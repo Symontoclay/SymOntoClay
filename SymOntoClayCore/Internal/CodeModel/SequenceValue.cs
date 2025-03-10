@@ -75,15 +75,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return string.Join(" ", _values.Select(p => p.ToSystemString()));
         }
 
-        private List<StrongIdentifierValue> _builtInSuperTypes;
+        private List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.SequenceTypeName) };
+            _builtInSuperTypes = new List<TypeInfo>() { NameHelper.CreateName(StandardNamesConstants.SequenceTypeName) };
 
             var result = base.CalculateLongHashCode(options);
 

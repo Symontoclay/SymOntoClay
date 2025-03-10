@@ -190,7 +190,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         float INavTarget.HorizontalAngle => 0f;
 
         /// <inheritdoc/>
-        Vector3 INavTarget.AbcoluteCoordinates => Vector3.Zero;
+        Vector3 INavTarget.AbsoluteCoordinates => Vector3.Zero;
 
         /// <inheritdoc/>
         IEntity INavTarget.Entity => this;

@@ -54,6 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         EntityValue,
         LogicalModalityExpressionValue,
         CodeItem,
-        SequenceValue
+        SequenceValue,
+        TypeInfo
     }
 }

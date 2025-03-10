@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public KindOfProperty KindOfProperty { get; set; } = KindOfProperty.Auto;
 
-        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<TypeInfo> TypesList { get; set; } = new List<TypeInfo>();
 
         public AstExpression DefaultValue { get; set; }
 

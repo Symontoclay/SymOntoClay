@@ -36,12 +36,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class FunctionArgumentInfo : IFunctionArgument
     {
         public StrongIdentifierValue Name { get; set; }
-        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<TypeInfo> TypesList { get; set; } = new List<TypeInfo>();
         public bool HasDefaultValue { get; set; }
         public Value DefaultValue { get; set; }
 
         /// <inheritdoc/>
-        IList<StrongIdentifierValue> IFunctionArgument.TypesList => TypesList;
+        IList<TypeInfo> IFunctionArgument.TypesList => TypesList;
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public FunctionArgumentInfo Clone()

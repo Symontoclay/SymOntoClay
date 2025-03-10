@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class RelationParameterDescription: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString
     {
         public StrongIdentifierValue Name { get; set; }
-        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<TypeInfo> TypesList { get; set; } = new List<TypeInfo>();
         public List<Value> MeaningRolesList { get; set; } = new List<Value>();
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />

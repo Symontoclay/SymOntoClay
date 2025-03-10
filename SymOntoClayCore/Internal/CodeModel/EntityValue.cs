@@ -62,10 +62,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override EntityValue AsEntityValue => this;
 
-        private List<StrongIdentifierValue> _builtInSuperTypes;
+        private List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         public override bool IsOnceResolved => false;

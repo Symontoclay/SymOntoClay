@@ -117,9 +117,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsSequenceValue => false;
         public virtual SequenceValue AsSequenceValue => null;
 
+        public virtual bool IsTypeInfo => false;
+        public virtual TypeInfo AsTypeInfo => null;
+
         public virtual bool IsSystemNull => false;
 
-        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException("8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0");
+        public virtual IReadOnlyList<TypeInfo> BuiltInSuperTypes => throw new NotImplementedException("8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0");
 
         public abstract object GetSystemValue();
 

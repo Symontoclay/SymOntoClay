@@ -59,7 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         {
             var targetObject = (WaypointValue)coreObject;
 
-            return targetObject.AbcoluteCoordinates;
+            return targetObject.AbsoluteCoordinates;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         public StrongIdentifierValue Name { get; set; }
 
         /// <inheritdoc/>
-        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<TypeInfo> TypesList { get; set; } = new List<TypeInfo>();
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)

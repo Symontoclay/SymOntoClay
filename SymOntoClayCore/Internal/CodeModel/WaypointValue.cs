@@ -56,17 +56,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             _context = context;
 
-            AbcoluteCoordinates = context.HostSupport.ConvertFromRelativeToAbsolute(Logger, new RelativeCoordinate() { Distance = distance, HorizontalAngle = horizontalAngle});
+            AbsoluteCoordinates = context.HostSupport.ConvertFromRelativeToAbsolute(Logger, new RelativeCoordinate() { Distance = distance, HorizontalAngle = horizontalAngle});
             Name = name;
         }
 
-        private WaypointValue(float distance, float horizontalAngle, Vector3 abcoluteCoordinates, StrongIdentifierValue name, IEngineContext context)
+        private WaypointValue(float distance, float horizontalAngle, Vector3 absoluteCoordinates, StrongIdentifierValue name, IEngineContext context)
             : base(context.Logger)
         {
             Distance = distance;
             HorizontalAngle = horizontalAngle;
             Name = name;
-            AbcoluteCoordinates = abcoluteCoordinates;
+            AbsoluteCoordinates = absoluteCoordinates;
             _context = context;
         }
 
@@ -81,20 +81,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public float Distance { get; private set; }
         public float HorizontalAngle { get; private set; }
-        public Vector3 AbcoluteCoordinates { get; private set; }
+        public Vector3 AbsoluteCoordinates { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
 
         private IEngineContext _context;
 
-        private List<StrongIdentifierValue> _builtInSuperTypes;
+        private List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            return AbcoluteCoordinates;
+            return AbsoluteCoordinates;
         }
 
         /// <inheritdoc/>
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.WaypointTypeName) };
 
-            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ (ulong)Math.Abs(AbcoluteCoordinates.GetHashCode()) ^ (ulong)Math.Abs(Distance.GetHashCode()) ^ (ulong)Math.Abs(HorizontalAngle.GetHashCode());
+            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ (ulong)Math.Abs(AbsoluteCoordinates.GetHashCode()) ^ (ulong)Math.Abs(Distance.GetHashCode()) ^ (ulong)Math.Abs(HorizontalAngle.GetHashCode());
         }
 
         /// <inheritdoc/>
@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)context[this];
             }
 
-            var result = new WaypointValue(Distance, HorizontalAngle, AbcoluteCoordinates, Name?.Clone(context), _context);
+            var result = new WaypointValue(Distance, HorizontalAngle, AbsoluteCoordinates, Name?.Clone(context), _context);
             context[this] = result;
 
             result.AppendAnnotations(this, context);
@@ -155,7 +155,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
             sb.AppendLine($"{spaces}{nameof(HorizontalAngle)} = {HorizontalAngle}");
-            sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
+            sb.AppendLine($"{spaces}{nameof(AbsoluteCoordinates)} = {AbsoluteCoordinates}");
             sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.Append(base.PropertiesToString(n));
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
             sb.AppendLine($"{spaces}{nameof(HorizontalAngle)} = {HorizontalAngle}");
-            sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
+            sb.AppendLine($"{spaces}{nameof(AbsoluteCoordinates)} = {AbsoluteCoordinates}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -185,7 +185,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
             sb.AppendLine($"{spaces}{nameof(HorizontalAngle)} = {HorizontalAngle}");
-            sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
+            sb.AppendLine($"{spaces}{nameof(AbsoluteCoordinates)} = {AbsoluteCoordinates}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
 
             sb.Append(base.PropertiesToBriefString(n));

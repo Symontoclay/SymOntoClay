@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public interface IFunctionArgument: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         StrongIdentifierValue Name { get; }
-        IList<StrongIdentifierValue> TypesList { get; }
+        IList<TypeInfo> TypesList { get; }
         bool HasDefaultValue { get; }
         Value DefaultValue { get; }
     }

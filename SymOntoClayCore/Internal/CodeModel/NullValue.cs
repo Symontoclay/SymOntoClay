@@ -20,17 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -73,15 +70,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return string.Empty;
         }
 
-        private List<StrongIdentifierValue> _builtInSuperTypes;
+        private List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.NullTypeName) };
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.NullTypeInfo };
 
             return LongHashCodeWeights.NullWeight ^ base.CalculateLongHashCode(options);
         }

@@ -35,11 +35,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class StringValue: Value
     {
-        private static List<StrongIdentifierValue> _builtInSuperTypes;
+        private static List<TypeInfo> _builtInSuperTypes;
 
         static StringValue()
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>();
+            _builtInSuperTypes = new List<TypeInfo>();
             _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.StringTypeName));
         }
 
@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override StringValue AsStringValue => this;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         public string SystemValue { get; private set; }
 

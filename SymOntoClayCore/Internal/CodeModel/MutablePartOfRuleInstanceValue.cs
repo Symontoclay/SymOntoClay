@@ -51,10 +51,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public MutablePartOfRuleInstance MutablePartOfRuleInstance { get; private set; }
 
-        private List<StrongIdentifierValue> _builtInSuperTypes;
+        private List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         public override object GetSystemValue()

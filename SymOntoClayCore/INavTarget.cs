@@ -32,7 +32,7 @@ namespace SymOntoClay.Core
         KindOfNavTarget Kind { get; }
         float Distance { get; }
         float HorizontalAngle { get; }
-        Vector3 AbcoluteCoordinates { get; }
+        Vector3 AbsoluteCoordinates { get; }
         IEntity Entity { get; }
     }
 }

@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public AstExpression DefaultValue { get; set; }
 
         /// <inheritdoc/>
-        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<TypeInfo> TypesList { get; set; } = new List<TypeInfo>();
         
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)

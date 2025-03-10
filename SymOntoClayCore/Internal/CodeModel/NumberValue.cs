@@ -51,10 +51,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override NumberValue AsNumberValue => this;
 
-        private List<StrongIdentifierValue> _builtInSuperTypes;
+        private List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
         
         private bool _isFuzzy;
 
@@ -104,11 +104,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 _isFuzzy = true;
             }
 
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.NumberTypeName) };
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.NumberTypeInfo };
 
             if(_isFuzzy)
             {
-                _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName));
+                _builtInSuperTypes.Add(TypeInfo.FuzzyTypeInfo);
             }
 
             return base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(SystemValue?.GetHashCode() ?? 0);

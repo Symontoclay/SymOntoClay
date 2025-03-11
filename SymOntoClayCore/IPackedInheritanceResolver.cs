@@ -31,10 +31,10 @@ namespace SymOntoClay.Core
 {
     public interface IPackedInheritanceResolver
     {
-        Value GetInheritanceRank(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName);
-        float GetRawInheritanceRank(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName);
+        Value GetInheritanceRank(IMonitorLogger logger, TypeInfo subType, TypeInfo superType);
+        float GetRawInheritanceRank(IMonitorLogger logger, TypeInfo subType, TypeInfo superType);
         IList<StrongIdentifierValue> GetSuperClassesKeysList(IMonitorLogger logger, StrongIdentifierValue subName);
-        IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, StrongIdentifierValue subName);
+        IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, TypeInfo subType);
         bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value);
         uint? GetDistance(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value);
         uint? GetDistance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName);

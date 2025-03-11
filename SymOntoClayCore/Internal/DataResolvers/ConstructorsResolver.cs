@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawList(logger, namedParameters.Count, storagesList, weightedInheritanceItems);
 
@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawList(logger, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance= true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawList(logger, 0, storagesList, weightedInheritanceItems);
 
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawPreConstructorsList(logger, storagesList, weightedInheritanceItems);
 

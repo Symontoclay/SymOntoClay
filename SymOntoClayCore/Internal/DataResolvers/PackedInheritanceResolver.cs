@@ -49,15 +49,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly ResolverOptions _options;
 
         /// <inheritdoc/>
-        public Value GetInheritanceRank(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
+        public Value GetInheritanceRank(IMonitorLogger logger, TypeInfo subType, TypeInfo superType)
         {
-            return _inheritanceResolver.GetInheritanceRank(logger, subName, superName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetInheritanceRank(logger, subType, superType, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
-        public float GetRawInheritanceRank(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
+        public float GetRawInheritanceRank(IMonitorLogger logger, TypeInfo subType, TypeInfo superType)
         {
-            return _inheritanceResolver.GetRawInheritanceRank(logger, subName, superName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetRawInheritanceRank(logger, subType, superType, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
@@ -67,9 +67,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, StrongIdentifierValue subName)
+        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, TypeInfo subType)
         {
-            return _inheritanceResolver.GetWeightedInheritanceItems(logger, subName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetWeightedInheritanceItems(logger, subType, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>

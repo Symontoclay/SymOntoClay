@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
-                    var targetHolder = weightedInheritanceItem.SuperType;
+                    var targetHolder = weightedInheritanceItem.SuperType.Name;
 
                     if(_preConstructorsDict.ContainsKey(targetHolder))
                     {

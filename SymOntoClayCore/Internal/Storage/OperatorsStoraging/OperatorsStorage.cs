@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
 
                     foreach(var weightedInheritanceItem in weightedInheritanceItems)
                     {
-                        var targetHolder = weightedInheritanceItem.SuperType;
+                        var targetHolder = weightedInheritanceItem.SuperType.Name;
 
                         if (dict.ContainsKey(targetHolder))
                         {

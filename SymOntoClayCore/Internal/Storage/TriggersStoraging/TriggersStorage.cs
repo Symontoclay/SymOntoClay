@@ -245,7 +245,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
             {
-                var targetHolder = weightedInheritanceItem.SuperType;
+                var targetHolder = weightedInheritanceItem.SuperType.Name;
 
                 if (dictForStoraging.ContainsKey(targetHolder))
                 {

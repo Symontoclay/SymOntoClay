@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetLogicConditionalRawList(logger, storagesList, weightedInheritanceItems);
 
@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetAddFactTriggersRawList(logger, storagesList, weightedInheritanceItems);
 
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetSystemEventsRawList(logger, kindOfSystemEvent, storagesList, weightedInheritanceItems);
 

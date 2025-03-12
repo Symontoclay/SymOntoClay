@@ -35,8 +35,8 @@ namespace SymOntoClay.Core
         float GetRawInheritanceRank(IMonitorLogger logger, TypeInfo subType, TypeInfo superType);
         IList<StrongIdentifierValue> GetSuperClassesKeysList(IMonitorLogger logger, StrongIdentifierValue subName);
         IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, TypeInfo subType);
-        bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value);
-        uint? GetDistance(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value);
-        uint? GetDistance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName);
+        bool IsFit(IMonitorLogger logger, IList<TypeInfo> typeInfoList, Value value);
+        uint? GetDistance(IMonitorLogger logger, IList<TypeInfo> typeInfoList, Value value);
+        uint? GetDistance(IMonitorLogger logger, TypeInfo subType, StrongIdentifierValue superName);
     }
 }

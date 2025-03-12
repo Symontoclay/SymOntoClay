@@ -52,13 +52,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public bool IsIsolated { get; set; }
 
         /// <inheritdoc/>
-        public StrongIdentifierValue Holder { get; set; }
+        public TypeInfo Holder { get; set; }
 
         /// <inheritdoc/>
         public IStorage Storage { get; set; }
 
         /// <inheritdoc/>
-        public StrongIdentifierValue Owner { get; set; }
+        public TypeInfo Owner { get; set; }
 
         /// <inheritdoc/>
         public IStorage OwnerStorage { get; set; }

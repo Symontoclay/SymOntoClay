@@ -37,10 +37,10 @@ namespace SymOntoClay.Core
 
         bool IsIsolated { get; }
 
-        StrongIdentifierValue Holder { get;}
+        TypeInfo Holder { get;}
         IStorage Storage { get;}
 
-        StrongIdentifierValue Owner { get;}
+        TypeInfo Owner { get;}
         IStorage OwnerStorage { get; }
 
         KindOfLocalCodeExecutionContext Kind { get; }

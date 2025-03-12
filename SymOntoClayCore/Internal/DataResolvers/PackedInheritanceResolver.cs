@@ -73,21 +73,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         /// <inheritdoc/>
-        public bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value)
+        public bool IsFit(IMonitorLogger logger, IList<TypeInfo> typeInfoList, Value value)
         {
-            return _inheritanceResolver.IsFit(logger, typeNamesList, value, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.IsFit(logger, typeInfoList, value, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
-        public uint? GetDistance(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value)
+        public uint? GetDistance(IMonitorLogger logger, IList<TypeInfo> typeInfoList, Value value)
         {
-            return _inheritanceResolver.GetDistance(logger, typeNamesList, value, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetDistance(logger, typeInfoList, value, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
-        public uint? GetDistance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
+        public uint? GetDistance(IMonitorLogger logger, TypeInfo subType, StrongIdentifierValue superName)
         {
-            return _inheritanceResolver.GetDistance(logger, subName, superName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetDistance(logger, subType, superName, _localCodeExecutionContext, _options);
         }
     }
 }

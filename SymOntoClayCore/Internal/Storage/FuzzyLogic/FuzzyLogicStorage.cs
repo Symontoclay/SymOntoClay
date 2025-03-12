@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
         private readonly ICommonNamesStorage _commonNamesStorage;
 
-        private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>> _valuesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>>();
+        private Dictionary<StrongIdentifierValue, Dictionary<TypeInfo, List<FuzzyLogicNonNumericValue>>> _valuesDict = new Dictionary<StrongIdentifierValue, Dictionary<TypeInfo, List<FuzzyLogicNonNumericValue>>>();
         private Dictionary<StrongIdentifierValue, FuzzyLogicOperator> _defaultOperatorsDict = new Dictionary<StrongIdentifierValue, FuzzyLogicOperator>();
 
         /// <inheritdoc/>
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
             }
         }
 
-        private void NAppendValue(IMonitorLogger logger, FuzzyLogicNonNumericValue value, StrongIdentifierValue holder)
+        private void NAppendValue(IMonitorLogger logger, FuzzyLogicNonNumericValue value, TypeInfo holder)
         {
             var name = value.Name;
 
@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
             }
             else
             {
-                var dict = new Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>();
+                var dict = new Dictionary<TypeInfo, List<FuzzyLogicNonNumericValue>>();
                 dict[holder] = new List<FuzzyLogicNonNumericValue>() { value };
                 _valuesDict[name] = dict;
             }

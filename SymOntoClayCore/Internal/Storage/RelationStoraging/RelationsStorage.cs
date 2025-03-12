@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         }
 
         private readonly object _lockObj = new object();
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<RelationDescription>>>> _itemsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<RelationDescription>>>>();
+        private readonly Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, Dictionary<int, List<RelationDescription>>>> _itemsDict = new Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, Dictionary<int, List<RelationDescription>>>>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, RelationDescription relation)

@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
-                    var targetHolder = weightedInheritanceItem.SuperType.Name;
+                    var targetHolder = weightedInheritanceItem.SuperType;
 
                     if (_actionsDict.ContainsKey(targetHolder))
                     {

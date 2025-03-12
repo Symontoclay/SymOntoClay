@@ -304,7 +304,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name.ToTypeInfo();
+            inheritanceItem.SubType = codeEntity.Name;
             inheritanceItem.SuperType = _commonNamesStorage.WorldName.ToTypeInfo();
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
@@ -318,7 +318,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name.ToTypeInfo();
+            inheritanceItem.SubType = codeEntity.Name;
             inheritanceItem.SuperType = _commonNamesStorage.AppName.ToTypeInfo();
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
@@ -332,8 +332,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name.ToTypeInfo();
-            inheritanceItem.SuperType = _commonNamesStorage.ClassName.ToTypeInfo();
+            inheritanceItem.SubType = codeEntity.Name;
+            inheritanceItem.SuperType = _commonNamesStorage.ClassName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
@@ -346,8 +346,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name.ToTypeInfo();
-            inheritanceItem.SuperType = _commonNamesStorage.ActionName.ToTypeInfo();
+            inheritanceItem.SubType = codeEntity.Name;
+            inheritanceItem.SuperType = _commonNamesStorage.ActionName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
@@ -361,7 +361,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             };
 
             inheritanceItem.SubType = codeEntity.Name.ToTypeInfo();
-            inheritanceItem.SuperType = _commonNamesStorage.StateName.ToTypeInfo();
+            inheritanceItem.SuperType = _commonNamesStorage.StateName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);

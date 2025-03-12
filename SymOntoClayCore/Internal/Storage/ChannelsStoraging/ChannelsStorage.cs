@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
 
                     foreach (var weightedInheritanceItem in weightedInheritanceItems)
                     {
-                        var targetHolder = weightedInheritanceItem.SuperType.Name;
+                        var targetHolder = weightedInheritanceItem.SuperType;
 
                         if (dict.ContainsKey(targetHolder))
                         {

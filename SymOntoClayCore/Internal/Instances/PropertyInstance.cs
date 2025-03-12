@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
 
-            _anyTypeName = context.CommonNamesStorage.AnyTypeName;
+            _anyType = context.CommonNamesStorage.AnyType;
 
             var kindOfCodeEntity = codeItem.KindOfProperty;
 
@@ -70,14 +70,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public KindOfProperty KindOfProperty => CodeItem.KindOfProperty;
         public StrongIdentifierValue Name { get; private set; }
-        public StrongIdentifierValue Holder { get; private set; }
+        public TypeInfo Holder { get; private set; }
         public Property CodeItem { get; private set; }
 
         private PropertyGetMethodExecutable _propertyGetMethodExecutable;
 
         public IExecutable GetMethodExecutable => _propertyGetMethodExecutable;
 
-        private StrongIdentifierValue _anyTypeName;
+        private TypeInfo _anyType;
 
         public void SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -169,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            if(typesList.All(p => p == _anyTypeName))
+            if(typesList.All(p => p == _anyType))
             {
                 return;
             }

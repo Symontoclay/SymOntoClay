@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class Operator : CodeItem, IExecutable
     {
 #if DEBUG
-        //private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        //private static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
 #endif
 
         /// <inheritdoc/>

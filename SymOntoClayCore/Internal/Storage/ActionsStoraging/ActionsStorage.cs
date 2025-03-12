@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 
         private readonly object _lockObj = new object();
 
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<ActionPtr>>>> _actionsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<ActionPtr>>>>();
+        private readonly Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, Dictionary<int, List<ActionPtr>>>> _actionsDict = new Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, Dictionary<int, List<ActionPtr>>>>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, ActionDef action)
@@ -198,7 +198,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
             return result;
         }
 
-        private Dictionary<int, List<ActionPtr>> GetDictByNames(IMonitorLogger logger, StrongIdentifierValue holder, StrongIdentifierValue name)
+        private Dictionary<int, List<ActionPtr>> GetDictByNames(IMonitorLogger logger, TypeInfo holder, StrongIdentifierValue name)
         {
             if (_actionsDict.ContainsKey(holder))
             {

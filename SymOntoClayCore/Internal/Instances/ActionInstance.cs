@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public ILocalCodeExecutionContext OwnLocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public StrongIdentifierValue Holder => null;
+        public TypeInfo Holder => null;
 
         /// <inheritdoc/>
         public bool NeedActivation => true;

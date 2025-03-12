@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public interface IReadOnlyMemberAccess
     {
-        StrongIdentifierValue Holder { get; }
+        TypeInfo Holder { get; }
         TypeOfAccess TypeOfAccess { get; }
     }
 }

@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public ILocalCodeExecutionContext OwnLocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public StrongIdentifierValue Holder => _executable.Holder;
+        public TypeInfo Holder => _executable.Holder;
 
         /// <inheritdoc/>
         IExecutionCoordinator IExecutable.GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)

@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Unknown;
 
         /// <inheritdoc/>
-        public StrongIdentifierValue Holder { get; set; }
+        public TypeInfo Holder { get; set; }
 
         /// <inheritdoc/>
         public Value ObligationModality => RuleInstance.ObligationModality;
@@ -361,7 +361,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             contextOfConvertingExpressionNode.RelationsList.Add(this);
         }
 
-        public void SetHolder(StrongIdentifierValue holder)
+        public void SetHolder(TypeInfo holder)
         {
             Holder = holder;
 

@@ -55,17 +55,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
 
                 _name = value;
+                _typeInfo = value.ToTypeInfo();
 
                 EmitOnNameChangedHandlers(value);
             }
         }
+
+        public virtual TypeInfo TypeInfo => _typeInfo;
 
         public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
         public CodeFile CodeFile { get; set; }
         public CodeItem ParentCodeEntity { get; set; }
         public List<CodeItem> SubItems { get; set; } = new List<CodeItem>();
 
-        public StrongIdentifierValue Holder
+        public TypeInfo Holder
         { 
             get
             {
@@ -153,7 +156,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private List<IOnNameChangedCodeItemHandler> _onNameChangedHandlers = new List<IOnNameChangedCodeItemHandler>();
 
         private StrongIdentifierValue _name;
-        private StrongIdentifierValue _holder;
+        private TypeInfo _typeInfo;
+        private TypeInfo _holder;
         private TypeOfAccess _typeOfAccess = TypeOfAccess.Local;
 
         public List<CodeItemDirective> Directives { get; private set; } = new List<CodeItemDirective>();
@@ -325,7 +329,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected void AppendCodeItem(CodeItem source, Dictionary<object, object> context)
         {
-            Name = source.Name?.Clone(context);
+            _name = source._name?.Clone(context);
+            _typeInfo = source._typeInfo.Clone(context);
             InheritanceItems = source.InheritanceItems?.Select(p => p.Clone(context)).ToList();
 
             CodeFile = source.CodeFile;
@@ -394,6 +399,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}"); 
             sb.AppendLine($"{spaces}{nameof(IsAnonymous)} = {IsAnonymous}");
             sb.PrintObjProp(n, nameof(Name), Name);
+            sb.PrintObjProp(n, nameof(TypeInfo), TypeInfo);
 
             sb.PrintObjListProp(n, nameof(InheritanceItems), InheritanceItems);
 
@@ -427,6 +433,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(IsAnonymous)} = {IsAnonymous}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
+            sb.PrintShortObjProp(n, nameof(TypeInfo), TypeInfo);
 
             sb.PrintShortObjListProp(n, nameof(InheritanceItems), InheritanceItems);
 
@@ -460,6 +467,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(IsAnonymous)} = {IsAnonymous}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
+            sb.PrintBriefObjProp(n, nameof(TypeInfo), TypeInfo);
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);

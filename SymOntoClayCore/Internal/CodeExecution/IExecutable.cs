@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         ISystemHandler SystemHandler { get; }
         bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name);
         ILocalCodeExecutionContext OwnLocalCodeExecutionContext { get; }
-        StrongIdentifierValue Holder { get; }
+        TypeInfo Holder { get; }
         bool NeedActivation { get; }
         bool IsActivated { get; }
         UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences { get; }

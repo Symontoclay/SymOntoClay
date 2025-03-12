@@ -41,6 +41,7 @@ namespace SymOntoClay.Core.Internal
         StrongIdentifierValue StateName { get; }
 
         StrongIdentifierValue DefaultHolder { get; }
+        TypeInfo DefaultHolderType { get; }
 
         StrongIdentifierValue SelfSystemVarName { get; }
 
@@ -61,5 +62,6 @@ namespace SymOntoClay.Core.Internal
         StrongIdentifierValue PriorityAttributeName { get; }
 
         StrongIdentifierValue AnyTypeName { get; }
+        TypeInfo AnyType { get; }
     }
 }

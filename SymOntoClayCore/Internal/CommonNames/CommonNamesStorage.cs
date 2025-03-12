@@ -49,6 +49,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
             StateName = NameHelper.CreateName(StandardNamesConstants.StateTypeName);
 
             DefaultHolder = new StrongIdentifierValue();
+            DefaultHolderType = DefaultHolder.ToTypeInfo();
 
             SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName);
 
@@ -70,6 +71,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
             PriorityAttributeName = NameHelper.CreateName(StandardNamesConstants.PriorityAttributeName);
 
             AnyTypeName = NameHelper.CreateName(StandardNamesConstants.AnyTypeName);
+            AnyType = AnyTypeName.ToTypeInfo();
         }
 
         private readonly IMainStorageContext _context;
@@ -91,6 +93,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue DefaultHolder { get; private set; }
+
+        /// <inheritdoc/>
+        public TypeInfo DefaultHolderType { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue SelfSystemVarName { get; private set; }
@@ -124,5 +129,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue AnyTypeName { get; private set; }
+
+        /// <inheritdoc/>
+        public TypeInfo AnyType { get; private set; }
     }
 }

@@ -49,10 +49,10 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         public StrongIdentifierValue Name { get; private set; }
-        public StrongIdentifierValue Holder { get; private set; }
+        public TypeInfo Holder { get; private set; }
         public CodeItem CodeItem { get; private set; }
 
-        public List<StrongIdentifierValue> TypesList { get; private set; }
+        public List<TypeInfo> TypesList { get; private set; }
 
         public Value Value
         {

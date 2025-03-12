@@ -50,13 +50,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool HasVars { get; set; }
         public bool IsParameterized { get; set; }
         public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Unknown;
-        public StrongIdentifierValue Holder { get; set; }
+        public TypeInfo Holder { get; set; }
 
         public IDictionary<StrongIdentifierValue, IList<LogicalQueryNode>> RelationsDict { get; set; }
 
 
 
-        public void SetHolder(StrongIdentifierValue holder)
+        public void SetHolder(TypeInfo holder)
         {
             Holder = holder;
 

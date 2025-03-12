@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
 
         private readonly object _lockObj = new object();
 
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>>();
+        private readonly Dictionary<StrongIdentifierValue, Dictionary<TypeInfo, List<Channel>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<TypeInfo, List<Channel>>>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, Channel channel)
@@ -75,7 +75,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
                 }
                 else
                 {
-                    _nonIndexedInfo[name] = new Dictionary<StrongIdentifierValue, List<Channel>>() { { holder, new List<Channel>() { channel} } };
+                    _nonIndexedInfo[name] = new Dictionary<TypeInfo, List<Channel>>() { { holder, new List<Channel>() { channel} } };
                 }
             }
         }

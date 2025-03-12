@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
 
         private readonly object _lockObj = new object();
 
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>>();
+        private readonly Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, List<StateDef>>>();
         private readonly Dictionary<StateDef, List<ActivationInfoOfStateDef>> _activationInfoDict = new Dictionary<StateDef, List<ActivationInfoOfStateDef>>();
         private List<StateDef> _statesList = new List<StateDef>();
         private List<ActivationInfoOfStateDef> _activationInfoList = new List<ActivationInfoOfStateDef>();

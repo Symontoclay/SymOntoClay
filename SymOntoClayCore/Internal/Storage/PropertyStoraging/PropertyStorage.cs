@@ -126,7 +126,7 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         private List<IPropertyStorage> _parentPropertyStoragesList = new List<IPropertyStorage>();
 
         private List<PropertyInstance> _allPropertiesList = new List<PropertyInstance>();
-        private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<PropertyInstance>>> _propertiesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<PropertyInstance>>>();
+        private Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, List<PropertyInstance>>> _propertiesDict = new Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, List<PropertyInstance>>>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, PropertyInstance propertyInstance)

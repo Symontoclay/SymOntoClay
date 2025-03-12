@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
 
         private readonly object _lockObj = new object();
 
-        private Dictionary<StrongIdentifierValue, List<IdleActionItem>> _itemsDict = new Dictionary<StrongIdentifierValue, List<IdleActionItem>>();
+        private Dictionary<TypeInfo, List<IdleActionItem>> _itemsDict = new Dictionary<TypeInfo, List<IdleActionItem>>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, IdleActionItem item)

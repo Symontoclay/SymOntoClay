@@ -145,7 +145,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private List<IVarStorage> _parentVarStoragesList = new List<IVarStorage>();
 
-        private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<VarInstance>>> _variablesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<VarInstance>>>();
+        private Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, List<VarInstance>>> _variablesDict = new Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, List<VarInstance>>>();
         private Dictionary<StrongIdentifierValue, VarInstance> _localVariablesDict = new Dictionary<StrongIdentifierValue, VarInstance>();
 
         private List<VarInstance> _allVariablesList = new List<VarInstance>();

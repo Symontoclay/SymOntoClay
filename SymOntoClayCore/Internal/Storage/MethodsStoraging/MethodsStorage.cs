@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
         }
 
         private readonly object _lockObj = new object();
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>> _namedFunctionsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>>();
+        private readonly Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>> _namedFunctionsDict = new Dictionary<TypeInfo, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>>();
         private readonly Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>> _localNamedFunctionsDict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>();
 
         /// <inheritdoc/>

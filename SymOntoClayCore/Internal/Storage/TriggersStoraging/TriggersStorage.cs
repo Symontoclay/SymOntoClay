@@ -67,10 +67,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private List<ITriggersStorage> _parentTriggersStoragesList = new List<ITriggersStorage>();
 
-        private Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _systemEventsInfoDict = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
+        private Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<TypeInfo, List<InlineTrigger>>> _systemEventsInfoDict = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<TypeInfo, List<InlineTrigger>>>();
 
-        private Dictionary<StrongIdentifierValue, List<InlineTrigger>> _logicConditionalsDict = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
-        private Dictionary<StrongIdentifierValue, List<InlineTrigger>> _addFactsDict = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
+        private Dictionary<TypeInfo, List<InlineTrigger>> _logicConditionalsDict = new Dictionary<TypeInfo, List<InlineTrigger>>();
+        private Dictionary<TypeInfo, List<InlineTrigger>> _addFactsDict = new Dictionary<TypeInfo, List<InlineTrigger>>();
 
         private List<INamedTriggerInstance> _namedTriggerInstancesList = new List<INamedTriggerInstance>();
         private Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>> _namedTriggerInstancesDict = new Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>>();
@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             }
         }
 
-        private void ProcessAppendTrigger(IMonitorLogger logger, InlineTrigger inlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
+        private void ProcessAppendTrigger(IMonitorLogger logger, InlineTrigger inlineTrigger, Dictionary<TypeInfo, List<InlineTrigger>> dictForStoraging)
         {
             inlineTrigger.CheckDirty();
 
@@ -166,7 +166,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                 }
                 else
                 {
-                    _systemEventsInfoDict[kindOfSystemEvent] = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>() { { holder, new List<InlineTrigger>() { inlineTrigger } } };
+                    _systemEventsInfoDict[kindOfSystemEvent] = new Dictionary<TypeInfo, List<InlineTrigger>>() { { holder, new List<InlineTrigger>() { inlineTrigger } } };
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             }                
         }
 
-        private IList<WeightedInheritanceResultItem<InlineTrigger>> GetTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
+        private IList<WeightedInheritanceResultItem<InlineTrigger>> GetTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems, Dictionary<TypeInfo, List<InlineTrigger>> dictForStoraging)
         {
             var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 

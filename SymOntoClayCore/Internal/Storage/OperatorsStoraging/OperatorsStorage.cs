@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
 
         private readonly object _lockObj = new object();
 
-        private readonly Dictionary<KindOfOperator, Dictionary<StrongIdentifierValue, List<Operator>>> _nonIndexedInfo = new Dictionary<KindOfOperator, Dictionary<StrongIdentifierValue, List<Operator>>>();
+        private readonly Dictionary<KindOfOperator, Dictionary<TypeInfo, List<Operator>>> _nonIndexedInfo = new Dictionary<KindOfOperator, Dictionary<TypeInfo, List<Operator>>>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, Operator op)
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
                 }
                 else
                 {
-                    _nonIndexedInfo[kindOfOperator] = new Dictionary<StrongIdentifierValue, List<Operator>>() { { op.Holder, new List<Operator>() { op } } };
+                    _nonIndexedInfo[kindOfOperator] = new Dictionary<TypeInfo, List<Operator>>() { { op.Holder, new List<Operator>() { op } } };
                 }
             }
         }

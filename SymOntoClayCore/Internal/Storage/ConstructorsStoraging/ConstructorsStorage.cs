@@ -40,10 +40,10 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         }
 
         private readonly object _constructorsLockObj = new object();
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<int, List<Constructor>>> _constructorsDict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<Constructor>>>();
+        private readonly Dictionary<TypeInfo, Dictionary<int, List<Constructor>>> _constructorsDict = new Dictionary<TypeInfo, Dictionary<int, List<Constructor>>>();
 
         private readonly object _preConstructorsLockObj = new object();
-        private readonly Dictionary<StrongIdentifierValue, PreConstructor> _preConstructorsDict = new Dictionary<StrongIdentifierValue, PreConstructor>();
+        private readonly Dictionary<TypeInfo, PreConstructor> _preConstructorsDict = new Dictionary<TypeInfo, PreConstructor>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, Constructor constructor)

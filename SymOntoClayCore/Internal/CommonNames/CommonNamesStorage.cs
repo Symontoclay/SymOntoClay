@@ -39,17 +39,22 @@ namespace SymOntoClay.Core.Internal.CommonNames
             base.LinkWithOtherBaseContextComponents();
 
             WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName);
+            WorldTypeInfo = WorldName.ToTypeInfo();
 
             AppName = NameHelper.CreateName(StandardNamesConstants.AppTypeName);
+            AppTypeInfo = AppName.ToTypeInfo();
 
             ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName);
+            ClassTypeInfo = ClassName.ToTypeInfo();
 
             ActionName = NameHelper.CreateName(StandardNamesConstants.ActionTypeName);
+            ActionTypeInfo = ActionName.ToTypeInfo();
 
             StateName = NameHelper.CreateName(StandardNamesConstants.StateTypeName);
+            StateTypeInfo = StateName.ToTypeInfo();
 
             DefaultHolder = new StrongIdentifierValue();
-            DefaultHolderType = DefaultHolder.ToTypeInfo();
+            DefaultHolderTypeInfo = DefaultHolder.ToTypeInfo();
 
             SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName);
 
@@ -72,7 +77,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
             PriorityAttributeName = NameHelper.CreateName(StandardNamesConstants.PriorityAttributeName);
 
             AnyTypeName = NameHelper.CreateName(StandardNamesConstants.AnyTypeName);
-            AnyType = AnyTypeName.ToTypeInfo();
+            AnyTypeInfo = AnyTypeName.ToTypeInfo();
         }
 
         private readonly IMainStorageContext _context;
@@ -81,22 +86,37 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public StrongIdentifierValue WorldName { get; private set; }
 
         /// <inheritdoc/>
+        public TypeInfo WorldTypeInfo { get; private set; }
+
+        /// <inheritdoc/>
         public StrongIdentifierValue AppName { get; private set; }
+        
+        /// <inheritdoc/>
+        public TypeInfo AppTypeInfo { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue ClassName { get; private set; }
 
         /// <inheritdoc/>
+        public TypeInfo ClassTypeInfo { get; private set; }
+
+        /// <inheritdoc/>
         public StrongIdentifierValue ActionName { get; private set; }
+
+        /// <inheritdoc/>
+        public TypeInfo ActionTypeInfo { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue StateName { get; private set; }
 
         /// <inheritdoc/>
+        public TypeInfo StateTypeInfo { get; private set; }
+
+        /// <inheritdoc/>
         public StrongIdentifierValue DefaultHolder { get; private set; }
 
         /// <inheritdoc/>
-        public TypeInfo DefaultHolderType { get; private set; }
+        public TypeInfo DefaultHolderTypeInfo { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue SelfSystemVarName { get; private set; }
@@ -135,6 +155,6 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public StrongIdentifierValue AnyTypeName { get; private set; }
 
         /// <inheritdoc/>
-        public TypeInfo AnyType { get; private set; }
+        public TypeInfo AnyTypeInfo { get; private set; }
     }
 }

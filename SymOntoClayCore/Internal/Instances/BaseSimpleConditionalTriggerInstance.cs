@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = _storage;
 
-            localCodeExecutionContext.Holder = parent.Name;
+            localCodeExecutionContext.Holder = parent.TypeInfo;
 
             _localCodeExecutionContext = localCodeExecutionContext;
 
@@ -197,7 +197,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
-            localCodeExecutionContext.Holder = _parent.Name;
+            localCodeExecutionContext.Holder = _parent.TypeInfo;
 
             RunHandler(localCodeExecutionContext);
         }
@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;
-                localCodeExecutionContext.Holder = _parent.Name;
+                localCodeExecutionContext.Holder = _parent.TypeInfo;
 
                 if (bindingVariables.Any())
                 {

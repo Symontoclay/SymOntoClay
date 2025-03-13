@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 _localCodeExecutionContext = new LocalCodeExecutionContext()
                 {
                     Storage = _context.Storage.GlobalStorage,
-                    Holder = commonNamesStorage.DefaultHolderType
+                    Holder = commonNamesStorage.DefaultHolderTypeInfo
                 };
             }
 

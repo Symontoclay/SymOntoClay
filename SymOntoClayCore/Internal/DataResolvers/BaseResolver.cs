@@ -247,7 +247,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var holderIsEntity = holder.KindOfName == KindOfName.Entity;
 
-            StrongIdentifierValue additionalHolder = null;
+            TypeInfo additionalHolder = null;
             var additionalHolderIsEntity = false;
             var hasAdditionalHolderInItems = false;
 
@@ -259,7 +259,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (allStateNamesList.Any(p => p == holder))
                 {
-                    additionalHolder = _context.InstancesStorage.MainEntity?.Name;
+                    additionalHolder = _context.InstancesStorage.MainEntity?.TypeInfo;
 
                     if (additionalHolder != null)
                     {

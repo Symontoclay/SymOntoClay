@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             base.Init();
 
-            _anyType = _context.CommonNamesStorage.AnyType;
+            _anyType = _context.CommonNamesStorage.AnyTypeInfo;
         }
 
         private TypeInfo _anyType;

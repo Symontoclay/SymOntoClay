@@ -759,15 +759,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.TypeInfo, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.TypeInfo, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.TypeInfo, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 default:
@@ -783,7 +783,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 executionsList.Add((newCodeFrame, coordinator));
             }
 
-            var preConstructors = _constructorsResolver.ResolvePreConstructors(Logger, newInstance.Name, newInstance.LocalCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var preConstructors = _constructorsResolver.ResolvePreConstructors(Logger, newInstance.TypeInfo, newInstance.LocalCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (preConstructors.Any())
             {
@@ -2791,8 +2791,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = paramsList[2];//_logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true);
 
-            inheritanceItem.SubType = subName;
-            inheritanceItem.SuperType = superName;
+            inheritanceItem.SubType = subName.ToTypeInfo();
+            inheritanceItem.SuperType = superName.ToTypeInfo();
             inheritanceItem.Rank = rank;
 
             _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);
@@ -2813,8 +2813,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = _logicalValueLinearResolver.Resolve(Logger, paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
 
-            inheritanceItem.SubType = subName;
-            inheritanceItem.SuperType = superName;
+            inheritanceItem.SubType = subName.ToTypeInfo();
+            inheritanceItem.SuperType = superName.ToTypeInfo();
             inheritanceItem.Rank = rank;
 
             _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);

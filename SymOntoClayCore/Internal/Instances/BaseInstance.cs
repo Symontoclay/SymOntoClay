@@ -118,6 +118,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public StrongIdentifierValue Name { get; private set; }
 
+        /// <inheritdoc/>
         public TypeInfo TypeInfo { get; private set; }
 
         /// <inheritdoc/>

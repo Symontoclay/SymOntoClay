@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.LeftRightStream,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Is,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new IsOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Point,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new PointOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Assign,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new AssignOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.CallLogicalQuery,
                 IsSystemDefined = true,
                 SystemHandler = new UnaryOperatorSystemHandler(new CallLogicalQueryOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Add,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new AddOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Sub,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new SubOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -130,7 +130,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Mul,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new MulOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Div,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new DivOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.UnaryPlus,
                 IsSystemDefined = true,
                 SystemHandler = new UnaryOperatorSystemHandler(new UnaryPlusOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.UnaryMinus,
                 IsSystemDefined = true,
                 SystemHandler = new UnaryOperatorSystemHandler(new UnaryMinusOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -171,7 +171,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.More,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new MoreOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.MoreOrEqual,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new MoreOrEqualOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -191,7 +191,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Less,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new LessOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -201,7 +201,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.LessOrEqual,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new LessOrEqualOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -211,7 +211,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Or,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new OrOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -221,7 +221,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.And,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new AndOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Not,
                 IsSystemDefined = true,
                 SystemHandler = new UnaryOperatorSystemHandler(new NotOperatorHandler(_context)),
-                Holder = _context.CommonNamesStorage.DefaultHolderType
+                Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo
             };
 
             globalOperatorsStorage.Append(Logger, op);
@@ -241,7 +241,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
         {
             var globalStorage = _context.Storage.GlobalStorage;
             var globalChannelsStorage = globalStorage.ChannelsStorage;
-            var holder = _context.CommonNamesStorage.DefaultHolderType;
+            var holder = _context.CommonNamesStorage.DefaultHolderTypeInfo;
 
             var name = NameHelper.CreateName("@>log");
 

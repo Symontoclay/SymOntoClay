@@ -129,7 +129,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (instance.Holder == null)
             {
-                instance.Holder = _commonNamesStorage.DefaultHolderType;
+                instance.Holder = _commonNamesStorage.DefaultHolderTypeInfo;
             }            
 
             var inheritanceItem = new InheritanceItem()

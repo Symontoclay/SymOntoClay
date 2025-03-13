@@ -31,17 +31,22 @@ namespace SymOntoClay.Core.Internal
     public interface ICommonNamesStorage
     {
         StrongIdentifierValue WorldName { get; }
+        TypeInfo WorldTypeInfo { get; }
 
         StrongIdentifierValue AppName { get; }
+        TypeInfo AppTypeInfo { get; }
 
         StrongIdentifierValue ClassName { get; }
+        TypeInfo ClassTypeInfo { get; }
 
         StrongIdentifierValue ActionName { get; }
+        TypeInfo ActionTypeInfo { get; }
 
         StrongIdentifierValue StateName { get; }
+        TypeInfo StateTypeInfo { get; }
 
         StrongIdentifierValue DefaultHolder { get; }
-        TypeInfo DefaultHolderType { get; }
+        TypeInfo DefaultHolderTypeInfo { get; }
 
         StrongIdentifierValue SelfSystemVarName { get; }
 
@@ -63,6 +68,6 @@ namespace SymOntoClay.Core.Internal
         StrongIdentifierValue PriorityAttributeName { get; }
 
         StrongIdentifierValue AnyTypeName { get; }
-        TypeInfo AnyType { get; }
+        TypeInfo AnyTypeInfo { get; }
     }
 }

@@ -304,8 +304,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name;
-            inheritanceItem.SuperType = _commonNamesStorage.WorldName;
+            inheritanceItem.SubType = codeEntity.TypeInfo;
+            inheritanceItem.SuperType = _commonNamesStorage.WorldTypeInfo;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
@@ -318,8 +318,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name;
-            inheritanceItem.SuperType = _commonNamesStorage.AppName;
+            inheritanceItem.SubType = codeEntity.TypeInfo;
+            inheritanceItem.SuperType = _commonNamesStorage.AppTypeInfo;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
@@ -332,8 +332,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name;
-            inheritanceItem.SuperType = _commonNamesStorage.ClassName;
+            inheritanceItem.SubType = codeEntity.TypeInfo;
+            inheritanceItem.SuperType = _commonNamesStorage.ClassTypeInfo;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
@@ -346,8 +346,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name;
-            inheritanceItem.SuperType = _commonNamesStorage.ActionName;
+            inheritanceItem.SubType = codeEntity.TypeInfo;
+            inheritanceItem.SuperType = _commonNamesStorage.ActionTypeInfo;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
@@ -360,8 +360,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            inheritanceItem.SubType = codeEntity.Name;
-            inheritanceItem.SuperType = _commonNamesStorage.StateName;
+            inheritanceItem.SubType = codeEntity.TypeInfo;
+            inheritanceItem.SuperType = _commonNamesStorage.StateTypeInfo;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
@@ -377,7 +377,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void SaveItem(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage, List<string> deferredLibsList)
         {
-            var codeEntityName = codeItem.Name;
+            var codeEntityName = codeItem.TypeInfo;
 
             var metadataStorage = targetStorage.MetadataStorage;
 
@@ -534,7 +534,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 if(fieldsList.Any() || propertiesList.Any())
                 {
                     var preConstructor = new PreConstructor();
-                    preConstructor.Holder = codeItem.Name;
+                    preConstructor.Holder = codeItem.TypeInfo;
 
                     var intermediateCommandsList = new List<IntermediateScriptCommand>();
 

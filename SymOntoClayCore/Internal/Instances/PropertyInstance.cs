@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
 
-            _anyType = context.CommonNamesStorage.AnyType;
+            _anyType = context.CommonNamesStorage.AnyTypeInfo;
 
             var kindOfCodeEntity = codeItem.KindOfProperty;
 

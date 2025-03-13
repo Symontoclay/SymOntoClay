@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (holder != null)
                 {
-                    sb.AppendLine($"{spaces}Holder: {holder.NameValue}");
+                    sb.AppendLine($"{spaces}Holder: {holder.ToHumanizedString()}");
                 }
 
                 sb.AppendLine($"{spaces}{Metadata.ToHumanizedLabel()}");

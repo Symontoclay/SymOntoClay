@@ -35,6 +35,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class MutablePartOfRuleInstanceValue : Value
     {
+        static MutablePartOfRuleInstanceValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.FactTypeTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public MutablePartOfRuleInstanceValue(MutablePartOfRuleInstance mutablePartOfRuleInstance)
         {
             MutablePartOfRuleInstance = mutablePartOfRuleInstance;
@@ -50,8 +57,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override MutablePartOfRuleInstanceValue AsMutablePartOfRuleInstanceValue => this;
 
         public MutablePartOfRuleInstance MutablePartOfRuleInstance { get; private set; }
-
-        private List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
@@ -91,8 +96,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.FactTypeName) };
-
             return base.CalculateLongHashCode(options);
         }
 

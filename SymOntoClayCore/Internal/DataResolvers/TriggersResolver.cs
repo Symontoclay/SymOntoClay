@@ -49,42 +49,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private SynonymsResolver _synonymsResolver;
 
-        public List<InlineTrigger> ResolveLogicConditionalTriggersList(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveLogicConditionalTriggersList(IMonitorLogger logger, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetLogicConditionalRawList(logger, storagesList, weightedInheritanceItems);
 
             return OrderAndDistinct(logger, rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        public List<InlineTrigger> ResolveAddFactTriggersList(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveAddFactTriggersList(IMonitorLogger logger, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetAddFactTriggersRawList(logger, storagesList, weightedInheritanceItems);
 
             return OrderAndDistinct(logger, rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        public List<InlineTrigger> ResolveSystemEventsTriggersList(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveSystemEventsTriggersList(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetSystemEventsRawList(logger, kindOfSystemEvent, storagesList, weightedInheritanceItems);
 

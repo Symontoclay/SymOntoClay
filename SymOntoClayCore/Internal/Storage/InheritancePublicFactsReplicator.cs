@@ -55,19 +55,19 @@ namespace SymOntoClay.Core.Internal.Storage
         private ILocalCodeExecutionContext _localCodeExecutionContext;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
 
-        private StrongIdentifierValue _selfName;
+        private TypeInfo _selfTypeInfo;
         private string _selfNameForFacts;
         private Dictionary<string, string> _factsIdDict = new Dictionary<string, string>();
         private Dictionary<string, InheritanceItem> _inheritanceItemsDict = new Dictionary<string, InheritanceItem>();
 
         /// <inheritdoc/>
-        public void ProcessChangeInheritance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
+        public void ProcessChangeInheritance(IMonitorLogger logger, TypeInfo subType, TypeInfo superType)
         {
             lock(_lockObj)
             {
 #if DEBUG
 
-                if (subName.NameValue == "app")
+                if (subType.NameValue == "app")
                 {
                     throw new NotImplementedException("75EDA0A0-AB44-4B4C-9CAC-428FBFFCDEA0");
                 }
@@ -76,13 +76,13 @@ namespace SymOntoClay.Core.Internal.Storage
                 if (_foundInheritanceKeysList.Any())
                 {
 
-                    if(subName != _selfName && !_foundInheritanceKeysList.Contains(subName))
+                    if(subType != _selfTypeInfo && !_foundInheritanceKeysList.Contains(subType))
                     {
                         Recalculate(logger);
                         return;
                     }
 
-                    if (superName != _selfName && !_foundInheritanceKeysList.Contains(superName))
+                    if (superType != _selfTypeInfo && !_foundInheritanceKeysList.Contains(superType))
                     {
                         Recalculate(logger);
                         return;
@@ -101,8 +101,8 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 var commonNamesStorage = _context.CommonNamesStorage;
 
-                _selfName = commonNamesStorage.SelfName;
-                _selfNameForFacts = NameHelper.ShieldString(_selfName.NameValue);
+                _selfTypeInfo = commonNamesStorage.SelfName;
+                _selfNameForFacts = NameHelper.ShieldString(_selfTypeInfo.Name.NameValue);
 
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
 
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 };
             }
 
-            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(logger, _selfName, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem?.IsSystemDefined ?? false);
+            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(logger, _selfTypeInfo, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem?.IsSystemDefined ?? false);
 
             if (!weightedInheritanceItemsList.Any())
             {
@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Storage
                     var addedInheritanceItem = new InheritanceItem();
 
                     addedInheritanceItem.SuperType = initialAddedInheritanceItem.SuperType;
-                    addedInheritanceItem.SubType = _selfName;
+                    addedInheritanceItem.SubType = _selfTypeInfo;
                     addedInheritanceItem.Rank = new LogicalValue(1);
 
                     _inheritanceItemsDict[name] = addedInheritanceItem;

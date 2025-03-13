@@ -27,6 +27,6 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public interface IInheritancePublicFactsReplicator
     {
-        void ProcessChangeInheritance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName);
+        void ProcessChangeInheritance(IMonitorLogger logger, TypeInfo subType, TypeInfo superType);
     }
 }

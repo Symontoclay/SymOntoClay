@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly List<Constructor> _emptyConstructorsList = new List<Constructor>();
         private readonly List<PreConstructor> _emptyPreConstructorsList = new List<PreConstructor>();
 
-        public Constructor ResolveOnlyOwn(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveOnlyOwn(IMonitorLogger logger, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(logger, rawList, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveOnlyOwn(IMonitorLogger logger, StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveOnlyOwn(IMonitorLogger logger, TypeInfo holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(logger, rawList, namedParameters, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveOnlyOwn(IMonitorLogger logger, StrongIdentifierValue holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveOnlyOwn(IMonitorLogger logger, TypeInfo holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(logger, rawList, positionedParameters, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveWithSelfAndDirectInheritance(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveWithSelfAndDirectInheritance(IMonitorLogger logger, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(logger, rawList, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveWithSelfAndDirectInheritance(IMonitorLogger logger, StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveWithSelfAndDirectInheritance(IMonitorLogger logger, TypeInfo holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -90,14 +90,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawList(logger, namedParameters.Count, storagesList, weightedInheritanceItems);
 
             return FilterRawListAndGetItem(logger, rawList, namedParameters, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveWithSelfAndDirectInheritance(IMonitorLogger logger, StrongIdentifierValue holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveWithSelfAndDirectInheritance(IMonitorLogger logger, TypeInfo holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -106,14 +106,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawList(logger, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
             return FilterRawListAndGetItem(logger, rawList, positionedParameters, localCodeExecutionContext, options);
         }
 
-        public List<Constructor> ResolveListWithSelfAndDirectInheritance(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<Constructor> ResolveListWithSelfAndDirectInheritance(IMonitorLogger logger, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance= true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawList(logger, 0, storagesList, weightedInheritanceItems);
 
@@ -166,14 +166,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<PreConstructor> ResolvePreConstructors(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<PreConstructor> ResolvePreConstructors(IMonitorLogger logger, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder.ToTypeInfo(), localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawPreConstructorsList(logger, storagesList, weightedInheritanceItems);
 

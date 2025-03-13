@@ -53,6 +53,8 @@ namespace SymOntoClay.Core.Internal.Instances
             _codeItem = codeItem;
 
             Name = codeItem.Name;
+            TypeInfo = Name.ToTypeInfo();
+
             _context = context;
             _parentStorage = parentStorage;
 
@@ -89,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _storage = storageFactory.CreateStorage(localStorageSettings);
 
             localCodeExecutionContext.Storage = _storage;
-            localCodeExecutionContext.Holder = Name;
+            localCodeExecutionContext.Holder = TypeInfo;
 
             _localCodeExecutionContext = localCodeExecutionContext;
             RebuildSuperClassesStorages(Logger);
@@ -115,6 +117,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
         /// <inheritdoc/>
         public StrongIdentifierValue Name { get; private set; }
+
+        public TypeInfo TypeInfo { get; private set; }
 
         /// <inheritdoc/>
         public virtual float Priority => 0f;
@@ -202,7 +206,7 @@ namespace SymOntoClay.Core.Internal.Instances
             RunActivatorsOfStates(logger);
             RunDeactivatorsOfStates(logger);
 
-            var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(logger, TypeInfo, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if(targetAddingFactTriggersList.Any())
             {
@@ -223,7 +227,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(logger, TypeInfo, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (targetLogicConditionalTriggersList.Any())
             {
@@ -372,7 +376,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunPreConstructors(IMonitorLogger logger)
         {
-            var preConstructors = _constructorsResolver.ResolvePreConstructors(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var preConstructors = _constructorsResolver.ResolvePreConstructors(logger, TypeInfo, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (preConstructors.Any())
             {
@@ -410,7 +414,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunConstructors(IMonitorLogger logger)
         {
-            var constructorsList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var constructorsList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(logger, TypeInfo, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (constructorsList.Any())
             {
@@ -428,7 +432,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                     localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
-                    localCodeExecutionContext.Holder = Name;
+                    localCodeExecutionContext.Holder = TypeInfo;
                     localCodeExecutionContext.Owner = targetHolder;
                     localCodeExecutionContext.OwnerStorage = targetStorage;
 
@@ -449,20 +453,20 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
         {
-            RunLifecycleTriggers(logger, kindOfSystemEvent, Name);
+            RunLifecycleTriggers(logger, kindOfSystemEvent, TypeInfo);
         }
 
         protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
-            RunLifecycleTriggers(logger, kindOfSystemEvent, Name, executionCoordinator, normalOrder);
+            RunLifecycleTriggers(logger, kindOfSystemEvent, TypeInfo, executionCoordinator, normalOrder);
         }
 
-        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder)
+        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, TypeInfo holder)
         {
             RunLifecycleTriggers(logger, kindOfSystemEvent, holder, _executionCoordinator);
         }
 
-        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder,
+        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, TypeInfo holder,
             IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
 #if DEBUG

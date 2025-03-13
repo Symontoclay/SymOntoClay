@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class TriggerConditionNodeObserverContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public TriggerConditionNodeObserverContext(IEngineContext engineContext, IStorage storage, StrongIdentifierValue holder)
+        public TriggerConditionNodeObserverContext(IEngineContext engineContext, IStorage storage, TypeInfo holder)
         {
             EngineContext = engineContext;
             Storage = storage;
@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         public IEngineContext EngineContext { get; private set; }
         public IStorage Storage { get; private set; }
-        public StrongIdentifierValue Holder { get; private set; }
+        public TypeInfo Holder { get; private set; }
 
         public bool IsOn { get; set; }
 

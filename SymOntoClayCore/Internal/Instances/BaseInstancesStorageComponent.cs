@@ -129,7 +129,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (instance.Holder == null)
             {
-                instance.Holder = _commonNamesStorage.DefaultHolder;
+                instance.Holder = _commonNamesStorage.DefaultHolderType;
             }            
 
             var inheritanceItem = new InheritanceItem()
@@ -137,8 +137,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 IsSystemDefined = false
             };
 
-            inheritanceItem.SubType = instance.Name;
-            inheritanceItem.SuperType = superCodeItem.Name;
+            inheritanceItem.SubType = instance.TypeInfo;
+            inheritanceItem.SuperType = superCodeItem.TypeInfo;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             instance.InheritanceItems.Add(inheritanceItem);

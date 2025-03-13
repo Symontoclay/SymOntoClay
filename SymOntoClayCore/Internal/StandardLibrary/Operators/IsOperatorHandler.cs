@@ -152,7 +152,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             var superName = _strongIdentifierLinearResolver.Resolve(logger, rightOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-            return new CallResult(_inheritanceResolver.GetInheritanceRank(logger, subName, superName, localCodeExecutionContext, ResolverOptions.GetDefaultOptions()));
+            return new CallResult(_inheritanceResolver.GetInheritanceRank(logger, subName.ToTypeInfo(), superName.ToTypeInfo(), localCodeExecutionContext, ResolverOptions.GetDefaultOptions()));
         }
     }
 }

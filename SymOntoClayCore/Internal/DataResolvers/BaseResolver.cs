@@ -48,9 +48,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
         }
 
-        public Dictionary<StrongIdentifierValue, IStorage> GetSuperClassStoragesDict(IMonitorLogger logger, IStorage storage, IInstance instance)
+        public Dictionary<TypeInfo, IStorage> GetSuperClassStoragesDict(IMonitorLogger logger, IStorage storage, IInstance instance)
         {
-            return GetStoragesList(logger, storage, KindOfStoragesList.CodeItems).Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass && p.Instance == instance).ToDictionary(p => p.TargetClassName, p => p);
+            return GetStoragesList(logger, storage, KindOfStoragesList.CodeItems).Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass && p.Instance == instance).ToDictionary(p => p.TargetTypeInfo, p => p);
         }
 
         public List<StorageUsingOptions> GetStoragesList(IMonitorLogger logger, IStorage storage, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
@@ -196,7 +196,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterCodeItems<T>(logger, source, localCodeExecutionContext.Holder, localCodeExecutionContext);
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, TypeInfo holder, ILocalCodeExecutionContext localCodeExecutionContext)
             where T : IFilteredCodeItem
         {
             if (!source.Any())
@@ -292,7 +292,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private bool IsFitByTypeOfAccess(IMonitorLogger logger, IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
+        private bool IsFitByTypeOfAccess(IMonitorLogger logger, IReadOnlyMemberAccess item, TypeInfo holder, InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
         {
             var typeOfAccess = item.TypeOfAccess;
 

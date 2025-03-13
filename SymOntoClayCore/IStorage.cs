@@ -35,8 +35,8 @@ namespace SymOntoClay.Core
     public interface IStorage : ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         KindOfStorage Kind { get; }
-        StrongIdentifierValue TargetClassName { get; }
-        StrongIdentifierValue InstanceName { get; }
+        TypeInfo TargetTypeInfo { get; }
+        TypeInfo InstanceTypeInfo { get; }
         IInstance Instance { get; }
 
         bool IsIsolated { get; }

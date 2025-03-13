@@ -21,6 +21,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public static TypeInfo StrongIdentifierTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.StrongIdentifierTypeName));
         public static TypeInfo WaypointTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.WaypointTypeName));
         public static TypeInfo ConditionalEntityTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName));
+        public static TypeInfo FactTypeTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.FactTypeName));
 
         public TypeInfo()
         {
@@ -62,6 +63,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private readonly bool _isEmpty = true;
 
         public bool IsEmpty => _isEmpty || (Name?.IsEmpty ?? true);
+
+        public KindOfName KindOfName => Name?.KindOfName ?? KindOfName.Unknown;
 
         /// <inheritdoc/>
         public override object GetSystemValue()

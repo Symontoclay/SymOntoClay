@@ -1844,7 +1844,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance = true;
 
-            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(Logger, _currentCodeFrame.LocalContext.Owner, _currentCodeFrame.LocalContext, optionsForInheritanceResolver);
+            var superClassesList = _inheritanceResolver.GetSuperClassesTypeInfoList(Logger, _currentCodeFrame.LocalContext.Owner, _currentCodeFrame.LocalContext, optionsForInheritanceResolver);
 
             if(!superClassesList.Any())
             {

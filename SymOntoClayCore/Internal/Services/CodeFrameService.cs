@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.Services
                 {
                     localCodeExecutionContext.Owner = functionHolder;
 
-                    localCodeExecutionContext.OwnerStorage = storagesList.SingleOrDefault(p => p.Kind == KindOfStorage.SuperClass && p.TargetClassName == functionHolder);
+                    localCodeExecutionContext.OwnerStorage = storagesList.SingleOrDefault(p => p.Kind == KindOfStorage.SuperClass && p.TargetTypeInfo == functionHolder);
                 }
 
                 var codeFrameArguments = codeFrame.Arguments;

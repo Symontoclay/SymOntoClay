@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         KindOfInstance KindOfInstance { get; }
         StrongIdentifierValue Name { get; }
+        TypeInfo TypeInfo { get; }
         float Priority { get; }
         CodeItem CodeItem { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }

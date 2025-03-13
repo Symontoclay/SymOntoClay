@@ -44,10 +44,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             base.Init();
 
-            _anyTypeName = _context.CommonNamesStorage.AnyTypeName;
+            _anyType = _context.CommonNamesStorage.AnyType;
         }
 
-        private StrongIdentifierValue _anyTypeName;
+        private TypeInfo _anyType;
 
         public void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            if (typesList.All(p => p == _anyTypeName))
+            if (typesList.All(p => p == _anyType))
             {
                 return;
             }
@@ -179,7 +179,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return NResolve(logger, varName, localCodeExecutionContext.Holder, localCodeExecutionContext.Storage, false, localCodeExecutionContext, options);
         }
 
-        private VarInstance NResolve(IMonitorLogger logger, StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private VarInstance NResolve(IMonitorLogger logger, StrongIdentifierValue varName, TypeInfo holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.Var);
 

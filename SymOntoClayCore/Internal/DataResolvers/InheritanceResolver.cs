@@ -106,9 +106,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetWeightedInheritanceItems(logger, subName.ToTypeInfo(), localCodeExecutionContext, options).Select(p => p.SuperType.Name).Where(p => !p.IsEmpty).Distinct().ToList();
         }
 
+        public List<TypeInfo> GetSuperClassesTypeInfoList(IMonitorLogger logger, TypeInfo subType, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetSuperClassesTypeInfoList(logger, subType, localCodeExecutionContext, DefaultOptions);
+        }
+
+        public List<TypeInfo> GetSuperClassesTypeInfoList(IMonitorLogger logger, TypeInfo subType, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            return GetWeightedInheritanceItems(logger, subType, localCodeExecutionContext, options).Select(p => p.SuperType).Where(p => !p.IsEmpty).Distinct().ToList();
+        }
+
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            return GetWeightedInheritanceItems(logger, localCodeExecutionContext.Holder.ToTypeInfo(), localCodeExecutionContext, options);
+            return GetWeightedInheritanceItems(logger, localCodeExecutionContext.Holder, localCodeExecutionContext, options);
         }
         
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, TypeInfo subType, ILocalCodeExecutionContext localCodeExecutionContext)

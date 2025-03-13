@@ -60,6 +60,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
             TargetLogicalVarName = NameHelper.CreateName(StandardNamesConstants.TargetLogicalVarName);
 
             SelfName = _context.SelfName;
+            SelfTypeInfo = SelfName.ToTypeInfo();
 
             DefaultCtorName = NameHelper.CreateName(StandardNamesConstants.DefaultCtorName);
 
@@ -111,6 +112,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue SelfName { get; private set; }
+
+        /// <inheritdoc/>
+        public TypeInfo SelfTypeInfo { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue DefaultCtorName { get; private set; }

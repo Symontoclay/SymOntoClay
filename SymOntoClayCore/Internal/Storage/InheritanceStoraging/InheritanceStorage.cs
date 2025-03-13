@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -153,6 +154,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
             }
         }
 
+        [Obsolete("Move this to Standard fact builder!")]
         private RuleInstance CreateInheritanceFact(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
             var factName = NameHelper.CreateRuleOrFactName();
@@ -176,12 +178,12 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
             var subItemNode = new LogicalQueryNode();
             isRelation.ParamsList.Add(subItemNode);
             subItemNode.Kind = KindOfLogicalQueryNode.Concept;
-            subItemNode.Name = inheritanceItem.SubType;
+            subItemNode.Name = inheritanceItem.SubType.Name;
 
             var superItemNode = new LogicalQueryNode();
             isRelation.ParamsList.Add(superItemNode);
             superItemNode.Kind = KindOfLogicalQueryNode.Concept;
-            superItemNode.Name = inheritanceItem.SuperType;
+            superItemNode.Name = inheritanceItem.SuperType.Name;
 
             var rankNode = new LogicalQueryNode();
             isRelation.ParamsList.Add(rankNode);

@@ -274,8 +274,8 @@ namespace TestSandbox.LogicalDatabase
 
                 var inheritanceItem = new InheritanceItem();
 
-                inheritanceItem.SuperType = inheritanceRelation.Name;
-                inheritanceItem.SubType = inheritanceRelation.ParamsList.Single().Name;
+                inheritanceItem.SuperType = inheritanceRelation.Name.ToTypeInfo();
+                inheritanceItem.SubType = inheritanceRelation.ParamsList.Single().Name.ToTypeInfo();
                 inheritanceItem.Rank = new LogicalValue(1);
 
                 inheritanceItem.KeysOfPrimaryRecords.Add(ruleInstanceName);
@@ -346,7 +346,7 @@ namespace TestSandbox.LogicalDatabase
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
             localCodeExecutionContext.Storage = _context.Storage.GlobalStorage;
-            localCodeExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolder;
+            localCodeExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo;
 
 
             var searchResult = searcher.Run(_logger, searchOptions);

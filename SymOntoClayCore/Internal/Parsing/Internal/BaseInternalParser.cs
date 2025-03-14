@@ -199,7 +199,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
-        protected List<StrongIdentifierValue> ParseTypesOfParameterOrVar()
+        protected List<TypeInfo> ParseTypesOfParameterOrVar()
         {
             switch (_currToken.TokenKind)
             {
@@ -221,7 +221,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         _context.Recovery(nextToken);
 
-                        return new List<StrongIdentifierValue>() { ParseName(_currToken.Content) };
+                        return new List<TypeInfo>() { ParseName(_currToken.Content).ToTypeInfo() };
                     }
 
                 case TokenKind.OpenRoundBracket:
@@ -519,7 +519,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
             
             return result;
@@ -534,7 +534,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
 
             return result;
@@ -588,7 +588,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
 
             return result;
@@ -612,7 +612,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
 
             return result;
@@ -637,7 +637,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
 
             return result;
@@ -662,7 +662,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
 
             return result;
@@ -687,7 +687,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
 
             return result;
@@ -704,7 +704,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (result.ParentCodeEntity != null)
             {
-                result.Holder = result.ParentCodeEntity.Name;
+                result.Holder = result.ParentCodeEntity.TypeInfo;
             }
 
             return result;

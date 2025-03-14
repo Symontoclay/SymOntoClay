@@ -2520,7 +2520,7 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SymOntoClay#Core#INavTarget#HorizontalAngle">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SymOntoClay#Core#INavTarget#AbcoluteCoordinates">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SymOntoClay#Core#INavTarget#AbsoluteCoordinates">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SymOntoClay#Core#INavTarget#Entity">
@@ -3924,7 +3924,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.SuperName">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.SuperType">
             <summary>
             Represents ancestor.
             </summary>
@@ -5663,10 +5663,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#TargetClassName">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#TargetTypeInfo">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#InstanceName">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#InstanceTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#Instance">
@@ -6224,6 +6224,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.ToSystemString">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.Equals(SymOntoClay.Core.Internal.CodeModel.TypeInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
@@ -6232,6 +6238,16 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TypeInfo.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -6473,19 +6489,37 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.WorldName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.WorldTypeInfo">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AppName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AppTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ClassName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ClassTypeInfo">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ActionName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ActionTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.StateName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.StateTypeInfo">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DefaultHolder">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DefaultHolderTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.SelfSystemVarName">
@@ -6501,6 +6535,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.SelfName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.SelfTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DefaultCtorName">
@@ -6519,6 +6556,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AnyTypeName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AnyTypeInfo">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
@@ -7061,25 +7101,25 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MetadataResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetInheritanceRank(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetInheritanceRank(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TypeInfo,SymOntoClay.Core.Internal.CodeModel.TypeInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetRawInheritanceRank(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetRawInheritanceRank(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TypeInfo,SymOntoClay.Core.Internal.CodeModel.TypeInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetSuperClassesKeysList(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetWeightedInheritanceItems(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetWeightedInheritanceItems(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TypeInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.IsFit(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.IsFit(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.TypeInfo},SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.TypeInfo},SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TypeInfo,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedLogicalValueModalityResolver.IsHigh(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
@@ -7827,6 +7867,9 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.Name">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.TypeInfo">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.Priority">
             <inheritdoc/>
         </member>
@@ -8530,6 +8573,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.SelfName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.MainStorageContext.SelfTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.AppFile">
@@ -9733,10 +9779,10 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.TargetClassName">
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.TargetTypeInfo">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.InstanceName">
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.InstanceTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.Instance">
@@ -9973,7 +10019,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.GetIdleActionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TypeInfo,SymOntoClay.Core.Internal.CodeModel.TypeInfo)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.Kind">
@@ -9982,7 +10028,7 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.Storage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.GetItemsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.GetItemsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TypeInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.RemoveInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
@@ -10006,7 +10052,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.RemoveInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.GetItemsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.GetItemsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TypeInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.OnDisposed">
@@ -10372,10 +10418,10 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.TargetClassName">
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.TargetTypeInfo">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.InstanceName">
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.InstanceTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.Instance">
@@ -10654,10 +10700,10 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponentSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.TargetClassName">
+        <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.TargetTypeInfo">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.InstanceName">
+        <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.InstanceTypeInfo">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.Instance">

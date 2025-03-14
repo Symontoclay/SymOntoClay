@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                             _currentItem.Rank = new LogicalValue(1.0F);
                             
-                            _currentItem.SuperType = ParseName(_currToken.Content);
+                            _currentItem.SuperType = ParseName(_currToken.Content).ToTypeInfo();
                             _state = State.GotSuperName;
                             break;
 
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     default:
                                         _context.Recovery(nextToken);
 
-                                        _currentItem.Rank = ParseName(_currToken.Content);
+                                        _currentItem.Rank = ParseName(_currToken.Content).ToTypeInfo();
 
                                         _state = State.GotRankValue;
                                         break;
@@ -225,7 +225,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Identifier:
                             TryCreateCurrentItem();
 
-                            _currentItem.SuperType = ParseName(_currToken.Content);
+                            _currentItem.SuperType = ParseName(_currToken.Content).ToTypeInfo();
                             _state = State.GotSuperName;
                             break;
 
@@ -245,7 +245,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 _currentItem = CreateInheritanceItem();
                 Result.Add(_currentItem);
-                _currentItem.SubType = _subName;
+                _currentItem.SubType = _subName.ToTypeInfo();
             }
         }
     }

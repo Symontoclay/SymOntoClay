@@ -174,7 +174,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            throw new NotImplementedException("E9B51957-4882-452C-AC12-670CBE37B3F0");
+            Name?.CheckDirty();
+
+            return base.CalculateLongHashCode(options) ^ (Name?.GetLongHashCode() ?? 0) ^ (Capacity.HasValue ? (ulong)Capacity.Value : 0);
         }
 
         /// <inheritdoc/>

@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
 
-        public List<StrongIdentifierValue> Result { get; set; } = new List<StrongIdentifierValue>();
+        public List<TypeInfo> Result { get; set; } = new List<TypeInfo>();
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Identifier:
                         case TokenKind.Word:
                             {
-                                Result.Add(ParseName(_currToken.Content));
+                                Result.Add(ParseName(_currToken.Content).ToTypeInfo());
 
                                 _state = State.GotTypeIdentifier;
                             }

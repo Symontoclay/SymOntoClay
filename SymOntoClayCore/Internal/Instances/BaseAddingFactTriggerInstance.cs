@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var localCodeExecutionContext = new LocalCodeExecutionContext(_parentCodeExecutionContext);
             localCodeExecutionContext.Storage = _storage;
 
-            localCodeExecutionContext.Holder = _parent.Name;
+            localCodeExecutionContext.Holder = _parent.TypeInfo;
 
             var mutablePart = new MutablePartOfRuleInstance();
             mutablePart.Parent = ruleInstance;

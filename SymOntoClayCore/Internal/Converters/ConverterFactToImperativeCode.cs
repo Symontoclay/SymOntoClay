@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Converters
         {
             _context = context;
 
-            _actName = NameHelper.CreateName("act");
+            _actTypeInfo = NameHelper.CreateName("act").ToTypeInfo();
         }
 
         /// <inheritdoc/>
@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private readonly IMainStorageContext _context;
         private ICompiler _compiler;
         private RelationsResolver _relationsResolver;
-        private readonly StrongIdentifierValue _actName;
+        private readonly TypeInfo _actTypeInfo;
 
         public CompiledFunctionBody Convert(IMonitorLogger logger, RuleInstance ruleInstance, ILocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -251,7 +251,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
                         var relationInfo = _relationsResolver.GetRelation(logger, node.Name, paramsCount, localCodeExecutionContext);
 
-                        var isAct = relationInfo.InheritanceItems.Any(p => p.SuperType == _actName);
+                        var isAct = relationInfo.InheritanceItems.Any(p => p.SuperType == _actTypeInfo);
 
                         if(isAct)
                         {
@@ -317,7 +317,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     continue;
                 }
 
-                var isAct = relationInfo.InheritanceItems.Any(p => p.SuperType == _actName);
+                var isAct = relationInfo.InheritanceItems.Any(p => p.SuperType == _actTypeInfo);
 
                 if(isAct)
                 {

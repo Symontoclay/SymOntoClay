@@ -257,7 +257,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var allStateNamesList = _context.Storage.GlobalStorage.StatesStorage.AllStateNames(logger);
 
-                if (allStateNamesList.Any(p => p == holder))
+                if (allStateNamesList.Any(p => p == holder.Name))
                 {
                     additionalHolder = _context.InstancesStorage.MainEntity?.TypeInfo;
 

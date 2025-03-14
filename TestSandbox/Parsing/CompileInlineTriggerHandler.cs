@@ -96,7 +96,7 @@ namespace TestSandbox.Parsing
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = globalStorage;
 
-            var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(_logger, KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(_logger, KindOfSystemEventOfInlineTrigger.Enter, mainEntity.TypeInfo, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             _logger.Info("D30E0ACA-3D8B-4352-B278-A5443311D169", $"targetTriggersList = {targetTriggersList.WriteListToString()}");

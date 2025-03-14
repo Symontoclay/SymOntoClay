@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var globalExecutionContext = new LocalCodeExecutionContext();
             globalExecutionContext.Storage = _context.Storage.GlobalStorage;
-            globalExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolder;
+            globalExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolderTypeInfo;
 
             _globalExecutionContext = globalExecutionContext;
         }

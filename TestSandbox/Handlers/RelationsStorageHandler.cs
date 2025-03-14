@@ -84,8 +84,8 @@ namespace TestSandbox.Handlers
 
             var inheritanceItem = new InheritanceItem();
             relation.InheritanceItems.Add(inheritanceItem);
-            inheritanceItem.SubType = relation.Name;
-            inheritanceItem.SuperType = NameHelper.CreateName("state");
+            inheritanceItem.SubType = relation.Name.ToTypeInfo();
+            inheritanceItem.SuperType = NameHelper.CreateName("state").ToTypeInfo();
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
             _logger.Info("15521A77-F18C-463D-B109-D5739BC6B8F8", $"relation = {relation.ToHumanizedString()}");
@@ -114,8 +114,8 @@ namespace TestSandbox.Handlers
 
             var inheritanceItem = new InheritanceItem();
             relation.InheritanceItems.Add(inheritanceItem);
-            inheritanceItem.SubType = relation.Name;
-            inheritanceItem.SuperType = NameHelper.CreateName("state");
+            inheritanceItem.SubType = relation.Name.ToTypeInfo();
+            inheritanceItem.SuperType = NameHelper.CreateName("state").ToTypeInfo();
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
             _logger.Info("93FBC5A3-E139-4A18-9F56-1916556ECDCC", $"relation = {relation.ToHumanizedString()}");

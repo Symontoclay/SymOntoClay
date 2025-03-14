@@ -1811,7 +1811,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (constructorName == _defaultCtorName)
             {
-                constructorName = _currentCodeFrame.LocalContext.Owner;
+                constructorName = _currentCodeFrame.LocalContext.Owner.Name;
             }
 
             IExecutable constructor = null;
@@ -1819,15 +1819,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName.ToTypeInfo(), _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName.ToTypeInfo(), namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName.ToTypeInfo(), positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 default:
@@ -1852,7 +1852,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            var targetSuperClassesList = superClassesList.Except(_currentCodeFrame.CalledCtorsList);
+            var targetSuperClassesList = superClassesList.Where(p => !_currentCodeFrame.CalledCtorsList.Contains(p.Name));
 
             if (!targetSuperClassesList.Any())
             {

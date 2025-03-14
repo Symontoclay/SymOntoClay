@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Services
 
             var globalExecutionContext = new LocalCodeExecutionContext();
             globalExecutionContext.Storage = _context.Storage.GlobalStorage;
-            globalExecutionContext.Holder = commonNamesStorage.DefaultHolder;
+            globalExecutionContext.Holder = commonNamesStorage.DefaultHolderTypeInfo;
 
             _globalExecutionContext = globalExecutionContext;
 

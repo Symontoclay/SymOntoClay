@@ -53,8 +53,8 @@ namespace TestSandbox.CodeExecution
                 IsSystemDefined = true
             };
 
-            applicationInheritanceItem.SubType = NameHelper.CreateName("PeaseKeeper");
-            applicationInheritanceItem.SuperType = context.CommonNamesStorage.AppName;
+            applicationInheritanceItem.SubType = NameHelper.CreateName("PeaseKeeper").ToTypeInfo();
+            applicationInheritanceItem.SuperType = context.CommonNamesStorage.AppTypeInfo;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
             context.Storage.GlobalStorage.InheritanceStorage.SetInheritance(_logger, applicationInheritanceItem);
@@ -108,7 +108,7 @@ namespace TestSandbox.CodeExecution
 
             var codeFrameLocalContext = new LocalCodeExecutionContext();
             codeFrameLocalContext.Storage = context.Storage.GlobalStorage;
-            codeFrameLocalContext.Holder = NameHelper.CreateName("PixKeeper");
+            codeFrameLocalContext.Holder = NameHelper.CreateName("PixKeeper").ToTypeInfo();
 
             codeFrame.LocalContext = codeFrameLocalContext;
 

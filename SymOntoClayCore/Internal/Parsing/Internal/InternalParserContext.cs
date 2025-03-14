@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             if(CurrentDefaultSettings != null)
             {
-                CurrentDefaultSettings.Holder = name;
+                CurrentDefaultSettings.Holder = name.ToTypeInfo();
             }            
         }
 

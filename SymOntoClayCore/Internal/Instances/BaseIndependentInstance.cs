@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
 
-            localCodeExecutionContext.Holder = Name;
+            localCodeExecutionContext.Holder = TypeInfo;
 
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = idleActionItem.GetCompiledFunctionBody(logger, _context, localCodeExecutionContext);

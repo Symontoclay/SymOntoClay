@@ -320,14 +320,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                             switch(paramsCount)
                             {
                                 case 2:
-                                    inheritanceItem.SuperType = inheritanceRelation.ParamsList[1].Name;
-                                    inheritanceItem.SubType = inheritanceRelation.ParamsList[0].Name;
+                                    inheritanceItem.SuperType = inheritanceRelation.ParamsList[1].Name.ToTypeInfo();
+                                    inheritanceItem.SubType = inheritanceRelation.ParamsList[0].Name.ToTypeInfo();
                                     inheritanceItem.Rank = new LogicalValue(1);
                                     break;
 
                                 case 3:
-                                    inheritanceItem.SuperType = inheritanceRelation.ParamsList[1].Name;
-                                    inheritanceItem.SubType = inheritanceRelation.ParamsList[0].Name;
+                                    inheritanceItem.SuperType = inheritanceRelation.ParamsList[1].Name.ToTypeInfo();
+                                    inheritanceItem.SubType = inheritanceRelation.ParamsList[0].Name.ToTypeInfo();
                                     var thirdParameter = inheritanceRelation.ParamsList[2];
                                     var kindOfThirdParameter = thirdParameter.Kind;
                                     switch (kindOfThirdParameter)
@@ -355,8 +355,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         }
                         else
                         {
-                            inheritanceItem.SuperType = inheritanceRelation.Name;
-                            inheritanceItem.SubType = inheritanceRelation.ParamsList.Single().Name;
+                            inheritanceItem.SuperType = inheritanceRelation.Name.ToTypeInfo();
+                            inheritanceItem.SubType = inheritanceRelation.ParamsList.Single().Name.ToTypeInfo();
                             inheritanceItem.Rank = new LogicalValue(1);
                         }
                         

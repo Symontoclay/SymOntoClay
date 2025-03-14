@@ -152,7 +152,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private IInstance _parentInstance;
         private readonly object _childInstancesLockObj = new object();
       
-        private readonly Dictionary<StrongIdentifierValue, IStorage> _superClassesStorages = new Dictionary<StrongIdentifierValue, IStorage>();
+        private readonly Dictionary<TypeInfo, IStorage> _superClassesStorages = new Dictionary<TypeInfo, IStorage>();
         private readonly object _superClassesStoragesLockObj = new object();
 
         /// <inheritdoc/>
@@ -248,7 +248,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void RebuildSuperClassesStorages(IMonitorLogger logger)
         {
-            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(logger, Name, _localCodeExecutionContext);
+            var superClassesList = _inheritanceResolver.GetSuperClassesTypeInfoList(logger, TypeInfo, _localCodeExecutionContext);
 
             lock(_superClassesStoragesLockObj)
             {
@@ -262,7 +262,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if(keysForAdding.Any())
                     {
-
                         foreach (var key in keysForAdding)
                         {
                             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _parentStorage);

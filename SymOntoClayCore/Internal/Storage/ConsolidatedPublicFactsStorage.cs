@@ -106,10 +106,10 @@ namespace SymOntoClay.Core.Internal.Storage
         public KindOfStorage Kind => _kind;
 
         /// <inheritdoc/>
-        public StrongIdentifierValue TargetClassName => null;
+        public TypeInfo TargetTypeInfo => null;
 
         /// <inheritdoc/>
-        public StrongIdentifierValue InstanceName => null;
+        public TypeInfo InstanceTypeInfo => null;
 
         /// <inheritdoc/>
         public IInstance Instance => null;

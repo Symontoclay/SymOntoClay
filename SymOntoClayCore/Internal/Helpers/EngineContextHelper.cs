@@ -156,6 +156,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.Id = settings.Id;
             context.SelfName = NameHelper.CreateName(settings.Id);
+            context.SelfTypeInfo = context.SelfName.ToTypeInfo();
             context.AppFile = settings.AppFile;
 
             context.LogicQueryParseAndCache = settings.LogicQueryParseAndCache;

@@ -34,23 +34,23 @@ namespace SymOntoClay.Core.Internal.Storage
             : base(context.Logger)
         {
             _settings = settings;
-            _selfName = context.SelfName;
+            _selfTypeInfo = context.SelfTypeInfo;
 
-            var storageSettigs = new RealStorageSettings()
+            var storageSettings = new RealStorageSettings()
             {
                 MainStorageContext = context
             };
 
-            storageSettigs.Enabled = settings.EnableCategories;
-            storageSettigs.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
+            storageSettings.Enabled = settings.EnableCategories;
+            storageSettings.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
 
-            _storage = new RealStorage(KindOfStorage.Categories, storageSettigs);
+            _storage = new RealStorage(KindOfStorage.Categories, storageSettings);
             _inheritanceStorage = _storage.InheritanceStorage;
         }
 
         private readonly CategoriesStorageSettings _settings;
         private readonly object _lockObj = new object();
-        private readonly StrongIdentifierValue _selfName;
+        private readonly TypeInfo _selfTypeInfo;
         private readonly RealStorage _storage;
         private readonly IInheritanceStorage _inheritanceStorage;
         private readonly List<string> _categoriesList = new List<string>();
@@ -119,8 +119,8 @@ namespace SymOntoClay.Core.Internal.Storage
                 IsSystemDefined = false
             };
 
-            inheritanceItem.SubType = _selfName;
-            inheritanceItem.SuperType = categoryName;
+            inheritanceItem.SubType = _selfTypeInfo;
+            inheritanceItem.SuperType = categoryName.ToTypeInfo();
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             _categoriesDict.Add(categoryName, inheritanceItem);

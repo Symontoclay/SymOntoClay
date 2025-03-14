@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal
     {
         public IList<Value> WhereSection { get; set; }
 
-        public StrongIdentifierValue Holder { get; set; }
+        public TypeInfo Holder { get; set; }
 
         public TypeOfAccess TypeOfAccess { get; set; } = CodeItem.DefaultTypeOfAccess;
 

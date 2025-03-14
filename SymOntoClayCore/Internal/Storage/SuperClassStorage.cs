@@ -26,23 +26,23 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class SuperClassStorage : RealStorage
     {
-        public SuperClassStorage(RealStorageSettings settings, StrongIdentifierValue targetClassName, IInstance instance)
+        public SuperClassStorage(RealStorageSettings settings, TypeInfo targetClassTypeInfo, IInstance instance)
             : base(KindOfStorage.SuperClass, settings)
         {
-            _targetClassName = targetClassName;
+            _targetClassTypeInfo = targetClassTypeInfo;
             _instance = instance;
-            _instanceName= instance.Name;
+            _instanceTypeInfo= instance.TypeInfo;
         }
 
-        private readonly StrongIdentifierValue _targetClassName;
-        private readonly StrongIdentifierValue _instanceName;
+        private readonly TypeInfo _targetClassTypeInfo;
+        private readonly TypeInfo _instanceTypeInfo;
         private readonly IInstance _instance;
 
         /// <inheritdoc/>
-        public override StrongIdentifierValue TargetClassName => _targetClassName;
+        public override TypeInfo TargetTypeInfo => _targetClassTypeInfo;
 
         /// <inheritdoc/>
-        public override StrongIdentifierValue InstanceName => _instanceName;
+        public override TypeInfo InstanceTypeInfo => _instanceTypeInfo;
 
         /// <inheritdoc/>
         public override IInstance Instance => _instance;

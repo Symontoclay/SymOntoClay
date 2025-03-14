@@ -446,7 +446,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 ReplaceConcepts = new Dictionary<StrongIdentifierValue, StrongIdentifierValue>()
             };
 
-            checkDirtyOptions.ReplaceConcepts[NameHelper.CreateName("I")] = NameHelper.CreateName(_context.Id);
+            checkDirtyOptions.ReplaceConcepts[NameHelper.CreateName("I")] = _context.SelfName;
 
             fact.CalculateLongHashCodes(checkDirtyOptions);
 

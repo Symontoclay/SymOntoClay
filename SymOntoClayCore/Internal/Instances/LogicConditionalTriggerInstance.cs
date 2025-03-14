@@ -70,11 +70,11 @@ namespace SymOntoClay.Core.Internal.Instances
             _storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = _storage;
 
-            localCodeExecutionContext.Holder = parent.Name;
+            localCodeExecutionContext.Holder = parent.TypeInfo;
 
             _localCodeExecutionContext = localCodeExecutionContext;
 
-            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
+            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.TypeInfo);
 
             _ruleInstancesList = _trigger.RuleInstancesList;
 
@@ -583,7 +583,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
-            localCodeExecutionContext.Holder = _parent.Name;
+            localCodeExecutionContext.Holder = _parent.TypeInfo;
 
             RunSetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
         }
@@ -603,7 +603,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;
-                localCodeExecutionContext.Holder = _parent.Name;
+                localCodeExecutionContext.Holder = _parent.TypeInfo;
 
                 var varStorage = storage.VarStorage;
 
@@ -634,7 +634,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
-            localCodeExecutionContext.Holder = _parent.Name;
+            localCodeExecutionContext.Holder = _parent.TypeInfo;
 
             RunResetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
         }
@@ -654,7 +654,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;
-                localCodeExecutionContext.Holder = _parent.Name;
+                localCodeExecutionContext.Holder = _parent.TypeInfo;
 
                 var varStorage = storage.VarStorage;
 

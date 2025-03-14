@@ -51,10 +51,11 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly ResolverOptions _resolverOptions;
         private IStandardCoreFactsBuilder _standardCoreFactsBuilder;
-        private List<StrongIdentifierValue> _foundInheritanceKeysList = new List<StrongIdentifierValue>();
+        private List<TypeInfo> _foundInheritanceKeysList = new List<TypeInfo>();
         private ILocalCodeExecutionContext _localCodeExecutionContext;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
 
+        private TypeInfo _appTypeInfo;
         private TypeInfo _selfTypeInfo;
         private string _selfNameForFacts;
         private Dictionary<string, string> _factsIdDict = new Dictionary<string, string>();
@@ -67,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Storage
             {
 #if DEBUG
 
-                if (subType.NameValue == "app")
+                if (subType == _appTypeInfo)
                 {
                     throw new NotImplementedException("75EDA0A0-AB44-4B4C-9CAC-428FBFFCDEA0");
                 }
@@ -101,8 +102,9 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 var commonNamesStorage = _context.CommonNamesStorage;
 
-                _selfTypeInfo = commonNamesStorage.SelfName;
+                _selfTypeInfo = commonNamesStorage.SelfTypeInfo;
                 _selfNameForFacts = NameHelper.ShieldString(_selfTypeInfo.Name.NameValue);
+                _appTypeInfo = commonNamesStorage.AppTypeInfo;
 
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
 
@@ -131,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 foreach(var id in newIdsList)
                 {
-                    var name = id.NameValue;
+                    var name = id.Name.NameValue;
 
                     var initialAddedInheritanceItem = inheritanceItemsDict[id];
 
@@ -159,7 +161,7 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 foreach(var id in oldIdList)
                 {
-                    var name = id.NameValue;
+                    var name = id.Name.NameValue;
 
                     _publicFactsStorage.RemoveById(logger, _factsIdDict[name]);
                     _factsIdDict.Remove(name);

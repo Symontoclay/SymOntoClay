@@ -49,6 +49,9 @@ namespace SymOntoClay.Core.Internal
         public StrongIdentifierValue SelfName { get; set; }
 
         /// <inheritdoc/>
+        public TypeInfo SelfTypeInfo { get; set; }
+
+        /// <inheritdoc/>
         public string AppFile { get; set; }
 
         public ActiveObjectContext ActiveObjectContext { get; set; }

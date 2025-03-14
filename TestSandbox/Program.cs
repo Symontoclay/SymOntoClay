@@ -565,7 +565,7 @@ namespace TestSandbox
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = engineContext.Storage.GlobalStorage;
-            localCodeExecutionContext.Holder = NameHelper.CreateName(engineContext.Id);
+            localCodeExecutionContext.Holder = engineContext.SelfTypeInfo;
 
             var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(_logger, fact, localCodeExecutionContext);
 

@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal
         /// </summary>
         string Id { get; }
         StrongIdentifierValue SelfName { get; }
+        TypeInfo SelfTypeInfo { get; }
 
         /// <summary>
         /// Gets or sets app file.

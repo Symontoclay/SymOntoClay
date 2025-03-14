@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal
         {
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = Storage.GlobalStorage;
-            localCodeExecutionContext.Holder = NameHelper.CreateName(Id);
+            localCodeExecutionContext.Holder = SelfTypeInfo;
 
             return GetNLPConverterContext(localCodeExecutionContext);
         }

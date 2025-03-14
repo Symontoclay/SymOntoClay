@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 var localCodeExecutionContext = new LocalCodeExecutionContext();
                 localCodeExecutionContext.Storage = mainStorageContext.Storage.GlobalStorage;
-                localCodeExecutionContext.Holder = NameHelper.CreateName(mainStorageContext.Id);
+                localCodeExecutionContext.Holder = mainStorageContext.SelfTypeInfo;
 
                 _localCodeExecutionContext = localCodeExecutionContext;
             }

@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public AddingFactConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(trigger, parent, context, parentStorage, parentCodeExecutionContext, true)
         {
-            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
+            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.TypeInfo);
 
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition, trigger.SetBindingVariables, parentCodeExecutionContext);
         }

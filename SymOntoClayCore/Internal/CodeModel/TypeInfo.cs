@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return false;
             }
 
-            if(!Name.Equals(other.Name))
+            if(!Name?.Equals(other.Name) ?? false)
             {
                 return false;
             }

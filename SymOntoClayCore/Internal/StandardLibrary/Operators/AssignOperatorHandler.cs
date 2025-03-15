@@ -102,8 +102,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                             }
                                             else
                                             {
-                                                property.SetValue(logger, rightOperand, localCodeExecutionContext);
-                                                return new CallResult(rightOperand);
+                                                return property.SetValue(logger, rightOperand, localCodeExecutionContext);
                                             }
                                             
                                         case CallMode.Default:
@@ -118,9 +117,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                                 switch(kindOfProperty)
                                                 {
                                                     case KindOfProperty.Auto:
-                                                        property.SetValue(logger, rightOperand, localCodeExecutionContext);
-                                                        return new CallResult(rightOperand);
-
+                                                        return property.SetValue(logger, rightOperand, localCodeExecutionContext);
+                                                        
                                                     default:
                                                         throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
                                                 }

@@ -16,6 +16,8 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Converters;
+using System.ComponentModel;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -40,6 +42,8 @@ namespace SymOntoClay.Core.Internal.Instances
             //var selfName = context.CommonNamesStorage.SelfName;
             //Info("E6A2620B-B34A-4ACB-B256-F2B9E1D0252C", $"selfName = {selfName}");
 #endif
+
+            _typeConverter = context.TypeConverter;
 
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
 
@@ -66,6 +70,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private IEngineContext _context;
         private ILogicalStorage _logicalStorage;
 
+        private ITypeConverter _typeConverter;
         private InheritanceResolver _inheritanceResolver;
 
         public KindOfProperty KindOfProperty => CodeItem.KindOfProperty;
@@ -79,20 +84,33 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private StrongIdentifierValue _anyTypeName;
 
-        public void SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            //logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
+#if DEBUG
+            logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
+#endif
 
-            if(_value == value)
+            if (_value == value)
             {
-                return;
+                return new CallResult(value);
             }
 
-            CheckFitVariableAndValue(logger, value, localCodeExecutionContext);
+            //CheckFitVariableAndValue(logger, value, localCodeExecutionContext);
 
-            _value = value;
+            var callResult = _typeConverter.CheckAndTryConvert(logger, value, CodeItem.TypesList, localCodeExecutionContext);
 
-            switch(KindOfProperty)
+            if(callResult.IsError)
+            {
+                return callResult;
+            }
+
+            _value = callResult.Value;
+
+#if DEBUG
+            logger.Info("F79031C5-A794-487B-B4C8-3B0E97127A9C", $"_value = {_value}");
+#endif
+
+            switch (KindOfProperty)
             {
                 case KindOfProperty.Auto:
                     {
@@ -120,6 +138,8 @@ namespace SymOntoClay.Core.Internal.Instances
             //throw new NotImplementedException("7D2B796B-C889-44B3-82D3-73A69884D2CD");
 
             EmitOnChangedHandlers(Name);
+
+            return new CallResult(value);
         }
 
         private RuleInstance BuildPropertyFactInstance(StrongIdentifierValue propertyName, Value propertyValue)
@@ -157,6 +177,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void CheckFitVariableAndValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
+#if DEBUG
+            Info("44498E34-9E8C-468E-9F10-B95B184480B5", $"value = {value}");
+#endif
+
             if (value.IsNullValue)
             {
                 return;

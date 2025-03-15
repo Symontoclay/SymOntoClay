@@ -25,6 +25,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public Exception SystemException { get; set; }
         public RuleInstance DslException { get; set; }
 
+        public bool IsError => KindOfResult == KindOfCallResult.WasSystemException || KindOfResult == KindOfCallResult.WasDslException;
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -53,6 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjProp(n, nameof(Executable), Executable);
             sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
             sb.PrintObjProp(n, nameof(DslException), DslException);
+            sb.AppendLine($"{spaces}{nameof(IsError)} = {IsError}");
 
             return sb.ToString();
         }
@@ -85,6 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjProp(n, nameof(Executable), Executable);
             sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
             sb.PrintShortObjProp(n, nameof(DslException), Executable);
+            sb.AppendLine($"{spaces}{nameof(IsError)} = {IsError}");
 
             return sb.ToString();
         }
@@ -117,6 +121,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(Executable), Executable);
             sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
             sb.PrintBriefObjProp(n, nameof(DslException), DslException);
+            sb.AppendLine($"{spaces}{nameof(IsError)} = {IsError}");
 
             return sb.ToString();
         }

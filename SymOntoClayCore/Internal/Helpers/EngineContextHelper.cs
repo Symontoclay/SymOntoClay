@@ -190,6 +190,10 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.ConvertersFactory = convertersFactory;
             baseContextComponents.Add(convertersFactory);
 
+            var typeConverter = new TypeConverter(context);
+            context.TypeConverter = typeConverter;
+            baseContextComponents.Add(typeConverter);
+
             context.ActiveObjectContext = new ActiveObjectContext(settings.SyncContext, context.LinkedCancellationTokenSource.Token);
             context.ModulesStorage = settings.ModulesStorage;
 

@@ -54,6 +54,7 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent CodeExecutor { get; }
 
         IDataResolversFactory DataResolversFactory { get; }
+        ITypeConverter TypeConverter { get; }
         IConvertersFactory ConvertersFactory { get; }
         ICommonNamesStorage CommonNamesStorage { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }

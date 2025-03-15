@@ -60,6 +60,7 @@ namespace SymOntoClay.Core.Internal
 
         public DataResolversFactory DataResolversFactory { get; set; }
         public ConvertersFactory ConvertersFactory { get; set; }
+        public TypeConverter TypeConverter { get; set; }
         public CommonNamesStorage CommonNamesStorage { get; set; }
         public BaseInstancesStorageComponent InstancesStorage { get; set; }
         public BaseLoaderFromSourceCode LoaderFromSourceCode { get; set; }
@@ -77,6 +78,7 @@ namespace SymOntoClay.Core.Internal
         
         IDataResolversFactory IMainStorageContext.DataResolversFactory => DataResolversFactory;
         IConvertersFactory IMainStorageContext.ConvertersFactory => ConvertersFactory;
+        ITypeConverter IMainStorageContext.TypeConverter => TypeConverter;
         ICommonNamesStorage IMainStorageContext.CommonNamesStorage => CommonNamesStorage;
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IInstancesStorageComponent IMainStorageContext.InstancesStorage => InstancesStorage;

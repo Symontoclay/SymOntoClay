@@ -1,5 +1,17 @@
 ﻿app PeaceKeeper
 {
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeAutoProp >> @>log;
+        'End' >> @>log;
+    }
+
+    prop SomeAutoProp: number = 16;
+}
+
+/*app PeaceKeeper
+{
     {: ReadOnlyProp(I, 16) :}
 
     on Enter =>
@@ -8,4 +20,4 @@
         ReadOnlyProp >> @>log;
         'End' >> @>log;
     }
-}
+}*/

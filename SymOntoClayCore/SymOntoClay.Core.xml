@@ -6659,6 +6659,9 @@
         <member name="M:SymOntoClay.Core.Internal.Converters.ConvertersFactory.GetConverterFactToImperativeCode">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckAndTryConvert(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IReadOnlyCollection{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>

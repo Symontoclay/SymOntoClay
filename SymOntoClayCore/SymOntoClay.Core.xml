@@ -6659,7 +6659,40 @@
         <member name="M:SymOntoClay.Core.Internal.Converters.ConvertersFactory.GetConverterFactToImperativeCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckAndTryConvert(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IReadOnlyCollection{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.LinkWithOtherBaseContextComponents">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckAndTryConvert(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckFitValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver.LinkWithOtherBaseContextComponents">

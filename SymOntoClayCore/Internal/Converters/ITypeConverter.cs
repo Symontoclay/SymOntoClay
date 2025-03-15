@@ -7,6 +7,7 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public interface ITypeConverter
     {
-        CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IReadOnlyCollection<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext);
+        CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext);
+        TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext);
     }
 }

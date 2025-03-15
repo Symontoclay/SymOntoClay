@@ -45,10 +45,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _typeConverter = context.TypeConverter;
 
-            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
-
-            _anyTypeName = context.CommonNamesStorage.AnyTypeName;
-
             var kindOfCodeEntity = codeItem.KindOfProperty;
 
             switch(kindOfCodeEntity)
@@ -71,7 +67,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private ILogicalStorage _logicalStorage;
 
         private ITypeConverter _typeConverter;
-        private InheritanceResolver _inheritanceResolver;
 
         public KindOfProperty KindOfProperty => CodeItem.KindOfProperty;
         public StrongIdentifierValue Name { get; private set; }
@@ -81,8 +76,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private PropertyGetMethodExecutable _propertyGetMethodExecutable;
 
         public IExecutable GetMethodExecutable => _propertyGetMethodExecutable;
-
-        private StrongIdentifierValue _anyTypeName;
 
         public CallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -94,8 +87,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 return new CallResult(value);
             }
-
-            //CheckFitVariableAndValue(logger, value, localCodeExecutionContext);
 
             var callResult = _typeConverter.CheckAndTryConvert(logger, value, CodeItem.TypesList, localCodeExecutionContext);
 
@@ -173,39 +164,6 @@ namespace SymOntoClay.Core.Internal.Instances
             result.CheckDirty();
 
             return result;
-        }
-
-        private void CheckFitVariableAndValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
-        {
-#if DEBUG
-            Info("44498E34-9E8C-468E-9F10-B95B184480B5", $"value = {value}");
-#endif
-
-            if (value.IsNullValue)
-            {
-                return;
-            }
-
-            var typesList = CodeItem.TypesList;
-
-            if (typesList.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            if(typesList.All(p => p == _anyTypeName))
-            {
-                return;
-            }
-
-            var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext);
-
-            if (isFit)
-            {
-                return;
-            }
-
-            throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {CodeItem.ToHumanizedString()}");
         }
 
         public Value GetValue()

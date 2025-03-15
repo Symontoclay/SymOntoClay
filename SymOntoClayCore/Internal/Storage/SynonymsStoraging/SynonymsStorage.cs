@@ -83,6 +83,11 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
                     return null;
                 }
 
+                //if(name == null)
+                //{
+                //    return null;
+                //}
+
                 if (_synonymsDict.ContainsKey(name))
                 {
                     return _synonymsDict[name];

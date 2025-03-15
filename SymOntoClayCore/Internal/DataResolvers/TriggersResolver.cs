@@ -86,7 +86,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
+#if DEBUG
+            logger.Info("0A996322-C5B0-4C83-AD4B-6D252716131D", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
+#endif
+
             var rawList = GetSystemEventsRawList(logger, kindOfSystemEvent, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            logger.Info("E28D6D84-BAA3-47CE-B9C2-07AAE0756E98", $"rawList.Count = {rawList.Count}");
+#endif
 
             return OrderAndDistinct(logger, rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
@@ -155,6 +163,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
                 var itemsList = storageItem.Storage.TriggersStorage.GetSystemEventsTriggersDirectly(logger, kindOfSystemEvent, weightedInheritanceItems);
+
+#if DEBUG
+                logger.Info("6FA78C12-9F48-425E-92BE-40E198FEA5A1", $"itemsList.Count = {itemsList.Count}");
+#endif
 
                 if (!itemsList.Any())
                 {

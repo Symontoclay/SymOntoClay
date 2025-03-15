@@ -71,6 +71,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
             {
+#if DEBUG
+                //Info("0A1F6F18-FEFD-4FE8-A5D1-D355EB4A4AED", $"weightedInheritanceItem.SuperType = {weightedInheritanceItem.SuperType}");
+                //Info("8C4CE32A-12A9-48D6-B265-8C5B324A7A1A", $"weightedInheritanceItem.SuperType.Name = {weightedInheritanceItem.SuperType.Name}");
+#endif
+
                 var codeItem = _metadataResolver.Resolve(logger, weightedInheritanceItem.SuperType.Name, localCodeExecutionContext);
 
                 if(codeItem == null)

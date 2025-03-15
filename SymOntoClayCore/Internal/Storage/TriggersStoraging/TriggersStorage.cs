@@ -193,6 +193,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     {
                         var targetHolder = weightedInheritanceItem.SuperType;
 
+#if DEBUG
+                        logger.Info("815E638D-5AB8-4228-8453-C2EC93FAAA7E", $"targetHolder = {targetHolder}");
+#endif
+
                         if (dict.ContainsKey(targetHolder))
                         {
                             var targetList = dict[targetHolder];

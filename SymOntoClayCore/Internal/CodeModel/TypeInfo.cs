@@ -37,11 +37,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
         }
 
-        public TypeInfo(bool isAnonymous, StrongIdentifierValue name, bool іsArray, int? capacity)
+        public TypeInfo(bool isAnonymous, StrongIdentifierValue name, bool isArray, int? capacity)
         {
             IsAnonymous = isAnonymous;
-            Name = Name;
-            IsArray = IsArray;
+            Name = name;
+            IsArray = isArray;
             Capacity = capacity;
             _isEmpty = false;
         }

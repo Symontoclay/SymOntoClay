@@ -118,6 +118,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            //Info("CC22FDE2-F1B4-49C7-A172-8E3252967DA5", $"localCodeExecutionContext.Holder = {localCodeExecutionContext.Holder}");
+#endif
+
             return GetWeightedInheritanceItems(logger, localCodeExecutionContext.Holder, localCodeExecutionContext, options);
         }
         

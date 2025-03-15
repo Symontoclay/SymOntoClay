@@ -49,6 +49,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private bool _isNull;
 
+        public bool IsArray { get; private set; }
+        public int? Capacity { get; private set; }
+
         /// <inheritdoc/>
         public override bool IsStrongIdentifierValue => true;
 
@@ -92,6 +95,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private bool NEquals(StrongIdentifierValue other)
         {
             if (other == null)
+            {
+                return false;
+            }
+
+            if (IsArray != other.IsArray)
+            {
+                return false;
+            }
+
+            if (Capacity != other.Capacity)
             {
                 return false;
             }
@@ -215,6 +228,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.KindOfName = KindOfName;
             result.NameValue = NameValue;
             result.NormalizedNameValue = NormalizedNameValue;
+            result.IsArray = IsArray;
+            result.Capacity = Capacity;
 
             result.AppendAnnotations(this, context);
 
@@ -239,6 +254,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
 
+            sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
+            sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -254,6 +272,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
+
+            sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
+            sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -271,6 +292,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
 
+            sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
+            sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
+
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
@@ -279,7 +303,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            return $"{spaces}`{NameValue}`";
+
+            return $"{spaces}{NToHumanizedString()}";
         }
 
         /// <inheritdoc/>
@@ -296,7 +321,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return NameValue;
+            var sb = new StringBuilder(NameValue);
+
+            if (IsArray)
+            {
+                sb.Append("[");
+
+                if (Capacity.HasValue)
+                {
+                    sb.Append(Capacity);
+                }
+
+                sb.Append("]");
+            }
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

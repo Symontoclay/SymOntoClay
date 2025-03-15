@@ -24,21 +24,14 @@ using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -52,6 +45,8 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Info("B89B059D-E73F-4422-AAD9-DE0BE2868FE1", $"codeItem.GetType().Name = {codeItem.GetType().Name}");
             //Info("C268AA31-5EFB-43CA-BD95-AE26695F6A93", $"Name = {Name}");
+            //Info("B78A4EEE-5CE6-41D9-89E0-FB6155C1E7EC", $"Name = {Name.ToHumanizedString()}");
+            //Info("4A68DB0B-8C7A-4D7F-BFC6-248CB2F93FF0", $"Name = {Name.ToDbgString()}");
 #endif
 
             _activeObjectContext = context.ActiveObjectContext;

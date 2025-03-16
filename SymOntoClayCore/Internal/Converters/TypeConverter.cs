@@ -7,6 +7,7 @@ using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Converters
@@ -48,7 +49,22 @@ namespace SymOntoClay.Core.Internal.Converters
             Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkResult = {checkResult}");
 #endif
 
-            throw new NotImplementedException("435AEB0F-4EB7-4219-89D3-D63871296755");
+            var kindOfResult = checkResult.KindOfResult;
+
+            switch(kindOfResult)
+            {
+                case KindOfTypeFitCheckingResult.IsFit:
+                    return new CallResult(value);
+
+                case KindOfTypeFitCheckingResult.NeedConvesion:
+                    return new CallResult(Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext));
+
+                case KindOfTypeFitCheckingResult.IsNotFit:
+                    throw new NotImplementedException("435AEB0F-4EB7-4219-89D3-D63871296755");
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+            }
         }
 
         /// <inheritdoc/>
@@ -84,6 +100,17 @@ namespace SymOntoClay.Core.Internal.Converters
             //throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {CodeItem.ToHumanizedString()}");
 
             throw new NotImplementedException("11924B32-F3D5-4CC4-93FA-D14C239F27C5");
+        }
+
+        /// <inheritdoc/>
+        public Value Convert(IMonitorLogger logger, Value value, StrongIdentifierValue targetType, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            Info("772AFCFF-0704-4AC2-A3C4-8BEF21681070", $"value = {value}");
+            Info("FB99DB07-9E1E-4904-8DAB-0E419C84C716", $"targetType = {targetType}");
+#endif
+
+            throw new NotImplementedException("30CA5B09-9171-4873-8893-DB3746C05036");
         }
     }
 }

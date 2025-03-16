@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
 #endif
 
-            var property = Resolve(logger, propertyName, localCodeExecutionContext);
+            var property = Resolve(logger, propertyName, localCodeExecutionContext, options);
 
 #if DEBUG
             //Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
@@ -98,6 +98,67 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);
             }
+        }
+
+        public CallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetPropertyValue(logger, propertyName, instance, localCodeExecutionContext, DefaultOptions);
+        }
+
+        public CallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
+#endif
+
+            var property = Resolve(Logger, propertyName, localCodeExecutionContext, options);
+
+#if DEBUG
+            Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
+#endif
+
+            if (property == null)
+            {
+                var value = ResolveImplicitProperty(Logger, propertyName, instance, localCodeExecutionContext, options);
+
+#if DEBUG
+                Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
+#endif
+
+                if (value == null)
+                {
+                    return new CallResult(NullValue.Instance);
+                }
+                else
+                {
+                    return new CallResult(value);
+                }
+            }
+
+            var kindOfProperty = property.KindOfProperty;
+
+            switch(kindOfProperty)
+            {
+                case KindOfProperty.Auto:
+                    return new CallResult(property.GetValue());
+
+                case KindOfProperty.Readonly:
+                case KindOfProperty.GetSet:
+                    {
+                        var executable = property.GetMethodExecutable;
+
+                        return new CallResult()
+                        {
+                            KindOfResult = KindOfCallResult.NeedExecuteGetProperty,
+                            Executable = executable
+                        };
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+            }
+
+            throw new NotImplementedException("3F5085DB-DF7C-4864-8E92-03EFB497FC6A");
         }
 
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)

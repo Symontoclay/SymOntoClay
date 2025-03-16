@@ -1317,63 +1317,34 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var conceptValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-            //Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            //Info("70359123-3D0B-444B-B9E3-44F75BF3AB36", $"conceptValue = {conceptValue}");
+            Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Info("70359123-3D0B-444B-B9E3-44F75BF3AB36", $"conceptValue = {conceptValue}");
 #endif
 
             var propertyName = conceptValue.AsStrongIdentifierValue;
 
-            var property = _propertiesResolver.Resolve(Logger, propertyName, _currentCodeFrame.LocalContext);
+            var callResult = _propertiesResolver.GetPropertyValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            //Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
+            Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
 #endif
 
-            if(property == null)
+            var kindOfResult = callResult.KindOfResult;
+
+            switch(kindOfResult)
             {
-                var value = _propertiesResolver.ResolveImplicitProperty(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
+                case KindOfCallResult.Value:
+                    _currentCodeFrame.ValuesStack.Push(callResult.Value);
+                    _currentCodeFrame.CurrentPosition++;
+                    return;
 
-#if DEBUG
-                //Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
-#endif
-
-                if(value == null)
-                {
-                    _currentCodeFrame.ValuesStack.Push(NullValue.Instance);
-                }
-                else
-                {
-                    _currentCodeFrame.ValuesStack.Push(value);
-                }
-
-                _currentCodeFrame.CurrentPosition++;
-
-                return;
-            }
-
-            var kindOfProperty = property.KindOfProperty;
-
-            switch(kindOfProperty)
-            {
-                case KindOfProperty.Auto:
-                    {
-                        _currentCodeFrame.ValuesStack.Push(property.GetValue());
-                        _currentCodeFrame.CurrentPosition++;
-
-                        return;
-                    }
-
-                case KindOfProperty.Readonly:
-                case KindOfProperty.GetSet:
-                    {
-                        var executable = property.GetMethodExecutable;
-
-                        CallExecutable(executable);
-                    }
+                case KindOfCallResult.NeedExecuteGetProperty:
+                case KindOfCallResult.NeenExecuteCode:
+                    CallExecutable(callResult.Executable);
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
             }
 
             //throw new NotImplementedException("4EB61280-1522-422E-88F8-301A9ACA25AD");

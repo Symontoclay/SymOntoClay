@@ -1224,7 +1224,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var valueStack = _currentCodeFrame.ValuesStack;
 
             var annotatedItem = currentCommand.AnnotatedItem;
-
+            
 #if DEBUG
             //Info("8A246ADA-0F77-48CA-AA29-EF5FC65A09B8", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
 #endif

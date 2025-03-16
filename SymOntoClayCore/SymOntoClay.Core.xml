@@ -7836,6 +7836,9 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.Priority">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.EngineContext">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.ExecutionCoordinator">
             <inheritdoc/>
         </member>

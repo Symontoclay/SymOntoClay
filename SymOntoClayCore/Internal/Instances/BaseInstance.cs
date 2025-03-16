@@ -124,6 +124,10 @@ namespace SymOntoClay.Core.Internal.Instances
         protected ICustomThreadPool _threadPool;
 
         protected readonly IEngineContext _context;
+
+        /// <inheritdoc/>
+        public IEngineContext EngineContext => _context;
+
         private readonly ITriggersStorage _globalTriggersStorage;
         private readonly IStorage _parentStorage;
         protected readonly IStorage _storage;

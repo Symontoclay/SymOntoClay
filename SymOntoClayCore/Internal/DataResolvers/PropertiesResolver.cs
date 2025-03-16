@@ -70,7 +70,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 case CallMode.PreConstructor:
                     if (property == null)
                     {
-                        throw new NotImplementedException("C1DA392F-6F4F-4DB3-8DFA-AE49E3CD0354");
+                        property = CreateAndSaveGlobalProperty(logger, propertyName, localCodeExecutionContext);
+                        return property.SetValue(logger, value, localCodeExecutionContext);                        
                     }
                     else
                     {
@@ -80,7 +81,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 case CallMode.Default:
                     if (property == null)
                     {
-                        throw new NotImplementedException("05DDD3F9-E954-464B-B60C-1C520F45CC5C");
+                        property = CreateAndSaveGlobalProperty(logger, propertyName, localCodeExecutionContext);
+                        return property.SetValue(logger, value, localCodeExecutionContext);
                     }
                     else
                     {
@@ -99,6 +101,31 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);
             }
+        }
+
+        private PropertyInstance CreateAndSaveGlobalProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            Info("A7608C40-FC0C-4454-A99A-2F14FBB8375C", $"propertyName = {propertyName}");
+#endif
+
+            var globalInstance = _context.InstancesStorage.MainEntity;
+            var globalPropertyStorage = _context.Storage.GlobalStorage.PropertyStorage;
+
+            var property = new Property()
+            {
+                TypeOfAccess = TypeOfAccess.Public,
+                Name = propertyName,
+                TypesList = new List<StrongIdentifierValue>() { _context.CommonNamesStorage.AnyTypeName },
+                Holder = globalInstance.Name,
+                KindOfProperty = KindOfProperty.Auto
+            };
+
+            var propertyInstance = new PropertyInstance(property, globalInstance, globalInstance.EngineContext);
+
+            globalPropertyStorage.Append(Logger, propertyInstance);
+
+            return propertyInstance;
         }
 
         public CallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)

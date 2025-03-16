@@ -122,13 +122,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 1`) } :}
+    {: >: { see(I, #`Barrel 1`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 1`) } :})
+        if({: >: { see(I, #`Barrel 1`) } :})
         {
             'Yes!' >> @>log;
         }
@@ -166,13 +166,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 2`) } :}
+    {: >: { see(I, #`Barrel 2`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 1`) } :})
+        if({: >: { see(I, #`Barrel 1`) } :})
         {
             'Yes!' >> @>log;
         }
@@ -206,13 +206,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 1`) } :}
+    {: >: { see(I, #`Barrel 1`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 1`) } :})
+        if({: >: { see(I, #`Barrel 1`) } :})
         {
             'Yes!' >> @>log;
         } else {
@@ -252,13 +252,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 2`) } :}
+    {: >: { see(I, #`Barrel 2`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 1`) } :})
+        if({: >: { see(I, #`Barrel 1`) } :})
         {
             'Yes!' >> @>log;
         } else {
@@ -298,16 +298,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 0`) } :}
+    {: >: { see(I, #`Barrel 0`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 0`) } :})
+        if({: >: { see(I, #`Barrel 0`) } :})
         {
             'Yes!' >> @>log;
-        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+        } elif ({: >: { see(I, #`Barrel 1`) } :}) {
             'Elif 1 Yes!' >> @>log;
         }
 
@@ -344,16 +344,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 1`) } :}
+    {: >: { see(I, #`Barrel 1`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 0`) } :})
+        if({: >: { see(I, #`Barrel 0`) } :})
         {
             'Yes!' >> @>log;
-        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+        } elif ({: >: { see(I, #`Barrel 1`) } :}) {
             'Elif 1 Yes!' >> @>log;
         }
 
@@ -390,16 +390,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 2`) } :}
+    {: >: { see(I, #`Barrel 2`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 0`) } :})
+        if({: >: { see(I, #`Barrel 0`) } :})
         {
             'Yes!' >> @>log;
-        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+        } elif ({: >: { see(I, #`Barrel 1`) } :}) {
             'Elif 1 Yes!' >> @>log;
         }
 
@@ -432,18 +432,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 2`) } :}
+    {: >: { see(I, #`Barrel 2`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 0`) } :})
+        if({: >: { see(I, #`Barrel 0`) } :})
         {
             'Yes!' >> @>log;
-        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+        } elif ({: >: { see(I, #`Barrel 1`) } :}) {
             'Elif 1 Yes!' >> @>log;
-        }elif ({: >: { see(I, #`Barel 2`) } :}) {
+        }elif ({: >: { see(I, #`Barrel 2`) } :}) {
             'Elif 2 Yes!' >> @>log;
         }
 
@@ -480,18 +480,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 3`) } :}
+    {: >: { see(I, #`Barrel 3`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 0`) } :})
+        if({: >: { see(I, #`Barrel 0`) } :})
         {
             'Yes!' >> @>log;
-        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+        } elif ({: >: { see(I, #`Barrel 1`) } :}) {
             'Elif 1 Yes!' >> @>log;
-        }elif ({: >: { see(I, #`Barel 2`) } :}) {
+        }elif ({: >: { see(I, #`Barrel 2`) } :}) {
             'Elif 2 Yes!' >> @>log;
         }else{
             'Else Yes!' >> @>log;

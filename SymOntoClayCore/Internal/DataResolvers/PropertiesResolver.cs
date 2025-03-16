@@ -336,7 +336,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);
 
 #if DEBUG
-            //Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
+            Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
 #endif
 
             if (searchResult.IsSuccess)

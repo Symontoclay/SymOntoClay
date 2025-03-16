@@ -359,11 +359,11 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 1`) } :}
+    {: >: { see(I, #`Barrel 1`) } :}
 
     on Enter =>
     {
-        ? {: see(I, #`Barel 1`) :} >> @>log;
+        ? {: see(I, #`Barrel 1`) :} >> @>log;
     }
 }";
 

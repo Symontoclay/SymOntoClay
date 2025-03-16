@@ -331,12 +331,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    {: ReadOnlyProp(I, 16) :}
+    {: ImplicitProp(I, 16) :}
 
     on Enter =>
     {
         'Begin' >> @>log;
-        ReadOnlyProp >> @>log;
+        ImplicitProp >> @>log;
         'End' >> @>log;
     }
 }";

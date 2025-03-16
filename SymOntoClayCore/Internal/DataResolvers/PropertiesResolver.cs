@@ -347,7 +347,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var foundItems = items.SelectMany(p => p.ResultOfVarOfQueryToRelationList).Where(p => p.NameOfVar == _targetLogicalVarName).Select(p => p.FoundExpression).ToList();
 
 #if DEBUG
-                Info("6ED61BD6-88F0-4146-9958-E2A685BE9012", $"foundItems = {foundItems.WriteListToString()}");
+                //Info("6ED61BD6-88F0-4146-9958-E2A685BE9012", $"foundItems = {foundItems.WriteListToString()}");
 #endif
 
                 if (foundItems.Count == 1)
@@ -361,7 +361,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var foundLogicalQueryNode = foundItems.Select(p => (p.RuleInstance?.TimeStamp ?? 0, p)).OrderByDescending(p => p.Item1).First().p;
 
 #if DEBUG
-                    Info("6AF8610C-6CDA-424C-BC3C-06DC67220A62", $"foundLogicalQueryNode = {foundLogicalQueryNode}");
+                    //Info("6AF8610C-6CDA-424C-BC3C-06DC67220A62", $"foundLogicalQueryNode = {foundLogicalQueryNode}");
 #endif
 
                     return LogicalQueryNodeHelper.ToValue(foundLogicalQueryNode);

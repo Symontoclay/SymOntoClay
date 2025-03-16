@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public CallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
+            //logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
 #endif
 
             if (_value == value)
@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _value = callResult.Value;
 
 #if DEBUG
-            logger.Info("F79031C5-A794-487B-B4C8-3B0E97127A9C", $"_value = {_value}");
+            //logger.Info("F79031C5-A794-487B-B4C8-3B0E97127A9C", $"_value = {_value}");
 #endif
 
             switch (KindOfProperty)

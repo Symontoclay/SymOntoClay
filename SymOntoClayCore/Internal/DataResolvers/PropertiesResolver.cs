@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private PropertyInstance CreateAndSaveGlobalProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Info("A7608C40-FC0C-4454-A99A-2F14FBB8375C", $"propertyName = {propertyName}");
+            //Info("A7608C40-FC0C-4454-A99A-2F14FBB8375C", $"propertyName = {propertyName}");
 #endif
 
             var globalInstance = _context.InstancesStorage.MainEntity;

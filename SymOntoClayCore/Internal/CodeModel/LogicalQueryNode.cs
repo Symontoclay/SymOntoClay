@@ -1047,6 +1047,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
             sb.PrintObjProp(n, nameof(Holder), Holder);
 
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
+            sb.PrintBriefObjProp(n, nameof(RulePart), RulePart);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -1083,6 +1086,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
 
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
+            sb.PrintBriefObjProp(n, nameof(RulePart), RulePart);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -1118,6 +1124,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
+
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
+            sb.PrintBriefObjProp(n, nameof(RulePart), RulePart);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

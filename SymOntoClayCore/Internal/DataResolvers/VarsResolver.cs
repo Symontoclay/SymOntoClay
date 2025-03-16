@@ -21,7 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
@@ -45,16 +47,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             base.Init();
 
             _anyTypeName = _context.CommonNamesStorage.AnyTypeName;
+            _typeConverter = _context.TypeConverter;
         }
 
         private StrongIdentifierValue _anyTypeName;
+        private ITypeConverter _typeConverter;
 
-        public void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            SetVarValue(logger, varName, value, localCodeExecutionContext, _defaultOptions);
+            return SetVarValue(logger, varName, value, localCodeExecutionContext, _defaultOptions);
         }
 
-        public void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public CallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if (varName.KindOfName != KindOfName.Var)
             {
@@ -68,43 +72,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 varPtr = CreateAndSaveLocalVariable(logger, varName, localCodeExecutionContext);
             }
 
-            CheckFitVariableAndValue(logger, varPtr, value, localCodeExecutionContext, options);
+            var callResult = _typeConverter.CheckAndTryConvert(logger, value, varPtr.TypesList, localCodeExecutionContext);
 
-            varPtr.SetValue(logger, value);
-        }
-
-        public void CheckFitVariableAndValue(IMonitorLogger logger, VarInstance varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
-        {
-            CheckFitVariableAndValue(logger, varItem, value, localCodeExecutionContext, _defaultOptions);
-        }
-
-        public void CheckFitVariableAndValue(IMonitorLogger logger, VarInstance varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
-        {
-            if (value.IsNullValue)
+            if (callResult.IsError)
             {
-                return;
+                return callResult;
             }
 
-            var typesList = varItem.TypesList;
+            varPtr.SetValueDirectly(logger, callResult.Value);
 
-            if (typesList.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            if (typesList.All(p => p == _anyTypeName))
-            {
-                return;
-            }
-
-            var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext, options);
-
-            if (isFit)
-            {
-                return;
-            }
-
-            throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {varItem.ToHumanizedString()}");
+            return new CallResult(value);
         }
 
         private VarInstance CreateAndSaveLocalVariable(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)

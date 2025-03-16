@@ -70,12 +70,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     switch (kindOfRightOperand)
                                     {
                                         case KindOfValue.StrongIdentifierValue:
-                                            _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
-                                            return new CallResult(rightOperand);
+                                            return _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
 
                                         default:
-                                            _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
-                                            return new CallResult(rightOperand);
+                                            return _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
                                     }
                                 }
 

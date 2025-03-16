@@ -6662,13 +6662,25 @@
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Converters.TypeConverter.DefaultOptions">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckAndTryConvert(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckAndTryConvert(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.DataResolvers.ResolverOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckFitValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.CheckFitValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.DataResolvers.ResolverOptions)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.Convert(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.Convert(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.DataResolvers.ResolverOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToString">
@@ -8457,7 +8469,7 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.TacticalTaskInstance.KindOfInstance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValueDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.VarInstance.TypeOfAccess">

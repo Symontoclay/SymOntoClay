@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public void SetValue(IMonitorLogger logger, Value value)
+        public void SetValueDirectly(IMonitorLogger logger, Value value)
         {
             lock (_lockObj)
             {

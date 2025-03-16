@@ -25,6 +25,8 @@ namespace SymOntoClay.Core.Internal.Converters
         private InheritanceResolver _inheritanceResolver;
         private StrongIdentifierValue _anyTypeName;
 
+        private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
+
         /// <inheritdoc/>
         protected override void LinkWithOtherBaseContextComponents()
         {
@@ -36,14 +38,23 @@ namespace SymOntoClay.Core.Internal.Converters
         }
 
         /// <inheritdoc/>
+        public ResolverOptions DefaultOptions => _defaultOptions;
+
+        /// <inheritdoc/>
         public CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return CheckAndTryConvert(logger, value, typesList, localCodeExecutionContext, DefaultOptions);
+        }
+
+        /// <inheritdoc/>
+        public CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Info("50526CB3-643C-4602-8B17-58CB31D522CA", $"value = {value}");
             Info("95E681A8-1612-4252-B477-F70B51097823", $"typesList = {typesList.WriteListToString()}");
 #endif
 
-            var checkResult = CheckFitValue(logger, value, typesList, localCodeExecutionContext);
+            var checkResult = CheckFitValue(logger, value, typesList, localCodeExecutionContext, options);
 
 #if DEBUG
             Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkResult = {checkResult}");
@@ -57,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     return new CallResult(value);
 
                 case KindOfTypeFitCheckingResult.NeedConvesion:
-                    return new CallResult(Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext));
+                    return new CallResult(Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext, options));
 
                 case KindOfTypeFitCheckingResult.IsNotFit:
                     throw new NotImplementedException("435AEB0F-4EB7-4219-89D3-D63871296755");
@@ -69,6 +80,12 @@ namespace SymOntoClay.Core.Internal.Converters
 
         /// <inheritdoc/>
         public TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return CheckFitValue(logger, value, typesList, localCodeExecutionContext, DefaultOptions);
+        }
+
+        /// <inheritdoc/>
+        public TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Info("F003F8DC-8153-42A6-86D5-9F544A627690", $"value = {value}");
@@ -90,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 return TypeFitCheckingResult.Fit;
             }
 
-            var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext);
+            var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext, options);
 
             if (isFit)
             {
@@ -104,6 +121,12 @@ namespace SymOntoClay.Core.Internal.Converters
 
         /// <inheritdoc/>
         public Value Convert(IMonitorLogger logger, Value value, StrongIdentifierValue targetType, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Convert(logger, value, targetType, localCodeExecutionContext, DefaultOptions);
+        }
+
+        /// <inheritdoc/>
+        public Value Convert(IMonitorLogger logger, Value value, StrongIdentifierValue targetType, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Info("772AFCFF-0704-4AC2-A3C4-8BEF21681070", $"value = {value}");

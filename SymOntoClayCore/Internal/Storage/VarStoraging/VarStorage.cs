@@ -319,7 +319,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             {
                 if (_localVariablesDict.ContainsKey(varName))
                 {
-                    _localVariablesDict[varName].SetValue(logger, value);
+                    _localVariablesDict[varName].SetValueDirectly(logger, value);
                     return;
                 }
 
@@ -327,7 +327,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                 NAppendVar(logger, varItem);
 
-                varItem.SetValue(logger, value);
+                varItem.SetValueDirectly(logger, value);
             }
         }
 

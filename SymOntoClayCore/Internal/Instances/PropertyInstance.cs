@@ -88,6 +88,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 return new CallResult(value);
             }
 
+#if DEBUG
+            Info("48CF5C14-1462-4A06-87FA-ABB613FF1BEA", $" = {}");
+#endif
+
             var callResult = _typeConverter.CheckAndTryConvert(logger, value, CodeItem.TypesList, localCodeExecutionContext);
 
             if(callResult.IsError)

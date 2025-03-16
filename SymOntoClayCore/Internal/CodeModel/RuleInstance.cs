@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -41,6 +42,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: CodeItem, IStorage, ILogicalStorage//, IEquatable<RuleInstance>
     {
+#if DEBUG
+        //private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.RuleOrFact;
 
@@ -66,7 +71,35 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public Value SelfObligationModality { get; set; }
 
-        public ulong? TimeStamp { get; set; }
+        private ulong? _timeStamp;
+
+        public ulong? TimeStamp 
+        { 
+            get
+            {
+                return _timeStamp;
+            }
+
+            set
+            {
+                if(_timeStamp == value)
+                {
+                    return;
+                }
+
+                _timeStamp = value;
+
+                if(Normalized != null)
+                {
+                    Normalized.TimeStamp = _timeStamp;
+                }
+                
+                if(Original != null)
+                {
+                    Original.TimeStamp = _timeStamp;
+                }
+            }
+        }
 
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
 
@@ -110,7 +143,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void PrepareDirty(CheckDirtyOptions options)
         {
-            if(Name == null || Name.IsEmpty)
+#if DEBUG
+            //_staticLogger.Info($"this = {this.ToHumanizedString()}");
+#endif
+
+            if (Name == null || Name.IsEmpty)
             {
                 Name = NameHelper.CreateRuleOrFactName();
             }
@@ -348,6 +385,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
+#if DEBUG
+            //_staticLogger.Info($"||||||||||||||");
+#endif
+
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
@@ -379,6 +420,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToShortString(uint n)
         {
+#if DEBUG
+            //_staticLogger.Info($"-----------------------");
+#endif
+
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
@@ -410,6 +455,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToBriefString(uint n)
         {
+#if DEBUG
+            //_staticLogger.Info($"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+#endif
+
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
@@ -426,10 +475,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(TimeStamp)} = {TimeStamp}");
 
-            sb.PrintBriefObjListProp(n, nameof(LogicalStorages), LogicalStorages);
+            sb.PrintExisting(n, nameof(LogicalStorages), LogicalStorages);
 
-            sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
-            sb.PrintBriefObjListProp(n, nameof(LeavesList), LeavesList);
+            sb.PrintExisting(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintExisting(n, nameof(LeavesList), LeavesList);
 
             sb.PrintExisting(n, nameof(Original), Original);
             sb.PrintExisting(n, nameof(Normalized), Normalized);
@@ -606,7 +655,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         void IStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException("3E406EDD-78EE-430D-BFC3-98F53DF9AF05");
 #endif
-        #endregion
+#endregion
 
         #region ILogicalStorage
         /// <inheritdoc/>

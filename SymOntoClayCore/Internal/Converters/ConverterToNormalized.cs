@@ -86,6 +86,7 @@ namespace SymOntoClay.Core.Internal.Converters
             result.Holder = source.Holder;
             result.ObligationModality = source.ObligationModality;
             result.SelfObligationModality = source.SelfObligationModality;
+            result.TimeStamp = source.TimeStamp;
 
             if(processedRuleInstances.Any())
             {

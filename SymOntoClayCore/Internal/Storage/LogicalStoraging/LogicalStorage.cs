@@ -180,8 +180,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private IList<StrongIdentifierValue> NAppendAndReturnUsedKeysList(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
-            ruleInstance.CheckDirty();
-
             if (NAppend(logger, ruleInstance, isPrimary))
             {
                 var annotationsList = ruleInstance.GetAllAnnotations();
@@ -201,6 +199,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private bool NAppend(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
+#if DEBUG
+            //Info("B8355FCB-99E5-4020-8962-CA92E038FF8E", $"ruleInstance = {ruleInstance?.ToHumanizedString()}");
+#endif
+
+            ruleInstance.CheckDirty();
+
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
             {
                 AnnotatedItemHelper.CheckAndFillUpHolder(logger, ruleInstance, _realStorageContext.MainStorageContext.CommonNamesStorage);
@@ -242,10 +246,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             ruleInstance.AddLogicalStorage(this);
 
-            if(!ruleInstance.TimeStamp.HasValue)
+#if DEBUG
+            //Info("5CF944E7-E757-4FF1-8A01-78CB32569EC7", $"ruleInstance.GetLongHashCode() = {ruleInstance.GetLongHashCode()}");
+            //Info("225D346C-31BC-4C82-87A2-370286D40844", $"ruleInstance = {ruleInstance}");
+#endif
+
+            if (!ruleInstance.TimeStamp.HasValue)
             {
                 ruleInstance.TimeStamp = _dateTimeProvider.CurrentTicks;
-            }            
+            }
+
+#if DEBUG           
+            //Info("400CE6A1-5288-4B61-935C-F6380840F178", $"ruleInstance = {ruleInstance}");
+#endif
 
             if (_enableOnAddingFactEvent && _onAddingFactHandlers.Count > 0)
             {

@@ -251,7 +251,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
-            sb.PrintBriefObjProp(n, nameof(Expression), Expression);
+            sb.PrintExisting(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

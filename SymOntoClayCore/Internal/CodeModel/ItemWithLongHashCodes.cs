@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,10 +29,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class ItemWithLongHashCodes: IObjectWithLongHashCodes
     {
+#if DEBUG
+        //private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         private bool _isDirty = true;
 
         public void CheckDirty(CheckDirtyOptions options = null)
         {
+#if DEBUG
+            //_staticLogger.Info($"FullName = {GetType().FullName};_isDirty = {_isDirty}");
+#endif
+
             if (_isDirty)
             {
                 CalculateLongHashCodes(options);

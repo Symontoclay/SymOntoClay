@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -37,7 +38,11 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent, IEquatable<LogicalQueryNode>
-    {        
+    {
+#if DEBUG
+        //private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
         public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
@@ -148,6 +153,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             this.CheckDirty();
 
+#if DEBUG
+            //_staticLogger.Info($"this = {ToHumanizedString()}");
+            //_staticLogger.Info($"ruleInstance = {ruleInstance?.ToHumanizedString()}");
+#endif
+
             RuleInstance = ruleInstance;
             RulePart = rulePart;
 
@@ -219,7 +229,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     {
                         IsQuestion = true;
                     }
-                    FillRelationParams(ParamsList, contextOfConvertingExpressionNode);
+                    FillRelationParams(ParamsList, contextOfConvertingExpressionNode, ruleInstance, rulePart);
                     break;
 
                 case KindOfLogicalQueryNode.Group:
@@ -236,7 +246,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         }
 
-        private void FillRelationParams(IList<LogicalQueryNode> sourceParamsList, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        private void FillRelationParams(IList<LogicalQueryNode> sourceParamsList, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode, RuleInstance ruleInstance, BaseRulePart rulePart)
         {
             CountParams = sourceParamsList.Count;
 
@@ -247,6 +257,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             foreach (var param in sourceParamsList)
             {
                 param.CheckDirty();
+
+                param.RuleInstance = ruleInstance;
+                param.RulePart = rulePart;
 
                 var kindOfParam = param.Kind;
                 switch (kindOfParam)
@@ -311,6 +324,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                             foreach(var node in param.ParamsList)
                             {
+                                node.RuleInstance = ruleInstance;
+                                node.RulePart = rulePart;
+
                                 LogicalQueryNodeHelper.FillUpInfoAboutComplexExpression(node, additionalKnownInfoExpressions, varNames);
                             }
 
@@ -1045,7 +1061,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
 
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
-            sb.PrintObjProp(n, nameof(Holder), Holder);
+            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
             sb.PrintBriefObjProp(n, nameof(RulePart), RulePart);

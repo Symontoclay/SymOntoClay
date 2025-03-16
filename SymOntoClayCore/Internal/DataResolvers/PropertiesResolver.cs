@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -336,22 +337,34 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);
 
 #if DEBUG
-            Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
+            //Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
 #endif
 
             if (searchResult.IsSuccess)
             {
                 var items = searchResult.Items;
 
-                if (items.Count == 1)
+                var foundItems = items.SelectMany(p => p.ResultOfVarOfQueryToRelationList).Where(p => p.NameOfVar == _targetLogicalVarName).Select(p => p.FoundExpression).ToList();
+
+#if DEBUG
+                Info("6ED61BD6-88F0-4146-9958-E2A685BE9012", $"foundItems = {foundItems.WriteListToString()}");
+#endif
+
+                if (foundItems.Count == 1)
                 {
-                    var foundLogicalQueryNode = items.SelectMany(p => p.ResultOfVarOfQueryToRelationList).Where(p => p.NameOfVar == _targetLogicalVarName).Single().FoundExpression;
+                    var foundLogicalQueryNode = foundItems.Single();
 
                     return LogicalQueryNodeHelper.ToValue(foundLogicalQueryNode);
                 }
                 else
                 {
-                    throw new NotImplementedException("43AA7A7B-F43E-48BE-ACA0-FAF5C69CAD59");
+                    var foundLogicalQueryNode = foundItems.Select(p => (p.RuleInstance?.TimeStamp ?? 0, p)).OrderByDescending(p => p.Item1).First().p;
+
+#if DEBUG
+                    Info("6AF8610C-6CDA-424C-BC3C-06DC67220A62", $"foundLogicalQueryNode = {foundLogicalQueryNode}");
+#endif
+
+                    return LogicalQueryNodeHelper.ToValue(foundLogicalQueryNode);
                 }
             }
             else

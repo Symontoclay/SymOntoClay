@@ -46,9 +46,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public CallResult Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            //Info("7313472E-E3BC-4724-9083-629F1017E0E5", $"leftOperand = {leftOperand}");
-            //Info("51F20A26-2F61-4129-BB92-DB538A43A7C2", $"callMode = {callMode}");
-            //Info("AA897067-F227-481B-9AA5-072BA7723338", $"rightOperand = {rightOperand}");
+            Info("7313472E-E3BC-4724-9083-629F1017E0E5", $"leftOperand = {leftOperand}");
+            Info("51F20A26-2F61-4129-BB92-DB538A43A7C2", $"callMode = {callMode}");
+            Info("AA897067-F227-481B-9AA5-072BA7723338", $"rightOperand = {rightOperand}");
 #endif
 
             var kindOfLeftOperand = leftOperand.KindOfValue;
@@ -78,56 +78,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                 }
 
                             case KindOfName.Concept:
-                                {
-#if DEBUG
-                                    //Info("9E484258-2A5E-4389-92CB-36BD6114BBBC", $"leftOperand = {leftOperand}");
-                                    //Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
-                                    //Info("489E4FD3-8244-42B5-B73C-D5B03B9C2165", $"rightOperand = {rightOperand}");
-#endif
-
-                                    var property = _propertiesResolver.Resolve(logger, leftIdentifierValue, localCodeExecutionContext);
-
-#if DEBUG
-                                    //Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
-#endif
-
-                                    switch(callMode)
-                                    {
-                                        case CallMode.PreConstructor:
-                                            if (property == null)
-                                            {
-                                                throw new NotImplementedException("C1DA392F-6F4F-4DB3-8DFA-AE49E3CD0354");
-                                            }
-                                            else
-                                            {
-                                                return property.SetValue(logger, rightOperand, localCodeExecutionContext);
-                                            }
-                                            
-                                        case CallMode.Default:
-                                            if (property == null)
-                                            {
-                                                throw new NotImplementedException("05DDD3F9-E954-464B-B60C-1C520F45CC5C");
-                                            }
-                                            else
-                                            {
-                                                var kindOfProperty = property.KindOfProperty;
-
-                                                switch(kindOfProperty)
-                                                {
-                                                    case KindOfProperty.Auto:
-                                                        return property.SetValue(logger, rightOperand, localCodeExecutionContext);
-                                                        
-                                                    default:
-                                                        throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
-                                                }
-
-                                                //throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
-                                            }
-
-                                        default:
-                                            throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);
-                                    }
-                                }
+                                return _propertiesResolver.SetPropertyValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext, callMode);
 
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(kindOfNameOfLeftIdentifierValue), kindOfNameOfLeftIdentifierValue, null);

@@ -45,6 +45,61 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public ResolverOptions DefaultOptions { get; private set; } = ResolverOptions.GetDefaultOptions();
 
+        public CallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        {
+            return SetPropertyValue(logger, propertyName, value, localCodeExecutionContext, callMode, DefaultOptions);
+        }
+
+        public CallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
+        {
+#if DEBUG
+            //Info("BAEC7F05-B0F0-42C2-BFEB-43B5AC51B208", $"propertyName = {propertyName}");
+            //Info("54CD61AD-5D26-4C26-9751-AE243769B0A4", $"value = {value}");
+            //Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
+#endif
+
+            var property = Resolve(logger, propertyName, localCodeExecutionContext);
+
+#if DEBUG
+            //Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
+#endif
+
+            switch(callMode)
+            {
+                case CallMode.PreConstructor:
+                    if (property == null)
+                    {
+                        throw new NotImplementedException("C1DA392F-6F4F-4DB3-8DFA-AE49E3CD0354");
+                    }
+                    else
+                    {
+                        return property.SetValue(logger, value, localCodeExecutionContext);
+                    }
+
+                case CallMode.Default:
+                    if (property == null)
+                    {
+                        throw new NotImplementedException("05DDD3F9-E954-464B-B60C-1C520F45CC5C");
+                    }
+                    else
+                    {
+                        var kindOfProperty = property.KindOfProperty;
+
+                        switch (kindOfProperty)
+                        {
+                            case KindOfProperty.Auto:
+                                return property.SetValue(logger, value, localCodeExecutionContext);
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+                        }
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);
+            }
+        }
+
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(logger, propertyName, localCodeExecutionContext, DefaultOptions);

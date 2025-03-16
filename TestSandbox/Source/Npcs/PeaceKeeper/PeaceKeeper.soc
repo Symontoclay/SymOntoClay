@@ -1,11 +1,9 @@
 ﻿app PeaceKeeper
 {
-    {: ImplicitProp(I, 16) :}
-
     on Enter =>
     {
         'Begin' >> @>log;
-        insert {: ImplicitProp(I, 22) :};
+        ImplicitProp = 15;
         ImplicitProp >> @>log;
         'End' >> @>log;
     }

@@ -1317,8 +1317,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var conceptValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-            Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Info("70359123-3D0B-444B-B9E3-44F75BF3AB36", $"conceptValue = {conceptValue}");
+            //Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("70359123-3D0B-444B-B9E3-44F75BF3AB36", $"conceptValue = {conceptValue}");
 #endif
 
             var propertyName = conceptValue.AsStrongIdentifierValue;
@@ -1326,7 +1326,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var callResult = _propertiesResolver.GetPropertyValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
+            //Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
 #endif
 
             var kindOfResult = callResult.KindOfResult;

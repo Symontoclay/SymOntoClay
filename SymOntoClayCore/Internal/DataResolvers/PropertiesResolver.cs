@@ -108,13 +108,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
+            //Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
 #endif
 
             var property = Resolve(Logger, propertyName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
+            //Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
 #endif
 
             if (property == null)
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var value = ResolveImplicitProperty(Logger, propertyName, instance, localCodeExecutionContext, options);
 
 #if DEBUG
-                Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
+                //Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
 #endif
 
                 if (value == null)

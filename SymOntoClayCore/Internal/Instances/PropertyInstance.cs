@@ -57,6 +57,10 @@ namespace SymOntoClay.Core.Internal.Instances
                     _propertyGetMethodExecutable = new PropertyGetMethodExecutable(this, context);
                     break;
             }
+
+#if DEBUG
+            Info("48CF5C14-1462-4A06-87FA-ABB613FF1BEA", $"CodeItem.TypesList.Max(p => p.Capacity ?? 1) = {CodeItem.TypesList.Max(p => p.Capacity ?? 1)}");
+#endif
         }
 
         private IInstance _instance;
@@ -87,10 +91,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 return new CallResult(value);
             }
-
-#if DEBUG
-            Info("48CF5C14-1462-4A06-87FA-ABB613FF1BEA", $" = {}");
-#endif
 
             var callResult = _typeConverter.CheckAndTryConvert(logger, value, CodeItem.TypesList, localCodeExecutionContext);
 

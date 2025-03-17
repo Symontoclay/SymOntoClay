@@ -41,6 +41,12 @@ namespace SymOntoClay.Core.Internal.Converters
         public ResolverOptions DefaultOptions => _defaultOptions;
 
         /// <inheritdoc/>
+        public int GetCapacity(IMonitorLogger logger, IList<StrongIdentifierValue> typesList)
+        {
+            return typesList?.Min(p => p.Capacity ?? 1) ?? 0;
+        }
+
+        /// <inheritdoc/>
         public CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return CheckAndTryConvert(logger, value, typesList, localCodeExecutionContext, DefaultOptions);

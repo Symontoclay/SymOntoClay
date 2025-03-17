@@ -4,6 +4,7 @@ using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -28,6 +29,10 @@ namespace SymOntoClay.Core.Internal.Instances
             Holder = varItem.Holder;
             CodeItem = varItem;
             TypesList = varItem.TypesList;
+
+            _typeConverter = context.TypeConverter;
+
+            CheckAndInitArray();
         }
 
         public VarInstance(Var varItem, IMainStorageContext context)
@@ -37,6 +42,10 @@ namespace SymOntoClay.Core.Internal.Instances
             Holder = varItem.Holder;
             CodeItem = varItem;
             TypesList = varItem.TypesList;
+
+            _typeConverter = context.TypeConverter;
+
+            CheckAndInitArray();
         }
 
         public VarInstance(Field field, IMainStorageContext context)
@@ -46,11 +55,35 @@ namespace SymOntoClay.Core.Internal.Instances
             Holder = field.Holder;
             CodeItem = field;
             TypesList = field.TypesList;
+
+            _typeConverter = context.TypeConverter;
+
+            CheckAndInitArray();
         }
+
+        private void CheckAndInitArray()
+        {
+            var capacity = _typeConverter.GetCapacity(Logger, TypesList);
+
+#if DEBUG
+            //Info("BC52C5A8-A910-4832-9B22-CC87E978AC15", $"capacity = {capacity}");
+#endif
+
+            _isArray = capacity > 1;
+
+            if (_isArray)
+            {
+                throw new NotImplementedException("D812EC62-ED71-403F-8E77-3836B97BEC1D");
+            }
+        }
+
+        private ITypeConverter _typeConverter;
 
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public CodeItem CodeItem { get; private set; }
+
+        private bool _isArray;
 
         public List<StrongIdentifierValue> TypesList { get; private set; }
 

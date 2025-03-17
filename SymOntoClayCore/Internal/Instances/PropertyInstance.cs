@@ -18,6 +18,7 @@ using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Converters;
 using System.ComponentModel;
+using System.Collections;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -45,6 +46,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _typeConverter = context.TypeConverter;
 
+            var capacity = _typeConverter.GetCapacity(Logger, CodeItem.TypesList);
+
+#if DEBUG
+            //Info("48CF5C14-1462-4A06-87FA-ABB613FF1BEA", $"capacity = {capacity}");
+#endif
+
+            _isArray = capacity > 1;
+
+            if(_isArray)
+            {
+                throw new NotImplementedException("E671BC82-9D31-44B0-9468-4FD998B34A1A");
+            }
+
             var kindOfCodeEntity = codeItem.KindOfProperty;
 
             switch(kindOfCodeEntity)
@@ -57,10 +71,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     _propertyGetMethodExecutable = new PropertyGetMethodExecutable(this, context);
                     break;
             }
-
-#if DEBUG
-            Info("48CF5C14-1462-4A06-87FA-ABB613FF1BEA", $"CodeItem.TypesList.Max(p => p.Capacity ?? 1) = {CodeItem.TypesList.Max(p => p.Capacity ?? 1)}");
-#endif
         }
 
         private IInstance _instance;
@@ -76,6 +86,8 @@ namespace SymOntoClay.Core.Internal.Instances
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public Property CodeItem { get; private set; }
+
+        private readonly bool _isArray;
 
         private PropertyGetMethodExecutable _propertyGetMethodExecutable;
 

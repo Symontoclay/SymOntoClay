@@ -9,6 +9,7 @@ namespace SymOntoClay.Core.Internal.Converters
     public interface ITypeConverter
     {
         ResolverOptions DefaultOptions { get; }
+        int GetCapacity(IMonitorLogger logger, IList<StrongIdentifierValue> typesList);
         CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext);
         CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options);
         TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext);

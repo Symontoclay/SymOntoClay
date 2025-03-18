@@ -47,15 +47,15 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             Run(statements, loopCompilingContext, null, KindOfCompilation.Usual);
         }
 
-        public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
+        public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation)
         {
             if (kindOfCompilation == KindOfCompilation.Constructor)
             {
                 var callsSelf = false;
 
-                if(!callSuperClassContructorsExpressions.IsNullOrEmpty())
+                if(!callSuperClassConstructorsExpressions.IsNullOrEmpty())
                 {
-                    var targetCtorsExprsList = callSuperClassContructorsExpressions.Select(p => p as CallingFunctionAstExpression);
+                    var targetCtorsExprsList = callSuperClassConstructorsExpressions.Select(p => p as CallingFunctionAstExpression);
 
                     callsSelf = targetCtorsExprsList.Any(p => (p.Left as ConstValueAstExpression).Value.AsStrongIdentifierValue == _defaultCtorName);
 
@@ -64,7 +64,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         var node = new CallingFunctionNode(_context);
                         node.Run(callCtorExpr, KindOfCallingFunction.CallConstructor);
                         AddCommands(node.Result);
-
                     }
                 }
 

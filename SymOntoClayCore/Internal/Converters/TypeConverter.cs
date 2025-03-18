@@ -43,7 +43,12 @@ namespace SymOntoClay.Core.Internal.Converters
         /// <inheritdoc/>
         public int GetCapacity(IMonitorLogger logger, IList<StrongIdentifierValue> typesList)
         {
-            return typesList?.Min(p => p.Capacity ?? 1) ?? 0;
+            if(typesList.IsNullOrEmpty())
+            {
+                return 1;
+            }
+
+            return typesList.Min(p => p.Capacity ?? 1);
         }
 
         /// <inheritdoc/>

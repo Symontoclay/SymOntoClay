@@ -101,9 +101,24 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 }
             }
 
-            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
-            leftNode.Run(expression.Left);
-            AddCommands(leftNode.Result);
+#if DEBUG
+            //Info("2B06F803-48CA-4708-8FDE-971988FEC4A2", $"expression.Left.Kind = {expression.Left.Kind}");
+#endif
+
+            if(expression.Left.Kind == KindOfAstExpression.ConstValue)
+            {
+                CompilePushVal((expression.Left as ConstValueAstExpression).Value, KindOfCompilePushVal.Direct);
+            }
+            else
+            {
+                var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+                leftNode.Run(expression.Left);
+                AddCommands(leftNode.Result);
+            }
+
+#if DEBUG
+            //DbgPrintCommands();
+#endif
 
             command.AnnotatedItem = expression;
 

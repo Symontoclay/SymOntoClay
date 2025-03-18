@@ -1,101 +1,55 @@
 ﻿app PeaceKeeper
 {
-    //root task `SomeRootTask`;
+    root task `DestroyEnemy`;
 
-    fun SomeOperator()
+    fun ChooseEnemyOperator()
     {
-       'Run SomeOperator' >> @>log;
-       //@targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
+       'Run ChooseEnemyOperator' >> @>log;
+       @targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
        wait 1;
     }
 
-    fun SomeOperator2()
+    fun NavToEnemyOperator(@target)
     {
-       'Run SomeOperator2' >> @>log;
+       'Run NavToEnemyOperator' >> @>log;
+       @target >> @>log;
        wait 1;
     }
 
-    fun SomeOperator3()
+    fun KillEnemyOperator(@target)
     {
-       'Run SomeOperator3' >> @>log;
+       'Run KillEnemyOperator' >> @>log;
+       @target >> @>log;
        wait 1;
     }
 
-    fun SomeOperator4()
-    {
-       'Run SomeOperator4' >> @>log;
-       wait 1;
-    }
-
-    prop SomeProp1: number = 2;
+    prop TargetEnemy => @targetEnemy;
 
 	private:
 	    var @targetEnemy;
 }
 
-root task SomeRootTask
+compound task DestroyEnemy
 {
    case
    {
-       SomeStrategicTask;
+       ChooseEnemy;
+       NavToEnemy;
+       KillEnemy;
    }
 }
 
-strategic task SomeStrategicTask
+primitive task ChooseEnemy
 {
-   case
-   {
-       SomeTacticalTask;
-       //SomeStrategicTask;
-       //SomePrimitiveTask;
-   }
+    operator ChooseEnemyOperator();
 }
 
-tactical task SomeTacticalTask
+primitive task NavToEnemy
 {
-   case
-   {
-       SomeCompoundTask;
-       SomeCompoundTask2;
-   }
-
-   prop SomeProp2: number = 2;
+    operator NavToEnemyOperator(TargetEnemy);
 }
 
-compound task SomeCompoundTask
+primitive task KillEnemy
 {
-   case
-   {
-       SomePrimitiveTask;
-       SomePrimitiveTask2;
-   }
-}
-
-compound task SomeCompoundTask2
-{
-   case
-   {
-       SomePrimitiveTask3;
-       SomePrimitiveTask4;
-   }
-}
-
-primitive task SomePrimitiveTask
-{
-    operator SomeOperator();
-}
-
-primitive task SomePrimitiveTask2
-{
-    operator SomeOperator2();
-}
-
-primitive task SomePrimitiveTask3
-{
-    operator SomeOperator3();
-}
-
-primitive task SomePrimitiveTask4
-{
-    operator SomeOperator4();
+    operator KillEnemyOperator(TargetEnemy);
 }

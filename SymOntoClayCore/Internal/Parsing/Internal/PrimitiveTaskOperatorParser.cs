@@ -1,7 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using System;
-using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {

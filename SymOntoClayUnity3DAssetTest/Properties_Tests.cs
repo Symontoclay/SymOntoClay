@@ -84,6 +84,82 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void AutoProperty_Get_Case2_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeAutoProp + 2 >> @>log;
+        'End' >> @>log;
+    }
+
+    prop SomeAutoProp = 16;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "18");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void AutoProperty_Get_Case2_2()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeAutoProp + 2 >> @>log;
+        'End' >> @>log;
+    }
+
+    SomeAutoProp = 16;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "18");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void AutoProperty_Set_Case1()
         {
             var text = @"app PeaceKeeper
@@ -233,6 +309,86 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 2:
                             Assert.AreEqual(message, "5");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void ReadOnlyProperty_Get_Case3()
+        {
+            var text = @"app PeaceKeeper
+{
+    var @b: number = 2;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeGetProp >> @>log;
+        'End' >> @>log;
+    }
+
+    prop SomeGetProp => @b;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "2");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void ReadOnlyProperty_Get_Case4()
+        {
+            var text = @"app PeaceKeeper
+{
+    var @b: number = 2;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeGetProp >> @>log;
+        'End' >> @>log;
+    }
+
+    SomeGetProp => @b;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "2");
                             break;
 
                         case 3:

@@ -100,6 +100,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForValue;
                             break;
 
+                        case TokenKind.Lambda:
+                            _state = State.WaitForLambdaGetCode;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

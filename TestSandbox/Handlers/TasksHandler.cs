@@ -75,33 +75,33 @@ namespace TestSandbox.Handlers
             Thread.Sleep(100);
             _logger.Info("EC6E70E3-294E-4492-8B7D-2F137D36628C", "-------------------------");
 
-            var tasksPlanner = new TasksPlanner(_npc.EngineContext);
+            //var tasksPlanner = new TasksPlanner(_npc.EngineContext);
 
-            var plan = tasksPlanner.BuildPlan();
+            //var plan = tasksPlanner.BuildPlan();
 
             //_logger.Info("B7831523-8D1C-4BAB-8348-460656F67E90", $"plan = {plan}");
-            _logger.Info("A74AD3BB-4D8E-44EC-AEF0-820592069E87", $"plan = {plan.ToDbgString()}");
+            //_logger.Info("A74AD3BB-4D8E-44EC-AEF0-820592069E87", $"plan = {plan.ToDbgString()}");
 
-            var context = _npc.EngineContext;
+            //var context = _npc.EngineContext;
 
-            var compiledFunctionBody = context.Compiler.Compile(plan);
+            //var compiledFunctionBody = context.Compiler.Compile(plan);
 
-            _logger.Info("F71873F5-CBD9-46E2-8B8A-304303268462", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
+            //_logger.Info("F71873F5-CBD9-46E2-8B8A-304303268462", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
 
-            var mainEntity = context.InstancesStorage.MainEntity;
+            //var mainEntity = context.InstancesStorage.MainEntity;
 
-            var processInitialInfo = new ProcessInitialInfo();
-            processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
-            processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
-            processInitialInfo.Metadata = mainEntity.CodeItem;
-            processInitialInfo.Instance = mainEntity;
-            processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
+            //var processInitialInfo = new ProcessInitialInfo();
+            //processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
+            //processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
+            //processInitialInfo.Metadata = mainEntity.CodeItem;
+            //processInitialInfo.Instance = mainEntity;
+            //processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
 
-            var task = context.CodeExecutor.ExecuteAsync(context.Logger, processInitialInfo);
+            //var task = context.CodeExecutor.ExecuteAsync(context.Logger, processInitialInfo);
 
-            _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|-|-|-|-|-|-|-|-|-|-|-|-|");
+            //_logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 
-            Thread.Sleep(10000);
+            Thread.Sleep(100000);
 
             _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|---|---|---|---|---|---|");
 

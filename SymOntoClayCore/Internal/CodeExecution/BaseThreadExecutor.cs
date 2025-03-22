@@ -630,7 +630,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
-        private BaseCompoundTaskInstance BaseCompoundTaskInstanceFactory(BaseCompoundTask compoundTask)
+        private BaseCompoundTaskInstance BaseCompoundTaskInstanceFactory(BaseCompoundHtnTask compoundTask)
         {
             var currentCodeFrame = _currentCodeFrame;
             var localContext = currentCodeFrame.LocalContext;

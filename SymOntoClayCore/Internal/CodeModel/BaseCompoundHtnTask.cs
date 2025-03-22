@@ -7,19 +7,19 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseCompoundTask: BaseTask
+    public abstract class BaseCompoundHtnTask: BaseTask
     {
         /// <inheritdoc/>
         public override bool IsBaseCompoundTask => true;
 
         /// <inheritdoc/>
-        public override BaseCompoundTask AsBaseCompoundTask => this;
+        public override BaseCompoundHtnTask AsBaseCompoundTask => this;
 
-        public List<CompoundTaskCase> Cases { get; set; } = new List<CompoundTaskCase>();
+        public List<CompoundHtnTaskCase> Cases { get; set; } = new List<CompoundHtnTaskCase>();
 
-        public abstract BaseCompoundTask CloneBaseCompoundTask(Dictionary<object, object> context);
+        public abstract BaseCompoundHtnTask CloneBaseCompoundTask(Dictionary<object, object> context);
 
-        protected void AppendBaseCompoundTask(BaseCompoundTask source, Dictionary<object, object> context)
+        protected void AppendBaseCompoundTask(BaseCompoundHtnTask source, Dictionary<object, object> context)
         {
             Cases = source.Cases?.Select(p => p.Clone(context))?.ToList();
 

@@ -39,8 +39,8 @@ namespace SymOntoClay.Core.Internal
         }
 
         public CodeExecutorComponent CodeExecutor { get; set; }
-
-        public TasksExecutorComponent TasksExecutor { get; set; }
+        
+        public HtnExecutorComponent TasksExecutor { get; set; }
 
         public StandardLibraryLoader StandardLibraryLoader { get; set; }
 
@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent IMainStorageContext.CodeExecutor => CodeExecutor;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
 
-        ITasksExecutorComponent IEngineContext.TasksExecutor => TasksExecutor;
+        IHtnExecutorComponent IEngineContext.HtnExecutor => TasksExecutor;
 
         /// <inheritdoc/>
         public INLPConverterContext GetNLPConverterContext()

@@ -10,14 +10,14 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
-    public class TasksPlan: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
+    public class HtnPlan: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
         /// <summary>
         /// Represents empty plan.
         /// </summary>
-        public static TasksPlan EmptyPlan { get; } = new TasksPlan();
+        public static HtnPlan EmptyPlan { get; } = new HtnPlan();
 
-        public List<TasksPlanItem> Items { get; set; } = new List<TasksPlanItem>();
+        public List<HtnPlanItem> Items { get; set; } = new List<HtnPlanItem>();
 
         /// <inheritdoc/>
         public override string ToString()

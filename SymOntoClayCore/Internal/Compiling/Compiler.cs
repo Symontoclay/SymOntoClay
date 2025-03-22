@@ -115,9 +115,9 @@ namespace SymOntoClay.Core.Internal.Compiling
         }
 
         /// <inheritdoc/>
-        public CompiledFunctionBody Compile(TasksPlan plan)
+        public CompiledFunctionBody Compile(HtnPlan plan)
         {
-            var node = new TasksPlanNode(_context);
+            var node = new HtnPlanNode(_context);
             node.Run(plan);
 
             return ConvertToCompiledFunctionBody(node.Result);

@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public BaseCompoundTask Result { get; protected set; }
+        public BaseCompoundHtnTask Result { get; protected set; }
 
         protected void ProcessGeneralContent()
         {

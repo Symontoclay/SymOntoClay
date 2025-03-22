@@ -6,14 +6,14 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
-    public class TasksPlanNode : BaseNode
+    public class HtnPlanNode : BaseNode
     {
-        public TasksPlanNode(IMainStorageContext context)
+        public HtnPlanNode(IMainStorageContext context)
             : base(context)
         {
         }
         
-        public void Run(TasksPlan plan)
+        public void Run(HtnPlan plan)
         {
             var beginTaskItems = new Dictionary<StrongIdentifierValue, IntermediateScriptCommand>();
 

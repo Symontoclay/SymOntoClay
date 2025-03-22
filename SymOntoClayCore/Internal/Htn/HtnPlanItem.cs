@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
-    public class TasksPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
+    public class HtnPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
         public BasePrimitiveTask ExecutedTask { get; set; }
 

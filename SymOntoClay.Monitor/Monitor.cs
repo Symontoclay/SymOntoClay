@@ -155,7 +155,7 @@ namespace SymOntoClay.Monitor
                     EnableEndRunResetExprOfConditionalTrigger = true,
                     EnableActivateIdleAction = true,
 
-                    EnableTasks = true,
+                    EnableHtn = true,
                     EnableBuildPlan = true,
 
                     EnableOutput = true,
@@ -523,11 +523,11 @@ namespace SymOntoClay.Monitor
             }
         }
 
-        bool IMonitorFeatures.EnableTasks 
+        bool IMonitorFeatures.EnableHtn 
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableTasks;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHtn;
             }
         }
 
@@ -658,7 +658,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature)} = {monitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableActivateIdleAction)} = {monitorFeatures.EnableActivateIdleAction}");
-            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTasks)} = {monitorFeatures.EnableTasks}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableHtn)} = {monitorFeatures.EnableHtn}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBuildPlan)} = {monitorFeatures.EnableBuildPlan}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");

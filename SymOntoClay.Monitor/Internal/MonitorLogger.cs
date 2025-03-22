@@ -3185,7 +3185,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.EnableTasks)
+            if (!_features.EnableHtn)
             {
                 return 0u;
             }
@@ -3260,7 +3260,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.EnableTasks)
+            if (!_features.EnableHtn)
             {
                 return;
             }

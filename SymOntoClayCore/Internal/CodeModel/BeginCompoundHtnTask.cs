@@ -1,30 +1,31 @@
-﻿using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Monitor.Common;
+﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Common;
+using System;
 using System.Collections.Generic;
+using SymOntoClay.Common.DebugHelpers;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class PrimitiveTask: BasePrimitiveTask
+    public class BeginCompoundHtnTask: BasePrimitiveTask
     {
-        public PrimitiveTaskOperator Operator { get; set; }
+        /// <inheritdoc/>
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.BeginCompoundTask;
 
         /// <inheritdoc/>
-        public override KindOfCodeEntity Kind => KindOfCodeEntity.PrimitiveTask;
+        public override bool IsBeginCompoundTask => true;
 
         /// <inheritdoc/>
-        public override bool IsPrimitiveTask => true;
+        public override BeginCompoundHtnTask AsBeginCompoundTask => this;
 
         /// <inheritdoc/>
-        public override PrimitiveTask AsPrimitiveTask => this;
+        public override KindOfTask KindOfTask => KindOfTask.BeginCompound;
 
         /// <inheritdoc/>
-        public override KindOfTask KindOfTask => KindOfTask.Primitive;
+        public override KindOfPrimitiveTask KindOfPrimitiveTask => KindOfPrimitiveTask.BeginCompound;
 
-        /// <inheritdoc/>
-        public override KindOfPrimitiveTask KindOfPrimitiveTask => KindOfPrimitiveTask.Primitive;
+        public BaseCompoundHtnTask CompoundTask { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -39,28 +40,102 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public PrimitiveTask Clone()
+        public BeginCompoundHtnTask Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public PrimitiveTask Clone(Dictionary<object, object> context)
+        public BeginCompoundHtnTask Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (PrimitiveTask)context[this];
+                return (BeginCompoundHtnTask)context[this];
             }
 
-            var result = new PrimitiveTask();
+            var result = new BeginCompoundHtnTask();
             context[this] = result;
 
-            result.Operator = Operator.Clone(context);
+            result.CompoundTask = CompoundTask?.CloneBaseCompoundTask(context);
 
             result.AppendCodeItem(this, context);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
+        {
+            var result = base.CalculateLongHashCode(options);
+
+            //if (!Cases.IsNullOrEmpty())
+            //{
+            //    foreach (var item in Cases)
+            //    {
+            //        result ^= item.GetLongHashCode(options);
+            //    }
+            //}
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<Annotation> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            CompoundTask.DiscoverAllAnnotations(result);
+
+            //if (!Cases.IsNullOrEmpty())
+            //{
+            //    foreach (var item in Cases)
+            //    {
+            //        item.DiscoverAllAnnotations(result);
+            //    }
+            //}
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(CompoundTask), CompoundTask);
+
+            //sb.PrintObjListProp(n, nameof(Cases), Cases);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintShortObjProp(n, nameof(CompoundTask), CompoundTask);
+
+            //sb.PrintShortObjListProp(n, nameof(Cases), Cases);
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintBriefObjProp(n, nameof(CompoundTask), CompoundTask);
+
+            //sb.PrintBriefObjListProp(n, nameof(Cases), Cases);
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
@@ -86,81 +161,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"primitive task: {Name.NameValue}";
-        }
-
-        /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
-        {
-            var result = base.CalculateLongHashCode(options);
-
-            //if (!Cases.IsNullOrEmpty())
-            //{
-            //    foreach (var item in Cases)
-            //    {
-            //        result ^= item.GetLongHashCode(options);
-            //    }
-            //}
-
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<Annotation> result)
-        {
-            base.DiscoverAllAnnotations(result);
-
-            Operator.DiscoverAllAnnotations(result);
-
-            //if (!Cases.IsNullOrEmpty())
-            //{
-            //    foreach (var item in Cases)
-            //    {
-            //        item.DiscoverAllAnnotations(result);
-            //    }
-            //}
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.PrintObjProp(n, nameof(Operator), Operator);
-
-            //sb.PrintObjListProp(n, nameof(Cases), Cases);
-
-            sb.Append(base.PropertiesToString(n));
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToShortString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.PrintShortObjProp(n, nameof(Operator), Operator);
-
-            //sb.PrintShortObjListProp(n, nameof(Cases), Cases);
-
-            sb.Append(base.PropertiesToShortString(n));
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToBriefString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.PrintBriefObjProp(n, nameof(Operator), Operator);
-
-            //sb.PrintBriefObjListProp(n, nameof(Cases), Cases);
-
-            sb.Append(base.PropertiesToBriefString(n));
-            return sb.ToString();
+            return $"Begin: {CompoundTask?.ToHumanizedLabel()}";
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SymOntoClay.Core
 {
     public interface ITasksStorage : ISpecificStorage
     {
-        BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
+        BaseCompoundHtnTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
         BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
 
         #region RootTask
@@ -18,23 +18,23 @@ namespace SymOntoClay.Core
         #endregion
 
         #region StrategicTask
-        void Append(IMonitorLogger logger, StrategicTask strategicTask);
-        StrategicTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name);
+        void Append(IMonitorLogger logger, StrategicHtnTask strategicTask);
+        StrategicHtnTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name);
         #endregion
 
         #region TacticalTask
-        void Append(IMonitorLogger logger, TacticalTask tacticalTask);
-        TacticalTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name);
+        void Append(IMonitorLogger logger, TacticalHtnTask tacticalTask);
+        TacticalHtnTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name);
         #endregion
 
         #region CompoundTask
-        void Append(IMonitorLogger logger, CompoundTask compoundTask);
-        CompoundTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
+        void Append(IMonitorLogger logger, CompoundHtnTask compoundTask);
+        CompoundHtnTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
         #endregion
 
         #region PrimitiveTask
-        void Append(IMonitorLogger logger, PrimitiveTask primitiveTask);
-        PrimitiveTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
+        void Append(IMonitorLogger logger, PrimitiveHtnTask primitiveTask);
+        PrimitiveHtnTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
         #endregion
     }
 }

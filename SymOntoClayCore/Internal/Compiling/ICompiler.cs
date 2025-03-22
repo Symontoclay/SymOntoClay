@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         CompiledFunctionBody Compile(List<Field> fields);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Field> fields);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Property> properties);
-        CompiledFunctionBody Compile(TasksPlan plan);
+        CompiledFunctionBody Compile(HtnPlan plan);
         CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> intermediateCommandsList);
     }
 }

@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal
     public interface IEngineContext: IMainStorageContext
     {   
         ICodeExecutorComponent CodeExecutor { get; }
-        ITasksExecutorComponent TasksExecutor { get; }
+        IHtnExecutorComponent HtnExecutor { get; }
 
         IHostSupport HostSupport { get; }
         IHostListener HostListener { get; }

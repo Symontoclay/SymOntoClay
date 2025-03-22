@@ -12,27 +12,27 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class PrimitiveTaskOperator : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class PrimitiveHtnTaskOperator : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public AstStatement Statement { get; set; }
         public List<IntermediateScriptCommand> IntermediateCommandsList { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public PrimitiveTaskOperator Clone()
+        public PrimitiveHtnTaskOperator Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public PrimitiveTaskOperator Clone(Dictionary<object, object> context)
+        public PrimitiveHtnTaskOperator Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (PrimitiveTaskOperator)context[this];
+                return (PrimitiveHtnTaskOperator)context[this];
             }
 
-            var result = new PrimitiveTaskOperator();
+            var result = new PrimitiveHtnTaskOperator();
             context[this] = result;
 
             result.Statement = Statement.CloneAstStatement(context);

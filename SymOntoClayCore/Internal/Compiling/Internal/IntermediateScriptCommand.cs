@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public int Position { get; set; }
         public Value Value { get; set; }
         public IAnnotatedItem AnnotatedItem { get; set; }
-        public BaseCompoundTask CompoundTask { get; set; }
+        public BaseCompoundHtnTask CompoundTask { get; set; }
         public IntermediateScriptCommand JumpToMe { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public int CountParams { get; set; }

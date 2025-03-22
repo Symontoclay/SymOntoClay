@@ -6,19 +6,19 @@ using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class TacticalTask : BaseCompoundTask
+    public class StrategicHtnTask : BaseCompoundHtnTask
     {
         /// <inheritdoc/>
-        public override KindOfCodeEntity Kind => KindOfCodeEntity.TacticalTask;
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.StrategicTask;
 
         /// <inheritdoc/>
-        public override bool IsTacticalTask => true;
+        public override bool IsStrategicTask => true;
 
         /// <inheritdoc/>
-        public override TacticalTask AsTacticalTask => this;
+        public override StrategicHtnTask AsStrategicTask => this;
 
         /// <inheritdoc/>
-        public override KindOfTask KindOfTask => KindOfTask.Tactical;
+        public override KindOfTask KindOfTask => KindOfTask.Strategic;
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -33,27 +33,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseCompoundTask CloneBaseCompoundTask(Dictionary<object, object> context)
+        public override BaseCompoundHtnTask CloneBaseCompoundTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public TacticalTask Clone()
+        public StrategicHtnTask Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public TacticalTask Clone(Dictionary<object, object> context)
+        public StrategicHtnTask Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (TacticalTask)context[this];
+                return (StrategicHtnTask)context[this];
             }
 
-            var result = new TacticalTask();
+            var result = new StrategicHtnTask();
             context[this] = result;
 
             result.AppendBaseCompoundTask(this, context);
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"TacticalTask task: {Name?.ToSystemString()}";
+            return $"Strategic task: {Name?.ToSystemString()}";
         }
     }
 }

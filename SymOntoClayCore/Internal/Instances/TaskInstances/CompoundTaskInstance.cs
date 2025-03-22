@@ -5,7 +5,7 @@ namespace SymOntoClay.Core.Internal.Instances.TaskInstances
 {
     public class CompoundTaskInstance: BaseCompoundTaskInstance
     {
-        public CompoundTaskInstance(CompoundTask codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IExecutionCoordinator parentExecutionCoordinator)
+        public CompoundTaskInstance(CompoundHtnTask codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IExecutionCoordinator parentExecutionCoordinator)
             : base(codeItem, context, parentStorage, parentCodeExecutionContext, parentExecutionCoordinator, context.StorageFactories.CompoundTaskInstanceStorageFactory)
         {
         }

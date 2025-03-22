@@ -8,7 +8,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class EndCompoundTask : BasePrimitiveTask
+    public class EndCompoundHtnTask : BasePrimitiveTask
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.EndCompoundTask;
@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsEndCompoundTask => true;
 
         /// <inheritdoc/>
-        public override EndCompoundTask AsEndCompoundTask => this;
+        public override EndCompoundHtnTask AsEndCompoundTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.EndCompound;
@@ -25,7 +25,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfPrimitiveTask KindOfPrimitiveTask => KindOfPrimitiveTask.EndCompound;
 
-        public BaseCompoundTask CompoundTask { get; set; }
+        public BaseCompoundHtnTask CompoundTask { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -40,21 +40,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public EndCompoundTask Clone()
+        public EndCompoundHtnTask Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public EndCompoundTask Clone(Dictionary<object, object> context)
+        public EndCompoundHtnTask Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (EndCompoundTask)context[this];
+                return (EndCompoundHtnTask)context[this];
             }
 
-            var result = new EndCompoundTask();
+            var result = new EndCompoundHtnTask();
             context[this] = result;
 
             result.CompoundTask = CompoundTask?.CloneBaseCompoundTask(context);

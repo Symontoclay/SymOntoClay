@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class CompoundTaskCase: CodeItem
+    public class CompoundHtnTaskCase: CodeItem
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.CompoundTaskCase;
@@ -20,9 +20,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsCompoundTaskCase => true;
 
         /// <inheritdoc/>
-        public override CompoundTaskCase AsCompoundTaskCase => this;
+        public override CompoundHtnTaskCase AsCompoundTaskCase => this;
         
-        public List<CompoundTaskCaseItem> Items { get; set; } = new List<CompoundTaskCaseItem>();
+        public List<CompoundHtnTaskCaseItem> Items { get; set; } = new List<CompoundHtnTaskCaseItem>();
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -31,21 +31,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public CompoundTaskCase Clone()
+        public CompoundHtnTaskCase Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public CompoundTaskCase Clone(Dictionary<object, object> context)
+        public CompoundHtnTaskCase Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (CompoundTaskCase)context[this];
+                return (CompoundHtnTaskCase)context[this];
             }
 
-            var result = new CompoundTaskCase();
+            var result = new CompoundHtnTaskCase();
             context[this] = result;
             
             result.Items = Items?.Select(p => p.Clone(context))?.ToList();

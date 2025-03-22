@@ -19,12 +19,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        private CompoundTask _compoundTask;
+        private CompoundHtnTask _compoundTask;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _compoundTask = new CompoundTask();
+            _compoundTask = new CompoundHtnTask();
             Result = _compoundTask;
 
             SetCurrentCodeItem(Result);

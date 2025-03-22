@@ -8,26 +8,26 @@ using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class CompoundTaskCaseItem : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class CompoundHtnTaskCaseItem : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public StrongIdentifierValue Name { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public CompoundTaskCaseItem Clone()
+        public CompoundHtnTaskCaseItem Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public CompoundTaskCaseItem Clone(Dictionary<object, object> context)
+        public CompoundHtnTaskCaseItem Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (CompoundTaskCaseItem)context[this];
+                return (CompoundHtnTaskCaseItem)context[this];
             }
 
-            var result = new CompoundTaskCaseItem();
+            var result = new CompoundHtnTaskCaseItem();
             context[this] = result;
 
             return result;

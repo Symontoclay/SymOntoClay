@@ -19,12 +19,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        private TacticalTask _tacticalTask;
+        private TacticalHtnTask _tacticalTask;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _tacticalTask = new TacticalTask();
+            _tacticalTask = new TacticalHtnTask();
             Result = _tacticalTask;
 
             SetCurrentCodeItem(Result);

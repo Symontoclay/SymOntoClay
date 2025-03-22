@@ -17,14 +17,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public CompoundTaskCaseItem Result { get; private set; }
+        public CompoundHtnTaskCaseItem Result { get; private set; }
 
         private State _state = State.Init;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new CompoundTaskCaseItem();
+            Result = new CompoundHtnTaskCaseItem();
         }
 
         /// <inheritdoc/>

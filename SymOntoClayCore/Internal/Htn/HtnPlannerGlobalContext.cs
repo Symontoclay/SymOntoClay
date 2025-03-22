@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
-    public class TasksPlannerGlobalContext: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class HtnPlannerGlobalContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public List<BuildPlanIterationContext> CompletedIterations { get; set; } = new List<BuildPlanIterationContext>();
 

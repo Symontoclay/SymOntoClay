@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         }
 
         /// <inheritdoc/>
-        public BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
+        public BaseCompoundHtnTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
             return null;
         }
@@ -45,12 +45,12 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 
         #region StrategicTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, StrategicTask strategicTask)
+        public void Append(IMonitorLogger logger, StrategicHtnTask strategicTask)
         {
         }
 
         /// <inheritdoc/>
-        public StrategicTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name)
+        public StrategicHtnTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }
@@ -58,12 +58,12 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 
         #region TacticalTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, TacticalTask tacticalTask)
+        public void Append(IMonitorLogger logger, TacticalHtnTask tacticalTask)
         {
         }
 
         /// <inheritdoc/>
-        public TacticalTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name)
+        public TacticalHtnTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }
@@ -71,12 +71,12 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 
         #region CompoundTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, CompoundTask compoundTask)
+        public void Append(IMonitorLogger logger, CompoundHtnTask compoundTask)
         {
         }
 
         /// <inheritdoc/>
-        public CompoundTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        public CompoundHtnTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }
@@ -84,12 +84,12 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 
         #region PrimitiveTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, PrimitiveTask primitiveTask)
+        public void Append(IMonitorLogger logger, PrimitiveHtnTask primitiveTask)
         {
         }
 
         /// <inheritdoc/>
-        public PrimitiveTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        public PrimitiveHtnTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }

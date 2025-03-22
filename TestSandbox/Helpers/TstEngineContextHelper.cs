@@ -186,7 +186,7 @@ namespace TestSandbox.Helpers
                     EnableEndRunResetExprOfConditionalTrigger = true,
                     EnableActivateIdleAction = true,
 
-                    EnableTasks = true,
+                    EnableHtn = true,
 
                     EnableBuildPlan = true,
 

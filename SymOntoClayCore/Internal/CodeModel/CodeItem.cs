@@ -222,37 +222,37 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual BaseTask AsBaseTask => null;
 
         public virtual bool IsBaseCompoundTask => false;
-        public virtual BaseCompoundTask AsBaseCompoundTask => null;
+        public virtual BaseCompoundHtnTask AsBaseCompoundTask => null;
 
         public virtual bool IsRootTask => false;
         public virtual RootTask AsRootTask => null;
 
         public virtual bool IsStrategicTask => false;
-        public virtual StrategicTask AsStrategicTask => null;
+        public virtual StrategicHtnTask AsStrategicTask => null;
 
         public virtual bool IsTacticalTask => false;
-        public virtual TacticalTask AsTacticalTask => null;
+        public virtual TacticalHtnTask AsTacticalTask => null;
 
         public virtual bool IsCompoundTask => false;
-        public virtual CompoundTask AsCompoundTask => null;
+        public virtual CompoundHtnTask AsCompoundTask => null;
 
         public virtual bool IsReplacedCompoundTask => false;
         public virtual ReplacedCompoundTask AsReplacedCompoundTask => null;
 
         public virtual bool IsCompoundTaskCase => false;
-        public virtual CompoundTaskCase AsCompoundTaskCase => null;
+        public virtual CompoundHtnTaskCase AsCompoundTaskCase => null;
 
         public virtual bool IsBasePrimitiveTask => false;
         public virtual BasePrimitiveTask AsBasePrimitiveTask => null;
 
         public virtual bool IsPrimitiveTask => false;
-        public virtual PrimitiveTask AsPrimitiveTask => null;
+        public virtual PrimitiveHtnTask AsPrimitiveTask => null;
 
         public virtual bool IsBeginCompoundTask => false;
-        public virtual BeginCompoundTask AsBeginCompoundTask => null;
+        public virtual BeginCompoundHtnTask AsBeginCompoundTask => null;
 
         public virtual bool IsEndCompoundTask => false;
-        public virtual EndCompoundTask AsEndCompoundTask => null;
+        public virtual EndCompoundHtnTask AsEndCompoundTask => null;
 
         public virtual bool IsNopPrimitiveTask => false;
         public virtual NopPrimitiveTask AsNopPrimitiveTask => null;

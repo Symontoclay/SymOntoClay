@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
-    public class TasksExecutorComponent: BaseContextComponent, ITasksExecutorComponent
+    public class HtnExecutorComponent: BaseContextComponent, IHtnExecutorComponent
     {
         private enum ExecutionState
         {
@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.Htn
             WaitingForFinishPlanExecution
         }
 
-        public TasksExecutorComponent(IEngineContext context)
+        public HtnExecutorComponent(IEngineContext context)
             : base(context.Logger)
         {
             _context = context;
@@ -40,10 +40,10 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private readonly IEngineContext _context;
         private IActivePeriodicObject _activeObject;
-        private volatile TasksPlanner _tasksPlanner;
+        private volatile HtnPlanner _tasksPlanner;
         private ICompiler _compiler;
         private volatile ExecutionState _executionState = ExecutionState.Init;
-        private volatile TasksPlan _plan;
+        private volatile HtnPlan _plan;
         private volatile IThreadExecutor _threadExecutor;
 
         private int? _maxPlanExecutionIterationsCount = 1;
@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             if (_executionState == ExecutionState.Init)
             {
-                _tasksPlanner = new TasksPlanner(_context);
+                _tasksPlanner = new HtnPlanner(_context);
 
                 if (!_tasksPlanner.HasRootTasks)
                 {

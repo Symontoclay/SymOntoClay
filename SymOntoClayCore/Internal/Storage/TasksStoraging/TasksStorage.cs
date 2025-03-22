@@ -11,21 +11,21 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
             : base(kind, realStorageContext)
         {
             _rootTasksStorage = new CommonTasksStorage<RootTask>(realStorageContext.Logger);
-            _strategicTasksStorage = new CommonTasksStorage<StrategicTask>(realStorageContext.Logger);
-            _tacticalTasksStorage = new CommonTasksStorage<TacticalTask>(realStorageContext.Logger);
-            _compoundCommonTasksStorage = new CommonTasksStorage<CompoundTask>(realStorageContext.Logger);
-            _primitiveCommonTasksStorage = new CommonTasksStorage<PrimitiveTask>(realStorageContext.Logger);
+            _strategicTasksStorage = new CommonTasksStorage<StrategicHtnTask>(realStorageContext.Logger);
+            _tacticalTasksStorage = new CommonTasksStorage<TacticalHtnTask>(realStorageContext.Logger);
+            _compoundCommonTasksStorage = new CommonTasksStorage<CompoundHtnTask>(realStorageContext.Logger);
+            _primitiveCommonTasksStorage = new CommonTasksStorage<PrimitiveHtnTask>(realStorageContext.Logger);
         }
 
         /// <inheritdoc/>
-        public BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
+        public BaseCompoundHtnTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
 #if DEBUG
             //logger.Info("BC884227-12CE-4881-A3D3-EC1551F1C0E1", $"name = {name}");
             //logger.Info("7DB2A28C-1044-4C71-B637-0A01D348FF20", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 
-            BaseCompoundTask task = null;
+            BaseCompoundHtnTask task = null;
 
             if(requestingKindOfTask == KindOfTask.Root)
             {
@@ -172,66 +172,66 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 
         #region StrategicTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, StrategicTask strategicTask)
+        public void Append(IMonitorLogger logger, StrategicHtnTask strategicTask)
         {
             _strategicTasksStorage.Append(logger, strategicTask);
         }
 
         /// <inheritdoc/>
-        public StrategicTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name)
+        public StrategicHtnTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return _strategicTasksStorage.GetByName(logger, name);
         }
 
-        private CommonTasksStorage<StrategicTask> _strategicTasksStorage;
+        private CommonTasksStorage<StrategicHtnTask> _strategicTasksStorage;
         #endregion
 
         #region TacticalTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, TacticalTask tacticalTask)
+        public void Append(IMonitorLogger logger, TacticalHtnTask tacticalTask)
         {
             _tacticalTasksStorage.Append(logger, tacticalTask);
         }
 
         /// <inheritdoc/>
-        public TacticalTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name)
+        public TacticalHtnTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return _tacticalTasksStorage.GetByName(logger, name);
         }
 
-        private CommonTasksStorage<TacticalTask> _tacticalTasksStorage;
+        private CommonTasksStorage<TacticalHtnTask> _tacticalTasksStorage;
         #endregion
 
         #region CompoundTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, CompoundTask compoundTask)
+        public void Append(IMonitorLogger logger, CompoundHtnTask compoundTask)
         {
             _compoundCommonTasksStorage.Append(logger, compoundTask);
         }
 
         /// <inheritdoc/>
-        public CompoundTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        public CompoundHtnTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return _compoundCommonTasksStorage.GetByName(logger, name);
         }
 
-        private CommonTasksStorage<CompoundTask> _compoundCommonTasksStorage;
+        private CommonTasksStorage<CompoundHtnTask> _compoundCommonTasksStorage;
         #endregion
 
         #region PrimitiveTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, PrimitiveTask primitiveTask)
+        public void Append(IMonitorLogger logger, PrimitiveHtnTask primitiveTask)
         {
             _primitiveCommonTasksStorage.Append(logger, primitiveTask);
         }
 
         /// <inheritdoc/>
-        public PrimitiveTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        public PrimitiveHtnTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return _primitiveCommonTasksStorage.GetByName(logger, name);
         }
 
-        private CommonTasksStorage<PrimitiveTask> _primitiveCommonTasksStorage;
+        private CommonTasksStorage<PrimitiveHtnTask> _primitiveCommonTasksStorage;
         #endregion
 
         /// <inheritdoc/>

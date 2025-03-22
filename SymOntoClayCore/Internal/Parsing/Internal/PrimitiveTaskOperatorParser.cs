@@ -18,14 +18,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public PrimitiveTaskOperator Result { get; private set; }
+        public PrimitiveHtnTaskOperator Result { get; private set; }
 
         private State _state = State.Init;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new PrimitiveTaskOperator();
+            Result = new PrimitiveHtnTaskOperator();
         }
 
         /// <inheritdoc/>

@@ -2457,25 +2457,25 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseCompoundTask.IsBaseCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseCompoundHtnTask.IsBaseCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseCompoundTask.AsBaseCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseCompoundHtnTask.AsBaseCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundHtnTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundHtnTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundTask.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundHtnTask.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundTask.PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundHtnTask.PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundTask.PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseCompoundHtnTask.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.InstanceId">
@@ -2601,59 +2601,59 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseTask.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.IsBeginCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.IsBeginCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.AsBeginCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.AsBeginCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.KindOfTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.KindOfTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.KindOfPrimitiveTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.KindOfPrimitiveTask">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.Clone">
@@ -2933,130 +2933,130 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItemDirective.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTask.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTask.IsCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.IsCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTask.AsCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.AsCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTask.KindOfTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.KindOfTask">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.IsCompoundTaskCase">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.IsCompoundTaskCase">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.AsCompoundTaskCase">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.AsCompoundTaskCase">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.GetLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.GetLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCase.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.ToString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.ToShortString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.ToShortString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.ToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.ToBriefString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.ToBriefString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.ToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.ToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTaskCaseItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.KindOfValue">
@@ -3258,59 +3258,59 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.IsEndCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.IsEndCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.AsEndCompoundTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.AsEndCompoundTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.KindOfTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.KindOfTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.KindOfPrimitiveTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.KindOfPrimitiveTask">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundTask.PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -5143,96 +5143,96 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.IsPrimitiveTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.IsPrimitiveTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.AsPrimitiveTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.AsPrimitiveTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.KindOfTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.KindOfTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.KindOfPrimitiveTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.KindOfPrimitiveTask">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.ToString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.ToShortString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.ToShortString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.ToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.ToBriefString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.ToBriefString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.ToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.ToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTaskOperator.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ProcessInfoValue.KindOfValue">
@@ -5965,44 +5965,44 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.IsStrategicTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.IsStrategicTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.AsStrategicTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.AsStrategicTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.KindOfTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.KindOfTask">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.KindOfValue">
@@ -6169,44 +6169,44 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Synonym.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.IsTacticalTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.IsTacticalTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.AsTacticalTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.AsTacticalTask">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.KindOfTask">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.KindOfTask">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.Clone">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
 		</summary><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeModel.TypeOfAccess.Local">
@@ -6506,7 +6506,7 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileToIntermediateCommands(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Property})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.TasksExecution.TasksPlan)">
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.Htn.HtnPlan)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.ConvertToCompiledFunctionBody(System.Collections.Generic.List{SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand})">
@@ -7283,6 +7283,247 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.EngineContext.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToDbgString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.ToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToDbgString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.ToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.LinkWithOtherBaseContextComponents">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.Init">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.HtnPlan.EmptyPlan">
+            <summary>
+            Represents empty plan.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToDbgString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlan.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToDbgString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IMainStorageContext.Id">
@@ -10705,25 +10946,25 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.GetAllRootTasks(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrategicTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.GetStrategicTask(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TacticalTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.GetTacticalTask(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CompoundTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.GetCompoundTaskByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.PrimitiveTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.GetPrimitiveTaskByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -10744,25 +10985,25 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.GetAllRootTasks(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrategicTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.GetStrategicTask(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TacticalTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.TacticalHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.GetTacticalTask(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CompoundTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.GetCompoundTaskByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.PrimitiveTask)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.GetPrimitiveTaskByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -10907,247 +11148,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.DbgPrintVariables(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.Clone">
-            <summary>
-			Clones the instance and returns cloned instance.
-		</summary><returns>Cloned instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-			Clones the instance using special context and returns cloned instance.
-		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToDbgString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.ToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuildPlanIterationContext.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.Clone">
-            <summary>
-			Clones the instance and returns cloned instance.
-		</summary><returns>Cloned instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-			Clones the instance using special context and returns cloned instance.
-		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToDbgString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.ToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksExecutorComponent.LinkWithOtherBaseContextComponents">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksExecutorComponent.Init">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksExecutorComponent.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.EmptyPlan">
-            <summary>
-            Represents empty plan.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToDbgString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToDbgString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanItem.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Visitors.ContainsNullValueLogicalVisitor.VisitRuleInstance(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">

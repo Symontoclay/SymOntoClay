@@ -6,7 +6,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class CompoundTask: BaseCompoundTask
+    public class CompoundHtnTask: BaseCompoundHtnTask
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.CompoundTask;
@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsCompoundTask => true;
 
         /// <inheritdoc/>
-        public override CompoundTask AsCompoundTask => this;
+        public override CompoundHtnTask AsCompoundTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.Compound;
@@ -33,27 +33,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseCompoundTask CloneBaseCompoundTask(Dictionary<object, object> context)
+        public override BaseCompoundHtnTask CloneBaseCompoundTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public CompoundTask Clone()
+        public CompoundHtnTask Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public CompoundTask Clone(Dictionary<object, object> context)
+        public CompoundHtnTask Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (CompoundTask)context[this];
+                return (CompoundHtnTask)context[this];
             }
 
-            var result = new CompoundTask();
+            var result = new CompoundHtnTask();
             context[this] = result;
 
             result.AppendBaseCompoundTask(this, context);

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class ReplacedCompoundTask : BaseCompoundTask
+    public class ReplacedCompoundTask : BaseCompoundHtnTask
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.ReplacedCompoundTask;
@@ -22,7 +22,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.Replaced;
 
-        public BaseCompoundTask CompoundTask { get; set; }
+        public BaseCompoundHtnTask CompoundTask { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseCompoundTask CloneBaseCompoundTask(Dictionary<object, object> context)
+        public override BaseCompoundHtnTask CloneBaseCompoundTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }

@@ -65,14 +65,14 @@ namespace SymOntoClay.Core.Internal.Htn
                 (_executionState == ExecutionState.Init || _executionState == ExecutionState.WaitingForPlanBuilding))
             {
 #if DEBUG
-                Info("A45BC6E5-469E-4842-8890-CAC83FAF8CBE", $"_maxPlanExecutionIterationsCount = {_maxPlanExecutionIterationsCount}");
-                Info("BEF87933-2FF6-4D52-95CE-E938FB8D18AA", $"_runPlanExecutionIterations = {_runPlanExecutionIterations}");
+                //Info("A45BC6E5-469E-4842-8890-CAC83FAF8CBE", $"_maxPlanExecutionIterationsCount = {_maxPlanExecutionIterationsCount}");
+                //Info("BEF87933-2FF6-4D52-95CE-E938FB8D18AA", $"_runPlanExecutionIterations = {_runPlanExecutionIterations}");
 #endif
 
                 if(_runPlanExecutionIterations >= _maxPlanExecutionIterationsCount)
                 {
 #if DEBUG
-                    Info("F57594AA-164C-48AF-A7BA-020E46F0E993", $"_runPlanExecutionIterations >= _maxPlanExecutionIterationsCount");
+                    //Info("F57594AA-164C-48AF-A7BA-020E46F0E993", $"_runPlanExecutionIterations >= _maxPlanExecutionIterationsCount");
 #endif
 
                     return false;
@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 if (!_htnPlanner.HasRootTasks)
                 {
 #if DEBUG
-                    Info("723CD4E5-CCF4-4C1E-AF2D-DCDA776CA721", "!_tasksPlanner.HasRootTasks");
+                    //Info("723CD4E5-CCF4-4C1E-AF2D-DCDA776CA721", "!_tasksPlanner.HasRootTasks");
 #endif
 
                     return false;

@@ -267,6 +267,48 @@
             A random entity on game level will be preferred.
             </summary>
         </member>
+        <member name="P:SymOntoClay.Core.HtnExecutionSettings.PlanExecutionIterationsMaxCount">
+            <summary>
+            Sets Max count of plan execution iterations.
+            <list type="bullet">
+            <item>
+            <term>
+            null
+            </term>
+            <description>
+            Infinite execution.
+            It is for production mode.
+            Default value.
+            </description>
+            </item>
+            <item>
+            0
+            <term>
+            </term>
+            <description>
+            Turns off execution.
+            </description>
+            </item>
+            <item>
+            Any positive value.
+            <term>
+            </term>
+            <description>
+            Builds and executes htn plan the required number of times.
+            </description>
+            </item>
+            </list>
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.HtnExecutionSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.HtnExecutionSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.HtnExecutionSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.Core.IEntity">
             <summary>
             Represents an entity (concrete or conditional).

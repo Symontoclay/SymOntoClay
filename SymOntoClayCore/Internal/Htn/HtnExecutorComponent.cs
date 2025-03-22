@@ -15,10 +15,11 @@ namespace SymOntoClay.Core.Internal.Htn
             WaitingForFinishPlanExecution
         }
 
-        public HtnExecutorComponent(IEngineContext context)
+        public HtnExecutorComponent(IEngineContext context, HtnExecutionSettings htnExecutionSettings)
             : base(context.Logger)
         {
             _context = context;
+            _planExecutionIterationsMaxCount = htnExecutionSettings?.PlanExecutionIterationsMaxCount;
         }
 
         /// <inheritdoc/>
@@ -46,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Htn
         private volatile HtnPlan _plan;
         private volatile IThreadExecutor _threadExecutor;
 
-        private int? _maxPlanExecutionIterationsCount = 1;
+        private readonly int? _planExecutionIterationsMaxCount;
         private volatile int _runPlanExecutionIterations;
 
         public void BeginStarting()
@@ -61,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("EB501AF1-9B30-4D5A-ACD1-C013DF7769B8", $"_executionState = {_executionState}");
 #endif
 
-            if(_maxPlanExecutionIterationsCount.HasValue && 
+            if(_planExecutionIterationsMaxCount.HasValue && 
                 (_executionState == ExecutionState.Init || _executionState == ExecutionState.WaitingForPlanBuilding))
             {
 #if DEBUG
@@ -69,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 //Info("BEF87933-2FF6-4D52-95CE-E938FB8D18AA", $"_runPlanExecutionIterations = {_runPlanExecutionIterations}");
 #endif
 
-                if(_runPlanExecutionIterations >= _maxPlanExecutionIterationsCount)
+                if(_runPlanExecutionIterations >= _planExecutionIterationsMaxCount)
                 {
 #if DEBUG
                     //Info("F57594AA-164C-48AF-A7BA-020E46F0E993", $"_runPlanExecutionIterations >= _maxPlanExecutionIterationsCount");

@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.CodeExecutor = codeExecutor;
             baseContextComponents.Add(codeExecutor);
 
-            var htnExecutor = new HtnExecutorComponent(context);
+            var htnExecutor = new HtnExecutorComponent(context, settings.HtnExecution);
             context.HtnExecutor = htnExecutor;
             baseContextComponents.Add(htnExecutor);
 

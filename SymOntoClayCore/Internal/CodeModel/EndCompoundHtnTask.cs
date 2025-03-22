@@ -8,16 +8,16 @@ using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class EndCompoundHtnTask : BasePrimitiveTask
+    public class EndCompoundHtnTask : BasePrimitiveHtnTask
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.EndCompoundTask;
 
         /// <inheritdoc/>
-        public override bool IsEndCompoundTask => true;
+        public override bool IsEndCompoundHtnTask => true;
 
         /// <inheritdoc/>
-        public override EndCompoundHtnTask AsEndCompoundTask => this;
+        public override EndCompoundHtnTask AsEndCompoundHtnTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.EndCompound;
@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }

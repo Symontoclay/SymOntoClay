@@ -7,13 +7,13 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseCompoundHtnTask: BaseTask
+    public abstract class BaseCompoundHtnTask: BaseHtnTask
     {
         /// <inheritdoc/>
-        public override bool IsBaseCompoundTask => true;
+        public override bool IsBaseCompoundHtnTask => true;
 
         /// <inheritdoc/>
-        public override BaseCompoundHtnTask AsBaseCompoundTask => this;
+        public override BaseCompoundHtnTask AsBaseCompoundHtnTask => this;
 
         public List<CompoundHtnTaskCase> Cases { get; set; } = new List<CompoundHtnTaskCase>();
 

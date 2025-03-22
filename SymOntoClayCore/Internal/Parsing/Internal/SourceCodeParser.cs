@@ -149,7 +149,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Root:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new RootTaskParser(_context);
+                                var parser = new RootHtnTaskParser(_context);
                                 parser.Run();
                                 Result.Add(parser.Result);
                             }
@@ -158,7 +158,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Strategic:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new StrategicTaskParser(_context);
+                                var parser = new StrategicHtnTaskParser(_context);
                                 parser.Run();
                                 Result.Add(parser.Result);
                             }
@@ -176,7 +176,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Compound:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new CompoundTaskParser(_context);
+                                var parser = new CompoundHtnTaskParser(_context);
                                 parser.Run();
                                 Result.Add(parser.Result);
                             }
@@ -185,7 +185,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Primitive:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new PrimitiveTaskParser(_context);
+                                var parser = new PrimitiveHtnTaskParser(_context);
                                 parser.Run();
                                 Result.Add(parser.Result);
                             }

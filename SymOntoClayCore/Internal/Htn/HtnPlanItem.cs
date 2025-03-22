@@ -11,7 +11,7 @@ namespace SymOntoClay.Core.Internal.Htn
 {
     public class HtnPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
-        public BasePrimitiveTask ExecutedTask { get; set; }
+        public BasePrimitiveHtnTask ExecutedTask { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

@@ -12,10 +12,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.TacticalTask;
 
         /// <inheritdoc/>
-        public override bool IsTacticalTask => true;
+        public override bool IsTacticalHtnTask => true;
 
         /// <inheritdoc/>
-        public override TacticalHtnTask AsTacticalTask => this;
+        public override TacticalHtnTask AsTacticalHtnTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.Tactical;
@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"TacticalTask task: {Name?.ToSystemString()}";
+            return $"Tactical task: {Name?.ToSystemString()}";
         }
     }
 }

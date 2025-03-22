@@ -111,7 +111,7 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-                _context.TasksExecutor.BeginStarting();
+                _context.HtnExecutor.BeginStarting();
             }
         }
 

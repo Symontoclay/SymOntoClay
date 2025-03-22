@@ -3,32 +3,48 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class SetRootTaskParser : BaseInternalParser
+    public class StrategicHtnTaskParser : BaseCompoundHtnTaskParser
     {
         private enum State
         {
             Init,
-            GotRootMark,
-            GotRootTaskMark,
-            GotRootTaskName
+            GotStrategic,
+            GotStrategicTask,
+            GotName,
+            ContentStarted
         }
 
-        public SetRootTaskParser(InternalParserContext context)
+        public StrategicHtnTaskParser(InternalParserContext context)
             : base(context)
         {
         }
 
-        private State _state = State.Init;
+        private StrategicHtnTask _strategicTask;
 
-        public StrongIdentifierValue Result { get; private set; }
+        /// <inheritdoc/>
+        protected override void OnEnter()
+        {
+            _strategicTask = new StrategicHtnTask();
+            Result = _strategicTask;
+
+            SetCurrentCodeItem(Result);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+            RemoveCurrentCodeEntity();
+        }
+
+        private State _state = State.Init;
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
-            //Info("6D2EA5A6-2CCC-415F-9372-602BA9DA6963", $"_state = {_state}");
-            //Info("197125B2-8F92-44BA-96CD-1F40F8039AE2", $"_currToken = {_currToken}");
-            //Info("C086C1F8-6667-46C9-8EC2-573C5594EB37", $"Result = {Result}");
+            //Info(, $"_state = {_state}");
+            //Info(, $"_currToken = {_currToken}");
+            //Info(, $"Result = {Result}");
 #endif
 
             switch (_state)
@@ -39,8 +55,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Root:
-                                    _state = State.GotRootMark;
+                                case KeyWordTokenKind.Strategic:
+                                    _state = State.GotStrategic;
                                     break;
 
                                 default:
@@ -53,14 +69,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotRootMark:
+                case State.GotStrategic:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Task:
-                                    _state = State.GotRootTaskMark;
+                                    _state = State.GotStrategicTask;
                                     break;
 
                                 default:
@@ -73,13 +89,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotRootTaskMark:
+                case State.GotStrategicTask:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
-                            Result = ParseName(_currToken.Content);
-                            _state = State.GotRootTaskName;
+                            Result.Name = ParseName(_currToken.Content);
+                            _state = State.GotName;
                             break;
 
                         default:
@@ -87,16 +103,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotRootTaskName:
+                case State.GotName:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Semicolon:
-                            Exit();
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
                             break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
+                    break;
+
+                case State.ContentStarted:
+                    ProcessGeneralContent();
                     break;
 
                 default:

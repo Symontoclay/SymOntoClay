@@ -12,10 +12,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.CompoundTask;
 
         /// <inheritdoc/>
-        public override bool IsCompoundTask => true;
+        public override bool IsCompoundHtnTask => true;
 
         /// <inheritdoc/>
-        public override CompoundHtnTask AsCompoundTask => this;
+        public override CompoundHtnTask AsCompoundHtnTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.Compound;
@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"CompoundTask task: {Name?.ToSystemString()}";
+            return $"Compound task: {Name?.ToSystemString()}";
         }
     }
 }

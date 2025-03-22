@@ -2,27 +2,30 @@
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class ReplacedCompoundTask : BaseCompoundHtnTask
+    public class JumpPrimitiveHtnTask : BasePrimitiveHtnTask
     {
         /// <inheritdoc/>
-        public override KindOfCodeEntity Kind => KindOfCodeEntity.ReplacedCompoundTask;
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.JumpPrimitiveTask;
 
         /// <inheritdoc/>
-        public override bool IsReplacedCompoundTask => true;
+        public override bool IsJumpPrimitiveHtnTask => true;
 
         /// <inheritdoc/>
-        public override ReplacedCompoundTask AsReplacedCompoundTask => this;
+        public override JumpPrimitiveHtnTask AsJumpPrimitiveHtnTask => this;
 
         /// <inheritdoc/>
-        public override KindOfTask KindOfTask => KindOfTask.Replaced;
+        public override KindOfTask KindOfTask => KindOfTask.Jump;
 
-        public BaseCompoundHtnTask CompoundTask { get; set; }
+        /// <inheritdoc/>
+        public override KindOfPrimitiveTask KindOfPrimitiveTask => KindOfPrimitiveTask.Jump;
+
+        public StrongIdentifierValue TargetTaskName { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -31,36 +34,30 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
-        {
-            return Clone(context);
-        }
-
-        /// <inheritdoc/>
-        public override BaseCompoundHtnTask CloneBaseCompoundTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public ReplacedCompoundTask Clone()
+        public JumpPrimitiveHtnTask Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public ReplacedCompoundTask Clone(Dictionary<object, object> context)
+        public JumpPrimitiveHtnTask Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (ReplacedCompoundTask)context[this];
+                return (JumpPrimitiveHtnTask)context[this];
             }
 
-            var result = new ReplacedCompoundTask();
+            var result = new JumpPrimitiveHtnTask();
             context[this] = result;
 
-            result.CompoundTask = CompoundTask?.CloneBaseCompoundTask(context);
+            result.TargetTaskName = TargetTaskName?.Clone(context);
 
             result.AppendCodeItem(this, context);
 
@@ -90,7 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"Replaced {CompoundTask?.ToHumanizedLabel()}";
+            return $"Jump to: {TargetTaskName?.ToSystemString()}";
         }
 
         /// <inheritdoc/>
@@ -114,7 +111,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
-            CompoundTask.DiscoverAllAnnotations(result);
+            //TargetBeginCompoundTask.DiscoverAllAnnotations(result);
 
             //if (!Cases.IsNullOrEmpty())
             //{
@@ -131,7 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(CompoundTask), CompoundTask);
+            sb.PrintObjProp(n, nameof(TargetTaskName), TargetTaskName);
 
             //sb.PrintObjListProp(n, nameof(Cases), Cases);
 
@@ -145,7 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(CompoundTask), CompoundTask);
+            sb.PrintShortObjProp(n, nameof(TargetTaskName), TargetTaskName);
 
             //sb.PrintShortObjListProp(n, nameof(Cases), Cases);
 
@@ -159,7 +156,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(CompoundTask), CompoundTask);
+            sb.PrintBriefObjProp(n, nameof(TargetTaskName), TargetTaskName);
 
             //sb.PrintBriefObjListProp(n, nameof(Cases), Cases);
 

@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal
 
         public CodeExecutorComponent CodeExecutor { get; set; }
         
-        public HtnExecutorComponent TasksExecutor { get; set; }
+        public HtnExecutorComponent HtnExecutor { get; set; }
 
         public StandardLibraryLoader StandardLibraryLoader { get; set; }
 
@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent IMainStorageContext.CodeExecutor => CodeExecutor;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
 
-        IHtnExecutorComponent IEngineContext.HtnExecutor => TasksExecutor;
+        IHtnExecutorComponent IEngineContext.HtnExecutor => HtnExecutor;
 
         /// <inheritdoc/>
         public INLPConverterContext GetNLPConverterContext()
@@ -105,7 +105,7 @@ namespace SymOntoClay.Core.Internal
         public override void Die()
         {
             CodeExecutor.Dispose();
-            TasksExecutor.Dispose();
+            HtnExecutor.Dispose();
             CodeExecutionThreadPool.Dispose();
             TriggersThreadPool.Dispose();
 
@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal
         protected override void OnDisposed()
         {
             CodeExecutor.Dispose();
-            TasksExecutor.Dispose();
+            HtnExecutor.Dispose();
             CodeExecutionThreadPool.Dispose();
             TriggersThreadPool.Dispose();
 

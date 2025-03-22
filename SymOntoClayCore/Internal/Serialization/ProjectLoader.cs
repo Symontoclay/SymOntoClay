@@ -483,19 +483,19 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.RootTask:
-                    targetStorage.TasksStorage.Append(logger, codeItem.AsRootTask);
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsRootHtnTask);
                     break;
 
                 case KindOfCodeEntity.StrategicTask:
-                    targetStorage.TasksStorage.Append(logger, codeItem.AsStrategicTask);
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsStrategicHtnTask);
                     break;
 
                 case KindOfCodeEntity.TacticalTask:
-                    targetStorage.TasksStorage.Append(logger, codeItem.AsTacticalTask);
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsTacticalHtnTask);
                     break;
 
                 case KindOfCodeEntity.CompoundTask:
-                    targetStorage.TasksStorage.Append(logger, codeItem.AsCompoundTask);
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsCompoundHtnTask);
                     break;
 
                 case KindOfCodeEntity.PrimitiveTask:

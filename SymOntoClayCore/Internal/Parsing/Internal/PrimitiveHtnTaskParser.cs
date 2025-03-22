@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class PrimitiveTaskParser : BaseInternalParser
+    public class PrimitiveHtnTaskParser : BaseInternalParser
     {
         private enum State
         {
@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             ContentStarted
         }
 
-        public PrimitiveTaskParser(InternalParserContext context)
+        public PrimitiveHtnTaskParser(InternalParserContext context)
             : base(context)
         {
         }
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     {
                                         _context.Recovery(_currToken);
 
-                                        var parser = new PrimitiveTaskOperatorParser(_context);
+                                        var parser = new PrimitiveHtnTaskOperatorParser(_context);
                                         parser.Run();
 
                                         Result.Operator = parser.Result;

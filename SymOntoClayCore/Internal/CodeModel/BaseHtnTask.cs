@@ -1,17 +1,21 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BasePrimitiveTask : BaseTask
+    public abstract class BaseHtnTask : CodeItem
     {
         /// <inheritdoc/>
-        public override bool IsBasePrimitiveTask => true;
+        public override bool IsBaseHtnTask => true;
 
         /// <inheritdoc/>
-        public override BasePrimitiveTask AsBasePrimitiveTask => this;
+        public override BaseHtnTask AsBaseHtnTask => this;
 
-        public abstract KindOfPrimitiveTask KindOfPrimitiveTask { get; }
+        public abstract BaseHtnTask CloneBaseTask(Dictionary<object, object> context);
+
+        public abstract KindOfTask KindOfTask { get; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -19,7 +23,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfPrimitiveTask)} = {KindOfPrimitiveTask}");
+            sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -31,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfPrimitiveTask)} = {KindOfPrimitiveTask}");
+            sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -43,7 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfPrimitiveTask)} = {KindOfPrimitiveTask}");
+            sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

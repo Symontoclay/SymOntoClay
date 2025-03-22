@@ -109,9 +109,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         Instantiate_N,
         Instantiate_P,
         AddLifeCycleEvent,
-        BeginCompoundTask,
-        EndCompoundTask,
-        BeginPrimitiveTask,
-        EndPrimitiveTask
+        BeginCompoundHtnTask,
+        EndCompoundHtnTask,
+        BeginPrimitiveHtnTask,
+        EndPrimitiveHtnTask
     }
 }

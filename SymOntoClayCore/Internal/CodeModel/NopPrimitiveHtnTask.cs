@@ -8,16 +8,16 @@ using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class NopPrimitiveTask : BasePrimitiveTask
+    public class NopPrimitiveHtnTask : BasePrimitiveHtnTask
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.NopPrimitiveTask;
 
         /// <inheritdoc/>
-        public override bool IsNopPrimitiveTask => true;
+        public override bool IsNopPrimitiveHtnTask => true;
 
         /// <inheritdoc/>
-        public override NopPrimitiveTask AsNopPrimitiveTask => this;
+        public override NopPrimitiveHtnTask AsNopPrimitiveHtnTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.Nop;
@@ -32,27 +32,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public NopPrimitiveTask Clone()
+        public NopPrimitiveHtnTask Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public NopPrimitiveTask Clone(Dictionary<object, object> context)
+        public NopPrimitiveHtnTask Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (NopPrimitiveTask)context[this];
+                return (NopPrimitiveHtnTask)context[this];
             }
 
-            var result = new NopPrimitiveTask();
+            var result = new NopPrimitiveHtnTask();
             context[this] = result;
 
 

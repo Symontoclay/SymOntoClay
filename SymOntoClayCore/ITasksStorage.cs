@@ -9,12 +9,12 @@ namespace SymOntoClay.Core
     public interface ITasksStorage : ISpecificStorage
     {
         BaseCompoundHtnTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
-        BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
+        BaseHtnTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
 
         #region RootTask
-        void Append(IMonitorLogger logger, RootTask rootTask);
-        RootTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name);
-        IEnumerable<RootTask> GetAllRootTasks(IMonitorLogger logger);
+        void Append(IMonitorLogger logger, RootHtnTask rootTask);
+        RootHtnTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name);
+        IEnumerable<RootHtnTask> GetAllRootTasks(IMonitorLogger logger);
         #endregion
 
         #region StrategicTask

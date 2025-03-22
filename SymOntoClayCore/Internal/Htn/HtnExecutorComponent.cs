@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private readonly IEngineContext _context;
         private IActivePeriodicObject _activeObject;
-        private volatile HtnPlanner _tasksPlanner;
+        private volatile HtnPlanner _htnPlanner;
         private ICompiler _compiler;
         private volatile ExecutionState _executionState = ExecutionState.Init;
         private volatile HtnPlan _plan;
@@ -83,9 +83,9 @@ namespace SymOntoClay.Core.Internal.Htn
 
             if (_executionState == ExecutionState.Init)
             {
-                _tasksPlanner = new HtnPlanner(_context);
+                _htnPlanner = new HtnPlanner(_context);
 
-                if (!_tasksPlanner.HasRootTasks)
+                if (!_htnPlanner.HasRootTasks)
                 {
 #if DEBUG
                     Info("723CD4E5-CCF4-4C1E-AF2D-DCDA776CA721", "!_tasksPlanner.HasRootTasks");
@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal.Htn
             {
                 Logger.StartBuildPlan("584A66AE-6592-4476-AA54-C283C9A65DBE");
 
-                _plan = _tasksPlanner.BuildPlan();
+                _plan = _htnPlanner.BuildPlan();
 
                 Logger.StopBuildPlan("CEB8C398-CFA8-4869-A6BC-5BFB32F89CBF");
 
@@ -159,7 +159,7 @@ namespace SymOntoClay.Core.Internal.Htn
         protected override void OnDisposed()
         {
             _activeObject.Dispose();
-            _tasksPlanner?.Dispose();
+            _htnPlanner?.Dispose();
             
             base.OnDisposed();
         }

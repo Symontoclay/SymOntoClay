@@ -210,8 +210,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.CallDefaultCtors:
                 case OperationCode.ExecCallEvent:
                 case OperationCode.AddLifeCycleEvent:
-                case OperationCode.BeginPrimitiveTask:
-                case OperationCode.EndPrimitiveTask:
+                case OperationCode.BeginPrimitiveHtnTask:
+                case OperationCode.EndPrimitiveHtnTask:
                 case OperationCode.VarDecl:
                 case OperationCode.PropDecl:
                 case OperationCode.LoadFromVar:
@@ -258,8 +258,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                     return $"{operationCode} *";
 
-                case OperationCode.BeginCompoundTask:
-                case OperationCode.EndCompoundTask:
+                case OperationCode.BeginCompoundHtnTask:
+                case OperationCode.EndCompoundHtnTask:
                     return $"{operationCode} {commandItem.CompoundTask?.ToHumanizedLabel()}";
 
                 default:

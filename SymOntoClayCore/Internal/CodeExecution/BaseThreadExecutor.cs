@@ -527,19 +527,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         ProcessAddLifeCycleEvent();
                         break;
 
-                    case OperationCode.BeginCompoundTask:
+                    case OperationCode.BeginCompoundHtnTask:
                         ProcessBeginCompoundTask(currentCommand);
                         break;
 
-                    case OperationCode.EndCompoundTask:
+                    case OperationCode.EndCompoundHtnTask:
                         ProcessEndCompoundTask(currentCommand);
                         break;
 
-                    case OperationCode.BeginPrimitiveTask:
+                    case OperationCode.BeginPrimitiveHtnTask:
                         ProcessBeginPrimitiveTask(currentCommand);
                         break;
 
-                    case OperationCode.EndPrimitiveTask:
+                    case OperationCode.EndPrimitiveHtnTask:
                         ProcessEndPrimitiveTask(currentCommand);
                         break;
 
@@ -640,16 +640,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch(kindOfTask)
             {
                 case KindOfTask.Root:
-                    return new RootTaskInstance(compoundTask.AsRootTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+                    return new RootTaskInstance(compoundTask.AsRootHtnTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
 
                 case KindOfTask.Strategic:
-                    return new StrategicTaskInstance(compoundTask.AsStrategicTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+                    return new StrategicTaskInstance(compoundTask.AsStrategicHtnTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
 
                 case KindOfTask.Tactical:
-                    return new TacticalTaskInstance(compoundTask.AsTacticalTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+                    return new TacticalTaskInstance(compoundTask.AsTacticalHtnTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
 
                 case KindOfTask.Compound:
-                    return new CompoundTaskInstance(compoundTask.AsCompoundTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+                    return new CompoundTaskInstance(compoundTask.AsCompoundHtnTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfTask), kindOfTask, null);

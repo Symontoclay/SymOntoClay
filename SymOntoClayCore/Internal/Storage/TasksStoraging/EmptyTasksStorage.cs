@@ -19,27 +19,27 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         }
 
         /// <inheritdoc/>
-        public BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
+        public BaseHtnTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
             return null;
         }
 
         #region RootTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, RootTask rootTask)
+        public void Append(IMonitorLogger logger, RootHtnTask rootTask)
         {
         }
 
         /// <inheritdoc/>
-        public RootTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name)
+        public RootHtnTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public IEnumerable<RootTask> GetAllRootTasks(IMonitorLogger logger)
+        public IEnumerable<RootHtnTask> GetAllRootTasks(IMonitorLogger logger)
         {
-            return Enumerable.Empty<RootTask>();
+            return Enumerable.Empty<RootHtnTask>();
         }
         #endregion
 

@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class CompoundTaskCaseItemParser : BaseInternalParser
+    public class CompoundHtnTaskCaseItemParser : BaseInternalParser
     {
         private enum State
         {
@@ -12,7 +12,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotName
         }
 
-        public CompoundTaskCaseItemParser(InternalParserContext context)
+        public CompoundHtnTaskCaseItemParser(InternalParserContext context)
             : base(context)
         {
         }

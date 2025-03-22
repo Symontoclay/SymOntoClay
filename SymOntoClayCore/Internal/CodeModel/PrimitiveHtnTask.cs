@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class PrimitiveHtnTask: BasePrimitiveTask
+    public class PrimitiveHtnTask: BasePrimitiveHtnTask
     {
         public PrimitiveHtnTaskOperator Operator { get; set; }
 
@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }

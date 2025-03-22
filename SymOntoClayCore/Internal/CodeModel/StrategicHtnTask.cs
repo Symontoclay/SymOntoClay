@@ -12,10 +12,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.StrategicTask;
 
         /// <inheritdoc/>
-        public override bool IsStrategicTask => true;
+        public override bool IsStrategicHtnTask => true;
 
         /// <inheritdoc/>
-        public override StrategicHtnTask AsStrategicTask => this;
+        public override StrategicHtnTask AsStrategicHtnTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.Strategic;
@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }

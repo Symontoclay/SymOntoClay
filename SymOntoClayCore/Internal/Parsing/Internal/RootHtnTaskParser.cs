@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class RootTaskParser : BaseCompoundTaskParser
+    public class RootHtnTaskParser : BaseCompoundHtnTaskParser
     {
         private enum State
         {
@@ -14,17 +14,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             ContentStarted
         }
 
-        public RootTaskParser(InternalParserContext context)
+        public RootHtnTaskParser(InternalParserContext context)
             : base(context)
         {
         }
 
-        private RootTask _rootTask;
+        private RootHtnTask _rootTask;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _rootTask = new RootTask();
+            _rootTask = new RootHtnTask();
             Result = _rootTask;
 
             SetCurrentCodeItem(Result);

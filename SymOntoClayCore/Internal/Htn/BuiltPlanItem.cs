@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Htn
 {
     public class BuiltPlanItem : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
-        public BaseTask ProcessedTask { get; set; }
+        public BaseHtnTask ProcessedTask { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public BuiltPlanItem Clone()

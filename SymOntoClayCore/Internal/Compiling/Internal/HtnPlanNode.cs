@@ -36,9 +36,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     case KindOfPrimitiveTask.BeginCompound:
                         {
                             var command = new IntermediateScriptCommand();
-                            command.OperationCode = OperationCode.BeginCompoundTask;
+                            command.OperationCode = OperationCode.BeginCompoundHtnTask;
 
-                            var compoundTask = executedTask.AsBeginCompoundTask.CompoundTask;
+                            var compoundTask = executedTask.AsBeginCompoundHtnTask.CompoundTask;
 
                             command.CompoundTask = compoundTask;
 
@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     case KindOfPrimitiveTask.Primitive:
                         {
                             var command = new IntermediateScriptCommand();
-                            command.OperationCode = OperationCode.BeginPrimitiveTask;
+                            command.OperationCode = OperationCode.BeginPrimitiveHtnTask;
                             AddCommand(command);
 
                             var intermediateCommandsList = executedTask.AsPrimitiveTask.Operator.IntermediateCommandsList;
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             }
 
                             command = new IntermediateScriptCommand();
-                            command.OperationCode = OperationCode.EndPrimitiveTask;
+                            command.OperationCode = OperationCode.EndPrimitiveHtnTask;
                             AddCommand(command);
                         }
                         break;
@@ -74,8 +74,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     case KindOfPrimitiveTask.EndCompound:
                         {
                             var command = new IntermediateScriptCommand();
-                            command.OperationCode = OperationCode.EndCompoundTask;
-                            command.CompoundTask = executedTask.AsEndCompoundTask.CompoundTask;
+                            command.OperationCode = OperationCode.EndCompoundHtnTask;
+                            command.CompoundTask = executedTask.AsEndCompoundHtnTask.CompoundTask;
 
                             AddCommand(command);
                         }
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             var command = new IntermediateScriptCommand();
                             command.OperationCode = OperationCode.JumpTo;
-                            command.JumpToMe = beginTaskItems[executedTask.AsJumpPrimitiveTask.TargetTaskName];
+                            command.JumpToMe = beginTaskItems[executedTask.AsJumpPrimitiveHtnTask.TargetTaskName];
 
                             AddCommand(command);
                         }

@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         public TasksStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {
-            _rootTasksStorage = new CommonTasksStorage<RootTask>(realStorageContext.Logger);
+            _rootTasksStorage = new CommonTasksStorage<RootHtnTask>(realStorageContext.Logger);
             _strategicTasksStorage = new CommonTasksStorage<StrategicHtnTask>(realStorageContext.Logger);
             _tacticalTasksStorage = new CommonTasksStorage<TacticalHtnTask>(realStorageContext.Logger);
             _compoundCommonTasksStorage = new CommonTasksStorage<CompoundHtnTask>(realStorageContext.Logger);
@@ -83,14 +83,14 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         }
 
         /// <inheritdoc/>
-        public BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
+        public BaseHtnTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
 #if DEBUG
             //logger.Info("141DA781-3FB0-453F-BE69-1FEF36607336", $"name = {name}");
             //logger.Info("8B88B83A-0495-4278-B03E-E8B993406B88", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 
-            BaseTask task = null;
+            BaseHtnTask task = null;
 
             if (requestingKindOfTask == KindOfTask.Root)
             {
@@ -150,24 +150,24 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 
         #region RootTask
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, RootTask rootTask)
+        public void Append(IMonitorLogger logger, RootHtnTask rootTask)
         {
             _rootTasksStorage.Append(logger, rootTask);
         }
 
         /// <inheritdoc/>
-        public RootTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name)
+        public RootHtnTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return _rootTasksStorage.GetByName(logger, name);
         }
 
         /// <inheritdoc/>
-        public IEnumerable<RootTask> GetAllRootTasks(IMonitorLogger logger)
+        public IEnumerable<RootHtnTask> GetAllRootTasks(IMonitorLogger logger)
         {
             return _rootTasksStorage.GetAllTasks(logger);
         }
 
-        private CommonTasksStorage<RootTask> _rootTasksStorage;
+        private CommonTasksStorage<RootHtnTask> _rootTasksStorage;
         #endregion
 
         #region StrategicTask

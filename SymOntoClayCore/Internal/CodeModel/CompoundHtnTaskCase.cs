@@ -17,10 +17,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.CompoundTaskCase;
 
         /// <inheritdoc/>
-        public override bool IsCompoundTaskCase => true;
+        public override bool IsCompoundTaskHtnCase => true;
 
         /// <inheritdoc/>
-        public override CompoundHtnTaskCase AsCompoundTaskCase => this;
+        public override CompoundHtnTaskCase AsCompoundTaskHtnCase => this;
         
         public List<CompoundHtnTaskCaseItem> Items { get; set; } = new List<CompoundHtnTaskCaseItem>();
 

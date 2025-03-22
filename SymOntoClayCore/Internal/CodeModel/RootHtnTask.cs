@@ -7,16 +7,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class RootTask : BaseCompoundHtnTask
+    public class RootHtnTask : BaseCompoundHtnTask
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.RootTask;
 
         /// <inheritdoc/>
-        public override bool IsRootTask => true;
+        public override bool IsRootHtnTask => true;
 
         /// <inheritdoc/>
-        public override RootTask AsRootTask => this;
+        public override RootHtnTask AsRootHtnTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.Root;
@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }
@@ -40,21 +40,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public RootTask Clone()
+        public RootHtnTask Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public RootTask Clone(Dictionary<object, object> context)
+        public RootHtnTask Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (RootTask)context[this];
+                return (RootHtnTask)context[this];
             }
 
-            var result = new RootTask();
+            var result = new RootHtnTask();
             context[this] = result;
 
             result.AppendBaseCompoundTask(this, context);
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"root task: {Name?.ToSystemString()}";
+            return $"Root task: {Name?.ToSystemString()}";
         }
     }
 }

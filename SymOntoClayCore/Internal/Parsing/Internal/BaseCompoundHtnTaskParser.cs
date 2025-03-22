@@ -3,9 +3,9 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public abstract class BaseCompoundTaskParser : BaseInternalParser
+    public abstract class BaseCompoundHtnTaskParser : BaseInternalParser
     {
-        protected BaseCompoundTaskParser(InternalParserContext context)
+        protected BaseCompoundHtnTaskParser(InternalParserContext context)
             : base(context)
         {
         }
@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _context.Recovery(_currToken);
 
-                                var parser = new CompoundTaskCaseParser(_context);
+                                var parser = new CompoundHtnTaskCaseParser(_context);
                                 parser.Run();
 
                                 Result.Cases.Add(parser.Result);

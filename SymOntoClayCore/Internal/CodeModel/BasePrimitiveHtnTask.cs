@@ -1,21 +1,17 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseTask : CodeItem
+    public abstract class BasePrimitiveHtnTask : BaseHtnTask
     {
         /// <inheritdoc/>
-        public override bool IsBaseTask => true;
+        public override bool IsBasePrimitiveHtnTask => true;
 
         /// <inheritdoc/>
-        public override BaseTask AsBaseTask => this;
+        public override BasePrimitiveHtnTask AsBasePrimitiveHtnTask => this;
 
-        public abstract BaseTask CloneBaseTask(Dictionary<object, object> context);
-
-        public abstract KindOfTask KindOfTask { get; }
+        public abstract KindOfPrimitiveTask KindOfPrimitiveTask { get; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -23,7 +19,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
+            sb.AppendLine($"{spaces}{nameof(KindOfPrimitiveTask)} = {KindOfPrimitiveTask}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -35,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
+            sb.AppendLine($"{spaces}{nameof(KindOfPrimitiveTask)} = {KindOfPrimitiveTask}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -47,7 +43,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
+            sb.AppendLine($"{spaces}{nameof(KindOfPrimitiveTask)} = {KindOfPrimitiveTask}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

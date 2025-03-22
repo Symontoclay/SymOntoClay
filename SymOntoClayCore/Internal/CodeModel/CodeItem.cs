@@ -218,47 +218,47 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsIdleActionItem => false;
         public virtual IdleActionItem AsIdleActionItem => null;
 
-        public virtual bool IsBaseTask => false;
-        public virtual BaseTask AsBaseTask => null;
+        public virtual bool IsBaseHtnTask => false;
+        public virtual BaseHtnTask AsBaseHtnTask => null;
 
-        public virtual bool IsBaseCompoundTask => false;
-        public virtual BaseCompoundHtnTask AsBaseCompoundTask => null;
+        public virtual bool IsBaseCompoundHtnTask => false;
+        public virtual BaseCompoundHtnTask AsBaseCompoundHtnTask => null;
 
-        public virtual bool IsRootTask => false;
-        public virtual RootTask AsRootTask => null;
+        public virtual bool IsRootHtnTask => false;
+        public virtual RootHtnTask AsRootHtnTask => null;
 
-        public virtual bool IsStrategicTask => false;
-        public virtual StrategicHtnTask AsStrategicTask => null;
+        public virtual bool IsStrategicHtnTask => false;
+        public virtual StrategicHtnTask AsStrategicHtnTask => null;
 
-        public virtual bool IsTacticalTask => false;
-        public virtual TacticalHtnTask AsTacticalTask => null;
+        public virtual bool IsTacticalHtnTask => false;
+        public virtual TacticalHtnTask AsTacticalHtnTask => null;
 
-        public virtual bool IsCompoundTask => false;
-        public virtual CompoundHtnTask AsCompoundTask => null;
+        public virtual bool IsCompoundHtnTask => false;
+        public virtual CompoundHtnTask AsCompoundHtnTask => null;
 
-        public virtual bool IsReplacedCompoundTask => false;
-        public virtual ReplacedCompoundTask AsReplacedCompoundTask => null;
+        public virtual bool IsReplacedCompoundHtnTask => false;
+        public virtual ReplacedCompoundHtnTask AsReplacedCompoundHtnTask => null;
 
-        public virtual bool IsCompoundTaskCase => false;
-        public virtual CompoundHtnTaskCase AsCompoundTaskCase => null;
+        public virtual bool IsCompoundTaskHtnCase => false;
+        public virtual CompoundHtnTaskCase AsCompoundTaskHtnCase => null;
 
-        public virtual bool IsBasePrimitiveTask => false;
-        public virtual BasePrimitiveTask AsBasePrimitiveTask => null;
+        public virtual bool IsBasePrimitiveHtnTask => false;
+        public virtual BasePrimitiveHtnTask AsBasePrimitiveHtnTask => null;
 
         public virtual bool IsPrimitiveTask => false;
         public virtual PrimitiveHtnTask AsPrimitiveTask => null;
 
-        public virtual bool IsBeginCompoundTask => false;
-        public virtual BeginCompoundHtnTask AsBeginCompoundTask => null;
+        public virtual bool IsBeginCompoundHtnTask => false;
+        public virtual BeginCompoundHtnTask AsBeginCompoundHtnTask => null;
 
-        public virtual bool IsEndCompoundTask => false;
-        public virtual EndCompoundHtnTask AsEndCompoundTask => null;
+        public virtual bool IsEndCompoundHtnTask => false;
+        public virtual EndCompoundHtnTask AsEndCompoundHtnTask => null;
 
-        public virtual bool IsNopPrimitiveTask => false;
-        public virtual NopPrimitiveTask AsNopPrimitiveTask => null;
+        public virtual bool IsNopPrimitiveHtnTask => false;
+        public virtual NopPrimitiveHtnTask AsNopPrimitiveHtnTask => null;
 
-        public virtual bool IsJumpPrimitiveTask => false;
-        public virtual JumpPrimitiveTask AsJumpPrimitiveTask => null;
+        public virtual bool IsJumpPrimitiveHtnTask => false;
+        public virtual JumpPrimitiveHtnTask AsJumpPrimitiveHtnTask => null;
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.CodeItem;

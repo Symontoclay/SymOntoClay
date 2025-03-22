@@ -3,29 +3,29 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class StrategicTaskParser : BaseCompoundTaskParser
+    public class CompoundHtnTaskParser: BaseCompoundHtnTaskParser
     {
         private enum State
         {
             Init,
-            GotStrategic,
-            GotStrategicTask,
+            GotCompound,
+            GotCompoundTask,
             GotName,
             ContentStarted
         }
 
-        public StrategicTaskParser(InternalParserContext context)
+        public CompoundHtnTaskParser(InternalParserContext context)
             : base(context)
         {
         }
 
-        private StrategicHtnTask _strategicTask;
+        private CompoundHtnTask _compoundTask;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _strategicTask = new StrategicHtnTask();
-            Result = _strategicTask;
+            _compoundTask = new CompoundHtnTask();
+            Result = _compoundTask;
 
             SetCurrentCodeItem(Result);
         }
@@ -42,8 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Info(, $"_state = {_state}");
-            //Info(, $"_currToken = {_currToken}");
+            //Info("AA2DDA77-8684-48D7-9A83-0693221247CD", $"_state = {_state}");
+            //Info("AA99F952-32B4-4483-A58E-83370DC30CD3", $"_currToken = {_currToken}");
             //Info(, $"Result = {Result}");
 #endif
 
@@ -53,10 +53,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
-                            switch (_currToken.KeyWordTokenKind)
+                            switch(_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Strategic:
-                                    _state = State.GotStrategic;
+                                case KeyWordTokenKind.Compound:
+                                    _state = State.GotCompound;
                                     break;
 
                                 default:
@@ -69,14 +69,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotStrategic:
+                case State.GotCompound:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Task:
-                                    _state = State.GotStrategicTask;
+                                    _state = State.GotCompoundTask;
                                     break;
 
                                 default:
@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotStrategicTask:
+                case State.GotCompoundTask:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:

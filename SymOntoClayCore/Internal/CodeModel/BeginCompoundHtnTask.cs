@@ -8,16 +8,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class BeginCompoundHtnTask: BasePrimitiveTask
+    public class BeginCompoundHtnTask: BasePrimitiveHtnTask
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.BeginCompoundTask;
 
         /// <inheritdoc/>
-        public override bool IsBeginCompoundTask => true;
+        public override bool IsBeginCompoundHtnTask => true;
 
         /// <inheritdoc/>
-        public override BeginCompoundHtnTask AsBeginCompoundTask => this;
+        public override BeginCompoundHtnTask AsBeginCompoundHtnTask => this;
 
         /// <inheritdoc/>
         public override KindOfTask KindOfTask => KindOfTask.BeginCompound;
@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override BaseTask CloneBaseTask(Dictionary<object, object> context)
+        public override BaseHtnTask CloneBaseTask(Dictionary<object, object> context)
         {
             return Clone(context);
         }

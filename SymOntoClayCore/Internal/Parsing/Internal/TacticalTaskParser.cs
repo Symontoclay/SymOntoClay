@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class TacticalTaskParser : BaseCompoundTaskParser
+    public class TacticalTaskParser : BaseCompoundHtnTaskParser
     {
         private enum State
         {

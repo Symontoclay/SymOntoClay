@@ -7,7 +7,7 @@ using System.Linq;
 namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 {
     public class CommonTasksStorage<T>: BaseComponent
-        where T: BaseTask
+        where T: BaseHtnTask
     {
         public CommonTasksStorage(IMonitorLogger logger)
             : base(logger)

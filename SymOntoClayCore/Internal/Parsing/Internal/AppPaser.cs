@@ -157,7 +157,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                             _context.Recovery(nextToken);
                                                             _context.Recovery(_currToken);
 
-                                                            var parser = new SetRootTaskParser(_context);
+                                                            var parser = new SetRootHtnTaskParser(_context);
                                                             parser.Run();
 
 #if DEBUG

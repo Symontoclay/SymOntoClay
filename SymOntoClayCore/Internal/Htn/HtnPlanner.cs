@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
                 var planItem = new HtnPlanItem()
                 {
-                    ExecutedTask = builtItem.ProcessedTask.AsBasePrimitiveTask
+                    ExecutedTask = builtItem.ProcessedTask.AsBasePrimitiveHtnTask
                 };
 
 #if DEBUG
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             var tasksToProcess = buildPlanIterationContext.TasksToProcess;
 
-            if (!tasksToProcess.Any(p => p.ProcessedTask.IsJumpPrimitiveTask))
+            if (!tasksToProcess.Any(p => p.ProcessedTask.IsJumpPrimitiveHtnTask))
             {
                 return buildPlanIterationContext;
             }
@@ -261,7 +261,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             while(true)
             {
-                if(buildPlanIterationContext.ProcessedIndex == -1 || buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask.IsBasePrimitiveTask)
+                if(buildPlanIterationContext.ProcessedIndex == -1 || buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask.IsBasePrimitiveHtnTask)
                 {
                     buildPlanIterationContext.ProcessedIndex++;
                 }
@@ -274,7 +274,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
                 if (buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count)
                 {
-                    if(tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveTask))
+                    if(tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveHtnTask))
                     {
                         tasksPlannerGlobalContext.CompletedIterations.Add(PrepareBuildPlanIterationContext(buildPlanIterationContext));
                     }
@@ -342,7 +342,7 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("DF3B0700-5B7E-4101-BB8B-FF159ADF9080", "Begin");
 #endif
 
-            var processedTask = builtPlanItem.ProcessedTask.AsBaseCompoundTask;
+            var processedTask = builtPlanItem.ProcessedTask.AsBaseCompoundHtnTask;
 
 #if DEBUG
             //Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
@@ -350,7 +350,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             if(buildPlanIterationContext.VisitedCompoundTasks.Contains(processedTask.Name))
             {
-                ReplaceBuiltPlanItems(new List<BaseTask> { new JumpPrimitiveTask() { TargetTaskName = processedTask.Name } }, buildPlanIterationContext);
+                ReplaceBuiltPlanItems(new List<BaseHtnTask> { new JumpPrimitiveHtnTask() { TargetTaskName = processedTask.Name } }, buildPlanIterationContext);
 
                 return;
             }
@@ -360,10 +360,10 @@ namespace SymOntoClay.Core.Internal.Htn
                 CompoundTask = processedTask 
             };
 
-            ReplaceBuiltPlanItems(new List<BaseTask> 
+            ReplaceBuiltPlanItems(new List<BaseHtnTask> 
                 {
                     beginCompoundTask,
-                    new ReplacedCompoundTask() { CompoundTask = processedTask },
+                    new ReplacedCompoundHtnTask() { CompoundTask = processedTask },
                     new EndCompoundHtnTask() { CompoundTask = processedTask } 
                 },
                 buildPlanIterationContext);
@@ -424,7 +424,7 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext.ToDbgString()}");
 #endif
 
-            var tasksList = new List<BaseTask>();
+            var tasksList = new List<BaseHtnTask>();
 
             foreach (var item in items)
             {
@@ -453,7 +453,7 @@ namespace SymOntoClay.Core.Internal.Htn
             //throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
         }
 
-        private void ReplaceBuiltPlanItems(List<BaseTask> tasksList, BuildPlanIterationContext buildPlanIterationContext)
+        private void ReplaceBuiltPlanItems(List<BaseHtnTask> tasksList, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
             //Info("3F772C3E-5E6D-4AB2-B1D2-085AF8589B62", $"buildPlanIterationContext.TasksToProcess.Count = {buildPlanIterationContext.TasksToProcess.Count}");

@@ -1,46 +1,39 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class CompoundTaskCaseParser : BaseInternalParser
+    public class PrimitiveHtnTaskOperatorParser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotCaseMark,
-            ContentStarted
+            GotOperatorMark,
+            GotCallingExpr
         }
 
-        public CompoundTaskCaseParser(InternalParserContext context)
+        public PrimitiveHtnTaskOperatorParser(InternalParserContext context)
             : base(context)
         {
         }
 
-        public CompoundHtnTaskCase Result { get; private set; }
+        public PrimitiveHtnTaskOperator Result { get; private set; }
 
         private State _state = State.Init;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new CompoundHtnTaskCase();
-
-            SetCurrentCodeItem(Result);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnFinish()
-        {
-            RemoveCurrentCodeEntity();
+            Result = new PrimitiveHtnTaskOperator();
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
-            //Info("DE93DB33-2003-45CD-BBFA-A1466C4FCB7B", $"_state = {_state}");
-            //Info("11A79601-440A-4241-AEA1-ABE664DADA99", $"_currToken = {_currToken}");
+            //Info("37F9FBC3-94E5-4926-98B4-4B0C40D5A278", $"_state = {_state}");
+            //Info("B3BC4040-868D-4647-B09A-25E54901EFC6", $"_currToken = {_currToken}");
             //Info(, $"Result = {Result}");
 #endif
 
@@ -52,8 +45,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Case:
-                                    _state = State.GotCaseMark;
+                                case KeyWordTokenKind.Operator:
+                                    _state = State.GotOperatorMark;
                                     break;
 
                                 default:
@@ -66,34 +59,34 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotCaseMark:
-                    switch (_currToken.TokenKind)
+                case State.GotOperatorMark:
                     {
-                        case TokenKind.OpenFigureBracket:
-                            _state = State.ContentStarted;
-                            break;
+                        _context.Recovery(_currToken);
 
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
+                        var parser = new AstExpressionParser(_context, new TerminationToken(TokenKind.Semicolon, true));
+                        parser.Run();
+
+#if DEBUG
+                        //Info("743FE80C-35FB-4007-A029-0E1EFBEB8DDB", $"parser.Result = {parser.Result}");
+#endif
+
+                        var statement = new AstExpressionStatement();
+                        Result.Statement = statement;
+
+                        statement.Expression = parser.Result;
+
+                        Result.IntermediateCommandsList = _context.Compiler.CompileToIntermediateCommands(statement);
+
+                        _state = State.GotCallingExpr;
+
                     }
                     break;
 
-                case State.ContentStarted:
+                case State.GotCallingExpr:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.CloseFigureBracket:
+                        case TokenKind.Semicolon:
                             Exit();
-                            break;
-
-                        case TokenKind.Word:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new CompoundTaskCaseItemParser(_context);
-                                parser.Run();
-
-                                Result.Items.Add(parser.Result);
-                            }
                             break;
 
                         default:

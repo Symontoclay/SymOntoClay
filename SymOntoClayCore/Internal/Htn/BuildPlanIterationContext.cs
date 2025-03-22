@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.TasksExecution
+namespace SymOntoClay.Core.Internal.Htn
 {
     public class BuildPlanIterationContext : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {

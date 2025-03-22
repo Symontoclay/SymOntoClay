@@ -3,7 +3,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
 using System.Threading;
 
-namespace SymOntoClay.Core.Internal.TasksExecution
+namespace SymOntoClay.Core.Internal.Htn
 {
     public class TasksExecutorComponent: BaseContextComponent, ITasksExecutorComponent
     {

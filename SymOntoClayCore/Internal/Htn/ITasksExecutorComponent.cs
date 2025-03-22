@@ -1,4 +1,4 @@
-﻿namespace SymOntoClay.Core.Internal.TasksExecution
+﻿namespace SymOntoClay.Core.Internal.Htn
 {
     public interface ITasksExecutorComponent
     {

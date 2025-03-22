@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.Core.Internal.TasksExecution
+namespace SymOntoClay.Core.Internal.Htn
 {
     public class TasksPlanner: BaseComponent
     {

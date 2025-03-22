@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.TasksExecution
+namespace SymOntoClay.Core.Internal.Htn
 {
     public class TasksPlannerGlobalContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {

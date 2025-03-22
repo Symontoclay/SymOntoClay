@@ -7,7 +7,7 @@ using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.TasksExecution
+namespace SymOntoClay.Core.Internal.Htn
 {
     public class TasksPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {

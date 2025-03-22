@@ -171,12 +171,12 @@ namespace SymOntoClay.BaseTestLib
                 AsyncEvents = new CustomThreadPoolSettings
                 {
                     MaxThreadsCount = 100,
-                    MinThreadsCount = 50
+                    MinThreadsCount = 5
                 },
                 CodeExecution = new CustomThreadPoolSettings
                 {
                     MaxThreadsCount = 100,
-                    MinThreadsCount = 50
+                    MinThreadsCount = 5
                 }
             };
         }

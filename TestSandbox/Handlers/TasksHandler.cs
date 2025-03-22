@@ -13,13 +13,13 @@ using TestSandbox.CoreHostListener;
 
 namespace TestSandbox.Handlers
 {
-    public class TasksHandler: BaseGeneralStartHandler
+    public class HtnHandler : BaseGeneralStartHandler
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public TasksHandler()
+        public HtnHandler()
             : base(new UnityTestEngineContextFactorySettings()
             {
                 UseDefaultNLPSettings = true,

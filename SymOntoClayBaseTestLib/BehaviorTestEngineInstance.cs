@@ -139,8 +139,8 @@ namespace SymOntoClay.BaseTestLib
 
                 return behaviorTestEngineInstance.Run(timeoutToEnd,
                     message => { logChannel(message); },
-                    errorMsg => { error(errorMsg); }, platformListener
-                    );
+                    errorMsg => { error(errorMsg); },
+                    platformListener);
             }
         }
 
@@ -157,8 +157,8 @@ namespace SymOntoClay.BaseTestLib
 
                 return behaviorTestEngineInstance.Run(timeoutToEnd,
                     message => { logChannel(message); },
-                    errorMsg => { error(errorMsg); }, platformListener
-                    );
+                    errorMsg => { error(errorMsg); },
+                    platformListener);
             }
         }
 

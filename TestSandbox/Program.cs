@@ -168,7 +168,7 @@ namespace TestSandbox
             //TstMonoBehaviorTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstTasksHandler();
+            TstHtnHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
@@ -2109,11 +2109,11 @@ action Go
             _logger.Info("EABCDF37-04C2-467E-9865-0527479C5CCB", "End");
         }
 
-        private static void TstTasksHandler()
+        private static void TstHtnHandler()
         {
             _logger.Info("FF16064F-085D-423A-A269-3C671843A371", "Begin");
 
-            using var handler = new TasksHandler();
+            using var handler = new HtnHandler();
             handler.Run();
 
             _logger.Info("40211AAF-B1A6-4A2B-B8D2-E63CD9FC0928", "End");

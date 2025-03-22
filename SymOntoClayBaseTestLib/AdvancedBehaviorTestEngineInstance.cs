@@ -90,9 +90,9 @@ namespace SymOntoClay.BaseTestLib
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { CreateOnlyWorldspace = true, ProjectName = _projectName };
 
-            var wSpaceFile = WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings, _testDir
-                    , errorMsg => throw new Exception(errorMsg)
-                    );
+            var wSpaceFile = WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings,
+                _testDir,
+                errorMsg => throw new Exception(errorMsg));
 
             _wSpaceDir = wSpaceFile.DirectoryName;
         }
@@ -252,7 +252,7 @@ namespace SymOntoClay.BaseTestLib
             factorySettings.ThreadingSettings = ConfigureThreadingSettings();
 
 #if DEBUG
-            _logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");
+            //_logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");
 #endif
 
             if (htnPlanExecutionIterationsMaxCount.HasValue)

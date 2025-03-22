@@ -216,6 +216,8 @@ namespace TestSandbox.Helpers
 
             settings.ThreadingSettings = factorySettings.ThreadingSettings;
 
+            settings.HtnExecutionSettings = factorySettings.HtnExecutionSettings;
+
             return settings;
         }
 
@@ -255,6 +257,8 @@ namespace TestSandbox.Helpers
             npcSettings.EnableCategories = factorySettings.EnableCategories;
 
             npcSettings.ThreadingSettings = factorySettings.ThreadingSettings;
+
+            npcSettings.HtnExecutionSettings = factorySettings.HtnExecutionSettings;
 
             return npcSettings;
         }

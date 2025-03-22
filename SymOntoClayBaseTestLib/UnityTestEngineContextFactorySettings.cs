@@ -59,6 +59,7 @@ namespace SymOntoClay.BaseTestLib
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
         public ThreadingSettings ThreadingSettings { get; set; }
+        public HtnExecutionSettings HtnExecutionSettings { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -104,6 +105,8 @@ namespace SymOntoClay.BaseTestLib
 
             sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
+
+            sb.PrintObjProp(n, nameof(HtnExecutionSettings), HtnExecutionSettings);
 
             return sb.ToString();
         }

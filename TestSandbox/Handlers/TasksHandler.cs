@@ -35,6 +35,10 @@ namespace TestSandbox.Handlers
                         MaxThreadsCount = 100,
                         MinThreadsCount = 50
                     }
+                },
+                HtnExecutionSettings = new HtnExecutionSettings
+                {
+                    PlanExecutionIterationsMaxCount = 1
                 }
             })
         {

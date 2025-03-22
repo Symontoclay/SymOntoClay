@@ -58,22 +58,22 @@ namespace SymOntoClay.Core.Internal.Htn
         private bool CommandLoop(CancellationToken cancellationToken)
         {
 #if DEBUG
-            //Info("688B9B84-D31E-4D6C-BB76-439F82430786", $"_maxPlanExecutionIterationsCount = {_maxPlanExecutionIterationsCount}");
+            //Info("688B9B84-D31E-4D6C-BB76-439F82430786", $"_planExecutionIterationsMaxCount= {_planExecutionIterationsMaxCount}");
             //Info("EB501AF1-9B30-4D5A-ACD1-C013DF7769B8", $"_executionState = {_executionState}");
 #endif
 
-            if(_planExecutionIterationsMaxCount.HasValue && 
+            if (_planExecutionIterationsMaxCount.HasValue && 
                 (_executionState == ExecutionState.Init || _executionState == ExecutionState.WaitingForPlanBuilding))
             {
 #if DEBUG
-                //Info("A45BC6E5-469E-4842-8890-CAC83FAF8CBE", $"_maxPlanExecutionIterationsCount = {_maxPlanExecutionIterationsCount}");
-                //Info("BEF87933-2FF6-4D52-95CE-E938FB8D18AA", $"_runPlanExecutionIterations = {_runPlanExecutionIterations}");
+                Info("A45BC6E5-469E-4842-8890-CAC83FAF8CBE", $"_planExecutionIterationsMaxCount = {_planExecutionIterationsMaxCount}");
+                Info("BEF87933-2FF6-4D52-95CE-E938FB8D18AA", $"_runPlanExecutionIterations = {_runPlanExecutionIterations}");
 #endif
 
                 if(_runPlanExecutionIterations >= _planExecutionIterationsMaxCount)
                 {
 #if DEBUG
-                    //Info("F57594AA-164C-48AF-A7BA-020E46F0E993", $"_runPlanExecutionIterations >= _maxPlanExecutionIterationsCount");
+                    Info("F57594AA-164C-48AF-A7BA-020E46F0E993", $"_runPlanExecutionIterations >= _planExecutionIterationsMaxCount");
 #endif
 
                     return false;

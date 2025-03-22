@@ -1321,10 +1321,10 @@ action Go
 
                     if(n == 3)
                     {
-                        return true;
+                        return false;
                     }
 
-                    return false;
+                    return true;
                 },
                 htnPlanExecutionIterationsMaxCount: 2);
 

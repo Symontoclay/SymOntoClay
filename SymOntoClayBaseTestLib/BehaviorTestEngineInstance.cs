@@ -36,6 +36,10 @@ namespace SymOntoClay.BaseTestLib
     {
         public const int DefaultTimeoutToEnd = 5000;
 
+#if DEBUG
+        private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         public BehaviorTestEngineInstance()
             : this(AdvancedBehaviorTestEngineInstance.RoorDir)
         {
@@ -308,14 +312,28 @@ namespace SymOntoClay.BaseTestLib
         {
             var result = true;
 
-            _internalInstance.CreateAndStartNPC(message => { logChannel(message); },
-                errorMsg => { result = false; error(errorMsg); },
+            var needRun = true;
+
+            _internalInstance.CreateAndStartNPC(message => { 
+                    if(!logChannel(message))
+                    {
+                        needRun = false;
+                    }
+                },
+                errorMsg => { 
+                    result = false;
+                    if(error(errorMsg))
+                    {
+                        needRun = false;
+                    }
+                },
                 platformListener,
                 htnPlanExecutionIterationsMaxCount);
 
-            throw new NotImplementedException("DFB86764-A463-4B6F-94CB-7D0C5A792BDD");
-
-            //Thread.Sleep(timeoutToEnd);
+            while (needRun)
+            {
+                Thread.Sleep(100);
+            }
 
             return result;
         }

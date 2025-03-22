@@ -84,6 +84,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
             StandardFactsBuilder = settings.StandardFactsBuilder;
+
+            HtnExecutionSettings = settings.HtnExecutionSettings;
         }
 
         private void CreateMonitoring(WorldSettings settings)
@@ -180,6 +182,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public ThreadingSettings ThreadingSettings { get; private set; }
+
+        /// <inheritdoc/>
+        public HtnExecutionSettings HtnExecutionSettings { get; private set; }
 
         /// <inheritdoc/>
         public ICustomThreadPool AsyncEventsThreadPool { get; private set; }

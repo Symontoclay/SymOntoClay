@@ -1339,6 +1339,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.ThreadingSettings">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.HtnExecutionSettings">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.AsyncEventsThreadPool">
             <inheritdoc/>
         </member>

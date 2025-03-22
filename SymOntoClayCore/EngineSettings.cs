@@ -42,7 +42,7 @@ namespace SymOntoClay.Core
 
         public INLPConverterFactory NLPConverterFactory { get; set; }
 
-        public HtnExecutionSettings HtnExecution { get; set; }
+        public HtnExecutionSettings HtnExecutionSettings { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core
             sb.PrintExisting(n, nameof(SoundPublisherProvider), SoundPublisherProvider);
             sb.PrintExisting(n, nameof(NLPConverterFactory), NLPConverterFactory);
 
-            sb.PrintObjProp(n, nameof(HtnExecution), HtnExecution);
+            sb.PrintObjProp(n, nameof(HtnExecutionSettings), HtnExecutionSettings);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

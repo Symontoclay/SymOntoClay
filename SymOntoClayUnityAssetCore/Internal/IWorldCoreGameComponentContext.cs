@@ -61,5 +61,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ThreadingSettings ThreadingSettings { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
         CancellationToken GetCancellationToken();
+
+        HtnExecutionSettings HtnExecutionSettings { get; }
     }
 }

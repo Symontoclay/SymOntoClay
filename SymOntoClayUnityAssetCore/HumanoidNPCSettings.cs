@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,8 @@ namespace SymOntoClay.UnityAsset.Core
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
 
+        public HtnExecutionSettings HtnExecutionSettings { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -58,6 +61,8 @@ namespace SymOntoClay.UnityAsset.Core
 
             sb.PrintPODListProp(n, nameof(Categories), Categories);
             sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
+
+            sb.PrintObjProp(n, nameof(HtnExecutionSettings), HtnExecutionSettings);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

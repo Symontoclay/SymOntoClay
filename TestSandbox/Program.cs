@@ -1304,55 +1304,27 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    root task `SomeRootTask`;
-
-    fun SomeOperator()
+    on Enter =>
     {
-       'Run SomeOperator' >> @>log;
-       wait 1;
+        'Begin' >> @>log;
+        SomeAutoProp = 15;
+        SomeAutoProp >> @>log;
+        'End' >> @>log;
     }
-}
 
-root task SomeRootTask
-{
-   case
-   {
-       SomeStrategicTask;
-   }
-}
-
-strategic task SomeStrategicTask
-{
-   case
-   {
-       SomeTacticalTask;
-   }
-}
-
-tactical task SomeTacticalTask
-{
-   case
-   {
-       SomeCompoundTask;
-   }
-}
-
-compound task SomeCompoundTask
-{
-   case
-   {
-       SomePrimitiveTask;
-   }
-}
-
-primitive task SomePrimitiveTask
-{
-    operator SomeOperator();
+    prop SomeAutoProp: number;
 }";
 
             BehaviorTestEngineInstance.Run(fileContent: text,
                 logChannel : (n, message) => {
                     _logger.Info("BEF7431B-B672-473E-9ABB-76D9A2D708A1", $"n = {n}; message = {message}");
+
+                    if(n == 3)
+                    {
+                        return true;
+                    }
+
+                    return false;
                 },
                 htnPlanExecutionIterationsMaxCount: 2);
 

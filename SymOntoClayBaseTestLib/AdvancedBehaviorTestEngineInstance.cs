@@ -38,6 +38,10 @@ namespace SymOntoClay.BaseTestLib
 {
     public class AdvancedBehaviorTestEngineInstance : IDisposable
     {
+#if DEBUG
+        private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         static AdvancedBehaviorTestEngineInstance()
         {
             _rootDir = UnityTestEngineContextFactory.CreateRootDir();
@@ -204,25 +208,25 @@ namespace SymOntoClay.BaseTestLib
 
         public IHumanoidNPC CreateNPC()
         {
-            return CreateNPC(_projectName, UnityTestEngineContextFactory.DefaultPlatformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition);
+            return CreateNPC(_projectName, UnityTestEngineContextFactory.DefaultPlatformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition, null);
         }
 
         public IHumanoidNPC CreateNPC(object platformListener)
         {
-            return CreateNPC(_projectName, platformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition);
+            return CreateNPC(_projectName, platformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition, null);
         }
 
-        public IHumanoidNPC CreateNPC(string npcName, object platformListener)
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener, int? htnPlanExecutionIterationsMaxCount)
         {
-            return CreateNPC(npcName, platformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition);
+            return CreateNPC(npcName, platformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition, htnPlanExecutionIterationsMaxCount);
         }
 
-        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition)
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, int? htnPlanExecutionIterationsMaxCount)
         {
-            return CreateNPC(npcName, platformListener, currentAbsolutePosition, null);
+            return CreateNPC(npcName, platformListener, currentAbsolutePosition, null, htnPlanExecutionIterationsMaxCount);
         }
 
-        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings, int? htnPlanExecutionIterationsMaxCount)
         {
             var logicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
 
@@ -247,6 +251,18 @@ namespace SymOntoClay.BaseTestLib
 
             factorySettings.ThreadingSettings = ConfigureThreadingSettings();
 
+#if DEBUG
+            _logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");
+#endif
+
+            if (htnPlanExecutionIterationsMaxCount.HasValue)
+            {
+                factorySettings.HtnExecutionSettings = new HtnExecutionSettings
+                {
+                    PlanExecutionIterationsMaxCount = htnPlanExecutionIterationsMaxCount
+                };
+            }
+
             return UnityTestEngineContextFactory.CreateHumanoidNPC(_world, factorySettings);
         }
 
@@ -263,15 +279,16 @@ namespace SymOntoClay.BaseTestLib
                 error => 
                 { 
                     throw new Exception(error); 
-                }, platformListener);
+                }, platformListener, 
+                null);
         }
 
         public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error)
         {
-            return CreateAndStartNPC(logChannel, error, new object());
+            return CreateAndStartNPC(logChannel, error, new object(), null);
         }
 
-        public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error, object platformListener)
+        public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error, object platformListener, int? htnPlanExecutionIterationsMaxCount)
         {
             ILoggedTestHostListener loggedTestHostListener = null;
 
@@ -282,7 +299,7 @@ namespace SymOntoClay.BaseTestLib
 
             CreateWorld(logChannel, error, loggedTestHostListener != null);
 
-            var npc = CreateNPC(_projectName, platformListener);
+            var npc = CreateNPC(_projectName, platformListener, htnPlanExecutionIterationsMaxCount);
 
             StartWorld();
 

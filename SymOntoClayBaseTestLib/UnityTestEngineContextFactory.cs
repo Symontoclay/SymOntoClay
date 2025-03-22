@@ -348,6 +348,8 @@ namespace SymOntoClay.BaseTestLib
 
             npcSettings.ThreadingSettings = factorySettings.ThreadingSettings;
 
+            npcSettings.HtnExecutionSettings = factorySettings.HtnExecutionSettings;
+
             return npcSettings;
         }
 

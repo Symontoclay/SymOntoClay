@@ -128,7 +128,7 @@ namespace TestSandbox
             //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
-            //TstTestRunner();//<=
+            TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -168,7 +168,7 @@ namespace TestSandbox
             //TstMonoBehaviorTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstHtnHandler();
+            //TstHtnHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
@@ -1304,23 +1304,57 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-    }
+    root task `SomeRootTask`;
 
-    on Enter =>
+    fun SomeOperator()
     {
-        'Begin' >> @>log;
-        a~()[:on complete => { 'on complete' >> @>log; } :];
-        'End' >> @>log;
+       'Run SomeOperator' >> @>log;
+       wait 1;
     }
+}
+
+root task SomeRootTask
+{
+   case
+   {
+       SomeStrategicTask;
+   }
+}
+
+strategic task SomeStrategicTask
+{
+   case
+   {
+       SomeTacticalTask;
+   }
+}
+
+tactical task SomeTacticalTask
+{
+   case
+   {
+       SomeCompoundTask;
+   }
+}
+
+compound task SomeCompoundTask
+{
+   case
+   {
+       SomePrimitiveTask;
+   }
+}
+
+primitive task SomePrimitiveTask
+{
+    operator SomeOperator();
 }";
 
-            BehaviorTestEngineInstance.Run(text,
-                (n, message) => {
+            BehaviorTestEngineInstance.Run(fileContent: text,
+                logChannel : (n, message) => {
                     _logger.Info("BEF7431B-B672-473E-9ABB-76D9A2D708A1", $"n = {n}; message = {message}");
-                });
+                },
+                htnPlanExecutionIterationsMaxCount: 2);
 
             _logger.Info("E18A11E9-F938-49F4-8C02-A124EA88D690", "End");
         }

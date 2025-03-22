@@ -40,7 +40,7 @@ namespace SymOntoClay.BaseTestLib
             : this(AdvancedBehaviorTestEngineInstance.RoorDir)
         {
         }
-
+        
         public BehaviorTestEngineInstance(KindOfUsingStandardLibrary useStandardLibrary)
             : this(AdvancedBehaviorTestEngineInstance.RoorDir, useStandardLibrary)
         {
@@ -73,12 +73,13 @@ namespace SymOntoClay.BaseTestLib
             return Run(fileContent, logChannel, useStandardLibrary, new object(), timeoutToEnd);
         }
 
-        public static bool Run(string fileContent, Action<int, string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd)
+        public static bool Run(string fileContent, Action<int, string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
-            return Run(fileContent, logChannel, new object(), timeoutToEnd);
+            return Run(fileContent, logChannel, new object(), timeoutToEnd, htnPlanExecutionIterationsMaxCount);
         }
 
-        public static bool Run(string fileContent, Action<int, string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
+        public static bool Run(string fileContent, Action<int, string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, object platformListener,
+            int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
             var n = 0;
 
@@ -86,17 +87,22 @@ namespace SymOntoClay.BaseTestLib
                 message => { n++; logChannel(n, message); },
                 error => { throw new Exception(error); },
                 useStandardLibrary,
-                platformListener, timeoutToEnd);
+                platformListener,
+                timeoutToEnd,
+                htnPlanExecutionIterationsMaxCount);
         }
 
-        public static bool Run(string fileContent, Action<int, string> logChannel, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
+        public static bool Run(string fileContent, Action<int, string> logChannel, object platformListener,
+            int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
             var n = 0;
 
             return Run(fileContent,
                 message => { n++; logChannel(n, message); },
                 error => { throw new Exception(error); },
-                platformListener, timeoutToEnd);
+                platformListener,
+                timeoutToEnd,
+                htnPlanExecutionIterationsMaxCount);
         }
 
         public static bool Run(string fileContent, Action<string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, int timeoutToEnd = DefaultTimeoutToEnd)
@@ -126,7 +132,8 @@ namespace SymOntoClay.BaseTestLib
             return Run(fileContent, logChannel, error, new object(), timeoutToEnd);
         }
 
-        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, KindOfUsingStandardLibrary useStandardLibrary, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
+        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, KindOfUsingStandardLibrary useStandardLibrary, object platformListener,
+            int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
             if (string.IsNullOrWhiteSpace(fileContent))
             {
@@ -137,14 +144,16 @@ namespace SymOntoClay.BaseTestLib
             {
                 behaviorTestEngineInstance.WriteFile(fileContent);
 
-                return behaviorTestEngineInstance.Run(timeoutToEnd,
+                return behaviorTestEngineInstance.Run(timeoutToEnd, 
+                    htnPlanExecutionIterationsMaxCount,
                     message => { logChannel(message); },
                     errorMsg => { error(errorMsg); },
                     platformListener);
             }
         }
 
-        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
+        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, object platformListener,
+            int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
             if (string.IsNullOrWhiteSpace(fileContent))
             {
@@ -156,24 +165,26 @@ namespace SymOntoClay.BaseTestLib
                 behaviorTestEngineInstance.WriteFile(fileContent);
 
                 return behaviorTestEngineInstance.Run(timeoutToEnd,
+                    htnPlanExecutionIterationsMaxCount,
                     message => { logChannel(message); },
                     errorMsg => { error(errorMsg); },
                     platformListener);
             }
         }
 
-        public bool Run(int timeoutToEnd, Action<string> logChannel, Action<string> error)
+        public bool Run(int timeoutToEnd, int? htnPlanExecutionIterationsMaxCount, Action<string> logChannel, Action<string> error)
         {
-            return Run(timeoutToEnd, logChannel, error, new object());
+            return Run(timeoutToEnd, htnPlanExecutionIterationsMaxCount, logChannel, error, new object());
         }
 
-        public bool Run(int timeoutToEnd, Action<string> logChannel, Action<string> error, object platformListener)
+        public bool Run(int timeoutToEnd, int? htnPlanExecutionIterationsMaxCount, Action<string> logChannel, Action<string> error, object platformListener)
         {
             var result = true;
 
             _internalInstance.CreateAndStartNPC(message => { logChannel(message); },
                 errorMsg => { result = false; error(errorMsg); },
-                platformListener);
+                platformListener, 
+                htnPlanExecutionIterationsMaxCount);
 
             Thread.Sleep(timeoutToEnd);
 

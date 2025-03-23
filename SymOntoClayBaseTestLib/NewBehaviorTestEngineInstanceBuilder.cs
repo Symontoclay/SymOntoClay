@@ -312,7 +312,7 @@
 
         private INewBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase1(Func<int, string, bool> logHandler)
         {
-            throw new NotImplementedException();
+            return new NewBehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler(_fileContent, _platformListener, logHandler, _rootDir, _useStandardLibrary, _htnIterationsMaxCount);
         }
 
         private INewBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase2(Func<string, bool> logHandler)

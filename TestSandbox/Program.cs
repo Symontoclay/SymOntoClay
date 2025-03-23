@@ -1345,8 +1345,11 @@ action Go
                 return true;
             });
 
-
             var testInstance = builder.Build();
+
+            var result = testInstance.Run();
+
+            _logger.Info("15E33BE2-7F30-4DD4-8822-98FBD47AEAE7", $"result = {result}");
 
             _logger.Info("E18A11E9-F938-49F4-8C02-A124EA88D690", "End");
         }

@@ -8,9 +8,15 @@ namespace SymOntoClay.BaseTestLib
 {
     public abstract class NewBaseBehaviorTestEngineInstance : INewBehaviorTestEngineInstance
     {
-        protected NewBaseBehaviorTestEngineInstance()
+        protected NewBaseBehaviorTestEngineInstance(string fileContent,
+            string rootDir,
+            KindOfUsingStandardLibrary useStandardLibrary)
         {
+            _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir, useStandardLibrary);
+            _internalInstance.WriteFile(fileContent);
         }
+
+        protected AdvancedBehaviorTestEngineInstance _internalInstance;
 
         /// <inheritdoc/>
         public abstract bool Run();
@@ -27,7 +33,7 @@ namespace SymOntoClay.BaseTestLib
 
             _isDisposed = true;
 
-
+            _internalInstance.Dispose();
         }
     }
 }

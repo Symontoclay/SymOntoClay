@@ -1329,6 +1329,24 @@ action Go
             //    htnPlanExecutionIterationsMaxCount: 2);
 
             var builder = new NewBehaviorTestEngineInstanceBuilder();
+            builder.UseDefaultRootDirectory();
+            builder.DontUsePlatformListener();
+            builder.EnableHtnPlanExecution();
+            builder.DontUseTimeoutToEnd();
+            builder.TestedCode(text);
+            builder.LogHandler((n, message) => {
+                _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
+
+                if (n == 3)
+                {
+                    return false;
+                }
+
+                return true;
+            });
+
+
+            var testInstance = builder.Build();
 
             _logger.Info("E18A11E9-F938-49F4-8C02-A124EA88D690", "End");
         }
@@ -1352,10 +1370,15 @@ action Go
 
             var veryHandler = new VeryFuzzyLogicOperatorHandler();
 
+            //var lHandler = new LFunctionFuzzyLogicMemberFunctionHandler(0, 0.1);
+            //lHandler.CheckDirty();
 
+            //var defuzzificatedValue = lHandler.Defuzzificate();
 
+            //_logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
 
             var trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(0.3, 0.4, 0.6, 0.7);
+            //trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(10, 12, 17, 20);
             trapezoid.CheckDirty(_logger);
 
             var defuzzificatedValue = trapezoid.Defuzzificate(_logger);

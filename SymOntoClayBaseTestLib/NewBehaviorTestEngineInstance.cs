@@ -1,24 +1,15 @@
 ﻿namespace SymOntoClay.BaseTestLib
 {
-    public class NewBehaviorTestEngineInstance: INewBehaviorTestEngineInstance
+    public class NewBehaviorTestEngineInstance: NewBaseBehaviorTestEngineInstance
     {
         public NewBehaviorTestEngineInstance()
         {
         }
 
-        private bool _isDisposed;
-
         /// <inheritdoc/>
-        public void Dispose()
+        public override bool Run()
         {
-            if (_isDisposed)
-            {
-                return;
-            }
-
-            _isDisposed = true;
-
-
+            throw new NotImplementedException();
         }
     }
 }

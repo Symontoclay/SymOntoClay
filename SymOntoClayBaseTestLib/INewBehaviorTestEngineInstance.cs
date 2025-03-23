@@ -8,5 +8,6 @@ namespace SymOntoClay.BaseTestLib
 {
     public interface INewBehaviorTestEngineInstance: IDisposable
     {
+        bool Run();
     }
 }

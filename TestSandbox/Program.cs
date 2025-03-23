@@ -1328,7 +1328,7 @@ action Go
             //    },
             //    htnPlanExecutionIterationsMaxCount: 2);
 
-            var builder = new NewBehaviorTestEngineInstanceBuilder();
+            var builder = new BehaviorTestEngineInstanceBuilder();
             //builder.UseDefaultRootDirectory();
             //builder.DontUsePlatformListener();
             //builder.EnableHtnPlanExecution();

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.BaseTestLib
 {
-    public abstract class NewBaseBehaviorTestEngineInstance : INewBehaviorTestEngineInstance
+    public abstract class BaseBehaviorTestEngineInstance : IBehaviorTestEngineInstance
     {
-        protected NewBaseBehaviorTestEngineInstance(string fileContent,
+        protected BaseBehaviorTestEngineInstance(string fileContent,
             string rootDir,
             KindOfUsingStandardLibrary useStandardLibrary,
             bool enableNLP,

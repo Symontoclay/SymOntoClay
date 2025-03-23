@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.BaseTestLib
 {
-    public interface INewBehaviorTestEngineInstance: IDisposable
+    public interface IBehaviorTestEngineInstance: IDisposable
     {
         /// <summary>
         /// Runs testing.

@@ -1,9 +1,9 @@
 ﻿namespace SymOntoClay.BaseTestLib
 {
-    public class NewBehaviorTestEngineInstanceBuilder: INewBehaviorTestEngineInstanceBuilder
+    public class BehaviorTestEngineInstanceBuilder: IBehaviorTestEngineInstanceBuilder
     {
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder UseDefaultRootDirectory()
+        public IBehaviorTestEngineInstanceBuilder UseDefaultRootDirectory()
         {
             _rootDir = AdvancedBehaviorTestEngineInstance.RoorDir;
 
@@ -11,7 +11,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder UseCustomRootDirectory(string rootDir)
+        public IBehaviorTestEngineInstanceBuilder UseCustomRootDirectory(string rootDir)
         {
             _rootDir = rootDir;
 
@@ -19,7 +19,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder DontUseStandardLibrary()
+        public IBehaviorTestEngineInstanceBuilder DontUseStandardLibrary()
         {
             _useStandardLibrary = KindOfUsingStandardLibrary.None;
 
@@ -27,7 +27,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder SetUsingStandardLibrary(KindOfUsingStandardLibrary useStandardLibrary)
+        public IBehaviorTestEngineInstanceBuilder SetUsingStandardLibrary(KindOfUsingStandardLibrary useStandardLibrary)
         {
             _useStandardLibrary = useStandardLibrary;
 
@@ -35,7 +35,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder DontUseTimeoutToEnd()
+        public IBehaviorTestEngineInstanceBuilder DontUseTimeoutToEnd()
         {
             _timeoutToEnd = null;
             _usedReturnBasedPart = true;
@@ -44,7 +44,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder UseDefaultTimeoutToEnd()
+        public IBehaviorTestEngineInstanceBuilder UseDefaultTimeoutToEnd()
         {
             _timeoutToEnd = _defaultTimeoutToEnd;
             _usedTimeoutBasedPart = true;
@@ -53,7 +53,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder UseTimeoutToEnd(int timeoutToEnd)
+        public IBehaviorTestEngineInstanceBuilder UseTimeoutToEnd(int timeoutToEnd)
         {
             _timeoutToEnd = timeoutToEnd;
             _usedTimeoutBasedPart = true;
@@ -62,7 +62,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder DisableHtnPlanExecution()
+        public IBehaviorTestEngineInstanceBuilder DisableHtnPlanExecution()
         {
             _htnIterationsMaxCount = 0;
 
@@ -70,7 +70,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder EnableHtnPlanExecution()
+        public IBehaviorTestEngineInstanceBuilder EnableHtnPlanExecution()
         {
             _htnIterationsMaxCount = null;
 
@@ -78,7 +78,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder SethHtnIterationsMaxCount(int htnIterationsMaxCount)
+        public IBehaviorTestEngineInstanceBuilder SethHtnIterationsMaxCount(int htnIterationsMaxCount)
         {
             _htnIterationsMaxCount = htnIterationsMaxCount;
 
@@ -86,7 +86,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder EnableNlp()
+        public IBehaviorTestEngineInstanceBuilder EnableNlp()
         {
             _enableNLP = true;
 
@@ -94,7 +94,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder DisableNlp()
+        public IBehaviorTestEngineInstanceBuilder DisableNlp()
         {
             _enableNLP = false;
 
@@ -102,7 +102,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder DisableCategories()
+        public IBehaviorTestEngineInstanceBuilder DisableCategories()
         {
             _enableCategories = false;
             _categories = null;
@@ -111,7 +111,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder UseCategories(List<string> categories)
+        public IBehaviorTestEngineInstanceBuilder UseCategories(List<string> categories)
         {
             _enableCategories = true;
             _categories = categories;
@@ -120,7 +120,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder DontUsePlatformListener()
+        public IBehaviorTestEngineInstanceBuilder DontUsePlatformListener()
         {
             _platformListener = new object();
 
@@ -128,7 +128,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder UsePlatformListener(object platformListener)
+        public IBehaviorTestEngineInstanceBuilder UsePlatformListener(object platformListener)
         {
             _platformListener = platformListener;
 
@@ -136,7 +136,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder TestedCode(string fileContent)
+        public IBehaviorTestEngineInstanceBuilder TestedCode(string fileContent)
         {
             _fileContent = fileContent;
 
@@ -144,7 +144,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder LogHandler(Action<int, string> handler)
+        public IBehaviorTestEngineInstanceBuilder LogHandler(Action<int, string> handler)
         {
             _timeoutBasedLogHandler1 = handler;
 
@@ -156,7 +156,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder LogHandler(Func<int, string, bool> handler)
+        public IBehaviorTestEngineInstanceBuilder LogHandler(Func<int, string, bool> handler)
         {
             _returnBasedLogHandler1 = handler;
 
@@ -168,7 +168,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder LogHandler(Action<string> handler)
+        public IBehaviorTestEngineInstanceBuilder LogHandler(Action<string> handler)
         {
             _timeoutBasedLogHandler2 = handler;
 
@@ -180,7 +180,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder LogHandler(Func<string, bool> handler)
+        public IBehaviorTestEngineInstanceBuilder LogHandler(Func<string, bool> handler)
         {
             _returnBasedLogHandler2 = handler;
 
@@ -192,7 +192,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder ErrorHandler(Action<string> handler)
+        public IBehaviorTestEngineInstanceBuilder ErrorHandler(Action<string> handler)
         {
             _timeoutBasedErrorHandler = handler;
 
@@ -204,7 +204,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstanceBuilder ErrorHandler(Func<string, bool> handler)
+        public IBehaviorTestEngineInstanceBuilder ErrorHandler(Func<string, bool> handler)
         {
             _returnBasedErrorHandler = handler;
 
@@ -232,7 +232,7 @@
         }
 
         /// <inheritdoc/>
-        public INewBehaviorTestEngineInstance Build()
+        public IBehaviorTestEngineInstance Build()
         {
             ValidateConfiguration();
 
@@ -339,19 +339,19 @@
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        private INewBehaviorTestEngineInstance BuildTimeoutBasedOnlyLogHandlerCase1(Action<int, string> logHandler)
+        private IBehaviorTestEngineInstance BuildTimeoutBasedOnlyLogHandlerCase1(Action<int, string> logHandler)
         {
             throw new NotImplementedException();
         }
 
-        private INewBehaviorTestEngineInstance BuildTimeoutBasedOnlyLogHandlerCase2(Action<string> logHandler)
+        private IBehaviorTestEngineInstance BuildTimeoutBasedOnlyLogHandlerCase2(Action<string> logHandler)
         {
             throw new NotImplementedException("B741FB62-A8BE-434F-9533-94BF94242F80");
         }
 
-        private INewBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase1(Func<int, string, bool> logHandler)
+        private IBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase1(Func<int, string, bool> logHandler)
         {
-            return new NewBehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler(_fileContent,
+            return new BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler(_fileContent,
                 _platformListener,
                 logHandler,
                 _rootDir,
@@ -362,27 +362,27 @@
                 _categories);
         }
 
-        private INewBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase2(Func<string, bool> logHandler)
+        private IBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase2(Func<string, bool> logHandler)
         {
             throw new NotImplementedException();
         }
 
-        private INewBehaviorTestEngineInstance BuildTimeoutBasedCase1(Action<int, string> logHandler, Action<string> errorHandler)
+        private IBehaviorTestEngineInstance BuildTimeoutBasedCase1(Action<int, string> logHandler, Action<string> errorHandler)
         {
             throw new NotImplementedException();
         }
 
-        private INewBehaviorTestEngineInstance BuildTimeoutBasedCase2(Action<string> logHandler, Action<string> errorHandler)
+        private IBehaviorTestEngineInstance BuildTimeoutBasedCase2(Action<string> logHandler, Action<string> errorHandler)
         {
             throw new NotImplementedException();
         }
 
-        private INewBehaviorTestEngineInstance BuildReturnBasedCase1(Func<int, string, bool> logHandler, Func<string, bool> errorHandler)
+        private IBehaviorTestEngineInstance BuildReturnBasedCase1(Func<int, string, bool> logHandler, Func<string, bool> errorHandler)
         {
             throw new NotImplementedException();
         }
 
-        private INewBehaviorTestEngineInstance BuildReturnBasedCase2(Func<string, bool> logHandler, Func<string, bool> errorHandler)
+        private IBehaviorTestEngineInstance BuildReturnBasedCase2(Func<string, bool> logHandler, Func<string, bool> errorHandler)
         {
             throw new NotImplementedException();
         }

@@ -2,9 +2,9 @@
 
 namespace SymOntoClay.BaseTestLib
 {
-    public class BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler: BaseBehaviorTestEngineInstance
+    public class BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandlerCase1: BaseBehaviorTestEngineInstance
     {
-        public BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler(string fileContent,
+        public BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandlerCase1(string fileContent,
             object platformListener,
             Func<int, string, bool> logHandler,
             string rootDir,

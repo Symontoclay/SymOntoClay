@@ -351,7 +351,7 @@
 
         private IBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase1(Func<int, string, bool> logHandler)
         {
-            return new BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler(_fileContent,
+            return new BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandlerCase1(_fileContent,
                 _platformListener,
                 logHandler,
                 _rootDir,

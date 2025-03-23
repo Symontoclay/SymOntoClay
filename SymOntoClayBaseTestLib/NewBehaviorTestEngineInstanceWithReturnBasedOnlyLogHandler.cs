@@ -9,8 +9,11 @@ namespace SymOntoClay.BaseTestLib
             Func<int, string, bool> logHandler,
             string rootDir,
             KindOfUsingStandardLibrary useStandardLibrary,
-            int? htnIterationsMaxCount)
-            : base(fileContent, rootDir, useStandardLibrary)
+            int? htnIterationsMaxCount,
+            bool enableNLP,
+            bool enableCategories,
+            List<string> categories)
+            : base(fileContent, rootDir, useStandardLibrary, enableNLP, enableCategories, categories)
         {
             _platformListener = platformListener;
             _logHandler = logHandler;

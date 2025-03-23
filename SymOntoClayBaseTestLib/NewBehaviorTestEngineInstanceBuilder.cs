@@ -86,6 +86,40 @@
         }
 
         /// <inheritdoc/>
+        public INewBehaviorTestEngineInstanceBuilder EnableNlp()
+        {
+            _enableNLP = true;
+
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public INewBehaviorTestEngineInstanceBuilder DisableNlp()
+        {
+            _enableNLP = false;
+
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public INewBehaviorTestEngineInstanceBuilder DisableCategories()
+        {
+            _enableCategories = false;
+            _categories = null;
+
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public INewBehaviorTestEngineInstanceBuilder UseCategories(List<string> categories)
+        {
+            _enableCategories = true;
+            _categories = categories;
+
+            return this;
+        }
+
+        /// <inheritdoc/>
         public INewBehaviorTestEngineInstanceBuilder DontUsePlatformListener()
         {
             _platformListener = new object();
@@ -278,6 +312,11 @@
         private KindOfUsingStandardLibrary _useStandardLibrary = KindOfUsingStandardLibrary.None;
         private int? _timeoutToEnd;
         private int? _htnIterationsMaxCount;
+
+        private bool _enableNLP;
+        private bool _enableCategories;
+        private List<string> _categories;
+
         private object _platformListener = new object();
         private string _fileContent;
 
@@ -312,7 +351,15 @@
 
         private INewBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase1(Func<int, string, bool> logHandler)
         {
-            return new NewBehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler(_fileContent, _platformListener, logHandler, _rootDir, _useStandardLibrary, _htnIterationsMaxCount);
+            return new NewBehaviorTestEngineInstanceWithReturnBasedOnlyLogHandler(_fileContent,
+                _platformListener,
+                logHandler,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
 
         private INewBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase2(Func<string, bool> logHandler)

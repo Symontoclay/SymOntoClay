@@ -10,9 +10,23 @@ namespace SymOntoClay.BaseTestLib
     {
         protected NewBaseBehaviorTestEngineInstance(string fileContent,
             string rootDir,
-            KindOfUsingStandardLibrary useStandardLibrary)
+            KindOfUsingStandardLibrary useStandardLibrary,
+            bool enableNLP,
+            bool enableCategories,
+            List<string> categories)
         {
-            _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir, useStandardLibrary);
+            AdvancedBehaviorTestEngineInstanceSettings advancedBehaviorTestEngineInstanceSettings = null;
+
+            if(enableCategories)
+            {
+                advancedBehaviorTestEngineInstanceSettings = new AdvancedBehaviorTestEngineInstanceSettings
+                {
+                    EnableCategories = enableCategories,
+                    Categories = categories
+                };
+            }
+
+            _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir, enableNLP, useStandardLibrary, advancedBehaviorTestEngineInstanceSettings);
             _internalInstance.WriteFile(fileContent);
         }
 

@@ -76,12 +76,12 @@ namespace SymOntoClay.BaseTestLib
         {
         }
 
-        public AdvancedBehaviorTestEngineInstance(AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+        public AdvancedBehaviorTestEngineInstance(AdvancedBehaviorTestEngineInstanceSettings advancedBehaviorTestEngineInstanceSettings)
             : this(RoorDir, false, KindOfUsingStandardLibrary.None, advancedBehaviorTestEngineInstanceSettings)
         {
         }
 
-        public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP, KindOfUsingStandardLibrary useStandardLibrary, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+        public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP, KindOfUsingStandardLibrary useStandardLibrary, AdvancedBehaviorTestEngineInstanceSettings advancedBehaviorTestEngineInstanceSettings)
         {
             _advancedBehaviorTestEngineInstanceSettings = advancedBehaviorTestEngineInstanceSettings;
             _enableNLP = enableNLP;
@@ -370,7 +370,7 @@ namespace SymOntoClay.BaseTestLib
         private readonly KindOfUsingStandardLibrary _useStandardLibrary = KindOfUsingStandardLibrary.None;
         private readonly string _wSpaceDir;
         private IWorld _world;
-        private readonly AdvancedBehaviorTestEngineInstanceSettings? _advancedBehaviorTestEngineInstanceSettings;
+        private readonly AdvancedBehaviorTestEngineInstanceSettings _advancedBehaviorTestEngineInstanceSettings;
 
         private readonly List<string> _createdNPCsDSLProjects = new List<string>();
         private readonly List<string> _createdThingsDSLProjects = new List<string>();

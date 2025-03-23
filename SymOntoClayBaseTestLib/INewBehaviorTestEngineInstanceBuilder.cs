@@ -12,6 +12,10 @@
         INewBehaviorTestEngineInstanceBuilder DisableHtnPlanExecution();
         INewBehaviorTestEngineInstanceBuilder EnableHtnPlanExecution();
         INewBehaviorTestEngineInstanceBuilder SethHtnIterationsMaxCount(int htnIterationsMaxCount);
+        INewBehaviorTestEngineInstanceBuilder EnableNlp();
+        INewBehaviorTestEngineInstanceBuilder DisableNlp();
+        INewBehaviorTestEngineInstanceBuilder DisableCategories();
+        INewBehaviorTestEngineInstanceBuilder UseCategories(List<string> categories);
         INewBehaviorTestEngineInstanceBuilder DontUsePlatformListener();
         INewBehaviorTestEngineInstanceBuilder UsePlatformListener(object platformListener);
         INewBehaviorTestEngineInstanceBuilder TestedCode(string fileContent);

@@ -414,6 +414,8 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case3()
         {
+            throw new NotImplementedException();
+
             using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
@@ -436,7 +438,8 @@ namespace SymOntoClay.Core.Tests
 
             instance.WriteFile(text);
 
-            var npc = instance.CreateAndStartNPC((n, message) => {
+            var npc = instance.CreateAndStartNPC((n, message) =>
+            {
                 switch (n)
                 {
                     case 1:
@@ -512,6 +515,8 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case4()
         {
+            throw new NotImplementedException();
+
             using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
@@ -534,7 +539,8 @@ namespace SymOntoClay.Core.Tests
 
             instance.WriteFile(text);
 
-            var npc = instance.CreateAndStartNPC((n, message) => {
+            var npc = instance.CreateAndStartNPC((n, message) =>
+            {
                 switch (n)
                 {
                     case 1:

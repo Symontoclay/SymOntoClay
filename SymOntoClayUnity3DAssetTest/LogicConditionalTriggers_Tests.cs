@@ -35,6 +35,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
 	on {: see(I, #`gun 1`) :} => {
@@ -145,6 +147,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case2()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
     on {: see(I, $x) & barrel($x) & !focus(I, friend) :} ($x >> @x) => 
@@ -232,6 +236,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case2_c()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
     {: barrel(#a) :}

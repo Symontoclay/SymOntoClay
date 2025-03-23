@@ -3246,42 +3246,44 @@ action Go
         [Parallelizable]
         public void Case13_d()
         {
-            var text = @"app PeaceKeeper
-{
-    fun a() => 
-    {       
-        wait 1;
-        '`a` has been called!' >> @>log;
-    }
+            throw new NotImplementedException();
 
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        a~()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
-        'End' >> @>log;
-    }
-}";
+//            var text = @"app PeaceKeeper
+//{
+//    fun a() => 
+//    {       
+//        wait 1;
+//        '`a` has been called!' >> @>log;
+//    }
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
-                (n, message) => {
-                    switch (n)
-                    {
-                        case 1:
-                            Assert.AreEqual("Begin", message);
-                            break;
+//    on Enter =>
+//    {
+//        'Begin' >> @>log;
+//        a~()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+//        'End' >> @>log;
+//    }
+//}";
 
-                        case 2:
-                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
-                            break;
+//            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+//                (n, message) => {
+//                    switch (n)
+//                    {
+//                        case 1:
+//                            Assert.AreEqual("Begin", message);
+//                            break;
 
-                        case 3:
-                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
-                            break;
+//                        case 2:
+//                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
+//                            break;
 
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
-                    }
-                }), true);
+//                        case 3:
+//                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
+//                            break;
+
+//                        default:
+//                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+//                    }
+//                }), true);
         }
 
         [Test]

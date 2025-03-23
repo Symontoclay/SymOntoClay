@@ -86,8 +86,26 @@
         /// </summary>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DisableNlp();
+
+        /// <summary>
+        /// Disables categories.
+        /// It is the default setting.
+        /// </summary>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DisableCategories();
+
+        /// <summary>
+        /// Enables categories and sets a list with used categories.
+        /// </summary>
+        /// <param name="categories">Set list with used categories.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseCategories(List<string> categories);
+
+        /// <summary>
+        /// Resets platform listener.
+        /// It is the default setting.
+        /// </summary>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DontUsePlatformListener();
         IBehaviorTestEngineInstanceBuilder UsePlatformListener(object platformListener);
         IBehaviorTestEngineInstanceBuilder TestedCode(string fileContent);
@@ -96,7 +114,6 @@
         IBehaviorTestEngineInstanceBuilder LogHandler(Action<string> handler);
         IBehaviorTestEngineInstanceBuilder LogHandler(Func<string, bool> handler);
         IBehaviorTestEngineInstanceBuilder ErrorHandler(Action<string> handler);
-        IBehaviorTestEngineInstanceBuilder ErrorHandler(Func<string, bool> handler);
 
         /// <summary>
         /// Bild test engine instance.

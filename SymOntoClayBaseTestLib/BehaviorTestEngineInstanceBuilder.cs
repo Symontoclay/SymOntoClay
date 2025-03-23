@@ -194,23 +194,10 @@
         /// <inheritdoc/>
         public IBehaviorTestEngineInstanceBuilder ErrorHandler(Action<string> handler)
         {
-            _timeoutBasedErrorHandler = handler;
+            _errorHandler = handler;
 
             _errorHandlerIsDefined = true;
-            _usedTimeoutBasedPart = true;
             SetDefaultTimeoutIfNeeds();
-
-            return this;
-        }
-
-        /// <inheritdoc/>
-        public IBehaviorTestEngineInstanceBuilder ErrorHandler(Func<string, bool> handler)
-        {
-            _returnBasedErrorHandler = handler;
-
-            _errorHandlerIsDefined = true;
-            _usedReturnBasedPart = true;
-            SetNullTimeoutIfNeeds();
 
             return this;
         }
@@ -240,24 +227,24 @@
             {
                 if(_timeoutBasedLogHandler1 == null)
                 {
-                    if(_timeoutBasedErrorHandler == null)
+                    if(_errorHandler == null)
                     {
                         return BuildTimeoutBasedOnlyLogHandlerCase2(_timeoutBasedLogHandler2);
                     }
                     else
                     {
-                        return BuildTimeoutBasedCase2(_timeoutBasedLogHandler2, _timeoutBasedErrorHandler);
+                        return BuildTimeoutBasedCase2(_timeoutBasedLogHandler2, _errorHandler);
                     }
                 }
                 else
                 {
-                    if (_timeoutBasedErrorHandler == null)
+                    if (_errorHandler == null)
                     {
                         return BuildTimeoutBasedOnlyLogHandlerCase1(_timeoutBasedLogHandler1);
                     }
                     else
                     {
-                        return BuildTimeoutBasedCase1(_timeoutBasedLogHandler1, _timeoutBasedErrorHandler);
+                        return BuildTimeoutBasedCase1(_timeoutBasedLogHandler1, _errorHandler);
                     }
                 }
             }
@@ -265,24 +252,24 @@
             {
                 if(_returnBasedLogHandler1 == null)
                 {
-                    if (_returnBasedErrorHandler == null)
+                    if (_errorHandler == null)
                     {
                         return BuildReturnBasedOnlyLogHandlerCase2(_returnBasedLogHandler2);
                     }
                     else
                     {
-                        return BuildReturnBasedCase2(_returnBasedLogHandler2, _returnBasedErrorHandler);
+                        return BuildReturnBasedCase2(_returnBasedLogHandler2, _errorHandler);
                     }
                 }
                 else
                 {
-                    if (_returnBasedErrorHandler == null)
+                    if (_errorHandler == null)
                     {
                         return BuildReturnBasedOnlyLogHandlerCase1(_returnBasedLogHandler1);
                     }
                     else
                     {
-                        return BuildReturnBasedCase1(_returnBasedLogHandler1, _returnBasedErrorHandler);
+                        return BuildReturnBasedCase1(_returnBasedLogHandler1, _errorHandler);
                     }
                 }
             }
@@ -332,8 +319,7 @@
         private Action<string> _timeoutBasedLogHandler2;
         private Func<string, bool> _returnBasedLogHandler2;
 
-        private Action<string> _timeoutBasedErrorHandler;
-        private Func<string, bool> _returnBasedErrorHandler;
+        private Action<string> _errorHandler;
 
 #if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -341,12 +327,30 @@
 
         private IBehaviorTestEngineInstance BuildTimeoutBasedOnlyLogHandlerCase1(Action<int, string> logHandler)
         {
-            throw new NotImplementedException();
+            return new BehaviorTestEngineInstanceWithTimeoutBasedOnlyLogHandlerCase1(_fileContent,
+                _platformListener,
+                logHandler,
+                _timeoutToEnd.Value,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
 
         private IBehaviorTestEngineInstance BuildTimeoutBasedOnlyLogHandlerCase2(Action<string> logHandler)
         {
-            throw new NotImplementedException("B741FB62-A8BE-434F-9533-94BF94242F80");
+            return new BehaviorTestEngineInstanceWithTimeoutBasedOnlyLogHandlerCase2(_fileContent,
+                _platformListener,
+                logHandler,
+                _timeoutToEnd.Value,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
 
         private IBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase1(Func<int, string, bool> logHandler)
@@ -364,27 +368,73 @@
 
         private IBehaviorTestEngineInstance BuildReturnBasedOnlyLogHandlerCase2(Func<string, bool> logHandler)
         {
-            throw new NotImplementedException();
+            return new BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandlerCase2(_fileContent,
+                _platformListener,
+                logHandler,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
 
         private IBehaviorTestEngineInstance BuildTimeoutBasedCase1(Action<int, string> logHandler, Action<string> errorHandler)
         {
-            throw new NotImplementedException();
+            return new BehaviorTestEngineInstanceWithTimeoutBasedHandlersCase1(_fileContent,
+                _platformListener,
+                logHandler,
+                errorHandler,
+                _timeoutToEnd.Value,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
 
         private IBehaviorTestEngineInstance BuildTimeoutBasedCase2(Action<string> logHandler, Action<string> errorHandler)
         {
-            throw new NotImplementedException();
+            return new BehaviorTestEngineInstanceWithTimeoutBasedHandlersCase2(_fileContent,
+                _platformListener,
+                logHandler,
+                errorHandler,
+                _timeoutToEnd.Value,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
 
-        private IBehaviorTestEngineInstance BuildReturnBasedCase1(Func<int, string, bool> logHandler, Func<string, bool> errorHandler)
+        private IBehaviorTestEngineInstance BuildReturnBasedCase1(Func<int, string, bool> logHandler, Action<string> errorHandler)
         {
-            throw new NotImplementedException();
+            return new BehaviorTestEngineInstanceWithReturnBasedHandlersCase1(_fileContent,
+                _platformListener,
+                logHandler,
+                errorHandler,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
 
-        private IBehaviorTestEngineInstance BuildReturnBasedCase2(Func<string, bool> logHandler, Func<string, bool> errorHandler)
+        private IBehaviorTestEngineInstance BuildReturnBasedCase2(Func<string, bool> logHandler, Action<string> errorHandler)
         {
-            throw new NotImplementedException();
+            return new BehaviorTestEngineInstanceWithReturnBasedHandlersCase2(_fileContent,
+                _platformListener,
+                logHandler,
+                errorHandler,
+                _rootDir,
+                _useStandardLibrary,
+                _htnIterationsMaxCount,
+                _enableNLP,
+                _enableCategories,
+                _categories);
         }
     }
 }

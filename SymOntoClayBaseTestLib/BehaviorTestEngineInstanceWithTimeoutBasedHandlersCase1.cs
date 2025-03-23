@@ -1,10 +1,12 @@
 ﻿namespace SymOntoClay.BaseTestLib
 {
-    public class BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandlerCase1: BaseBehaviorTestEngineInstance
+    public class BehaviorTestEngineInstanceWithTimeoutBasedHandlersCase1 : BaseBehaviorTestEngineInstance
     {
-        public BehaviorTestEngineInstanceWithReturnBasedOnlyLogHandlerCase1(string fileContent,
+        public BehaviorTestEngineInstanceWithTimeoutBasedHandlersCase1(string fileContent,
             object platformListener,
-            Func<int, string, bool> logHandler,
+            Action<int, string> logHandler,
+            Action<string> errorHandler,
+            int timeoutToEnd,
             string rootDir,
             KindOfUsingStandardLibrary useStandardLibrary,
             int? htnIterationsMaxCount,
@@ -15,40 +17,36 @@
         {
             _platformListener = platformListener;
             _logHandler = logHandler;
+            _errorHandler = errorHandler;
+            _timeoutToEnd = timeoutToEnd;
             _htnIterationsMaxCount = htnIterationsMaxCount;
         }
 
         private readonly object _platformListener;
-        private readonly Func<int, string, bool> _logHandler;
+        private readonly Action<int, string> _logHandler;
+        private readonly Action<string> _errorHandler;
+        private readonly int _timeoutToEnd;
         private readonly int? _htnIterationsMaxCount;
 
         /// <inheritdoc/>
         public override bool Run()
         {
             var n = 0;
-            
-            var result = true;
 
-            var needRun = true;
+            var result = true;
 
             _internalInstance.CreateAndStartNPC(message => {
                     n++;
-                    if (!_logHandler(n, message))
-                    {
-                        needRun = false;
-                    }
+                    _logHandler(n, message);
                 },
-                errorMsg => { 
+                errorMsg => {
                     result = false;
-                    needRun = false; 
+                    _errorHandler(errorMsg);
                 },
                 _platformListener,
                 _htnIterationsMaxCount);
 
-            while (needRun)
-            {
-                Thread.Sleep(100);
-            }
+            Thread.Sleep(_timeoutToEnd);
 
             return result;
         }

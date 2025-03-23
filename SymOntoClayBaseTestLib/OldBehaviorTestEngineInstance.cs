@@ -303,7 +303,7 @@ namespace SymOntoClay.BaseTestLib
                 },
                 errorMsg => { 
                     result = false;
-                    if(error(errorMsg))
+                    if(!error(errorMsg))
                     {
                         needRun = false;
                     }

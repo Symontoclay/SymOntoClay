@@ -226,7 +226,7 @@ namespace SymOntoClay.BaseTestLib
             return CreateNPC(npcName, platformListener, currentAbsolutePosition, null, htnPlanExecutionIterationsMaxCount);
         }
 
-        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings, int? htnPlanExecutionIterationsMaxCount)
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings advancedBehaviorTestEngineInstanceSettings, int? htnPlanExecutionIterationsMaxCount)
         {
             var logicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
 

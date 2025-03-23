@@ -13,7 +13,7 @@
         /// <summary>
         /// Sets using a custom root directory.
         /// </summary>
-        /// <param name="rootDir">Set root directory.</param>
+        /// <param name="rootDir">Root directory.</param>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseCustomRootDirectory(string rootDir);
 
@@ -27,7 +27,7 @@
         /// <summary>
         /// Sets using standard library mode.
         /// </summary>
-        /// <param name="useStandardLibrary">Set using standard library mode.</param>
+        /// <param name="useStandardLibrary">Standard library mode.</param>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder SetUsingStandardLibrary(KindOfUsingStandardLibrary useStandardLibrary);
 
@@ -50,7 +50,7 @@
         /// Enables using timeout and sets a custom timeout.
         /// Only for using with handlers which don't return any result.
         /// </summary>
-        /// <param name="timeoutToEnd">Set custom timeout.</param>
+        /// <param name="timeoutToEnd">Custom timeout.</param>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseTimeoutToEnd(int timeoutToEnd);
 
@@ -70,7 +70,7 @@
         /// <summary>
         /// Enables HTN execution, but limits count of iterations.
         /// </summary>
-        /// <param name="htnIterationsMaxCount">Set limit of count of iterations.</param>
+        /// <param name="htnIterationsMaxCount">Limit of count of iterations.</param>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder SethHtnIterationsMaxCount(int htnIterationsMaxCount);
 
@@ -97,7 +97,7 @@
         /// <summary>
         /// Enables categories and sets a list with used categories.
         /// </summary>
-        /// <param name="categories">Set list with used categories.</param>
+        /// <param name="categories">List with used categories.</param>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseCategories(List<string> categories);
 
@@ -107,12 +107,54 @@
         /// </summary>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DontUsePlatformListener();
+
+        /// <summary>
+        /// Sets custom platform listener.
+        /// </summary>
+        /// <param name="platformListener">Custom platform listener.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UsePlatformListener(object platformListener);
+
+        /// <summary>
+        /// Sets tested code.
+        /// </summary>
+        /// <param name="fileContent">Tested code.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder TestedCode(string fileContent);
+
+        /// <summary>
+        /// Sets log handler.
+        /// </summary>
+        /// <param name="handler">Log handler.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder LogHandler(Action<int, string> handler);
+
+        /// <summary>
+        /// Sets log handler.
+        /// </summary>
+        /// <param name="handler">Log handler.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder LogHandler(Func<int, string, bool> handler);
+
+        /// <summary>
+        /// Sets log handler.
+        /// </summary>
+        /// <param name="handler">Log handler.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder LogHandler(Action<string> handler);
+
+        /// <summary>
+        /// Sets log handler.
+        /// </summary>
+        /// <param name="handler">Log handler.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder LogHandler(Func<string, bool> handler);
+
+        /// <summary>
+        /// Sets error handler.
+        /// </summary>
+        /// <param name="handler">Error handler.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder ErrorHandler(Action<string> handler);
 
         /// <summary>

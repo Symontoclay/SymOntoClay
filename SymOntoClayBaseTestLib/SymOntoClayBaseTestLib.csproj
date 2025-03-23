@@ -9,6 +9,7 @@
     <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
     <AssemblyName>SymOntoClay.BaseTestLib</AssemblyName>
     <RootNamespace>SymOntoClay.BaseTestLib</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Libs\SymOntoClay.Libs.csproj" />

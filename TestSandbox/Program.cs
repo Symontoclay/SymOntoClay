@@ -1315,18 +1315,20 @@ action Go
     prop SomeAutoProp: number;
 }";
 
-            BehaviorTestEngineInstance.Run(fileContent: text,
-                logChannel : (n, message) => {
-                    _logger.Info("BEF7431B-B672-473E-9ABB-76D9A2D708A1", $"n = {n}; message = {message}");
+            //BehaviorTestEngineInstance.Run(fileContent: text,
+            //    logChannel : (n, message) => {
+            //        _logger.Info("BEF7431B-B672-473E-9ABB-76D9A2D708A1", $"n = {n}; message = {message}");
 
-                    if(n == 3)
-                    {
-                        return false;
-                    }
+            //        if(n == 3)
+            //        {
+            //            return false;
+            //        }
 
-                    return true;
-                },
-                htnPlanExecutionIterationsMaxCount: 2);
+            //        return true;
+            //    },
+            //    htnPlanExecutionIterationsMaxCount: 2);
+
+            var builder = new NewBehaviorTestEngineInstanceBuilder();
 
             _logger.Info("E18A11E9-F938-49F4-8C02-A124EA88D690", "End");
         }

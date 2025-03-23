@@ -7,35 +7,35 @@
         /// Its a temporary directory with a random name.
         /// It is the default setting.
         /// </summary>
-        /// <returns>The instance of the builder.</returns>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseDefaultRootDirectory();
 
         /// <summary>
         /// Sets using a custom root directory.
         /// </summary>
         /// <param name="rootDir">Set root directory.</param>
-        /// <returns>The instance of the builder.</returns>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseCustomRootDirectory(string rootDir);
 
         /// <summary>
         /// Sets not to use standard library.
         /// It is the default setting.
         /// </summary>
-        /// <returns>The instance of the builder.</returns>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DontUseStandardLibrary();
 
         /// <summary>
         /// Sets using standard library mode.
         /// </summary>
         /// <param name="useStandardLibrary">Set using standard library mode.</param>
-        /// <returns>The instance of the builder.</returns>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder SetUsingStandardLibrary(KindOfUsingStandardLibrary useStandardLibrary);
 
         /// <summary>
         /// Disables using timeout in the Run method of created instance.
         /// Only for using with handlers which return boolean result.
         /// </summary>
-        /// <returns>The instance of the builder.</returns>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DontUseTimeoutToEnd();
 
         /// <summary>
@@ -43,7 +43,7 @@
         /// Only for using with handlers which don't return any result.
         /// It is the default setting.
         /// </summary>
-        /// <returns>The instance of the builder.</returns>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseDefaultTimeoutToEnd();
 
         /// <summary>
@@ -51,13 +51,40 @@
         /// Only for using with handlers which don't return any result.
         /// </summary>
         /// <param name="timeoutToEnd">Set custom timeout.</param>
-        /// <returns>The instance of the builder.</returns>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseTimeoutToEnd(int timeoutToEnd);
 
+        /// <summary>
+        /// Disables HTN execution.
+        /// </summary>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DisableHtnPlanExecution();
+
+        /// <summary>
+        /// Enables HTN execution.
+        /// It is the default setting.
+        /// </summary>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder EnableHtnPlanExecution();
+
+        /// <summary>
+        /// Enables HTN execution, but limits count of iterations.
+        /// </summary>
+        /// <param name="htnIterationsMaxCount">Set limit of count of iterations.</param>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder SethHtnIterationsMaxCount(int htnIterationsMaxCount);
+
+        /// <summary>
+        /// Enables NLP.
+        /// </summary>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder EnableNlp();
+
+        /// <summary>
+        /// Disables NLP.
+        /// It is the default setting.
+        /// </summary>
+        /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder DisableNlp();
         IBehaviorTestEngineInstanceBuilder DisableCategories();
         IBehaviorTestEngineInstanceBuilder UseCategories(List<string> categories);
@@ -71,6 +98,10 @@
         IBehaviorTestEngineInstanceBuilder ErrorHandler(Action<string> handler);
         IBehaviorTestEngineInstanceBuilder ErrorHandler(Func<string, bool> handler);
 
+        /// <summary>
+        /// Bild test engine instance.
+        /// </summary>
+        /// <returns>The built instance.</returns>
         IBehaviorTestEngineInstance Build();
     }
 }

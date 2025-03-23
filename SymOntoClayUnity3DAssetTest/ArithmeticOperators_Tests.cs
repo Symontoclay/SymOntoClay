@@ -47,7 +47,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -89,7 +89,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -127,7 +127,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -165,7 +165,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -203,7 +203,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -241,7 +241,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -279,7 +279,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -317,7 +317,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -355,7 +355,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -393,7 +393,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -431,7 +431,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -470,7 +470,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -509,7 +509,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -548,7 +548,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -587,7 +587,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -626,7 +626,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)

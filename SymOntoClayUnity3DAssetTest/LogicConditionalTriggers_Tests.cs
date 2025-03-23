@@ -42,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -70,7 +70,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -99,7 +99,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -126,7 +126,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -153,7 +153,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -179,7 +179,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -213,7 +213,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -244,7 +244,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -270,7 +270,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -529,7 +529,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -567,7 +567,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -601,7 +601,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1846,7 +1846,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1882,7 +1882,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)

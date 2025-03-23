@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 namespace SymOntoClay.BaseTestLib
 {
-    public class BehaviorTestEngineInstance : IDisposable
+    public class OldBehaviorTestEngineInstance : IDisposable
     {
         public const int DefaultTimeoutToEnd = 5000;
 
@@ -30,24 +30,24 @@ namespace SymOntoClay.BaseTestLib
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public BehaviorTestEngineInstance()
+        public OldBehaviorTestEngineInstance()
             : this(AdvancedBehaviorTestEngineInstance.RoorDir)
         {
         }
         
-        public BehaviorTestEngineInstance(KindOfUsingStandardLibrary useStandardLibrary)
+        public OldBehaviorTestEngineInstance(KindOfUsingStandardLibrary useStandardLibrary)
             : this(AdvancedBehaviorTestEngineInstance.RoorDir, useStandardLibrary)
         {
         }
 
         private AdvancedBehaviorTestEngineInstance _internalInstance;
 
-        public BehaviorTestEngineInstance(string rootDir, KindOfUsingStandardLibrary useStandardLibrary)
+        public OldBehaviorTestEngineInstance(string rootDir, KindOfUsingStandardLibrary useStandardLibrary)
         {
             _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir, useStandardLibrary);
         }
 
-        public BehaviorTestEngineInstance(string rootDir)
+        public OldBehaviorTestEngineInstance(string rootDir)
         {
             _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir);
         }
@@ -202,7 +202,7 @@ namespace SymOntoClay.BaseTestLib
                 throw new Exception("Argument 'fileContent' can not be null or empty!");
             }
 
-            using (var behaviorTestEngineInstance = new BehaviorTestEngineInstance(useStandardLibrary))
+            using (var behaviorTestEngineInstance = new OldBehaviorTestEngineInstance(useStandardLibrary))
             {
                 behaviorTestEngineInstance.WriteFile(fileContent);
 
@@ -222,7 +222,7 @@ namespace SymOntoClay.BaseTestLib
                 throw new Exception("Argument 'fileContent' can not be null or empty!");
             }
 
-            using (var behaviorTestEngineInstance = new BehaviorTestEngineInstance(useStandardLibrary))
+            using (var behaviorTestEngineInstance = new OldBehaviorTestEngineInstance(useStandardLibrary))
             {
                 behaviorTestEngineInstance.WriteFile(fileContent);
 
@@ -242,7 +242,7 @@ namespace SymOntoClay.BaseTestLib
                 throw new Exception("Argument 'fileContent' can not be null or empty!");
             }
 
-            using (var behaviorTestEngineInstance = new BehaviorTestEngineInstance())
+            using (var behaviorTestEngineInstance = new OldBehaviorTestEngineInstance())
             {
                 behaviorTestEngineInstance.WriteFile(fileContent);
 
@@ -262,7 +262,7 @@ namespace SymOntoClay.BaseTestLib
                 throw new Exception("Argument 'fileContent' can not be null or empty!");
             }
 
-            using (var behaviorTestEngineInstance = new BehaviorTestEngineInstance())
+            using (var behaviorTestEngineInstance = new OldBehaviorTestEngineInstance())
             {
                 behaviorTestEngineInstance.WriteFile(fileContent);
 

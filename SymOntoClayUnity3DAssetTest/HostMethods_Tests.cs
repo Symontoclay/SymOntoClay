@@ -50,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -90,7 +90,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -134,7 +134,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -178,7 +178,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -421,7 +421,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener2();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -453,7 +453,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener2();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -485,7 +485,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener3();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -529,7 +529,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener3();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -573,7 +573,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener4();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -621,7 +621,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener4();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {

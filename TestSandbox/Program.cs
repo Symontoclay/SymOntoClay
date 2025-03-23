@@ -1265,7 +1265,7 @@ action Go
     }
 }";
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = {message}");
                 }, KindOfUsingStandardLibrary.Import);
@@ -1290,7 +1290,7 @@ action Go
             //var hostListener = new HostMethods_Tests_HostListener();
             var hostListener = new FullGeneralized_Tests_HostListener();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = '{message}'");
                 }, hostListener);

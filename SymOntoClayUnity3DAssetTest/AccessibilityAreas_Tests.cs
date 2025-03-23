@@ -53,7 +53,7 @@ private:
 	@a = #Tom;
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -97,7 +97,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -142,7 +142,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -188,7 +188,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -234,7 +234,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -279,7 +279,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -325,7 +325,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -373,7 +373,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -420,7 +420,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -465,7 +465,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -511,7 +511,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -590,7 +590,7 @@ app PeaceKeeper is cls1, cls2
         @b = 3;
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -648,7 +648,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)

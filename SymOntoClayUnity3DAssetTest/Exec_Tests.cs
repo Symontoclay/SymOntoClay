@@ -50,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -86,7 +86,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -117,7 +117,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener1();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -151,7 +151,7 @@ app PeaceKeeper
 
             var hostListener = new Exec_Tests_HostListener2();
 
-            BehaviorTestEngineInstance.Run(text,
+            OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {

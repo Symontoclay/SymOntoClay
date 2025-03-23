@@ -1329,13 +1329,26 @@ action Go
             //    htnPlanExecutionIterationsMaxCount: 2);
 
             var builder = new NewBehaviorTestEngineInstanceBuilder();
-            builder.UseDefaultRootDirectory();
-            builder.DontUsePlatformListener();
-            builder.EnableHtnPlanExecution();
-            builder.DontUseTimeoutToEnd();
-            builder.TestedCode(text);
-            builder.LogHandler((n, message) => {
-                _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
+            //builder.UseDefaultRootDirectory();
+            //builder.DontUsePlatformListener();
+            //builder.EnableHtnPlanExecution();
+            //builder.DontUseTimeoutToEnd();
+            //builder.TestedCode(text);
+            //builder.LogHandler((n, message) => {
+            //    _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
+
+            //    if (n == 3)
+            //    {
+            //        return false;
+            //    }
+
+            //    return true;
+            //});
+
+            //var testInstance = builder.Build();
+
+            var testInstance = builder.CreateMinimalInstance(text, (n, message) => {
+                _logger.Info("7C09894C-BB7E-4B51-A3CF-72D7CD45E350", $"n = {n}; message = {message}");
 
                 if (n == 3)
                 {
@@ -1344,8 +1357,6 @@ action Go
 
                 return true;
             });
-
-            var testInstance = builder.Build();
 
             var result = testInstance.Run();
 

@@ -1309,8 +1309,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @r = @b = 1;
-        @b >> @>log;
+        @bx >> @>log;
         'End' >> @>log;
     }
 }";
@@ -1328,6 +1327,8 @@ action Go
             //    },
             //    htnPlanExecutionIterationsMaxCount: 2);
 
+            var maxN = 0;
+
             var builder = new BehaviorTestEngineInstanceBuilder();
             builder.UseDefaultRootDirectory();
             builder.DontUsePlatformListener();
@@ -1338,6 +1339,8 @@ action Go
             {
                 _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
 
+                maxN = n;
+
                 switch (n)
                 {
                     case 1:
@@ -1345,7 +1348,7 @@ action Go
                         return true;
 
                     case 2:
-                        Assert.AreEqual(message, "1");
+                        Assert.AreEqual(message, "NULL");
                         return true;
 
                     case 3:
@@ -1398,6 +1401,8 @@ action Go
             //});
 
             _logger.Info("15E33BE2-7F30-4DD4-8822-98FBD47AEAE7", $"result = {result}");
+
+            _logger.Info("F1323C4D-2BF6-4601-B330-58D1B9C28852", $"maxN = {maxN}");
 
             _logger.Info("E18A11E9-F938-49F4-8C02-A124EA88D690", "End");
         }

@@ -22,6 +22,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     prop SomeAutoProp: number = 16;
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -45,7 +47,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -64,6 +66,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     prop SomeAutoProp: number = 16;
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -87,7 +91,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -106,6 +110,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     prop SomeAutoProp = 16;
 }";
 
+            var maxN = 0;
+            
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -129,7 +135,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -148,6 +154,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     SomeAutoProp = 16;
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -171,7 +179,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -189,6 +197,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
     SomeAutoProp;
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -213,7 +223,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -232,6 +242,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
     prop SomeAutoProp: number;
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -256,7 +268,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -275,6 +287,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -304,7 +318,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -324,6 +338,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
     prop SomeGetProp: number => @b;
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -348,7 +364,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -368,6 +384,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
     prop SomeGetProp: number => @b;
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -392,7 +410,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -413,6 +431,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     prop SomeGetProp => @b;
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -436,7 +456,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -457,6 +477,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     SomeGetProp => @b;
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -480,7 +502,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -499,6 +521,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -528,7 +552,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -544,6 +568,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -568,7 +594,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -586,6 +612,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -610,7 +638,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -629,6 +657,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -653,7 +683,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -670,6 +700,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -694,7 +726,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
     }
 }

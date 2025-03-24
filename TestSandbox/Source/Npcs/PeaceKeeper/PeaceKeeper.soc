@@ -1,47 +1,10 @@
 ﻿app PeaceKeeper
 {
-    root task `SomeRootTask`;
-
-    fun SomeOperator()
+    on Enter =>
     {
-       'Run SomeOperator' >> @>log;
-       wait 1;
+        'Begin' >> @>log;
+        @r = @b = 1;
+        @b >> @>log;
+        'End' >> @>log;
     }
-}
-
-root task SomeRootTask
-{
-   case
-   {
-       SomeStrategicTask;
-   }
-}
-
-strategic task SomeStrategicTask
-{
-   case
-   {
-       SomeTacticalTask;
-   }
-}
-
-tactical task SomeTacticalTask
-{
-   case
-   {
-       SomeCompoundTask;
-   }
-}
-
-compound task SomeCompoundTask
-{
-   case
-   {
-       SomePrimitiveTask;
-   }
-}
-
-primitive task SomePrimitiveTask
-{
-    operator SomeOperator();
 }

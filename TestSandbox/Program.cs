@@ -21,7 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using DictionaryGenerator;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.CLI;
@@ -1307,12 +1309,10 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        SomeAutoProp = 15;
-        SomeAutoProp >> @>log;
+        @r = @b = 1;
+        @b >> @>log;
         'End' >> @>log;
     }
-
-    prop SomeAutoProp: number;
 }";
 
             //BehaviorTestEngineInstance.Run(fileContent: text,
@@ -1328,24 +1328,39 @@ action Go
             //    },
             //    htnPlanExecutionIterationsMaxCount: 2);
 
-            //var builder = new BehaviorTestEngineInstanceBuilder();
-            //builder.UseDefaultRootDirectory();
-            //builder.DontUsePlatformListener();
-            //builder.EnableHtnPlanExecution();
-            //builder.DontUseTimeoutToEnd();
-            //builder.TestedCode(text);
-            //builder.LogHandler((n, message) => {
-            //    _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
+            var builder = new BehaviorTestEngineInstanceBuilder();
+            builder.UseDefaultRootDirectory();
+            builder.DontUsePlatformListener();
+            builder.EnableHtnPlanExecution();
+            builder.DontUseTimeoutToEnd();
+            builder.TestedCode(text);
+            builder.LogHandler((n, message) =>
+            {
+                _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
 
-            //    if (n == 3)
-            //    {
-            //        return false;
-            //    }
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "Begin");
+                        return true;
 
-            //    return true;
+                    case 2:
+                        Assert.AreEqual(message, "1");
+                        return true;
+
+                    case 3:
+                        Assert.AreEqual(message, "End");
+                        return false;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+            //builder.ErrorHandler((errorMsg) => {
+            //    _logger.Info("DB0176DD-B108-40DD-A527-5FD3B7C6318A", $"errorMsg = {errorMsg}");
             //});
 
-            //var testInstance = builder.Build();
+            var testInstance = builder.Build();
 
             //var testInstance = builder.CreateMinimalInstance(text, (n, message) => {
             //    _logger.Info("7C09894C-BB7E-4B51-A3CF-72D7CD45E350", $"n = {n}; message = {message}");
@@ -1358,18 +1373,29 @@ action Go
             //    return true;
             //});
 
-            //var result = testInstance.Run();
+            var result = testInstance.Run();
 
-            var result = BehaviorTestEngineRunner.RunMinimalInstance(text, (n, message) => {
-                _logger.Info("DC97FBD3-DB40-4A88-9C12-14030A67DE00", $"n = {n}; message = {message}");
+            //var result = BehaviorTestEngineRunner.RunMinimalInstance(text, (n, message) => {
+            //    _logger.Info("DC97FBD3-DB40-4A88-9C12-14030A67DE00", $"n = {n}; message = {message}");
 
-                if (n == 3)
-                {
-                    return false;
-                }
+            //    switch (n)
+            //    {
+            //        case 1:
+            //            Assert.AreEqual(message, "Begin");
+            //            return true;
 
-                return true;
-            });
+            //        case 2:
+            //            Assert.AreEqual(message, "1");
+            //            return true;
+
+            //        case 3:
+            //            Assert.AreEqual(message, "End");
+            //            return false;
+
+            //        default:
+            //            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+            //    }
+            //});
 
             _logger.Info("15E33BE2-7F30-4DD4-8822-98FBD47AEAE7", $"result = {result}");
 

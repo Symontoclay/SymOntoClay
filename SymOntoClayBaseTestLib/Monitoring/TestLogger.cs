@@ -24,12 +24,7 @@ using SymOntoClay.Common.Disposing;
 using SymOntoClay.Monitor;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.BaseTestLib.Monitoring
 {
@@ -554,6 +549,13 @@ namespace SymOntoClay.BaseTestLib.Monitoring
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger.WriteLnRawError(messagePointId, message);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -562,6 +564,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+            Error(messagePointId, exception?.ToString(), memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -570,6 +573,13 @@ namespace SymOntoClay.BaseTestLib.Monitoring
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger.WriteLnRawFatal(messagePointId, message);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -578,6 +588,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+            Fatal(messagePointId, exception?.ToString(), memberName, sourceFilePath, sourceLineNumber);
         }
     }
 }

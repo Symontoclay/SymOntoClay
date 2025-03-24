@@ -1328,7 +1328,7 @@ action Go
             //    },
             //    htnPlanExecutionIterationsMaxCount: 2);
 
-            var builder = new BehaviorTestEngineInstanceBuilder();
+            //var builder = new BehaviorTestEngineInstanceBuilder();
             //builder.UseDefaultRootDirectory();
             //builder.DontUsePlatformListener();
             //builder.EnableHtnPlanExecution();
@@ -1347,8 +1347,21 @@ action Go
 
             //var testInstance = builder.Build();
 
-            var testInstance = builder.CreateMinimalInstance(text, (n, message) => {
-                _logger.Info("7C09894C-BB7E-4B51-A3CF-72D7CD45E350", $"n = {n}; message = {message}");
+            //var testInstance = builder.CreateMinimalInstance(text, (n, message) => {
+            //    _logger.Info("7C09894C-BB7E-4B51-A3CF-72D7CD45E350", $"n = {n}; message = {message}");
+
+            //    if (n == 3)
+            //    {
+            //        return false;
+            //    }
+
+            //    return true;
+            //});
+
+            //var result = testInstance.Run();
+
+            var result = BehaviorTestEngineRunner.RunMinimalInstance(text, (n, message) => {
+                _logger.Info("DC97FBD3-DB40-4A88-9C12-14030A67DE00", $"n = {n}; message = {message}");
 
                 if (n == 3)
                 {
@@ -1357,8 +1370,6 @@ action Go
 
                 return true;
             });
-
-            var result = testInstance.Run();
 
             _logger.Info("15E33BE2-7F30-4DD4-8822-98FBD47AEAE7", $"result = {result}");
 

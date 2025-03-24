@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 namespace SymOntoClay.BaseTestLib
 {
-    [Obsolete("Use Builder")]
+    [Obsolete("Use Builder or BehaviorTestEngineRunner")]
     public class OldBehaviorTestEngineInstance : IDisposable
     {
         public const int DefaultTimeoutToEnd = 5000;

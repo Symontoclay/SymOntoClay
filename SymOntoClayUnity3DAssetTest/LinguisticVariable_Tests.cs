@@ -49,20 +49,20 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.AsLinguisticVariable;
+            var linguisticVariable = codeEntity.AsLinguisticVariable;
 
-            lingiusticVariable.CheckDirty();
+            linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(lingiusticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(linguisticVariable.Name, NameHelper.CreateName("age"));
 
-            CheckRange(lingiusticVariable.Range, false, 0, 150, true);
+            CheckRange(linguisticVariable.Range, false, 0, 150, true);
 
-            Assert.AreEqual(lingiusticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(linguisticVariable.Constraint.IsEmpty, true);
 
-            var term = lingiusticVariable.Values.Single();
+            var term = linguisticVariable.Values.Single();
 
             Assert.AreEqual(term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(term.Parent, lingiusticVariable);
+            Assert.AreEqual(term.Parent, linguisticVariable);
 
             var handler = term.Handler;
 
@@ -92,20 +92,20 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.AsLinguisticVariable;
+            var linguisticVariable = codeEntity.AsLinguisticVariable;
 
-            lingiusticVariable.CheckDirty();
+            linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(lingiusticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(linguisticVariable.Name, NameHelper.CreateName("age"));
 
-            CheckRange(lingiusticVariable.Range, true, 0, 150, false);
+            CheckRange(linguisticVariable.Range, true, 0, 150, false);
 
-            Assert.AreEqual(lingiusticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(linguisticVariable.Constraint.IsEmpty, true);
 
-            var term = lingiusticVariable.Values.Single();
+            var term = linguisticVariable.Values.Single();
 
             Assert.AreEqual(term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(term.Parent, lingiusticVariable);
+            Assert.AreEqual(term.Parent, linguisticVariable);
 
             var handler = term.Handler;
 

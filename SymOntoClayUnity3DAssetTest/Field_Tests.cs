@@ -58,11 +58,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "NULL");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -102,11 +102,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "NULL");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -146,11 +146,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "2");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -191,11 +191,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -235,11 +235,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "2");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -279,11 +279,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "NULL");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -323,11 +323,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "2");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -367,11 +367,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "NULL");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -411,13 +411,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(true, message.StartsWith("{:"));
                             Assert.AreEqual(true, message.EndsWith(":}"));
                             Assert.AreEqual(true, message.Contains(">: { male(#tom) }"));
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -457,11 +457,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@[10, 20]");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -501,11 +501,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(barrel)");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -546,11 +546,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "NULL");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -590,11 +590,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#`gun 1`");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -634,11 +634,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "dog");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -678,11 +678,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`white dog`");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -724,11 +724,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");

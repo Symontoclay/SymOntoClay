@@ -60,8 +60,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -123,8 +125,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -182,8 +186,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -239,8 +245,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -300,8 +308,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -363,8 +373,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -430,8 +442,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -495,8 +509,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -574,8 +590,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -647,8 +665,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -735,8 +755,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -820,8 +842,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -912,8 +936,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1008,8 +1034,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1094,8 +1122,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1150,8 +1180,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1190,8 +1222,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1239,8 +1273,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1283,8 +1319,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1336,8 +1374,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1384,8 +1424,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:

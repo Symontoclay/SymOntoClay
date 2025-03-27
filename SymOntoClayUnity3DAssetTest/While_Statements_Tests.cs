@@ -57,6 +57,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -143,6 +145,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -195,6 +199,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:

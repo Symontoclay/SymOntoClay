@@ -70,7 +70,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -122,7 +122,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -174,7 +174,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -226,7 +226,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -278,7 +278,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -330,7 +330,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -382,7 +382,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -434,7 +434,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -486,7 +486,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -538,7 +538,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -590,7 +590,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -642,7 +642,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -694,7 +694,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -746,7 +746,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -798,7 +798,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -850,7 +850,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -902,7 +902,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -954,7 +954,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1006,7 +1006,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1058,7 +1058,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1110,7 +1110,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1162,7 +1162,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1214,7 +1214,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1266,7 +1266,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1313,7 +1313,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1365,7 +1365,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1417,7 +1417,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1469,7 +1469,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1521,7 +1521,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1579,7 +1579,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1637,7 +1637,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1695,7 +1695,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1753,7 +1753,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1811,7 +1811,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1869,7 +1869,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1927,7 +1927,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1985,7 +1985,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2043,7 +2043,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2101,7 +2101,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2159,7 +2159,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2217,7 +2217,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);

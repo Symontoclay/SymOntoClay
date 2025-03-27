@@ -65,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -114,7 +114,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -166,7 +166,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -219,7 +219,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -271,7 +271,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -323,7 +323,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -375,7 +375,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -427,7 +427,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -480,7 +480,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -532,7 +532,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -586,7 +586,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -640,7 +640,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -701,7 +701,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -775,7 +775,7 @@ app PeaceKeeper
 
                         case 7:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -849,7 +849,7 @@ app PeaceKeeper
 
                         case 7:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -923,7 +923,7 @@ app PeaceKeeper
 
                         case 7:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -982,7 +982,7 @@ app PeaceKeeper
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1041,7 +1041,7 @@ app PeaceKeeper
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1100,7 +1100,7 @@ app PeaceKeeper
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1159,7 +1159,7 @@ app PeaceKeeper
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1211,7 +1211,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1268,7 +1268,7 @@ app PeaceKeeper
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1330,7 +1330,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1393,7 +1393,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1457,7 +1457,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1521,7 +1521,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1583,7 +1583,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1646,7 +1646,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1710,7 +1710,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1774,7 +1774,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1844,7 +1844,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1896,7 +1896,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1948,7 +1948,7 @@ app PeaceKeeper
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2015,7 +2015,7 @@ app PeaceKeeper
 
                         case 6:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2082,7 +2082,7 @@ app PeaceKeeper
 
                         case 6:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2155,7 +2155,7 @@ app PeaceKeeper
 
                         case 6:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2756,7 +2756,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2798,7 +2798,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2846,7 +2846,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2899,7 +2899,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -2952,7 +2952,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3005,7 +3005,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3053,7 +3053,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3101,7 +3101,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3149,7 +3149,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3192,7 +3192,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3239,7 +3239,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3287,7 +3287,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3334,7 +3334,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3386,7 +3386,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3438,7 +3438,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -3485,7 +3485,7 @@ app PeaceKeeper
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);

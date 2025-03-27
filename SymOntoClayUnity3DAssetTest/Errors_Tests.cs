@@ -84,7 +84,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 5:
                             Assert.AreEqual(message, "#a");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -153,7 +153,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -214,7 +214,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 4:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -285,7 +285,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 6:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -352,7 +352,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 6:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -417,7 +417,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -490,7 +490,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -569,7 +569,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -650,7 +650,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 6:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -737,7 +737,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 8:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -830,7 +830,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -922,7 +922,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 8:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1019,7 +1019,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1121,7 +1121,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1205,7 +1205,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1252,7 +1252,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 2:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1306,7 +1306,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 4:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1357,7 +1357,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1411,7 +1411,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 4:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1466,7 +1466,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -1528,7 +1528,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);

@@ -55,7 +55,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 2:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -243,7 +243,7 @@ app PeaceKeeper is cls1, cls2
 
                         case 23:
                             Assert.AreEqual("End ctor 1 of PeaceKeeper", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -456,7 +456,7 @@ app PeaceKeeper is cls1, cls2, cls3
 
                         case 26:
                             Assert.AreEqual("End ctor 1 of PeaceKeeper", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -560,7 +560,7 @@ app PeaceKeeper
 
                         case 11:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);

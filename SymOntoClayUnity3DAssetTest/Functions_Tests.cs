@@ -47,6 +47,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -94,6 +96,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -139,6 +143,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -191,6 +197,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -240,6 +248,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -291,6 +301,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -341,6 +353,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -390,6 +404,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -442,6 +458,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -491,6 +509,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -544,6 +564,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -595,6 +617,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -655,6 +679,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -714,6 +740,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -787,6 +815,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -859,6 +889,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -924,6 +956,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -980,6 +1014,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1038,6 +1074,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1095,6 +1133,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1149,6 +1189,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1199,6 +1241,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1264,6 +1308,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1324,6 +1370,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1387,6 +1435,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1449,6 +1499,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1508,6 +1560,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1569,6 +1623,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1632,6 +1688,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1693,6 +1751,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1762,6 +1822,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1812,6 +1874,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -1861,6 +1925,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1918,6 +1984,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -1983,6 +2051,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -2054,6 +2124,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -2666,6 +2738,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -2705,6 +2779,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -2751,6 +2827,8 @@ app PeaceKeeper
         return fun(){return 1;};
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -2803,6 +2881,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -2853,6 +2933,8 @@ app PeaceKeeper
         return @param();
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -2905,6 +2987,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -2950,6 +3034,8 @@ app PeaceKeeper
         return @param();
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -2997,6 +3083,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -3043,6 +3131,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -3083,6 +3173,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -3128,6 +3220,8 @@ app PeaceKeeper
         return fun(){return 1;};
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -3175,6 +3269,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -3219,6 +3315,8 @@ app PeaceKeeper
         return fun(){return @a + 1;};
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -3270,6 +3368,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -3320,6 +3420,8 @@ app PeaceKeeper
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -3364,6 +3466,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {

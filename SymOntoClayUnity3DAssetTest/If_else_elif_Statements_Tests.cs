@@ -49,6 +49,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
@@ -97,6 +99,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
@@ -140,6 +144,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
@@ -189,6 +195,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
@@ -234,6 +242,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
@@ -285,6 +295,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
@@ -334,6 +346,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
@@ -385,6 +399,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
@@ -435,6 +451,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
@@ -482,6 +500,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
@@ -536,6 +556,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>

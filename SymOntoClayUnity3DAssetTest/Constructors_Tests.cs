@@ -41,6 +41,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -142,6 +144,8 @@ app PeaceKeeper is cls1, cls2
     private:
         @b = 3;
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
@@ -342,6 +346,8 @@ app PeaceKeeper is cls1, cls2, cls3
         @b = 4;
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
@@ -503,6 +509,8 @@ app PeaceKeeper
         'End' >> @>log;
     }
 }";
+
+            var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {

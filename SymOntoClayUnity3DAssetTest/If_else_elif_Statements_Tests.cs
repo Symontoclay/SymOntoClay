@@ -23,10 +23,6 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -56,6 +52,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -74,6 +72,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -100,6 +100,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -114,6 +116,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -140,6 +144,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -158,6 +164,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -184,6 +192,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -198,6 +208,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -226,6 +238,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -244,6 +258,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -272,6 +288,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -290,6 +308,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -318,6 +338,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -336,6 +358,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -364,6 +388,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -382,6 +408,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -410,6 +438,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -424,6 +454,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -454,6 +486,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -472,6 +506,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -504,6 +540,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -522,6 +560,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
     }
 }

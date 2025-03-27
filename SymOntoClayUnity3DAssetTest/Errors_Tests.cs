@@ -23,8 +23,6 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -90,6 +88,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -155,6 +155,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -212,6 +214,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -279,6 +283,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -342,6 +348,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -403,6 +411,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -472,6 +482,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -547,6 +559,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -624,6 +638,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -707,6 +723,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -796,6 +814,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -884,6 +904,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -977,6 +999,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1075,6 +1099,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1155,6 +1181,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1198,6 +1226,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1248,6 +1278,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1295,6 +1327,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1345,6 +1379,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1396,6 +1432,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1454,6 +1492,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
     }
 }

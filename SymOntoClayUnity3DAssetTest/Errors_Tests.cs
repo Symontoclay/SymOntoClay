@@ -68,19 +68,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "on Fired");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "#a");
@@ -91,7 +91,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -136,20 +136,20 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                           Assert.AreEqual(message, "Begin");
-                           break;
+                            Assert.AreEqual(message, "Begin");
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "catch");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -160,7 +160,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -202,15 +202,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -221,7 +221,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -265,23 +265,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `a`");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -292,7 +292,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -332,23 +332,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `a`");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -359,7 +359,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -401,19 +401,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `a`");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End");
@@ -424,7 +424,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -474,19 +474,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "catch");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -497,7 +497,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -545,27 +545,27 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `a`");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "else");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -576,7 +576,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(7, maxN);
         }
 
         [Test]
@@ -630,23 +630,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "catch");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -657,7 +657,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -709,31 +709,31 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `a`");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "else");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -744,7 +744,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(8, maxN);
         }
 
         [Test]
@@ -803,30 +803,30 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "catch(@e)");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
                             Assert.AreEqual(true, message.Contains("see(i,#a)"));
                             Assert.AreEqual(true, message.Contains(":}"));
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -837,7 +837,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(7, maxN);
         }
 
         [Test]
@@ -894,31 +894,31 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `a`");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "else");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -929,7 +929,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(8, maxN);
         }
 
         [Test]
@@ -992,30 +992,30 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "catch(@e)");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
                             Assert.AreEqual(true, message.Contains("see(i,#a)"));
                             Assert.AreEqual(true, message.Contains(":}"));
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1026,7 +1026,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(7, maxN);
         }
 
         [Test]
@@ -1094,30 +1094,30 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "catch(@e) where {: see(I, $x) :}");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
                             Assert.AreEqual(true, message.Contains("see(i,#a)"));
                             Assert.AreEqual(true, message.Contains(":}"));
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1128,7 +1128,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(7, maxN);
         }
 
         [Test]
@@ -1186,22 +1186,22 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "catch(@e) where {: see(I, $x) :}");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
                             Assert.AreEqual(true, message.Contains("see(i,#a)"));
                             Assert.AreEqual(true, message.Contains(":}"));
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1212,7 +1212,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -1248,7 +1248,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1259,7 +1259,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -1294,15 +1294,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "else");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1313,7 +1313,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1349,11 +1349,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1364,7 +1364,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -1399,15 +1399,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1418,7 +1418,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1458,11 +1458,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1473,7 +1473,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -1512,19 +1512,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "else");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "ensure");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End of `Enter`");
@@ -1535,7 +1535,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(5, maxN);
         }
     }
 }

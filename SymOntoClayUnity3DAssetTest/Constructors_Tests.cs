@@ -51,7 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("End", message);
@@ -62,7 +62,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -155,91 +155,91 @@ app PeaceKeeper is cls1, cls2
                     {
                         case 1:
                             Assert.AreEqual("Begin ctor 1 of cls0", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Cool!", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("End ctor 1 of cls0", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("Begin ctor of cls1", message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("The Beatles!", message);
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual("End ctor of cls1", message);
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual("Begin ctor 2 of cls0", message);
-                            break;
+                            return true;
 
                         case 10:
                             Assert.AreEqual("16", message);
-                            break;
+                            return true;
 
                         case 11:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 12:
                             Assert.AreEqual("End ctor 2 of cls0", message);
-                            break;
+                            return true;
 
                         case 13:
                             Assert.AreEqual("Begin ctor of cls2", message);
-                            break;
+                            return true;
 
                         case 14:
                             Assert.AreEqual("12", message);
-                            break;
+                            return true;
 
                         case 15:
                             Assert.AreEqual("2", message);
-                            break;
+                            return true;
 
                         case 16:
                             Assert.AreEqual("End ctor of cls2", message);
-                            break;
+                            return true;
 
                         case 17:
                             Assert.AreEqual("Begin ctor 2 of PeaceKeeper", message);
-                            break;
+                            return true;
 
                         case 18:
                             Assert.AreEqual("Hi", message);
-                            break;
+                            return true;
 
                         case 19:
                             Assert.AreEqual("3", message);
-                            break;
+                            return true;
 
                         case 20:
                             Assert.AreEqual("End ctor 2 of PeaceKeeper", message);
-                            break;
+                            return true;
 
                         case 21:
                             Assert.AreEqual("Begin ctor 1 of PeaceKeeper", message);
-                            break;
+                            return true;
 
                         case 22:
                             Assert.AreEqual("3", message);
-                            break;
+                            return true;
 
                         case 23:
                             Assert.AreEqual("End ctor 1 of PeaceKeeper", message);
@@ -250,7 +250,7 @@ app PeaceKeeper is cls1, cls2
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(23, maxN);
         }
 
         [Test]
@@ -356,103 +356,103 @@ app PeaceKeeper is cls1, cls2, cls3
                     {
                         case 1:
                             Assert.AreEqual("Begin ctor 1 of cls0", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Cool!", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("End ctor 1 of cls0", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("Begin ctor of cls1", message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("The Beatles!", message);
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual("End ctor of cls1", message);
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual("Begin ctor 2 of cls0", message);
-                            break;
+                            return true;
 
                         case 10:
                             Assert.AreEqual("16", message);
-                            break;
+                            return true;
 
                         case 11:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 12:
                             Assert.AreEqual("End ctor 2 of cls0", message);
-                            break;
+                            return true;
 
                         case 13:
                             Assert.AreEqual("Begin ctor of cls2", message);
-                            break;
+                            return true;
 
                         case 14:
                             Assert.AreEqual("12", message);
-                            break;
+                            return true;
 
                         case 15:
                             Assert.AreEqual("2", message);
-                            break;
+                            return true;
 
                         case 16:
                             Assert.AreEqual("End ctor of cls2", message);
-                            break;
+                            return true;
 
                         case 17:
                             Assert.AreEqual("Begin ctor of cls3", message);
-                            break;
+                            return true;
 
                         case 18:
                             Assert.AreEqual("3", message);
-                            break;
+                            return true;
 
                         case 19:
                             Assert.AreEqual("End ctor of cls3", message);
-                            break;
+                            return true;
 
                         case 20:
                             Assert.AreEqual("Begin ctor 2 of PeaceKeeper", message);
-                            break;
+                            return true;
 
                         case 21:
                             Assert.AreEqual("Hi", message);
-                            break;
+                            return true;
 
                         case 22:
                             Assert.AreEqual("4", message);
-                            break;
+                            return true;
 
                         case 23:
                             Assert.AreEqual("End ctor 2 of PeaceKeeper", message);
-                            break;
+                            return true;
 
                         case 24:
                             Assert.AreEqual("Begin ctor 1 of PeaceKeeper", message);
-                            break;
+                            return true;
 
                         case 25:
                             Assert.AreEqual("4", message);
-                            break;
+                            return true;
 
                         case 26:
                             Assert.AreEqual("End ctor 1 of PeaceKeeper", message);
@@ -463,7 +463,7 @@ app PeaceKeeper is cls1, cls2, cls3
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(26, maxN);
         }
 
         [Test]
@@ -520,43 +520,43 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Begin ctor of cls0", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("Cool!", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("End ctor of cls0", message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("Begin ctor of cls1", message);
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual("Hi!", message);
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual("End ctor of cls1", message);
-                            break;
+                            return true;
 
                         case 10:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 11:
                             Assert.AreEqual("End", message);
@@ -567,7 +567,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(11, maxN);
         }
     }
 }

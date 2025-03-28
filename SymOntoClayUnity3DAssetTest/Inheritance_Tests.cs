@@ -53,7 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -123,7 +123,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -183,7 +183,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -215,7 +215,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -247,7 +247,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -302,7 +302,7 @@ app PeaceKeeper is [middle] exampleClass
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -385,7 +385,7 @@ app PeaceKeeper is [very middle] exampleClass
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -451,7 +451,7 @@ app PeaceKeeper is [very middle] exampleClass
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)

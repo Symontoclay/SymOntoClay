@@ -1509,15 +1509,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (any) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "dog");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1528,7 +1528,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1571,15 +1571,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1590,7 +1590,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1634,15 +1634,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (string) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "Hi");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1653,7 +1653,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1698,15 +1698,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (any) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "dog");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1717,7 +1717,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1762,15 +1762,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (any) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "dog");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1781,7 +1781,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1832,15 +1832,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (fuzzy) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1851,7 +1851,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1884,15 +1884,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (any) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1903,7 +1903,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1936,15 +1936,15 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "12");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
@@ -1955,7 +1955,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -1995,23 +1995,23 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (number | string) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "`a` (number | string) has been called!");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "Hi");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End");
@@ -2022,7 +2022,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -2062,23 +2062,23 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (number | string) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "`a` (number | string) has been called!");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "Hi");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End");
@@ -2089,7 +2089,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -2135,23 +2135,23 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "`a` (fuzzy) has been called!");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "`a` (number | string) has been called!");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "Hi");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End");
@@ -2162,7 +2162,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -2748,11 +2748,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -2763,7 +2763,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2790,11 +2790,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -2805,7 +2805,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2838,11 +2838,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -2853,7 +2853,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2891,11 +2891,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -2906,7 +2906,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2944,11 +2944,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -2959,7 +2959,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2997,11 +2997,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3012,7 +3012,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3045,11 +3045,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3060,7 +3060,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3093,11 +3093,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3108,7 +3108,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3141,11 +3141,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3156,7 +3156,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3184,11 +3184,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("3", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3199,7 +3199,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3231,11 +3231,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3246,7 +3246,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3279,11 +3279,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("3", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3294,7 +3294,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3326,11 +3326,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("3", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3341,7 +3341,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3378,11 +3378,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3393,7 +3393,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3430,11 +3430,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3445,7 +3445,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -3477,11 +3477,11 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
@@ -3492,7 +3492,7 @@ app PeaceKeeper
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
     }
 }

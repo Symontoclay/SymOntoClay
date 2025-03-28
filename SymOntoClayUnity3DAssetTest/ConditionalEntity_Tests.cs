@@ -54,11 +54,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(barrel)");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -69,7 +69,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -98,12 +98,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message.StartsWith("#@{:"), true);
                             Assert.AreEqual(message.EndsWith(">: { barrel($_) } :}"), true);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -114,7 +114,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -143,12 +143,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message.StartsWith("#@{:"), true);
                             Assert.AreEqual(message.EndsWith(">: { barrel($_) } :}"), true);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -159,7 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -188,11 +188,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(hold(i,this) & weapon)");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -203,7 +203,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -232,11 +232,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(hold(i,this) & (weapon & dog))");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -247,7 +247,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -276,11 +276,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(hold(#a,this) & (weapon & dog))");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -291,7 +291,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -320,11 +320,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(color = black)");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -335,7 +335,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -363,11 +363,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(color = black)");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -378,7 +378,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -410,13 +410,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$x = #@{:"), true);
                             Assert.AreEqual(message.Contains(">: { cat($_) & possess(i,$_) } :}"), true);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -427,7 +427,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -456,11 +456,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(barrel & random)");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -471,7 +471,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -500,11 +500,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(barrel & nearest)");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
@@ -515,7 +515,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
     }
 }

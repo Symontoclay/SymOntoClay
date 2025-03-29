@@ -58,11 +58,6 @@ namespace SymOntoClay.BaseTestLib
             _internalInstance.WriteFile(fileContent);
         }
 
-        public static bool Run(string fileContent, Action<int, string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, int timeoutToEnd = DefaultTimeoutToEnd)
-        {
-            return Run(fileContent, logChannel, useStandardLibrary, new object(), timeoutToEnd);
-        }
-
         public static bool Run(string fileContent, Action<int, string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
             return Run(fileContent, logChannel, new object(), timeoutToEnd, htnPlanExecutionIterationsMaxCount);

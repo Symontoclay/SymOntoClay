@@ -34,5 +34,15 @@
 
             return builder.Build();
         }
+
+        public static IBehaviorTestEngineInstance CreateMinimalInstanceWithImportStandardLibrary(this IBehaviorTestEngineInstanceBuilder builder, string fileContent, Func<int, string, bool> logHandler)
+        {
+            builder.DontUseTimeoutToEnd();
+            builder.SetUsingStandardLibrary(KindOfUsingStandardLibrary.Import);
+            builder.TestedCode(fileContent);
+            builder.LogHandler(logHandler);
+
+            return builder.Build();
+        }
     }
 }

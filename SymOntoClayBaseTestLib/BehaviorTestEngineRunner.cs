@@ -22,5 +22,12 @@
             var testInstance = builder.CreateMinimalInstanceWithCategories(fileContent, categories, logHandler);
             return testInstance.Run();
         }
+
+        public static bool RunMinimalInstanceWithImportStandardLibrary(string fileContent, Func<int, string, bool> logHandler)
+        {
+            var builder = new BehaviorTestEngineInstanceBuilder();
+            var testInstance = builder.CreateMinimalInstanceWithImportStandardLibrary(fileContent, logHandler);
+            return testInstance.Run();
+        }
     }
 }

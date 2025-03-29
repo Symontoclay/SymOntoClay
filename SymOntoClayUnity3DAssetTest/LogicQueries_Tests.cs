@@ -22,10 +22,7 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
-using SymOntoClay.Monitor.Common.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -46,7 +43,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -80,7 +77,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -115,7 +112,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -148,7 +145,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -162,7 +159,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import));
+                }));
         }
 
         [Test]
@@ -180,7 +177,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -211,7 +208,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -243,7 +240,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -275,7 +272,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -306,7 +303,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -336,7 +333,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -367,7 +364,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -397,7 +394,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -427,7 +424,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -456,7 +453,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -485,7 +482,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -514,7 +511,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -543,7 +540,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -574,7 +571,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -606,7 +603,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -646,7 +643,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -684,7 +681,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -722,7 +719,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -760,7 +757,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -798,7 +795,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -836,7 +833,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -874,7 +871,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -912,7 +909,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -950,7 +947,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -985,7 +982,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1023,7 +1020,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1058,7 +1055,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1096,7 +1093,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1127,7 +1124,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1160,7 +1157,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1190,7 +1187,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1221,7 +1218,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1252,7 +1249,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1282,7 +1279,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1313,7 +1310,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1343,7 +1340,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1373,7 +1370,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1404,7 +1401,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1435,7 +1432,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1465,7 +1462,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1495,7 +1492,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1525,7 +1522,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1556,7 +1553,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1586,7 +1583,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1617,7 +1614,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1656,7 +1653,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1695,7 +1692,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1733,7 +1730,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1771,7 +1768,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1810,7 +1807,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1849,7 +1846,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1887,7 +1884,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1925,7 +1922,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1963,7 +1960,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2002,7 +1999,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2040,7 +2037,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2079,7 +2076,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2118,7 +2115,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2157,7 +2154,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2195,7 +2192,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2233,7 +2230,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2272,7 +2269,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2311,7 +2308,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2349,7 +2346,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2387,7 +2384,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2425,7 +2422,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2464,7 +2461,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2502,7 +2499,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2541,7 +2538,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2571,7 +2568,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2612,7 +2609,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2650,7 +2647,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2684,7 +2681,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2698,7 +2695,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import));
+                }));
         }
 
         [Test]
@@ -2718,7 +2715,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2732,7 +2729,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import));
+                }));
         }
 
         [Test]
@@ -2752,7 +2749,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2766,7 +2763,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -2786,7 +2783,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2800,7 +2797,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -2820,7 +2817,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2834,7 +2831,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -2884,7 +2881,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2898,7 +2895,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -2918,7 +2915,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2932,7 +2929,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -2950,7 +2947,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2984,7 +2981,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2996,7 +2993,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3014,7 +3011,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3048,7 +3045,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3062,7 +3059,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3082,7 +3079,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3096,7 +3093,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3116,7 +3113,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3130,7 +3127,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3150,7 +3147,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3164,7 +3161,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3184,7 +3181,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3196,7 +3193,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3216,7 +3213,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3228,7 +3225,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3248,7 +3245,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3262,7 +3259,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3282,7 +3279,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3296,7 +3293,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3316,7 +3313,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3330,7 +3327,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3350,7 +3347,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3364,7 +3361,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3381,7 +3378,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3412,7 +3409,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3443,7 +3440,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3473,7 +3470,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3501,7 +3498,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3532,7 +3529,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3565,7 +3562,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3599,7 +3596,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3634,7 +3631,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3670,7 +3667,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3706,7 +3703,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3720,7 +3717,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }), true);
         }
 
         [Test]
@@ -3741,7 +3738,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3779,7 +3776,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3812,7 +3809,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3847,7 +3844,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3883,7 +3880,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)

@@ -63,20 +63,6 @@ namespace SymOntoClay.BaseTestLib
             return Run(fileContent, logChannel, new object(), timeoutToEnd, htnPlanExecutionIterationsMaxCount);
         }
 
-        public static bool Run(string fileContent, Action<int, string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, object platformListener,
-            int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
-        {
-            var n = 0;
-
-            return Run(fileContent,
-                message => { n++; logChannel(n, message); },
-                error => { throw new Exception(error); },
-                useStandardLibrary,
-                platformListener,
-                timeoutToEnd,
-                htnPlanExecutionIterationsMaxCount);
-        }
-
         public static bool Run(string fileContent, Action<int, string> logChannel, object platformListener,
             int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
@@ -101,26 +87,6 @@ namespace SymOntoClay.BaseTestLib
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, int timeoutToEnd = DefaultTimeoutToEnd)
         {
             return Run(fileContent, logChannel, error, new object(), timeoutToEnd);
-        }
-
-        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, KindOfUsingStandardLibrary useStandardLibrary, object platformListener,
-            int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
-        {
-            if (string.IsNullOrWhiteSpace(fileContent))
-            {
-                throw new Exception("Argument 'fileContent' can not be null or empty!");
-            }
-
-            using (var behaviorTestEngineInstance = new OldBehaviorTestEngineInstance(useStandardLibrary))
-            {
-                behaviorTestEngineInstance.WriteFile(fileContent);
-
-                return behaviorTestEngineInstance.Run(timeoutToEnd, 
-                    htnPlanExecutionIterationsMaxCount,
-                    message => { logChannel(message); },
-                    errorMsg => { error(errorMsg); },
-                    platformListener);
-            }
         }
 
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, object platformListener,

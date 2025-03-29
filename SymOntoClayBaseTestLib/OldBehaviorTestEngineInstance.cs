@@ -68,11 +68,6 @@ namespace SymOntoClay.BaseTestLib
             return Run(fileContent, logChannel, new object(), timeoutToEnd, htnPlanExecutionIterationsMaxCount);
         }
 
-        public static bool Run(string fileContent, Func<int, string, bool> logChannel, int? htnPlanExecutionIterationsMaxCount = null)
-        {
-            return Run(fileContent, logChannel, new object(), htnPlanExecutionIterationsMaxCount);
-        }
-
         public static bool Run(string fileContent, Action<int, string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, object platformListener,
             int timeoutToEnd = DefaultTimeoutToEnd, int? htnPlanExecutionIterationsMaxCount = null)
         {
@@ -97,22 +92,6 @@ namespace SymOntoClay.BaseTestLib
                 error => { throw new Exception(error); },
                 platformListener,
                 timeoutToEnd,
-                htnPlanExecutionIterationsMaxCount);
-        }
-
-        public static bool Run(string fileContent, Func<int, string, bool> logChannel, object platformListener,
-            int? htnPlanExecutionIterationsMaxCount = null)
-        {
-            var n = 0;
-
-            return Run(fileContent,
-                message => 
-                { 
-                    n++; 
-                    return logChannel(n, message); 
-                },
-                error => { throw new Exception(error); },
-                platformListener,
                 htnPlanExecutionIterationsMaxCount);
         }
 
@@ -169,26 +148,6 @@ namespace SymOntoClay.BaseTestLib
             }
         }
 
-        public static bool Run(string fileContent, Func<string, bool> logChannel, Func<string, bool> error, object platformListener,
-            int? htnPlanExecutionIterationsMaxCount = null)
-        {
-            if (string.IsNullOrWhiteSpace(fileContent))
-            {
-                throw new Exception("Argument 'fileContent' can not be null or empty!");
-            }
-
-            using (var behaviorTestEngineInstance = new OldBehaviorTestEngineInstance())
-            {
-                behaviorTestEngineInstance.WriteFile(fileContent);
-
-                return behaviorTestEngineInstance.Run(
-                    htnPlanExecutionIterationsMaxCount,
-                    message => { return logChannel(message); },
-                    errorMsg => { return error(errorMsg); },
-                    platformListener);
-            }
-        }
-
         public bool Run(int timeoutToEnd, int? htnPlanExecutionIterationsMaxCount, Action<string> logChannel, Action<string> error, object platformListener)
         {
             var result = true;
@@ -199,36 +158,6 @@ namespace SymOntoClay.BaseTestLib
                 htnPlanExecutionIterationsMaxCount);
 
             Thread.Sleep(timeoutToEnd);
-
-            return result;
-        }
-
-        public bool Run(int? htnPlanExecutionIterationsMaxCount, Func<string, bool> logChannel, Func<string, bool> error, object platformListener)
-        {
-            var result = true;
-
-            var needRun = true;
-
-            _internalInstance.CreateAndStartNPC(message => { 
-                    if(!logChannel(message))
-                    {
-                        needRun = false;
-                    }
-                },
-                errorMsg => { 
-                    result = false;
-                    if(!error(errorMsg))
-                    {
-                        needRun = false;
-                    }
-                },
-                platformListener,
-                htnPlanExecutionIterationsMaxCount);
-
-            while (needRun)
-            {
-                Thread.Sleep(100);
-            }
 
             return result;
         }

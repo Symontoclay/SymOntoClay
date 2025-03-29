@@ -24,10 +24,6 @@ using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -50,8 +46,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -67,6 +67,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -86,8 +88,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -102,6 +108,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -117,7 +125,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener1();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -132,7 +140,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
         }
 
         [Test]
@@ -151,7 +159,7 @@ app PeaceKeeper
 
             var hostListener = new Exec_Tests_HostListener2();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -166,7 +174,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
         }
     }
 }

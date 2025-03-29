@@ -23,10 +23,6 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -53,7 +49,7 @@ private:
 	@a = #Tom;
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -97,7 +93,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -142,7 +138,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -188,7 +184,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -234,7 +230,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -279,7 +275,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -325,7 +321,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -373,7 +369,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -420,7 +416,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -465,7 +461,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -511,7 +507,7 @@ private:
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -590,7 +586,7 @@ app PeaceKeeper is cls1, cls2
         @b = 3;
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -648,7 +644,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     switch (n)

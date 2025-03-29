@@ -36,17 +36,7 @@ namespace SymOntoClay.BaseTestLib
         {
         }
         
-        public OldBehaviorTestEngineInstance(KindOfUsingStandardLibrary useStandardLibrary)
-            : this(AdvancedBehaviorTestEngineInstance.RoorDir, useStandardLibrary)
-        {
-        }
-
         private AdvancedBehaviorTestEngineInstance _internalInstance;
-
-        public OldBehaviorTestEngineInstance(string rootDir, KindOfUsingStandardLibrary useStandardLibrary)
-        {
-            _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir, useStandardLibrary);
-        }
 
         public OldBehaviorTestEngineInstance(string rootDir)
         {
@@ -74,19 +64,6 @@ namespace SymOntoClay.BaseTestLib
                 platformListener,
                 timeoutToEnd,
                 htnPlanExecutionIterationsMaxCount);
-        }
-
-        public static bool Run(string fileContent, Action<string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd)
-        {
-            return Run(fileContent,
-                message => { logChannel(message); },
-                error => { throw new Exception(error); },
-                timeoutToEnd);
-        }
-
-        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, int timeoutToEnd = DefaultTimeoutToEnd)
-        {
-            return Run(fileContent, logChannel, error, new object(), timeoutToEnd);
         }
 
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, object platformListener,

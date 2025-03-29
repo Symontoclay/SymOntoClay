@@ -16,6 +16,13 @@
             return testInstance.Run();
         }
 
+        public static bool RunMinimalInstanceTimeoutBased(string fileContent, Action<string> logHandler)
+        {
+            var builder = new BehaviorTestEngineInstanceBuilder();
+            var testInstance = builder.CreateMinimalInstance(fileContent, logHandler);
+            return testInstance.Run();
+        }
+
         public static bool RunMinimalInstanceWithCategories(string fileContent, List<string> categories, Func<int, string, bool> logHandler)
         {
             var builder = new BehaviorTestEngineInstanceBuilder();

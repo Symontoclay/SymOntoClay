@@ -24,11 +24,6 @@ using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {

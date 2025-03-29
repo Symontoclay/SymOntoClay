@@ -23,11 +23,7 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -60,7 +56,7 @@ state Idling
             var initN = 0;
             var enterN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if(message.EndsWith(" Enter"))
                     {
@@ -130,7 +126,7 @@ state Idling
             var initN = 0;
             var enterN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -198,7 +194,7 @@ state Idling
             var initN = 0;
             var enterN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -268,7 +264,7 @@ state Idling
             var initN = 0;
             var enterN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -345,7 +341,7 @@ state Patrolling
             var appN = 0;
             var patrollingEnterN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains("Idling Enters"))
                     {
@@ -430,7 +426,7 @@ state Patrolling
             var appEnterN = 0;
             var patrollingEnterN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -512,7 +508,7 @@ state Patrolling
             var patrollingN = 0;
             var idlingN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Patrolling "))
                     {
@@ -601,7 +597,7 @@ state Patrolling
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -665,7 +661,7 @@ state Patrolling
             var patrollingN = 0;
             var idlingN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Patrolling "))
                     {
@@ -762,7 +758,7 @@ state Patrolling
             var appN = 0;
             var enterN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -1196,7 +1192,7 @@ state Idling
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1259,7 +1255,7 @@ state Idling
             var appN = 0;
             var idlingN = 0;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Idling "))
                     {
@@ -1353,7 +1349,7 @@ state Patrolling
 
             var wasPatrolling = false;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if(message.Contains(" Idling "))
                     {
@@ -1479,7 +1475,7 @@ state Patrolling
 
             var wasPatrolling = false;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Idling "))
                     {
@@ -1564,7 +1560,7 @@ state Idling
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1639,7 +1635,7 @@ state Patrolling
 
             var wasPatrollingEnter = false;
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if(message.Contains(" Idling Enter"))
                     {

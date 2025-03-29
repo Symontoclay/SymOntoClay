@@ -56,14 +56,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -96,14 +96,14 @@ app PeaceKeeper
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -137,14 +137,14 @@ app PeaceKeeper
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -176,14 +176,14 @@ app PeaceKeeper
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }));
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -213,14 +213,14 @@ app PeaceKeeper
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
                             Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -251,14 +251,14 @@ app PeaceKeeper
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), false);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -289,14 +289,14 @@ app PeaceKeeper
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), false);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -326,14 +326,14 @@ app PeaceKeeper
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$x = fly"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -362,14 +362,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -400,14 +400,14 @@ app PeaceKeeper
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$z = can(bird,fly)"), true);
                             Assert.AreEqual(message.Contains("$x"), false);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -435,14 +435,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -471,14 +471,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -507,14 +507,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -542,14 +542,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -577,14 +577,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -612,14 +612,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -647,14 +647,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -685,14 +685,14 @@ app PeaceKeeper
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
                             Assert.AreEqual(true, message.Contains("$z = see(i,#a)"));
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -724,14 +724,14 @@ app PeaceKeeper
                             Assert.AreEqual(message.Contains("<yes>"), true);
                             Assert.AreEqual(message.Contains("$x = cat; $z = animal"), true);
                             Assert.AreEqual(message.Contains("$x = #a; $z = barrel"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -768,14 +768,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<no>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -812,14 +812,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -856,14 +856,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -900,14 +900,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -944,14 +944,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -988,14 +988,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -1032,14 +1032,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -1076,14 +1076,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -1120,14 +1120,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<no>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -1161,14 +1161,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -1205,14 +1205,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -1246,14 +1246,14 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(1, maxN);
         }
 
         [Test]
@@ -3017,7 +3017,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<no>"), true);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message.Contains("<yes>"), true);

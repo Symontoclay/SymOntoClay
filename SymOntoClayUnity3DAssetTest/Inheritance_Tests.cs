@@ -53,51 +53,57 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(9, maxN);
         }
 
         [Test]
@@ -123,51 +129,57 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(9, maxN);
         }
 
         [Test]
@@ -183,23 +195,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -215,23 +233,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -247,23 +271,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -302,51 +332,57 @@ app PeaceKeeper is [middle] exampleClass
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(9, maxN);
         }
 
         [Test]
@@ -385,51 +421,57 @@ app PeaceKeeper is [very middle] exampleClass
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "1");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "0.5");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "0");
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(9, maxN);
         }
 
         [Test]
@@ -451,36 +493,36 @@ app PeaceKeeper is [very middle] exampleClass
     }
 }";
 
+            var maxN = 0;
+
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
         [Parallelizable]
         public void Case5()
         {
-            var settings = new AdvancedBehaviorTestEngineInstanceSettings()
-            {
-                Categories = new List<string>() { "elf" },
-                EnableCategories = true
-            };
-
-            var instance = new AdvancedBehaviorTestEngineInstance(settings);
+            var categories = new List<string>() { "elf" };
 
             var text = @"app PeaceKeeper
 {
@@ -494,29 +536,32 @@ app PeaceKeeper is [very middle] exampleClass
     }
 }";
 
-            instance.WriteFile(text);
+            var maxN = 0;
 
-            var npc = instance.CreateAndStartNPC((n, message) => {
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithCategories(text, categories, (n, message) => 
+            {
+                maxN = n;
+
                 switch (n)
                 {
                     case 1:
                         Assert.AreEqual(message, "Begin");
-                        break;
+                        return true;
 
                     case 2:
                         Assert.AreEqual(message, "1");
-                        break;
+                        return true;
 
                     case 3:
                         Assert.AreEqual(message, "End");
-                        break;
+                        return false;
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
                 }
-            });
+            }), true);
 
-            Thread.Sleep(2000);
+            Assert.AreEqual(3, maxN);
         }
     }
 }

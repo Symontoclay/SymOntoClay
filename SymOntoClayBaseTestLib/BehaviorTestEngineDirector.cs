@@ -14,5 +14,25 @@
 
             return builder.Build();
         }
+
+        public static IBehaviorTestEngineInstance CreateMinimalInstance(this IBehaviorTestEngineInstanceBuilder builder, string fileContent, Action<int, string> logHandler)
+        {
+            builder.UseDefaultTimeoutToEnd();
+            builder.TestedCode(fileContent);
+            builder.LogHandler(logHandler);
+
+            return builder.Build();
+        }
+
+        public static IBehaviorTestEngineInstance CreateMinimalInstanceWithCategories(this IBehaviorTestEngineInstanceBuilder builder,
+            string fileContent, List<string> categories, Func<int, string, bool> logHandler)
+        {
+            builder.DontUseTimeoutToEnd();
+            builder.UseCategories(categories);
+            builder.TestedCode(fileContent);
+            builder.LogHandler(logHandler);
+
+            return builder.Build();
+        }
     }
 }

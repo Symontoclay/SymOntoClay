@@ -711,34 +711,40 @@ action Go
 
             var hostListener = new FullGeneralized_Tests_HostListener();
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("methodName = 'rotate'", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("isNamedParameters = False", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("on complete", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener));
+
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -757,7 +763,7 @@ action Go
 
             var hostListener = new FullGeneralized_Tests_HostListener();
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -803,7 +809,7 @@ action Go
 
             var hostListener = new FullGeneralized_Tests_HostListener();
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -849,7 +855,7 @@ action Go
 
             var hostListener = new FullGeneralized_Tests_HostListener();
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -926,8 +932,12 @@ action Go
 
             var hostListener = new FullGeneralized_Tests_HostListener();
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -958,6 +968,8 @@ action Go
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener));
+
+            Assert.AreEqual(, maxN);
         }
 
 
@@ -1008,8 +1020,12 @@ action Go
 
             var hostListener = new FullGeneralized_Tests_HostListener();
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1040,6 +1056,8 @@ action Go
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener));
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1062,8 +1080,12 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1082,6 +1104,8 @@ action Go
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1104,8 +1128,12 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1124,6 +1152,8 @@ action Go
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1146,8 +1176,12 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1166,6 +1200,8 @@ action Go
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]
@@ -1188,8 +1224,12 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
@@ -1208,6 +1248,8 @@ action Go
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(, maxN);
         }
 
         [Test]

@@ -56,19 +56,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "go!!!!");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message.Contains("#@{:"), true);
                             Assert.AreEqual(message.Contains(">: { color($_,$x1) & place($_) & green($x1) } :}"), true);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -98,18 +98,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message, "go!!!!");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "#@(place & color = green)");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]

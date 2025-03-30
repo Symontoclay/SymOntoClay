@@ -48,30 +48,36 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("`a` has been called!", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("on complete", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -93,30 +99,36 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("`a` has been called!", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("on complete", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -138,30 +150,36 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("`a` has been called!", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("on completed", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -183,30 +201,36 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("`a` has been called!", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("on completed", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -228,7 +252,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -273,7 +297,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -318,7 +342,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -363,7 +387,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -408,7 +432,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -453,7 +477,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -498,7 +522,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -574,34 +598,40 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Begin Go", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("10", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("`a` has been called!", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -629,34 +659,40 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Begin Go", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End Go", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("on complete", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]

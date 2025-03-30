@@ -48,26 +48,32 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "BooImpl Begin");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener));
+
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -88,30 +94,36 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "RotateImpl Begin");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "30");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener));
+
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -132,30 +144,36 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "RotateImpl Begin");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, string.Empty);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener));
+
+            Assert.AreEqual(4, maxN);
         }
 
         [Test]
@@ -176,26 +194,32 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "RotateToEntityImpl Begin");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener));
+
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -419,22 +443,28 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener2();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("<0, 0, 0>", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
+
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -451,22 +481,28 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener2();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("<0, 0, 0>", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
+
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -483,34 +519,40 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener3();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("GoToImpl End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
+
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -527,34 +569,40 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener3();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("GoToImpl End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
+
+            Assert.AreEqual(5, maxN);
         }
 
         [Test]
@@ -571,38 +619,44 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener4();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("ByEntity", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("GoToImpl End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
+
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -619,38 +673,44 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener4();
 
-            OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("ByEntity", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("0", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(string.Empty, message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("GoToImpl End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener), true);
+
+            Assert.AreEqual(6, maxN);
         }
     }
 }

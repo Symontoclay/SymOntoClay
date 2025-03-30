@@ -54,10 +54,32 @@
             return builder.Build();
         }
 
-        public static IBehaviorTestEngineInstance CreateMinimalInstanceTimeoutBasedWithImportStandardLibrary(this IBehaviorTestEngineInstanceBuilder builder, string fileContent, Action<int, string> logHandler)
+        public static IBehaviorTestEngineInstance CreateMinimalInstanceWithImportStandardLibrary(this IBehaviorTestEngineInstanceBuilder builder, string fileContent, Action<int, string> logHandler)
         {
             builder.DontUseTimeoutToEnd();
             builder.SetUsingStandardLibrary(KindOfUsingStandardLibrary.Import);
+            builder.TestedCode(fileContent);
+            builder.LogHandler(logHandler);
+
+            return builder.Build();
+        }
+
+        public static IBehaviorTestEngineInstance CreateMinimalInstanceWithPlatformListener(this IBehaviorTestEngineInstanceBuilder builder,
+            string fileContent, Func<int, string, bool> logHandler, object platformListener)
+        {
+            builder.DontUseTimeoutToEnd();
+            builder.UsePlatformListener(platformListener);
+            builder.TestedCode(fileContent);
+            builder.LogHandler(logHandler);
+
+            return builder.Build();
+        }
+
+        public static IBehaviorTestEngineInstance CreateMinimalInstanceWithPlatformListener(this IBehaviorTestEngineInstanceBuilder builder,
+            string fileContent, Action<int, string> logHandler, object platformListener)
+        {
+            builder.UseDefaultTimeoutToEnd();
+            builder.UsePlatformListener(platformListener);
             builder.TestedCode(fileContent);
             builder.LogHandler(logHandler);
 

@@ -1116,7 +1116,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1190,39 +1190,45 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "Begin Go");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "`a` has been called!");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "`b` has been called!");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End Go");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -1396,55 +1402,61 @@ action kill
 	    var @_target;
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Begin move", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("1", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("End move", message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("Begin kill", message);
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual("2", message);
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual("2", message);
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual("End kill", message);
-                            break;
+                            return true;
 
                         case 10:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(10, maxN);
         }
 
         [Test]
@@ -1502,55 +1514,61 @@ action kill
 	    var @_target;
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "Begin go and kill");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "Begin move");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "move: 1");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "End move");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "Begin kill");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "kill: 2");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "End kill");
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual(message, "End go and kill");
-                            break;
+                            return true;
 
                         case 10:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(10, maxN);
         }
 
         [Test]
@@ -1612,63 +1630,69 @@ action kill
 	    var @_target;
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual(message, "Begin go and kill");
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual(message, "Begin move");
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual(message, "move: 1");
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual(message, "move (1): 1");
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual(message, "End move");
-                            break;
+                            return true;
 
                         case 7:
                             Assert.AreEqual(message, "Begin kill");
-                            break;
+                            return true;
 
                         case 8:
                             Assert.AreEqual(message, "kill: 2");
-                            break;
+                            return true;
 
                         case 9:
                             Assert.AreEqual(message, "kill (1): 2");
-                            break;
+                            return true;
 
                         case 10:
                             Assert.AreEqual(message, "End kill");
-                            break;
+                            return true;
 
                         case 11:
                             Assert.AreEqual(message, "End go and kill");
-                            break;
+                            return true;
 
                         case 12:
                             Assert.AreEqual(message, "End");
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
+
+            Assert.AreEqual(12, maxN);
         }
 
         [Test]

@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -281,7 +281,7 @@ namespace SymOntoClay.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -407,8 +407,6 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case3()
         {
-            throw new NotImplementedException();
-
             using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
@@ -485,7 +483,7 @@ namespace SymOntoClay.Core.Tests
     }
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -508,8 +506,6 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case4()
         {
-            throw new NotImplementedException();
-
             using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
@@ -592,7 +588,7 @@ namespace SymOntoClay.Core.Tests
     }
 }";
 
-            Assert.AreEqual(true, OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)

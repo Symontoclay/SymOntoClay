@@ -125,22 +125,28 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new Exec_Tests_HostListener1();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl_2", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("<0, 0, 0>", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener), true);
+
+            Assert.AreEqual(2, maxN);
         }
 
         [Test]
@@ -159,22 +165,28 @@ app PeaceKeeper
 
             var hostListener = new Exec_Tests_HostListener2();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("GoToImpl", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("<0, 0, 0>", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener), true);
+
+            Assert.AreEqual(2, maxN);
         }
     }
 }

@@ -942,34 +942,34 @@ action Go
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Begin Go", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("10", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("methodName = 'rotate'", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("isNamedParameters = False", message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener));
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
 
@@ -1030,34 +1030,34 @@ action Go
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("Begin Go", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("10", message);
-                            break;
+                            return true;
 
                         case 4:
                             Assert.AreEqual("methodName = 'rotate'", message);
-                            break;
+                            return true;
 
                         case 5:
                             Assert.AreEqual("isNamedParameters = False", message);
-                            break;
+                            return true;
 
                         case 6:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener));
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(6, maxN);
         }
 
         [Test]
@@ -1082,7 +1082,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1090,22 +1090,22 @@ action Go
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak cancel", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -1130,7 +1130,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1138,22 +1138,22 @@ action Go
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak canceled", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -1178,7 +1178,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1186,22 +1186,22 @@ action Go
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak cancel", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -1226,7 +1226,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1234,22 +1234,22 @@ action Go
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak canceled", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
 
-            Assert.AreEqual(, maxN);
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]

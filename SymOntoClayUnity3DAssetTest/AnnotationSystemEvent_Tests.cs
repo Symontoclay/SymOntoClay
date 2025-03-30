@@ -2116,26 +2116,32 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak cancel", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener), true);
+
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2154,26 +2160,32 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak canceled", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener), true);
+
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2192,26 +2204,32 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak cancel", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener), true);
+
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2230,26 +2248,32 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
+                    maxN = n;
+
                     switch (n)
                     {
                         case 1:
                             Assert.AreEqual("Begin", message);
-                            break;
+                            return true;
 
                         case 2:
                             Assert.AreEqual("on weak canceled", message);
-                            break;
+                            return true;
 
                         case 3:
                             Assert.AreEqual("End", message);
-                            break;
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }, hostListener), true);
+
+            Assert.AreEqual(3, maxN);
         }
 
         [Test]
@@ -2268,7 +2292,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2306,7 +2330,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2344,7 +2368,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2382,7 +2406,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2420,7 +2444,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2458,7 +2482,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2496,7 +2520,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2534,7 +2558,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2572,7 +2596,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2610,7 +2634,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2648,7 +2672,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2686,7 +2710,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2725,7 +2749,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2764,7 +2788,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2803,7 +2827,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2842,7 +2866,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2881,7 +2905,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2920,7 +2944,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2959,7 +2983,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2998,7 +3022,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3036,7 +3060,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3074,7 +3098,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3108,7 +3132,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3146,7 +3170,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3180,7 +3204,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3222,7 +3246,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3256,7 +3280,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3298,7 +3322,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3320,44 +3344,43 @@ action Go
         [Parallelizable]
         public void Case13_d()
         {
-            throw new NotImplementedException();
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {       
+        wait 1;
+        '`a` has been called!' >> @>log;
+    }
 
-//            var text = @"app PeaceKeeper
-//{
-//    fun a() => 
-//    {       
-//        wait 1;
-//        '`a` has been called!' >> @>log;
-//    }
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        a~()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        'End' >> @>log;
+    }
+}";
 
-//    on Enter =>
-//    {
-//        'Begin' >> @>log;
-//        a~()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
-//        'End' >> @>log;
-//    }
-//}";
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
 
-//            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
-//                (n, message) => {
-//                    switch (n)
-//                    {
-//                        case 1:
-//                            Assert.AreEqual("Begin", message);
-//                            break;
+                        case 2:
+                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
+                            break;
 
-//                        case 2:
-//                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
-//                            break;
+                        case 3:
+                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
+                            break;
 
-//                        case 3:
-//                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
-//                            break;
-
-//                        default:
-//                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
-//                    }
-//                }), true);
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
         }
 
         [Test]
@@ -3380,7 +3403,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3419,7 +3442,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(OldBehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {

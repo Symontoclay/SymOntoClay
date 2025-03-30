@@ -36,5 +36,19 @@
             var testInstance = builder.CreateMinimalInstanceWithImportStandardLibrary(fileContent, logHandler);
             return testInstance.Run();
         }
+
+        public static bool RunMinimalInstanceTimeoutBasedWithImportStandardLibrary(string fileContent, Action<int, string> logHandler)
+        {
+            var builder = new BehaviorTestEngineInstanceBuilder();
+            var testInstance = builder.CreateMinimalInstanceTimeoutBasedWithImportStandardLibrary(fileContent, logHandler);
+            return testInstance.Run();
+        }
+
+        public static bool RunMinimalInstanceTimeoutBasedWithPlatformListener(string fileContent, Action<int, string> logHandler, object platformListener)
+        {
+            var builder = new BehaviorTestEngineInstanceBuilder();
+            var testInstance = builder.CreateMinimalInstanceWithPlatformListener(fileContent, logHandler, platformListener);
+            return testInstance.Run();
+        }
     }
 }

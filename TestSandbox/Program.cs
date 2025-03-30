@@ -1267,10 +1267,9 @@ action Go
     }
 }";
 
-            BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithImportStandardLibrary(text,
                 (n, message) => {
                     _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = {message}");
-                    return true;
                 });
 
             _logger.Info("EFF4EB51-E83C-4FA6-96A9-811A72B430E4", "End");

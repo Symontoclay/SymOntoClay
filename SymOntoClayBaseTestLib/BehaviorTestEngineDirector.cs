@@ -85,5 +85,16 @@
 
             return builder.Build();
         }
+
+        public static IBehaviorTestEngineInstance CreateMinimalInstanceWithOneHtnIteration(this IBehaviorTestEngineInstanceBuilder builder,
+            string fileContent, Func<int, string, bool> logHandler)
+        {
+            builder.DontUseTimeoutToEnd();
+            builder.SethHtnIterationsMaxCount(1);
+            builder.TestedCode(fileContent);
+            builder.LogHandler(logHandler);
+
+            return builder.Build();
+        }
     }
 }

@@ -130,7 +130,7 @@ namespace TestSandbox
             //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
-            //TstTestRunner();//<=
+            TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -171,7 +171,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1306,12 +1306,26 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
+    root task `SomeCompoundTask`;
+
+    fun SomeOperator()
     {
-        'Begin' >> @>log;
-        @bx >> @>log;
-        'End' >> @>log;
+       'SomeOperator' >> @>log;
+       wait 1;
     }
+}
+
+compound task SomeCompoundTask
+{
+   case
+   {
+       SomePrimitiveTask;
+   }
+}
+
+primitive task SomePrimitiveTask
+{
+    operator SomeOperator();
 }";
 
             //BehaviorTestEngineInstance.Run(fileContent: text,
@@ -1329,41 +1343,50 @@ action Go
 
             var maxN = 0;
 
-            var builder = new BehaviorTestEngineInstanceBuilder();
-            builder.UseDefaultRootDirectory();
-            builder.DontUsePlatformListener();
-            builder.EnableHtnPlanExecution();
-            builder.DontUseTimeoutToEnd();
-            builder.TestedCode(text);
-            builder.LogHandler((n, message) =>
+            var result = BehaviorTestEngineRunner.RunMinimalInstanceWithOneHtnIteration(text, (n, message) =>
             {
-                _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
+                _logger.Info("68991BD3-D688-44F8-9D70-E9994D7D176F", $"n = {n}; message = {message}");
 
                 maxN = n;
 
-                switch (n)
-                {
-                    case 1:
-                        Assert.AreEqual(message, "Begin");
-                        return true;
-
-                    case 2:
-                        Assert.AreEqual(message, "NULL");
-                        return true;
-
-                    case 3:
-                        Assert.AreEqual(message, "End");
-                        return false;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
-                }
+                return true;
             });
+
+            //var builder = new BehaviorTestEngineInstanceBuilder();
+            //builder.UseDefaultRootDirectory();
+            //builder.DontUsePlatformListener();
+            //builder.EnableHtnPlanExecution();
+            //builder.DontUseTimeoutToEnd();
+            //builder.TestedCode(text);
+            //builder.LogHandler((n, message) =>
+            //{
+            //    _logger.Info("CEB3C0B7-4DC5-4208-88F4-9707C3F057BE", $"n = {n}; message = {message}");
+
+            //    maxN = n;
+
+            //    switch (n)
+            //    {
+            //        case 1:
+            //            Assert.AreEqual(message, "Begin");
+            //            return true;
+
+            //        case 2:
+            //            Assert.AreEqual(message, "NULL");
+            //            return true;
+
+            //        case 3:
+            //            Assert.AreEqual(message, "End");
+            //            return false;
+
+            //        default:
+            //            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+            //    }
+            //});
             //builder.ErrorHandler((errorMsg) => {
             //    _logger.Info("DB0176DD-B108-40DD-A527-5FD3B7C6318A", $"errorMsg = {errorMsg}");
             //});
 
-            var testInstance = builder.Build();
+            //var testInstance = builder.Build();
 
             //var testInstance = builder.CreateMinimalInstance(text, (n, message) => {
             //    _logger.Info("7C09894C-BB7E-4B51-A3CF-72D7CD45E350", $"n = {n}; message = {message}");
@@ -1376,7 +1399,7 @@ action Go
             //    return true;
             //});
 
-            var result = testInstance.Run();
+            //var result = testInstance.Run();
 
             //var result = BehaviorTestEngineRunner.RunMinimalInstance(text, (n, message) => {
             //    _logger.Info("DC97FBD3-DB40-4A88-9C12-14030A67DE00", $"n = {n}; message = {message}");

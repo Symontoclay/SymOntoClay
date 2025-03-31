@@ -56,6 +56,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         private void RunAssignBinaryOperator(BinaryOperatorAstExpression expression)
         {
+#if DEBUG
+            //Info("F5226D11-914F-4B58-8249-EFB8F6FA362C", $"expression.Right.Kind = {expression.Right.Kind}");
+            //Info("25DEC754-44BF-49DF-B1AA-496AD2B76595", $"expression.Right = {expression.Right}");
+#endif
+
             var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
@@ -113,11 +118,17 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                         var kindOfOperator = binOpExpr.KindOfOperator;
 
-                        switch(kindOfOperator)
+#if DEBUG
+                        //Info("587ADCE8-E906-4EAC-A946-E611B968F250", $"kindOfOperator = {kindOfOperator}");
+                        //Info("56BC3CE3-B93E-408D-9C3A-963F1E36364A", $"binOpExpr.Right = {binOpExpr.Right}");
+                        //Info("B823CD43-BA0A-46A6-A1EC-2C15864ADE3B", $"binOpExpr.Left = {binOpExpr.Left}");
+#endif
+
+                        switch (kindOfOperator)
                         {
                             case KindOfOperator.Assign:
                                 {
-                                    var rightNode = new ExpressionNode(_context, null);
+                                    var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.Direct);
                                     rightNode.Run(binOpExpr.Right);
                                     AddCommands(rightNode.Result);
 
@@ -152,6 +163,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
+#if DEBUG
+            //DbgPrintCommands();
+#endif
         }
 
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)

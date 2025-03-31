@@ -407,6 +407,8 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case3()
         {
+            throw new NotImplementedException();
+
             using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
@@ -506,6 +508,8 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case4()
         {
+            throw new NotImplementedException();
+
             using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper

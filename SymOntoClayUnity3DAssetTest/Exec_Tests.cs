@@ -33,6 +33,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
 	on Enter => {
@@ -75,6 +77,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1_a()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
 	on Enter => {
@@ -116,6 +120,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case2()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
 	on Enter => {
@@ -153,6 +159,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case2_a()
         {
+            throw new NotImplementedException();
+
             var text = @"synonym to for direction;
 
 app PeaceKeeper

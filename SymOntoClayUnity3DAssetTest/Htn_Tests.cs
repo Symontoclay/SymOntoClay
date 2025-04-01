@@ -466,5 +466,165 @@ primitive task SomePrimitiveTask
 
             Assert.AreEqual(3, maxN);
         }
+
+        [Test]
+        [Parallelizable]
+        public void MinimalRecursionCase1()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun SomeOperator()
+    {
+       'Run SomeOperator' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator2()
+    {
+       'Run SomeOperator2' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator3()
+    {
+       'Run SomeOperator3' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator4()
+    {
+       'Run SomeOperator4' >> @>log;
+       wait 1;
+    }
+}
+
+root task SomeRootTask
+{
+   case
+   {
+       SomeStrategicTask;
+   }
+}
+
+strategic task SomeStrategicTask
+{
+   case
+   {
+       SomeTacticalTask;
+       SomeStrategicTask;
+   }
+}
+
+tactical task SomeTacticalTask
+{
+   case
+   {
+       SomeCompoundTask;
+       SomeCompoundTask2;
+   }
+}
+
+compound task SomeCompoundTask
+{
+   case
+   {
+       SomePrimitiveTask;
+       SomePrimitiveTask2;
+   }
+}
+
+compound task SomeCompoundTask2
+{
+   case
+   {
+       SomePrimitiveTask3;
+       SomePrimitiveTask4;
+   }
+}
+
+primitive task SomePrimitiveTask
+{
+    operator SomeOperator();
+}
+
+primitive task SomePrimitiveTask2
+{
+    operator SomeOperator2();
+}
+
+primitive task SomePrimitiveTask3
+{
+    operator SomeOperator3();
+}
+
+primitive task SomePrimitiveTask4
+{
+    operator SomeOperator4();
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) =>
+                {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Run SomeOperator", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("Run SomeOperator2", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("Run SomeOperator3", message);
+                            return true;
+
+                        case 4:
+                            Assert.AreEqual("Run SomeOperator4", message);
+                            return true;
+
+                        case 5:
+                            Assert.AreEqual("Run SomeOperator", message);
+                            return true;
+
+                        case 6:
+                            Assert.AreEqual("Run SomeOperator2", message);
+                            return true;
+
+                        case 7:
+                            Assert.AreEqual("Run SomeOperator3", message);
+                            return true;
+
+                        case 8:
+                            Assert.AreEqual("Run SomeOperator4", message);
+                            return true;
+
+                        case 9:
+                            Assert.AreEqual("Run SomeOperator", message);
+                            return true;
+
+                        case 10:
+                            Assert.AreEqual("Run SomeOperator2", message);
+                            return true;
+
+                        case 11:
+                            Assert.AreEqual("Run SomeOperator3", message);
+                            return true;
+
+                        case 12:
+                            Assert.AreEqual("Run SomeOperator4", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
+
+            Assert.AreEqual(12, maxN);
+        }
     }
 }

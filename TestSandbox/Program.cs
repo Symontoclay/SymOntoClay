@@ -1311,6 +1311,24 @@ action Go
        'Run SomeOperator' >> @>log;
        wait 1;
     }
+
+    fun SomeOperator2()
+    {
+       'Run SomeOperator2' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator3()
+    {
+       'Run SomeOperator3' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator4()
+    {
+       'Run SomeOperator4' >> @>log;
+       wait 1;
+    }
 }
 
 root task SomeRootTask
@@ -1326,6 +1344,7 @@ strategic task SomeStrategicTask
    case
    {
        SomeTacticalTask;
+       SomeStrategicTask;
    }
 }
 
@@ -1334,6 +1353,7 @@ tactical task SomeTacticalTask
    case
    {
        SomeCompoundTask;
+       SomeCompoundTask2;
    }
 }
 
@@ -1342,12 +1362,37 @@ compound task SomeCompoundTask
    case
    {
        SomePrimitiveTask;
+       SomePrimitiveTask2;
+   }
+}
+
+compound task SomeCompoundTask2
+{
+   case
+   {
+       SomePrimitiveTask3;
+       SomePrimitiveTask4;
    }
 }
 
 primitive task SomePrimitiveTask
 {
     operator SomeOperator();
+}
+
+primitive task SomePrimitiveTask2
+{
+    operator SomeOperator2();
+}
+
+primitive task SomePrimitiveTask3
+{
+    operator SomeOperator3();
+}
+
+primitive task SomePrimitiveTask4
+{
+    operator SomeOperator4();
 }";
 
             //BehaviorTestEngineInstance.Run(fileContent: text,
@@ -1371,7 +1416,12 @@ primitive task SomePrimitiveTask
 
                 maxN = n;
 
-                return true;
+                if(n < 20)
+                {
+                    return true;
+                }
+
+                return false;
             });
 
             //var builder = new BehaviorTestEngineInstanceBuilder();

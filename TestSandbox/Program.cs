@@ -1306,13 +1306,35 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    root task `SomeCompoundTask`;
-
     fun SomeOperator()
     {
-       'SomeOperator' >> @>log;
+       'Run SomeOperator' >> @>log;
        wait 1;
     }
+}
+
+root task SomeRootTask
+{
+   case
+   {
+       SomeStrategicTask;
+   }
+}
+
+strategic task SomeStrategicTask
+{
+   case
+   {
+       SomeTacticalTask;
+   }
+}
+
+tactical task SomeTacticalTask
+{
+   case
+   {
+       SomeCompoundTask;
+   }
 }
 
 compound task SomeCompoundTask

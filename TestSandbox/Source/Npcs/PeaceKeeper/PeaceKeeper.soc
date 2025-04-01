@@ -1,31 +1,55 @@
 ﻿app PeaceKeeper
 {
-    root task `SomeTacticalTask`;
+    root task `DestroyEnemy`;
 
-    fun SomeOperator()
+    fun ChooseEnemyOperator()
     {
-       'Run SomeOperator' >> @>log;
+       'Run ChooseEnemyOperator' >> @>log;
+       @targetEnemy = 16;
        wait 1;
     }
+
+    fun NavToEnemyOperator(@target)
+    {
+       'Run NavToEnemyOperator' >> @>log;
+       @target >> @>log;
+       wait 1;
+    }
+
+    fun KillEnemyOperator(@target)
+    {
+       'Run KillEnemyOperator' >> @>log;
+       @target >> @>log;
+       wait 1;
+    }
+
+    prop TargetEnemy => @targetEnemy;
+
+	private:
+	    var @targetEnemy;
 }
 
-tactical task SomeTacticalTask
+compound task DestroyEnemy
 {
    case
    {
-       SomeCompoundTask;
+       ChooseEnemy;
+       NavToEnemy;
+       KillEnemy;
    }
 }
 
-compound task SomeCompoundTask
+primitive task ChooseEnemy
 {
-   case
-   {
-       SomePrimitiveTask;
-   }
+    operator ChooseEnemyOperator();
 }
 
-primitive task SomePrimitiveTask
+primitive task NavToEnemy
 {
-    operator SomeOperator();
+    operator NavToEnemyOperator(TargetEnemy);
+}
+
+primitive task KillEnemy
+{
+    operator KillEnemyOperator(TargetEnemy);
 }

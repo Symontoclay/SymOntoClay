@@ -4926,6 +4926,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.ToMonitorSerializableObject(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.KindOfValue">
             <inheritdoc/>
         </member>

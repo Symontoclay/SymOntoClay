@@ -20,17 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Common;
-using System;
+using SymOntoClay.Monitor.Common.Models;
 using System.Collections.Generic;
-using System.Text;
-using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -139,6 +135,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 Label = NToHumanizedString()
             };
+        }
+
+        /// <inheritdoc/>
+        public override object ToMonitorSerializableObject(IMonitorLogger logger)
+        {
+            return null;
         }
     }
 }

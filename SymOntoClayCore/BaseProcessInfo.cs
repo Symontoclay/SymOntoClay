@@ -337,6 +337,11 @@ namespace SymOntoClay.Core
                 case ProcessStatus.WeakCanceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
+                        if(child == null)
+                        {
+                            continue;
+                        }
+
                         child.WeakCancel(logger, "256BA91B-55AE-4ABB-BCE6-44CE5CFD5A2F", ReasonOfChangeStatus.ByParentProcess, changer, callMethodId);
                     }
                     break;
@@ -344,6 +349,11 @@ namespace SymOntoClay.Core
                 case ProcessStatus.Canceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
+                        if (child == null)
+                        {
+                            continue;
+                        }
+
                         child.Cancel(logger, "B710370A-6267-43F4-89FA-EF73F86A576E", ReasonOfChangeStatus.ByParentProcess, changer, callMethodId);
                     }
                     break;

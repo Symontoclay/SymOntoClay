@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new PrimitiveHtnTask();
             context[this] = result;
 
-            result.Operator = Operator.Clone(context);
+            result.Operator = Operator?.Clone(context);
 
             result.AppendCodeItem(this, context);
 

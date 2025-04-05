@@ -139,6 +139,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public VarInstance Resolve(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            var result = EnumerableLocalCodeExecutionContext<VarInstance>(logger, localCodeExecutionContext, (ctx) => {
+                return NResolve(logger, varName, ctx, options);
+            });
+
+            return result;
+        }
+
+        private VarInstance NResolve(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
             VarInstance varPtr = null;
 
             if (localCodeExecutionContext.OwnerStorage != null)
@@ -146,7 +155,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 varPtr = NResolve(logger, varName, localCodeExecutionContext.Owner, localCodeExecutionContext.OwnerStorage, true, localCodeExecutionContext, options);
             }
 
-            if(varPtr != null)
+            if (varPtr != null)
             {
                 return varPtr;
             }

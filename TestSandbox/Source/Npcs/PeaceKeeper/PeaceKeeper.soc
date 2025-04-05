@@ -23,11 +23,10 @@
        wait 1;
     }
 
-    //prop TargetEnemy => @targetEnemy;
-    prop TargetEnemy: number = 22;
+    prop TargetEnemy => @targetEnemy;
 
 	private:
-	    var @targetEnemy = 15;
+	    var @targetEnemy;
 }
 
 compound task DestroyEnemy

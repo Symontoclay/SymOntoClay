@@ -205,7 +205,7 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
                     var targetHolder = weightedInheritanceItem.SuperName;
 
 #if DEBUG
-                    Info("E73323C9-4988-46E5-9E15-67792538617D", $"targetHolder = {targetHolder.ToHumanizedString()}");
+                    //Info("E73323C9-4988-46E5-9E15-67792538617D", $"targetHolder = {targetHolder.ToHumanizedString()}");
 #endif
 
                     if (_propertiesDict.ContainsKey(targetHolder))

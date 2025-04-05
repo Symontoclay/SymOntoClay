@@ -136,13 +136,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
+            //Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
 #endif
 
             var property = Resolve(Logger, propertyName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
+            //Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
 #endif
 
             if (property == null)
@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var value = ResolveImplicitProperty(Logger, propertyName, instance, localCodeExecutionContext, options);
 
 #if DEBUG
-                Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
+                //Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
 #endif
 
                 if (value == null)
@@ -206,13 +206,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public PropertyInstance NResolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
+            //Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
 #endif
 
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.Property);
 
 #if DEBUG
-            Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
+            //Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
 #endif
 
             var optionsForInheritanceResolver = options.Clone();
@@ -221,13 +221,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Info("35C3DF0D-8B07-4F45-8741-1526A7AE5C64", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
+            //Info("35C3DF0D-8B07-4F45-8741-1526A7AE5C64", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
 #endif
 
             var rawList = GetRawPropertiesList(logger, propertyName, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Info("971B9D45-54A7-4D6C-8939-66FCE52F227D", $"rawList.Count = {rawList.Count}");
+            //Info("971B9D45-54A7-4D6C-8939-66FCE52F227D", $"rawList.Count = {rawList.Count}");
 #endif
 
             if (!rawList.Any())
@@ -421,13 +421,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
 #if DEBUG
-                Info("FBC42265-F5E8-4275-B0DE-A25E1035BCBA", $"storageItem.Storage = {storageItem.Storage}");
+                //Info("FBC42265-F5E8-4275-B0DE-A25E1035BCBA", $"storageItem.Storage = {storageItem.Storage}");
 #endif
 
                 var itemsList = storageItem.Storage.PropertyStorage.GetPropertyDirectly(logger, name, weightedInheritanceItems);
 
 #if DEBUG
-                Info("07EAFBC3-7345-4E18-9B85-75D207ADB26D", $"itemsList?.Count = {itemsList?.Count}");
+                //Info("07EAFBC3-7345-4E18-9B85-75D207ADB26D", $"itemsList?.Count = {itemsList?.Count}");
 #endif
 
                 if (!itemsList.Any())

@@ -23,8 +23,8 @@
        wait 1;
     }
 
-    prop TargetEnemy => @targetEnemy;
-    //prop TargetEnemy: number = 22;
+    //prop TargetEnemy => @targetEnemy;
+    prop TargetEnemy: number = 22;
 
 	private:
 	    var @targetEnemy = 15;

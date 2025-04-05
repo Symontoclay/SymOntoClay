@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
                     var targetHolder = weightedInheritanceItem.SuperName;
 
 #if DEBUG
-                    Info("4B075159-ABBC-40C4-85E1-8FF72845E97C", $"targetHolder = {targetHolder.ToHumanizedString()}");
+                    //Info("4B075159-ABBC-40C4-85E1-8FF72845E97C", $"targetHolder = {targetHolder.ToHumanizedString()}");
 #endif
 
                     if (_namedFunctionsDict.ContainsKey(targetHolder))

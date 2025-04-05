@@ -48,6 +48,72 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
         }
 
+        protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        {
+            return EnumerableLocalCodeExecutionContext(logger, localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders, func);
+        }
+
+        protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        {
+            var result = func(localCodeExecutionContext);
+
+            if (kindOfEnumerableLocalCodeExecutionContext == KindOfEnumerableLocalCodeExecutionContext.NoEnumeration)
+            {
+                return result;
+            }
+
+            if (result != null)
+            {
+                return result;
+            }
+
+            while (true)
+            {
+                localCodeExecutionContext = GetParentLocalCodeExecutionContext(logger, localCodeExecutionContext, kindOfEnumerableLocalCodeExecutionContext);
+
+                if (localCodeExecutionContext == null)
+                {
+                    return default(T);
+                }
+
+                result = func(localCodeExecutionContext);
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+        }
+
+        private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
+        {
+            switch (kindOfEnumerableLocalCodeExecutionContext)
+            {
+                case KindOfEnumerableLocalCodeExecutionContext.Serial:
+                    return localCodeExecutionContext.Parent;
+
+                case KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders:
+                    {
+                        var initialHolder = localCodeExecutionContext.Holder;
+
+                        while ((localCodeExecutionContext = localCodeExecutionContext.Parent) != null)
+                        {
+                            if (localCodeExecutionContext.Holder == initialHolder)
+                            {
+                                continue;
+                            }
+
+                            return localCodeExecutionContext;
+                        }
+
+                        return null;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfEnumerableLocalCodeExecutionContext), kindOfEnumerableLocalCodeExecutionContext, null);
+            }
+        }
+
         public Dictionary<StrongIdentifierValue, IStorage> GetSuperClassStoragesDict(IMonitorLogger logger, IStorage storage, IInstance instance)
         {
             return GetStoragesList(logger, storage, KindOfStoragesList.CodeItems).Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass && p.Instance == instance).ToDictionary(p => p.TargetClassName, p => p);

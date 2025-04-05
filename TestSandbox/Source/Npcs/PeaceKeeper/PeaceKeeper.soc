@@ -24,9 +24,10 @@
     }
 
     prop TargetEnemy => @targetEnemy;
+    //prop TargetEnemy: number = 22;
 
 	private:
-	    var @targetEnemy;
+	    var @targetEnemy = 15;
 }
 
 compound task DestroyEnemy

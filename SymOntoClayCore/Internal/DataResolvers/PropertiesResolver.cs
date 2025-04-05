@@ -196,6 +196,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            var result = EnumerableLocalCodeExecutionContext<PropertyInstance>(logger, localCodeExecutionContext, (ctx) => {
+                return NResolve(logger, propertyName, ctx, options);
+            });
+
+            return result;
+        }
+
+        public PropertyInstance NResolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
 #if DEBUG
             Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
 #endif
@@ -416,6 +425,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
                 var itemsList = storageItem.Storage.PropertyStorage.GetPropertyDirectly(logger, name, weightedInheritanceItems);
+
+#if DEBUG
+                Info("07EAFBC3-7345-4E18-9B85-75D207ADB26D", $"itemsList?.Count = {itemsList?.Count}");
+#endif
 
                 if (!itemsList.Any())
                 {

@@ -29,6 +29,7 @@ using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -92,12 +93,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            Info("FCE7B484-4745-48AF-ACEF-696D912728AA", $"name = {name.ToHumanizedString()}");
+#endif
+
             var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
-                var method = ResolveMethod(logger, callMethodId, name, positionedParameters, localCodeExecutionContext, options);
+#if DEBUG
+                Info("2872E907-C173-4771-B558-908525EC7B1F", "Iteration");
+#endif
+
+                var method = ResolveMethod(logger, callMethodId, name, positionedParameters, ctx, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(logger, callMethodId, name, positionedParameters, localCodeExecutionContext, options);
+                    return ResolveAction(logger, callMethodId, name, positionedParameters, ctx, options);
                 }
 
                 return method;
@@ -560,11 +569,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> NGetRawMethodsList(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
+#if DEBUG
+            Info("BD264319-577D-4694-8E9D-44FE71315BBB", $"name = {name?.ToHumanizedString()}; paramsCount = {paramsCount}");
+#endif
+
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
 
             foreach (var storageItem in storagesList)
             {
+#if DEBUG
+                Info("6EB3CF7A-EB17-461C-BD50-C9FA8097BAEE", $"storageItem.Storage = {storageItem.Storage}");
+#endif
+
                 var itemsList = storageItem.Storage.MethodsStorage.GetNamedFunctionsDirectly(logger, name, paramsCount, weightedInheritanceItems);
+
+#if DEBUG
+                Info("D3B38CBB-3097-4523-853B-25DF3695A40E", $"itemsList?.Count = {itemsList?.Count}");
+#endif
 
                 if (!itemsList.Any())
                 {

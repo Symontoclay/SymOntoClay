@@ -739,5 +739,122 @@ primitive task KillEnemy
 
             Assert.AreEqual(10, maxN);
         }
+
+        [Test]
+        [Parallelizable]
+        public void ReadOnlyPropertyCase1()
+        {
+            var text = @"app PeaceKeeper
+{
+    root task `DestroyEnemy`;
+
+    fun ChooseEnemyOperator()
+    {
+       'Run ChooseEnemyOperator' >> @>log;
+       @targetEnemy = 16;
+       wait 1;
+    }
+
+    fun NavToEnemyOperator(@target)
+    {
+       'Run NavToEnemyOperator' >> @>log;
+       @target >> @>log;
+       wait 1;
+    }
+
+    fun KillEnemyOperator(@target)
+    {
+       'Run KillEnemyOperator' >> @>log;
+       @target >> @>log;
+       wait 1;
+    }
+
+    prop TargetEnemy => @targetEnemy;
+
+	private:
+	    var @targetEnemy;
+}
+
+compound task DestroyEnemy
+{
+   case
+   {
+       ChooseEnemy;
+       NavToEnemy;
+       KillEnemy;
+   }
+}
+
+primitive task ChooseEnemy
+{
+    operator ChooseEnemyOperator();
+}
+
+primitive task NavToEnemy
+{
+    operator NavToEnemyOperator(TargetEnemy);
+}
+
+primitive task KillEnemy
+{
+    operator KillEnemyOperator(TargetEnemy);
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) =>
+                {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Run ChooseEnemyOperator", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("Run NavToEnemyOperator", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("16", message);
+                            return true;
+
+                        case 4:
+                            Assert.AreEqual("Run KillEnemyOperator", message);
+                            return true;
+
+                        case 5:
+                            Assert.AreEqual("16", message);
+                            return true;
+
+                        case 6:
+                            Assert.AreEqual("Run ChooseEnemyOperator", message);
+                            return true;
+
+                        case 7:
+                            Assert.AreEqual("Run NavToEnemyOperator", message);
+                            return true;
+
+                        case 8:
+                            Assert.AreEqual("16", message);
+                            return true;
+
+                        case 9:
+                            Assert.AreEqual("Run KillEnemyOperator", message);
+                            return true;
+
+                        case 10:
+                            Assert.AreEqual("16", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
+
+            Assert.AreEqual(10, maxN);
+        }
     }
 }

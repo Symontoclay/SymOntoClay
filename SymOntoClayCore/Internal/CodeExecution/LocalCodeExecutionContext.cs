@@ -33,11 +33,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class LocalCodeExecutionContext: ILocalCodeExecutionContext
     {
-        public LocalCodeExecutionContext()
+        public LocalCodeExecutionContext(bool tmpDummy)
         {
         }
 
-        public LocalCodeExecutionContext(ILocalCodeExecutionContext parent)
+        public LocalCodeExecutionContext(ILocalCodeExecutionContext parent, bool tmpDummy)
         {
             Parent = parent;
         }
@@ -56,6 +56,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         /// <inheritdoc/>
         public IStorage Storage { get; set; }
+
+        /// <inheritdoc/>
+        public IInstance Instance { get; set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue Owner { get; set; }
@@ -97,10 +100,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}"); 
             sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
             sb.PrintObjProp(n, nameof(Holder), Holder);            
-            sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Storage)}.{nameof(Storage.Kind)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Instance)}.{nameof(Instance.Name)} = {Instance?.Name?.ToHumanizedLabel()}");
             sb.PrintObjProp(n, nameof(Owner), Owner);
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName?.NameValue}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.Kind)} = {OwnerStorage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
@@ -130,10 +134,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Storage)}.{nameof(Storage.Kind)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Instance)}.{nameof(Instance.Name)} = {Instance?.Name?.ToHumanizedLabel()}");
             sb.PrintShortObjProp(n, nameof(Owner), Owner);
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName?.NameValue}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.Kind)} = {OwnerStorage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintShortObjProp(n, nameof(MutablePart), MutablePart);
@@ -163,10 +168,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintExisting(n, nameof(Parent), Parent);
             sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Storage)}.{nameof(Storage.Kind)} = {Storage?.Kind}");
             sb.PrintBriefObjProp(n, nameof(Owner), Owner);
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName?.NameValue}");
+            sb.AppendLine($"{spaces}{nameof(Instance)}.{nameof(Instance.Name)} = {Instance?.Name?.ToHumanizedLabel()}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.Kind)} = {OwnerStorage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);

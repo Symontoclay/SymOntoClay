@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
 
-                _localCodeExecutionContext = new LocalCodeExecutionContext()
+                _localCodeExecutionContext = new LocalCodeExecutionContext(true)
                 {
                     Storage = _context.Storage.GlobalStorage,
                     Holder = commonNamesStorage.DefaultHolder

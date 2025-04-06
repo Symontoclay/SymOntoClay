@@ -39,6 +39,7 @@ namespace SymOntoClay.Core
 
         StrongIdentifierValue Holder { get;}
         IStorage Storage { get;}
+        IInstance Instance { get; }
 
         StrongIdentifierValue Owner { get;}
         IStorage OwnerStorage { get; }

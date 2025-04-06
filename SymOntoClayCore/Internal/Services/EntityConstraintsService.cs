@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Services
         {
             var commonNamesStorage = _context.CommonNamesStorage;
 
-            var globalExecutionContext = new LocalCodeExecutionContext();
+            var globalExecutionContext = new LocalCodeExecutionContext(true);
             globalExecutionContext.Storage = _context.Storage.GlobalStorage;
             globalExecutionContext.Holder = commonNamesStorage.DefaultHolder;
 

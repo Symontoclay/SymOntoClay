@@ -364,6 +364,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             Info("5DF95D7D-537A-415B-B47E-52F49FE0B470", $"instance == null = {instance == null}");
             Info("401862BC-2E0C-49E4-B864-7669414EEF1D", $"instance.Name = {instance?.Name}");
+            var tmpLocalCodeExecutionContext = localCodeExecutionContext;
+
+            while(tmpLocalCodeExecutionContext != null)
+            {
+                Info("26E87670-1296-4DBE-A0AC-1DB21666E4FF", $"tmpLocalCodeExecutionContext = {tmpLocalCodeExecutionContext}");
+
+                tmpLocalCodeExecutionContext = tmpLocalCodeExecutionContext.Parent;
+            }
 #endif
 
             var searchOptions = new LogicalSearchOptions();

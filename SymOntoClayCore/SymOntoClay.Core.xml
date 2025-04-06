@@ -703,6 +703,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Storage">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Instance">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Owner">
             <inheritdoc/>
         </member>

@@ -94,7 +94,7 @@ namespace TestSandbox.CodeExecution
 
             var triggersResolver = context.DataResolversFactory.GetTriggersResolver();
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(true);
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = globalStorage;
 
             var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(_logger, KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());

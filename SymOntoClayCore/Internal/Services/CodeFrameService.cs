@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Services
         {
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages(logger);
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext, true);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), false);
 
             var newStorage = new LocalStorage(localStorageSettings);
@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Services
             {
                 var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages(logger);
 
-                var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext, true);
+                var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), additionalSettings?.AllowParentLocalStorages ?? false);
 
                 var newStorage = new LocalStorage(localStorageSettings);

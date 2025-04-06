@@ -579,7 +579,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Info("DE5D95AD-4B0F-48AF-A125-5DF09F26F8FD", $"doTriggerSearchId = {doTriggerSearchId};Run!!!!!!!!!!!!;{_trigger.ToHumanizedLabel()}");
 #endif
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
@@ -600,7 +600,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach (var targetVarList in varList)
             {
-                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
+                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;
@@ -632,7 +632,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
@@ -653,7 +653,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach (var targetVarList in varList)
             {
-                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
+                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;

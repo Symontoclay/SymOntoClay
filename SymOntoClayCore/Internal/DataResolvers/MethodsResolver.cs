@@ -49,8 +49,32 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            Info("06848B24-663C-4749-983F-948472598100", $"name = {name}");
+            var tmpLocalCodeExecutionContext = localCodeExecutionContext;
+
+            while (tmpLocalCodeExecutionContext != null)
+            {
+                Info("97489203-E331-4B09-B381-D6A0F4475525", $"tmpLocalCodeExecutionContext = {tmpLocalCodeExecutionContext}");
+
+                tmpLocalCodeExecutionContext = tmpLocalCodeExecutionContext.Parent;
+            }
+            Info("3D2C1D37-12E9-49ED-9198-B4645ED85245", $"======================================");
+#endif
+
             var result = EnumerateLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) =>
             {
+#if DEBUG
+                var tmpCtx = ctx;
+                while (tmpCtx != null)
+                {
+                    Info("E86C0575-54D2-4EED-8D25-3F4EF18B0AB7", $"tmpCtx = {tmpCtx}");
+
+                    tmpCtx = tmpCtx.Parent;
+                }
+                Info("74D3544F-C4EA-4EFE-AB83-57F66650E866", $")))))))))))))))))))))))))))))))))))))))))))");
+#endif
+
                 var method = ResolveMethod(logger, callMethodId, name, ctx, options);
 
                 if (method == null)

@@ -1,5 +1,63 @@
 ﻿app PeaceKeeper
 {
+    root task `DestroyEnemy`;
+
+    fun ChooseEnemyOperator()
+    {
+       'Run ChooseEnemyOperator' >> @>log;
+       @targetEnemy = 16;
+       'SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
+       wait 1;
+    }
+
+    fun NavToEnemyOperator(@target)
+    {
+       'Run NavToEnemyOperator' >> @>log;
+       @target >> @>log;
+       wait 1;
+    }
+
+    fun KillEnemyOperator(@target)
+    {
+       'Run KillEnemyOperator' >> @>log;
+       @target >> @>log;
+       wait 1;
+    }
+
+    prop TargetEnemy => @targetEnemy;
+
+	private:
+	    var @targetEnemy;
+}
+
+compound task DestroyEnemy
+{
+   case
+   {
+       ChooseEnemy;
+       NavToEnemy;
+       KillEnemy;
+   }
+}
+
+primitive task ChooseEnemy
+{
+    operator ChooseEnemyOperator();
+}
+
+primitive task NavToEnemy
+{
+    operator NavToEnemyOperator(TargetEnemy);
+}
+
+primitive task KillEnemy
+{
+    operator KillEnemyOperator(TargetEnemy);
+}
+
+/*app PeaceKeeper
+{
     on Enter =>
     {
         'Begin' >> @>log;
@@ -25,4 +83,4 @@
         'SomeProp:' >> @>log;
         SomeProp >> @>log;
     }
-}
+}*/

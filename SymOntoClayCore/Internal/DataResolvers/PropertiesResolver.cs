@@ -196,6 +196,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            Info("163564B6-A6A5-424B-9974-DB506035843F", $"propertyName = {propertyName}");
+            //var tmpLocalCodeExecutionContext = localCodeExecutionContext;
+
+            //while (tmpLocalCodeExecutionContext != null)
+            //{
+            //    Info("DD93963A-03FD-417C-A8F9-CE904652F289", $"tmpLocalCodeExecutionContext = {tmpLocalCodeExecutionContext}");
+
+            //    tmpLocalCodeExecutionContext = tmpLocalCodeExecutionContext.Parent;
+            //}
+#endif
+
             var result = EnumerateLocalCodeExecutionContext<PropertyInstance>(logger, localCodeExecutionContext, (ctx) => {
                 return NResolve(logger, propertyName, ctx, options);
             });

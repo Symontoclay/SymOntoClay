@@ -361,13 +361,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Value ResolveImplicitProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            Info("5DF95D7D-537A-415B-B47E-52F49FE0B470", $"instance == null = {instance == null}");
+            Info("401862BC-2E0C-49E4-B864-7669414EEF1D", $"instance.Name = {instance?.Name}");
+#endif
+
             var searchOptions = new LogicalSearchOptions();
             searchOptions.ResolveVirtualRelationsFromPropetyHook = false;
             searchOptions.QueryExpression = _standardCoreFactsBuilder.BuildImplicitPropertyQueryInstance(propertyName, instance.Name);
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 
 #if DEBUG
-            //Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
+            Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
 #endif
 
             var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);

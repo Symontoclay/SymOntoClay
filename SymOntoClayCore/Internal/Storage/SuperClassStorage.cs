@@ -20,7 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
@@ -46,5 +48,41 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public override IInstance Instance => _instance;
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(TargetClassName)} = {TargetClassName?.ToHumanizedLabel()}");
+            sb.AppendLine($"{spaces}{nameof(InstanceName)} = {InstanceName?.ToHumanizedLabel()}");
+            sb.Append(base.PropertiesToString(n));
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(TargetClassName)} = {TargetClassName?.ToHumanizedLabel()}");
+            sb.AppendLine($"{spaces}{nameof(InstanceName)} = {InstanceName?.ToHumanizedLabel()}");
+            sb.Append(base.PropertiesToShortString(n));
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(TargetClassName)} = {TargetClassName?.ToHumanizedLabel()}");
+            sb.AppendLine($"{spaces}{nameof(InstanceName)} = {InstanceName?.ToHumanizedLabel()}");
+            sb.Append(base.PropertiesToBriefString(n));
+
+            return sb.ToString();
+        }
     }
 }

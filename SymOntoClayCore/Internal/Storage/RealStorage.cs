@@ -527,6 +527,11 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
         {
+            return PropertiesToString(n);
+        }
+
+        protected virtual string PropertiesToString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
@@ -552,6 +557,11 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
+            return PropertiesToShortString(0u);
+        }
+
+        protected virtual string PropertiesToShortString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
@@ -576,6 +586,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            return PropertiesToBriefString(0u);
+        }
+
+        protected virtual string PropertiesToBriefString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + DisplayHelper.IndentationStep;

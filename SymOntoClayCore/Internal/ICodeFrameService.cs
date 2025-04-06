@@ -33,11 +33,11 @@ namespace SymOntoClay.Core.Internal
 {
     public interface ICodeFrameService
     {
-        CodeFrame ConvertCompiledFunctionBodyToCodeFrame(IMonitorLogger logger, CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
-        CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, IExecutable function, KindOfFunctionParameters kindOfParameters,
+        CodeFrame ConvertCompiledFunctionBodyToCodeFrame(IMonitorLogger logger, IInstance instance, CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
+        CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, IInstance instance, IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false);
-        CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, string callMethodId, IExecutable function, KindOfFunctionParameters kindOfParameters,
+        CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, string callMethodId, IInstance instance, IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false);
     }

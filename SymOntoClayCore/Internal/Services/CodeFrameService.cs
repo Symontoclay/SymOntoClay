@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Services
         private BaseResolver _baseResolver;
 
         /// <inheritdoc/>
-        public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(IMonitorLogger logger, CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(IMonitorLogger logger, IInstance instance, CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages(logger);
 
@@ -67,10 +67,12 @@ namespace SymOntoClay.Core.Internal.Services
             localCodeExecutionContext.Storage = newStorage;
 
             localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
+            localCodeExecutionContext.Instance = instance;
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
             codeFrame.LocalContext = localCodeExecutionContext;
+            codeFrame.Instance = instance;
 
             var processInfo = new ProcessInfo(_context.GetCancellationToken(), _context.AsyncEventsThreadPool, _context.ActiveObjectContext);
 
@@ -81,23 +83,24 @@ namespace SymOntoClay.Core.Internal.Services
         }
 
         /// <inheritdoc/>
-        public CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, IExecutable function, KindOfFunctionParameters kindOfParameters,
+        public CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, IInstance instance, IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
         {
-            return ConvertExecutableToCodeFrame(logger, string.Empty, function, kindOfParameters,
+            return ConvertExecutableToCodeFrame(logger, string.Empty, instance, function, kindOfParameters,
             namedParameters, positionedParameters,
             parentLocalCodeExecutionContext, additionalSettings, useParentLocalCodeExecutionContextDirectly);
         }
 
         /// <inheritdoc/>
-        public CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, string callMethodId, IExecutable function, KindOfFunctionParameters kindOfParameters,
+        public CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, string callMethodId, IInstance instance, IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
         {
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
             codeFrame.CallMethodId = callMethodId;
+            codeFrame.Instance = instance;
 
             if (useParentLocalCodeExecutionContextDirectly)
             {
@@ -147,7 +150,7 @@ namespace SymOntoClay.Core.Internal.Services
                 }
 
                 localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
-
+                localCodeExecutionContext.Instance = instance;
                 codeFrame.LocalContext = localCodeExecutionContext;
             }
 

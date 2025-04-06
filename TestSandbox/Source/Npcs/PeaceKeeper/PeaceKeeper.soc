@@ -1,55 +1,28 @@
 ﻿app PeaceKeeper
 {
-    root task `DestroyEnemy`;
-
-    fun ChooseEnemyOperator()
+    on Enter =>
     {
-       'Run ChooseEnemyOperator' >> @>log;
-       @targetEnemy = 16;
-       wait 1;
+        'Begin' >> @>log;
+        Fun1();
+        Fun2();
+        'SomeProp:' >> @>log;
+        SomeProp >> @>log;
+        'End' >> @>log;
     }
 
-    fun NavToEnemyOperator(@target)
+    fun Fun1()
     {
-       'Run NavToEnemyOperator' >> @>log;
-       @target >> @>log;
-       wait 1;
+        'Run Fun1' >> @>log;
+        'Before SomeProp:' >> @>log;
+        SomeProp >> @>log;
+        'After SomeProp:' >> @>log;
+        SomeProp >> @>log;
     }
 
-    fun KillEnemyOperator(@target)
+    fun Fun2()
     {
-       'Run KillEnemyOperator' >> @>log;
-       @target >> @>log;
-       wait 1;
+        'Run Fun1' >> @>log;
+        'SomeProp:' >> @>log;
+        SomeProp >> @>log;
     }
-
-    prop TargetEnemy => @targetEnemy;
-
-	private:
-	    var @targetEnemy;
-}
-
-compound task DestroyEnemy
-{
-   case
-   {
-       ChooseEnemy;
-       NavToEnemy;
-       KillEnemy;
-   }
-}
-
-primitive task ChooseEnemy
-{
-    operator ChooseEnemyOperator();
-}
-
-primitive task NavToEnemy
-{
-    operator NavToEnemyOperator(TargetEnemy);
-}
-
-primitive task KillEnemy
-{
-    operator KillEnemyOperator(TargetEnemy);
 }

@@ -33,11 +33,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class LocalCodeExecutionContext: ILocalCodeExecutionContext
     {
-        public LocalCodeExecutionContext(bool tmpDummy)
+        public LocalCodeExecutionContext()
         {
         }
 
-        public LocalCodeExecutionContext(ILocalCodeExecutionContext parent, bool tmpDummy)
+        public LocalCodeExecutionContext(ILocalCodeExecutionContext parent)
         {
             Parent = parent;
         }

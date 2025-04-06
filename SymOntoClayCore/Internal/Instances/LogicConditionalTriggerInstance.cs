@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _threadPool = context.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext, true);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = _storage;

@@ -565,7 +565,7 @@ namespace TestSandbox
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(true);
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = engineContext.Storage.GlobalStorage;
             localCodeExecutionContext.Holder = NameHelper.CreateName(engineContext.Id);
 

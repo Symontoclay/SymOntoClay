@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //logger.Info("DB893B55-F574-466A-BDE2-9326253534C2", $"idleActionItem = {idleActionItem.ToLabel(logger)}");
 #endif
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);

@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var isIsolated = codeItem.ParentCodeEntity == null;
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext, true)
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext)
             {
                 IsIsolated = isIsolated,
                 Instance = this

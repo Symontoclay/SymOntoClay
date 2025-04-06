@@ -793,7 +793,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     var targetStorage = superClassesStoragesDict[targetHolder];
 
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(newInstance.LocalCodeExecutionContext, true);
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(newInstance.LocalCodeExecutionContext);
                     localCodeExecutionContext.Storage = targetStorage;
                     localCodeExecutionContext.Holder = targetHolder;
                     localCodeExecutionContext.Owner = targetHolder;

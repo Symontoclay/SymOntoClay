@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) =>
+            var result = EnumerateLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) =>
             {
                 var method = ResolveMethod(logger, callMethodId, name, ctx, options);
 
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
+            var result = EnumerateLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
                 var method = ResolveMethod(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
 
                 if (method == null)
@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Info("FCE7B484-4745-48AF-ACEF-696D912728AA", $"name = {name.ToHumanizedString()}");
 #endif
 
-            var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
+            var result = EnumerateLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
 #if DEBUG
                 //Info("2872E907-C173-4771-B558-908525EC7B1F", "Iteration");
 #endif

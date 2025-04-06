@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public VarInstance Resolve(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var result = EnumerableLocalCodeExecutionContext<VarInstance>(logger, localCodeExecutionContext, (ctx) => {
+            var result = EnumerateLocalCodeExecutionContext<VarInstance>(logger, localCodeExecutionContext, (ctx) => {
                 return NResolve(logger, varName, ctx, options);
             });
 

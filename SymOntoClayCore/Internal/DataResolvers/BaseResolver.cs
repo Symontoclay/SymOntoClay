@@ -48,16 +48,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
         }
 
-        protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        protected T EnumerateLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
-            return EnumerableLocalCodeExecutionContext(logger, localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders, func);
+            return EnumerateLocalCodeExecutionContext(logger, localCodeExecutionContext, KindOfEnumerationLocalCodeExecutionContext.StepBetweenNewHolders, func);
         }
 
-        protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        protected T EnumerateLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerationLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
             var result = func(localCodeExecutionContext);
 
-            if (kindOfEnumerableLocalCodeExecutionContext == KindOfEnumerableLocalCodeExecutionContext.NoEnumeration)
+            if (kindOfEnumerableLocalCodeExecutionContext == KindOfEnumerationLocalCodeExecutionContext.NoEnumeration)
             {
                 return result;
             }
@@ -85,14 +85,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
+        private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerationLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
         {
             switch (kindOfEnumerableLocalCodeExecutionContext)
             {
-                case KindOfEnumerableLocalCodeExecutionContext.Serial:
+                case KindOfEnumerationLocalCodeExecutionContext.Serial:
                     return localCodeExecutionContext.Parent;
 
-                case KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders:
+                case KindOfEnumerationLocalCodeExecutionContext.StepBetweenNewHolders:
                     {
                         var initialHolder = localCodeExecutionContext.Holder;
 

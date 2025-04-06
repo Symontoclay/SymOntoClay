@@ -26,7 +26,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public enum KindOfEnumerableLocalCodeExecutionContext
+    public enum KindOfEnumerationLocalCodeExecutionContext
     {
         NoEnumeration,
         Serial,

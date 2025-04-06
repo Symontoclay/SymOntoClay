@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         {
             _toSystemBoolResolver = context.EngineContext.DataResolversFactory.GetToSystemBoolResolver();
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext, true);
             localCodeExecutionContext.Storage = context.Storage;
             localCodeExecutionContext.Holder = context.Holder;
 

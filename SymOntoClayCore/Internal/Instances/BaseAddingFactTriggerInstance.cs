@@ -117,10 +117,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected IAddFactOrRuleResult ProcessAction(List<List<VarInstance>> varsList, RuleInstance ruleInstance)
         {
-            var localCodeExecutionContext = new LocalCodeExecutionContext(_parentCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_parentCodeExecutionContext, true);
             localCodeExecutionContext.Storage = _storage;
-
             localCodeExecutionContext.Holder = _parent.Name;
+            localCodeExecutionContext.Instance = _parent;
 
             var mutablePart = new MutablePartOfRuleInstance();
             mutablePart.Parent = ruleInstance;

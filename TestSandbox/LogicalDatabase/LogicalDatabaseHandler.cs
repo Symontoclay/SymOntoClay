@@ -343,7 +343,7 @@ namespace TestSandbox.LogicalDatabase
             var searchOptions = new LogicalSearchOptions();
             searchOptions.QueryExpression = parsedQuery;
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(true);
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
             localCodeExecutionContext.Storage = _context.Storage.GlobalStorage;
             localCodeExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolder;

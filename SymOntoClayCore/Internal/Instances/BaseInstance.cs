@@ -77,9 +77,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var isIsolated = codeItem.ParentCodeEntity == null;
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext)
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext, true)
             {
-                IsIsolated = isIsolated
+                IsIsolated = isIsolated,
+                Instance = this
             };
 
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
@@ -390,11 +391,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     var targetStorage = superClassesStoragesDict[targetHolder];
 
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
                     localCodeExecutionContext.Storage = targetStorage;
                     localCodeExecutionContext.Holder = targetHolder;
+                    localCodeExecutionContext.Instance = this;
                     localCodeExecutionContext.Owner = targetHolder;
-                    localCodeExecutionContext.OwnerStorage= targetStorage;
+                    localCodeExecutionContext.OwnerStorage= targetStorage;                    
                     localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.PreConstructor;
 
                     var processInitialInfo = new ProcessInitialInfo();
@@ -428,11 +430,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     var targetStorage = superClassesStoragesDict[targetHolder];
 
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
 
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                     localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
                     localCodeExecutionContext.Holder = Name;
+                    localCodeExecutionContext.Instance = this;
                     localCodeExecutionContext.Owner = targetHolder;
                     localCodeExecutionContext.OwnerStorage = targetStorage;
 
@@ -497,12 +500,12 @@ namespace SymOntoClay.Core.Internal.Instances
                     //logger.Info("60696ED7-12B3-4298-B6BC-D1AD220324A0", $"{nameof(targetTrigger)}.ToHumanizedString() = {targetTrigger.ToHumanizedString()}");
                     //logger.Info("F940CFA1-FC58-46A4-824B-C425D313FDC4", $"{nameof(targetTrigger)}.ToLabel(logger) = {targetTrigger.ToLabel(logger)}");
 #endif
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
 
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                     localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
-
                     localCodeExecutionContext.Holder = holder;
+                    localCodeExecutionContext.Instance = this;
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = targetTrigger.SetCompiledFunctionBody;

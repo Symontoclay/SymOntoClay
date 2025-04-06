@@ -63,7 +63,7 @@ namespace TestSandbox.CodeExecution
 
             var operatorsResolver = _context.DataResolversFactory.GetOperatorsResolver();
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(true);
             localCodeExecutionContext.Storage = globalStorage;
 
             var targetOp = operatorsResolver.GetOperator(_context.Logger, KindOfOperator.LeftRightStream, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());

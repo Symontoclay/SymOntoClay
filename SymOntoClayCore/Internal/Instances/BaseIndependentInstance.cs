@@ -76,12 +76,12 @@ namespace SymOntoClay.Core.Internal.Instances
             //logger.Info("DB893B55-F574-466A-BDE2-9326253534C2", $"idleActionItem = {idleActionItem.ToLabel(logger)}");
 #endif
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
 
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
-
             localCodeExecutionContext.Holder = Name;
+            localCodeExecutionContext.Instance = this;
 
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = idleActionItem.GetCompiledFunctionBody(logger, _context, localCodeExecutionContext);

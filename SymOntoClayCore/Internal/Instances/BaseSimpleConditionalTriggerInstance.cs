@@ -53,12 +53,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext, true);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = _storage;
-
             localCodeExecutionContext.Holder = parent.Name;
+            localCodeExecutionContext.Instance = parent;
 
             _localCodeExecutionContext = localCodeExecutionContext;
 
@@ -193,11 +193,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _isOn = true;
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
             localCodeExecutionContext.Holder = _parent.Name;
+            localCodeExecutionContext.Instance = _parent;
 
             RunHandler(localCodeExecutionContext);
         }
@@ -220,11 +221,12 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
 
-                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext, true);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;
                 localCodeExecutionContext.Holder = _parent.Name;
+                localCodeExecutionContext.Instance = _parent;
 
                 if (bindingVariables.Any())
                 {

@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             var lifeCycleEventCoordinator = _handler.GetCoordinator(logger, _context, _currentCodeFrame.LocalContext);
-            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(logger, _handler, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(logger, _currentCodeFrame.Instance, _handler, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 
             _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(logger, _parentThreadId, newCodeFrame, _currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
         }

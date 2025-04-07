@@ -42,12 +42,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #endregion
         
         #region public methods
-        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
+        public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(logger, callMethodId, name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Info("06848B24-663C-4749-983F-948472598100", $"name = {name}");
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Info("3D2C1D37-12E9-49ED-9198-B4645ED85245", $"======================================");
 #endif
 
-            var result = EnumerateLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) =>
+            var result = EnumerateLocalCodeExecutionContext<MethodResolvingResult>(logger, localCodeExecutionContext, (ctx) =>
             {
 #if DEBUG
                 var tmpCtx = ctx;
@@ -79,48 +79,66 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (method == null)
                 {
-                    return ResolveAction(logger, callMethodId, name, ctx, options);
+                    method = ResolveAction(logger, callMethodId, name, ctx, options);
+
+                    if(method == null)
+                    {
+                        return null;
+                    }
                 }
 
-                return method;
+                return new MethodResolvingResult 
+                { 
+                    Executable = method,
+                    Instance = ctx.Instance
+                };                    
             });
 
             return result;
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
+        public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(logger, callMethodId, name, namedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var result = EnumerateLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
+            var result = EnumerateLocalCodeExecutionContext<MethodResolvingResult>(logger, localCodeExecutionContext, (ctx) => {
                 var method = ResolveMethod(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
+                    method = ResolveAction(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
+
+                    if (method == null)
+                    {
+                        return null;
+                    }
                 }
 
-                return method;
+                return new MethodResolvingResult
+                {
+                    Executable = method,
+                    Instance = ctx.Instance
+                };
             });
 
             return result;
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
+        public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(logger, callMethodId, name, positionedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Info("FCE7B484-4745-48AF-ACEF-696D912728AA", $"name = {name.ToHumanizedString()}");
 #endif
 
-            var result = EnumerateLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
+            var result = EnumerateLocalCodeExecutionContext<MethodResolvingResult>(logger, localCodeExecutionContext, (ctx) => {
 #if DEBUG
                 //Info("2872E907-C173-4771-B558-908525EC7B1F", "Iteration");
 #endif
@@ -129,10 +147,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (method == null)
                 {
-                    return ResolveAction(logger, callMethodId, name, positionedParameters, ctx, options);
+                    method = ResolveAction(logger, callMethodId, name, positionedParameters, ctx, options);
+
+                    if (method == null)
+                    {
+                        return null;
+                    }
                 }
 
-                return method;
+                return new MethodResolvingResult
+                {
+                    Executable = method,
+                    Instance = ctx.Instance
+                };
             });
 
             return result;

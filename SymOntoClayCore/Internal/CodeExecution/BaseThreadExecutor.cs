@@ -778,7 +778,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var coordinator = ((IExecutable)constructor).GetCoordinator(Logger, _context, newInstance.LocalCodeExecutionContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, constructor, kindOfParameters, namedParameters, positionedParameters, newInstance.LocalCodeExecutionContext, null);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, newInstance, constructor, kindOfParameters, namedParameters, positionedParameters, newInstance.LocalCodeExecutionContext, null);
 
                 executionsList.Add((newCodeFrame, coordinator));
             }
@@ -796,13 +796,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var localCodeExecutionContext = new LocalCodeExecutionContext(newInstance.LocalCodeExecutionContext);
                     localCodeExecutionContext.Storage = targetStorage;
                     localCodeExecutionContext.Holder = targetHolder;
+                    localCodeExecutionContext.Instance = newInstance;
                     localCodeExecutionContext.Owner = targetHolder;
                     localCodeExecutionContext.OwnerStorage = targetStorage;
                     localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.PreConstructor;
 
                     var coordinator = ((IExecutable)preConstructor).GetCoordinator(Logger, _context, newInstance.LocalCodeExecutionContext);
 
-                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, preConstructor, KindOfFunctionParameters.NoParameters, null, null, localCodeExecutionContext, null, true);
+                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, newInstance, preConstructor, KindOfFunctionParameters.NoParameters, null, null, localCodeExecutionContext, null, true);
 
                     executionsList.Add((newCodeFrame, coordinator));
                 }
@@ -1844,7 +1845,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var coordinator = ((IExecutable)constructor).GetCoordinator(Logger, _context, _currentCodeFrame.LocalContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, constructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, _currentCodeFrame.Instance, constructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
 
                 executionsList.Add((newCodeFrame, coordinator));
             }
@@ -1945,7 +1946,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 coordinator = _currentCodeFrame.ExecutionCoordinator;
             }
 
-            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, annotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, _currentCodeFrame.Instance, annotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 
             if (annotationSystemEvent.IsSync)
             {
@@ -2060,7 +2061,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var executable = caller.GetExecutable(Logger, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(callMethodId, executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(callMethodId, caller.InstanceInfo, executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
         private void CallPointRefValue(string callMethodId, PointRefValue caller,
@@ -2085,7 +2086,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var method = callerLeftOperand.GetMethod(Logger, methodName, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(callMethodId, null, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
@@ -2295,20 +2296,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Info("03ED4F39-8D56-49C9-9E33-80B4C7674FEA", $"methodName = {methodName.ToHumanizedString()}");
 #endif
 
-            IExecutable method = null;
+            MethodResolvingResult methodResolvingResult = null;
 
-            switch(kindOfParameters)
+            switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    method = _methodsResolver.Resolve(Logger, callMethodId, methodName, _currentCodeFrame.LocalContext);
+                    methodResolvingResult = _methodsResolver.Resolve(Logger, callMethodId, methodName, _currentCodeFrame.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    method = _methodsResolver.Resolve(Logger, callMethodId, methodName, namedParameters, _currentCodeFrame.LocalContext);
+                    methodResolvingResult = _methodsResolver.Resolve(Logger, callMethodId, methodName, namedParameters, _currentCodeFrame.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    method = _methodsResolver.Resolve(Logger, callMethodId, methodName, positionedParameters, _currentCodeFrame.LocalContext);
+                    methodResolvingResult = _methodsResolver.Resolve(Logger, callMethodId, methodName, positionedParameters, _currentCodeFrame.LocalContext);
                     break;
 
                 default:
@@ -2316,10 +2317,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Logger.SystemExpr("010446DC-DBA6-43A8-B128-3B42625803C6", callMethodId, $"method != null", method != null);
+            Logger.SystemExpr("010446DC-DBA6-43A8-B128-3B42625803C6", callMethodId, $"methodResolvingResult != null", methodResolvingResult != null);
 #endif
 
-            if (method == null)
+            if (methodResolvingResult == null)
             {
                 if(mayCallHost)
                 {
@@ -2330,14 +2331,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(callMethodId, methodResolvingResult.Instance, methodResolvingResult.Executable, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
         private void ExecRuleInstanceValue(RuleInstance ruleInstance)
         {
             var compiledCode = _converterFactToImperativeCode.Convert(Logger, ruleInstance, _currentCodeFrame.LocalContext);
 
-            var codeFrame = _codeFrameService.ConvertCompiledFunctionBodyToCodeFrame(Logger, compiledCode, _currentCodeFrame.LocalContext);
+            var codeFrame = _codeFrameService.ConvertCompiledFunctionBodyToCodeFrame(Logger, _currentInstance, compiledCode, _currentCodeFrame.LocalContext);
 
             ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }
@@ -2444,10 +2445,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
-            CallExecutable(string.Empty, executable, ownLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(string.Empty, null, executable, ownLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
-        private void CallExecutable(string callMethodId, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption)
+        private void CallExecutable(string callMethodId, IInstance instance, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
 #if DEBUG
             //Info("B39E497B-B02E-41DD-AC8F-A69910597590", $"Begin");
@@ -2562,7 +2563,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotatedItem, ownLocalCodeExecutionContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, callMethodId, executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, callMethodId, instance, executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
                     additionalSettings);
 
                 ExecuteCodeFrame(newCodeFrame, coordinator, syncOption, true, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);

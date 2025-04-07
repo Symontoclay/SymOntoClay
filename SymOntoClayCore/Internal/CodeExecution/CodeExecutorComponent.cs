@@ -169,10 +169,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
-            return CallExecutable(logger, executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext, callMode);
+            return CallExecutable(logger, null, executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext, callMode);
         }
 
-        private Value CallExecutable(IMonitorLogger logger, IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
+        private Value CallExecutable(IMonitorLogger logger, IInstance instance, IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
             if (executable == null)
             {
@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(logger, executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(logger, instance, executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext);
 
                 _context.InstancesStorage.AppendProcessInfo(logger, newCodeFrame.ProcessInfo);
 
@@ -314,32 +314,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
-            IExecutable method = null;
+            MethodResolvingResult methodResolvingResult = null;
 
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    method = _methodsResolver.Resolve(logger, string.Empty, methodName, parentLocalCodeExecutionContext);
+                    methodResolvingResult = _methodsResolver.Resolve(logger, string.Empty, methodName, parentLocalCodeExecutionContext);
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    method = _methodsResolver.Resolve(logger, string.Empty, methodName, namedParameters, parentLocalCodeExecutionContext);
+                    methodResolvingResult = _methodsResolver.Resolve(logger, string.Empty, methodName, namedParameters, parentLocalCodeExecutionContext);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    method = _methodsResolver.Resolve(logger, string.Empty, methodName, positionedParameters, parentLocalCodeExecutionContext);
+                    methodResolvingResult = _methodsResolver.Resolve(logger, string.Empty, methodName, positionedParameters, parentLocalCodeExecutionContext);
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-            if (method == null)
+            if (methodResolvingResult == null)
             {
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            return CallExecutable(logger, method, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext, CallMode.Default);
+            return CallExecutable(logger, methodResolvingResult.Instance, methodResolvingResult.Executable, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext, CallMode.Default);
         }
     }
 }

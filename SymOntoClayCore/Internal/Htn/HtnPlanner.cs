@@ -1,12 +1,9 @@
 ﻿using SymOntoClay.Common.CollectionsHelpers;
-using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
@@ -24,10 +21,15 @@ namespace SymOntoClay.Core.Internal.Htn
         private readonly AppInstance _mainEntity;
         private readonly ITasksStorage _tasksStorage;
 
-        public bool HasRootTasks => GetRootTasks().Count > 0;
+        public bool HasRootTasks => _mainEntity == null ? false : GetRootTasks().Count > 0;
 
         public HtnPlan BuildPlan()
         {
+            if(_mainEntity == null)
+            {
+                return HtnPlan.EmptyPlan;
+            }
+
             var rootTasks = GetRootTasks();
 
 #if DEBUG

@@ -1,4 +1,4 @@
-﻿app PeaceKeeper
+﻿/*app PeaceKeeper
 {
     root task `DestroyEnemy`;
 
@@ -54,7 +54,7 @@ primitive task NavToEnemy
 primitive task KillEnemy
 {
     operator KillEnemyOperator(TargetEnemy);
-}
+}*/
 
 /*app PeaceKeeper
 {

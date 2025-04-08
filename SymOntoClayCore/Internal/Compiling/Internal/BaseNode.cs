@@ -22,10 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -130,22 +128,22 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         }
 
 #if DEBUG
-        public void DbgPrintCommands()
+        public void DbgPrintCommands(string messagePointId)
         {
             var sb = new StringBuilder();
 
             NDbgPrintCommands(_result, sb);
 
-            Info("5F925DB0-28D5-4B20-8C56-C79625D56D4C", $"sb = {sb}");
+            Info(messagePointId, $"sb = {sb}");
         }
 
-        public void DbgPrintCommands(List<IntermediateScriptCommand> intermediateCommandsList)
+        public void DbgPrintCommands(string messagePointId, List<IntermediateScriptCommand> intermediateCommandsList)
         {
             var sb = new StringBuilder();
 
             NDbgPrintCommands(intermediateCommandsList, sb);
 
-            Info("2E299BD9-2409-4E8B-B110-C74293401147", $"sb = {sb}");
+            Info(messagePointId, $"sb = {sb}");
         }
 
         private void NDbgPrintCommands(List<IntermediateScriptCommand> intermediateCommandsList, StringBuilder sb)

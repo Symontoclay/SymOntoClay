@@ -197,15 +197,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("163564B6-A6A5-424B-9974-DB506035843F", $"propertyName = {propertyName}");
-            //var tmpLocalCodeExecutionContext = localCodeExecutionContext;
-
-            //while (tmpLocalCodeExecutionContext != null)
-            //{
-            //    Info("DD93963A-03FD-417C-A8F9-CE904652F289", $"tmpLocalCodeExecutionContext = {tmpLocalCodeExecutionContext}");
-
-            //    tmpLocalCodeExecutionContext = tmpLocalCodeExecutionContext.Parent;
-            //}
+            //Info("163564B6-A6A5-424B-9974-DB506035843F", $"propertyName = {propertyName}");
+            //localCodeExecutionContext.DbgPrintContextChain(logger, "DD93963A-03FD-417C-A8F9-CE904652F289");
 #endif
 
             var result = EnumerateLocalCodeExecutionContext<PropertyInstance>(logger, localCodeExecutionContext, (ctx) => {
@@ -374,9 +367,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public Value ResolveImplicitProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("5DF95D7D-537A-415B-B47E-52F49FE0B470", $"instance == null = {instance == null}");
-            Info("401862BC-2E0C-49E4-B864-7669414EEF1D", $"instance.Name = {instance?.Name}");
-            localCodeExecutionContext.DbgPrintContextChain(logger, "26E87670-1296-4DBE-A0AC-1DB21666E4FF");
+            //Info("5DF95D7D-537A-415B-B47E-52F49FE0B470", $"instance == null = {instance == null}");
+            //Info("401862BC-2E0C-49E4-B864-7669414EEF1D", $"instance.Name = {instance?.Name}");
+            //localCodeExecutionContext.DbgPrintContextChain(logger, "26E87670-1296-4DBE-A0AC-1DB21666E4FF");
 #endif
 
             var searchOptions = new LogicalSearchOptions();
@@ -385,7 +378,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 
 #if DEBUG
-            Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
+            //Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
 #endif
 
             var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);

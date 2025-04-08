@@ -50,14 +50,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("06848B24-663C-4749-983F-948472598100", $"name = {name}");
-            localCodeExecutionContext.DbgPrintContextChain(logger, "97489203-E331-4B09-B381-D6A0F4475525");
+            //Info("06848B24-663C-4749-983F-948472598100", $"name = {name}");
+            //localCodeExecutionContext.DbgPrintContextChain(logger, "97489203-E331-4B09-B381-D6A0F4475525");
 #endif
 
             var result = EnumerateLocalCodeExecutionContext<MethodResolvingResult>(logger, localCodeExecutionContext, (ctx) =>
             {
 #if DEBUG
-                ctx.DbgPrintContextChain(logger, "E86C0575-54D2-4EED-8D25-3F4EF18B0AB7");
+                //ctx.DbgPrintContextChain(logger, "E86C0575-54D2-4EED-8D25-3F4EF18B0AB7");
 #endif
 
                 var method = ResolveMethod(logger, callMethodId, name, ctx, options);

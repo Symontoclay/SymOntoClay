@@ -751,6 +751,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.DbgPrintContextChain(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.ProcessInfo">
             <inheritdoc/>
         </member>

@@ -728,5 +728,103 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(3, maxN);
         }
+
+        [Test]
+        [Parallelizable]
+        public void CrossFunctionsProperty_Case1()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        Fun1();
+        Fun2();
+        'SomeProp:' >> @>log;
+        SomeProp >> @>log;
+        'End' >> @>log;
+    }
+
+    fun Fun1()
+    {
+        'Run Fun1' >> @>log;
+        'Before SomeProp:' >> @>log;
+        SomeProp >> @>log;
+        SomeProp = 16;
+        'After SomeProp:' >> @>log;
+        SomeProp >> @>log;
+    }
+
+    fun Fun2()
+    {
+        'Run Fun2' >> @>log;
+        'SomeProp:' >> @>log;
+        SomeProp >> @>log;
+    }
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) => {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual(message, "Run Fun1");
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual(message, "Before SomeProp:");
+                            return true;
+
+                        case 4:
+                            Assert.AreEqual(message, "NULL");
+                            return true;
+
+                        case 5:
+                            Assert.AreEqual(message, "After SomeProp:");
+                            return true;
+
+                        case 6:
+                            Assert.AreEqual(message, "16");
+                            return true;
+
+                        case 7:
+                            Assert.AreEqual(message, "Run Fun2");
+                            return true;
+
+                        case 8:
+                            Assert.AreEqual(message, "SomeProp:");
+                            return true;
+
+                        case 9:
+                            Assert.AreEqual(message, "16");
+                            return true;
+
+                        case 10:
+                            Assert.AreEqual(message, "SomeProp:");
+                            return true;
+
+                        case 11:
+                            Assert.AreEqual(message, "16");
+                            return true;
+
+                        case 12:
+                            Assert.AreEqual(message, "End");
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+
+            Assert.AreEqual(12, maxN);
+        }
     }
 }

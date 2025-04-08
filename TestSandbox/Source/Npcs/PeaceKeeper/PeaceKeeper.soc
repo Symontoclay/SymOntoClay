@@ -80,7 +80,7 @@ app PeaceKeeper
 
     fun Fun2()
     {
-        'Run Fun1' >> @>log;
+        'Run Fun2' >> @>log;
         'SomeProp:' >> @>log;
         SomeProp >> @>log;
     }

@@ -856,5 +856,143 @@ primitive task KillEnemy
 
             Assert.AreEqual(10, maxN);
         }
+
+        [Test]
+        [Parallelizable]
+        public void CrossFunctionsProperty_Case1()
+        {
+            var text = @"app PeaceKeeper
+{
+    root task `DestroyEnemy`;
+
+    fun ChooseEnemyOperator()
+    {
+       'Run ChooseEnemyOperator' >> @>log;
+       @targetEnemy = 16;
+       'Before SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
+       SomeUnknownProp = 22;
+       'After SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
+       wait 1;
+    }
+
+    fun NavToEnemyOperator(@target)
+    {
+       'Run NavToEnemyOperator' >> @>log;
+       @target >> @>log;
+       'SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
+       wait 1;
+    }
+
+    fun KillEnemyOperator(@target)
+    {
+       'Run KillEnemyOperator' >> @>log;
+       @target >> @>log;
+       'SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
+       wait 1;
+    }
+
+    prop TargetEnemy => @targetEnemy;
+
+	private:
+	    var @targetEnemy;
+}
+
+compound task DestroyEnemy
+{
+   case
+   {
+       ChooseEnemy;
+       NavToEnemy;
+       KillEnemy;
+   }
+}
+
+primitive task ChooseEnemy
+{
+    operator ChooseEnemyOperator();
+}
+
+primitive task NavToEnemy
+{
+    operator NavToEnemyOperator(TargetEnemy);
+}
+
+primitive task KillEnemy
+{
+    operator KillEnemyOperator(TargetEnemy);
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) =>
+                {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Run ChooseEnemyOperator", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("Before SomeUnknownProp:", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("NULL", message);
+                            return true;
+
+                        case 4:
+                            Assert.AreEqual("After SomeUnknownProp:", message);
+                            return true;
+
+                        case 5:
+                            Assert.AreEqual("22", message);
+                            return true;
+
+                        case 6:
+                            Assert.AreEqual("Run NavToEnemyOperator", message);
+                            return true;
+
+                        case 7:
+                            Assert.AreEqual("16", message);
+                            return true;
+
+                        case 8:
+                            Assert.AreEqual("SomeUnknownProp:", message);
+                            return true;
+
+                        case 9:
+                            Assert.AreEqual("22", message);
+                            return true;
+
+                        case 10:
+                            Assert.AreEqual("Run KillEnemyOperator", message);
+                            return true;
+
+                        case 11:
+                            Assert.AreEqual("16", message);
+                            return true;
+
+                        case 12:
+                            Assert.AreEqual("SomeUnknownProp:", message);
+                            return true;
+
+                        case 13:
+                            Assert.AreEqual("22", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
+
+            Assert.AreEqual(13, maxN);
+        }
     }
 }

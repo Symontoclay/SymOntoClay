@@ -1,4 +1,4 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
 {
     root task `DestroyEnemy`;
 
@@ -6,7 +6,10 @@
     {
        'Run ChooseEnemyOperator' >> @>log;
        @targetEnemy = 16;
-       'SomeUnknownProp:' >> @>log;
+       'Before SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
+       SomeUnknownProp = 22;
+       'After SomeUnknownProp:' >> @>log;
        SomeUnknownProp >> @>log;
        wait 1;
     }
@@ -15,6 +18,8 @@
     {
        'Run NavToEnemyOperator' >> @>log;
        @target >> @>log;
+       'SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
        wait 1;
     }
 
@@ -22,6 +27,8 @@
     {
        'Run KillEnemyOperator' >> @>log;
        @target >> @>log;
+       'SomeUnknownProp:' >> @>log;
+       SomeUnknownProp >> @>log;
        wait 1;
     }
 
@@ -54,9 +61,9 @@ primitive task NavToEnemy
 primitive task KillEnemy
 {
     operator KillEnemyOperator(TargetEnemy);
-}*/
+}
 
-app PeaceKeeper
+/*app PeaceKeeper
 {
     on Enter =>
     {
@@ -84,4 +91,4 @@ app PeaceKeeper
         'SomeProp:' >> @>log;
         SomeProp >> @>log;
     }
-}
+}*/

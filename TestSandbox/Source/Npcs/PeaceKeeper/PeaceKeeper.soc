@@ -1,94 +1,11 @@
 ﻿app PeaceKeeper
 {
-    root task `DestroyEnemy`;
-
-    fun ChooseEnemyOperator()
-    {
-       'Run ChooseEnemyOperator' >> @>log;
-       @targetEnemy = 16;
-       'Before SomeUnknownProp:' >> @>log;
-       SomeUnknownProp >> @>log;
-       SomeUnknownProp = 22;
-       'After SomeUnknownProp:' >> @>log;
-       SomeUnknownProp >> @>log;
-       wait 1;
-    }
-
-    fun NavToEnemyOperator(@target)
-    {
-       'Run NavToEnemyOperator' >> @>log;
-       @target >> @>log;
-       'SomeUnknownProp:' >> @>log;
-       SomeUnknownProp >> @>log;
-       wait 1;
-    }
-
-    fun KillEnemyOperator(@target)
-    {
-       'Run KillEnemyOperator' >> @>log;
-       @target >> @>log;
-       'SomeUnknownProp:' >> @>log;
-       SomeUnknownProp >> @>log;
-       wait 1;
-    }
-
-    prop TargetEnemy => @targetEnemy;
-
-	private:
-	    var @targetEnemy;
-}
-
-compound task DestroyEnemy
-{
-   case
-   {
-       ChooseEnemy;
-       NavToEnemy;
-       KillEnemy;
-   }
-}
-
-primitive task ChooseEnemy
-{
-    operator ChooseEnemyOperator();
-}
-
-primitive task NavToEnemy
-{
-    operator NavToEnemyOperator(TargetEnemy);
-}
-
-primitive task KillEnemy
-{
-    operator KillEnemyOperator(TargetEnemy);
-}
-
-/*app PeaceKeeper
-{
     on Enter =>
     {
         'Begin' >> @>log;
-        Fun1();
-        Fun2();
-        'SomeProp:' >> @>log;
-        SomeProp >> @>log;
+        CanSeeEnemy >> @>log;
         'End' >> @>log;
     }
 
-    fun Fun1()
-    {
-        'Run Fun1' >> @>log;
-        'Before SomeProp:' >> @>log;
-        SomeProp >> @>log;
-        SomeProp = 16;
-        'After SomeProp:' >> @>log;
-        SomeProp >> @>log;
-    }
-
-    fun Fun2()
-    {
-        'Run Fun2' >> @>log;
-        'SomeProp:' >> @>log;
-        SomeProp >> @>log;
-    }
-}*/
+    prop CanSeeEnemy: boolean => {: enemy($_) & see(I, $_) & alive($_, true) :};
+}

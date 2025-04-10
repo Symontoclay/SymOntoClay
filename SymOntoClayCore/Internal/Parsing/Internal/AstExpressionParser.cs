@@ -56,6 +56,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            //Info("3CCFE3E3-5C8D-4A33-A9FC-CBAEE98F961A", $"_currToken = {_currToken}");
+#endif
+
             switch (_currToken.TokenKind)
             {
                 case TokenKind.Number:

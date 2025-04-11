@@ -39,6 +39,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -107,6 +108,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _converterFactToImperativeCode = context.ConvertersFactory.GetConverterFactToImperativeCode();
             _dateTimeProvider = context.DateTimeProvider;
 
+            _typeConverter = context.TypeConverter;
+
             var commonNamesStorage = _context.CommonNamesStorage;
 
             _defaultCtorName = commonNamesStorage.DefaultCtorName;
@@ -144,7 +147,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly DateTimeResolver _dateTimeResolver;
 
         private readonly ValueResolvingHelper _valueResolvingHelper;
-        
+
+        private readonly ITypeConverter _typeConverter;
+
         private readonly ConverterFactToImperativeCode _converterFactToImperativeCode;
         private readonly IDateTimeProvider _dateTimeProvider;
 
@@ -956,6 +961,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
 #if DEBUG
                 Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
+#endif
+
+                var conversionResult = _typeConverter.CheckAndTryConvert(Logger, currentValue, returnable.TypesList, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
 #endif
             }
 

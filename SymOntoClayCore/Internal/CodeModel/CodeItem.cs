@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
@@ -259,6 +260,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool IsJumpPrimitiveHtnTask => false;
         public virtual JumpPrimitiveHtnTask AsJumpPrimitiveHtnTask => null;
+
+        public virtual bool IsIReturnable => false;
+        public virtual IReturnable AsIReturnable => null;
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.CodeItem;

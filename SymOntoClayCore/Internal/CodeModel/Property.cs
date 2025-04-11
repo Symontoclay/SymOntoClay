@@ -11,10 +11,11 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Core.Internal.CodeExecution;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Property : CodeItem
+    public class Property : CodeItem, IReturnable
     {
         public Property()
         {
@@ -30,9 +31,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Property AsProperty => this;
 
+        /// <inheritdoc/>
+        public override bool IsIReturnable => true;
+
+        /// <inheritdoc/>
+        public override IReturnable AsIReturnable => this;
+
         public KindOfProperty KindOfProperty { get; set; } = KindOfProperty.Auto;
 
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+
+        /// <inheritdoc/>
+        IList<StrongIdentifierValue> IReturnable.TypesList => TypesList;
 
         public AstExpression DefaultValue { get; set; }
 

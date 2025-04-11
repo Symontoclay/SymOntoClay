@@ -5340,6 +5340,15 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.AsProperty">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.IsIReturnable">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.AsIReturnable">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.SymOntoClay#Core#Internal#CodeExecution#IReturnable#TypesList">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>

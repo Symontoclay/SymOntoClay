@@ -944,6 +944,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
+#if DEBUG
+            Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
+            Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Info("4F2C17C8-9410-491B-9DF5-0872F61B45B0", $"_currentCodeFrame.Metadata.GetType().FullName = {_currentCodeFrame.Metadata.GetType().FullName}");
+#endif
+
+            var returnable = _currentCodeFrame.Metadata.AsIReturnable;
+
+            if(returnable != null)
+            {
+#if DEBUG
+                Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
+#endif
+            }
+
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "17EFD6A4-C466-4A2E-AB3E-E7C90CC3547C", ProcessStatus.Completed);
 
             GoBackToPrevCodeFrame("E2204170-6974-4F11-83F0-D078939C58C4", ActionExecutionStatus.Complete);

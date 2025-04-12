@@ -20,19 +20,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using NLog;
 
 namespace DictionaryGenerator
 {
     public class LogicalMeaningsSourceForOneMeaning
     {
+#if DEBUG
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         public LogicalMeaningsSourceForOneMeaning(string path)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSourceForOneMeaning path = {path}");
+            _logger.Info($"LogicalMeaningsSourceForOneMeaning path = {path}");
 #endif
 
             var fileInfo = new FileInfo(path);
@@ -52,7 +53,7 @@ namespace DictionaryGenerator
                     while ((currentLine = sr.ReadLine()) != null)
                     {
 #if DEBUG
-                        NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSourceForOneMeaning currentLine = {currentLine}");
+                        _logger.Info($"LogicalMeaningsSourceForOneMeaning currentLine = {currentLine}");
 #endif
 
                         if(string.IsNullOrWhiteSpace(currentLine))

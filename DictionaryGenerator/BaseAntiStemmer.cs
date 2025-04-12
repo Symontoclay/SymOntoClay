@@ -20,21 +20,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using NLog;
 
 namespace DictionaryGenerator
 {
     public abstract class BaseAntiStemmer
     {
+#if DEBUG
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         protected BaseAntiStemmer(BaseExceptionCasesWordNetSource exceptionCasesSource)
         {
             var exceptionCaseItemsList = exceptionCasesSource.ReadAll();
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"VerbAntiStemmer exceptionCaseItemsList.Count = {exceptionCaseItemsList.Count}");
+            _logger.Info($"VerbAntiStemmer exceptionCaseItemsList.Count = {exceptionCaseItemsList.Count}");
 #endif
 
             mExceptionsDict = exceptionCaseItemsList.GroupBy(p => p.RootWord).ToDictionary(p => p.Key, p => p.Select(x => x.ExceptWord).Distinct().ToList());

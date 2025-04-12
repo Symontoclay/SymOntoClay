@@ -20,15 +20,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using NLog;
 
 namespace DictionaryGenerator
 {
     public class LogicalMeaningsSourceForOneMeaningByRelativePath
     {
+#if DEBUG
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         public LogicalMeaningsSourceForOneMeaningByRelativePath(string localPath)
         {
             var rootPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -36,7 +37,7 @@ namespace DictionaryGenerator
             var absolutePath = Path.Combine(rootPath, localPath);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSourceForOneMeaningByRelativePath absolutePath = {absolutePath}");
+            _logger.Info($"LogicalMeaningsSourceForOneMeaningByRelativePath absolutePath = {absolutePath}");
 #endif
 
             mInternalData = new LogicalMeaningsSourceForOneMeaning(absolutePath);

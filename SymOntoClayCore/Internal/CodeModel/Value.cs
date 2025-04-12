@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 #endif
 
                 throw new NotImplementedException("8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0");
-            }            
+            }
         }
 
         public abstract object GetSystemValue();

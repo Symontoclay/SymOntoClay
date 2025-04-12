@@ -20,19 +20,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using NLog;
 
 namespace DictionaryGenerator
 {
     public class LogicalMeaningsSource
     {
+#if DEBUG
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         public LogicalMeaningsSource(string localPath)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSource localPath = {localPath}");
+            _logger.Info($"LogicalMeaningsSource localPath = {localPath}");
 #endif
 
             var rootPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -40,7 +41,7 @@ namespace DictionaryGenerator
             var absolutePath = Path.Combine(rootPath, localPath);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSource absolutePath = {absolutePath}");
+            _logger.Info($"LogicalMeaningsSource absolutePath = {absolutePath}");
 #endif
 
             if(Directory.Exists(absolutePath))
@@ -48,13 +49,13 @@ namespace DictionaryGenerator
                 var filesList = Directory.GetFiles(absolutePath);
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSource filesList.Length = {filesList.Length}");
+                _logger.Info($"LogicalMeaningsSource filesList.Length = {filesList.Length}");
 #endif
 
                 foreach(var fileName in filesList)
                 {
 #if DEBUG
-                    NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSource fileName = {fileName}");
+                    _logger.Info($"LogicalMeaningsSource fileName = {fileName}");
 #endif
 
                     var item = new LogicalMeaningsSourceForOneMeaning(fileName);

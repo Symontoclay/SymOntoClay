@@ -20,13 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json.Linq;
 using NLog;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -37,6 +33,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class Value: AnnotatedItem, IEquatable<Value>, IMonitoredMethodIdentifier, IMonitoredObject
     {
+#if DEBUG
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         public abstract KindOfValue KindOfValue { get; }
 
         public virtual bool IsNullValue => false;
@@ -119,7 +119,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool IsSystemNull => false;
 
-        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException("8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0");
+        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes
+        {
+            get
+            {
+#if DEBUG
+                _logger.Info($"{nameof(Value)}.{nameof(BuiltInSuperTypes)} GetType().FullName = {GetType().FullName}");
+#endif
+
+                throw new NotImplementedException("8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0");
+            }            
+        }
 
         public abstract object GetSystemValue();
 

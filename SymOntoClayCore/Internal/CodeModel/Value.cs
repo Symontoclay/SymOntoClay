@@ -33,10 +33,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class Value: AnnotatedItem, IEquatable<Value>, IMonitoredMethodIdentifier, IMonitoredObject
     {
-#if DEBUG
-        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         public abstract KindOfValue KindOfValue { get; }
 
         public virtual bool IsNullValue => false;
@@ -119,17 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool IsSystemNull => false;
 
-        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes
-        {
-            get
-            {
-#if DEBUG
-                _logger.Info($"{nameof(Value)}.{nameof(BuiltInSuperTypes)} GetType().FullName = {GetType().FullName}");
-#endif
-
-                throw new NotImplementedException("8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0");
-            }
-        }
+        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException($"8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0: {GetType().FullName}");
 
         public abstract object GetSystemValue();
 
@@ -174,7 +160,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected virtual bool ConcreteValueEquals(Value other)
         {
-            throw new NotImplementedException("A3C123A9-471D-4477-B5FC-D93A74A1B710");
+            throw new NotImplementedException($"A3C123A9-471D-4477-B5FC-D93A74A1B710: {GetType().FullName}");
         }
 
         public void SetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName, Value value)
@@ -198,17 +184,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
-             throw new NotImplementedException("0B65BA6A-37C0-4C99-B911-A9450744EA17");
+             throw new NotImplementedException($"0B65BA6A-37C0-4C99-B911-A9450744EA17: {GetType().FullName}");
         }
 
         protected virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            throw new NotImplementedException("AA45CD1D-2E04-440F-88A2-37907994FB76");
+            throw new NotImplementedException($"AA45CD1D-2E04-440F-88A2-37907994FB76: {GetType().FullName}");
         }
 
         public virtual void SetValue(IMonitorLogger logger, Value value)
         {
-            throw new NotImplementedException("E4583867-F52A-443A-A926-7BBDD35F826D");
+            throw new NotImplementedException($"E4583867-F52A-443A-A926-7BBDD35F826D: {GetType().FullName}");
         }
 
         public Value GetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName)
@@ -230,12 +216,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected virtual Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
-            throw new NotImplementedException("A63D5CA7-1443-49C0-86CE-5CDF5D7C8F2A");
+            throw new NotImplementedException($"A63D5CA7-1443-49C0-86CE-5CDF5D7C8F2A: {GetType().FullName}");
         }
 
         protected virtual Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            throw new NotImplementedException("2A9BFB77-BC79-4742-BB4B-1C9FDADDF25D");
+            throw new NotImplementedException($"2A9BFB77-BC79-4742-BB4B-1C9FDADDF25D: {GetType().FullName}");
         }
 
         public virtual IExecutable GetMethod(IMonitorLogger logger, StrongIdentifierValue methodName,
@@ -246,7 +232,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
-            throw new NotImplementedException("58DE8BF6-83CB-4965-9979-056EF82E48E8");
+            throw new NotImplementedException($"58DE8BF6-83CB-4965-9979-056EF82E48E8: {GetType().FullName}");
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
@@ -265,9 +251,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public virtual object ToMonitorSerializableObject(IMonitorLogger logger)
         {
-            logger.Info("19CE9FAD-574D-4261-AF9A-17B929ECE2F7", GetType().FullName);
-
-            throw new NotImplementedException("CED1BBCD-46B2-46C6-BFA6-9E876D27845E");
+            throw new NotImplementedException($"CED1BBCD-46B2-46C6-BFA6-9E876D27845E: {GetType().FullName}");
         }
 
         /// <inheritdoc/>

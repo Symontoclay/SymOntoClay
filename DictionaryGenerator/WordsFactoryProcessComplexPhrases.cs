@@ -21,10 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.NLP.CommonDict;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DictionaryGenerator
@@ -114,7 +110,7 @@ namespace DictionaryGenerator
         private bool DetectWordInComplexPhrase(string word, string phrase)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"DetectWordInComplexPhrase word = {word} phrase = {phrase}");
+            _logger.Info($"DetectWordInComplexPhrase word = {word} phrase = {phrase}");
 #endif
 
             if(phrase.StartsWith($"{word}_") || phrase.Contains($"_{word}_") || phrase.Contains($"_{word}"))
@@ -128,13 +124,13 @@ namespace DictionaryGenerator
         private void ProcessComplexVerb(string rootWord)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessComplexVerb rootWord = {rootWord}");
+            _logger.Info($"ProcessComplexVerb rootWord = {rootWord}");
 #endif
 
             if(DetectWordInComplexPhrase("be", rootWord))
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info("ProcessComplexVerb Detect!!!!!");
+                _logger.Info("ProcessComplexVerb Detect!!!!!");
 #endif
             }
         }
@@ -148,7 +144,7 @@ namespace DictionaryGenerator
             if (IsNumeral(rootWord))
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info("ProcessComplexAdv IsNumeral(rootWord) return; !!!!!");
+                _logger.Info("ProcessComplexAdv IsNumeral(rootWord) return; !!!!!");
 #endif
                 return;
             }

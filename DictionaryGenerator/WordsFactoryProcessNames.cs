@@ -63,11 +63,11 @@ namespace DictionaryGenerator
 
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessName logicalMeaning.Count = {logicalMeaning.Count}");
+            _logger.Info($"ProcessName logicalMeaning.Count = {logicalMeaning.Count}");
 
             foreach (var className in logicalMeaning)
             {
-                NLog.LogManager.GetCurrentClassLogger().Info($"ProcessName className = {className}");
+                _logger.Info($"ProcessName className = {className}");
             }
 #endif
 
@@ -79,13 +79,13 @@ namespace DictionaryGenerator
                 LogicalMeaning = logicalMeaning.ToList()
             });
 
-            var possesiveSingular = mNounAntiStemmer.GetPossesiveForSingular(rootWord);
+            var possessiveSingular = mNounAntiStemmer.GetPossesiveForSingular(rootWord);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessName possesiveSingular = {possesiveSingular}");
+            _logger.Info($"ProcessName possessiveSingular = {possessiveSingular}");
 #endif
 
-            AddGrammaticalWordFrame(possesiveSingular, new NounGrammaticalWordFrame()
+            AddGrammaticalWordFrame(possessiveSingular, new NounGrammaticalWordFrame()
             {
                 RootWord = rootWord,
                 Number = GrammaticalNumberOfWord.Singular,
@@ -97,7 +97,7 @@ namespace DictionaryGenerator
 
             var multipleForms = mNounAntiStemmer.GetPluralForm(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessName multipleForms = {multipleForms}");
+            _logger.Info($"ProcessName multipleForms = {multipleForms}");
 
             AddGrammaticalWordFrameOfName(multipleForms, new NounGrammaticalWordFrame()
             {
@@ -108,13 +108,13 @@ namespace DictionaryGenerator
                 LogicalMeaning = logicalMeaning.ToList()
             });
 
-            var possesivePlural = mNounAntiStemmer.GetPossesiveForPlural(multipleForms);
+            var possessivePlural = mNounAntiStemmer.GetPossesiveForPlural(multipleForms);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessName possesivePlural = {possesivePlural}");
+            _logger.Info($"ProcessName possessivePlural = {possessivePlural}");
 #endif
 
-            AddGrammaticalWordFrame(possesivePlural, new NounGrammaticalWordFrame()
+            AddGrammaticalWordFrame(possessivePlural, new NounGrammaticalWordFrame()
             {
                 RootWord = rootWord,
                 Number = GrammaticalNumberOfWord.Plural,

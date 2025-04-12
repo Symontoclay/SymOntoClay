@@ -21,11 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
-using SymOntoClay.NLP.CommonDict;
-using System.Text.RegularExpressions;
-using SymOntoClay.NLP.CommonDict.Implementations;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
+using SymOntoClay.NLP.CommonDict.Implementations;
+using System.Text.RegularExpressions;
 
 namespace DictionaryGenerator
 {
@@ -168,7 +168,7 @@ namespace DictionaryGenerator
             mRootAdvsDict = rootAdvsList.GroupBy(p => p.Word).ToDictionary(p => p.Key, p => p.ToList());
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run usualWordsList.Count = {usualWordsList.Count}");
+            _logger.Info($"Run usualWordsList.Count = {usualWordsList.Count}");
 #endif
 
             mWordSplitter = new WordSplitter(mRootNounDict, mRootVerbsDict, mRootAdjsDict, mRootAdvsDict);
@@ -367,7 +367,7 @@ namespace DictionaryGenerator
             var fullPath = Path.Combine(rootPath, localPath);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"SimpleSaveDict fullPath = {fullPath}");
+            _logger.Info($"SimpleSaveDict fullPath = {fullPath}");
 #endif
             var serializationEngine = new WordsDictJSONSerializationEngine();//new WordsDictSerializationEngine();
             serializationEngine.SaveToFile(dict, fullPath);
@@ -514,7 +514,7 @@ to have (when it means "to possess")*
         private void ProcessRootWordName(string rootWord)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessRootWordName rootWord = '{rootWord}'");
+            _logger.Info($"ProcessRootWordName rootWord = '{rootWord}'");
 #endif
 
             var rez = Regex.Match(rootWord, @"\(\w+\)");
@@ -527,7 +527,7 @@ to have (when it means "to possess")*
 
             if(rootWord.Contains("("))
             {
-                NLog.LogManager.GetCurrentClassLogger().Info($"ProcessRootWordName rootWord = '{rootWord}'");
+                _logger.Info($"ProcessRootWordName rootWord = '{rootWord}'");
                 throw new NotImplementedException("908463E3-C4EA-4277-85FF-7CA576F8F1EB");
             }
 
@@ -587,13 +587,13 @@ to have (when it means "to possess")*
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun rootWord = {rootWord}");
+            _logger.Info($"ProcessNoun rootWord = {rootWord}");
 #endif
 
             if(IsNumeral(rootWord))
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info("ProcessNoun IsNumeral(rootWord) return; !!!!!");
+                _logger.Info("ProcessNoun IsNumeral(rootWord) return; !!!!!");
 #endif
                 return;
             }
@@ -603,18 +603,18 @@ to have (when it means "to possess")*
 
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun logicalMeaning.Count = {logicalMeaning.Count}");
+            _logger.Info($"ProcessNoun logicalMeaning.Count = {logicalMeaning.Count}");
 
             foreach (var className in logicalMeaning)
             {
-                NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun className = {className}");
+                _logger.Info($"ProcessNoun className = {className}");
             }
 #endif
 
             var isCountable = logicalMeaning.Contains("object") || logicalMeaning.Contains("causal_agent");
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun isCountable = {isCountable}");
+            _logger.Info($"ProcessNoun isCountable = {isCountable}");
 #endif
 
             mTotalCount++;
@@ -626,13 +626,13 @@ to have (when it means "to possess")*
                 LogicalMeaning = logicalMeaning.ToList()
             });
 
-            var possesiveSingular = mNounAntiStemmer.GetPossesiveForSingular(rootWord);
+            var possessiveSingular = mNounAntiStemmer.GetPossesiveForSingular(rootWord);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun possesiveSingular = {possesiveSingular}");
+            _logger.Info($"ProcessNoun possessiveSingular = {possessiveSingular}");
 #endif
 
-            AddGrammaticalWordFrame(possesiveSingular, new NounGrammaticalWordFrame()
+            AddGrammaticalWordFrame(possessiveSingular, new NounGrammaticalWordFrame()
             {
                 RootWord = rootWord,
                 Number = GrammaticalNumberOfWord.Singular,
@@ -644,7 +644,7 @@ to have (when it means "to possess")*
             var multipleForms = mNounAntiStemmer.GetPluralForm(rootWord);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun multipleForms = {multipleForms}");
+            _logger.Info($"ProcessNoun multipleForms = {multipleForms}");
 #endif
             AddGrammaticalWordFrame(multipleForms, new NounGrammaticalWordFrame()
             {
@@ -656,13 +656,13 @@ to have (when it means "to possess")*
 
             mTotalCount++;
 
-            var possesivePlural = mNounAntiStemmer.GetPossesiveForPlural(multipleForms);
+            var possessivePlural = mNounAntiStemmer.GetPossesiveForPlural(multipleForms);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun possesivePlural = {possesivePlural}");
+            _logger.Info($"ProcessNoun possessivePlural = {possessivePlural}");
 #endif
 
-            AddGrammaticalWordFrame(possesivePlural, new NounGrammaticalWordFrame()
+            AddGrammaticalWordFrame(possessivePlural, new NounGrammaticalWordFrame()
             {
                 RootWord = rootWord,
                 Number = GrammaticalNumberOfWord.Plural,
@@ -765,7 +765,7 @@ to have (when it means "to possess")*
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessVerb rootWord = {rootWord}");
+            _logger.Info($"ProcessVerb rootWord = {rootWord}");
 #endif
             mTotalCount++;
 
@@ -780,7 +780,7 @@ to have (when it means "to possess")*
 
             var pastFormsList = mVerbAntiStemmer.GetPastForms(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessVerb pastFormsList = {string.Join(',', pastFormsList)}");
+            _logger.Info($"ProcessVerb pastFormsList = {string.Join(',', pastFormsList)}");
 
             foreach(var pastForm in pastFormsList)
             {
@@ -796,7 +796,7 @@ to have (when it means "to possess")*
 
             var particleFormsList = mVerbAntiStemmer.GetParticleForms(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessVerb particleFormsList = {string.Join(',', particleFormsList)}");
+            _logger.Info($"ProcessVerb particleFormsList = {string.Join(',', particleFormsList)}");
 
             foreach(var particleForm in particleFormsList)
             {
@@ -813,7 +813,7 @@ to have (when it means "to possess")*
 
             var ingForm = mVerbAntiStemmer.GetIngForm(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessVerb ingForm = {ingForm}");
+            _logger.Info($"ProcessVerb ingForm = {ingForm}");
 
             mTotalCount++;
 
@@ -827,7 +827,7 @@ to have (when it means "to possess")*
 
             var presentThirdPersonForm = mVerbAntiStemmer.GetThirdPersonSingularPresent(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessVerb presentThirdPersonForm = {presentThirdPersonForm}");
+            _logger.Info($"ProcessVerb presentThirdPersonForm = {presentThirdPersonForm}");
 
             mTotalCount++;
 
@@ -844,7 +844,7 @@ to have (when it means "to possess")*
         private void ProcessBe(string rootWord)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("ProcessBe");
+            _logger.Info("ProcessBe");
 #endif
 
             AddGrammaticalWordFrame(rootWord, new VerbGrammaticalWordFrame()
@@ -1013,7 +1013,7 @@ to have (when it means "to possess")*
         private void ProcessWill(string rootWord)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("ProcessWill");
+            _logger.Info("ProcessWill");
 #endif
 
             AddGrammaticalWordFrame(rootWord, new VerbGrammaticalWordFrame()
@@ -1027,7 +1027,7 @@ to have (when it means "to possess")*
         private void ProcessHave(string rootWord)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("ProcessHave");
+            _logger.Info("ProcessHave");
 #endif
 
             AddGrammaticalWordFrame(rootWord, new VerbGrammaticalWordFrame()
@@ -1073,7 +1073,7 @@ to have (when it means "to possess")*
         private void ProcessDo(string rootWord)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("ProcessDo");
+            _logger.Info("ProcessDo");
 #endif
 
             AddGrammaticalWordFrame(rootWord, new VerbGrammaticalWordFrame()
@@ -1128,7 +1128,7 @@ to have (when it means "to possess")*
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessAdj rootWord = {rootWord}");
+            _logger.Info($"ProcessAdj rootWord = {rootWord}");
 #endif
             mTotalCount++;
 
@@ -1141,7 +1141,7 @@ to have (when it means "to possess")*
 
             var comparativeForm = mAdjAntiStemmer.GetComparativeForm(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessAdj comparativeForm = {comparativeForm}");
+            _logger.Info($"ProcessAdj comparativeForm = {comparativeForm}");
             mTotalCount++;
 
             AddGrammaticalWordFrame(comparativeForm, new AdjectiveGrammaticalWordFrame()
@@ -1153,7 +1153,7 @@ to have (when it means "to possess")*
 
             var superlativeForm = mAdjAntiStemmer.GetSuperlativeForm(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessAdj superlativeForm = {superlativeForm}");
+            _logger.Info($"ProcessAdj superlativeForm = {superlativeForm}");
             mTotalCount++;
 
             AddGrammaticalWordFrame(superlativeForm, new AdjectiveGrammaticalWordFrame()
@@ -1175,13 +1175,13 @@ to have (when it means "to possess")*
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessAdv rootWord = {rootWord}");
+            _logger.Info($"ProcessAdv rootWord = {rootWord}");
 #endif
 
             if (IsNumeral(rootWord))
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info("ProcessAdv IsNumeral(rootWord) return; !!!!!");
+                _logger.Info("ProcessAdv IsNumeral(rootWord) return; !!!!!");
 #endif
                 return;
             }
@@ -1197,7 +1197,7 @@ to have (when it means "to possess")*
 
             var comparativeForm = mAdvAntiStemmer.GetComparativeForm(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessAdv comparativeForm = {comparativeForm}");
+            _logger.Info($"ProcessAdv comparativeForm = {comparativeForm}");
 
             if(!string.IsNullOrWhiteSpace(comparativeForm))
             {
@@ -1213,7 +1213,7 @@ to have (when it means "to possess")*
 
             var superlativeForm = mAdvAntiStemmer.GetSuperlativeForm(rootWord);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessAdv superlativeForm = {superlativeForm}");
+            _logger.Info($"ProcessAdv superlativeForm = {superlativeForm}");
 
             if (!string.IsNullOrWhiteSpace(superlativeForm))
             {

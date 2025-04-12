@@ -21,9 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.NLP.CommonDict;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DictionaryGenerator
 {
@@ -32,7 +29,7 @@ namespace DictionaryGenerator
         private void ProcessAllPrepositions()
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("Begin ProcessAllPrepositions");
+            _logger.Info("Begin ProcessAllPrepositions");
 #endif
 
             var word = "aboard";

@@ -20,10 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace DictionaryGenerator
 {
     public partial class WordsFactory
@@ -31,7 +27,7 @@ namespace DictionaryGenerator
         private void ProcessAllInterjections()
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("Begin ProcessAllInterjections");
+            _logger.Info("Begin ProcessAllInterjections");
 #endif
         }
     }

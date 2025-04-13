@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 if (systemValue > 1F || systemValue < 0F)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(systemValue), systemValue, "The system (C#) value which represents SymOntoCklay's logical value must be between 0 and 1.");
+                    throw new ArgumentOutOfRangeException(nameof(systemValue), systemValue, "The system (C#) value which represents SymOntoClay's logical value must be between 0 and 1.");
                 }
             }
 

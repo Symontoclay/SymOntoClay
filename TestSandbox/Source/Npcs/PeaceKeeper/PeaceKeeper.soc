@@ -3,9 +3,9 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        CanSeeEnemy >> @>log;
+        SomeAutoProp >> @>log;
         'End' >> @>log;
     }
 
-    prop CanSeeEnemy: boolean => {: enemy($_) & see(I, $_) & alive($_, true) :};
-}
+    prop SomeAutoProp: number = 16;
+}"

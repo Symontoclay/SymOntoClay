@@ -161,19 +161,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             };
         }
 
-        private string TypesListToHumanizedString()
-        {
-            if (TypesList.IsNullOrEmpty())
-            {
-                return "(any)";
-            }
-
-            return $"({string.Join(" | ", TypesList.Select(p => p.NameValue))})";
-        }
-
         private string NToHumanizedString()
         {
-            return $"prop {Name.NameValue}: {TypesListToHumanizedString()}";
+            return $"prop {Name.NameValue}: {TypesList.TypesListToHumanizedString()}";
         }
     }
 }

@@ -10,6 +10,7 @@ namespace SymOntoClay.Core.Internal.Converters
     public class TypeFitCheckingResult : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public static TypeFitCheckingResult Fit = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.IsFit);
+        public static TypeFitCheckingResult IsNotFit = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.IsNotFit);
 
         public TypeFitCheckingResult(KindOfTypeFitCheckingResult kindOfResult)
         {

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -61,14 +62,14 @@ namespace SymOntoClay.Core.Internal.Converters
         public CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Info("50526CB3-643C-4602-8B17-58CB31D522CA", $"value = {value}");
-            //Info("95E681A8-1612-4252-B477-F70B51097823", $"typesList = {typesList.WriteListToString()}");
+            Info("50526CB3-643C-4602-8B17-58CB31D522CA", $"value = {value?.ToHumanizedString()}");
+            Info("95E681A8-1612-4252-B477-F70B51097823", $"typesList = {typesList.WriteListToString()}");
 #endif
 
             var checkResult = CheckFitValue(logger, value, typesList, localCodeExecutionContext, options);
 
 #if DEBUG
-            //Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkResult = {checkResult}");
+            Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkResult = {checkResult}");
 #endif
 
             var kindOfResult = checkResult.KindOfResult;
@@ -82,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     return new CallResult(Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext, options));
 
                 case KindOfTypeFitCheckingResult.IsNotFit:
-                    throw new NotImplementedException("435AEB0F-4EB7-4219-89D3-D63871296755");
+                    throw new Exception($"435AEB0F-4EB7-4219-89D3-D63871296755: The value '{value.ToHumanizedString()}' does not fit to type `{typesList.TypesListToHumanizedString()}`");
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
@@ -99,8 +100,8 @@ namespace SymOntoClay.Core.Internal.Converters
         public TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Info("F003F8DC-8153-42A6-86D5-9F544A627690", $"value = {value}");
-            //Info("569F4890-E159-4A87-BDCE-03F5D9F039FB", $"typesList = {typesList.WriteListToString()}");
+            Info("F003F8DC-8153-42A6-86D5-9F544A627690", $"value = {value.ToHumanizedString()}");
+            Info("569F4890-E159-4A87-BDCE-03F5D9F039FB", $"typesList = {typesList.WriteListToString()}");
 #endif
 
             if (value.IsNullValue)
@@ -127,7 +128,9 @@ namespace SymOntoClay.Core.Internal.Converters
 
             //throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {CodeItem.ToHumanizedString()}");
 
-            throw new NotImplementedException("11924B32-F3D5-4CC4-93FA-D14C239F27C5");
+            //throw new NotImplementedException("11924B32-F3D5-4CC4-93FA-D14C239F27C5");
+
+            return TypeFitCheckingResult.IsNotFit;
         }
 
         /// <inheritdoc/>

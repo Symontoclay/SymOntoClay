@@ -117,16 +117,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
-        public string TypesListToHumanizedString()
-        {
-            if(TypesList.IsNullOrEmpty())
-            {
-                return "(any)";
-            }
-
-            return $"({string.Join(" | ", TypesList.Select(p => p.NameValue))})";
-        }
-
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
@@ -141,7 +131,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString(DebugHelperOptions options)
         {
-            return $"{Name.NameValue}: {TypesListToHumanizedString()}";// = {(Value == null ? "NULL" : Value.ToHumanizedLabel(options))}
+            return $"{Name.NameValue}: {TypesList.TypesListToHumanizedString()}";// = {(Value == null ? "NULL" : Value.ToHumanizedLabel(options))}
         }
 
         /// <inheritdoc/>

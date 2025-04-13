@@ -55,6 +55,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override RuleInstance AsRuleInstance => this;
 
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+
         public bool IsSource { get; set; } = true;
 
         public bool IsParameterized { get; set; }
@@ -246,8 +251,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             var result = base.CalculateLongHashCode(options) ^ PrimaryPart.GetLongHashCode(options);
 
-            if (!SecondaryParts.IsNullOrEmpty())
+            if (SecondaryParts.IsNullOrEmpty())
             {
+                _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.FactTypeName) };
+            }
+            else
+            {
+                _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.RuleTypeName) };
+
                 foreach (var secondaryPart in SecondaryParts)
                 {
                     result ^= secondaryPart.GetLongHashCode(options);

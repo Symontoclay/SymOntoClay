@@ -5671,6 +5671,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.AsRuleInstance">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.BuiltInSuperTypes">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.NullValueEquals">
             <inheritdoc/>
         </member>

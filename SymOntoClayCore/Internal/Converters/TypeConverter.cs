@@ -119,6 +119,11 @@ namespace SymOntoClay.Core.Internal.Converters
                 return TypeFitCheckingResult.Fit;
             }
 
+            if(value.IsRuleInstance && value.AsRuleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
+            {
+                е
+            }
+
             var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext, options);
 
             if (isFit)

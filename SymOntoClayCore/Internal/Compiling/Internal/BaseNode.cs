@@ -93,21 +93,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     {
                                         case KindOfName.Var:
                                         case KindOfName.SystemVar:
-                                            {
-                                                var cmd = new IntermediateScriptCommand();
-                                                cmd.OperationCode = OperationCode.LoadFromVar;
-                                                
-                                                AddCommand(cmd);
-                                            }
+                                            CompileLoadFromVar();
                                             break;
 
                                         case KindOfName.Concept:
-                                            {
-                                                var cmd = new IntermediateScriptCommand();
-                                                cmd.OperationCode = OperationCode.TryLoadFromProperty;
-
-                                                AddCommand(cmd);
-                                            }
+                                            CompileTryLoadFromProperty();
                                             break;
                                     }
                                 }
@@ -125,6 +115,22 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCompilePushVal), kindOfCompilePushVal, null);
             }
+        }
+
+        private void CompileLoadFromVar()
+        {
+            var cmd = new IntermediateScriptCommand();
+            cmd.OperationCode = OperationCode.LoadFromVar;
+
+            AddCommand(cmd);
+        }
+
+        private void CompileTryLoadFromProperty()
+        {
+            var cmd = new IntermediateScriptCommand();
+            cmd.OperationCode = OperationCode.TryLoadFromProperty;
+
+            AddCommand(cmd);
         }
 
 #if DEBUG

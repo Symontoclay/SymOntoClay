@@ -85,16 +85,16 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 {
                     if (isNamed)
                     {
-                        var node = new ExpressionNode(_context, KindOfCompilePushVal.Direct);
+                        var node = new ExpressionNode(_context, KindOfCompilePushVal.DirectAllCases);
                         node.Run(parameter.Name);
                         AddCommands(node.Result);
-                        node = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+                        node = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
                         node.Run(parameter.Value);
                         AddCommands(node.Result);
                     }
                     else
                     {
-                        var node = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+                        var node = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
                         node.Run(parameter.Value);
                         AddCommands(node.Result);
                     }
@@ -107,11 +107,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             if(expression.Left.Kind == KindOfAstExpression.ConstValue)
             {
-                CompilePushVal((expression.Left as ConstValueAstExpression).Value, KindOfCompilePushVal.Direct);
+                CompilePushVal((expression.Left as ConstValueAstExpression).Value, KindOfCompilePushVal.DirectAllCases);
             }
             else
             {
-                var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+                var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
                 leftNode.Run(expression.Left);
                 AddCommands(leftNode.Result);
             }

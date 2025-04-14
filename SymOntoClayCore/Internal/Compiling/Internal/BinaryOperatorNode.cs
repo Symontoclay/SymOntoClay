@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Info("25DEC754-44BF-49DF-B1AA-496AD2B76595", $"expression.Right = {expression.Right}");
 #endif
 
-            var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+            var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 
@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case KindOfAstExpression.ConstValue:
                 case KindOfAstExpression.Var:
                     {
-                        var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.Direct);
+                        var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.DirectAllCases);
                         leftNode.Run(expression);
                         AddCommands(leftNode.Result);
 
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             case KindOfOperator.Assign:
                                 {
-                                    var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.Direct);
+                                    var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.DirectAllCases);
                                     rightNode.Run(binOpExpr.Right);
                                     AddCommands(rightNode.Result);
 
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)
         {
-            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 

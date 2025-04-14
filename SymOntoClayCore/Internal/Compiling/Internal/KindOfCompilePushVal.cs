@@ -3,8 +3,8 @@
     public enum KindOfCompilePushVal
     {
         Unknown,
-        Direct,
-        SetProp,
-        GetProp
+        DirectAllCases,
+        SetAllCases,
+        GetAllCases
     }
 }

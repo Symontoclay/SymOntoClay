@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(UnaryOperatorAstExpression expression)
         {
-            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 

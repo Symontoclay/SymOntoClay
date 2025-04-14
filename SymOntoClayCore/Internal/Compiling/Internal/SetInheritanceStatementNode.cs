@@ -37,9 +37,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstSetInheritanceStatement statement)
         {
-            CompilePushVal(statement.SubName, KindOfCompilePushVal.Direct);
-            CompilePushVal(statement.SuperName, KindOfCompilePushVal.Direct);
-            CompilePushVal(statement.Rank, KindOfCompilePushVal.Direct);
+            CompilePushVal(statement.SubName, KindOfCompilePushVal.DirectAllCases);
+            CompilePushVal(statement.SuperName, KindOfCompilePushVal.DirectAllCases);
+            CompilePushVal(statement.Rank, KindOfCompilePushVal.DirectAllCases);
 
             var command = new IntermediateScriptCommand();
             command.AnnotatedItem = statement;

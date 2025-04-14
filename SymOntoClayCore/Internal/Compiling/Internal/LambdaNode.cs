@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             var astExpressionStatement = statement as AstExpressionStatement;
 
-            var node = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
+            var node = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
             node.Run(astExpressionStatement.Expression);
 
             AddCommands(node.Result);

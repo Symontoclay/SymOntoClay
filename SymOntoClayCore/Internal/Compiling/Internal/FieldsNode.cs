@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 AddCommands(node.Result);
 
-                CompilePushVal(field.Name, KindOfCompilePushVal.Direct);
+                CompilePushVal(field.Name, KindOfCompilePushVal.DirectAllCases);
 
                 var command = new IntermediateScriptCommand();
                 command.OperationCode = OperationCode.CallBinOp;

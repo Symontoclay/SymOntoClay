@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(CodeItemAstExpression expression)
         {
-            CompilePushVal(expression.CodeItem, KindOfCompilePushVal.Direct);
+            CompilePushVal(expression.CodeItem, KindOfCompilePushVal.DirectAllCases);
 
             if(expression.CodeItem.IsAnonymous)
             {

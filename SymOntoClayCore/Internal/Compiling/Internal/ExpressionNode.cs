@@ -58,11 +58,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     break;
 
                 case KindOfAstExpression.ConstValue:
-                    CompilePushVal((expression as ConstValueAstExpression).Value, _kindOfCompilePushVal ?? KindOfCompilePushVal.GetProp);
+                    CompilePushVal((expression as ConstValueAstExpression).Value, _kindOfCompilePushVal ?? KindOfCompilePushVal.GetAllCases);
                     break;
 
                 case KindOfAstExpression.Var:
-                    CompilePushVal((expression as VarAstExpression).Name, _kindOfCompilePushVal ?? KindOfCompilePushVal.GetProp);
+                    CompilePushVal((expression as VarAstExpression).Name, _kindOfCompilePushVal ?? KindOfCompilePushVal.GetAllCases);
                     break;
 
                 case KindOfAstExpression.CallingFunction:

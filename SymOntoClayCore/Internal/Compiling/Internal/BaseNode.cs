@@ -73,10 +73,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             switch(kindOfCompilePushVal)
             {
-                case KindOfCompilePushVal.Direct:
+                case KindOfCompilePushVal.DirectAllCases:
                     break;
 
-                case KindOfCompilePushVal.GetProp:
+                case KindOfCompilePushVal.GetAllCases:
                     {
 #if DEBUG
                         //Info("CEA034BE-D83D-4DCF-8C1A-EB21B3594B65", $"value = {value}");

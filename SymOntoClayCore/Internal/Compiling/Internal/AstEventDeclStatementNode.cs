@@ -42,9 +42,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             node.Run(statement.Expression);
             AddCommands(node.Result);
 
-            CompilePushVal(statement.KindOfLifeCycleEvent, KindOfCompilePushVal.Direct);
+            CompilePushVal(statement.KindOfLifeCycleEvent, KindOfCompilePushVal.DirectAllCases);
 
-            CompilePushVal(statement.Handler, KindOfCompilePushVal.Direct);
+            CompilePushVal(statement.Handler, KindOfCompilePushVal.DirectAllCases);
 
             AddCommand(new IntermediateScriptCommand()
             {

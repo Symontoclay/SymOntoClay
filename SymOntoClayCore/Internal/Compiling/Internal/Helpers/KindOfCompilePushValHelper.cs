@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
             if (kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.SetAllCases))
             {
                 result.Add(InternalKindOfCompilePushVal.SetVar);
-                result.Add(InternalKindOfCompilePushVal.GetVar);
+                result.Add(InternalKindOfCompilePushVal.SetProp);
             }
 
             if (kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.GetAllCases))
@@ -81,7 +81,48 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
 
                 if (internalKindOfItemList.Any())
                 {
-                    throw new NotImplementedException();
+                    foreach (var item in internalKindOfItemList) 
+                    {
+                        switch(item)
+                        {
+                            case InternalKindOfCompilePushValItem.Variable:
+                                if(kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.DirectOther))
+                                {
+                                    result.Add(InternalKindOfCompilePushVal.DirectVar);
+                                }
+
+                                if(kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.SetOther))
+                                {
+                                    result.Add(InternalKindOfCompilePushVal.SetVar);
+                                }
+
+                                if(kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.GetOther))
+                                {
+                                    result.Add(InternalKindOfCompilePushVal.GetVar);
+                                }
+                                break;
+
+                            case InternalKindOfCompilePushValItem.Property:
+                                if (kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.DirectOther))
+                                {
+                                    result.Add(InternalKindOfCompilePushVal.DirectProp);
+                                }
+
+                                if (kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.SetOther))
+                                {
+                                    result.Add(InternalKindOfCompilePushVal.SetProp);
+                                }
+
+                                if (kindOfCompilePushVal.HasFlag(KindOfCompilePushVal.GetOther))
+                                {
+                                    result.Add(InternalKindOfCompilePushVal.GetProp);
+                                }
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(item), item, null);
+                        }
+                    }
                 }
             }
 

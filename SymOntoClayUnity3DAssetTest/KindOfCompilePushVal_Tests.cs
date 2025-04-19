@@ -315,12 +315,174 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
         }
 
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case1()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectVar | KindOfCompilePushVal.SetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case2()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectVar | KindOfCompilePushVal.GetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case3()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.SetVar | KindOfCompilePushVal.DirectOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case4()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.SetVar | KindOfCompilePushVal.GetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case5()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.GetVar | KindOfCompilePushVal.DirectOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case6()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.GetVar | KindOfCompilePushVal.SetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case7()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectProp | KindOfCompilePushVal.SetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectProp));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetVar));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case8()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectProp | KindOfCompilePushVal.GetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectProp));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetVar));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case9()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.SetProp | KindOfCompilePushVal.DirectOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetProp));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectVar));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case10()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.SetProp | KindOfCompilePushVal.GetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetProp));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetVar));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case11()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.GetProp | KindOfCompilePushVal.DirectOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectVar));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Success_Case12()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.GetProp | KindOfCompilePushVal.SetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetVar));
+        }
+
         /*
         [Test]
         [Parallelizable]
-        public void AllCases_Single_Case()
+        public void Other_Multiple_Fail_Case()
         {
-            
+            throw new NotImplementedException();
         }*/
+
+        /* 
+         
+         
+         
+         */
     }
 }

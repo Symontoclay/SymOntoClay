@@ -34,6 +34,8 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Compiling.Internal;
+using SymOntoClay.Core.Internal.Compiling.Internal.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing.Internal;
@@ -88,6 +90,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstKindOfCompilePushValHelper();
             //TstLogFileBuilderAppCommandLineParserHandler();
             //TstThreadTask();
             //TstThreadPoolCount();
@@ -171,10 +174,26 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstKindOfCompilePushValHelper()
+        {
+            _globalLogger.Info("Begin");
+
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectVar;
+
+            _globalLogger.Info($"kindOfCompilePushVal = {kindOfCompilePushVal}");
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            _globalLogger.Info($"result.Count = {result.Count}");
+            _globalLogger.Info($"result = {JsonConvert.SerializeObject(result.Select(p => p.ToString()), Formatting.Indented)}");
+
+            _globalLogger.Info("End");
         }
 
         private static void TstLogFileBuilderAppCommandLineParserHandler()

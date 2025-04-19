@@ -198,12 +198,129 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
         }
 
+        [Test]
+        [Parallelizable]
+        public void Trivial_Multiple_Fail_Case1()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.DirectVar | KindOfCompilePushVal.GetVar;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options DirectVar, GetVar can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Trivial_Multiple_Fail_Case2()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.DirectVar | KindOfCompilePushVal.SetVar;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options DirectVar, SetVar can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Trivial_Multiple_Fail_Case3()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.GetVar | KindOfCompilePushVal.SetVar;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options SetVar, GetVar can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Trivial_Multiple_Fail_Case4()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.DirectProp | KindOfCompilePushVal.SetProp;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options DirectProp, SetProp can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Trivial_Multiple_Fail_Case5()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.DirectProp | KindOfCompilePushVal.GetProp;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options DirectProp, GetProp can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Trivial_Multiple_Fail_Case6()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.SetProp | KindOfCompilePushVal.GetProp;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options SetProp, GetProp can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void AllCases_Single_Case1()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectAllCases;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void AllCases_Single_Case2()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.SetAllCases;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void AllCases_Single_Case3()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.GetAllCases;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
+        }
+
         /*
         [Test]
         [Parallelizable]
-        public void Trivial_Multiple_Success_Case()
+        public void AllCases_Single_Case()
         {
-            throw new NotImplementedException();
+            
         }*/
     }
 }

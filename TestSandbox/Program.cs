@@ -184,7 +184,7 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            var kindOfCompilePushVal = KindOfCompilePushVal.DirectVar | KindOfCompilePushVal.GetVar;
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectAllCases;
 
             _globalLogger.Info($"kindOfCompilePushVal = {kindOfCompilePushVal}");
 

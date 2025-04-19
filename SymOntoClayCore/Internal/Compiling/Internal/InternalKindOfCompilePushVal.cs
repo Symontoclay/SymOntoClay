@@ -7,6 +7,6 @@
         GetVar,
         DirectProp,
         SetProp,
-        GetProp,
+        GetProp
     }
 }

@@ -79,9 +79,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #if DEBUG
             Info("A683D34C-505F-46D2-BEC6-282CA9C075BB", $"internalKindOfCompilePushValItems = {JsonConvert.SerializeObject(internalKindOfCompilePushValItems.Select(p => p.ToString()), Formatting.Indented)}");
 #endif
+            var internalVarKindOfCompilePushValItems = internalKindOfCompilePushValItems.Where(p => p == InternalKindOfCompilePushVal.DirectVar || p == InternalKindOfCompilePushVal.SetVar || p == InternalKindOfCompilePushVal.GetVar);
+            var internalPropKindOfCompilePushValItems = internalKindOfCompilePushValItems.Where(p => p == InternalKindOfCompilePushVal.DirectProp || p == InternalKindOfCompilePushVal.SetProp || p == InternalKindOfCompilePushVal.GetProp);
 
-            var internalVarKindOfCompilePushValItem = internalKindOfCompilePushValItems.SingleOrDefault(p => p == InternalKindOfCompilePushVal.DirectVar || p == InternalKindOfCompilePushVal.SetVar || p == InternalKindOfCompilePushVal.GetVar);
-            var internalPropKindOfCompilePushValItem = internalKindOfCompilePushValItems.SingleOrDefault(p => p == InternalKindOfCompilePushVal.DirectProp || p == InternalKindOfCompilePushVal.SetProp || p == InternalKindOfCompilePushVal.GetProp);
+            InternalKindOfCompilePushVal? internalVarKindOfCompilePushValItem = internalVarKindOfCompilePushValItems.Any() ? internalVarKindOfCompilePushValItems.SingleOrDefault() : (InternalKindOfCompilePushVal?)null;
+            InternalKindOfCompilePushVal? internalPropKindOfCompilePushValItem = internalPropKindOfCompilePushValItems.Any() ? internalPropKindOfCompilePushValItems.SingleOrDefault() : (InternalKindOfCompilePushVal?)null;
 
 #if DEBUG
             Info("41A07939-3F85-45B9-92C0-EE317CD48ED8", $"internalVarKindOfCompilePushValItem  = {internalVarKindOfCompilePushValItem}");
@@ -98,48 +100,52 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             case KindOfName.Var:
                             case KindOfName.SystemVar:
-                                throw new NotImplementedException();
-                                //CompileLoadFromVar();
+                                if(internalVarKindOfCompilePushValItem.HasValue)
+                                {
+                                    switch (internalVarKindOfCompilePushValItem)
+                                    {
+                                        case InternalKindOfCompilePushVal.DirectVar:
+                                            break;
+
+                                        case InternalKindOfCompilePushVal.GetVar:
+                                            CompileLoadFromVar();
+                                            break;
+
+                                        default:
+                                            throw new ArgumentOutOfRangeException(nameof(internalVarKindOfCompilePushValItem), internalVarKindOfCompilePushValItem, null);
+                                    }
+                                }
                                 break;
 
                             case KindOfName.Concept:
-                                throw new NotImplementedException();
-                                //CompileTryLoadFromProperty();
+                                if(internalPropKindOfCompilePushValItem.HasValue)
+                                {
+                                    switch (internalPropKindOfCompilePushValItem)
+                                    {
+                                        case InternalKindOfCompilePushVal.DirectProp:
+                                            break;
+
+                                        case InternalKindOfCompilePushVal.GetProp:
+                                            CompileTryLoadFromProperty();
+                                            break;
+
+                                        default:
+                                            throw new ArgumentOutOfRangeException(nameof(internalPropKindOfCompilePushValItem), internalPropKindOfCompilePushValItem, null);
+                                    }
+                                }
                                 break;
                         }
                     }
                     break;
 
                 case KindOfValue.PointRefValue:
-                    //if(internalVarKindOfCompilePushValItem.)
-                    //{
-
-                    //}
-                    //Check TryResolveFromVarOrExpr in the ValueResolvingHelper
-                    throw new NotImplementedException("18036216-1223-4190-8DC3-A17FC4522D24");
-            }
-
-            /*switch (kindOfCompilePushVal)
-            {
-                case KindOfCompilePushVal.DirectAllCases:
-                    break;
-
-                case KindOfCompilePushVal.GetAllCases:
+                    if (internalVarKindOfCompilePushValItem.HasValue || internalPropKindOfCompilePushValItem.HasValue)
                     {
-#if DEBUG
-                        //Info("CEA034BE-D83D-4DCF-8C1A-EB21B3594B65", $"value = {value}");
-                        //Info("011FD653-DA69-4481-AA7D-E1CE9B33492C", $"kindOfCompilePushVal = {kindOfCompilePushVal}");
-#endif
-
-
-
-                        //throw new NotImplementedException();
+                        //Check TryResolveFromVarOrExpr in the ValueResolvingHelper
+                        throw new NotImplementedException("18036216-1223-4190-8DC3-A17FC4522D24");
                     }
                     break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfCompilePushVal), kindOfCompilePushVal, null);
-            }*/
+            }
         }
 
         private void CompileLoadFromVar()

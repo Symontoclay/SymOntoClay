@@ -20,12 +20,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Compiling.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
@@ -71,7 +74,52 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             AddCommand(command);
 
-            switch(kindOfCompilePushVal)
+            var internalKindOfCompilePushValItems = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+#if DEBUG
+            Info("A683D34C-505F-46D2-BEC6-282CA9C075BB", $"internalKindOfCompilePushValItems = {JsonConvert.SerializeObject(internalKindOfCompilePushValItems.Select(p => p.ToString()), Formatting.Indented)}");
+#endif
+
+            var internalVarKindOfCompilePushValItem = internalKindOfCompilePushValItems.SingleOrDefault(p => p == InternalKindOfCompilePushVal.DirectVar || p == InternalKindOfCompilePushVal.SetVar || p == InternalKindOfCompilePushVal.GetVar);
+            var internalPropKindOfCompilePushValItem = internalKindOfCompilePushValItems.SingleOrDefault(p => p == InternalKindOfCompilePushVal.DirectProp || p == InternalKindOfCompilePushVal.SetProp || p == InternalKindOfCompilePushVal.GetProp);
+
+#if DEBUG
+            Info("41A07939-3F85-45B9-92C0-EE317CD48ED8", $"internalVarKindOfCompilePushValItem  = {internalVarKindOfCompilePushValItem}");
+            Info("DEF74918-104E-4F00-9DD5-C419F0C74DE7", $"internalPropKindOfCompilePushValItem = {internalPropKindOfCompilePushValItem}");
+#endif
+
+            switch (value.KindOfValue)
+            {
+                case KindOfValue.StrongIdentifierValue:
+                    {
+                        var name = value.AsStrongIdentifierValue;
+
+                        switch (name.KindOfName)
+                        {
+                            case KindOfName.Var:
+                            case KindOfName.SystemVar:
+                                throw new NotImplementedException();
+                                //CompileLoadFromVar();
+                                break;
+
+                            case KindOfName.Concept:
+                                throw new NotImplementedException();
+                                //CompileTryLoadFromProperty();
+                                break;
+                        }
+                    }
+                    break;
+
+                case KindOfValue.PointRefValue:
+                    //if(internalVarKindOfCompilePushValItem.)
+                    //{
+
+                    //}
+                    //Check TryResolveFromVarOrExpr in the ValueResolvingHelper
+                    throw new NotImplementedException("18036216-1223-4190-8DC3-A17FC4522D24");
+            }
+
+            /*switch (kindOfCompilePushVal)
             {
                 case KindOfCompilePushVal.DirectAllCases:
                     break;
@@ -83,30 +131,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         //Info("011FD653-DA69-4481-AA7D-E1CE9B33492C", $"kindOfCompilePushVal = {kindOfCompilePushVal}");
 #endif
 
-                        switch (value.KindOfValue)
-                        {
-                            case KindOfValue.StrongIdentifierValue:
-                                {
-                                    var name = value.AsStrongIdentifierValue;
 
-                                    switch (name.KindOfName)
-                                    {
-                                        case KindOfName.Var:
-                                        case KindOfName.SystemVar:
-                                            CompileLoadFromVar();
-                                            break;
-
-                                        case KindOfName.Concept:
-                                            CompileTryLoadFromProperty();
-                                            break;
-                                    }
-                                }
-                                break;
-
-                            case KindOfValue.PointRefValue:
-                                //Check TryResolveFromVarOrExpr in the ValueResolvingHelper
-                                throw new NotImplementedException("18036216-1223-4190-8DC3-A17FC4522D24");
-                        }
 
                         //throw new NotImplementedException();
                     }
@@ -114,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCompilePushVal), kindOfCompilePushVal, null);
-            }
+            }*/
         }
 
         private void CompileLoadFromVar()

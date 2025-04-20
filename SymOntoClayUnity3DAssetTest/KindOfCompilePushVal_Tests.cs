@@ -471,18 +471,82 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetVar));
         }
 
-        /*
         [Test]
         [Parallelizable]
-        public void Other_Multiple_Fail_Case()
+        public void Only_Other_Case1()
         {
-            throw new NotImplementedException();
-        }*/
+            var kindOfCompilePushVal = KindOfCompilePushVal.DirectOther;
 
-        /* 
-         
-         
-         
-         */
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.DirectProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Only_Other_Case2()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.SetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.SetProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Only_Other_Case3()
+        {
+            var kindOfCompilePushVal = KindOfCompilePushVal.GetOther;
+
+            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetVar));
+            Assert.AreEqual(true, result.Contains(InternalKindOfCompilePushVal.GetProp));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Multiple_Fail_Case1()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.DirectOther | KindOfCompilePushVal.SetOther;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options DirectOther, SetOther can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Multiple_Fail_Case2()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.DirectOther | KindOfCompilePushVal.GetOther;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options DirectOther, GetOther can not be used together.", e.Message);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Other_Multiple_Fail_Case3()
+        {
+            var e = Assert.Throws<Exception>(() => {
+                var kindOfCompilePushVal = KindOfCompilePushVal.SetOther | KindOfCompilePushVal.GetOther;
+
+                KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
+            });
+
+            Assert.AreEqual("The options SetOther, GetOther can not be used together.", e.Message);
+        }
     }
 }

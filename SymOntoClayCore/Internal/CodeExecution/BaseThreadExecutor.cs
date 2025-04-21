@@ -968,6 +968,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
 #endif
+
+                var kindOfResult = conversionResult.KindOfResult;
+
+                switch(kindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        currentValue = conversionResult.Value;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                }
             }
 
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "17EFD6A4-C466-4A2E-AB3E-E7C90CC3547C", ProcessStatus.Completed);

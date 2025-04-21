@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Converters
@@ -24,10 +25,12 @@ namespace SymOntoClay.Core.Internal.Converters
         private readonly IMainStorageContext _context;
 
         private InheritanceResolver _inheritanceResolver;
+        private LogicalSearchResolver _logicalSearchResolver;
+
         private StrongIdentifierValue _anyTypeName;
         private StrongIdentifierValue _booleanTypeName;
 
-        private TypeFitCheckingResult _needConversionToBooleanTypeFitCheckingResult;
+        private TypeFitCheckingResult _needConversionToBooleanTypeFitCheckingResult;        
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
@@ -39,6 +42,7 @@ namespace SymOntoClay.Core.Internal.Converters
             var dataResolversFactory = _context.DataResolversFactory;
 
             _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
 
             var commonNamesStorage = _context.CommonNamesStorage;
 
@@ -173,7 +177,17 @@ namespace SymOntoClay.Core.Internal.Converters
 
                         if(ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
                         {
-                            throw new NotImplementedException();
+                            var searchOptions = new LogicalSearchOptions();
+                            searchOptions.QueryExpression = ruleInstance;
+                            searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
+
+                            var isTruth = _logicalSearchResolver.IsTruth(logger, searchOptions);
+
+#if DEBUG
+                            Info("EEE1B871-1108-423A-8E78-5A71E9C2A481", $"isTruth = {isTruth}");
+#endif
+
+                            return new LogicalValue(isTruth);
                         }
                         else
                         {

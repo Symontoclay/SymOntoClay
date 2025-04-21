@@ -34,6 +34,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _fuzzyLogicResolver = _context.DataResolversFactory.GetFuzzyLogicResolver();
+        }
+
+        private FuzzyLogicResolver _fuzzyLogicResolver;
+
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
         public bool CanBeResolved(IMonitorLogger logger, Value source)
@@ -84,20 +94,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
+                        return _fuzzyLogicResolver.Resolve(logger, source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
+                        return _fuzzyLogicResolver.Resolve(logger, source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
                     }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);
             }
         }
-
     }
 }

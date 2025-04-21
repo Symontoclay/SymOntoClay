@@ -27,6 +27,8 @@ namespace SymOntoClay.Core.Internal.Converters
         private StrongIdentifierValue _anyTypeName;
         private StrongIdentifierValue _booleanTypeName;
 
+        private TypeFitCheckingResult _needConversionToBooleanTypeFitCheckingResult;
+
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
         /// <inheritdoc/>
@@ -34,12 +36,16 @@ namespace SymOntoClay.Core.Internal.Converters
         {
             base.LinkWithOtherBaseContextComponents();
 
-            _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+            var dataResolversFactory = _context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
 
             var commonNamesStorage = _context.CommonNamesStorage;
 
             _anyTypeName = commonNamesStorage.AnyTypeName;
             _booleanTypeName = commonNamesStorage.BooleanTypeName;
+
+            _needConversionToBooleanTypeFitCheckingResult = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConvesion, _booleanTypeName);
         }
 
         /// <inheritdoc/>
@@ -123,10 +129,10 @@ namespace SymOntoClay.Core.Internal.Converters
                 return TypeFitCheckingResult.Fit;
             }
 
-            //if(value.IsRuleInstance && value.AsRuleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
-            //{
-            //    е
-            //}
+            if (typesList.Any(p => p == _booleanTypeName) && value.IsRuleInstance && value.AsRuleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
+            {
+                return _needConversionToBooleanTypeFitCheckingResult;
+            }
 
             var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext, options);
 
@@ -152,11 +158,36 @@ namespace SymOntoClay.Core.Internal.Converters
         public Value Convert(IMonitorLogger logger, Value value, StrongIdentifierValue targetType, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Info("772AFCFF-0704-4AC2-A3C4-8BEF21681070", $"value = {value}");
-            //Info("FB99DB07-9E1E-4904-8DAB-0E419C84C716", $"targetType = {targetType}");
+            Info("772AFCFF-0704-4AC2-A3C4-8BEF21681070", $"value = {value}");
+            Info("FB99DB07-9E1E-4904-8DAB-0E419C84C716", $"targetType = {targetType}");
 #endif
 
-            throw new NotImplementedException("30CA5B09-9171-4873-8893-DB3746C05036");
+            var normalizedTypeName = targetType.NormalizedNameValue;
+
+            switch (normalizedTypeName)
+            {
+                case "boolean":
+                    if(value.IsRuleInstance)
+                    {
+                        var ruleInstance = value.AsRuleInstance;
+
+                        if(ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
+                        {
+                            throw new NotImplementedException();
+                        }
+                        else
+                        {
+                            throw new NotImplementedException("CBFE55DB-8776-4375-9B84-A46C38AB06E5");
+                        }                            
+                    }
+                    else
+                    {
+                        throw new NotImplementedException("30CA5B09-9171-4873-8893-DB3746C05036");
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(normalizedTypeName), normalizedTypeName, null);
+            }
         }
     }
 }

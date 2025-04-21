@@ -34,6 +34,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        private FuzzyLogicResolver _fuzzyLogicResolver;
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _fuzzyLogicResolver = _context.DataResolversFactory.GetFuzzyLogicResolver();
+        }
+
         public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return Resolve(logger, source, localCodeExecutionContext, options, false);
@@ -63,7 +73,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
                         }
 
-                        return ValueConverter.ConvertNumberValueToLogicalValue(logger, _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+                        return ValueConverter.ConvertNumberValueToLogicalValue(logger, _fuzzyLogicResolver.Resolve(logger, source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
@@ -75,7 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
                         }
 
-                        return ValueConverter.ConvertNumberValueToLogicalValue(logger, _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+                        return ValueConverter.ConvertNumberValueToLogicalValue(logger, _fuzzyLogicResolver.Resolve(logger, source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
 
                 default:

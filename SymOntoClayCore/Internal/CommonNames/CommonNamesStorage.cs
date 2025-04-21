@@ -70,6 +70,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
             PriorityAttributeName = NameHelper.CreateName(StandardNamesConstants.PriorityAttributeName);
 
             AnyTypeName = NameHelper.CreateName(StandardNamesConstants.AnyTypeName);
+            BooleanTypeName = NameHelper.CreateName(StandardNamesConstants.BooleanTypeName);
         }
 
         private readonly IMainStorageContext _context;
@@ -124,5 +125,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue AnyTypeName { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue BooleanTypeName { get; private set; }
     }
 }

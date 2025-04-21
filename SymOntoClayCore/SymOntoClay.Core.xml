@@ -6539,6 +6539,9 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AnyTypeName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.BooleanTypeName">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
             <inheritdoc/>
         </member>

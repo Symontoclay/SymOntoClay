@@ -25,6 +25,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private InheritanceResolver _inheritanceResolver;
         private StrongIdentifierValue _anyTypeName;
+        private StrongIdentifierValue _booleanTypeName;
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
@@ -35,7 +36,10 @@ namespace SymOntoClay.Core.Internal.Converters
 
             _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
-            _anyTypeName = _context.CommonNamesStorage.AnyTypeName;
+            var commonNamesStorage = _context.CommonNamesStorage;
+
+            _anyTypeName = commonNamesStorage.AnyTypeName;
+            _booleanTypeName = commonNamesStorage.BooleanTypeName;
         }
 
         /// <inheritdoc/>

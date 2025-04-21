@@ -57,8 +57,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
         
         private bool _isFuzzy;
+        private bool _isBoolean;
 
         public bool IsFuzzy => _isFuzzy;
+        public bool IsBoolean => _isBoolean;
 
         public double? SystemValue { get; private set; }
 
@@ -97,6 +99,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 if(SystemValue >= 0 && SystemValue <= 1)
                 {
                     _isFuzzy = true;
+
+                    if(SystemValue == 0 || SystemValue == 1)
+                    {
+                        _isBoolean = true;
+                    }
                 }
             }
             else
@@ -109,6 +116,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if(_isFuzzy)
             {
                 _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName));
+            }
+
+            if(_isBoolean)
+            {
+                _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.BooleanTypeName));
             }
 
             return base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(SystemValue?.GetHashCode() ?? 0);

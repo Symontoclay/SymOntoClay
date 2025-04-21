@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -71,6 +72,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override LogicalValue AsLogicalValue => this;
+
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        private bool _isBoolean;
+
+        public bool IsBoolean => _isBoolean;
 
         public float? SystemValue { get; private set; }
 
@@ -156,6 +163,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName) };
+
+            if (SystemValue.HasValue)
+            {
+                if (SystemValue == 0 || SystemValue == 1)
+                {
+                    _isBoolean = true;
+                }
+            }
+            else
+            {
+                _isBoolean = true;
+            }
+
+            if (_isBoolean)
+            {
+                _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.BooleanTypeName));
+            }
+
             return base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(SystemValue?.GetHashCode() ?? 0);
         }
 

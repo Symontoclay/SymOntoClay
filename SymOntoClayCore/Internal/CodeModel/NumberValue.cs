@@ -106,6 +106,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             else
             {
                 _isFuzzy = true;
+                _isBoolean = true;
             }
 
             _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.NumberTypeName) };

@@ -8,13 +8,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
     public static class KindOfCompilePushValHelper
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public static List<InternalKindOfCompilePushVal> ConvertToInternalItems(KindOfCompilePushVal kindOfCompilePushVal)
         {
 #if DEBUG
-            _globalLogger.Info($"kindOfCompilePushVal = {kindOfCompilePushVal:G} ({kindOfCompilePushVal:D})");
+            //_globalLogger.Info($"kindOfCompilePushVal = {kindOfCompilePushVal:G} ({kindOfCompilePushVal:D})");
 #endif
 
             Validate(kindOfCompilePushVal);
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
                 var internalKindOfItemList = GetInternalKindOfItem(result);
 
 #if DEBUG
-                _globalLogger.Info($"internalKindOfItemList = {JsonConvert.SerializeObject(internalKindOfItemList.Select(p => p.ToString()), Formatting.Indented)}");
+                //_globalLogger.Info($"internalKindOfItemList = {JsonConvert.SerializeObject(internalKindOfItemList.Select(p => p.ToString()), Formatting.Indented)}");
 #endif
 
                 if (internalKindOfItemList.Any())
@@ -134,7 +134,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
         private static List<InternalKindOfCompilePushValItem> GetInternalKindOfItem(List<InternalKindOfCompilePushVal> existingItems)
         {
 #if DEBUG
-            _globalLogger.Info($"existingItems = {JsonConvert.SerializeObject(existingItems.Select(p => p.ToString()), Formatting.Indented)}");
+            //_globalLogger.Info($"existingItems = {JsonConvert.SerializeObject(existingItems.Select(p => p.ToString()), Formatting.Indented)}");
 #endif
 
             var result = new List<InternalKindOfCompilePushValItem> { InternalKindOfCompilePushValItem.Variable, InternalKindOfCompilePushValItem.Property };
@@ -176,7 +176,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
             }
 
 #if DEBUG
-            _globalLogger.Info($"userVar.Count = {userVar.Count}");
+            //_globalLogger.Info($"userVar.Count = {userVar.Count}");
 #endif
 
             if (userVar.Count > 1)
@@ -202,7 +202,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
             }
 
 #if DEBUG
-            _globalLogger.Info($"usedProp.Count = {usedProp.Count}");
+            //_globalLogger.Info($"usedProp.Count = {usedProp.Count}");
 #endif
 
             if (usedProp.Count > 1)
@@ -214,7 +214,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
         private static void Validate(KindOfCompilePushVal kindOfCompilePushVal)
         {
 #if DEBUG
-            _globalLogger.Info($"kindOfCompilePushVal = {kindOfCompilePushVal:G} ({kindOfCompilePushVal:D})");
+            //_globalLogger.Info($"kindOfCompilePushVal = {kindOfCompilePushVal:G} ({kindOfCompilePushVal:D})");
 #endif
 
             var usedAll = new List<KindOfCompilePushVal>();
@@ -235,7 +235,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
             }
 
 #if DEBUG
-            _globalLogger.Info($"usedAll.Count = {usedAll.Count}");
+            //_globalLogger.Info($"usedAll.Count = {usedAll.Count}");
 #endif
 
             if (usedAll.Count > 1)
@@ -261,7 +261,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
             }
 
 #if DEBUG
-            _globalLogger.Info($"usedOther.Count = {usedOther.Count}");
+            //_globalLogger.Info($"usedOther.Count = {usedOther.Count}");
 #endif
 
             if (usedOther.Count > 1)
@@ -287,7 +287,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
             }
 
 #if DEBUG
-            _globalLogger.Info($"userVar.Count = {userVar.Count}");
+            //_globalLogger.Info($"userVar.Count = {userVar.Count}");
 #endif
 
             if (userVar.Count > 1)
@@ -313,7 +313,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal.Helpers
             }
 
 #if DEBUG
-            _globalLogger.Info($"usedProp.Count = {usedProp.Count}");
+            //_globalLogger.Info($"usedProp.Count = {usedProp.Count}");
 #endif
 
             if (usedProp.Count > 1)

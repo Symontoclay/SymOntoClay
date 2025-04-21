@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             var internalKindOfCompilePushValItems = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
 
 #if DEBUG
-            Info("A683D34C-505F-46D2-BEC6-282CA9C075BB", $"internalKindOfCompilePushValItems = {JsonConvert.SerializeObject(internalKindOfCompilePushValItems.Select(p => p.ToString()), Formatting.Indented)}");
+            //Info("A683D34C-505F-46D2-BEC6-282CA9C075BB", $"internalKindOfCompilePushValItems = {JsonConvert.SerializeObject(internalKindOfCompilePushValItems.Select(p => p.ToString()), Formatting.Indented)}");
 #endif
             var internalVarKindOfCompilePushValItems = internalKindOfCompilePushValItems.Where(p => p == InternalKindOfCompilePushVal.DirectVar || p == InternalKindOfCompilePushVal.SetVar || p == InternalKindOfCompilePushVal.GetVar);
             var internalPropKindOfCompilePushValItems = internalKindOfCompilePushValItems.Where(p => p == InternalKindOfCompilePushVal.DirectProp || p == InternalKindOfCompilePushVal.SetProp || p == InternalKindOfCompilePushVal.GetProp);
@@ -86,8 +86,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             InternalKindOfCompilePushVal? internalPropKindOfCompilePushValItem = internalPropKindOfCompilePushValItems.Any() ? internalPropKindOfCompilePushValItems.SingleOrDefault() : (InternalKindOfCompilePushVal?)null;
 
 #if DEBUG
-            Info("41A07939-3F85-45B9-92C0-EE317CD48ED8", $"internalVarKindOfCompilePushValItem  = {internalVarKindOfCompilePushValItem}");
-            Info("DEF74918-104E-4F00-9DD5-C419F0C74DE7", $"internalPropKindOfCompilePushValItem = {internalPropKindOfCompilePushValItem}");
+            //Info("41A07939-3F85-45B9-92C0-EE317CD48ED8", $"internalVarKindOfCompilePushValItem  = {internalVarKindOfCompilePushValItem}");
+            //Info("DEF74918-104E-4F00-9DD5-C419F0C74DE7", $"internalPropKindOfCompilePushValItem = {internalPropKindOfCompilePushValItem}");
 #endif
 
             switch (value.KindOfValue)

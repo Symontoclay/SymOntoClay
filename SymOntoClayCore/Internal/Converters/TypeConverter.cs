@@ -76,14 +76,14 @@ namespace SymOntoClay.Core.Internal.Converters
         public CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("50526CB3-643C-4602-8B17-58CB31D522CA", $"value = {value?.ToHumanizedString()}");
-            Info("95E681A8-1612-4252-B477-F70B51097823", $"typesList = {typesList.WriteListToString()}");
+            //Info("50526CB3-643C-4602-8B17-58CB31D522CA", $"value = {value?.ToHumanizedString()}");
+            //Info("95E681A8-1612-4252-B477-F70B51097823", $"typesList = {typesList.WriteListToString()}");
 #endif
 
             var checkResult = CheckFitValue(logger, value, typesList, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkResult = {checkResult}");
+            //Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkResult = {checkResult}");
 #endif
 
             var kindOfResult = checkResult.KindOfResult;
@@ -114,8 +114,8 @@ namespace SymOntoClay.Core.Internal.Converters
         public TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("F003F8DC-8153-42A6-86D5-9F544A627690", $"value = {value.ToHumanizedString()}");
-            Info("569F4890-E159-4A87-BDCE-03F5D9F039FB", $"typesList = {typesList.WriteListToString()}");
+            //Info("F003F8DC-8153-42A6-86D5-9F544A627690", $"value = {value.ToHumanizedString()}");
+            //Info("569F4890-E159-4A87-BDCE-03F5D9F039FB", $"typesList = {typesList.WriteListToString()}");
 #endif
 
             if (value.IsNullValue)
@@ -162,8 +162,8 @@ namespace SymOntoClay.Core.Internal.Converters
         public Value Convert(IMonitorLogger logger, Value value, StrongIdentifierValue targetType, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("772AFCFF-0704-4AC2-A3C4-8BEF21681070", $"value = {value}");
-            Info("FB99DB07-9E1E-4904-8DAB-0E419C84C716", $"targetType = {targetType}");
+            //Info("772AFCFF-0704-4AC2-A3C4-8BEF21681070", $"value = {value}");
+            //Info("FB99DB07-9E1E-4904-8DAB-0E419C84C716", $"targetType = {targetType}");
 #endif
 
             var normalizedTypeName = targetType.NormalizedNameValue;
@@ -184,7 +184,7 @@ namespace SymOntoClay.Core.Internal.Converters
                             var isTruth = _logicalSearchResolver.IsTruth(logger, searchOptions);
 
 #if DEBUG
-                            Info("EEE1B871-1108-423A-8E78-5A71E9C2A481", $"isTruth = {isTruth}");
+                            //Info("EEE1B871-1108-423A-8E78-5A71E9C2A481", $"isTruth = {isTruth}");
 #endif
 
                             return new LogicalValue(isTruth);

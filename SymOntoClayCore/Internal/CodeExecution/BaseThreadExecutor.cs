@@ -950,9 +950,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-            Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
-            Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Info("4F2C17C8-9410-491B-9DF5-0872F61B45B0", $"_currentCodeFrame.Metadata.GetType().FullName = {_currentCodeFrame.Metadata.GetType().FullName}");
+            //Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
+            //Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("4F2C17C8-9410-491B-9DF5-0872F61B45B0", $"_currentCodeFrame.Metadata.GetType().FullName = {_currentCodeFrame.Metadata.GetType().FullName}");
 #endif
 
             var returnable = _currentCodeFrame.Metadata.AsIReturnable;
@@ -960,13 +960,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if(returnable != null)
             {
 #if DEBUG
-                Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
+                //Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
 #endif
 
                 var conversionResult = _typeConverter.CheckAndTryConvert(Logger, currentValue, returnable.TypesList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
+                //Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
 #endif
 
                 var kindOfResult = conversionResult.KindOfResult;

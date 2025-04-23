@@ -1,12 +1,11 @@
 ﻿app PeaceKeeper
 {
+    @b: boolean = {: enemy($_) & see(I, $_) & alive($_, true) :};
+
     on Enter =>
     {
         'Begin' >> @>log;
-        SomeAutoProp = {: enemy($_) & see(I, $_) & alive($_, true) :};
-        SomeAutoProp >> @>log;
+        @b >> @>log;
         'End' >> @>log;
     }
-
-    prop SomeAutoProp: boolean;
 }

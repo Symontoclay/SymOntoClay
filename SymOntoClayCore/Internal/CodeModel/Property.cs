@@ -15,7 +15,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Property : CodeItem, IReturnable
+    public class Property : CodeItem, IReturnable, IVarDecl
     {
         public Property()
         {
@@ -36,6 +36,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override IReturnable AsIReturnable => this;
+
+        /// <inheritdoc/>
+        public override bool IsIVarDecl => true;
+
+        /// <inheritdoc/>
+        public override IVarDecl AsIVarDecl => this;
 
         public KindOfProperty KindOfProperty { get; set; } = KindOfProperty.Auto;
 

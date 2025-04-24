@@ -264,6 +264,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsIReturnable => false;
         public virtual IReturnable AsIReturnable => null;
 
+        public virtual bool IsIVarDecl => false;
+        public virtual IVarDecl AsIVarDecl => null;
+
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.CodeItem;
 

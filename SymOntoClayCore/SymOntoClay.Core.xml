@@ -3525,6 +3525,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Field.AsField">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Field.IsIVarDecl">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Field.AsIVarDecl">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Field.TypesList">
             <inheritdoc/>
         </member>
@@ -5346,6 +5352,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.AsIReturnable">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.IsIVarDecl">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.AsIVarDecl">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.SymOntoClay#Core#Internal#CodeExecution#IReturnable#TypesList">
             <inheritdoc/>
         </member>
@@ -6319,6 +6331,12 @@
             </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Var.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Var.IsIVarDecl">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Var.AsIVarDecl">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -8815,7 +8833,7 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.TacticalTaskInstance.KindOfInstance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValueDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.VarInstance.TypeOfAccess">
@@ -11204,7 +11222,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetLocalVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedVarStorageHandler)">
@@ -11249,7 +11267,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetLocalVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnDisposed">

@@ -3,6 +3,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -82,6 +83,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public CodeItem CodeItem { get; private set; }
+        private IVarDecl _varDecl;
 
         private bool _isArray;
 
@@ -99,18 +101,31 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public void SetValueDirectly(IMonitorLogger logger, Value value)
+        public CallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)
             {
+#if DEBUG
+                //Info("55F59341-F9EE-4E0B-8103-D23782FD7BA3", $"Name = {Name.ToHumanizedLabel()}; value = {value}");
+#endif
+
                 if (_value == value)
                 {
-                    return;
+                    return new CallResult(value);
                 }
 
-                _value = value;
+                var callResult = _typeConverter.CheckAndTryConvert(logger, value, TypesList, localCodeExecutionContext);
+
+                if (callResult.IsError)
+                {
+                    return callResult;
+                }
+
+                _value = callResult.Value;
 
                 EmitOnChangedHandlers(Name);
+
+                return new CallResult(value);
             }
         }
 

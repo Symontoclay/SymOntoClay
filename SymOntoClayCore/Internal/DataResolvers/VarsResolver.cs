@@ -45,12 +45,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             base.Init();
 
             _anyTypeName = _context.CommonNamesStorage.AnyTypeName;
-            _typeConverter = _context.TypeConverter;
         }
 
         private StrongIdentifierValue _anyTypeName;
-        private ITypeConverter _typeConverter;
-
+        
         public CallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return SetVarValue(logger, varName, value, localCodeExecutionContext, _defaultOptions);
@@ -70,16 +68,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 varPtr = CreateAndSaveLocalVariable(logger, varName, localCodeExecutionContext);
             }
 
-            var callResult = _typeConverter.CheckAndTryConvert(logger, value, varPtr.TypesList, localCodeExecutionContext);
-
-            if (callResult.IsError)
-            {
-                return callResult;
-            }
-
-            varPtr.SetValueDirectly(logger, callResult.Value);
-
-            return new CallResult(value);
+            return varPtr.SetValue(logger, value, localCodeExecutionContext);
         }
 
         private VarInstance CreateAndSaveLocalVariable(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)

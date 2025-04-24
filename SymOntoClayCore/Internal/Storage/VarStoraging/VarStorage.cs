@@ -313,13 +313,13 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
+        public void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)
             {
                 if (_localVariablesDict.ContainsKey(varName))
                 {
-                    _localVariablesDict[varName].SetValueDirectly(logger, value);
+                    _localVariablesDict[varName].SetValue(logger, value, localCodeExecutionContext);
                     return;
                 }
 
@@ -327,7 +327,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                 NAppendVar(logger, varItem);
 
-                varItem.SetValueDirectly(logger, value);
+                varItem.SetValue(logger, value, localCodeExecutionContext);
             }
         }
 

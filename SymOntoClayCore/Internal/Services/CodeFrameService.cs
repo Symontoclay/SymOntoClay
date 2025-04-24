@@ -214,7 +214,7 @@ namespace SymOntoClay.Core.Internal.Services
                 {
                     if (argument.HasDefaultValue)
                     {
-                        varsStorage.SetValue(logger, argument.Name, argument.DefaultValue);
+                        varsStorage.SetValue(logger, argument.Name, argument.DefaultValue, localCodeExecutionContext);
                         codeFrameArguments[argument.Name] = argument.DefaultValue;
                         break;
                     }
@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.Services
 
                 var parameterItem = positionedParametersEnumerator.Current;
 
-                varsStorage.SetValue(logger, argument.Name, parameterItem);
+                varsStorage.SetValue(logger, argument.Name, parameterItem, localCodeExecutionContext);
                 codeFrameArguments[argument.Name] = parameterItem;
             }
         }
@@ -266,7 +266,7 @@ namespace SymOntoClay.Core.Internal.Services
                 {
                     usedParameters.Add(parameterName);
 
-                    varsStorage.SetValue(logger, parameterName, namedParameter.Value);
+                    varsStorage.SetValue(logger, parameterName, namedParameter.Value, localCodeExecutionContext);
                     codeFrameArguments[parameterName] = namedParameter.Value;
                 }
             }
@@ -284,7 +284,7 @@ namespace SymOntoClay.Core.Internal.Services
 
                     if (argument.HasDefaultValue)
                     {
-                        varsStorage.SetValue(logger, argument.Name, argument.DefaultValue);
+                        varsStorage.SetValue(logger, argument.Name, argument.DefaultValue, localCodeExecutionContext);
                         codeFrameArguments[argument.Name] = argument.DefaultValue;
                         continue;
                     }

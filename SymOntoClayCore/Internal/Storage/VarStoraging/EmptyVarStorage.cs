@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
+        public void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
         }
 

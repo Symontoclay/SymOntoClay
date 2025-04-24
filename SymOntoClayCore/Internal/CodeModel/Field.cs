@@ -48,6 +48,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Field AsField => this;
 
+        /// <inheritdoc/>
+        public override bool IsIVarDecl => true;
+
+        /// <inheritdoc/>
+        public override IVarDecl AsIVarDecl => this;
+
         public AstExpression DefaultValue { get; set; }
 
         /// <inheritdoc/>

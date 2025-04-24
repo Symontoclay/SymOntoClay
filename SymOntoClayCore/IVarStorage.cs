@@ -40,7 +40,7 @@ namespace SymOntoClay.Core
         IList<WeightedInheritanceResultItem<VarInstance>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
         VarInstance GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name);
 
-        void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
+        void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext);
 
         void AddOnChangedHandler(IOnChangedVarStorageHandler handler);
         void RemoveOnChangedHandler(IOnChangedVarStorageHandler handler);

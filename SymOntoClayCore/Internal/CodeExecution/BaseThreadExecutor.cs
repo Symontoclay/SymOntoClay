@@ -1567,9 +1567,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var ruleInstance = _currentError.RuleInstance;
 
+            var localCodeExecutionContext = _currentCodeFrame.LocalContext;
+
             var searchOptions = new LogicalSearchOptions();
             searchOptions.TargetStorage = ruleInstance;
-            searchOptions.LocalCodeExecutionContext = _currentCodeFrame.LocalContext;
+            searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 
             foreach (var sehItem in _currentCodeFrame.CurrentSEHGroup.Items)
             {
@@ -1585,7 +1587,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (sehItem.VariableName != null && !sehItem.VariableName.IsEmpty)
                 {
-                    _currentVarStorage.SetValue(Logger, sehItem.VariableName, _currentError);
+                    _currentVarStorage.SetValue(Logger, sehItem.VariableName, _currentError, localCodeExecutionContext);
                 }
 
                 _currentError = null;

@@ -5,7 +5,7 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        @b = {: enemy($_) & see(I, $_) & alive($_, true) :}
+        @b = {: enemy($_) & see(I, $_) & alive($_, true) :};
         @b >> @>log;
         'End' >> @>log;
     }

@@ -245,7 +245,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                         var destVar = bindingVariables.GetDest(resultVar.NameOfVar);
 
-                        varStorage.SetValue(Logger, destVar, value);
+                        varStorage.SetValue(Logger, destVar, value, localCodeExecutionContext);
                     }
                 }
 

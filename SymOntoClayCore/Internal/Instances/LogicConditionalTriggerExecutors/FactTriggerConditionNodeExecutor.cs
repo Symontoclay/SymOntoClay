@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                                 var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext);
                                 
-                                varItem.SetValueDirectly(Logger, processedRuleInstance);                                
+                                varItem.SetValue(Logger, processedRuleInstance, _localCodeExecutionContext);                                
 
                                 resultVarList.Add(varItem);
                             }                            
@@ -136,7 +136,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                             }
 
                             var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext);
-                            varItem.SetValueDirectly(Logger, value);
+                            varItem.SetValue(Logger, value, _localCodeExecutionContext);
                             
                             resultVarList.Add(varItem);
                         }

@@ -35,10 +35,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
     /// <summary>
     /// Represents a variable.
     /// </summary>
-    public class Var: CodeItem
+    public class Var: CodeItem, IVarDecl
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Var;
+
+        /// <inheritdoc/>
+        public override bool IsIVarDecl => true;
+
+        /// <inheritdoc/>
+        public override IVarDecl AsIVarDecl => this;
 
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
 

@@ -1183,7 +1183,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var annotatedItem = currentCommand.AnnotatedItem;
 
 #if DEBUG
-            //Info("FAE862E7-9313-4F14-A950-D3F243046302", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
+            Info("FAE862E7-9313-4F14-A950-D3F243046302", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
 #endif
 
             VarInstance varInstance = null;

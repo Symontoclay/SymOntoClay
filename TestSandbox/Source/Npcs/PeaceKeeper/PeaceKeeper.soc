@@ -1,24 +1,12 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
 {
     on Enter =>
     {
         'Begin' >> @>log;
-        var @b: boolean;// = {: enemy($_) & see(I, $_) & alive($_, true) :};
+        var @b: boolean = true;
         @b >> @>log;
-        'End' >> @>log;
-    }
-}*/
-app PeaceKeeper
-{
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        var @a: number = 2;
-        @a >> @>log;
-        var @b: number;
+        @b = {: enemy($_) & see(I, $_) & alive($_, true) :};
         @b >> @>log;
-        var @c;
-        @c >> @>log;
         'End' >> @>log;
     }
 }

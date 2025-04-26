@@ -19,6 +19,11 @@ namespace SymOntoClay.Core.Internal.Instances
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
         public VarInstance(StrongIdentifierValue varName, TypeOfAccess typeOfAccess, IMainStorageContext context)
+            : this (varName, null, typeOfAccess, context)
+        {
+        }
+
+        public VarInstance(StrongIdentifierValue varName, List<StrongIdentifierValue> typesList, TypeOfAccess typeOfAccess, IMainStorageContext context)
             : base(context.Logger)
         {
             var varItem = new Var();
@@ -29,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances
             Name = varName;
             Holder = varItem.Holder;
             CodeItem = varItem;
-            TypesList = varItem.TypesList;
+            TypesList = typesList ?? varItem.TypesList;
 
             _typeConverter = context.TypeConverter;
 

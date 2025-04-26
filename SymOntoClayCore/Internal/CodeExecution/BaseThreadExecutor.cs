@@ -1183,7 +1183,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var annotatedItem = currentCommand.AnnotatedItem;
 
 #if DEBUG
-            Info("FAE862E7-9313-4F14-A950-D3F243046302", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
+            //Info("FAE862E7-9313-4F14-A950-D3F243046302", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
 #endif
 
             VarInstance varInstance = null;
@@ -1200,7 +1200,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
                 else
                 {
-                    throw new NotSupportedException($"A95A0763-5F1D-4A72-BAD8-E11EE69506C1: Can not create {nameof(VarInstance)} by {annotatedItem?.GetType().FullName}.");
+                    if(annotatedItem is VarDeclAstExpression)
+                    {
+                        var varDecl = annotatedItem as VarDeclAstExpression;
+
+                        varInstance = new VarInstance(varDecl.Name, varDecl.TypesList, TypeOfAccess.Local, _context);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException($"A95A0763-5F1D-4A72-BAD8-E11EE69506C1: Can not create {nameof(VarInstance)} by {annotatedItem?.GetType().FullName}.");
+                    }                        
                 }
             }
 

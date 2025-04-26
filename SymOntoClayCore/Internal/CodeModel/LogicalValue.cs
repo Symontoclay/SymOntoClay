@@ -75,6 +75,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private List<StrongIdentifierValue> _builtInSuperTypes;
 
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+
         private bool _isBoolean;
 
         public bool IsBoolean => _isBoolean;

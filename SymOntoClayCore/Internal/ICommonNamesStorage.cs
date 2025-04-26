@@ -62,5 +62,8 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue AnyTypeName { get; }
         StrongIdentifierValue BooleanTypeName { get; }
+
+        StrongIdentifierValue TrueValueLiteral { get; }
+        StrongIdentifierValue FalseValueLiteral { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Monitor.Common;
 using System;
 
@@ -22,8 +23,22 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
         }
 
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
+            var commonNamesStorage = _context.CommonNamesStorage;
+
+            _trueValueLiteral = commonNamesStorage.TrueValueLiteral;
+            _falseValueLiteral = commonNamesStorage.FalseValueLiteral;
+        }
+
         private PropertiesResolver _propertiesResolver;
         private FuzzyLogicResolver _fuzzyLogicResolver;
+
+        private StrongIdentifierValue _trueValueLiteral;
+        private StrongIdentifierValue _falseValueLiteral;
 
         public ResolverOptions DefaultOptions { get; private set; } = ResolverOptions.GetDefaultOptions();
 
@@ -56,9 +71,30 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new CallResult(_fuzzyLogicResolver.DefuzzificateTargetFuzzyLogicNonNumericValue(logger, targetFuzzyLogicItem));
             }
 
+            if(name == _trueValueLiteral)
+            {
+                return new CallResult(LogicalValue.TrueValue);
+            }
 
+            if(name == _falseValueLiteral)
+            {
+                return new CallResult(LogicalValue.FalseValue);
+            }
 
-            throw new NotImplementedException();
+            var value = _propertiesResolver.ResolveImplicitProperty(logger, name, instance, localCodeExecutionContext, options);
+
+#if DEBUG
+            Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");
+#endif
+
+            if (value == null)
+            {
+                return new CallResult(NullValue.Instance);
+            }
+            else
+            {
+                return new CallResult(value);
+            }
         }
     }
 }

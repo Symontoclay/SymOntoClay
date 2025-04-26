@@ -71,6 +71,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
             AnyTypeName = NameHelper.CreateName(StandardNamesConstants.AnyTypeName);
             BooleanTypeName = NameHelper.CreateName(StandardNamesConstants.BooleanTypeName);
+
+            TrueValueLiteral = NameHelper.CreateName(StandardNamesConstants.TrueValueLiteral);
+            FalseValueLiteral = NameHelper.CreateName(StandardNamesConstants.FalseValueLiteral);
         }
 
         private readonly IMainStorageContext _context;
@@ -128,5 +131,11 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue BooleanTypeName { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue TrueValueLiteral { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue FalseValueLiteral { get; private set; }
     }
 }

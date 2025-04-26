@@ -52,6 +52,8 @@ namespace SymOntoClay.Core.Internal
         public const string DefaultCtorName = "__ctor";
         public const string TimeoutAttributeName = "timeout";
         public const string PriorityAttributeName = "priority";
+        public const string TrueValueLiteral = "true";
+        public const string FalseValueLiteral = "false";
         #endregion
     }
 }

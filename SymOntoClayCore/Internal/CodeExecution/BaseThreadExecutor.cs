@@ -1373,16 +1373,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var propertyName = conceptValue.AsStrongIdentifierValue;
 
-            var oldCallResult = _propertiesResolver.GetPropertyValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
+            //var oldCallResult = _propertiesResolver.GetPropertyValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            Info("3DFD674F-EFA2-4607-B79E-7C5BE5179D43", $"oldCallResult = {oldCallResult}");
+            //Info("3DFD674F-EFA2-4607-B79E-7C5BE5179D43", $"oldCallResult = {oldCallResult}");
 #endif
 
             var callResult = _strongIdentifierExprValueResolver.GetValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
+            //Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
 #endif
 
             var kindOfResult = callResult.KindOfResult;

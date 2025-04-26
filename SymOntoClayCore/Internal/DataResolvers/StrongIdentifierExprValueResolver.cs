@@ -50,13 +50,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("C83986EF-4A7C-4ED8-8CA1-C9F39C04815A", $"name = {name}");
+            //Info("C83986EF-4A7C-4ED8-8CA1-C9F39C04815A", $"name = {name}");
 #endif
 
             var property = _propertiesResolver.Resolve(logger, name, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("E16D50F3-4AC5-4E80-BCF9-AB72FE95A6CE", $"property?.KindOfProperty = {property?.KindOfProperty}");
+            //Info("E16D50F3-4AC5-4E80-BCF9-AB72FE95A6CE", $"property?.KindOfProperty = {property?.KindOfProperty}");
 #endif
 
             if(property != null)
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var value = _propertiesResolver.ResolveImplicitProperty(logger, name, instance, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");
+            //Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");
 #endif
 
             if (value == null)

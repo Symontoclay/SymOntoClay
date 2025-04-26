@@ -127,5 +127,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         LogicalSearchVarResultsItemInvertor GetLogicalSearchVarResultsItemInvertor();
 
         DateTimeResolver GetDateTimeResolver();
+
+        StrongIdentifierExprValueResolver GetStrongIdentifierExprValueResolver();
     }
 }

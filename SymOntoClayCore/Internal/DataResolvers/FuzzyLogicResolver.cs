@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             return Resolve(logger, name, reason, localCodeExecutionContext, _defaultOptions);
         }
-
+        
         public NumberValue Resolve(IMonitorLogger logger, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var targetItem = GetTargetFuzzyLogicNonNumericValue(logger, name, null, reason, localCodeExecutionContext, options);
@@ -105,9 +105,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new NumberValue(null);
             }
 
-            var fuzzyValue = targetItem.Handler.Defuzzificate(logger);
+            var fuzzyValue = DefuzzificateTargetFuzzyLogicNonNumericValue(logger, targetItem);
 
             return fuzzyValue;
+        }
+
+        public NumberValue DefuzzificateTargetFuzzyLogicNonNumericValue(IMonitorLogger logger, FuzzyLogicNonNumericValue fuzzyLogicNonNumericValue)
+        {
+            return fuzzyLogicNonNumericValue.Handler.Defuzzificate(logger);
         }
 
         public NumberValue Resolve(IMonitorLogger logger, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -1418,7 +1423,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(IMonitorLogger logger, StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(IMonitorLogger logger, StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 

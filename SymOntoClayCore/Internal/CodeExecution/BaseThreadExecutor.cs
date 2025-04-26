@@ -102,6 +102,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _annotationsResolver = dataResolversFactory.GetAnnotationsResolver();
             _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
             _dateTimeResolver = dataResolversFactory.GetDateTimeResolver();
+            _strongIdentifierExprValueResolver = dataResolversFactory.GetStrongIdentifierExprValueResolver();
 
             _valueResolvingHelper = dataResolversFactory.GetValueResolvingHelper();
 
@@ -145,6 +146,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly AnnotationsResolver _annotationsResolver;
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly DateTimeResolver _dateTimeResolver;
+        private readonly StrongIdentifierExprValueResolver _strongIdentifierExprValueResolver;
 
         private readonly ValueResolvingHelper _valueResolvingHelper;
 
@@ -1371,10 +1373,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var propertyName = conceptValue.AsStrongIdentifierValue;
 
-            var callResult = _propertiesResolver.GetPropertyValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
+            var oldCallResult = _propertiesResolver.GetPropertyValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            //Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
+            Info("3DFD674F-EFA2-4607-B79E-7C5BE5179D43", $"oldCallResult = {oldCallResult}");
+#endif
+
+            var callResult = _strongIdentifierExprValueResolver.GetValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
 #endif
 
             var kindOfResult = callResult.KindOfResult;

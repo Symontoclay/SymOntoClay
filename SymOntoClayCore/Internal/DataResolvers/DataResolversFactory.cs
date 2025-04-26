@@ -110,6 +110,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             _dateTimeResolver = new DateTimeResolver(_context);
             _baseContextComponents.Add(_dateTimeResolver);
+
+            _strongIdentifierExprValueResolver = new StrongIdentifierExprValueResolver(_context);
+            _baseContextComponents.Add(_strongIdentifierExprValueResolver);
         }
 
         /// <inheritdoc/>
@@ -164,6 +167,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly MetadataResolver _metadataResolver;
         private readonly LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
         private readonly DateTimeResolver _dateTimeResolver;
+        private readonly StrongIdentifierExprValueResolver _strongIdentifierExprValueResolver;
 
         /// <inheritdoc/>
         public BaseResolver GetBaseResolver()
@@ -319,6 +323,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public DateTimeResolver GetDateTimeResolver()
         {
             return _dateTimeResolver;
+        }
+
+        /// <inheritdoc/>
+        public StrongIdentifierExprValueResolver GetStrongIdentifierExprValueResolver()
+        {
+            return _strongIdentifierExprValueResolver;
         }
     }
 }

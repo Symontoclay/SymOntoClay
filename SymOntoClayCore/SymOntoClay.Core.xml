@@ -6923,6 +6923,9 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetDateTimeResolver">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetStrongIdentifierExprValueResolver">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DateTimeResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
@@ -7309,6 +7312,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.StatesResolver.LinkWithOtherBaseContextComponents">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierExprValueResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.TriggersResolver.LinkWithOtherBaseContextComponents">

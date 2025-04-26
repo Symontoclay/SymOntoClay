@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json;
-using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeExecution;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
@@ -139,7 +135,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
 #endif
 
-            var property = Resolve(Logger, propertyName, localCodeExecutionContext, options);
+            var property = Resolve(logger, propertyName, localCodeExecutionContext, options);
 
 #if DEBUG
             //Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
@@ -147,7 +143,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (property == null)
             {
-                var value = ResolveImplicitProperty(Logger, propertyName, instance, localCodeExecutionContext, options);
+                var value = ResolveImplicitProperty(logger, propertyName, instance, localCodeExecutionContext, options);
 
 #if DEBUG
                 //Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
@@ -163,9 +159,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
+            return ConvertPropertyInstanceToCallResult(property);
+
+            //throw new NotImplementedException("3F5085DB-DF7C-4864-8E92-03EFB497FC6A");
+        }
+
+        public CallResult ConvertPropertyInstanceToCallResult(PropertyInstance property)
+        {
             var kindOfProperty = property.KindOfProperty;
 
-            switch(kindOfProperty)
+            switch (kindOfProperty)
             {
                 case KindOfProperty.Auto:
                     return new CallResult(property.GetValue());
@@ -185,8 +188,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
             }
-
-            throw new NotImplementedException("3F5085DB-DF7C-4864-8E92-03EFB497FC6A");
         }
 
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)

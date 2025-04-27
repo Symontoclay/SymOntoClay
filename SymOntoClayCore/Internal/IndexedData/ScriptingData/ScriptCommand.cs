@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.VarDecl:
                 case OperationCode.PropDecl:
                 case OperationCode.LoadFromVar:
-                case OperationCode.TryLoadFromProperty:
+                case OperationCode.TryLoadFromStrongIdentifier:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:

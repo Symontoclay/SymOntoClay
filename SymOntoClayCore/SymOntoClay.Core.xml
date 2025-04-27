@@ -7968,6 +7968,11 @@
             Pushes a constant value into a current stack.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.TryLoadFromStrongIdentifier">
+            <summary>
+            For loading from properties and linguistic variables.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.CallUnOp">
             <summary>
             Calls an unary operator.

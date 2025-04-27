@@ -38,7 +38,10 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// </summary>
         PushVal,
         LoadFromVar,
-        TryLoadFromProperty,
+        /// <summary>
+        /// For loading from properties and linguistic variables.
+        /// </summary>
+        TryLoadFromStrongIdentifier,
 
         /// <summary>
         /// Calls an unary operator.

@@ -346,8 +346,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         ProcessLoadFromVar();
                         break;
 
-                    case OperationCode.TryLoadFromProperty:
-                        ProcessTryLoadFromProperty();
+                    case OperationCode.TryLoadFromStrongIdentifier:
+                        ProcessTryLoadFromStrongIdentifier();
                         break;
 
                     case OperationCode.VarDecl:
@@ -1362,7 +1362,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
-        private void ProcessTryLoadFromProperty()
+        private void ProcessTryLoadFromStrongIdentifier()
         {
             var conceptValue = _currentCodeFrame.ValuesStack.Pop();
 

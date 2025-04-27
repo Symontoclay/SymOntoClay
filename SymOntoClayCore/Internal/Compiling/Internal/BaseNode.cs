@@ -159,7 +159,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         private void CompileTryLoadFromProperty()
         {
             var cmd = new IntermediateScriptCommand();
-            cmd.OperationCode = OperationCode.TryLoadFromProperty;
+            cmd.OperationCode = OperationCode.TryLoadFromStrongIdentifier;
 
             AddCommand(cmd);
         }
@@ -250,7 +250,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.VarDecl:
                 case OperationCode.PropDecl:
                 case OperationCode.LoadFromVar:
-                case OperationCode.TryLoadFromProperty:
+                case OperationCode.TryLoadFromStrongIdentifier:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

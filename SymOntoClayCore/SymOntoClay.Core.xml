@@ -5680,6 +5680,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.Kind">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.KindOfValue">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.IsRuleInstance">
             <inheritdoc/>
         </member>
@@ -6196,6 +6199,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToMonitorSerializableObject(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">

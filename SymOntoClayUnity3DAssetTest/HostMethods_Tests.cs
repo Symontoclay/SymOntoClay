@@ -433,6 +433,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case4()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -471,6 +473,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case4_a()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -509,6 +513,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case5()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -559,6 +565,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case5_a()
         {
+            throw new NotImplementedException();
+
             var text = @"app PeaceKeeper
 {
     on Enter =>

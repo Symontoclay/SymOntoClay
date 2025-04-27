@@ -417,7 +417,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
             else
             {
-                return NullValue.Instance;
+                return null;
             }
         }
 

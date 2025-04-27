@@ -944,7 +944,7 @@ primitive task KillEnemy
                             return true;
 
                         case 3:
-                            Assert.AreEqual("NULL", message);
+                            Assert.AreEqual("someunknownprop", message);
                             return true;
 
                         case 4:

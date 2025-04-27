@@ -50,6 +50,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.RuleOrFact;
 
         /// <inheritdoc/>
+        public override KindOfValue KindOfValue => KindOfValue.RuleInstance;
+
+        /// <inheritdoc/>
         public override bool IsRuleInstance => true;
 
         /// <inheritdoc/>

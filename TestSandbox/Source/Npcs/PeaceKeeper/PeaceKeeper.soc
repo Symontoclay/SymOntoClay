@@ -1,27 +1,16 @@
 ﻿app PeaceKeeper
 {
-    fun a(@param_1)
-    {
-        '`a` (any) has been called!' >> @>log;
-        @param_1 >> @>log;
-    }
-
-    fun a(@param_1: string)
-    {
-        '`a` (string) has been called!' >> @>log;
-        @param_1 >> @>log;
-    }
-
-    fun a(@param_1: number)
-    {
-        '`a` has been called!' >> @>log;
-        @param_1 >> @>log;
-    }
+    {: >: { see(I, #`Barrel 1`) } :}
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a(dog);
+        
+        if({: >: { see(I, #`Barrel 1`) } :})
+        {
+            'Yes!' >> @>log;
+        }
+
         'End' >> @>log;
     }
 }

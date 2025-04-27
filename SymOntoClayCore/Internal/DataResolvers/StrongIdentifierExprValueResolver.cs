@@ -89,12 +89,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var value = _propertiesResolver.ResolveImplicitProperty(logger, name, instance, localCodeExecutionContext, options);
 
 #if DEBUG
-            //Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");
+            Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");
 #endif
 
             if (value == null)
             {
-                return new CallResult(NullValue.Instance);
+                return new CallResult(name);
             }
             else
             {

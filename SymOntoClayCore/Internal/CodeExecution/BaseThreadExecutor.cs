@@ -1502,7 +1502,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
+#if DEBUG
+            //Info("2CC01662-FE1B-4963-9C26-271664A4B1FE", $"currentValue = {currentValue}");
+#endif
+
             var kindOfValue = currentValue.KindOfValue;
+
+#if DEBUG
+            //Info("6EEDFEAF-0B4A-4AF6-8725-CBB4C7BBE5AA", $"kindOfValue = {kindOfValue}");
+#endif
 
             switch (kindOfValue)
             {

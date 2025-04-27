@@ -308,6 +308,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override object ToMonitorSerializableObject(IMonitorLogger logger)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             return NToHumanizedString();
@@ -334,7 +340,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 sb.Append("]");
             }
-
+            
             return sb.ToString();
         }
 

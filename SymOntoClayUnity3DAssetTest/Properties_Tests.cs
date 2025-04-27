@@ -671,7 +671,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "NULL");
+                            Assert.AreEqual(message, "readonlyprop");
                             return true;
 
                         case 3:
@@ -873,7 +873,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "NULL");
+                            Assert.AreEqual(message, "someprop");
                             return true;
 
                         case 5:

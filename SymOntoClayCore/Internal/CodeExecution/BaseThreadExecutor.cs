@@ -1382,7 +1382,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var callResult = _strongIdentifierExprValueResolver.GetValue(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            //Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
+            Info("F809CFFD-1E71-4CB0-A988-95A1D36FAD63", $"callResult = {callResult}");
 #endif
 
             var kindOfResult = callResult.KindOfResult;

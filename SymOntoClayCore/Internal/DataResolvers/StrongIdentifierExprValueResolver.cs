@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (targetFuzzyLogicItem != null)
             {
-                return new CallResult(_fuzzyLogicResolver.DefuzzificateTargetFuzzyLogicNonNumericValue(logger, targetFuzzyLogicItem));
+                return new CallResult(name);
             }
 
             if(name == _trueValueLiteral)

@@ -1,19 +1,5 @@
-﻿linvar age for range (0, 150]
+﻿linvar age for range (-∞, +∞)
 {
-	constraints:
-		for relation age;
-
-	terms:
-        `teenager` = Trapezoid(10, 12, 17, 20);
-}
-
-app PeaceKeeper
-{
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        var @b: number = `teenager`;
-        @b >> @>log;
-        'End' >> @>log;
-    }
+    terms:
+	    `teenager` = Trapezoid(10, 12, 17, 20);
 }

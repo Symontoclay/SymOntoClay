@@ -1036,6 +1036,58 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(handlerStr5.Contains("_b = 1"), true);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Case17()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @b: number = `teenager`;
+        @b >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) => {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual(message, "14.777777777777782");
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+
+            Assert.AreEqual(3, maxN);
+        }
+
         private void CheckCodeEntity(CodeItem codeEntity, string name)
         {
             Assert.AreEqual(codeEntity.Kind, KindOfCodeEntity.LinguisticVariable);

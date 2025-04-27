@@ -1,11 +1,18 @@
-﻿app PeaceKeeper
+﻿linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
 {
     on Enter =>
     {
         'Begin' >> @>log;
-        var @b: boolean = true;
-        @b >> @>log;
-        @b = {: enemy($_) & see(I, $_) & alive($_, true) :};
+        var @b: number = `teenager`;
         @b >> @>log;
         'End' >> @>log;
     }

@@ -193,7 +193,7 @@ namespace SymOntoClay.BaseTestLib
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                ThreadingSettings = factorySettings.ThreadingSettings.AsyncEvents
+                ThreadingSettings = factorySettings?.ThreadingSettings?.AsyncEvents
             });
 
             if (!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)

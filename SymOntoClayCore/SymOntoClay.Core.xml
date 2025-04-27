@@ -6563,6 +6563,12 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.BooleanTypeName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.FuzzyTypeName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.NumberTypeName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.TrueValueLiteral">
             <inheritdoc/>
         </member>

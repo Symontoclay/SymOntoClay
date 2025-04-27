@@ -53,6 +53,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Info("C83986EF-4A7C-4ED8-8CA1-C9F39C04815A", $"name = {name}");
 #endif
 
+            if(name.IsNullValue)
+            {
+                return new CallResult(NullValue.Instance);
+            }
+
+            var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name, null, null, localCodeExecutionContext, options);
+
+            if (targetFuzzyLogicItem != null)
+            {
+                return new CallResult(name);
+            }
+
             var property = _propertiesResolver.Resolve(logger, name, localCodeExecutionContext, options);
 
 #if DEBUG
@@ -62,13 +74,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(property != null)
             {
                 return _propertiesResolver.ConvertPropertyInstanceToCallResult(property);
-            }
-
-            var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name, null, null, localCodeExecutionContext, options);
-
-            if (targetFuzzyLogicItem != null)
-            {
-                return new CallResult(name);
             }
 
             if(name == _trueValueLiteral)

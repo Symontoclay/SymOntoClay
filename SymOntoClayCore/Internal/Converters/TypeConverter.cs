@@ -26,9 +26,12 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private InheritanceResolver _inheritanceResolver;
         private LogicalSearchResolver _logicalSearchResolver;
+        private FuzzyLogicResolver _fuzzyLogicResolver;
 
         private StrongIdentifierValue _anyTypeName;
         private StrongIdentifierValue _booleanTypeName;
+        private StrongIdentifierValue _fuzzyTypeName;
+        private StrongIdentifierValue _numberTypeName;
 
         private TypeFitCheckingResult _needConversionToBooleanTypeFitCheckingResult;        
 
@@ -43,11 +46,14 @@ namespace SymOntoClay.Core.Internal.Converters
 
             _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
             _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
+            _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
 
             var commonNamesStorage = _context.CommonNamesStorage;
 
             _anyTypeName = commonNamesStorage.AnyTypeName;
             _booleanTypeName = commonNamesStorage.BooleanTypeName;
+            _fuzzyTypeName = commonNamesStorage.FuzzyTypeName;
+            _numberTypeName = commonNamesStorage.NumberTypeName;
 
             _needConversionToBooleanTypeFitCheckingResult = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConvesion, _booleanTypeName);
         }
@@ -94,14 +100,28 @@ namespace SymOntoClay.Core.Internal.Converters
                     return new CallResult(value);
 
                 case KindOfTypeFitCheckingResult.NeedConvesion:
-                    return new CallResult(Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext, options));
+                    {
+                        var conversionResult = Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext, options);
+
+                        if(conversionResult == null)
+                        {
+                            throw new Exception($"7B409E1B-0273-40AE-A8F4-4720C93DEBC3: {BuildIsNotFitErrorMessage(value, typesList)}");
+                        }
+
+                        return new CallResult(conversionResult);
+                    }                    
 
                 case KindOfTypeFitCheckingResult.IsNotFit:
-                    throw new Exception($"435AEB0F-4EB7-4219-89D3-D63871296755: The value '{value.ToHumanizedString()}' does not fit to type `{typesList.TypesListToHumanizedString()}`");
+                    throw new Exception($"435AEB0F-4EB7-4219-89D3-D63871296755: {BuildIsNotFitErrorMessage(value, typesList)}");
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
             }
+        }
+
+        private string BuildIsNotFitErrorMessage(Value value, IList<StrongIdentifierValue> typesList)
+        {
+            return $"The value '{value.ToHumanizedString()}' does not fit to type `{typesList.TypesListToHumanizedString()}`";
         }
 
         /// <inheritdoc/>
@@ -133,9 +153,28 @@ namespace SymOntoClay.Core.Internal.Converters
                 return TypeFitCheckingResult.Fit;
             }
 
-            if (typesList.Any(p => p == _booleanTypeName) && value.IsRuleInstance && value.AsRuleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
+            if (typesList.Any(p => p == _booleanTypeName))
             {
-                return _needConversionToBooleanTypeFitCheckingResult;
+                if(value.IsRuleInstance && value.AsRuleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
+                {
+                    return _needConversionToBooleanTypeFitCheckingResult;
+                }
+            }
+
+            if (typesList.Any(p => p == _numberTypeName))
+            {
+                if (value.IsStrongIdentifierValue)
+                {
+                    return new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConvesion, _numberTypeName);
+                }
+            }
+
+            if (typesList.Any(p => p == _fuzzyTypeName))
+            {
+                if (value.IsStrongIdentifierValue)
+                {
+                    return new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConvesion, _fuzzyTypeName);
+                }
             }
 
             var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext, options);
@@ -170,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
             switch (normalizedTypeName)
             {
-                case "boolean":
+                case StandardNamesConstants.BooleanTypeName:
                     if(value.IsRuleInstance)
                     {
                         var ruleInstance = value.AsRuleInstance;
@@ -199,9 +238,31 @@ namespace SymOntoClay.Core.Internal.Converters
                         throw new NotImplementedException("30CA5B09-9171-4873-8893-DB3746C05036");
                     }
 
+                case StandardNamesConstants.NumberTypeName:
+                    if(value.IsStrongIdentifierValue)
+                    {
+                        return Defuzzificate(logger, value.AsStrongIdentifierValue, localCodeExecutionContext, options);
+                    }
+                    else
+                    {
+                        throw new NotImplementedException("34E25373-EA53-4471-9015-8A824505931D");
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(normalizedTypeName), normalizedTypeName, null);
             }
+        }
+
+        private NumberValue Defuzzificate(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name, null, null, localCodeExecutionContext, options);
+
+            if (targetFuzzyLogicItem == null)
+            {
+                return null;
+            }
+
+            return _fuzzyLogicResolver.DefuzzificateTargetFuzzyLogicNonNumericValue(logger, targetFuzzyLogicItem);
         }
     }
 }

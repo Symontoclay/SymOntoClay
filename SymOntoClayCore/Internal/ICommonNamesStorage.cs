@@ -62,6 +62,8 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue AnyTypeName { get; }
         StrongIdentifierValue BooleanTypeName { get; }
+        StrongIdentifierValue FuzzyTypeName { get; }
+        StrongIdentifierValue NumberTypeName { get; }
 
         StrongIdentifierValue TrueValueLiteral { get; }
         StrongIdentifierValue FalseValueLiteral { get; }

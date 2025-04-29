@@ -935,7 +935,7 @@ namespace SymOntoClay.StandardFacts
                     node.Kind = KindOfLogicalQueryNode.Entity;
                     break;
 
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     node.Kind = KindOfLogicalQueryNode.Concept;
                     break;
 

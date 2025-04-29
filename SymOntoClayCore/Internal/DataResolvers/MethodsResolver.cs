@@ -562,7 +562,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     case KindOfName.Var:
                         break;
 
-                    case KindOfName.Concept:
+                    case KindOfName.CommonConcept:
                         parameterName = NameHelper.CreateName($"@{parameterName.NameValue}");
                         break;
 

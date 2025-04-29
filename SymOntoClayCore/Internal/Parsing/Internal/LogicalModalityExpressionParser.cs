@@ -191,7 +191,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             switch (kindOfName)
             {
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     {
                         var node = new LogicalModalityExpressionNode() { Kind = KindOfLogicalModalityExpressionNode.Value };
                         node.Value = value;

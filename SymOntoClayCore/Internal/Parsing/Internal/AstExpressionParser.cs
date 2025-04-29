@@ -570,7 +570,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             switch (kindOfName)
             {
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                 case KindOfName.Channel:
                 case KindOfName.Entity:
                     {

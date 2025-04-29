@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     SetVarValue(logger, memberName, value);
                     break;
 
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     SetPropertyValue(logger, memberName, value);
                     break;
 
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfName.Var:
                     return GetVarValue(logger, memberName);
 
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     return GetPropertyValue(logger, memberName);
 
                 default:

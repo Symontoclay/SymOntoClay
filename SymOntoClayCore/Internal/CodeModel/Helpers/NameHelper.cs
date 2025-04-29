@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");
             }
 
-            name.KindOfName = KindOfName.Concept;
+            name.KindOfName = KindOfName.CommonConcept;
 
             if(text.StartsWith("@>"))
             {

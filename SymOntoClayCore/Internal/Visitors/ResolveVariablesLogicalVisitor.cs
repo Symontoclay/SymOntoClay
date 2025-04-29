@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.Visitors
 
                             switch (kindOfName)
                             {
-                                case KindOfName.Concept:
+                                case KindOfName.CommonConcept:
                                     logicalQueryNode.Kind = KindOfLogicalQueryNode.Concept;
                                     logicalQueryNode.Name = strVal;
                                     break;

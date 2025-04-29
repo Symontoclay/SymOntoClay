@@ -49,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             Assert.AreEqual(firstItem.Name.NameValue, "enemy");
-            Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 0);
         }
@@ -69,7 +69,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             Assert.AreEqual(firstItem.Name.NameValue, "pixkeeper");
-            Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 1);
 

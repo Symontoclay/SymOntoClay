@@ -65,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
                 case KindOfName.Entity:
                     return ConvertEntityToPlatformType(logger, identifier, context, localContext);
 
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     return ConvertConceptToPlatformType(logger, identifier, context, localContext);
 
                 default:

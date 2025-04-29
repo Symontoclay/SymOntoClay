@@ -282,7 +282,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
             switch(kindOfSourceName)
             {
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     superNameNode.Kind = KindOfLogicalQueryNode.Concept;
                     break;
 

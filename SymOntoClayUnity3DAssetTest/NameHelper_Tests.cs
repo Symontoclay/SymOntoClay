@@ -85,7 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
             Assert.AreEqual(name.NormalizedNameValue, text);
-            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, "dog");
             Assert.AreEqual(name.NormalizedNameValue, "dog");
-            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, "`small dog`");
             Assert.AreEqual(name.NormalizedNameValue, text);
-            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
         }
 
         [Test]

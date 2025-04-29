@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
             {
-                if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept)
+                if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.CommonConcept)
                 {
                     var ruleInstance = leftOperand.AsRuleInstance;
 

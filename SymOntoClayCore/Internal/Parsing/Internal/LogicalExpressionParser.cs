@@ -654,7 +654,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             switch (value.KindOfName)
             {
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     if(_lastLogicalQueryNode != null && _lastLogicalQueryNode.KindOfOperator == KindOfOperatorOfLogicalQueryNode.Is && _currToken.KeyWordTokenKind == KeyWordTokenKind.Not)
                     {
                         _context.Recovery(nextToken);
@@ -806,7 +806,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             switch (kindOfName)
             {
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     node.Kind = KindOfLogicalQueryNode.Concept;
                     break;
 

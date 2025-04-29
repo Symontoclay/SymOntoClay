@@ -248,7 +248,7 @@ namespace SymOntoClay.Core.Internal.Services
                     case KindOfName.Var:
                         break;
 
-                    case KindOfName.Concept:
+                    case KindOfName.CommonConcept:
                         parameterName = NameHelper.CreateName($"@{parameterName.NameValue}");
                         break;
 

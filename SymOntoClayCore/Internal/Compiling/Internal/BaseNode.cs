@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                 }
                                 break;
 
-                            case KindOfName.Concept:
+                            case KindOfName.CommonConcept:
                                 if(internalPropKindOfCompilePushValItem.HasValue)
                                 {
                                     switch (internalPropKindOfCompilePushValItem)

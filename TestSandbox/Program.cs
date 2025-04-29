@@ -165,7 +165,7 @@ namespace TestSandbox
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
-            //TstCreateName();
+            TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
             //TstBattleRoyaleHandler();//<==
@@ -174,7 +174,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -2182,33 +2182,61 @@ primitive task SomePrimitiveTask4
 
             _logger.Info("3E73FFE5-96A2-4288-B965-D265FC6623F1", $"{nameof(nameVal1)} = {nameVal1}");
 
+            //var result = ParseName(nameVal1);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
+            //var nameVal2 = "dog (animal)";
 
+            //_logger.Info($"{nameof(nameVal2)} = {nameVal2}");
 
+            //result = ParseName(nameVal2);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
+            //var nameVal3 = "dog (animal | instrument)";
 
+            //_logger.Info($"{nameof(nameVal3)} = {nameVal3}");
 
+            //result = ParseName(nameVal3);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
+            //var nameVal4 = "dog (animal (alive))";
 
+            //_logger.Info($"{nameof(nameVal4)} = {nameVal4}");
 
+            //result = ParseName(nameVal4);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
+            //var nameVal5 = "dog (alive::animal)";
 
+            //_logger.Info($"{nameof(nameVal5)} = {nameVal5}");
 
+            //result = ParseName(nameVal5);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
+            //var nameVal6 = "dog (alive::animal | instrument (big))";
 
+            //_logger.Info($"{nameof(nameVal6)} = {nameVal6}");
 
+            //result = ParseName(nameVal6);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
+            //var nameVal7 = "animal::dog";
 
+            //result = ParseName(nameVal7);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
+            //var nameVal8 = "(animal | instrument)::dog";
 
+            //result = ParseName(nameVal8);
 
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
             var name = NameHelper.CreateName(nameVal1);
 

@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public enum KindOfName
     {
         Unknown,
-        Concept,
+        CommonConcept,
         Entity,
         RuleOrFact,
         EntityCondition,

@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     }
                                 }
 
-                            case KindOfName.Concept:
+                            case KindOfName.CommonConcept:
                                 return _propertiesResolver.SetPropertyValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext, callMode);
 
                             default:

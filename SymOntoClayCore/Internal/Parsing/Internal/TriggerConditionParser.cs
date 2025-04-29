@@ -431,7 +431,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             switch (kindOfName)
             {
-                case KindOfName.Concept:
+                case KindOfName.CommonConcept:
                     {
                         var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Concept };
                         node.Name = value;

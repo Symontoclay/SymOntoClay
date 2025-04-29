@@ -34,10 +34,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         RuleOrFact,
         EntityCondition,
         AnonymousEntityCondition,
-        EntityRefByConcept,
+        Concept,
         Channel,
         Var,
         SystemVar,
-        LogicalVar
+        LogicalVar,
+        LinguisticVar,
+        Property
     }
 }

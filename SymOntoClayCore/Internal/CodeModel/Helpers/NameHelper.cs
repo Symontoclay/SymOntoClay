@@ -244,7 +244,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             }
             else if (text.StartsWith("##"))
             {
-                name.KindOfName = KindOfName.EntityRefByConcept;
+                name.KindOfName = KindOfName.Concept;
             }
             else if (text.StartsWith("#^"))
             {

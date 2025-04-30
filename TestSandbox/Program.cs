@@ -2242,7 +2242,9 @@ primitive task SomePrimitiveTask4
 
             //_logger.Info("2C88170A-6C28-48F1-98A1-980A34D8FCFC", $"name = {name}");
 
-            var name = NameHelper.CreateName("#|`teenager`");
+            //var name = NameHelper.CreateName("#|`teenager`");
+            //var name = NameHelper.CreateName("##dog");
+            var name = NameHelper.CreateName("@:Prop1");
 
             _logger.Info("8809F884-AA8E-4EAA-A423-96D3D938280B", $"name = {name}");
 

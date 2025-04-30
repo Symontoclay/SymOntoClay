@@ -266,5 +266,22 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.IsArray, false);
             Assert.AreEqual(name.Capacity.HasValue, false);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Concept_Case1()
+        {
+            var text = "##dog";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.NormalizedNameValue, text);
+            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
+        }
     }
 }

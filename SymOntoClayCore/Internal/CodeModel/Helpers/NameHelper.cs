@@ -250,6 +250,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 name.KindOfName = KindOfName.RuleOrFact;
             }
+            else if (text.StartsWith("#|"))
+            {
+                name.KindOfName = KindOfName.LinguisticVar;
+            }
             else if (text.StartsWith("@"))
             {
                 name.KindOfName = KindOfName.Var;

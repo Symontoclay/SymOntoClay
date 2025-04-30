@@ -21,30 +21,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
-using SymOntoClay.BaseTestLib;
-using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Parsing;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
     public class NameHelper_Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-            _mainStorageContext = new UnityTestMainStorageContext();
-        }
-
-        private IMainStorageContext _mainStorageContext;
-
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_Empty()
+        public void Empty_Case1()
         {
             var name = new StrongIdentifierValue();
 
@@ -56,11 +42,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.KindOfValue, KindOfValue.StrongIdentifierValue);
             Assert.AreEqual(name.IsStrongIdentifierValue, true);
             Assert.AreEqual(name.AsStrongIdentifierValue, name);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_2_Empty()
+        public void Empty_Case2()
         {
             var name = NameHelper.CreateName(string.Empty);
 
@@ -72,11 +61,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.KindOfValue, KindOfValue.StrongIdentifierValue);
             Assert.AreEqual(name.IsStrongIdentifierValue, true);
             Assert.AreEqual(name.AsStrongIdentifierValue, name);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_Concept()
+        public void CommonConcept_Case1()
         {
             var text = "dog";
 
@@ -86,11 +78,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, text);
             Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_2_Concept()
+        public void CommonConcept_Case2()
         {
             var name = NameHelper.CreateName("Dog");
 
@@ -98,11 +93,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, "dog");
             Assert.AreEqual(name.NormalizedNameValue, "dog");
             Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_3_Concept()
+        public void CommonConcept_Case3()
         {
             var text = "small dog";
 
@@ -112,11 +110,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, "`small dog`");
             Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_Channel()
+        public void Channel_Case1()
         {
             var text = "@>log";
 
@@ -126,11 +127,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, text);
             Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Channel);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_CreateRuleOrFactName()
+        public void CreateRuleOrFactName_Case1()
         {
             var name = NameHelper.CreateRuleOrFactName();
 
@@ -139,11 +143,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreNotEqual(name.NameValue, string.Empty);
             Assert.AreNotEqual(name.NormalizedNameValue, string.Empty);
             Assert.AreEqual(name.KindOfName, KindOfName.RuleOrFact);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_Entity()
+        public void Entity_Case1()
         {
             var text = "#dog1";
 
@@ -153,11 +160,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, text);
             Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_2_Entity()
+        public void Entity_Case2()
         {
             var text = "#Tom";
 
@@ -167,11 +177,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, "#tom");
             Assert.AreEqual(name.NormalizedNameValue, "#tom");
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_3_Entity()
+        public void Entity_Case3()
         {
             var text = "#`Barrel 1`";
 
@@ -181,11 +194,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, "#`barrel 1`");
             Assert.AreEqual(name.NormalizedNameValue, "#barrel 1");
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_Var()
+        public void Var_Case1()
         {
             var text = "@a";
 
@@ -195,11 +211,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, "@a");
             Assert.AreEqual(name.NormalizedNameValue, "@a");
             Assert.AreEqual(name.KindOfName, KindOfName.Var);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_SystemVar()
+        public void SystemVar_Case1()
         {
             var text = "@@host";
 
@@ -209,11 +228,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, "@@host");
             Assert.AreEqual(name.NormalizedNameValue, "@@host");
             Assert.AreEqual(name.KindOfName, KindOfName.SystemVar);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
         }
 
         [Test]
         [Parallelizable]
-        public void NameHelper_Tests_Case_LogicVar()
+        public void LogicVar_Case1()
         {
             var text = "$x";
 
@@ -223,6 +245,26 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.NameValue, "$x");
             Assert.AreEqual(name.NormalizedNameValue, "$x");
             Assert.AreEqual(name.KindOfName, KindOfName.LogicalVar);
-        }   
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void LinguisticVar_Case1()
+        {
+            var text = "#|`teenager`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#|`teenager`");
+            Assert.AreEqual(name.NormalizedNameValue, "#|teenager");
+            Assert.AreEqual(name.KindOfName, KindOfName.LinguisticVar);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
+        }
     }
 }

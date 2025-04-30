@@ -283,5 +283,22 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.IsArray, false);
             Assert.AreEqual(name.Capacity.HasValue, false);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Property_Case1()
+        {
+            var text = "@:Prop1";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@:prop1");
+            Assert.AreEqual(name.NormalizedNameValue, "@:prop1");
+            Assert.AreEqual(name.KindOfName, KindOfName.Property);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, false);
+        }
     }
 }

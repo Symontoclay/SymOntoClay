@@ -73,6 +73,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 return $"{source.Insert(2, "`")}`";
             }
 
+            if (source.StartsWith("@:"))
+            {
+                var nameSubStr = source.Substring(2);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(2, "`")}`";
+            }
+
             if (source == "#@")
             {
                 return source;
@@ -233,6 +245,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             else if (text.StartsWith("@@"))
             {
                 name.KindOfName = KindOfName.SystemVar;
+            }
+            else if (text.StartsWith("@:"))
+            {
+                name.KindOfName = KindOfName.Property;
             }
             else if (text == "#@")
             {

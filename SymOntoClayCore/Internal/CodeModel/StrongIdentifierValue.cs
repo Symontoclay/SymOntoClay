@@ -24,6 +24,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -49,8 +50,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private bool _isNull;
 
-        public bool IsArray { get; private set; }
-        public int? Capacity { get; private set; }
+        public bool IsArray { get; set; }
+        public int? Capacity { get; set; }
+
+        public StrongIdentifierLevel Level { get; set; } = StrongIdentifierLevel.None;
 
         /// <inheritdoc/>
         public override bool IsStrongIdentifierValue => true;
@@ -230,6 +233,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.NormalizedNameValue = NormalizedNameValue;
             result.IsArray = IsArray;
             result.Capacity = Capacity;
+            result.Level = Level;
 
             result.AppendAnnotations(this, context);
 
@@ -257,6 +261,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
 
+            sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -276,6 +282,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
 
+            sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -294,6 +302,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
+
+            sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

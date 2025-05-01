@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -62,13 +63,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public Lexer(string text, IMonitorLogger logger)
+        public Lexer(string text, IMonitorLogger logger, LexerMode mode = LexerMode.Code)
         {
+            _mode = mode;
             _logger = logger;
             _items = new Queue<char>(text.ToList());
         }
 
         private IMonitorLogger _logger;
+        private LexerMode _mode;
         private Queue<char> _items;
         private State _state = State.Init;
         private State _stateBeforeComment = State.Init;
@@ -97,12 +100,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 _currentPos++;
 
 #if DEBUG
-                //_logger.Info("63869F33-9EDD-4C0E-AD5C-0A40A2A7D247", $"tmpChar = {tmpChar}");
-                //_logger.Info("2440A33D-A1F1-45BF-9AEC-2F5B05AF6CF6", $"_currentPos = {_currentPos}");
-                //_logger.Info("2A1A450C-E1C9-4168-B124-423E1B5CB1AD", $"_state = {_state}");
-                //_logger.Info("38B84256-148B-407F-AADB-1855BB8F2D9C", $"_kindOfPrefix = {_kindOfPrefix}");
-                //_logger.Info("88DF13BA-DBD3-4A20-9A61-27413870733B", $"buffer == null = {buffer == null}");
-                //_logger.Info("A7CD854B-679A-4A04-84A6-C24213E5D47B", $"buffer = {buffer}");
+                _logger.Info("63869F33-9EDD-4C0E-AD5C-0A40A2A7D247", $"tmpChar = {tmpChar}");
+                _logger.Info("2440A33D-A1F1-45BF-9AEC-2F5B05AF6CF6", $"_currentPos = {_currentPos}");
+                _logger.Info("2A1A450C-E1C9-4168-B124-423E1B5CB1AD", $"_state = {_state}");
+                _logger.Info("38B84256-148B-407F-AADB-1855BB8F2D9C", $"_kindOfPrefix = {_kindOfPrefix}");
+                _logger.Info("88DF13BA-DBD3-4A20-9A61-27413870733B", $"buffer == null = {buffer == null}");
+                _logger.Info("A7CD854B-679A-4A04-84A6-C24213E5D47B", $"buffer = {buffer}");
 #endif
 
                 switch (_state)
@@ -351,26 +354,66 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 break;
 
                             case '`':
-                                _state = State.InIdentifier;
-                                buffer = new StringBuilder();
+                                switch(_mode)
+                                {
+                                    case LexerMode.Code:
+                                        _state = State.InIdentifier;
+                                        buffer = new StringBuilder();
+                                        break;
+
+                                    case LexerMode.StrongIdentifier:
+                                        return CreateToken(TokenKind.Gravis);
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                }
                                 break;
 
                             case '@':
-                                buffer = new StringBuilder();
-                                buffer.Append(tmpChar);
-                                _state = State.At;
+                                switch(_mode)
+                                {
+                                    case LexerMode.Code:
+                                        buffer = new StringBuilder();
+                                        buffer.Append(tmpChar);
+                                        _state = State.At;
+                                        break;
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                }
                                 break;
 
                             case '#':
-                                buffer = new StringBuilder();
-                                buffer.Append(tmpChar);
-                                _state = State.Sharp;
+                                switch (_mode)
+                                {
+                                    case LexerMode.Code:
+                                        buffer = new StringBuilder();
+                                        buffer.Append(tmpChar);
+                                        _state = State.Sharp;
+                                        break;
+
+                                    case LexerMode.StrongIdentifier:
+                                        {
+                                            throw new NotImplementedException();
+                                        }
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                }
                                 break;
 
                             case '$':
-                                buffer = new StringBuilder();
-                                buffer.Append(tmpChar);
-                                _state = State.DollarSign;
+                                switch (_mode)
+                                {
+                                    case LexerMode.Code:
+                                        buffer = new StringBuilder();
+                                        buffer.Append(tmpChar);
+                                        _state = State.DollarSign;
+                                        break;
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                }
                                 break;
 
                             default:
@@ -1430,6 +1473,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                     }
                     break;
+
+                case TokenKind.Gravis:
+                    content = "`";
+                    break;
             }
 
             var result = new Token();
@@ -1465,6 +1512,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             result._items = new Queue<char>(_items);
             result._recoveriesTokens = new Queue<Token>(_recoveriesTokens);
             result._state = _state;
+            result._mode = _mode;
             return result;
         }
 

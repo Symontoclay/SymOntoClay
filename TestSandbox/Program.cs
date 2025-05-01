@@ -167,7 +167,7 @@ namespace TestSandbox
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
             TstParseName();
-            TstCreateName();
+            //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
             //TstBattleRoyaleHandler();//<==
@@ -2177,6 +2177,9 @@ primitive task SomePrimitiveTask4
         private static void TstParseName()
         {
             _logger.Info("60A1C553-B2A4-4973-AF27-326E892B568D", "Begin");
+
+            var handler = new ParseNameHandler();
+            handler.Run();
 
             _logger.Info("6BE61E81-9CB6-4144-A493-3023457F9263", "End");
         }

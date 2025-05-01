@@ -24,11 +24,7 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.NLP;
@@ -38,20 +34,9 @@ using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
-using SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure;
-using SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
-using SymOntoClay.UnityAsset.Core.Internal;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestSandbox.Helpers;
-using TestSandbox.NLP;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
@@ -87,6 +72,12 @@ namespace TestSandbox.Handlers
             _logger.Info("4D933D64-6489-47ED-8CAA-32AABCBC4B78", "Begin");
 
             Case6();
+            //Case5();
+            //Case4();
+            //Case3();
+            //Case2();
+            //Case1();
+            //Case0();
 
             _logger.Info("1C22A861-96A6-46FD-9187-65762CD44423", "End");
         }

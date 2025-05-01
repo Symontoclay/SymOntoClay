@@ -24,6 +24,7 @@ using DictionaryGenerator;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.CLI;
@@ -165,6 +166,7 @@ namespace TestSandbox
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
+            TstParseName();
             TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
@@ -2170,6 +2172,13 @@ primitive task SomePrimitiveTask4
             handler.Run();
 
             _logger.Info("BDD0D69E-5805-4E2F-89DA-7B85012D8F1C", "End");
+        }
+
+        private static void TstParseName()
+        {
+            _logger.Info("60A1C553-B2A4-4973-AF27-326E892B568D", "Begin");
+
+            _logger.Info("6BE61E81-9CB6-4144-A493-3023457F9263", "End");
         }
 
         private static void TstCreateName()

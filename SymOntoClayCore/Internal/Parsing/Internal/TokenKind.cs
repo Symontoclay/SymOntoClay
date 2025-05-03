@@ -119,7 +119,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `:`.
         /// </summary>
         Colon,
-
+        /// <summary>
+        /// Represents symbol `::`.
+        /// </summary>
+        DoubleColon,
         /// <summary>
         /// Represents symbol `;`.
         /// </summary>

@@ -16,7 +16,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("5BF042DE-688A-48D8-8ECD-92233AF6D477", "Begin");
 
-            Case12();
+            Case13();
+            //Case12();
             //Case11();
             //Case10();
             //Case9();
@@ -30,6 +31,22 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("75A8C4DA-0D97-496F-AF78-258D4B8A5043", "End");
+        }
+
+        private void Case13()
+        {
+            var str = "global::Prop1";
+
+            _logger.Info("9900B991-57DD-4963-A2BD-23BC257BA431", $"str = '{str}'");
+
+            var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            Token token = null;
+
+            while ((token = lexer.GetToken()) != null)
+            {
+                _logger.Info("3E42C8BF-FA63-43E5-B58F-4EC15D10B479", $"token = {token}");
+            }
         }
 
         private void Case12()

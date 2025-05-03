@@ -9656,6 +9656,11 @@
             Represents symbol `:`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.DoubleColon">
+            <summary>
+            Represents symbol `::`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Semicolon">
             <summary>
             Represents symbol `;`.

@@ -155,7 +155,31 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 return CreateToken(TokenKind.CloseRoundBracket);
 
                             case ':':
-                                return CreateToken(TokenKind.Colon);
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Info("5F68BCEA-D588-484C-B980-3BF16C46F212", $"nextChar = {nextChar}");
+#endif
+
+                                    switch (nextChar)
+                                    {
+                                        case ':':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.DoubleColon);
+
+                                        case '}':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.CloseFactBracket);
+
+                                        case ']':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.CloseAnnotationBracket);
+
+                                        default:
+                                            return CreateToken(TokenKind.Colon);
+                                    }
+                                }
 
                             case ';':
                                 return CreateToken(TokenKind.Semicolon);
@@ -776,33 +800,35 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     //_logger.Info("11D91A9D-B8B8-4ECF-B70E-C638E9647910", $"nextChar = {nextChar}");
 #endif
 
-                                    if (nextChar == '`')
+                                    switch(nextChar)
                                     {
-                                        _state = State.InIdentifier;
-                                    }
-                                    else
-                                    {
-                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
-                                        {
+                                        case '`':
+                                            _state = State.InIdentifier;
+                                            break;
+
+                                        case '_':
                                             _state = State.InWord;
-                                        }
-                                        else
-                                        {
-                                            if(nextChar == '@')
+                                            break;
+
+                                        case '@':
+                                            _currentPos++;
+                                            buffer.Append(nextChar);
+                                            _items.Dequeue();
+
+                                            _state = State.Init;
+
+                                            return CreateToken(TokenKind.OnceEntityCondition, buffer.ToString());
+
+                                        default:
+                                            if(char.IsLetterOrDigit(nextChar))
                                             {
-                                                _currentPos++;
-                                                buffer.Append(nextChar);
-                                                _items.Dequeue();
-
-                                                _state = State.Init;
-
-                                                return CreateToken(TokenKind.OnceEntityCondition, buffer.ToString());
+                                                _state = State.InWord;
                                             }
                                             else
                                             {
                                                 throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
-                                            }                                            
-                                        }
+                                            }
+                                            break;
                                     }
                                 }
                                 break;
@@ -1523,24 +1549,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.Colon:
-                    {
-                        var nextChar = _items.Peek();
+                    content = ":";
+                    break;
 
-                        switch (nextChar)
-                        {
-                            case '}':
-                                _items.Dequeue();
-                                content = ":}";
-                                kind = TokenKind.CloseFactBracket;
-                                break;
+                case TokenKind.CloseFactBracket:
+                    content = ":}";
+                    break;
 
-                            case ']':
-                                _items.Dequeue();
-                                content = ":]";
-                                kind = TokenKind.CloseAnnotationBracket;
-                                break;
-                        }
-                    }
+                case TokenKind.CloseAnnotationBracket:
+                    content = ":]";
+                    break;
+
+                case TokenKind.DoubleColon:
+                    content = "::";
                     break;
 
                 case TokenKind.Gravis:

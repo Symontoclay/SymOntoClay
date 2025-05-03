@@ -444,7 +444,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                     
                                                 case '|':
                                                     _items.Dequeue();
-                                                    throw new NotImplementedException();
+                                                    return CreateToken(TokenKind.LinguisticVarPrefix);
 
                                                 default:
                                                     return CreateToken(TokenKind.IdentifierPrefix);
@@ -1565,6 +1565,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.RuleOrFactIdentifierPrefix:
                     content = "#^";
+                    break;
+
+                case TokenKind.LinguisticVarPrefix:
+                    content = "#|";
                     break;
             }
 

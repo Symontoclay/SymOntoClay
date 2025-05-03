@@ -202,6 +202,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `#^`.
         /// </summary>
-        RuleOrFactIdentifierPrefix
+        RuleOrFactIdentifierPrefix,
+        /// <summary>
+        /// Represents symbol `#|`.
+        /// </summary>
+        LinguisticVarPrefix
     }
 }

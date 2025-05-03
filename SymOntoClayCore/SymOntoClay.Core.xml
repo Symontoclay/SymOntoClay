@@ -9741,6 +9741,11 @@
             Represents symbol `#^`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LinguisticVarPrefix">
+            <summary>
+            Represents symbol `#|`.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionDurationParser.OnRun">
             <inheritdoc/>
         </member>

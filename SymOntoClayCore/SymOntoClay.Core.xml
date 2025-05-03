@@ -9756,6 +9756,21 @@
             Represents symbol `@`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.SystemVarPrefix">
+            <summary>
+            Represents symbol `@@`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.ChannelVarPrefix">
+            <summary>
+            Represents symbol `@>`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.PropertyPrefix">
+            <summary>
+            Represents symbol `@:`.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionDurationParser.OnRun">
             <inheritdoc/>
         </member>

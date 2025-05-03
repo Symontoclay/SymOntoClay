@@ -389,13 +389,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             switch (nextChar)
                                             {
                                                 case '>':
-                                                    throw new NotImplementedException();
+                                                    _items.Dequeue();
+                                                    return CreateToken(TokenKind.ChannelVarPrefix);
 
                                                 case '@':
-                                                    throw new NotImplementedException();
+                                                    _items.Dequeue();
+                                                    return CreateToken(TokenKind.SystemVarPrefix);
 
                                                 case ':':
-                                                    throw new NotImplementedException();
+                                                    _items.Dequeue();
+                                                    return CreateToken(TokenKind.PropertyPrefix);
 
                                                 default:
                                                     return CreateToken(TokenKind.VarPrefix);
@@ -1574,6 +1577,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.VarPrefix:
                     content = "@";
+                    break;
+
+                case TokenKind.SystemVarPrefix:
+                    content = "@@";
+                    break;
+
+                case TokenKind.ChannelVarPrefix:
+                    content = "@>";
+                    break;
+
+                case TokenKind.PropertyPrefix:
+                    content = "@:";
                     break;
             }
 

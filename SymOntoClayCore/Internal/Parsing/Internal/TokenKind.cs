@@ -214,6 +214,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `@`.
         /// </summary>
-        VarPrefix
+        VarPrefix,
+        /// <summary>
+        /// Represents symbol `@@`.
+        /// </summary>
+        SystemVarPrefix,
+        /// <summary>
+        /// Represents symbol `@>`.
+        /// </summary>
+        ChannelVarPrefix,
+        /// <summary>
+        /// Represents symbol `@:`.
+        /// </summary>
+        PropertyPrefix
     }
 }

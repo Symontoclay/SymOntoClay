@@ -388,8 +388,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                             switch (nextChar)
                                             {
-                                                default:
+                                                case '>':
                                                     throw new NotImplementedException();
+
+                                                case '@':
+                                                    throw new NotImplementedException();
+
+                                                case ':':
+                                                    throw new NotImplementedException();
+
+                                                default:
+                                                    return CreateToken(TokenKind.VarPrefix);
                                             }
                                         }
 
@@ -1561,6 +1570,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.LogicalVarPrefix:
                     content = "$";
+                    break;
+
+                case TokenKind.VarPrefix:
+                    content = "@";
                     break;
             }
 

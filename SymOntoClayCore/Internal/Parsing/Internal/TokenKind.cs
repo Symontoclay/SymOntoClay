@@ -210,6 +210,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `$`.
         /// </summary>
-        LogicalVarPrefix
+        LogicalVarPrefix,
+        /// <summary>
+        /// Represents symbol `@`.
+        /// </summary>
+        VarPrefix
     }
 }

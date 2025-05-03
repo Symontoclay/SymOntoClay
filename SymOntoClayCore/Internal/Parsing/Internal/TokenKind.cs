@@ -198,6 +198,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `##@`.
         /// </summary>
-        OnceResolvedEntityConditionPrefix
+        OnceResolvedEntityConditionPrefix,
+        /// <summary>
+        /// Represents symbol `#^`.
+        /// </summary>
+        RuleOrFactIdentifierPrefix
     }
 }

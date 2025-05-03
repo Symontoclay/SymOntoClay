@@ -16,13 +16,30 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("5BF042DE-688A-48D8-8ECD-92233AF6D477", "Begin");
 
-            Case5();
+            Case6();
+            //Case5();
             //Case4();
             //Case3();
             //Case2();
             //Case1();
 
             _logger.Info("75A8C4DA-0D97-496F-AF78-258D4B8A5043", "End");
+        }
+
+        private void Case6()
+        {
+            var str = "#^`dog`";
+
+            _logger.Info("A8C58289-A166-4FBC-B94F-0ABC6DBFEBDA", $"str = '{str}'");
+
+            var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            Token token = null;
+
+            while ((token = lexer.GetToken()) != null)
+            {
+                _logger.Info("E7C6D716-0E31-49A8-B39B-A9687D567ECE", $"token = {token}");
+            }
         }
 
         private void Case5()

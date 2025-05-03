@@ -423,7 +423,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                                 case '^':
                                                     _items.Dequeue();
-                                                    throw new NotImplementedException();
+                                                    return CreateToken(TokenKind.RuleOrFactIdentifierPrefix);
 
                                                 case '#':
                                                     _items.Dequeue();
@@ -1561,6 +1561,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.OnceResolvedEntityConditionPrefix:
                     content = "##@";
+                    break;
+
+                case TokenKind.RuleOrFactIdentifierPrefix:
+                    content = "#^";
                     break;
             }
 

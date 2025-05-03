@@ -466,19 +466,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         break;
 
                                     case LexerMode.StrongIdentifier:
-                                        {
-                                            var nextChar = _items.Peek();
-
-#if DEBUG
-                                            _logger.Info("FA64319A-F001-490F-9220-33C5BDE4EC41", $"nextChar = {nextChar}");
-#endif
-
-                                            switch (nextChar)
-                                            {
-                                                default:
-                                                    throw new NotImplementedException();
-                                            }
-                                        }
+                                        return CreateToken(TokenKind.LogicalVarPrefix);
 
                                     default:
                                         throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
@@ -1569,6 +1557,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.LinguisticVarPrefix:
                     content = "#|";
+                    break;
+
+                case TokenKind.LogicalVarPrefix:
+                    content = "$";
                     break;
             }
 

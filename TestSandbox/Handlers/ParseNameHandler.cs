@@ -16,7 +16,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("5BF042DE-688A-48D8-8ECD-92233AF6D477", "Begin");
 
-            Case7();
+            Case8();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -25,6 +26,22 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("75A8C4DA-0D97-496F-AF78-258D4B8A5043", "End");
+        }
+
+        private void Case8()
+        {
+            var str = "$`dog`";
+
+            _logger.Info("5FD716CD-6A41-44EA-A40C-FCFFF266BBF3", $"str = '{str}'");
+
+            var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            Token token = null;
+
+            while ((token = lexer.GetToken()) != null)
+            {
+                _logger.Info("315947C3-DFA6-453F-8B29-B793F4B02E9B", $"token = {token}");
+            }
         }
 
         private void Case7()

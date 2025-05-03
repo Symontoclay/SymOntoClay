@@ -206,6 +206,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `#|`.
         /// </summary>
-        LinguisticVarPrefix
+        LinguisticVarPrefix,
+        /// <summary>
+        /// Represents symbol `$`.
+        /// </summary>
+        LogicalVarPrefix
     }
 }

@@ -378,6 +378,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         _state = State.At;
                                         break;
 
+                                    case LexerMode.StrongIdentifier:
+                                        {
+                                            var nextChar = _items.Peek();
+
+#if DEBUG
+                                            _logger.Info("C0BE062A-119E-490C-828F-98E8CD3FB118", $"nextChar = {nextChar}");
+#endif
+
+                                            switch (nextChar)
+                                            {
+                                                default:
+                                                    throw new NotImplementedException();
+                                            }
+                                        }
+
                                     default:
                                         throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
                                 }
@@ -403,7 +418,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             switch(nextChar)
                                             {
                                                 case '@':
-                                                    throw new NotImplementedException();
+                                                    _items.Dequeue();
+                                                    return CreateToken(TokenKind.EntityConditionPrefix);
 
                                                 case '^':
                                                     throw new NotImplementedException();
@@ -417,8 +433,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                 default:
                                                     return CreateToken(TokenKind.IdentifierPrefix);
                                             }
-
-                                            throw new NotImplementedException();
                                         }
 
                                     default:
@@ -434,6 +448,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         buffer.Append(tmpChar);
                                         _state = State.DollarSign;
                                         break;
+
+                                    case LexerMode.StrongIdentifier:
+                                        {
+                                            var nextChar = _items.Peek();
+
+#if DEBUG
+                                            _logger.Info("FA64319A-F001-490F-9220-33C5BDE4EC41", $"nextChar = {nextChar}");
+#endif
+
+                                            switch (nextChar)
+                                            {
+                                                default:
+                                                    throw new NotImplementedException();
+                                            }
+                                        }
 
                                     default:
                                         throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
@@ -1504,6 +1533,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.IdentifierPrefix:
                     content = "#";
+                    break;
+
+                case TokenKind.EntityConditionPrefix:
+                    content = "#@";
                     break;
             }
 

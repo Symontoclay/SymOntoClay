@@ -434,6 +434,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
                                                     switch(nextChar)
                                                     {
+                                                        case '@':
+                                                            _items.Dequeue();
+                                                            return CreateToken(TokenKind.OnceResolvedEntityConditionPrefix);
+
                                                         default:
                                                             return CreateToken(TokenKind.ConceptPrefix);
                                                     }
@@ -1553,6 +1557,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.ConceptPrefix:
                     content = "##";
+                    break;
+
+                case TokenKind.OnceResolvedEntityConditionPrefix:
+                    content = "##@";
                     break;
             }
 

@@ -182,6 +182,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `-∞`.
         /// </summary>
         NegativeInfinity,
-        Gravis
+        Gravis,
+        /// <summary>
+        /// Represents symbol `#`.
+        /// </summary>
+        IdentifierPrefix
     }
 }

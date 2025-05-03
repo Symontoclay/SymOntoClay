@@ -394,6 +394,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     case LexerMode.StrongIdentifier:
                                         {
+                                            var nextChar = _items.Peek();
+
+#if DEBUG
+                                            _logger.Info("5B30C864-E243-434D-92EC-F6EF6A4600EC", $"nextChar = {nextChar}");
+#endif
+
+                                            switch(nextChar)
+                                            {
+                                                case '@':
+                                                    throw new NotImplementedException();
+
+                                                case '^':
+                                                    throw new NotImplementedException();
+
+                                                case '#':
+                                                    throw new NotImplementedException();
+
+                                                case '|':
+                                                    throw new NotImplementedException();
+
+                                                default:
+                                                    return CreateToken(TokenKind.IdentifierPrefix);
+                                            }
+
                                             throw new NotImplementedException();
                                         }
 
@@ -1476,6 +1500,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.Gravis:
                     content = "`";
+                    break;
+
+                case TokenKind.IdentifierPrefix:
+                    content = "#";
                     break;
             }
 

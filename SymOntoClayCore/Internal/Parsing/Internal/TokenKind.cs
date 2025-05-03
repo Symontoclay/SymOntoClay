@@ -190,6 +190,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `#@`.
         /// </summary>
-        EntityConditionPrefix
+        EntityConditionPrefix,
+        /// <summary>
+        /// Represents symbol `##`.
+        /// </summary>
+        ConceptPrefix
     }
 }

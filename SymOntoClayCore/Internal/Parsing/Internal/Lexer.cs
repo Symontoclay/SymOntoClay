@@ -422,12 +422,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                     return CreateToken(TokenKind.EntityConditionPrefix);
 
                                                 case '^':
+                                                    _items.Dequeue();
                                                     throw new NotImplementedException();
 
                                                 case '#':
-                                                    throw new NotImplementedException();
+                                                    _items.Dequeue();
+                                                    nextChar = _items.Peek();
 
+#if DEBUG
+                                                    _logger.Info("6B80E14B-3DED-4812-8FB8-5A9791B39966", $"nextChar = {nextChar}");
+#endif
+                                                    switch(nextChar)
+                                                    {
+                                                        default:
+                                                            return CreateToken(TokenKind.ConceptPrefix);
+                                                    }
+                                                    
                                                 case '|':
+                                                    _items.Dequeue();
                                                     throw new NotImplementedException();
 
                                                 default:
@@ -1537,6 +1549,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.EntityConditionPrefix:
                     content = "#@";
+                    break;
+
+                case TokenKind.ConceptPrefix:
+                    content = "##";
                     break;
             }
 

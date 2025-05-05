@@ -69,7 +69,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             }
         }
 
-        public void Assing(RolesStorageOfSemanticAnalyzer source)
+        public void Assign(RolesStorageOfSemanticAnalyzer source)
         {
             if (source.Count == 0)
             {

@@ -36,11 +36,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : this(context, null)
         {
         }
-
+        
         protected BaseInternalParser(InternalParserContext context, TerminationToken[] terminationTokens)
             : base(context, terminationTokens)
         {
+            _context = context;
         }
+
+        protected readonly InternalParserContext _context;
 
         protected StrongIdentifierValue ParseName(string text)
         {

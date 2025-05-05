@@ -9261,7 +9261,7 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InlineTriggerParser.OnRun">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.InternalParserContext.Count">
+        <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.InternalParserCoreContext.Count">
             <summary>
             Number of remaining characters.
             </summary>
@@ -9539,6 +9539,24 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrategicHtnTaskParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrongIdentifierPart.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrongIdentifierPart.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrongIdentifierPart.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrongIdentifierValueParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrongIdentifierValueParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrongIdentifierValueParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SynonymParser.OnEnter">

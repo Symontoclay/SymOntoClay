@@ -118,6 +118,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Case,
         Primitive,
         Strategic,
-        Tactical
+        Tactical,
+        Global
     }
 }

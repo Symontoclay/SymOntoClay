@@ -22,41 +22,34 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class InternalParserContext : IOnNameChangedCodeItemHandler
+    public class InternalParserContext : InternalParserCoreContext, IOnNameChangedCodeItemHandler
     {
         private InternalParserContext()
         {
         }
         
         public InternalParserContext(string text, CodeFile codeFile, IBaseCoreContext context)
+            : base(text, context.Logger)
         {
             _context = context;
             CodeFile = codeFile;
-            _lexer = new Lexer(text, context.Logger);
         }
 
         public bool NeedCheckDirty { get; set; } = true;
 
-        public IMonitorLogger Logger => _context.Logger;
         public ICompiler Compiler => _context.Compiler;
 
         public CodeFile CodeFile { get; private set; }
 
         private IBaseCoreContext _context;
-        private Lexer _lexer;
-        private Stack<Token> _recoveriesTokens = new Stack<Token>();
 
         private Stack<CodeItem> _codeItems = new Stack<CodeItem>();
 
@@ -165,67 +158,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
-        public Token GetToken()
-        {
-            if (_recoveriesTokens.Count == 0)
-            {
-                return _lexer.GetToken();
-            }
-
-            return _recoveriesTokens.Pop();
-        }
-
-        public void Recovery(Token token)
-        {
-            _recoveriesTokens.Push(token);
-
-        }
-
-        public bool IsEmpty()
-        {
-            var tmpToken = GetToken();
-
-            if (tmpToken == null)
-            {
-                return true;
-            }
-
-            Recovery(tmpToken);
-
-            return false;
-        }
-
-        /// <summary>
-        /// Number of remaining characters.
-        /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _recoveriesTokens.Count + _lexer.Count;
-            }
-        }
-
-        public InternalParserContext Fork()
+        public new InternalParserContext Fork()
         {
             var result = new InternalParserContext();
             result._context = _context;
             result.NeedCheckDirty = NeedCheckDirty;
-            result._lexer = _lexer.Fork();
-            result._recoveriesTokens = new Stack<Token>(_recoveriesTokens.Reverse().ToList());
             result.CodeFile = CodeFile;
             result._codeItems = new Stack<CodeItem>(_codeItems.Select(p => p.CloneCodeItem()).Reverse().ToList());
 
             result._defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>(_defaultSettingsOfCodeEntity.Select(p => p.Clone()).Reverse().ToList());
             result._currentDefaultSettings = result._defaultSettingsOfCodeEntity.Peek();
 
+            Append(result);
+
             return result;
         }
 
-        public void Assing(InternalParserContext context)
+        public void Assign(InternalParserContext context)
         {
-            _lexer.Assing(context._lexer);
-            _recoveriesTokens = new Stack<Token>(context._recoveriesTokens.Reverse());
+            base.Assign(context);
         }
     }
 }

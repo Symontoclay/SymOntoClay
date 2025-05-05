@@ -27,12 +27,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
     public abstract class BaseInternalParserCore : BaseLoggedComponent
     {
-        protected BaseInternalParserCore(InternalParserContext context)
+        protected BaseInternalParserCore(InternalParserCoreContext context)
             : this(context, null)
         {
         }
 
-        protected BaseInternalParserCore(InternalParserContext context, TerminationToken[] terminationTokens)
+        protected BaseInternalParserCore(InternalParserCoreContext context, TerminationToken[] terminationTokens)
             : base(context.Logger)
         {
             _context = context;
@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _hasTerminationTokens = !terminationTokens.IsNullOrEmpty();
         }
 
-        protected readonly InternalParserContext _context;
+        private readonly InternalParserCoreContext _context;
         protected readonly TerminationToken[] _terminationTokens;
         private readonly bool _hasTerminationTokens;
 

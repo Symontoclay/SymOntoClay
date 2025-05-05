@@ -86,8 +86,8 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             }
 
             var verbAndObjectsMixRolesStorage = new RolesStorageOfSemanticAnalyzer();
-            verbAndObjectsMixRolesStorage.Assing(_objectsRolesStorage);
-            verbAndObjectsMixRolesStorage.Assing(_verbsRolesStorage);
+            verbAndObjectsMixRolesStorage.Assign(_objectsRolesStorage);
+            verbAndObjectsMixRolesStorage.Assign(_verbsRolesStorage);
 
             if (_verbFullLogicalMeaning.Contains("event") || _verbFullLogicalMeaning.Contains("state"))
             {
@@ -213,8 +213,8 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var nounPhraseNode = new NounPhraseNodeOfSemanticAnalyzer(Context, nounPhrase);
             var nounResult = nounPhraseNode.Run();
 
-            PrimaryRolesDict.Assing(nounResult.PrimaryRolesDict);
-            _objectsRolesStorage.Assing(nounResult.PrimaryRolesDict);
+            PrimaryRolesDict.Assign(nounResult.PrimaryRolesDict);
+            _objectsRolesStorage.Assign(nounResult.PrimaryRolesDict);
         }
 
         private void ProcessPPAsBaseSentenceItem(BaseSentenceItem sentenceItem, ResultOfNodeOfSemanticAnalyzer result)

@@ -73,6 +73,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.DoubleColon:
+                        case TokenKind.Gravis:
+                        case TokenKind.IdentifierPrefix:
+                        case TokenKind.EntityConditionPrefix:
+                        case TokenKind.ConceptPrefix:
+                        case TokenKind.OnceResolvedEntityConditionPrefix:
+                        case TokenKind.RuleOrFactIdentifierPrefix:
+                        case TokenKind.LinguisticVarPrefix:
+                        case TokenKind.LogicalVarPrefix:
+                        case TokenKind.VarPrefix:
+                        case TokenKind.SystemVarPrefix:
+                        case TokenKind.ChannelVarPrefix:
+                        case TokenKind.PropertyPrefix:
                             {
                                 var item = new StrongIdentifierPart
                                 {

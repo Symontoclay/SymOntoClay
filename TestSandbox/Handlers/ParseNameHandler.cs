@@ -40,7 +40,7 @@ namespace TestSandbox.Handlers
 
             _logger.Info("E47B42AA-7EF4-4F10-A8DB-AAF232414610", $"str = '{str}'");
 
-            var parserContext = new InternalParserCoreContext(str, _logger);
+            var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
 
             var parser = new StrongIdentifierValueParser(parserContext);
             parser.Run();
@@ -61,7 +61,7 @@ namespace TestSandbox.Handlers
 
             _logger.Info("9900B991-57DD-4963-A2BD-23BC257BA431", $"str = '{str}'");
 
-            var parserContext = new InternalParserCoreContext(str, _logger);
+            var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
 
             var parser = new StrongIdentifierValueParser(parserContext);
             parser.Run();

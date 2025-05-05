@@ -10,10 +10,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public InternalParserCoreContext(string text, IMonitorLogger logger)
+        public InternalParserCoreContext(string text, IMonitorLogger logger, LexerMode mode = LexerMode.Code)
         {
             _logger = logger;
-            _lexer = new Lexer(text, logger);
+            _lexer = new Lexer(text, logger, mode);
         }
 
         private readonly IMonitorLogger _logger;

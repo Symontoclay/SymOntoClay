@@ -1,9 +1,11 @@
-﻿using SymOntoClay.Common.DebugHelpers;
+﻿using Newtonsoft.Json;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -49,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 throw new NotImplementedException();
             }
 
-            var result = PostProcess(_items);
+            var result = PostProcessParts(_items);
 
 #if DEBUG
             Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"result = {result}");
@@ -171,10 +173,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _currentItemsList = _itemsListStack.Pop();
         }
 
-        private StrongIdentifierValue PostProcess(List<StrongIdentifierPart> items)
+        private StrongIdentifierValue PostProcessParts(List<StrongIdentifierPart> items)
         {
 #if DEBUG
             Info("9416E080-D9AE-4E49-92F1-E25E7378A110", $"items = {items.WriteListToString()}");
+#endif
+
+            var groupedItems = GroupPartsByDoubleColon(items);
+
+#if DEBUG
+            Info("8297EA2B-34BA-4008-84B1-7CFF9F8A9FE0", $"groupedItems = {JsonConvert.SerializeObject(groupedItems.Select(p => p.WriteListToString()), Formatting.Indented)}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private List<List<StrongIdentifierPart>> GroupPartsByDoubleColon(List<StrongIdentifierPart> items)
+        {
+#if DEBUG
+            Info("FCE78ECE-2AFF-4C8D-A1E5-F4E61D3D4233", $"items = {items.WriteListToString()}");
 #endif
 
             throw new NotImplementedException();

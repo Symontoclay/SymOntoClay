@@ -6,6 +6,7 @@ using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -201,6 +202,95 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Info("EB5C99F1-0BE9-4622-A78D-622B4582049C", $"countOfGroup = {countOfGroup}");
             Info("87FFFF2E-D3E1-49D8-AAD9-66A3B401EE14", $"positionInGroup = {positionInGroup}");
             Info("A04C90F7-95F5-4904-AE6F-AB3685F7030E", $"isRootItem = {isRootItem}");
+#endif
+
+            if(items.Count == 1)
+            {
+                throw new NotImplementedException();
+            }
+
+            var nameValueSb = new StringBuilder();
+            var normalizedNameValueSb = new StringBuilder();
+            var kindOfName = KindOfName.Unknown;
+            var level = StrongIdentifierLevel.None;
+            int? capacity = null;
+
+            var wasWord = false;
+
+            foreach(var item in items)
+            {
+#if DEBUG
+                Info("B556484D-EA3F-4575-B70A-EE5603FC67AC", $"item = {item}");
+#endif
+
+                var tokenKind = item.Token.TokenKind;
+
+                switch (tokenKind)
+                {
+                    case TokenKind.PropertyPrefix:
+                        if(kindOfName == KindOfName.Unknown)
+                        {
+                            if(wasWord)
+                            {
+                                throw new Exception("An identifier prefix can not be placed in the middle of an identifier.");
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.Property;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An identifier prefix is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                    break;
+
+                    case TokenKind.Word:
+                        if(item.Capacity.HasValue)
+                        {
+                            throw new NotImplementedException("7D39B5C1-AACF-4BF0-BD4B-C3DF74F395DA");
+                        }
+
+                        if(item.SubParts.Any())
+                        {
+                            throw new NotImplementedException("E024D5B6-61BB-445C-8D7D-D8A26C1DF735");
+                        }
+
+                        if(wasWord)
+                        {
+                            nameValueSb.Append(" ");
+                            nameValueSb.Append(item.Token.Content);
+                            normalizedNameValueSb.Append(" ");
+                            normalizedNameValueSb.Append(item.Token.Content);
+                        }
+                        else
+                        {
+                            nameValueSb.Append("`");
+                            nameValueSb.Append(item.Token.Content);
+                            normalizedNameValueSb.Append(item.Token.Content);
+                            wasWord = true;
+                        }
+                        break;
+                }
+            }
+
+            if(wasWord)
+            {
+                nameValueSb.Append("`");
+            }
+            else
+            {
+                throw new NotImplementedException("A1C6DE97-419B-40FB-B0D3-D6F132BCBA0E");
+            }
+
+#if DEBUG
+            Info("711C4952-C769-4A7F-B7DB-2287A09C9F1F", $"nameValueSb = {nameValueSb}");
+            Info("0A91B826-A842-4757-8015-8F10297172B2", $"normalizedNameValueSb = {normalizedNameValueSb}");
+            Info("51A42AD0-4B49-4CEF-AE6F-1256697D3766", $"kindOfName = {kindOfName}");
+            Info("53C85862-4A77-4A84-86A9-E4D4FFF10EB9", $"level = {level}");
+            Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
 #endif
 
             throw new NotImplementedException();

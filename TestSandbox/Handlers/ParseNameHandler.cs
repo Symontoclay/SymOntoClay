@@ -1,6 +1,9 @@
-﻿using SymOntoClay.Core.Internal.Parsing.Internal;
+﻿using Newtonsoft.Json.Linq;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TestSandbox.Handlers
 {
@@ -20,6 +23,7 @@ namespace TestSandbox.Handlers
             //Case14();
             //Case13();
             Case12();
+            //Case12_a();
             //Case11();
             //Case10();
             //Case9();
@@ -100,9 +104,13 @@ namespace TestSandbox.Handlers
 
         private void Case12()
         {
-            var str = "@:`dog`";
+            var str = "@:`small`";
 
             _logger.Info("00BFEA04-11BC-4D7D-A734-67F00DBF274C", $"str = '{str}'");
+
+            var oldIdentifier = NameHelper.CreateName(str);
+
+            _logger.Info("CF1AFD01-3EB5-4FA0-AA6F-8660BDD03C7B", $"oldIdentifier = {oldIdentifier}");
 
             var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
 
@@ -116,6 +124,31 @@ namespace TestSandbox.Handlers
             //while ((token = lexer.GetToken()) != null)
             //{
             //    _logger.Info("F06803C2-0BA4-4786-BC40-D65B88194898", $"token = {token}");
+            //}
+        }
+
+        private void Case12_a()
+        {
+            var str = "@:`small dog`";
+
+            _logger.Info("F89FDC9A-422F-488B-9B12-4217050718C0", $"str = '{str}'");
+
+            var oldIdentifier = NameHelper.CreateName(str);
+
+            _logger.Info("9B0C0273-477C-4013-9570-634012B18B57", $"oldIdentifier = {oldIdentifier}");
+
+            var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
+
+            var parser = new StrongIdentifierValueParser(parserContext);
+            parser.Run();
+
+            //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            //Token token = null;
+
+            //while ((token = lexer.GetToken()) != null)
+            //{
+            //    _logger.Info("6B4D33BA-4A82-45FE-ABC1-B87F6DAE21EF", $"token = {token}");
             //}
         }
 

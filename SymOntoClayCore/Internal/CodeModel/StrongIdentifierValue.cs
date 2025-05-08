@@ -29,6 +29,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -40,6 +41,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.StrongIdentifierValue;
+
+        /// <inheritdoc/>
+        public override bool IsStrongIdentifierValue => true;
+
+        /// <inheritdoc/>
+        public override StrongIdentifierValue AsStrongIdentifierValue => this;
 
         public bool IsEmpty { get; set; } = true;
 
@@ -55,11 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public StrongIdentifierLevel Level { get; set; } = StrongIdentifierLevel.None;
 
-        /// <inheritdoc/>
-        public override bool IsStrongIdentifierValue => true;
-
-        /// <inheritdoc/>
-        public override StrongIdentifierValue AsStrongIdentifierValue => this;
+        public List<StrongIdentifierValue> Namespaces { get; set; } = new List<StrongIdentifierValue>();
 
         private List<StrongIdentifierValue> _builtInSuperTypes;
 
@@ -234,6 +237,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.IsArray = IsArray;
             result.Capacity = Capacity;
             result.Level = Level;
+            result.Namespaces = Namespaces?.Select(p => p.Clone(context))?.ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -263,6 +267,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
 
+            sb.PrintObjListProp(n, nameof(Namespaces), Namespaces);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -284,6 +290,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
 
+            sb.PrintShortObjListProp(n, nameof(Namespaces), Namespaces);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -304,6 +312,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
 
             sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
+
+            sb.PrintBriefObjListProp(n, nameof(Namespaces), Namespaces);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -337,6 +347,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
+            if(Namespaces.Any())
+            {
+                throw new NotImplementedException("ECB9B7CE-105E-4949-89CA-D48AB78B3526");
+            }
+
             var sb = new StringBuilder(NameValue);
 
             if (IsArray)

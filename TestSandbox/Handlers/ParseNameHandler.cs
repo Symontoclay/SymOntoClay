@@ -16,10 +16,10 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("5BF042DE-688A-48D8-8ECD-92233AF6D477", "Begin");
 
-            Case15();
+            //Case15();
             //Case14();
             //Case13();
-            //Case12();
+            Case12();
             //Case11();
             //Case10();
             //Case9();
@@ -104,14 +104,19 @@ namespace TestSandbox.Handlers
 
             _logger.Info("00BFEA04-11BC-4D7D-A734-67F00DBF274C", $"str = '{str}'");
 
-            var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+            var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
 
-            Token token = null;
+            var parser = new StrongIdentifierValueParser(parserContext);
+            parser.Run();
 
-            while ((token = lexer.GetToken()) != null)
-            {
-                _logger.Info("F06803C2-0BA4-4786-BC40-D65B88194898", $"token = {token}");
-            }
+            //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            //Token token = null;
+
+            //while ((token = lexer.GetToken()) != null)
+            //{
+            //    _logger.Info("F06803C2-0BA4-4786-BC40-D65B88194898", $"token = {token}");
+            //}
         }
 
         private void Case11()

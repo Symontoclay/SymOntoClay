@@ -48,10 +48,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_currentItemsList != _items)
             {
-                throw new NotImplementedException();
+                throw new Exception($"9BA9A4D2-2A42-446D-BC57-2AE6A720952A: Invalid sting. Please check closing brackets.");
             }
 
-            var result = PostProcessParts(_items);
+            var result = PostProcessParts(_items, true);
 
 #if DEBUG
             Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"result = {result}");
@@ -173,9 +173,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _currentItemsList = _itemsListStack.Pop();
         }
 
-        private StrongIdentifierValue PostProcessParts(List<StrongIdentifierPart> items)
+        private StrongIdentifierValue PostProcessParts(List<StrongIdentifierPart> items, bool isRootItem)
         {
 #if DEBUG
+            Info("8BEF1C26-16E1-456F-BB81-AA54ABAE63D5", $"isRootItem = {isRootItem}");
             Info("9416E080-D9AE-4E49-92F1-E25E7378A110", $"items = {items.WriteListToString()}");
 #endif
 
@@ -183,6 +184,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
 #if DEBUG
             Info("8297EA2B-34BA-4008-84B1-7CFF9F8A9FE0", $"groupedItems = {JsonConvert.SerializeObject(groupedItems, Formatting.Indented)}");
+#endif
+
+            if(groupedItems.Count == 1)
+            {
+                return BuildStrongIdentifierValue(groupedItems.Single(), 1, 1, isRootItem);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private StrongIdentifierValue BuildStrongIdentifierValue(List<StrongIdentifierPart> items, int countOfGroup, int positionInGroup, bool isRootItem)
+        {
+#if DEBUG
+            Info("E5B5F691-BF07-4176-A2B7-73BD6037BD2D", $"items = {items.WriteListToString()}");
+            Info("EB5C99F1-0BE9-4622-A78D-622B4582049C", $"countOfGroup = {countOfGroup}");
+            Info("87FFFF2E-D3E1-49D8-AAD9-66A3B401EE14", $"positionInGroup = {positionInGroup}");
+            Info("A04C90F7-95F5-4904-AE6F-AB3685F7030E", $"isRootItem = {isRootItem}");
 #endif
 
             throw new NotImplementedException();
@@ -204,14 +222,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 //Info("03D2A14F-E8B2-46F0-B9C8-6B12881E019C", $"item = {item}");
 #endif
 
-                if(item.Token.TokenKind == TokenKind.DoubleColon)
+                var tokenKind = item.Token.TokenKind;
+
+                switch (tokenKind)
                 {
-                    result.Add(setOfParts);
-                    setOfParts = new List<StrongIdentifierPart>();
-                }
-                else
-                {
-                    setOfParts.Add(item);
+                    case TokenKind.DoubleColon:
+                        result.Add(setOfParts);
+                        setOfParts = new List<StrongIdentifierPart>();
+                        break;
+
+                    case TokenKind.Gravis:
+                        break;
+
+                    default:
+                        setOfParts.Add(item);
+                        break;
                 }
             }
 

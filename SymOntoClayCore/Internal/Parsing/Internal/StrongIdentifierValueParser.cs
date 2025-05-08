@@ -29,6 +29,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private StrongIdentifierPart _currentItem;
         private Stack<List<StrongIdentifierPart>> _itemsListStack = new Stack<List<StrongIdentifierPart>>();
 
+        public StrongIdentifierValue Result { get; private set; }
+
         /// <inheritdoc/>
         protected override void OnEnter()
         {
@@ -52,10 +54,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 throw new Exception($"9BA9A4D2-2A42-446D-BC57-2AE6A720952A: Invalid sting. Please check closing brackets.");
             }
 
-            var result = PostProcessParts(_items, true);
+            Result = PostProcessParts(_items, true);
 
 #if DEBUG
-            Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"result = {result}");
+            Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"Result = {Result}");
 #endif
         }
 
@@ -293,7 +295,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
 #endif
 
-            throw new NotImplementedException();
+            var result = new StrongIdentifierValue
+            {
+                NameValue = nameValueSb.ToString(),
+                NormalizedNameValue = normalizedNameValueSb.ToString(),
+                KindOfName = kindOfName,
+                Level = level,
+                Capacity = capacity
+            };
+
+            result.CheckDirty();
+
+            return result;
         }
 
         private List<List<StrongIdentifierPart>> GroupPartsByDoubleColon(List<StrongIdentifierPart> items)

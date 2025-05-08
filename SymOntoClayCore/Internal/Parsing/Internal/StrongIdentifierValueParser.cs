@@ -48,6 +48,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 throw new NotImplementedException();
             }
+
+            var result = PostProcess(_items);
+
+#if DEBUG
+            Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"result = {result}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -163,6 +169,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void StopParsingSubParts()
         {
             _currentItemsList = _itemsListStack.Pop();
+        }
+
+        private StrongIdentifierValue PostProcess(List<StrongIdentifierPart> items)
+        {
+#if DEBUG
+            Info("9416E080-D9AE-4E49-92F1-E25E7378A110", $"items = {items.WriteListToString()}");
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

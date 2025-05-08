@@ -182,7 +182,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var groupedItems = GroupPartsByDoubleColon(items);
 
 #if DEBUG
-            Info("8297EA2B-34BA-4008-84B1-7CFF9F8A9FE0", $"groupedItems = {JsonConvert.SerializeObject(groupedItems.Select(p => p.WriteListToString()), Formatting.Indented)}");
+            Info("8297EA2B-34BA-4008-84B1-7CFF9F8A9FE0", $"groupedItems = {JsonConvert.SerializeObject(groupedItems, Formatting.Indented)}");
 #endif
 
             throw new NotImplementedException();
@@ -191,10 +191,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private List<List<StrongIdentifierPart>> GroupPartsByDoubleColon(List<StrongIdentifierPart> items)
         {
 #if DEBUG
-            Info("FCE78ECE-2AFF-4C8D-A1E5-F4E61D3D4233", $"items = {items.WriteListToString()}");
+            //Info("FCE78ECE-2AFF-4C8D-A1E5-F4E61D3D4233", $"items = {items.WriteListToString()}");
 #endif
 
-            throw new NotImplementedException();
+            var result = new List<List<StrongIdentifierPart>>();
+
+            var setOfParts = new List<StrongIdentifierPart>();
+
+            foreach (var item in items)
+            {
+#if DEBUG
+                //Info("03D2A14F-E8B2-46F0-B9C8-6B12881E019C", $"item = {item}");
+#endif
+
+                if(item.Token.TokenKind == TokenKind.DoubleColon)
+                {
+                    result.Add(setOfParts);
+                    setOfParts = new List<StrongIdentifierPart>();
+                }
+                else
+                {
+                    setOfParts.Add(item);
+                }
+            }
+
+            result.Add(setOfParts);
+
+            return result;
         }
     }
 }

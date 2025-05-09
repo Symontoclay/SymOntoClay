@@ -194,6 +194,56 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 return BuildStrongIdentifierValue(groupedItems.Single(), 1, 1, isRootItem);
             }
 
+            var initialCount = groupedItems.Count;
+
+            var level = StrongIdentifierLevel.None;
+
+            var firstGroupedItem = groupedItems.First();
+
+#if DEBUG
+            Info("7D565976-1184-4052-A475-4C4C4055155A", $"firstGroupedItem = {firstGroupedItem.WriteListToString()}");
+#endif
+
+            if(firstGroupedItem.Count == 1)
+            {
+                var singleItem = firstGroupedItem.Single();
+
+#if DEBUG
+                Info("61B2CCCE-3E3D-4DD4-B17B-8E78C9EA6B21", $"singleItem = {singleItem}");
+#endif
+
+                if(singleItem.StrongIdentifierLevel != StrongIdentifierLevel.None)
+                {
+                    level = singleItem.StrongIdentifierLevel;
+                    groupedItems.Remove(firstGroupedItem);
+                }
+            }
+
+#if DEBUG
+            Info("39AEC91C-1D82-4162-AEF0-55429807CF5E", $"level = {level}");
+#endif
+
+            var lastGroupedItem = groupedItems.Last();
+
+#if DEBUG
+            Info("179C398C-CD91-4D50-9608-23C798150C3B", $"lastGroupedItem = {lastGroupedItem.WriteListToString()}");
+#endif
+
+            groupedItems.Remove(lastGroupedItem);
+
+            var result = BuildStrongIdentifierValue(lastGroupedItem, initialCount, initialCount - 1, isRootItem);
+
+#if DEBUG
+            Info("5F303670-5F25-4438-ACF8-E74463E762F8", $"result = {result}");
+#endif
+
+            foreach (var groupedItem in groupedItems)
+            {
+#if DEBUG
+                Info("4D7769DD-88C4-4711-A892-CF9C98C8B19F", $"groupedItem = {groupedItem.WriteListToString()}");
+#endif
+            }
+
             throw new NotImplementedException();
         }
 
@@ -208,7 +258,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(items.Count == 1)
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
             }
 
             var nameValueSb = new StringBuilder();

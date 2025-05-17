@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 Info("61B2CCCE-3E3D-4DD4-B17B-8E78C9EA6B21", $"singleItem = {singleItem}");
 #endif
 
-                if(singleItem.StrongIdentifierLevel != StrongIdentifierLevel.None)
+                if(singleItem.StrongIdentifierLevel != StrongIdentifierLevel.None && singleItem.SubParts.Count == 0)
                 {
                     level = singleItem.StrongIdentifierLevel;
                     groupedItems.Remove(firstGroupedItem);
@@ -237,11 +237,32 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Info("5F303670-5F25-4438-ACF8-E74463E762F8", $"result = {result}");
 #endif
 
-            foreach (var groupedItem in groupedItems)
+            if(groupedItems.Any())
             {
+                var subItems = new List<StrongIdentifierValue>();
+
+                foreach (var groupedItem in groupedItems)
+                {
 #if DEBUG
-                Info("4D7769DD-88C4-4711-A892-CF9C98C8B19F", $"groupedItem = {groupedItem.WriteListToString()}");
+                    Info("4D7769DD-88C4-4711-A892-CF9C98C8B19F", $"groupedItem = {groupedItem.WriteListToString()}");
 #endif
+
+                    var subItem = BuildStrongIdentifierValue(groupedItem, -1, -1, false);
+
+#if DEBUG
+                    Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
+#endif
+
+                    subItems.Add(subItem);
+                }
+
+#if DEBUG
+                Info("AB559700-C03E-4244-8156-90D80DC82D0E", $"subItems = {subItems.WriteListToString()}");
+#endif
+
+                result.Namespaces.AddRange(subItems);
+
+                //throw new NotImplementedException("E024D5B6-61BB-445C-8D7D-D8A26C1DF735");
             }
 
             return result;
@@ -308,7 +329,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         if(item.SubParts.Any())
                         {
-                            throw new NotImplementedException("E024D5B6-61BB-445C-8D7D-D8A26C1DF735");
+                            subItem = BuildStrongIdentifierValue(item.SubParts, -1, -1, false);
+
+#if DEBUG
+                            Info("411FD458-B5B5-4383-A478-0C14A71828C9", $"subItem = {subItem}");
+#endif
                         }
 
                         if(wasWord)
@@ -354,6 +379,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 Level = level,
                 Capacity = capacity
             };
+
+            if(subItem != null)
+            {
+                result.Namespaces.Add(subItem);
+            }
 
             result.CheckDirty();
 

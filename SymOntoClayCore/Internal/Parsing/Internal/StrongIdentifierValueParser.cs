@@ -266,6 +266,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var kindOfName = KindOfName.CommonConcept;
             var level = StrongIdentifierLevel.None;
             int? capacity = null;
+            StrongIdentifierValue subItem = null;
 
             var wasWord = false;
 

@@ -244,7 +244,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
             }
 
-            throw new NotImplementedException();
+            return result;
         }
 
         private StrongIdentifierValue BuildStrongIdentifierValue(List<StrongIdentifierPart> items, int countOfGroup, int positionInGroup, bool isRootItem)
@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var nameValueSb = new StringBuilder();
             var normalizedNameValueSb = new StringBuilder();
-            var kindOfName = KindOfName.Unknown;
+            var kindOfName = KindOfName.CommonConcept;
             var level = StrongIdentifierLevel.None;
             int? capacity = null;
 

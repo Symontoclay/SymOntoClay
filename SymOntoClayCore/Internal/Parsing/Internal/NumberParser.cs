@@ -68,6 +68,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+
+
             switch (_state)
             {
                 case State.Init:

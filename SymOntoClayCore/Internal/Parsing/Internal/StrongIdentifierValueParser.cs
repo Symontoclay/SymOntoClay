@@ -139,10 +139,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = NumberParser.CreateFromInternalParserCoreContext(CoreContext);
                                 parser.Run();
 
+                                _currentItem.Capacity = Convert.ToInt32(parser.Result.GetSystemValue());
+
 #if DEBUG
                                 Info("58C32FFC-C0D0-4204-ADF7-B676CF226A8B", $"parser.Result = {parser.Result}");
+                                Info("55FB64C7-3548-4C61-BAE9-2BBF0CB9540A", $"_currentItem = {_currentItem}");
 #endif
                             }
+                            break;
+
+                        case TokenKind.CloseSquareBracket:
+#if DEBUG
+                            Info("C0E6914E-5582-49D5-B481-D9E8D0F8B14E", $"_currentItem = {_currentItem}");
+#endif
+
+                            if(!_currentItem.Capacity.HasValue)
+                            {
+                                throw new NotImplementedException();
+                            }
+
+                            _state = State.Init;
                             break;
 
                         default:
@@ -349,7 +365,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     case TokenKind.Word:
                         if(item.Capacity.HasValue)
                         {
-                            throw new NotImplementedException("7D39B5C1-AACF-4BF0-BD4B-C3DF74F395DA");
+                            capacity = item.Capacity.Value;
                         }
 
                         if(item.SubParts.Any())
@@ -386,6 +402,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             else
             {
                 throw new NotImplementedException("A1C6DE97-419B-40FB-B0D3-D6F132BCBA0E");
+            }
+
+            if (isRootItem && !capacity.HasValue)
+            {
+                capacity = 1;
             }
 
 #if DEBUG

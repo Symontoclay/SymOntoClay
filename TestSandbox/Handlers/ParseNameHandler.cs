@@ -51,6 +51,11 @@ namespace TestSandbox.Handlers
             var parser = new StrongIdentifierValueParser(parserContext);
             parser.Run();
 
+            var result = parser.Result;
+
+            _logger.Info("0B9D7CE5-265C-401E-8237-AFECFDE73D11", $"result = {result}");
+            _logger.Info("D9B8B4B6-D4F7-4065-BD29-732AF846E299", $"result = {result.ToHumanizedLabel()}");
+
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
             //Token token = null;

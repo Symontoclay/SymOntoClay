@@ -423,7 +423,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 NormalizedNameValue = normalizedNameValueSb.ToString(),
                 KindOfName = kindOfName,
                 Level = level,
-                Capacity = capacity
+                Capacity = capacity,
+                IsArray = capacity.HasValue && capacity.Value > 1
             };
 
             if(subItem != null)

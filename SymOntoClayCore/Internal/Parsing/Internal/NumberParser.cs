@@ -40,6 +40,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotFractionPart
         }
 
+        public static NumberParser CreateFromInternalParserCoreContext(InternalParserCoreContext context)
+        {
+            var targetContext = new InternalParserContext(context);
+
+            return new NumberParser(targetContext);
+        }
+
         public NumberParser(InternalParserContext context, bool createLogicalValue = false)
             : base(context)
         {

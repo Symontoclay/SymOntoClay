@@ -25,8 +25,10 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Monitor.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -35,7 +37,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private InternalParserContext()
         {
         }
-        
+
+        public InternalParserContext(InternalParserCoreContext context)
+            : base(context, context.Logger)
+        {
+        }
+
         public InternalParserContext(string text, CodeFile codeFile, IBaseCoreContext context)
             : base(text, context.Logger)
         {

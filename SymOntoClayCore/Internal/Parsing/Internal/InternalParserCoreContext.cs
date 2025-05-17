@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Monitor.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +9,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         protected InternalParserCoreContext()
         {
+        }
+
+        public InternalParserCoreContext(InternalParserCoreContext source, IMonitorLogger logger)
+        {
+            throw new NotImplementedException();
         }
 
         public InternalParserCoreContext(string text, IMonitorLogger logger, LexerMode mode = LexerMode.Code)

@@ -14,7 +14,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            InCapacity
         }
 
         public StrongIdentifierValueParser(InternalParserCoreContext context)
@@ -118,6 +119,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.CloseRoundBracket:
                             StopParsingSubParts();
+                            break;
+
+                        case TokenKind.OpenSquareBracket:
+                            _state = State.InCapacity;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.InCapacity:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Number:
+                            {
+                                CoreContext.Recovery(_currToken);
+                                var parser = NumberParser.CreateFromInternalParserCoreContext(CoreContext);
+                                parser.Run();
+
+#if DEBUG
+                                Info("58C32FFC-C0D0-4204-ADF7-B676CF226A8B", $"parser.Result = {parser.Result}");
+#endif
+                            }
                             break;
 
                         default:

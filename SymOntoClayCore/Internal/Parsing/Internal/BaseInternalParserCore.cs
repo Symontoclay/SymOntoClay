@@ -41,6 +41,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private readonly InternalParserCoreContext _context;
+
+        protected InternalParserCoreContext CoreContext => _context;
+
         protected readonly TerminationToken[] _terminationTokens;
         private readonly bool _hasTerminationTokens;
 

@@ -13,6 +13,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         public StrongIdentifierLevel StrongIdentifierLevel { get; set; } = StrongIdentifierLevel.None;
         public List<StrongIdentifierPart> SubParts { get; set; } = new List<StrongIdentifierPart>();
         public int? Capacity { get; set; }
+        public bool HasInfiniteCapacity { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             sb.AppendLine($"{spaces}{nameof(StrongIdentifierLevel)} = {StrongIdentifierLevel}");
             sb.PrintObjListProp(n, nameof(SubParts), SubParts);
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
-            //sb.AppendLine($"{spaces}{nameof(Content)} = {Content}");
+            sb.AppendLine($"{spaces}{nameof(HasInfiniteCapacity)} = {HasInfiniteCapacity}");
             //sb.AppendLine($"{spaces}{nameof(Pos)} = {Pos}");
             //sb.AppendLine($"{spaces}{nameof(Line)} = {Line}");
             return sb.ToString();

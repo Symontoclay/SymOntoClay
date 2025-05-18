@@ -155,7 +155,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                             if(!_currentItem.Capacity.HasValue)
                             {
-                                throw new NotImplementedException();
+                                _currentItem.HasInfiniteCapacity = true;
                             }
 
                             _state = State.Init;
@@ -328,6 +328,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var kindOfName = KindOfName.CommonConcept;
             var level = StrongIdentifierLevel.None;
             int? capacity = null;
+            var hasInfiniteCapacity = false;
             StrongIdentifierValue subItem = null;
 
             var wasWord = false;
@@ -367,8 +368,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             capacity = item.Capacity.Value;
                         }
+                        else
+                        {
+                            if(item.HasInfiniteCapacity)
+                            {
+                                hasInfiniteCapacity = true;
+                            }
+                        }
 
-                        if(item.SubParts.Any())
+                        if (item.SubParts.Any())
                         {
                             subItem = BuildStrongIdentifierValue(item.SubParts, -1, -1, false);
 
@@ -404,7 +412,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 throw new NotImplementedException("A1C6DE97-419B-40FB-B0D3-D6F132BCBA0E");
             }
 
-            if (isRootItem && !capacity.HasValue)
+            if (isRootItem && !capacity.HasValue && !hasInfiniteCapacity)
             {
                 capacity = 1;
             }
@@ -415,6 +423,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Info("51A42AD0-4B49-4CEF-AE6F-1256697D3766", $"kindOfName = {kindOfName}");
             Info("53C85862-4A77-4A84-86A9-E4D4FFF10EB9", $"level = {level}");
             Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
+            Info("39D5DFC1-7E0E-4E56-9255-2A3C137CD69A", $"hasInfiniteCapacity = {hasInfiniteCapacity}");
 #endif
 
             var result = new StrongIdentifierValue
@@ -424,7 +433,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 KindOfName = kindOfName,
                 Level = level,
                 Capacity = capacity,
-                IsArray = capacity.HasValue && capacity.Value > 1
+                HasInfiniteCapacity = hasInfiniteCapacity,
+                IsArray = (capacity.HasValue && capacity.Value > 1) || hasInfiniteCapacity
             };
 
             if(subItem != null)

@@ -59,6 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool IsArray { get; set; }
         public int? Capacity { get; set; }
+        public bool HasInfiniteCapacity { get; set; }
 
         public StrongIdentifierLevel Level { get; set; } = StrongIdentifierLevel.None;
 
@@ -111,6 +112,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             if (Capacity != other.Capacity)
+            {
+                return false;
+            }
+
+            if(HasInfiniteCapacity != other.HasInfiniteCapacity)
             {
                 return false;
             }
@@ -236,6 +242,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.NormalizedNameValue = NormalizedNameValue;
             result.IsArray = IsArray;
             result.Capacity = Capacity;
+            result.HasInfiniteCapacity = HasInfiniteCapacity;
             result.Level = Level;
             result.Namespaces = Namespaces?.Select(p => p.Clone(context))?.ToList();
 
@@ -264,6 +271,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
+            sb.AppendLine($"{spaces}{nameof(HasInfiniteCapacity)} = {HasInfiniteCapacity}");
 
             sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
 
@@ -287,6 +295,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
+            sb.AppendLine($"{spaces}{nameof(HasInfiniteCapacity)} = {HasInfiniteCapacity}");
 
             sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
 
@@ -310,6 +319,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
+            sb.AppendLine($"{spaces}{nameof(HasInfiniteCapacity)} = {HasInfiniteCapacity}");
 
             sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
 

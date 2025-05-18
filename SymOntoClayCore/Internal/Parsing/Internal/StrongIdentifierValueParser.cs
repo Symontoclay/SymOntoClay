@@ -134,6 +134,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Number:
+                            if(_currentItem.HasInfiniteCapacity || _currentItem.Capacity.HasValue)
+                            {
+                                throw new UnexpectedTokenException(_currToken);
+                            }
+                            else
                             {
                                 CoreContext.Recovery(_currToken);
                                 var parser = NumberParser.CreateFromInternalParserCoreContext(CoreContext);
@@ -146,6 +151,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Info("55FB64C7-3548-4C61-BAE9-2BBF0CB9540A", $"_currentItem = {_currentItem}");
 #endif
                             }
+                            break;
+
+                        case TokenKind.Multiplication:
+                            if(_currentItem.HasInfiniteCapacity || _currentItem.Capacity.HasValue)
+                            {
+                                throw new UnexpectedTokenException(_currToken);
+                            }
+                            else
+                            {
+                                _currentItem.HasInfiniteCapacity = true;
+                            }                                
                             break;
 
                         case TokenKind.CloseSquareBracket:

@@ -19,7 +19,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("5BF042DE-688A-48D8-8ECD-92233AF6D477", "Begin");
 
-            Case17();
+            Case18();
+            //Case17();
             //Case16();
             //Case15();
             //Case14();
@@ -39,6 +40,32 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("75A8C4DA-0D97-496F-AF78-258D4B8A5043", "End");
+        }
+
+        private void Case18()
+        {
+            var str = "number[*]";
+
+            _logger.Info("2408E45E-6E97-4FC3-8683-89EFC3FC4C59", $"str = '{str}'");
+
+            var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
+
+            var parser = new StrongIdentifierValueParser(parserContext);
+            parser.Run();
+
+            var result = parser.Result;
+
+            _logger.Info("94B50052-56AE-4F7C-B359-2796455AA64B", $"result = {result}");
+            _logger.Info("DDC6F23F-A54A-460C-9CF6-42BCBD920ADA", $"result = {result.ToHumanizedLabel()}");
+
+            //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            //Token token = null;
+
+            //while ((token = lexer.GetToken()) != null)
+            //{
+            //    _logger.Info("2F410076-8A01-4B50-A836-0554D74CFA81", $"token = {token}");
+            //}
         }
 
         private void Case17()

@@ -357,17 +357,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            if(Namespaces.Any())
+            var sb = new StringBuilder();
+
+            switch(Level)
             {
-                throw new NotImplementedException("ECB9B7CE-105E-4949-89CA-D48AB78B3526");
+                case StrongIdentifierLevel.None:
+                    break;
+
+                case StrongIdentifierLevel.Global:
+                    sb.Append("global::");
+                    break;
+
+                case StrongIdentifierLevel.Root:
+                    sb.Append("root::");
+                    break;
+
+                case StrongIdentifierLevel.Strategic:
+                    sb.Append("strategic::");
+                    break;
+
+                case StrongIdentifierLevel.Tactical:
+                    sb.Append("tactical::");
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Level), Level, null);
             }
 
-            if(Level != StrongIdentifierLevel.None)
-            {
-                throw new NotImplementedException("28EADA34-0FF0-43DE-B519-24C7E66257C2");
-            }
-
-            var sb = new StringBuilder(NameValue);
+            sb.Append(NameValue);
 
             if (IsArray)
             {
@@ -384,7 +401,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 sb.Append("]");
             }
-            
+
+            if (Namespaces.Any())
+            {
+                throw new NotImplementedException("ECB9B7CE-105E-4949-89CA-D48AB78B3526");
+            }
+
             return sb.ToString();
         }
 

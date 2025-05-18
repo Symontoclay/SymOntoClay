@@ -250,7 +250,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(groupedItems.Count == 1)
             {
-                return BuildStrongIdentifierValue(groupedItems.Single(), isRootItem);
+                return BuildStrongIdentifierValue(groupedItems.Single(), StrongIdentifierLevel.None, isRootItem);
             }
 
             var level = StrongIdentifierLevel.None;
@@ -288,7 +288,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             groupedItems.Remove(lastGroupedItem);
 
-            var result = BuildStrongIdentifierValue(lastGroupedItem, isRootItem);
+            var result = BuildStrongIdentifierValue(lastGroupedItem, level, isRootItem);
 
 #if DEBUG
             Info("5F303670-5F25-4438-ACF8-E74463E762F8", $"result = {result}");
@@ -304,7 +304,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     Info("4D7769DD-88C4-4711-A892-CF9C98C8B19F", $"groupedItem = {groupedItem.WriteListToString()}");
 #endif
 
-                    var subItem = BuildStrongIdentifierValue(groupedItem, false);
+                    var subItem = BuildStrongIdentifierValue(groupedItem, StrongIdentifierLevel.None, false);
 
 #if DEBUG
                     Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
@@ -325,7 +325,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
-        private StrongIdentifierValue BuildStrongIdentifierValue(List<StrongIdentifierPart> items, bool isRootItem)
+        private StrongIdentifierValue BuildStrongIdentifierValue(List<StrongIdentifierPart> items, StrongIdentifierLevel level, bool isRootItem)
         {
 #if DEBUG
             Info("E5B5F691-BF07-4176-A2B7-73BD6037BD2D", $"items = {items.WriteListToString()}");
@@ -335,7 +335,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nameValueSb = new StringBuilder();
             var normalizedNameValueSb = new StringBuilder();
             var kindOfName = KindOfName.CommonConcept;
-            var level = StrongIdentifierLevel.None;
             int? capacity = null;
             var hasInfiniteCapacity = false;
             StrongIdentifierValue subItem = null;
@@ -387,7 +386,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         if (item.SubParts.Any())
                         {
-                            subItem = BuildStrongIdentifierValue(item.SubParts, false);
+                            subItem = BuildStrongIdentifierValue(item.SubParts, StrongIdentifierLevel.None, false);
 
 #if DEBUG
                             Info("411FD458-B5B5-4383-A478-0C14A71828C9", $"subItem = {subItem}");

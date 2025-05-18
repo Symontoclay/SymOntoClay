@@ -362,6 +362,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 throw new NotImplementedException("ECB9B7CE-105E-4949-89CA-D48AB78B3526");
             }
 
+            if(Level != StrongIdentifierLevel.None)
+            {
+                throw new NotImplementedException("28EADA34-0FF0-43DE-B519-24C7E66257C2");
+            }
+
             var sb = new StringBuilder(NameValue);
 
             if (IsArray)

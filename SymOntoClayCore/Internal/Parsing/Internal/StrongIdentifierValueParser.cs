@@ -250,10 +250,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(groupedItems.Count == 1)
             {
-                return BuildStrongIdentifierValue(groupedItems.Single(), 1, 1, isRootItem);
+                return BuildStrongIdentifierValue(groupedItems.Single(), isRootItem);
             }
-
-            var initialCount = groupedItems.Count;
 
             var level = StrongIdentifierLevel.None;
 
@@ -290,7 +288,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             groupedItems.Remove(lastGroupedItem);
 
-            var result = BuildStrongIdentifierValue(lastGroupedItem, initialCount, initialCount - 1, isRootItem);
+            var result = BuildStrongIdentifierValue(lastGroupedItem, isRootItem);
 
 #if DEBUG
             Info("5F303670-5F25-4438-ACF8-E74463E762F8", $"result = {result}");
@@ -306,7 +304,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     Info("4D7769DD-88C4-4711-A892-CF9C98C8B19F", $"groupedItem = {groupedItem.WriteListToString()}");
 #endif
 
-                    var subItem = BuildStrongIdentifierValue(groupedItem, -1, -1, false);
+                    var subItem = BuildStrongIdentifierValue(groupedItem, false);
 
 #if DEBUG
                     Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
@@ -327,19 +325,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
-        private StrongIdentifierValue BuildStrongIdentifierValue(List<StrongIdentifierPart> items, int countOfGroup, int positionInGroup, bool isRootItem)
+        private StrongIdentifierValue BuildStrongIdentifierValue(List<StrongIdentifierPart> items, bool isRootItem)
         {
 #if DEBUG
             Info("E5B5F691-BF07-4176-A2B7-73BD6037BD2D", $"items = {items.WriteListToString()}");
-            Info("EB5C99F1-0BE9-4622-A78D-622B4582049C", $"countOfGroup = {countOfGroup}");
-            Info("87FFFF2E-D3E1-49D8-AAD9-66A3B401EE14", $"positionInGroup = {positionInGroup}");
             Info("A04C90F7-95F5-4904-AE6F-AB3685F7030E", $"isRootItem = {isRootItem}");
 #endif
-
-            if(items.Count == 1)
-            {
-                //throw new NotImplementedException();
-            }
 
             var nameValueSb = new StringBuilder();
             var normalizedNameValueSb = new StringBuilder();
@@ -396,7 +387,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         if (item.SubParts.Any())
                         {
-                            subItem = BuildStrongIdentifierValue(item.SubParts, -1, -1, false);
+                            subItem = BuildStrongIdentifierValue(item.SubParts, false);
 
 #if DEBUG
                             Info("411FD458-B5B5-4383-A478-0C14A71828C9", $"subItem = {subItem}");

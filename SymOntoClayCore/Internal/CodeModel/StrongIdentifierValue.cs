@@ -404,7 +404,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (Namespaces.Any())
             {
-                throw new NotImplementedException("ECB9B7CE-105E-4949-89CA-D48AB78B3526");
+                sb.Append($" ({string.Join(" | ", Namespaces.Select(p => p.ToHumanizedLabel()))})");
             }
 
             return sb.ToString();

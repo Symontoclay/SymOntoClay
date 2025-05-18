@@ -9729,6 +9729,11 @@
             Represents symbol `-&gt;`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Infinity">
+            <summary>
+            Represents symbol `∞`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.PositiveInfinity">
             <summary>
             Represents symbol `+∞`.

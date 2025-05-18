@@ -154,6 +154,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Multiplication:
+                        case TokenKind.Infinity:
+                        case TokenKind.PositiveInfinity:
                             if(_currentItem.HasInfiniteCapacity || _currentItem.Capacity.HasValue)
                             {
                                 throw new UnexpectedTokenException(_currToken);

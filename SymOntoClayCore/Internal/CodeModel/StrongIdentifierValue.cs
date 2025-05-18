@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2024 Sergiy Tolkachov
 
@@ -371,6 +371,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 if (Capacity.HasValue)
                 {
                     sb.Append(Capacity);
+                } 
+                else
+                {
+                    sb.Append('∞');
                 }
 
                 sb.Append("]");

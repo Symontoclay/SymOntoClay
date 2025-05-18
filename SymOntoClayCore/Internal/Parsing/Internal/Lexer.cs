@@ -509,6 +509,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 }
                                 break;
 
+                            case '∞':
+                                return CreateToken(TokenKind.Infinity);
+
                             default:
                                 {
                                     var intCharCode = (int)tmpChar;

@@ -177,6 +177,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         LeftRightArrow,
 
         /// <summary>
+        /// Represents symbol `∞`.
+        /// </summary>
+        Infinity,
+
+        /// <summary>
         /// Represents symbol `+∞`.
         /// </summary>
         PositiveInfinity,

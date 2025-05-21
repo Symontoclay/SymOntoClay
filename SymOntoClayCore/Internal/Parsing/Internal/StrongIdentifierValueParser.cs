@@ -55,7 +55,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 throw new Exception($"9BA9A4D2-2A42-446D-BC57-2AE6A720952A: Invalid sting. Please check closing brackets.");
             }
 
-            Result = PostProcessParts(_items, true);
+            var resultsList = PostProcessParts(_items, true);
+
+#if DEBUG
+            Info("290F1D9A-3BE7-49BD-9AAE-3FC2B104B691", $"resultsList.Count = {resultsList.Count}");
+            Info("B6AAE834-1E66-47B5-848A-13B63E74745F", $"resultsList = {resultsList.WriteListToString()}");
+#endif
+
+            if(resultsList.Count > 1)
+            {
+                throw new NotImplementedException("D3EE3F0E-17CB-4F08-9EEC-CE10E6A574B3");
+            }
+
+            Result = resultsList.Single();
+
+            //Result = PostProcessDoubleColonParts(_items, true);
 
 #if DEBUG
             Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"Result = {Result}");
@@ -66,11 +80,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("E11076A3-E467-41F3-A228-B95D0F17FB5F", $"_state = {_state}");
-            Info("60F3CC3D-9E06-4F5C-8E0C-1C92DFF8A226", $"_currToken = {_currToken}");
-            Info("120DA08F-7326-4AB0-A1FB-EBF9DDB85631", $"_items = {_items.WriteListToString()}");
-            Info("55696EE0-358F-4F13-ABE9-47278918A598", $"_currentItemsList = {_currentItemsList.WriteListToString()}");
-            Info("0E8EB277-F964-4E68-B02A-DD6C12AE195B", $"_currentItem = {_currentItem}");
+            //Info("E11076A3-E467-41F3-A228-B95D0F17FB5F", $"_state = {_state}");
+            //Info("60F3CC3D-9E06-4F5C-8E0C-1C92DFF8A226", $"_currToken = {_currToken}");
+            //Info("120DA08F-7326-4AB0-A1FB-EBF9DDB85631", $"_items = {_items.WriteListToString()}");
+            //Info("55696EE0-358F-4F13-ABE9-47278918A598", $"_currentItemsList = {_currentItemsList.WriteListToString()}");
+            //Info("0E8EB277-F964-4E68-B02A-DD6C12AE195B", $"_currentItem = {_currentItem}");
 #endif
 
             switch (_state)
@@ -148,8 +162,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _currentItem.Capacity = Convert.ToInt32(parser.Result.GetSystemValue());
 
 #if DEBUG
-                                Info("58C32FFC-C0D0-4204-ADF7-B676CF226A8B", $"parser.Result = {parser.Result}");
-                                Info("55FB64C7-3548-4C61-BAE9-2BBF0CB9540A", $"_currentItem = {_currentItem}");
+                                //Info("58C32FFC-C0D0-4204-ADF7-B676CF226A8B", $"parser.Result = {parser.Result}");
+                                //Info("55FB64C7-3548-4C61-BAE9-2BBF0CB9540A", $"_currentItem = {_currentItem}");
 #endif
                             }
                             break;
@@ -169,7 +183,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.CloseSquareBracket:
 #if DEBUG
-                            Info("C0E6914E-5582-49D5-B481-D9E8D0F8B14E", $"_currentItem = {_currentItem}");
+                            //Info("C0E6914E-5582-49D5-B481-D9E8D0F8B14E", $"_currentItem = {_currentItem}");
 #endif
 
                             if(!_currentItem.Capacity.HasValue)
@@ -236,7 +250,44 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _currentItemsList = _itemsListStack.Pop();
         }
 
-        private StrongIdentifierValue PostProcessParts(List<StrongIdentifierPart> items, bool isRootItem)
+        private List<StrongIdentifierValue> PostProcessParts(List<StrongIdentifierPart> items, bool isRootItem)
+        {
+#if DEBUG
+            Info("7844EC21-0330-47A2-98A3-BA00BA7DF1BC", $"isRootItem = {isRootItem}");
+            Info("39DDF0F0-08A7-4D88-93D3-E6F88A666659", $"items = {items.WriteListToString()}");
+#endif
+
+            var result = new List<StrongIdentifierValue>();
+
+            var groupedItems = GroupPartsByOr(items);
+
+#if DEBUG
+            Info("9DEA4560-3AC3-4617-9315-6E0514D0CA9D", $"groupedItems = {JsonConvert.SerializeObject(groupedItems, Formatting.Indented)}");
+#endif
+
+            foreach (var groupedItem in groupedItems)
+            {
+#if DEBUG
+                Info("D9533B06-3B27-4129-A3EF-D2645FE5AE47", $"groupedItem = {groupedItem.WriteListToString()}");
+#endif
+
+                var subItem = PostProcessDoubleColonParts(groupedItem, isRootItem);
+
+#if DEBUG
+                Info("42D91583-C2D1-4651-84F6-A501F4CCC7CB", $"subItem = {subItem}");
+#endif
+
+                result.Add(subItem);
+            }
+
+#if DEBUG
+            Info("8375F3C3-1C8E-479E-8FD1-9E04AAED2F86", $"result = { result.WriteListToString()}");
+#endif
+
+            return result;
+        }
+
+        private StrongIdentifierValue PostProcessDoubleColonParts(List<StrongIdentifierPart> items, bool isRootItem)
         {
 #if DEBUG
             Info("8BEF1C26-16E1-456F-BB81-AA54ABAE63D5", $"isRootItem = {isRootItem}");
@@ -338,7 +389,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var kindOfName = KindOfName.CommonConcept;
             int? capacity = null;
             var hasInfiniteCapacity = false;
-            StrongIdentifierValue subItem = null;
+            var subItems = new List<StrongIdentifierValue>();
 
             var wasWord = false;
 
@@ -387,11 +438,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         if (item.SubParts.Any())
                         {
-                            subItem = BuildStrongIdentifierValue(item.SubParts, StrongIdentifierLevel.None, false);
+#if DEBUG
+                            Info("FD9B7C67-2D59-4F83-8742-EB9F6AE30332", $"item.SubParts = {item.SubParts.WriteListToString()}");
+#endif
+
+                            var convertedSubItems = PostProcessParts(item.SubParts, false);
 
 #if DEBUG
-                            Info("411FD458-B5B5-4383-A478-0C14A71828C9", $"subItem = {subItem}");
+                            Info("51133947-8891-4354-A0C8-6385F85D9573", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
 #endif
+
+                            subItems.AddRange(convertedSubItems);
                         }
 
                         if(wasWord)
@@ -433,6 +490,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Info("53C85862-4A77-4A84-86A9-E4D4FFF10EB9", $"level = {level}");
             Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
             Info("39D5DFC1-7E0E-4E56-9255-2A3C137CD69A", $"hasInfiniteCapacity = {hasInfiniteCapacity}");
+            Info("16324165-46D6-401C-A9E2-35731FECA78A", $"subItems = {subItems.WriteListToString()}");
 #endif
 
             var result = new StrongIdentifierValue
@@ -446,12 +504,51 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 IsArray = (capacity.HasValue && capacity.Value > 1) || hasInfiniteCapacity
             };
 
-            if(subItem != null)
+            if(subItems.Any())
             {
-                result.Namespaces.Add(subItem);
+                result.Namespaces.AddRange(subItems);
             }
 
             result.CheckDirty();
+
+            return result;
+        }
+
+        private List<List<StrongIdentifierPart>> GroupPartsByOr(List<StrongIdentifierPart> items)
+        {
+#if DEBUG
+            //Info("F5AA0CA1-CE97-4AD0-BD7A-304049093881", $"items = {items.WriteListToString()}");
+#endif
+
+            var result = new List<List<StrongIdentifierPart>>();
+
+            var setOfParts = new List<StrongIdentifierPart>();
+
+            foreach (var item in items)
+            {
+#if DEBUG
+                //Info("51E5C9D1-37A9-45D5-B2A3-DB3937A62B33", $"item = {item}");
+#endif
+
+                var tokenKind = item.Token.TokenKind;
+
+                switch (tokenKind)
+                {
+                    case TokenKind.Or:
+                        result.Add(setOfParts);
+                        setOfParts = new List<StrongIdentifierPart>();
+                        break;
+
+                    case TokenKind.Gravis:
+                        break;
+
+                    default:
+                        setOfParts.Add(item);
+                        break;
+                }
+            }
+
+            result.Add(setOfParts);
 
             return result;
         }

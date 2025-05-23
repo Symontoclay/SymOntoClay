@@ -55,6 +55,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 throw new Exception($"9BA9A4D2-2A42-446D-BC57-2AE6A720952A: Invalid sting. Please check closing brackets.");
             }
 
+            if(_items.Count == 0)
+            {
+                throw new NotImplementedException();
+            }
+
             var resultsList = PostProcessParts(_items, true);
 
 #if DEBUG

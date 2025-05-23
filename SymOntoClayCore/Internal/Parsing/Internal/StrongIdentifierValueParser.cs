@@ -369,9 +369,36 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 Info("AB559700-C03E-4244-8156-90D80DC82D0E", $"subItems = {subItems.WriteListToString()}");
 #endif
 
-                result.Namespaces.AddRange(subItems);
+                if(subItems.Count == 1)
+                {
+                    result.Namespaces.AddRange(subItems);
+                }
+                else
+                {
+                    subItems.Reverse();
 
-                //throw new NotImplementedException("E024D5B6-61BB-445C-8D7D-D8A26C1DF735");
+#if DEBUG
+                    Info("70A528E2-137A-47A4-9989-3C43D80AEEB8", $"subItems (after) = {subItems.WriteListToString()}");
+#endif
+                    var firstItem = subItems.First();
+                    var currentItem = firstItem;
+
+                    subItems.Remove(firstItem);
+
+                    foreach(var subItem in subItems)
+                    {
+#if DEBUG
+                        Info("021B2076-48DA-42EA-A8A9-7ADF0933FE5F", $"subItem = {subItem}");
+#endif
+
+                        currentItem.Namespaces.Add(subItem);
+                        currentItem = subItem;
+                    }
+
+                    result.Namespaces.Add(firstItem);
+
+                    //throw new NotImplementedException("E024D5B6-61BB-445C-8D7D-D8A26C1DF735");
+                }
             }
 
             return result;

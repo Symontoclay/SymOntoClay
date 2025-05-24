@@ -57,22 +57,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_items.Count == 0)
             {
-                throw new NotImplementedException();
+                Result = BuildEmptyStrongIdentifierValue();
             }
-
-            var resultsList = PostProcessParts(_items, true);
+            else
+            {
+                var resultsList = PostProcessParts(_items, true);
 
 #if DEBUG
-            Info("290F1D9A-3BE7-49BD-9AAE-3FC2B104B691", $"resultsList.Count = {resultsList.Count}");
-            Info("B6AAE834-1E66-47B5-848A-13B63E74745F", $"resultsList = {resultsList.WriteListToString()}");
+                Info("290F1D9A-3BE7-49BD-9AAE-3FC2B104B691", $"resultsList.Count = {resultsList.Count}");
+                Info("B6AAE834-1E66-47B5-848A-13B63E74745F", $"resultsList = {resultsList.WriteListToString()}");
 #endif
 
-            if(resultsList.Count > 1)
-            {
-                throw new NotImplementedException("D3EE3F0E-17CB-4F08-9EEC-CE10E6A574B3");
-            }
+                if (resultsList.Count > 1)
+                {
+                    throw new NotImplementedException("D3EE3F0E-17CB-4F08-9EEC-CE10E6A574B3");
+                }
 
-            Result = resultsList.Single();
+                Result = resultsList.Single();
+            }
 
             //Result = PostProcessDoubleColonParts(_items, true);
 
@@ -405,6 +407,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     //throw new NotImplementedException("E024D5B6-61BB-445C-8D7D-D8A26C1DF735");
                 }
             }
+
+            return result;
+        }
+
+        private StrongIdentifierValue BuildEmptyStrongIdentifierValue()
+        {
+            var result = new StrongIdentifierValue() { IsEmpty = true };
+            result.CheckDirty();
 
             return result;
         }

@@ -512,6 +512,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             wasWord = true;
                         }
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(tokenKind), tokenKind, null);
                 }
             }
 

@@ -27,21 +27,21 @@ namespace TestSandbox.Handlers
             //Case17();
             //Case16();
             //Case15();
-            //Case14();
-            //Case13();
+            Case14();
+            Case13();
             Case12();
-            //Case12_a();
-            //Case11();
-            //Case10();
-            //Case9();
-            //Case8();
-            //Case7();
-            //Case6();
-            //Case5();
-            //Case4();
-            //Case3();
-            //Case2();
-            //Case1();
+            Case12_a();
+            Case11();
+            Case10();
+            Case9();
+            Case8();
+            Case7();
+            Case6();
+            Case5();
+            Case4();
+            Case3();
+            Case2();
+            Case1();
 
             _logger.Info("75A8C4DA-0D97-496F-AF78-258D4B8A5043", "End");
         }

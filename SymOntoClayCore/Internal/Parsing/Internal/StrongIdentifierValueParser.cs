@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             base.OnFinish();
 
 #if DEBUG
-            Info("1B5ACEB2-D3E6-4E0A-8341-53BF158773C4", $"_items = {_items.WriteListToString()}");
+            //Info("1B5ACEB2-D3E6-4E0A-8341-53BF158773C4", $"_items = {_items.WriteListToString()}");
 #endif
 
             if(_currentItemsList != _items)
@@ -64,8 +64,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 var resultsList = PostProcessParts(_items, true);
 
 #if DEBUG
-                Info("290F1D9A-3BE7-49BD-9AAE-3FC2B104B691", $"resultsList.Count = {resultsList.Count}");
-                Info("B6AAE834-1E66-47B5-848A-13B63E74745F", $"resultsList = {resultsList.WriteListToString()}");
+                //Info("290F1D9A-3BE7-49BD-9AAE-3FC2B104B691", $"resultsList.Count = {resultsList.Count}");
+                //Info("B6AAE834-1E66-47B5-848A-13B63E74745F", $"resultsList = {resultsList.WriteListToString()}");
 #endif
 
                 if (resultsList.Count > 1)
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Result = PostProcessDoubleColonParts(_items, true);
 
 #if DEBUG
-            Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"Result = {Result}");
+            //Info("806612EB-DB86-4C60-BB81-F3A261E876E6", $"Result = {Result}");
 #endif
         }
 
@@ -260,8 +260,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private List<StrongIdentifierValue> PostProcessParts(List<StrongIdentifierPart> items, bool isRootItem)
         {
 #if DEBUG
-            Info("7844EC21-0330-47A2-98A3-BA00BA7DF1BC", $"isRootItem = {isRootItem}");
-            Info("39DDF0F0-08A7-4D88-93D3-E6F88A666659", $"items = {items.WriteListToString()}");
+            //Info("7844EC21-0330-47A2-98A3-BA00BA7DF1BC", $"isRootItem = {isRootItem}");
+            //Info("39DDF0F0-08A7-4D88-93D3-E6F88A666659", $"items = {items.WriteListToString()}");
 #endif
 
             var result = new List<StrongIdentifierValue>();
@@ -269,26 +269,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var groupedItems = GroupPartsByOr(items);
 
 #if DEBUG
-            Info("9DEA4560-3AC3-4617-9315-6E0514D0CA9D", $"groupedItems = {JsonConvert.SerializeObject(groupedItems, Formatting.Indented)}");
+            //Info("9DEA4560-3AC3-4617-9315-6E0514D0CA9D", $"groupedItems = {JsonConvert.SerializeObject(groupedItems, Formatting.Indented)}");
 #endif
 
             foreach (var groupedItem in groupedItems)
             {
 #if DEBUG
-                Info("D9533B06-3B27-4129-A3EF-D2645FE5AE47", $"groupedItem = {groupedItem.WriteListToString()}");
+                //Info("D9533B06-3B27-4129-A3EF-D2645FE5AE47", $"groupedItem = {groupedItem.WriteListToString()}");
 #endif
 
                 var subItem = PostProcessDoubleColonParts(groupedItem, isRootItem);
 
 #if DEBUG
-                Info("42D91583-C2D1-4651-84F6-A501F4CCC7CB", $"subItem = {subItem}");
+                //Info("42D91583-C2D1-4651-84F6-A501F4CCC7CB", $"subItem = {subItem}");
 #endif
 
                 result.Add(subItem);
             }
 
 #if DEBUG
-            Info("8375F3C3-1C8E-479E-8FD1-9E04AAED2F86", $"result = { result.WriteListToString()}");
+            //Info("8375F3C3-1C8E-479E-8FD1-9E04AAED2F86", $"result = { result.WriteListToString()}");
 #endif
 
             return result;
@@ -297,14 +297,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private StrongIdentifierValue PostProcessDoubleColonParts(List<StrongIdentifierPart> items, bool isRootItem)
         {
 #if DEBUG
-            Info("8BEF1C26-16E1-456F-BB81-AA54ABAE63D5", $"isRootItem = {isRootItem}");
-            Info("9416E080-D9AE-4E49-92F1-E25E7378A110", $"items = {items.WriteListToString()}");
+            //Info("8BEF1C26-16E1-456F-BB81-AA54ABAE63D5", $"isRootItem = {isRootItem}");
+            //Info("9416E080-D9AE-4E49-92F1-E25E7378A110", $"items = {items.WriteListToString()}");
 #endif
 
             var groupedItems = GroupPartsByDoubleColon(items);
 
 #if DEBUG
-            Info("8297EA2B-34BA-4008-84B1-7CFF9F8A9FE0", $"groupedItems = {JsonConvert.SerializeObject(groupedItems, Formatting.Indented)}");
+            //Info("8297EA2B-34BA-4008-84B1-7CFF9F8A9FE0", $"groupedItems = {JsonConvert.SerializeObject(groupedItems, Formatting.Indented)}");
 #endif
 
             if(groupedItems.Count == 1)
@@ -317,7 +317,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var firstGroupedItem = groupedItems.First();
 
 #if DEBUG
-            Info("7D565976-1184-4052-A475-4C4C4055155A", $"firstGroupedItem = {firstGroupedItem.WriteListToString()}");
+            //Info("7D565976-1184-4052-A475-4C4C4055155A", $"firstGroupedItem = {firstGroupedItem.WriteListToString()}");
 #endif
 
             if(firstGroupedItem.Count == 1)
@@ -325,7 +325,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 var singleItem = firstGroupedItem.Single();
 
 #if DEBUG
-                Info("61B2CCCE-3E3D-4DD4-B17B-8E78C9EA6B21", $"singleItem = {singleItem}");
+                //Info("61B2CCCE-3E3D-4DD4-B17B-8E78C9EA6B21", $"singleItem = {singleItem}");
 #endif
 
                 if(singleItem.StrongIdentifierLevel != StrongIdentifierLevel.None && singleItem.SubParts.Count == 0)
@@ -336,13 +336,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
 #if DEBUG
-            Info("39AEC91C-1D82-4162-AEF0-55429807CF5E", $"level = {level}");
+            //Info("39AEC91C-1D82-4162-AEF0-55429807CF5E", $"level = {level}");
 #endif
 
             var lastGroupedItem = groupedItems.Last();
 
 #if DEBUG
-            Info("179C398C-CD91-4D50-9608-23C798150C3B", $"lastGroupedItem = {lastGroupedItem.WriteListToString()}");
+            //Info("179C398C-CD91-4D50-9608-23C798150C3B", $"lastGroupedItem = {lastGroupedItem.WriteListToString()}");
 #endif
 
             groupedItems.Remove(lastGroupedItem);
@@ -350,7 +350,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var result = BuildStrongIdentifierValue(lastGroupedItem, level, isRootItem);
 
 #if DEBUG
-            Info("5F303670-5F25-4438-ACF8-E74463E762F8", $"result = {result}");
+            //Info("5F303670-5F25-4438-ACF8-E74463E762F8", $"result = {result}");
 #endif
 
             if(groupedItems.Any())
@@ -360,20 +360,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 foreach (var groupedItem in groupedItems)
                 {
 #if DEBUG
-                    Info("4D7769DD-88C4-4711-A892-CF9C98C8B19F", $"groupedItem = {groupedItem.WriteListToString()}");
+                    //Info("4D7769DD-88C4-4711-A892-CF9C98C8B19F", $"groupedItem = {groupedItem.WriteListToString()}");
 #endif
 
                     var subItem = BuildStrongIdentifierValue(groupedItem, StrongIdentifierLevel.None, false);
 
 #if DEBUG
-                    Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
+                    //Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
 #endif
 
                     subItems.Add(subItem);
                 }
 
 #if DEBUG
-                Info("AB559700-C03E-4244-8156-90D80DC82D0E", $"subItems = {subItems.WriteListToString()}");
+                //Info("AB559700-C03E-4244-8156-90D80DC82D0E", $"subItems = {subItems.WriteListToString()}");
 #endif
 
                 if(subItems.Count == 1)
@@ -385,7 +385,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     subItems.Reverse();
 
 #if DEBUG
-                    Info("70A528E2-137A-47A4-9989-3C43D80AEEB8", $"subItems (after) = {subItems.WriteListToString()}");
+                    //Info("70A528E2-137A-47A4-9989-3C43D80AEEB8", $"subItems (after) = {subItems.WriteListToString()}");
 #endif
                     var firstItem = subItems.First();
                     var currentItem = firstItem;
@@ -395,7 +395,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     foreach(var subItem in subItems)
                     {
 #if DEBUG
-                        Info("021B2076-48DA-42EA-A8A9-7ADF0933FE5F", $"subItem = {subItem}");
+                        //Info("021B2076-48DA-42EA-A8A9-7ADF0933FE5F", $"subItem = {subItem}");
 #endif
 
                         currentItem.Namespaces.Add(subItem);
@@ -403,8 +403,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
 
                     result.Namespaces.Add(firstItem);
-
-                    //throw new NotImplementedException("E024D5B6-61BB-445C-8D7D-D8A26C1DF735");
                 }
             }
 
@@ -422,8 +420,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private StrongIdentifierValue BuildStrongIdentifierValue(List<StrongIdentifierPart> items, StrongIdentifierLevel level, bool isRootItem)
         {
 #if DEBUG
-            Info("E5B5F691-BF07-4176-A2B7-73BD6037BD2D", $"items = {items.WriteListToString()}");
-            Info("A04C90F7-95F5-4904-AE6F-AB3685F7030E", $"isRootItem = {isRootItem}");
+            //Info("E5B5F691-BF07-4176-A2B7-73BD6037BD2D", $"items = {items.WriteListToString()}");
+            //Info("A04C90F7-95F5-4904-AE6F-AB3685F7030E", $"isRootItem = {isRootItem}");
 #endif
 
             var nameValueSb = new StringBuilder();
@@ -438,7 +436,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             foreach(var item in items)
             {
 #if DEBUG
-                Info("B556484D-EA3F-4575-B70A-EE5603FC67AC", $"item = {item}");
+                //Info("B556484D-EA3F-4575-B70A-EE5603FC67AC", $"item = {item}");
 #endif
 
                 var tokenKind = item.Token.TokenKind;
@@ -647,7 +645,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                     case TokenKind.PropertyPrefix:
 #if DEBUG
-                        Info("CC947963-BF42-4674-A411-C917D3D17D16", $"kindOfName = {kindOfName}");
+                        //Info("CC947963-BF42-4674-A411-C917D3D17D16", $"kindOfName = {kindOfName}");
 #endif
 
                         if (kindOfName == KindOfName.CommonConcept)
@@ -685,13 +683,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         if (item.SubParts.Any())
                         {
 #if DEBUG
-                            Info("FD9B7C67-2D59-4F83-8742-EB9F6AE30332", $"item.SubParts = {item.SubParts.WriteListToString()}");
+                            //Info("FD9B7C67-2D59-4F83-8742-EB9F6AE30332", $"item.SubParts = {item.SubParts.WriteListToString()}");
 #endif
 
                             var convertedSubItems = PostProcessParts(item.SubParts, false);
 
 #if DEBUG
-                            Info("51133947-8891-4354-A0C8-6385F85D9573", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
+                            //Info("51133947-8891-4354-A0C8-6385F85D9573", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
 #endif
 
                             subItems.AddRange(convertedSubItems);
@@ -733,13 +731,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
 #if DEBUG
-            Info("711C4952-C769-4A7F-B7DB-2287A09C9F1F", $"nameValueSb = {nameValueSb}");
-            Info("0A91B826-A842-4757-8015-8F10297172B2", $"normalizedNameValueSb = {normalizedNameValueSb}");
-            Info("51A42AD0-4B49-4CEF-AE6F-1256697D3766", $"kindOfName = {kindOfName}");
-            Info("53C85862-4A77-4A84-86A9-E4D4FFF10EB9", $"level = {level}");
-            Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
-            Info("39D5DFC1-7E0E-4E56-9255-2A3C137CD69A", $"hasInfiniteCapacity = {hasInfiniteCapacity}");
-            Info("16324165-46D6-401C-A9E2-35731FECA78A", $"subItems = {subItems.WriteListToString()}");
+            //Info("711C4952-C769-4A7F-B7DB-2287A09C9F1F", $"nameValueSb = {nameValueSb}");
+            //Info("0A91B826-A842-4757-8015-8F10297172B2", $"normalizedNameValueSb = {normalizedNameValueSb}");
+            //Info("51A42AD0-4B49-4CEF-AE6F-1256697D3766", $"kindOfName = {kindOfName}");
+            //Info("53C85862-4A77-4A84-86A9-E4D4FFF10EB9", $"level = {level}");
+            //Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
+            //Info("39D5DFC1-7E0E-4E56-9255-2A3C137CD69A", $"hasInfiniteCapacity = {hasInfiniteCapacity}");
+            //Info("16324165-46D6-401C-A9E2-35731FECA78A", $"subItems = {subItems.WriteListToString()}");
 #endif
 
             var result = new StrongIdentifierValue

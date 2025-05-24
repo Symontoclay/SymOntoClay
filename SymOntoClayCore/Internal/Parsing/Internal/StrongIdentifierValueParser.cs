@@ -446,7 +446,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 switch (tokenKind)
                 {
                     case TokenKind.PropertyPrefix:
-                        if(kindOfName == KindOfName.Unknown)
+#if DEBUG
+                        Info("CC947963-BF42-4674-A411-C917D3D17D16", $"kindOfName = {kindOfName}");
+#endif
+
+                        if (kindOfName == KindOfName.CommonConcept)
                         {
                             if(wasWord)
                             {

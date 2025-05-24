@@ -445,6 +445,206 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 switch (tokenKind)
                 {
+                    case TokenKind.IdentifierPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.IdentifierPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.Entity;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.IdentifierPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.EntityConditionPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.EntityConditionPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.EntityCondition;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.EntityConditionPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.ConceptPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.ConceptPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.Concept;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.ConceptPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.OnceResolvedEntityConditionPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.OnceResolvedEntityConditionPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.OnceResolvedEntityCondition;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.OnceResolvedEntityConditionPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.RuleOrFactIdentifierPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.RuleOrFactIdentifierPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.RuleOrFact;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.RuleOrFactIdentifierPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.LinguisticVarPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.LinguisticVarPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.LinguisticVar;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.LinguisticVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.LogicalVarPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.LogicalVarPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.LogicalVar;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.LogicalVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.VarPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.VarPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.Var;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.VarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.SystemVarPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.SystemVarPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.SystemVar;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.SystemVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
+                    case TokenKind.ChannelVarPrefix:
+                        if (kindOfName == KindOfName.CommonConcept)
+                        {
+                            if (wasWord)
+                            {
+                                throw new Exception($"An {nameof(TokenKind.ChannelVarPrefix)} can not be placed in the middle of an identifier."); ;
+                            }
+                            else
+                            {
+                                kindOfName = KindOfName.Channel;
+                                nameValueSb.Append(item.Token.Content);
+                                normalizedNameValueSb.Append(item.Token.Content);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"An {nameof(TokenKind.ChannelVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                        }
+                        break;
+
                     case TokenKind.PropertyPrefix:
 #if DEBUG
                         Info("CC947963-BF42-4674-A411-C917D3D17D16", $"kindOfName = {kindOfName}");
@@ -452,9 +652,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         if (kindOfName == KindOfName.CommonConcept)
                         {
-                            if(wasWord)
+                            if (wasWord)
                             {
-                                throw new Exception("An identifier prefix can not be placed in the middle of an identifier.");
+                                throw new Exception($"An {nameof(TokenKind.PropertyPrefix)} can not be placed in the middle of an identifier."); ;
                             }
                             else
                             {
@@ -465,9 +665,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An identifier prefix is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception($"An {nameof(TokenKind.PropertyPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
                         }
-                    break;
+                        break;
 
                     case TokenKind.Word:
                         if(item.Capacity.HasValue)

@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected BaseMethodsResolver(IMainStorageContext context)
             : base(context)
         {
+            
         }
 
         /// <inheritdoc/>
@@ -46,12 +47,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var dataResolversFactory = _context.DataResolversFactory;
 
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
+
+            var commonNamesStorage = _context.CommonNamesStorage;
+            _fuzzyTypeName = commonNamesStorage.FuzzyTypeName;
+            _numberTypeName = commonNamesStorage.NumberTypeName;
         }
 
         protected SynonymsResolver _synonymsResolver;
 
-        private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
-        private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
+        private StrongIdentifierValue _fuzzyTypeName;
+        private StrongIdentifierValue _numberTypeName;
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
@@ -196,7 +201,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return namedParameters[synonym];
                 }
 
-                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym, logger);
 
                 if (namedParameters.ContainsKey(alternativeSynonym))
                 {
@@ -204,7 +209,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            var alternativeArgumentName = NameHelper.CreateAlternativeArgumentName(argumentName);
+            var alternativeArgumentName = NameHelper.CreateAlternativeArgumentName(argumentName, logger);
 
             synonymsList = _synonymsResolver.GetSynonyms(logger, alternativeArgumentName, localCodeExecutionContext);
 
@@ -215,7 +220,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return namedParameters[synonym];
                 }
 
-                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym, logger);
 
                 if (namedParameters.ContainsKey(alternativeSynonym))
                 {
@@ -405,9 +410,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    if (checkedTypeName == _fuzzyTypeIdentifier)
+                    if (checkedTypeName == _fuzzyTypeName)
                     {
-                        if (typesList.Contains(_numberTypeIdentifier))
+                        if (typesList.Contains(_numberTypeName))
                         {
                             parametersRankMatrix[position]++;
 
@@ -464,9 +469,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    if (typesList.Contains(_fuzzyTypeIdentifier))
+                    if (typesList.Contains(_fuzzyTypeName))
                     {
-                        result[i] = _fuzzyTypeIdentifier;
+                        result[i] = _fuzzyTypeName;
                     }
                 }
             }

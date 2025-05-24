@@ -20,6 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.Parsing.Internal;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Linq;
 
@@ -27,6 +30,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class NameHelper
     {
+        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+
         public static string GetNewEntityNameString()
         {
             return $"#{Guid.NewGuid():D}";
@@ -204,24 +209,52 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
         public static StrongIdentifierValue CreateRuleOrFactName()
         {
+            return CreateRuleOrFactName(_logger);
+        }
+
+        public static StrongIdentifierValue CreateRuleOrFactName(IMonitorLogger logger)
+        {
             var text = GetNewRuleOrFactNameString();
-            return CreateName(text);
+            return CreateName(text, logger);
         }
 
         public static StrongIdentifierValue CreateEntityName()
         {
+            return CreateEntityName(_logger);
+        }
+
+        public static StrongIdentifierValue CreateEntityName(IMonitorLogger logger)
+        {
             var text = GetNewEntityNameString();
-            return CreateName(text);
+            return CreateName(text, logger);
         }
 
         public static StrongIdentifierValue CreateLogicalVarName()
         {
+            return CreateLogicalVarName(_logger);
+        }
+
+        public static StrongIdentifierValue CreateLogicalVarName(IMonitorLogger logger)
+        {
             var text = GetNewLogicalVarNameString();
-            return CreateName(text);
+            return CreateName(text, logger);
         }
 
         public static StrongIdentifierValue CreateName(string text)
         {
+            return CreateName(text, _logger);
+        }
+
+        public static StrongIdentifierValue CreateName(string text, IMonitorLogger logger)
+        {
+            var parserContext = new InternalParserCoreContext(text, logger, LexerMode.StrongIdentifier);
+
+            var parser = new StrongIdentifierValueParser(parserContext);
+            parser.Run();
+
+            return parser.Result;
+
+            /*
             if(string.IsNullOrWhiteSpace(text))
             {
                 return new StrongIdentifierValue() { IsEmpty = true };
@@ -286,8 +319,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             name.NameValue = ShieldString(text);
 
             name.NormalizedNameValue = NormalizeString(text);
-
-            return name;
+            */
+            //return name;
         }
 
         public static string NormalizeString(string value)
@@ -295,16 +328,16 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return value.ToLower().Replace("`", string.Empty).Trim();
         }
 
-        public static StrongIdentifierValue CreateAlternativeArgumentName(StrongIdentifierValue argumentName)
+        public static StrongIdentifierValue CreateAlternativeArgumentName(StrongIdentifierValue argumentName, IMonitorLogger logger)
         {
             var nameValue = argumentName.NameValue;
 
             if (nameValue.StartsWith("@"))
             {
-                return CreateName(argumentName.NameValue.Replace("@", string.Empty));
+                return CreateName(argumentName.NameValue.Replace("@", string.Empty), logger);
             }
 
-            return CreateName($"@{nameValue}");
+            return CreateName($"@{nameValue}", logger);
         }
     }
 }

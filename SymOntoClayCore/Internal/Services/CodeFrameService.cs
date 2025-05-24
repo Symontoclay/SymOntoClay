@@ -249,7 +249,7 @@ namespace SymOntoClay.Core.Internal.Services
                         break;
 
                     case KindOfName.CommonConcept:
-                        parameterName = NameHelper.CreateName($"@{parameterName.NameValue}");
+                        parameterName = NameHelper.CreateName($"@{parameterName.NameValue}", logger);
                         break;
 
                     default:
@@ -312,7 +312,7 @@ namespace SymOntoClay.Core.Internal.Services
                     return synonym;
                 }
 
-                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym, logger);
 
                 if (function.ContainsArgument(logger, alternativeSynonym))
                 {
@@ -320,7 +320,7 @@ namespace SymOntoClay.Core.Internal.Services
                 }
             }
 
-            var alternativeParameterName = NameHelper.CreateAlternativeArgumentName(parameterName);
+            var alternativeParameterName = NameHelper.CreateAlternativeArgumentName(parameterName, logger);
 
             synonymsList = synonymsResolver.GetSynonyms(logger, alternativeParameterName, localCodeExecutionContext);
 
@@ -331,7 +331,7 @@ namespace SymOntoClay.Core.Internal.Services
                     return synonym;
                 }
 
-                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym, logger);
 
                 if (function.ContainsArgument(logger, alternativeSynonym))
                 {

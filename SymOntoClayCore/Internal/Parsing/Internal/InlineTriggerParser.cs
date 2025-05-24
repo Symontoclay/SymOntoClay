@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {      
             _inlineTrigger = CreateInlineTriggerAndSetAsCurrentCodeItem();
-            _inlineTrigger.Name = NameHelper.CreateRuleOrFactName();
+            _inlineTrigger.Name = NameHelper.CreateRuleOrFactName(Logger);
         }
 
         /// <inheritdoc/>
@@ -497,7 +497,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
-                            Result.Name = NameHelper.CreateName(_currToken.Content);
+                            Result.Name = NameHelper.CreateName(_currToken.Content, Logger);
                             _state = State.GotName;
                             break;
 

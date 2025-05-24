@@ -54,9 +54,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
 
-            context.Storage.GlobalStorage.SynonymsStorage.Append(context.Logger, new Synonym()
+            var logger = _context.Logger;
+
+            context.Storage.GlobalStorage.SynonymsStorage.Append(logger, new Synonym()
             {
-                Name = NameHelper.CreateName("i"),
+                Name = NameHelper.CreateName("i", logger),
                 Object = Name
             });
 

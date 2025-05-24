@@ -519,7 +519,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private Value NCreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContext, bool loadCodeItem)
         {
-            var targetCodeItem = CreateAndSaveInstanceCodeItem(logger, codeItem, NameHelper.CreateEntityName());
+            var targetCodeItem = CreateAndSaveInstanceCodeItem(logger, codeItem, NameHelper.CreateEntityName(logger));
 
             var instance = new ObjectInstance(targetCodeItem, _context, executionContext.Storage, executionContext);
 
@@ -541,7 +541,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var action = actionPtr.Action;
 
-            var targetCodeItem = CreateAndSaveInstanceCodeItem(logger, action, NameHelper.CreateEntityName());
+            var targetCodeItem = CreateAndSaveInstanceCodeItem(logger, action, NameHelper.CreateEntityName(logger));
 
             var actionInstance = new ActionInstance(targetCodeItem, actionPtr, _context, executionContext.Storage, executionContext, executionCoordinator);
 

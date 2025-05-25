@@ -87,11 +87,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("E11076A3-E467-41F3-A228-B95D0F17FB5F", $"_state = {_state}");
-            Info("60F3CC3D-9E06-4F5C-8E0C-1C92DFF8A226", $"_currToken = {_currToken}");
-            Info("120DA08F-7326-4AB0-A1FB-EBF9DDB85631", $"_items = {_items.WriteListToString()}");
-            Info("55696EE0-358F-4F13-ABE9-47278918A598", $"_currentItemsList = {_currentItemsList.WriteListToString()}");
-            Info("0E8EB277-F964-4E68-B02A-DD6C12AE195B", $"_currentItem = {_currentItem}");
+            //Info("E11076A3-E467-41F3-A228-B95D0F17FB5F", $"_state = {_state}");
+            //Info("60F3CC3D-9E06-4F5C-8E0C-1C92DFF8A226", $"_currToken = {_currToken}");
+            //Info("120DA08F-7326-4AB0-A1FB-EBF9DDB85631", $"_items = {_items.WriteListToString()}");
+            //Info("55696EE0-358F-4F13-ABE9-47278918A598", $"_currentItemsList = {_currentItemsList.WriteListToString()}");
+            //Info("0E8EB277-F964-4E68-B02A-DD6C12AE195B", $"_currentItem = {_currentItem}");
 #endif
 
             switch (_state)
@@ -372,7 +372,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     var subItem = BuildStrongIdentifierValue(groupedItem, StrongIdentifierLevel.None, false);
 
 #if DEBUG
-                    Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
+                    //Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
 #endif
 
                     if (subItem.IsEmpty)
@@ -459,7 +459,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             foreach(var item in items)
             {
 #if DEBUG
-                Info("B556484D-EA3F-4575-B70A-EE5603FC67AC", $"item = {item}");
+                //Info("B556484D-EA3F-4575-B70A-EE5603FC67AC", $"item = {item}");
 #endif
 
                 var token = item.Token;
@@ -469,13 +469,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     if (item.SubParts.Any())
                     {
 #if DEBUG
-                        Info("5FDE1B77-0AF4-4D1E-98F1-FA2573541716", $"item.SubParts = {item.SubParts.WriteListToString()}");
+                        //Info("5FDE1B77-0AF4-4D1E-98F1-FA2573541716", $"item.SubParts = {item.SubParts.WriteListToString()}");
 #endif
 
                         var convertedSubItems = PostProcessParts(item.SubParts, false);
 
 #if DEBUG
-                        Info("77B059D6-AB04-47D9-8CAD-8A0E32D2E87A", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
+                        //Info("77B059D6-AB04-47D9-8CAD-8A0E32D2E87A", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
 #endif
 
                         subItems.AddRange(convertedSubItems);
@@ -836,7 +836,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             foreach (var item in items)
             {
 #if DEBUG
-                Info("51E5C9D1-37A9-45D5-B2A3-DB3937A62B33", $"item = {item}");
+                //Info("51E5C9D1-37A9-45D5-B2A3-DB3937A62B33", $"item = {item}");
 #endif
 
                 var token = item.Token;
@@ -884,7 +884,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             foreach (var item in items)
             {
 #if DEBUG
-                Info("03D2A14F-E8B2-46F0-B9C8-6B12881E019C", $"item = {item}");
+                //Info("03D2A14F-E8B2-46F0-B9C8-6B12881E019C", $"item = {item}");
 #endif
 
                 var token = item.Token;

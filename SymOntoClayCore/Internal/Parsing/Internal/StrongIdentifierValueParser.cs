@@ -136,6 +136,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.OpenRoundBracket:
+                            if(_currentItem == null)
+                            {
+                                var item = new StrongIdentifierPart();
+
+                                AddItem(item);
+                            }
                             StartParsingSubParts();
                             break;
 
@@ -366,43 +372,60 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     var subItem = BuildStrongIdentifierValue(groupedItem, StrongIdentifierLevel.None, false);
 
 #if DEBUG
-                    //Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
+                    Info("B9B363FA-CC4A-4A16-B5C4-6EBE5BD42CE8", $"subItem = {subItem}");
 #endif
 
-                    subItems.Add(subItem);
+                    if (subItem.IsEmpty)
+                    {
+                        if (subItem.Namespaces.Any())
+                        {
+                            result.Namespaces.AddRange(subItem.Namespaces);
+                        }
+                    }
+                    else
+                    {
+                        subItems.Add(subItem);
+                    }
                 }
 
 #if DEBUG
                 //Info("AB559700-C03E-4244-8156-90D80DC82D0E", $"subItems = {subItems.WriteListToString()}");
 #endif
 
-                if(subItems.Count == 1)
+                switch(subItems.Count)
                 {
-                    result.Namespaces.AddRange(subItems);
-                }
-                else
-                {
-                    subItems.Reverse();
+                    case 0:
+                        break;
+
+                    case 1:
+                        result.Namespaces.AddRange(subItems);
+                        break;
+
+                    default:
+                        {
+                            subItems.Reverse();
 
 #if DEBUG
-                    //Info("70A528E2-137A-47A4-9989-3C43D80AEEB8", $"subItems (after) = {subItems.WriteListToString()}");
+                            //Info("70A528E2-137A-47A4-9989-3C43D80AEEB8", $"subItems (after) = {subItems.WriteListToString()}");
 #endif
-                    var firstItem = subItems.First();
-                    var currentItem = firstItem;
+                            var firstItem = subItems.First();
+                            var currentItem = firstItem;
 
-                    subItems.Remove(firstItem);
+                            subItems.Remove(firstItem);
 
-                    foreach(var subItem in subItems)
-                    {
+                            foreach (var subItem in subItems)
+                            {
 #if DEBUG
-                        //Info("021B2076-48DA-42EA-A8A9-7ADF0933FE5F", $"subItem = {subItem}");
+                                //Info("021B2076-48DA-42EA-A8A9-7ADF0933FE5F", $"subItem = {subItem}");
 #endif
 
-                        currentItem.Namespaces.Add(subItem);
-                        currentItem = subItem;
-                    }
+                                currentItem.Namespaces.Add(subItem);
+                                currentItem = subItem;
+                            }
 
-                    result.Namespaces.Add(firstItem);
+                            result.Namespaces.Add(firstItem);
+                        }
+                        break;
                 }
             }
 
@@ -436,10 +459,34 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             foreach(var item in items)
             {
 #if DEBUG
-                //Info("B556484D-EA3F-4575-B70A-EE5603FC67AC", $"item = {item}");
+                Info("B556484D-EA3F-4575-B70A-EE5603FC67AC", $"item = {item}");
 #endif
 
-                var tokenKind = item.Token.TokenKind;
+                var token = item.Token;
+
+                if(token == null)
+                {
+                    if (item.SubParts.Any())
+                    {
+#if DEBUG
+                        Info("5FDE1B77-0AF4-4D1E-98F1-FA2573541716", $"item.SubParts = {item.SubParts.WriteListToString()}");
+#endif
+
+                        var convertedSubItems = PostProcessParts(item.SubParts, false);
+
+#if DEBUG
+                        Info("77B059D6-AB04-47D9-8CAD-8A0E32D2E87A", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
+#endif
+
+                        subItems.AddRange(convertedSubItems);
+                    }
+
+                    //throw new NotImplementedException();
+
+                    continue;
+                }
+
+                var tokenKind = token.TokenKind;
 
                 switch (tokenKind)
                 {
@@ -732,6 +779,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         kindOfName = KindOfName.OnceResolvedAnonymousEntityCondition;
                         break;
 
+                    case KindOfName.CommonConcept:
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"Unexpected {nameof(KindOfName)} anonymous identifier.");
                 }
@@ -786,24 +836,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             foreach (var item in items)
             {
 #if DEBUG
-                //Info("51E5C9D1-37A9-45D5-B2A3-DB3937A62B33", $"item = {item}");
+                Info("51E5C9D1-37A9-45D5-B2A3-DB3937A62B33", $"item = {item}");
 #endif
 
-                var tokenKind = item.Token.TokenKind;
+                var token = item.Token;
 
-                switch (tokenKind)
+                if(token == null)
                 {
-                    case TokenKind.Or:
-                        result.Add(setOfParts);
-                        setOfParts = new List<StrongIdentifierPart>();
-                        break;
+                    setOfParts.Add(item);
+                }
+                else
+                {
+                    var tokenKind = token.TokenKind;
 
-                    case TokenKind.Gravis:
-                        break;
+                    switch (tokenKind)
+                    {
+                        case TokenKind.Or:
+                            result.Add(setOfParts);
+                            setOfParts = new List<StrongIdentifierPart>();
+                            break;
 
-                    default:
-                        setOfParts.Add(item);
-                        break;
+                        case TokenKind.Gravis:
+                            break;
+
+                        default:
+                            setOfParts.Add(item);
+                            break;
+                    }
                 }
             }
 
@@ -825,24 +884,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             foreach (var item in items)
             {
 #if DEBUG
-                //Info("03D2A14F-E8B2-46F0-B9C8-6B12881E019C", $"item = {item}");
+                Info("03D2A14F-E8B2-46F0-B9C8-6B12881E019C", $"item = {item}");
 #endif
 
-                var tokenKind = item.Token.TokenKind;
+                var token = item.Token;
 
-                switch (tokenKind)
+                if(token == null)
                 {
-                    case TokenKind.DoubleColon:
-                        result.Add(setOfParts);
-                        setOfParts = new List<StrongIdentifierPart>();
-                        break;
+                    setOfParts.Add(item);
+                }
+                else
+                {
+                    var tokenKind = token.TokenKind;
 
-                    case TokenKind.Gravis:
-                        break;
+                    switch (tokenKind)
+                    {
+                        case TokenKind.DoubleColon:
+                            result.Add(setOfParts);
+                            setOfParts = new List<StrongIdentifierPart>();
+                            break;
 
-                    default:
-                        setOfParts.Add(item);
-                        break;
+                        case TokenKind.Gravis:
+                            break;
+
+                        default:
+                            setOfParts.Add(item);
+                            break;
+                    }
                 }
             }
 

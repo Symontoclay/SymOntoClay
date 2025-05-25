@@ -19,6 +19,7 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("5BF042DE-688A-48D8-8ECD-92233AF6D477", "Begin");
 
+            Case23();
             //Case22();
             //Case21();
             //Case20();
@@ -35,18 +36,48 @@ namespace TestSandbox.Handlers
             //Case10();
             //Case9();
             //Case8();
-            Case8_a();//<-
+            //Case8_a();
             //Case7();
             //Case6();
             //Case5();
-            //Case5_a();//<-
+            //Case5_a();
             //Case4();
             //Case3();
-            //Case3_a();//<-
+            //Case3_a();
             //Case2();
             //Case1();
 
             _logger.Info("75A8C4DA-0D97-496F-AF78-258D4B8A5043", "End");
+        }
+
+        private void Case23()
+        {
+            _logger.Info("304DD03B-842C-47B6-BDE2-E8E1F3BB8CCE", $"Begin {nameof(Case23)}");
+
+            var str = "(animal | instrument)::dog";
+
+            _logger.Info("8B3AA3A3-E2DE-4DF7-8B29-631D7911EDE0", $"str = '{str}'");
+
+            var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
+
+            var parser = new StrongIdentifierValueParser(parserContext);
+            parser.Run();
+
+            var result = parser.Result;
+
+            _logger.Info("19F2C080-A816-4159-9576-186C22A430F1", $"result = {result}");
+            _logger.Info("43869980-52EA-4F14-B536-60FD513EB7EC", $"result = {result.ToHumanizedLabel()}");
+
+            //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            //Token token = null;
+
+            //while ((token = lexer.GetToken()) != null)
+            //{
+            //    _logger.Info("20556A98-2048-4CBB-AD52-CD068F75CADB", $"token = {token}");
+            //}
+
+            _logger.Info("BF0B3233-6E66-4DD0-A364-5F18927CB501", $"End {nameof(Case23)}");
         }
 
         private void Case22()

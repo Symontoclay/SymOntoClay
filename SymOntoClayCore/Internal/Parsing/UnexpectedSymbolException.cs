@@ -32,5 +32,10 @@ namespace SymOntoClay.Core.Internal.Parsing
             : base($"Unexpected symbol `{symbol}` at line {line} and pos {pos}.")
         {
         }
+
+        public UnexpectedSymbolException(string content, int line, int pos)
+            : base($"Unexpected symbols `{content}` at line {line} and pos {pos}.")
+        {
+        }
     }
 }

@@ -722,7 +722,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
             else
             {
-                throw new NotImplementedException("A1C6DE97-419B-40FB-B0D3-D6F132BCBA0E");
+                switch(kindOfName)
+                {
+                    case KindOfName.EntityCondition:
+                        kindOfName = KindOfName.AnonymousEntityCondition;
+                        break;
+
+                    case KindOfName.OnceResolvedEntityCondition:
+                        kindOfName = KindOfName.OnceResolvedAnonymousEntityCondition;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"Unexpected {nameof(KindOfName)} anonymous identifier.");
+                }
             }
 
             if (isRootItem && !capacity.HasValue && !hasInfiniteCapacity)

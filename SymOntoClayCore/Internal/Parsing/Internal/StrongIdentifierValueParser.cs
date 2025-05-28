@@ -130,6 +130,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.ChannelVarPrefix:
                         case TokenKind.PropertyPrefix:
                         case TokenKind.Number:
+                        case TokenKind.Minus:
                             {
                                 var item = new StrongIdentifierPart
                                 {
@@ -719,68 +720,79 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         break;
 
-                    case TokenKind.Word:                    
-                        if(item.Capacity.HasValue)
+                    case TokenKind.Word:
                         {
-                            capacity = item.Capacity.Value;
-                        }
-                        else
-                        {
-                            if(item.HasInfiniteCapacity)
+                            if (item.Capacity.HasValue)
                             {
-                                hasInfiniteCapacity = true;
+                                capacity = item.Capacity.Value;
                             }
-                        }
+                            else
+                            {
+                                if (item.HasInfiniteCapacity)
+                                {
+                                    hasInfiniteCapacity = true;
+                                }
+                            }
 
-                        if (item.SubParts.Any())
-                        {
+                            if (item.SubParts.Any())
+                            {
 #if DEBUG
-                            //Info("FD9B7C67-2D59-4F83-8742-EB9F6AE30332", $"item.SubParts = {item.SubParts.WriteListToString()}");
+                                //Info("FD9B7C67-2D59-4F83-8742-EB9F6AE30332", $"item.SubParts = {item.SubParts.WriteListToString()}");
 #endif
 
-                            var convertedSubItems = PostProcessParts(item.SubParts, false);
+                                var convertedSubItems = PostProcessParts(item.SubParts, false);
 
 #if DEBUG
-                            //Info("51133947-8891-4354-A0C8-6385F85D9573", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
+                                //Info("51133947-8891-4354-A0C8-6385F85D9573", $"convertedSubItems = {convertedSubItems.WriteListToString()}");
 #endif
 
-                            subItems.AddRange(convertedSubItems);
-                        }
-
-                        var content = item.Token.Content;
-
-                        if (wasWord)
-                        {
-                            if (!content.StartsWith("-"))
-                            {
-                                nameValueSb.Append(" ");
-                                normalizedNameValueSb.Append(" ");
+                                subItems.AddRange(convertedSubItems);
                             }
-                            
-                            nameValueSb.Append(content);                            
-                            normalizedNameValueSb.Append(content);
-                        }
-                        else
-                        {
-                            nameValueSb.Append("`");
-                            nameValueSb.Append(content);
-                            normalizedNameValueSb.Append(content);
-                            wasWord = true;
+
+                            var content = item.Token.Content;
+
+                            if (wasWord)
+                            {
+                                if (!content.StartsWith("-") && !nameValueSb.ToString().EndsWith("-"))
+                                {
+                                    nameValueSb.Append(" ");
+                                    normalizedNameValueSb.Append(" ");
+                                }
+
+                                nameValueSb.Append(content);
+                                normalizedNameValueSb.Append(content);
+                            }
+                            else
+                            {
+                                nameValueSb.Append("`");
+                                nameValueSb.Append(content);
+                                normalizedNameValueSb.Append(content);
+                                wasWord = true;
+                            }
                         }
                         break;
 
                     case TokenKind.Number:
-                        if (wasWord)
+                    case TokenKind.Minus:
                         {
-                            nameValueSb.Append(item.Token.Content);
-                            normalizedNameValueSb.Append(item.Token.Content);
-                        }
-                        else
-                        {
-                            nameValueSb.Append("`");
-                            nameValueSb.Append(item.Token.Content);
-                            normalizedNameValueSb.Append(item.Token.Content);
-                            wasWord = true;
+                            var content = item.Token.Content;
+
+#if DEBUG
+                            Info("FC21F895-676B-4918-BD4A-05D392FD0DF5", $"content = '{content}'");
+#endif
+
+                            if (wasWord)
+                            {
+                                nameValueSb.Append(content);
+                                normalizedNameValueSb.Append(content);
+                            }
+                            else
+                            {
+                                nameValueSb.Append("`");
+                                nameValueSb.Append(content);
+                                normalizedNameValueSb.Append(content);
+                                wasWord = true;
+                            }
                         }
                         break;
 

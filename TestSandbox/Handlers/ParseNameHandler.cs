@@ -45,7 +45,8 @@ namespace TestSandbox.Handlers
             //Case3();
             //Case3_a();
             //Case2();
-            Case2_a();
+            //Case2_a();
+            Case2_b();
             //Case1();
 
             _logger.Info("75A8C4DA-0D97-496F-AF78-258D4B8A5043", "End");
@@ -867,6 +868,36 @@ namespace TestSandbox.Handlers
             //}
 
             _logger.Info("77B9B0C2-3634-4101-AF04-2B556E1635FA", $"End {nameof(Case2_a)}");
+        }
+
+        private void Case2_b()
+        {
+            _logger.Info("E7EFAB4E-8EED-4754-96AB-3EE979D56628", $"Begin {nameof(Case2_b)}");
+
+            var str = "#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9";
+
+            _logger.Info("46C1D3F8-75B7-4A0F-B75D-3F94040CB4D8", $"str = '{str}'");
+
+            var parserContext = new InternalParserCoreContext(str, _logger, LexerMode.StrongIdentifier);
+
+            var parser = new StrongIdentifierValueParser(parserContext);
+            parser.Run();
+
+            var result = parser.Result;
+
+            _logger.Info("1F61F194-0901-4962-A215-FFE7399077D1", $"result = {result}");
+            _logger.Info("FDF0A42E-2E72-450E-8476-74DBC0C6159E", $"result = {result.ToHumanizedLabel()}");
+
+            //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
+
+            //Token token = null;
+
+            //while((token = lexer.GetToken()) != null)
+            //{
+            //    _logger.Info("ABEFD016-F6F6-44B4-81E9-96B685B5D92C", $"token = {token}");
+            //}
+
+            _logger.Info("23B882CC-D5B4-4385-8A37-A23C058BC63A", $"End {nameof(Case2_b)}");
         }
 
         private void Case1()

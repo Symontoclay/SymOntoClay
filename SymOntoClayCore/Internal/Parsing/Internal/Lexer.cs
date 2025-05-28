@@ -1592,20 +1592,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case TokenKind.Assign:
                     {
-                        if (_items.Count > 0)
+                        if (_items.Count == 0)
                         {
-                            throw new UnexpectedSymbolException(content, _currentLine, _currentPos);
+                            content = "=";
                         }
-
-                        var nextChar = _items.Peek();
-
-                        switch(nextChar)
+                        else
                         {
-                            case '>':
-                                _items.Dequeue();
-                                content = "=>";
-                                kind = TokenKind.Lambda;
-                                break;
+                            var nextChar = _items.Peek();
+
+                            switch (nextChar)
+                            {
+                                case '>':
+                                    _items.Dequeue();
+                                    content = "=>";
+                                    kind = TokenKind.Lambda;
+                                    break;
+                            }
                         }
                     }
                     break;
@@ -1614,24 +1616,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         if (_items.Count == 0)
                         {
-                            throw new UnexpectedSymbolException(content, _currentLine, _currentPos);
+                            content = ">";
                         }
-
-                        var nextChar = _items.Peek();
-
-                        switch (nextChar)
+                        else
                         {
-                            case '>':
-                                _items.Dequeue();
-                                content = ">>";
-                                kind = TokenKind.LeftRightStream;
-                                break;
+                            var nextChar = _items.Peek();
 
-                            case ':':
-                                _items.Dequeue();
-                                content = ">:";
-                                kind = TokenKind.PrimaryLogicalPartMark;
-                                break;
+                            switch (nextChar)
+                            {
+                                case '>':
+                                    _items.Dequeue();
+                                    content = ">>";
+                                    kind = TokenKind.LeftRightStream;
+                                    break;
+
+                                case ':':
+                                    _items.Dequeue();
+                                    content = ">:";
+                                    kind = TokenKind.PrimaryLogicalPartMark;
+                                    break;
+                            }
                         }
                     }
                     break;
@@ -1640,18 +1644,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         if (_items.Count == 0)
                         {
-                            throw new UnexpectedSymbolException(content, _currentLine, _currentPos);
+                            content = "{";
                         }
-
-                        var nextChar = _items.Peek();
-
-                        switch(nextChar)
+                        else
                         {
-                            case ':':
-                                _items.Dequeue();
-                                content = "{:";
-                                kind = TokenKind.OpenFactBracket;
-                                break;
+                            var nextChar = _items.Peek();
+
+                            switch (nextChar)
+                            {
+                                case ':':
+                                    _items.Dequeue();
+                                    content = "{:";
+                                    kind = TokenKind.OpenFactBracket;
+                                    break;
+                            }
                         }
                     }
                     break;
@@ -1660,20 +1666,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         if (_items.Count == 0)
                         {
-                            throw new UnexpectedSymbolException(content, _currentLine, _currentPos);
+                            content = "[";
                         }
-
-                        var nextChar = _items.Peek();
-
-                        switch (nextChar)
+                        else
                         {
-                            case ':':
-                                _items.Dequeue();
-                                content = "[:";
-                                kind = TokenKind.OpenAnnotationBracket;
-                                break;
+                            var nextChar = _items.Peek();
+
+                            switch (nextChar)
+                            {
+                                case ':':
+                                    _items.Dequeue();
+                                    content = "[:";
+                                    kind = TokenKind.OpenAnnotationBracket;
+                                    break;
+                            }
                         }
                     }
+                    break;
+
+                case TokenKind.Minus:
+                    content = "-";
                     break;
 
                 case TokenKind.Colon:

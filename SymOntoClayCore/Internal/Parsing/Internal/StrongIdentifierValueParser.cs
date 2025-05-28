@@ -719,7 +719,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         break;
 
-                    case TokenKind.Word:
+                    case TokenKind.Word:                    
                         if(item.Capacity.HasValue)
                         {
                             capacity = item.Capacity.Value;
@@ -747,11 +747,32 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             subItems.AddRange(convertedSubItems);
                         }
 
-                        if(wasWord)
+                        var content = item.Token.Content;
+
+                        if (wasWord)
                         {
-                            nameValueSb.Append(" ");
+                            if (!content.StartsWith("-"))
+                            {
+                                nameValueSb.Append(" ");
+                                normalizedNameValueSb.Append(" ");
+                            }
+                            
+                            nameValueSb.Append(content);                            
+                            normalizedNameValueSb.Append(content);
+                        }
+                        else
+                        {
+                            nameValueSb.Append("`");
+                            nameValueSb.Append(content);
+                            normalizedNameValueSb.Append(content);
+                            wasWord = true;
+                        }
+                        break;
+
+                    case TokenKind.Number:
+                        if (wasWord)
+                        {
                             nameValueSb.Append(item.Token.Content);
-                            normalizedNameValueSb.Append(" ");
                             normalizedNameValueSb.Append(item.Token.Content);
                         }
                         else

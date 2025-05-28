@@ -110,7 +110,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 Error("9A9C31DD-54C7-4E82-A6D3-6A84C2ABE746", e);
 
                 throw e;
-            }   
+            }
         }
 
         private readonly bool _allowPublicPosition;

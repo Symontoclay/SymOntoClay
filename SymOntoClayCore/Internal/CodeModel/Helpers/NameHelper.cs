@@ -247,6 +247,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
         public static StrongIdentifierValue CreateName(string text, IMonitorLogger logger)
         {
+#if DEBUG
+            _logger.Info("C853CD9C-C4D9-454F-A512-7D4E36FEADB7", $"text = '{text}'");
+#endif
+
             var parserContext = new InternalParserCoreContext(text, logger, LexerMode.StrongIdentifier);
 
             var parser = new StrongIdentifierValueParser(parserContext);

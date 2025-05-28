@@ -779,7 +779,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         kindOfName = KindOfName.OnceResolvedAnonymousEntityCondition;
                         break;
 
+                    case KindOfName.Unknown:
                     case KindOfName.CommonConcept:
+                    case KindOfName.Entity:
+                    case KindOfName.RuleOrFact:
+                    case KindOfName.Concept:
+                    case KindOfName.Channel:
+                    case KindOfName.Var:
+                    case KindOfName.SystemVar:
+                    case KindOfName.LogicalVar:
+                    case KindOfName.LinguisticVar:
+                    case KindOfName.Property:
                         break;
 
                     default:

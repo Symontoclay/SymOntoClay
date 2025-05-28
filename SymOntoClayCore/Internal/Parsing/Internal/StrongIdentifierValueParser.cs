@@ -218,7 +218,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, $"In `{Text}`.");
             }
         }
 
@@ -764,7 +764,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(tokenKind), tokenKind, null);
+                        throw new ArgumentOutOfRangeException(nameof(tokenKind), tokenKind, $"In `{Text}`.");
                 }
             }
 
@@ -798,7 +798,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"Unexpected {nameof(KindOfName)} anonymous identifier.");
+                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"Unexpected {nameof(KindOfName)} anonymous identifier in `{Text}`.");
                 }
             }
 

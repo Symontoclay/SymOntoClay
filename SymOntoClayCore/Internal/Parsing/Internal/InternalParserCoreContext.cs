@@ -21,6 +21,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _logger = logger;
             _lexer = new Lexer(text, logger, mode);
+            _text = text;
         }
 
         private InternalParserCoreContext _source;
@@ -28,6 +29,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private readonly IMonitorLogger _logger;
 
         public IMonitorLogger Logger => _logger;
+
+        private string _text;
+
+        public string Text
+        {
+            get
+            {
+                if (_source != null)
+                {
+                    return _source.Text;
+                }
+
+                return _text;
+            }
+        }
 
         private Lexer _lexer;
         private Stack<Token> _recoveriesTokens = new Stack<Token>();
@@ -105,11 +121,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             dest._source = _source;
             dest._lexer = _lexer.Fork();
+            dest._text = _text;
             dest._recoveriesTokens = new Stack<Token>(_recoveriesTokens.Reverse().ToList());
         }
 
         public void Assign(InternalParserCoreContext context)
         {
+            _text = context._text;
             _lexer.Assign(context._lexer);
             _recoveriesTokens = new Stack<Token>(context._recoveriesTokens.Reverse());
         }

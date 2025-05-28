@@ -49,6 +49,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected virtual bool ShouldBeUsedTerminationToken() => true;
 
+        protected string Text => _context.Text;
+
         public void Run()
         {
             OnEnter();

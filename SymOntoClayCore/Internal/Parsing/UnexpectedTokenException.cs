@@ -29,13 +29,43 @@ namespace SymOntoClay.Core.Internal.Parsing
 {
     public class UnexpectedTokenException : Exception
     {
+        private static string BuildMessage(string fullText, Token token, string message)
+        {
+            var sb = new StringBuilder();
+
+            if(!string.IsNullOrWhiteSpace(message))
+            {
+                sb.Append(message);
+            }
+
+            sb.Append($" Unexpected token {token.ToDebugString()}.");
+
+            if(!string.IsNullOrWhiteSpace(fullText))
+            {
+                sb.AppendLine();
+                sb.Append($"in `{fullText}`.");
+            }
+
+            return sb.ToString().Trim();
+        }
+
         public UnexpectedTokenException(Token token)
-            : base($"Unexpected token {token.ToDebugString()}.")
+            : base(BuildMessage(string.Empty, token, string.Empty))
+        {
+        }
+
+        public UnexpectedTokenException(string fullText, Token token)
+            : base(BuildMessage(fullText, token, string.Empty))
         {
         }
 
         public UnexpectedTokenException(Token token, string message)
-            : base($"{message} Unexpected token {token.ToDebugString()}.")
+            : base(BuildMessage(string.Empty, token, message))
+        {
+        }
+
+        public UnexpectedTokenException(string fullText, Token token, string message)
+            : base(BuildMessage(fullText, token, message))
         {
         }
     }

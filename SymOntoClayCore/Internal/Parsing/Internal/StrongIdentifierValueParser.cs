@@ -52,7 +52,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_currentItemsList != _items)
             {
-                throw new Exception($"9BA9A4D2-2A42-446D-BC57-2AE6A720952A: Invalid sting. Please check closing brackets.");
+                var sb = new StringBuilder();
+                sb.AppendLine($"9BA9A4D2-2A42-446D-BC57-2AE6A720952A: Invalid sting. Please check closing brackets.");
+                sb.Append($"in `{Text}`.");
+
+                throw new Exception(sb.ToString());
             }
 
             if(_items.Count == 0)
@@ -70,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 if (resultsList.Count > 1)
                 {
-                    throw new NotImplementedException("D3EE3F0E-17CB-4F08-9EEC-CE10E6A574B3");
+                    throw new NotImplementedException($"D3EE3F0E-17CB-4F08-9EEC-CE10E6A574B3 in `{Text}`.");
                 }
 
                 Result = resultsList.Single();
@@ -125,6 +129,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.SystemVarPrefix:
                         case TokenKind.ChannelVarPrefix:
                         case TokenKind.PropertyPrefix:
+                        case TokenKind.Number:
                             {
                                 var item = new StrongIdentifierPart
                                 {
@@ -154,7 +159,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -186,7 +191,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.PositiveInfinity:
                             if(_currentItem.HasInfiniteCapacity || _currentItem.Capacity.HasValue)
                             {
-                                throw new UnexpectedTokenException(_currToken);
+                                throw new UnexpectedTokenException(Text, _currToken);
                             }
                             else
                             {
@@ -208,7 +213,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -495,7 +500,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.IdentifierPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.IdentifierPrefix)));
                             }
                             else
                             {
@@ -506,7 +511,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.IdentifierPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.IdentifierPrefix), kindOfName, item));
                         }
                         break;
 
@@ -515,7 +520,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.EntityConditionPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.EntityConditionPrefix)));
                             }
                             else
                             {
@@ -526,7 +531,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.EntityConditionPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.EntityConditionPrefix), kindOfName, item));
                         }
                         break;
 
@@ -535,7 +540,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.ConceptPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.ConceptPrefix)));
                             }
                             else
                             {
@@ -546,7 +551,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.ConceptPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.ConceptPrefix), kindOfName, item));
                         }
                         break;
 
@@ -555,7 +560,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.OnceResolvedEntityConditionPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.OnceResolvedEntityConditionPrefix)));
                             }
                             else
                             {
@@ -566,7 +571,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.OnceResolvedEntityConditionPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.OnceResolvedEntityConditionPrefix), kindOfName, item));
                         }
                         break;
 
@@ -575,7 +580,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.RuleOrFactIdentifierPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.RuleOrFactIdentifierPrefix)));
                             }
                             else
                             {
@@ -586,7 +591,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.RuleOrFactIdentifierPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.RuleOrFactIdentifierPrefix), kindOfName, item));
                         }
                         break;
 
@@ -595,7 +600,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.LinguisticVarPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.LinguisticVarPrefix)));
                             }
                             else
                             {
@@ -606,7 +611,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.LinguisticVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.LinguisticVarPrefix), kindOfName, item));
                         }
                         break;
 
@@ -615,7 +620,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.LogicalVarPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.LogicalVarPrefix)));
                             }
                             else
                             {
@@ -626,7 +631,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.LogicalVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.LogicalVarPrefix), kindOfName, item));
                         }
                         break;
 
@@ -635,7 +640,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.VarPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.VarPrefix)));
                             }
                             else
                             {
@@ -646,7 +651,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.VarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.VarPrefix), kindOfName, item));
                         }
                         break;
 
@@ -655,7 +660,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.SystemVarPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.SystemVarPrefix)));
                             }
                             else
                             {
@@ -666,7 +671,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.SystemVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.SystemVarPrefix), kindOfName, item));
                         }
                         break;
 
@@ -675,7 +680,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.ChannelVarPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.ChannelVarPrefix)));
                             }
                             else
                             {
@@ -686,7 +691,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.ChannelVarPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.ChannelVarPrefix), kindOfName, item));
                         }
                         break;
 
@@ -699,7 +704,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             if (wasWord)
                             {
-                                throw new Exception($"An {nameof(TokenKind.PropertyPrefix)} can not be placed in the middle of an identifier."); ;
+                                throw new Exception(BuildExceptionMessage1(nameof(TokenKind.PropertyPrefix)));
                             }
                             else
                             {
@@ -710,7 +715,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         }
                         else
                         {
-                            throw new Exception($"An {nameof(TokenKind.PropertyPrefix)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` used.");
+                            throw new Exception(BuildExceptionMessage2(nameof(TokenKind.PropertyPrefix), kindOfName, item));
                         }
                         break;
 
@@ -831,6 +836,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             result.CheckDirty();
 
             return result;
+        }
+
+        private string BuildExceptionMessage1(string tokenKindName)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"An {tokenKindName} can not be placed in the middle of an identifier.");
+            sb.Append($"in `{Text}`.");
+            return sb.ToString();
+        }
+
+        private string BuildExceptionMessage2(string tokenKindName, KindOfName kindOfName, StrongIdentifierPart item)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"An {nameof(tokenKindName)} is already used. The identifier has already kind of name `{kindOfName}`. But prefix `{item.Token.Content}` is used.");
+            sb.Append($"in `{Text}`.");
+            return sb.ToString();
         }
 
         private List<List<StrongIdentifierPart>> GroupPartsByOr(List<StrongIdentifierPart> items)

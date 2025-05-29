@@ -106,6 +106,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return false;
             }
 
+            if (IsEmpty != other.IsEmpty)
+            {
+                return false;
+            }
+
             if (IsArray != other.IsArray)
             {
                 return false;
@@ -137,7 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 return false;
             }
-
+            //TODO: Use NEquals
             return Equals(personObj);
         }
 
@@ -157,7 +162,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 return false;
             }
-
+            //TODO: Use NEquals
             return a.NormalizedNameValue == b.NormalizedNameValue;
         }
 
@@ -177,7 +182,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 return true;
             }
-
+            //TODO: Use NEquals
             return a.NormalizedNameValue != b.NormalizedNameValue;
         }
 

@@ -852,6 +852,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var result = new StrongIdentifierValue
             {
+                IsEmpty = false,
                 NameValue = nameValueSb.ToString(),
                 NormalizedNameValue = normalizedNameValueSb.ToString(),
                 KindOfName = kindOfName,

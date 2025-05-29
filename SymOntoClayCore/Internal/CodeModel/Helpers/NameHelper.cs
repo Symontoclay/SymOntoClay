@@ -251,17 +251,36 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             _logger.Info("C853CD9C-C4D9-454F-A512-7D4E36FEADB7", $"text = '{text}'");
 #endif
 
+
             var parserContext = new InternalParserCoreContext(text, logger, LexerMode.StrongIdentifier);
 
             var parser = new StrongIdentifierValueParser(parserContext);
             parser.Run();
 
-            return parser.Result;
+#if DEBUG
+            //_logger.Info("938300DA-D7DD-4C09-8640-20A940EF7D7B", $"parser.Result = {parser.Result}");
+#endif
 
-            /*
-            if(string.IsNullOrWhiteSpace(text))
+            //if (text != "__ctor")
+            //{
+                var newValue = parser.Result;
+                //newValue.Capacity = null;
+                //if(!newValue.NormalizedNameValue.Contains("-"))
+                //{
+                //    newValue.NormalizedNameValue = newValue.NormalizedNameValue.Replace("`", string.Empty).Trim();
+                //}
+                return newValue;
+            //}
+
+            if (string.IsNullOrWhiteSpace(text))
             {
-                return new StrongIdentifierValue() { IsEmpty = true };
+                var oldValue = new StrongIdentifierValue() { IsEmpty = true };
+
+#if DEBUG
+                //_logger.Info("9C2A8D73-7EF1-4EDA-8124-536EC05F744A", $"oldValue = {oldValue}");
+#endif
+
+                return oldValue;
             }
 
             var name = new StrongIdentifierValue() { IsEmpty = false };
@@ -323,8 +342,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             name.NameValue = ShieldString(text);
 
             name.NormalizedNameValue = NormalizeString(text);
-            */
-            //return name;
+
+#if DEBUG
+            //_logger.Info("88132CDC-4B18-40B5-BF08-7C1B512E7F7D", $"name = {name}");
+#endif
+
+            return name;
         }
 
         public static string NormalizeString(string value)

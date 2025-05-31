@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Helpers
@@ -245,25 +246,37 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return CreateName(text, _logger);
         }
 
+        private static Dictionary<string, StrongIdentifierValue> _cache = new Dictionary<string, StrongIdentifierValue>();
+
         public static StrongIdentifierValue CreateName(string text, IMonitorLogger logger)
         {
 #if DEBUG
             _logger.Info("C853CD9C-C4D9-454F-A512-7D4E36FEADB7", $"text = '{text}'");
 #endif
 
+            if(_cache.TryGetValue(text, out var cachedResult))
+            {
+                return cachedResult;
+            }
 
             var parserContext = new InternalParserCoreContext(text, logger, LexerMode.StrongIdentifier);
 
             var parser = new StrongIdentifierValueParser(parserContext);
             parser.Run();
 
+            var result = parser.Result;
+
 #if DEBUG
-            //_logger.Info("938300DA-D7DD-4C09-8640-20A940EF7D7B", $"parser.Result = {parser.Result}");
+            //_logger.Info("938300DA-D7DD-4C09-8640-20A940EF7D7B", $"result = {result}");
 #endif
 
+            _cache[text] = result;
+
+            return result;
+            /*
             //if (text != "__ctor")
             //{
-                var newValue = parser.Result;
+            var newValue = parser.Result;
                 //newValue.Capacity = null;
                 //if(!newValue.NormalizedNameValue.Contains("-"))
                 //{
@@ -347,7 +360,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             //_logger.Info("88132CDC-4B18-40B5-BF08-7C1B512E7F7D", $"name = {name}");
 #endif
 
-            return name;
+            return name;*/
         }
 
         public static string NormalizeString(string value)

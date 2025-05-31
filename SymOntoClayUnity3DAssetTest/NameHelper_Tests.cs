@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2024 Sergiy Tolkachov
 
@@ -168,7 +168,53 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
-        public void CreateRuleOrFactName_Case1()
+        public void Channel_Case1_a()
+        {
+            var text = "@>`log`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@>`log`");
+            Assert.AreEqual(name.NormalizedNameValue, "@>log");
+            Assert.AreEqual(name.KindOfName, KindOfName.Channel);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Channel_Case1_b()
+        {
+            var text = "@>`big log`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@>`big log`");
+            Assert.AreEqual(name.NormalizedNameValue, "@>big log");
+            Assert.AreEqual(name.KindOfName, KindOfName.Channel);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void CreateRuleOrFactName_Case1_b()
         {
             var name = NameHelper.CreateRuleOrFactName();
 
@@ -305,6 +351,52 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void SystemVar_Case1_a()
+        {
+            var text = "@@`host`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@@`host`");
+            Assert.AreEqual(name.NormalizedNameValue, "@@host");
+            Assert.AreEqual(name.KindOfName, KindOfName.SystemVar);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void SystemVar_Case1_b()
+        {
+            var text = "@@`big host`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@@`big host`");
+            Assert.AreEqual(name.NormalizedNameValue, "@@big host");
+            Assert.AreEqual(name.KindOfName, KindOfName.SystemVar);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
         public void LogicVar_Case1()
         {
             var text = "$x";
@@ -374,6 +466,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void LinguisticVar_Case1_b()
+        {
+            var text = "#|`big teenager`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#|`big teenager`");
+            Assert.AreEqual(name.NormalizedNameValue, "#|big teenager");
+            Assert.AreEqual(name.KindOfName, KindOfName.LinguisticVar);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Concept_Case1()
         {
             var text = "##dog";
@@ -417,5 +532,34 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(name.Namespaces.Count, 0);
         }
+
+        /*
+        "#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9"
+        "#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`"
+        "#020ED339-6313-459A-900D-92F809CEBDC5"
+        "#`020ED339-6313-459A-900D-92F809CEBDC5`"
+        "##`dog`"
+        "##`small dog`"
+        "#@"
+        "#@`dog`"
+        "#@dog"
+        "##@"
+        "##@`dog`"
+        "##@dog"
+        "$_"
+        "$`_`"
+        "global::Prop1"
+        "@:`small dog`"
+        "global::##Prop1"
+        "global(politics)::dog (animal (alive))"
+        "number[5]"
+        "number[]"
+        "number[*]"
+        "number[∞]"
+        "dog (alive::animal | instrument (big))"
+        "alive::animal::big::dog"
+        "(animal | instrument)::dog"
+        "__ctor"
+        */
     }
 }

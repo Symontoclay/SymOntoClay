@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using System;
@@ -753,7 +754,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                             if (wasWord)
                             {
-                                if (!content.StartsWith("-") && !nameValueSb.ToString().EndsWith("-"))
+                                var lastChar = nameValueSb.Last();
+
+#if DEBUG
+                                //Info("86502C7E-188A-4E73-B02F-BEE4187C347A", $"lastChar = '{lastChar}'");
+                                
+#endif
+
+                                if (!content.StartsWith("-") && lastChar != '-' && !content.StartsWith("_") && lastChar != '_')
                                 {
                                     nameValueSb.Append(" ");
                                     normalizedNameValueSb.Append(" ");
@@ -778,7 +786,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             var content = item.Token.Content;
 
 #if DEBUG
-                            Info("FC21F895-676B-4918-BD4A-05D392FD0DF5", $"content = '{content}'");
+                            //Info("FC21F895-676B-4918-BD4A-05D392FD0DF5", $"content = '{content}'");
 #endif
 
                             if (wasWord)

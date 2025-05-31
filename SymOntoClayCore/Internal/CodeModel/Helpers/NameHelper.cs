@@ -274,17 +274,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
             return result;
             /*
-            //if (text != "__ctor")
-            //{
-            var newValue = parser.Result;
-                //newValue.Capacity = null;
-                //if(!newValue.NormalizedNameValue.Contains("-"))
-                //{
-                //    newValue.NormalizedNameValue = newValue.NormalizedNameValue.Replace("`", string.Empty).Trim();
-                //}
-                return newValue;
-            //}
-
             if (string.IsNullOrWhiteSpace(text))
             {
                 var oldValue = new StrongIdentifierValue() { IsEmpty = true };

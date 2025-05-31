@@ -167,7 +167,7 @@ namespace TestSandbox
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
             //TstParseName();
-            //TstCreateName();
+            TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
             //TstBattleRoyaleHandler();//<==
@@ -176,7 +176,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -2188,7 +2188,7 @@ primitive task SomePrimitiveTask4
         {
             _logger.Info("FC76D93C-5314-4852-BFAD-58ACE5999231", "Begin");
 
-            var parserContext = new TstMainStorageContext();
+            //var parserContext = new TstMainStorageContext();
 
             //var nameVal1 = "dog";
 
@@ -2257,7 +2257,8 @@ primitive task SomePrimitiveTask4
             //var name = NameHelper.CreateName("#|`teenager`");
             //var name = NameHelper.CreateName("##dog");
             //var name = NameHelper.CreateName("@:Prop1");
-            var name = NameHelper.CreateName("global::Prop1");
+            //var name = NameHelper.CreateName("global::Prop1");
+            var name = NameHelper.CreateName("#`Barrel 1`");
 
             _logger.Info("8809F884-AA8E-4EAA-A423-96D3D938280B", $"name = {name}");
 

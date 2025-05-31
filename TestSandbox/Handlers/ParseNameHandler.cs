@@ -19,9 +19,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("5BF042DE-688A-48D8-8ECD-92233AF6D477", "Begin");
 
-            Case24();
+            //Case24();
             //Case23();
-            //Case22();
+            Case22();
             //Case21();
             //Case20();
             //Case19();

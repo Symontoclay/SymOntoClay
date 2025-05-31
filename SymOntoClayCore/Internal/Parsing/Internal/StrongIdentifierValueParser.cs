@@ -791,6 +791,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                             if (wasWord)
                             {
+                                var lastChar = nameValueSb.Last();
+
+#if DEBUG
+                                //Info("45FDE69C-4954-4E37-A2CC-1BD6EAA984B9", $"lastChar = '{lastChar}'");
+
+#endif
+
+                                if (!content.StartsWith("-") && lastChar != '-')
+                                {
+                                    nameValueSb.Append(" ");
+                                    normalizedNameValueSb.Append(" ");
+                                }
+
+
                                 nameValueSb.Append(content);
                                 normalizedNameValueSb.Append(content);
                             }
@@ -861,8 +875,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var result = new StrongIdentifierValue
             {
                 IsEmpty = false,
-                NameValue = nameValueSb.ToString(),
-                NormalizedNameValue = normalizedNameValueSb.ToString(),
+                NameValue = nameValueSb.ToString().Trim(),
+                NormalizedNameValue = normalizedNameValueSb.ToString().ToLower().Trim(),
                 KindOfName = kindOfName,
                 Level = level,
                 Capacity = capacity,

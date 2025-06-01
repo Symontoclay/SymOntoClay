@@ -145,6 +145,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void CommonConcept_Case4()
+        {
+            var text = "__ctor";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`__ctor`");
+            Assert.AreEqual(name.NormalizedNameValue, "__ctor");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Channel_Case1()
         {
             var text = "@>log";
@@ -650,6 +673,52 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void Concept_Case2()
+        {
+            var text = "##`dog`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "##`dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "##dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Concept_Case3()
+        {
+            var text = "##`small dog`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "##`small dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "##small dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Property_Case1()
         {
             var text = "@:Prop1";
@@ -671,28 +740,53 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.Namespaces.Count, 0);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Property_Case2()
+        {
+            var text = "@:`small dog`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@:`small dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "@:small dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.Property);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
         /*
-        "##`dog`"
-        "##`small dog`"
         "#@"
         "#@`dog`"
         "#@dog"
+        "#@`small dog`"
+
         "##@"
         "##@`dog`"
         "##@dog"
+        "##@`small dog`"
+
         "global::Prop1"
         "global::@:Prop1"
-        "@:`small dog`"
         "global::##Prop1"
-        "global(politics)::dog (animal (alive))"
+        
         "number[5]"
         "number[]"
         "number[*]"
         "number[∞]"
+
+        "global(politics)::dog (animal (alive))"
         "dog (alive::animal | instrument (big))"
         "alive::animal::big::dog"
         "(animal | instrument)::dog"
-        "__ctor"
         */
     }
 }

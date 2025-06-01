@@ -236,6 +236,52 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void RuleOrFactName_Case2()
+        {
+            var text = "#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`");
+            Assert.AreEqual(name.NormalizedNameValue, "#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9");
+            Assert.AreEqual(name.KindOfName, KindOfName.RuleOrFact);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void RuleOrFactName_Case2_a()
+        {
+            var text = "#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`");
+            Assert.AreEqual(name.NormalizedNameValue, "#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9");
+            Assert.AreEqual(name.KindOfName, KindOfName.RuleOrFact);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Entity_Case1()
         {
             var text = "#dog1";
@@ -291,6 +337,52 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, "#`Barrel 1`");
             Assert.AreEqual(name.NormalizedNameValue, "#barrel 1");
+            Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Entity_Case4()
+        {
+            var text = "#020ED339-6313-459A-900D-92F809CEBDC5";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#`020ED339-6313-459A-900D-92F809CEBDC5`");
+            Assert.AreEqual(name.NormalizedNameValue, "#020ed339-6313-459a-900d-92f809cebdc5");
+            Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Entity_Case4_a()
+        {
+            var text = "#`020ED339-6313-459A-900D-92F809CEBDC5`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#`020ED339-6313-459A-900D-92F809CEBDC5`");
+            Assert.AreEqual(name.NormalizedNameValue, "#020ed339-6313-459a-900d-92f809cebdc5");
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
 
             Assert.AreEqual(name.IsArray, false);
@@ -420,6 +512,52 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void LogicVar_Case2()
+        {
+            var text = "$_";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "$`_`");
+            Assert.AreEqual(name.NormalizedNameValue, "$_");
+            Assert.AreEqual(name.KindOfName, KindOfName.LogicalVar);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void LogicVar_Case2_a()
+        {
+            var text = "$`_`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "$`_`");
+            Assert.AreEqual(name.NormalizedNameValue, "$_");
+            Assert.AreEqual(name.KindOfName, KindOfName.LogicalVar);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
         public void LinguisticVar_Case1()
         {
             var text = "#|`teenager`";
@@ -534,10 +672,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         /*
-        "#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9"
-        "#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`"
-        "#020ED339-6313-459A-900D-92F809CEBDC5"
-        "#`020ED339-6313-459A-900D-92F809CEBDC5`"
         "##`dog`"
         "##`small dog`"
         "#@"
@@ -546,9 +680,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         "##@"
         "##@`dog`"
         "##@dog"
-        "$_"
-        "$`_`"
         "global::Prop1"
+        "global::@:Prop1"
         "@:`small dog`"
         "global::##Prop1"
         "global(politics)::dog (animal (alive))"

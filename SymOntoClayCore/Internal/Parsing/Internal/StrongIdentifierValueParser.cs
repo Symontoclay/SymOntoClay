@@ -872,10 +872,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Info("16324165-46D6-401C-A9E2-35731FECA78A", $"subItems = {subItems.WriteListToString()}");
 #endif
 
+            var nameValue = nameValueSb.ToString().Trim();
+
             var result = new StrongIdentifierValue
             {
-                IsEmpty = false,
-                NameValue = nameValueSb.ToString().Trim(),
+                IsEmpty = string.IsNullOrWhiteSpace(nameValue),
+                NameValue = nameValue,
                 NormalizedNameValue = normalizedNameValueSb.ToString().ToLower().Trim(),
                 KindOfName = kindOfName,
                 Level = level,

@@ -1085,14 +1085,96 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.Namespaces.Count, 0);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Array_Case1()
+        {
+            var text = "number[5]";
 
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`number`");
+            Assert.AreEqual(name.NormalizedNameValue, "number");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, true);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 5);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Array_Case2()
+        {
+            var text = "number[]";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`number`");
+            Assert.AreEqual(name.NormalizedNameValue, "number");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, true);
+            Assert.AreEqual(name.Capacity.HasValue, false);
+            Assert.AreEqual(name.HasInfiniteCapacity, true);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Array_Case3()
+        {
+            var text = "number[*]";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`number`");
+            Assert.AreEqual(name.NormalizedNameValue, "number");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, true);
+            Assert.AreEqual(name.Capacity.HasValue, false);
+            Assert.AreEqual(name.HasInfiniteCapacity, true);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Array_Case4()
+        {
+            var text = "number[∞]";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`number`");
+            Assert.AreEqual(name.NormalizedNameValue, "number");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, true);
+            Assert.AreEqual(name.Capacity.HasValue, false);
+            Assert.AreEqual(name.HasInfiniteCapacity, true);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
 
         /*
-        "number[5]"
-        "number[]"
-        "number[*]"
-        "number[∞]"
-
         "global(politics)::dog (animal (alive))"
         "dog (alive::animal | instrument (big))"
         "alive::animal::big::dog"

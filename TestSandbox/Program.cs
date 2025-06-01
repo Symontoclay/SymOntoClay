@@ -2258,7 +2258,7 @@ primitive task SomePrimitiveTask4
             //var name = NameHelper.CreateName("##dog");
             //var name = NameHelper.CreateName("@:Prop1");
             //var name = NameHelper.CreateName("global::Prop1");
-            var name = NameHelper.CreateName("number[5]");
+            var name = NameHelper.CreateName("number[]");
 
             _logger.Info("8809F884-AA8E-4EAA-A423-96D3D938280B", $"name = {name}");
 

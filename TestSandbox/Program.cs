@@ -2258,9 +2258,23 @@ primitive task SomePrimitiveTask4
             //var name = NameHelper.CreateName("##dog");
             //var name = NameHelper.CreateName("@:Prop1");
             //var name = NameHelper.CreateName("global::Prop1");
-            var name = NameHelper.CreateName("number[]");
+            var name = NameHelper.CreateName("alive::animal::big::dog");
 
             _logger.Info("8809F884-AA8E-4EAA-A423-96D3D938280B", $"name = {name}");
+
+            _logger.Info("01364002-566A-4FD7-B0F7-E85D9335E48E", $"name.Namespaces.Count = {name.Namespaces.Count}");
+
+            //var firstNamespacesElement = name.Namespaces[0];
+
+            //_logger.Info("B9E73FF9-5AF9-4645-AFAA-AE3818E50267", $"firstNamespacesElement = {firstNamespacesElement}");
+            //_logger.Info("53AFA441-237B-4C04-B86C-0CDC98EFE6FF", $"firstNamespacesElement.Namespaces.Count = {firstNamespacesElement.Namespaces.Count}");
+
+            //var secondNamespacesElement = name.Namespaces[1];
+
+            //_logger.Info("1D190F48-1403-428C-B62F-71EE2F9DCB1A", $"secondNamespacesElement = {secondNamespacesElement}");
+            //_logger.Info("0BFE04AF-EF35-495A-815A-234924B9BC8D", $"secondNamespacesElement.Namespaces.Count = {secondNamespacesElement.Namespaces.Count}");
+
+            //_logger.Info(, $" = {}");
 
             _logger.Info("8B5DDBE3-EB99-4DAA-BEA0-09745DC23DD7", "End");
         }

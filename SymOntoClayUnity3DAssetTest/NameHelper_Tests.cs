@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using System;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -1174,9 +1175,173 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.Namespaces.Count, 0);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Namespaces_Case1()
+        {
+            var text = "global(politics)::dog (animal (alive))";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 2);
+
+            var firstNamespacesElement = name.Namespaces[0];
+
+            Assert.AreEqual(firstNamespacesElement.IsEmpty, false);
+            Assert.AreEqual(firstNamespacesElement.NameValue, "`animal`");
+            Assert.AreEqual(firstNamespacesElement.NormalizedNameValue, "animal");
+            Assert.AreEqual(firstNamespacesElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(firstNamespacesElement.IsArray, false);
+            Assert.AreEqual(firstNamespacesElement.Capacity.HasValue, false);
+            Assert.AreEqual(firstNamespacesElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(firstNamespacesElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(firstNamespacesElement.Namespaces.Count, 1);
+
+            var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
+
+            Assert.AreEqual(firstNamespacesSubElement.IsEmpty, false);
+            Assert.AreEqual(firstNamespacesSubElement.NameValue, "`alive`");
+            Assert.AreEqual(firstNamespacesSubElement.NormalizedNameValue, "alive");
+            Assert.AreEqual(firstNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(firstNamespacesSubElement.IsArray, false);
+            Assert.AreEqual(firstNamespacesSubElement.Capacity.HasValue, false);
+            Assert.AreEqual(firstNamespacesSubElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(firstNamespacesSubElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(firstNamespacesSubElement.Namespaces.Count, 0);
+
+            var secondNamespacesElement = name.Namespaces[1];
+
+            Assert.AreEqual(secondNamespacesElement.IsEmpty, false);
+            Assert.AreEqual(secondNamespacesElement.NameValue, "`global`");
+            Assert.AreEqual(secondNamespacesElement.NormalizedNameValue, "global");
+            Assert.AreEqual(secondNamespacesElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(secondNamespacesElement.IsArray, false);
+            Assert.AreEqual(secondNamespacesElement.Capacity.HasValue, false);
+            Assert.AreEqual(secondNamespacesElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(secondNamespacesElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(secondNamespacesElement.Namespaces.Count, 1);
+
+            var secondNamespacesSubElement = secondNamespacesElement.Namespaces[0];
+
+            Assert.AreEqual(secondNamespacesSubElement.IsEmpty, false);
+            Assert.AreEqual(secondNamespacesSubElement.NameValue, "`politics`");
+            Assert.AreEqual(secondNamespacesSubElement.NormalizedNameValue, "politics");
+            Assert.AreEqual(secondNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(secondNamespacesSubElement.IsArray, false);
+            Assert.AreEqual(secondNamespacesSubElement.Capacity.HasValue, false);
+            Assert.AreEqual(secondNamespacesSubElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(secondNamespacesSubElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(secondNamespacesSubElement.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Namespaces_Case2()
+        {
+            var text = "dog (alive::animal | instrument (big))";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 2);
+
+            var firstNamespacesElement = name.Namespaces[0];
+
+            Assert.AreEqual(firstNamespacesElement.IsEmpty, false);
+            Assert.AreEqual(firstNamespacesElement.NameValue, "`animal`");
+            Assert.AreEqual(firstNamespacesElement.NormalizedNameValue, "animal");
+            Assert.AreEqual(firstNamespacesElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(firstNamespacesElement.IsArray, false);
+            Assert.AreEqual(firstNamespacesElement.Capacity.HasValue, false);
+            Assert.AreEqual(firstNamespacesElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(firstNamespacesElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(firstNamespacesElement.Namespaces.Count, 1);
+
+            var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
+
+            Assert.AreEqual(firstNamespacesSubElement.IsEmpty, false);
+            Assert.AreEqual(firstNamespacesSubElement.NameValue, "`alive`");
+            Assert.AreEqual(firstNamespacesSubElement.NormalizedNameValue, "alive");
+            Assert.AreEqual(firstNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(firstNamespacesSubElement.IsArray, false);
+            Assert.AreEqual(firstNamespacesSubElement.Capacity.HasValue, false);
+            Assert.AreEqual(firstNamespacesSubElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(firstNamespacesSubElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(firstNamespacesSubElement.Namespaces.Count, 0);
+
+            var secondNamespacesElement = name.Namespaces[1];
+
+            Assert.AreEqual(secondNamespacesElement.IsEmpty, false);
+            Assert.AreEqual(secondNamespacesElement.NameValue, "`instrument`");
+            Assert.AreEqual(secondNamespacesElement.NormalizedNameValue, "instrument");
+            Assert.AreEqual(secondNamespacesElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(secondNamespacesElement.IsArray, false);
+            Assert.AreEqual(secondNamespacesElement.Capacity.HasValue, false);
+            Assert.AreEqual(secondNamespacesElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(secondNamespacesElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(secondNamespacesElement.Namespaces.Count, 1);
+
+            var secondNamespacesSubElement = secondNamespacesElement.Namespaces[0];
+
+            Assert.AreEqual(secondNamespacesSubElement.IsEmpty, false);
+            Assert.AreEqual(secondNamespacesSubElement.NameValue, "`big`");
+            Assert.AreEqual(secondNamespacesSubElement.NormalizedNameValue, "big");
+            Assert.AreEqual(secondNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(secondNamespacesSubElement.IsArray, false);
+            Assert.AreEqual(secondNamespacesSubElement.Capacity.HasValue, false);
+            Assert.AreEqual(secondNamespacesSubElement.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(secondNamespacesSubElement.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(secondNamespacesSubElement.Namespaces.Count, 0);
+        }
+
         /*
-        "global(politics)::dog (animal (alive))"
-        "dog (alive::animal | instrument (big))"
         "alive::animal::big::dog"
         "(animal | instrument)::dog"
         */

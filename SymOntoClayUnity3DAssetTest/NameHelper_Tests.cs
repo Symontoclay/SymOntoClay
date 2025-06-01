@@ -763,21 +763,331 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(name.Namespaces.Count, 0);
         }
 
+        [Test]
+        [Parallelizable]
+        public void EntityCondition_Case1()
+        {
+            var text = "#@";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#@");
+            Assert.AreEqual(name.NormalizedNameValue, "#@");
+            Assert.AreEqual(name.KindOfName, KindOfName.AnonymousEntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void EntityCondition_Case2()
+        {
+            var text = "#@`dog`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#@`dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "#@dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.EntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void EntityCondition_Case2_a()
+        {
+            var text = "#@dog";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#@`dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "#@dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.EntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void EntityCondition_Case3()
+        {
+            var text = "#@`small dog`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#@`small dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "#@small dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.EntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void OnceResolvedEntityCondition_Case1()
+        {
+            var text = "##@";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "##@");
+            Assert.AreEqual(name.NormalizedNameValue, "##@");
+            Assert.AreEqual(name.KindOfName, KindOfName.OnceResolvedAnonymousEntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void OnceResolvedEntityCondition_Case2()
+        {
+            var text = "##@`dog`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "##@`dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "##@dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.OnceResolvedEntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void OnceResolvedEntityCondition_Case2_a()
+        {
+            var text = "##@dog";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "##@`dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "##@dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.OnceResolvedEntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void OnceResolvedEntityCondition_Case3()
+        {
+            var text = "##@`small dog`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "##@`small dog`");
+            Assert.AreEqual(name.NormalizedNameValue, "##@small dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.OnceResolvedEntityCondition);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.None);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Level_Case1()
+        {
+            var text = "global::Prop1";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`Prop1`");
+            Assert.AreEqual(name.NormalizedNameValue, "prop1");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.Global);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Level_Case2()
+        {
+            var text = "global::@:Prop1";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@:`Prop1`");
+            Assert.AreEqual(name.NormalizedNameValue, "@:prop1");
+            Assert.AreEqual(name.KindOfName, KindOfName.Property);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.Global);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Level_Case3()
+        {
+            var text = "global::##Prop1";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "##`Prop1`");
+            Assert.AreEqual(name.NormalizedNameValue, "##prop1");
+            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.Global);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Level_Case4()
+        {
+            var text = "root::Prop1";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`Prop1`");
+            Assert.AreEqual(name.NormalizedNameValue, "prop1");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.Root);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Level_Case5()
+        {
+            var text = "strategic::Prop1";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`Prop1`");
+            Assert.AreEqual(name.NormalizedNameValue, "prop1");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.Strategic);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Level_Case6()
+        {
+            var text = "tactical::Prop1";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "`Prop1`");
+            Assert.AreEqual(name.NormalizedNameValue, "prop1");
+            Assert.AreEqual(name.KindOfName, KindOfName.CommonConcept);
+
+            Assert.AreEqual(name.IsArray, false);
+            Assert.AreEqual(name.Capacity.HasValue, true);
+            Assert.AreEqual(name.Capacity.Value, 1);
+            Assert.AreEqual(name.HasInfiniteCapacity, false);
+
+            Assert.AreEqual(name.Level, StrongIdentifierLevel.Tactical);
+
+            Assert.AreEqual(name.Namespaces.Count, 0);
+        }
+
+
+
         /*
-        "#@"
-        "#@`dog`"
-        "#@dog"
-        "#@`small dog`"
-
-        "##@"
-        "##@`dog`"
-        "##@dog"
-        "##@`small dog`"
-
-        "global::Prop1"
-        "global::@:Prop1"
-        "global::##Prop1"
-        
         "number[5]"
         "number[]"
         "number[*]"

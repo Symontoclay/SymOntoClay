@@ -247,6 +247,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
         }
 
         private static Dictionary<string, StrongIdentifierValue> _cache = new Dictionary<string, StrongIdentifierValue>();
+        private static object _cacheLock = new object();
 
         public static StrongIdentifierValue CreateName(string text, IMonitorLogger logger)
         {
@@ -254,9 +255,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             _logger.Info("C853CD9C-C4D9-454F-A512-7D4E36FEADB7", $"text = '{text}'");
 #endif
 
-            if(_cache.TryGetValue(text, out var cachedResult))
+            lock(_cacheLock)
             {
-                return cachedResult;
+                if (_cache.TryGetValue(text, out var cachedResult))
+                {
+                    return cachedResult;
+                }
             }
 
             var parserContext = new InternalParserCoreContext(text, logger, LexerMode.StrongIdentifier);
@@ -270,7 +274,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             //_logger.Info("938300DA-D7DD-4C09-8640-20A940EF7D7B", $"result = {result}");
 #endif
 
-            _cache[text] = result;
+            lock (_cacheLock)
+            {
+                _cache[text] = result;
+            }            
 
             return result;
             /*

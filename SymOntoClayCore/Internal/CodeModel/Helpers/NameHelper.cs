@@ -26,6 +26,7 @@ using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
@@ -48,6 +49,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"${Guid.NewGuid().ToString("D").Substring(0, 8)}";
         }
 
+        private static Dictionary<string, string> _shieldStringCache = new Dictionary<string, string>();
+        private static object _shieldStringCacheLock = new object();
+
         public static string ShieldString(string source)
         {
             if(string.IsNullOrWhiteSpace(source))
@@ -55,147 +59,24 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 return string.Empty;
             }
 
-            if (source.StartsWith("@>"))
+            lock (_shieldStringCacheLock)
             {
-                var nameSubStr = source.Substring(2);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
+                if (_shieldStringCache.TryGetValue(source, out var cachedResult))
                 {
-                    return source;
+                    return cachedResult;
                 }
-
-                return $"{source.Insert(2, "`")}`";
             }
 
-            if (source.StartsWith("@@"))
+            var name = CreateName(source);
+
+            var result = name.NameValue;
+
+            lock (_shieldStringCacheLock)
             {
-                var nameSubStr = source.Substring(2);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(2, "`")}`";
+                _shieldStringCache[source] = result;
             }
 
-            if (source.StartsWith("@:"))
-            {
-                var nameSubStr = source.Substring(2);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(2, "`")}`";
-            }
-
-            if (source == "#@")
-            {
-                return source;
-            }
-
-            if(source == "##@")
-            {
-                return source;
-            }
-
-            if (source.StartsWith("##@"))
-            {
-                var nameSubStr = source.Substring(2);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(3, "`")}`";
-            }
-
-            if (source.StartsWith("#@"))
-            {
-                var nameSubStr = source.Substring(2);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(2, "`")}`";
-            }
-
-            if (source.StartsWith("##"))
-            {
-                var nameSubStr = source.Substring(2);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(2, "`")}`";
-            }
-
-            if (source.StartsWith("#^"))
-            {
-                var nameSubStr = source.Substring(2);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(2, "`")}`";
-            }
-
-            if (source.StartsWith("@"))
-            {
-                var nameSubStr = source.Substring(1);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(1, "`")}`";
-            }
-
-            if (source.StartsWith("#"))
-            {
-                var nameSubStr = source.Substring(1);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(1, "`")}`";
-            }
-
-            if (source == "$_")
-            {
-                return source;
-            }
-
-            if (source.StartsWith("$"))
-            {
-                var nameSubStr = source.Substring(1);
-
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
-                {
-                    return source;
-                }
-
-                return $"{source.Insert(1, "`")}`";
-            }
-
-            if (source.All(p => char.IsLetterOrDigit(p) || p == '_') || source.Contains("`"))
-            {
-                return source;
-            }
-
-            return $"`{source}`";
+            return result;
         }
 
         public static string UnShieldString(string source)
@@ -246,8 +127,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return CreateName(text, _logger);
         }
 
-        private static Dictionary<string, StrongIdentifierValue> _cache = new Dictionary<string, StrongIdentifierValue>();
-        private static object _cacheLock = new object();
+        private static Dictionary<string, StrongIdentifierValue> _createNameCache = new Dictionary<string, StrongIdentifierValue>();
+        private static object _createNameCacheLock = new object();
 
         public static StrongIdentifierValue CreateName(string text, IMonitorLogger logger)
         {
@@ -255,9 +136,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             _logger.Info("C853CD9C-C4D9-454F-A512-7D4E36FEADB7", $"text = '{text}'");
 #endif
 
-            lock(_cacheLock)
+            if(string.IsNullOrWhiteSpace(text))
             {
-                if (_cache.TryGetValue(text, out var cachedResult))
+                return StrongIdentifierValue.Empty;
+            }
+
+            lock(_createNameCacheLock)
+            {
+                if (_createNameCache.TryGetValue(text, out var cachedResult))
                 {
                     return cachedResult;
                 }
@@ -274,9 +160,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             //_logger.Info("938300DA-D7DD-4C09-8640-20A940EF7D7B", $"result = {result}");
 #endif
 
-            lock (_cacheLock)
+            lock (_createNameCacheLock)
             {
-                _cache[text] = result;
+                _createNameCache[text] = result;
             }            
 
             return result;

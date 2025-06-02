@@ -43,7 +43,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case2()
         {
-            Assert.AreEqual("dog", NameHelper.ShieldString("dog"));
+            Assert.AreEqual("`dog`", NameHelper.ShieldString("dog"));
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case3()
         {
-            Assert.AreEqual("@>log", NameHelper.ShieldString("@>log"));
+            Assert.AreEqual("@>`log`", NameHelper.ShieldString("@>log"));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case4()
         {
-            Assert.AreEqual("@@self", NameHelper.ShieldString("@@self"));
+            Assert.AreEqual("@@`self`", NameHelper.ShieldString("@@self"));
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case6()
         {
-            Assert.AreEqual("#@example", NameHelper.ShieldString("#@example"));
+            Assert.AreEqual("#@`example`", NameHelper.ShieldString("#@example"));
         }
 
         [Test]
@@ -162,7 +162,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case7()
         {
-            Assert.AreEqual("##example", NameHelper.ShieldString("##example"));
+            Assert.AreEqual("##`example`", NameHelper.ShieldString("##example"));
         }
 
         [Test]
@@ -190,7 +190,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case8()
         {
-            Assert.AreEqual("#^example", NameHelper.ShieldString("#^example"));
+            Assert.AreEqual("#^`example`", NameHelper.ShieldString("#^example"));
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case9()
         {
-            Assert.AreEqual("@example", NameHelper.ShieldString("@example"));
+            Assert.AreEqual("@`example`", NameHelper.ShieldString("@example"));
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case10()
         {
-            Assert.AreEqual("#example", NameHelper.ShieldString("#example"));
+            Assert.AreEqual("#`example`", NameHelper.ShieldString("#example"));
         }
 
         [Test]
@@ -274,7 +274,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case11()
         {
-            Assert.AreEqual("$example", NameHelper.ShieldString("$example"));
+            Assert.AreEqual("$`example`", NameHelper.ShieldString("$example"));
         }
 
         [Test]

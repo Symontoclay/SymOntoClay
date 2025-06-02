@@ -142,8 +142,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 return false;
             }
-            //TODO: Use NEquals
-            return Equals(personObj);
+            
+            return NEquals(personObj);
         }
 
         public static bool operator == (StrongIdentifierValue a, StrongIdentifierValue b)
@@ -162,8 +162,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 return false;
             }
-            //TODO: Use NEquals
-            return a.NormalizedNameValue == b.NormalizedNameValue;
+            return a.NEquals(b);
         }
 
         public static bool operator != (StrongIdentifierValue a, StrongIdentifierValue b)
@@ -182,8 +181,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 return true;
             }
-            //TODO: Use NEquals
-            return a.NormalizedNameValue != b.NormalizedNameValue;
+            
+            return !a.NEquals(b);
         }
 
         /// <inheritdoc/>

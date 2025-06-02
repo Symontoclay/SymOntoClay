@@ -102,7 +102,7 @@ namespace TestSandbox.Handlers
 
             _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
 
             _logger.Info("E90B79FF-F642-4FC1-94A6-EE3F9BBD6DD0", "|||||||||||||");
 

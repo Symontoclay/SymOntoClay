@@ -50,12 +50,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
         }
     }

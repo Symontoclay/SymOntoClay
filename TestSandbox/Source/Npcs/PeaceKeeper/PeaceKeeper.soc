@@ -1,15 +1,12 @@
 ﻿app PeaceKeeper
 {
-    {: >: { see(I, #`Barrel 1`) } :}
+    
 
     on Enter =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barrel 1`) } :})
-        {
-            'Yes!' >> @>log;
-        }
+        ##`Begin` >> @>log;
 
         'End' >> @>log;
     }

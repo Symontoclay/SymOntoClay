@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -169,12 +169,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, $"In `{Text}`.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 if(Result.AnnotationSystemEventsDict.ContainsKey(KindOfAnnotationSystemEvent.Complete))
                                 {
-                                    throw new UnexpectedTokenException(_currToken, "Event `Complete` already exists.");
+                                    throw new UnexpectedTokenException(Text, _currToken, "Event `Complete` already exists.");
                                 }
 
                                 _context.Recovery(_currToken);
@@ -211,7 +211,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 if (Result.AnnotationSystemEventsDict.ContainsKey(KindOfAnnotationSystemEvent.WeakCancel))
                                 {
-                                    throw new UnexpectedTokenException(_currToken, "Event `Weak cancel` already exists.");
+                                    throw new UnexpectedTokenException(Text, _currToken, "Event `Weak cancel` already exists.");
                                 }
 
                                 _context.Recovery(_currToken);

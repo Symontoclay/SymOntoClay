@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -166,7 +166,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -187,7 +187,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -199,7 +199,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -215,7 +215,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -247,12 +247,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, $"In `{Text}`.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             if(_primaryPartHasBeenParsed)
             {
-                throw new UnexpectedTokenException(_currToken);
+                throw new UnexpectedTokenException(Text, _currToken);
             }
 
             _context.Recovery(_currToken);
@@ -280,7 +280,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             if(_secondaryPartHasBeenParsed)
             {
-                throw new UnexpectedTokenException(_currToken);
+                throw new UnexpectedTokenException(Text, _currToken);
             }
 
             _context.Recovery(_currToken);
@@ -312,7 +312,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         if(_obligationModalityHasBeenParsed)
                         {
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                         }
 
                         var parser = new LogicalModalityValueParser(_context);
@@ -330,7 +330,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         if(_selfObligationModalityHasBeenParsed)
                         {
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                         }
 
                         var parser = new LogicalModalityValueParser(_context);

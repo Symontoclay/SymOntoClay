@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         Exit();
                         break;
                     }
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
 
                 case TokenKind.OpenAnnotationBracket:
                     ProcessAnnotation();
@@ -184,7 +184,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
         }
 
@@ -230,7 +230,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             if (_nodePoint.CurrentNode != null && _nodePoint.CurrentNode.Kind == KindOfIntermediateAstNode.Leaf)
             {
-                throw new UnexpectedTokenException(_currToken);
+                throw new UnexpectedTokenException(Text, _currToken);
             }
 
             _lastBinaryOperator = null;
@@ -361,7 +361,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 break;
 
                             default:
-                                throw new UnexpectedTokenException(_currToken);
+                                throw new UnexpectedTokenException(Text, _currToken);
                         }
                     }
                     break;
@@ -389,7 +389,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 break;
 
                             default:
-                                throw new UnexpectedTokenException(_currToken);
+                                throw new UnexpectedTokenException(Text, _currToken);
                         }
                         break;
                     }
@@ -409,13 +409,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 break;
 
                             default:
-                                throw new UnexpectedTokenException(_currToken);
+                                throw new UnexpectedTokenException(Text, _currToken);
                         }
                     }
                     break;
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
         }
 
@@ -564,7 +564,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _lastIsOperator = null;
             //_hasSomething = true;
 
+#if DEBUG
+            Info("0EB1AEEA-4C3E-4082-94DD-45F986FB41E9", $"_currToken.Content = {_currToken.Content}");
+#endif
+
             var value = NameHelper.CreateName(_currToken.Content);
+
+#if DEBUG
+            Info("D71E7ABE-7304-46EF-A0CB-C7E2C8194E78", $"value = {value}");
+#endif
 
             var kindOfName = value.KindOfName;
 
@@ -584,7 +592,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"In `{Text}`.");
             }
         }
 
@@ -731,14 +739,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 return;
             }
 
-            throw new UnexpectedTokenException(_currToken);
+            throw new UnexpectedTokenException(Text, _currToken);
         }
 
         private void ProcessChannel()
         {
             if (_nodePoint.CurrentNode.Kind == KindOfIntermediateAstNode.Leaf)
             {
-                throw new UnexpectedTokenException(_currToken);
+                throw new UnexpectedTokenException(Text, _currToken);
             }
 
             _lastBinaryOperator = null;

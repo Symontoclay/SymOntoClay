@@ -87,12 +87,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     break;
 
                                 default:
-                                    throw new UnexpectedTokenException(_currToken);
+                                    throw new UnexpectedTokenException(Text, _currToken);
                             }
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                         break;
 
                                                     default:
-                                                        throw new UnexpectedTokenException(_currToken);
+                                                        throw new UnexpectedTokenException(Text, _currToken);
                                                 }
                                                 break;
 
@@ -157,12 +157,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     break;
 
                                 default:
-                                    throw new UnexpectedTokenException(_currToken);
+                                    throw new UnexpectedTokenException(Text, _currToken);
                             }
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -178,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -190,7 +190,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -208,7 +208,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, $"In `{Text}`.");
             }
         }
 

@@ -171,7 +171,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Number:
                             if(_currentItem.HasInfiniteCapacity || _currentItem.Capacity.HasValue)
                             {
-                                throw new UnexpectedTokenException(_currToken);
+                                throw new UnexpectedTokenException(Text, _currToken);
                             }
                             else
                             {

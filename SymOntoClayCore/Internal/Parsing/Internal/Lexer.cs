@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -65,13 +66,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public Lexer(string text, IMonitorLogger logger, LexerMode mode = LexerMode.Code)
         {
+#if DEBUG
+            //logger.Info("19896493-9760-47D8-A5D2-F418AA545A43", $"text = {text}");
+            //logger.Info("13D68258-968D-4292-B475-345F71B0283E", $"mode = {mode}");
+
+            //if (mode == LexerMode.StrongIdentifier)
+            //{
+            //    //throw new NotImplementedException();
+            //}
+#endif
+
             _mode = mode;
             _logger = logger;
+            _text = text;
             _items = new Queue<char>(text.ToList());
         }
 
         private IMonitorLogger _logger;
-        private LexerMode _mode;
+        private LexerMode _mode = LexerMode.Code;
+        private string _text;
         private Queue<char> _items;
         private State _state = State.Init;
         private State _stateBeforeComment = State.Init;
@@ -100,6 +113,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 _currentPos++;
 
 #if DEBUG
+                //_logger.Info("F30F90D1-F2FA-49E5-8A09-30F0C187551A", $"_mode = {_mode}");
                 //_logger.Info("63869F33-9EDD-4C0E-AD5C-0A40A2A7D247", $"tmpChar = {tmpChar}");
                 //_logger.Info("2440A33D-A1F1-45BF-9AEC-2F5B05AF6CF6", $"_currentPos = {_currentPos}");
                 //_logger.Info("2A1A450C-E1C9-4168-B124-423E1B5CB1AD", $"_state = {_state}");
@@ -517,6 +531,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                                 case '#':
                                                     _items.Dequeue();
+
+                                                    if(_items.Count == 0)
+                                                    {
+                                                        return CreateToken(TokenKind.ConceptPrefix);
+                                                    }
+
                                                     nextChar = _items.Peek();
 
 #if DEBUG
@@ -754,6 +774,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     if(nextChar == '`')
                                     {
+                                        _items.Dequeue();
                                         _state = State.InIdentifier;
                                     }
                                     else
@@ -784,6 +805,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     if (nextChar == '`')
                                     {
+                                        _items.Dequeue();
                                         _state = State.InIdentifier;
                                     }
                                     else
@@ -815,6 +837,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     if (nextChar == '`')
                                     {
+                                        _items.Dequeue();
                                         _state = State.InIdentifier;
                                     }
                                     else
@@ -853,6 +876,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     if (nextChar == '`')
                                     {
+                                        _items.Dequeue();
                                         _state = State.InIdentifier;
                                     }
                                     else
@@ -890,6 +914,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     switch(nextChar)
                                     {
                                         case '`':
+                                            _items.Dequeue();
                                             _state = State.InIdentifier;
                                             break;
 
@@ -946,6 +971,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     if (nextChar == '`')
                                     {
+                                        _items.Dequeue();
                                         _state = State.InIdentifier;
                                     }
                                     else
@@ -990,6 +1016,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     if (nextChar == '`')
                                     {
+                                        _items.Dequeue();
                                         _state = State.InIdentifier;
                                     }
                                     else
@@ -1026,6 +1053,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                             if (nextChar == '`')
                             {
+                                _items.Dequeue();
                                 _state = State.InIdentifier;
                             }
                             else
@@ -1046,7 +1074,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                        throw new ArgumentOutOfRangeException(nameof(_state), _state, $"In `{_text}`.");
                 }
             }
 
@@ -1578,7 +1606,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case TokenKind.Identifier:
                     if(content.StartsWith("##"))
                     {
-                        throw new NotImplementedException("FBDEBA2D-C686-4AAD-9A11-B8B623280E8E");
+                        //throw new NotImplementedException("FBDEBA2D-C686-4AAD-9A11-B8B623280E8E");
                     }
                     else if (content.StartsWith("#@"))
                     {
@@ -1784,6 +1812,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var result = new Lexer();
             result._logger = _logger;
             result._items = new Queue<char>(_items);
+            result._text = _text;
             result._recoveriesTokens = new Queue<Token>(_recoveriesTokens);
             result._state = _state;
             result._mode = _mode;
@@ -1793,6 +1822,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         public void Assign(Lexer source)
         {
             _items = new Queue<char>(source._items);
+            _text = source._text;
             _recoveriesTokens = new Queue<Token>(source._recoveriesTokens);
             _state = source._state;
         }

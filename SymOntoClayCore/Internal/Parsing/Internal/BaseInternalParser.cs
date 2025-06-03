@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
         }
 
@@ -196,7 +196,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
 
             return result;
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
         }
 
@@ -726,12 +726,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
             {
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
 
                     switch (_currToken.KeyWordTokenKind)
                     {
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }     
  */

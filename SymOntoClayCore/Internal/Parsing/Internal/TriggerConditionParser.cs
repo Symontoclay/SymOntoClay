@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(Text, _currToken);
                     }
                     break;
 
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new UnexpectedTokenException(Text, _currToken);
             }
         }
 
@@ -517,7 +517,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             if(!_hasSomething)
             {
-                throw new UnexpectedTokenException(_currToken);
+                throw new UnexpectedTokenException(Text, _currToken);
             }
 
             var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.BinaryOperator };
@@ -548,7 +548,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 return;
             }
 
-            throw new UnexpectedTokenException(_currToken);
+            throw new UnexpectedTokenException(Text, _currToken);
         }
 
         private void ProcessAddition()

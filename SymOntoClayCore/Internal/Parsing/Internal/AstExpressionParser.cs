@@ -565,13 +565,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //_hasSomething = true;
 
 #if DEBUG
-            Info("0EB1AEEA-4C3E-4082-94DD-45F986FB41E9", $"_currToken.Content = {_currToken.Content}");
+            //Info("0EB1AEEA-4C3E-4082-94DD-45F986FB41E9", $"_currToken.Content = {_currToken.Content}");
 #endif
 
             var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
-            Info("D71E7ABE-7304-46EF-A0CB-C7E2C8194E78", $"value = {value}");
+            //Info("D71E7ABE-7304-46EF-A0CB-C7E2C8194E78", $"value = {value}");
 #endif
 
             var kindOfName = value.KindOfName;
@@ -579,6 +579,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (kindOfName)
             {
                 case KindOfName.CommonConcept:
+                case KindOfName.Concept:
                 case KindOfName.Channel:
                 case KindOfName.Entity:
                     {

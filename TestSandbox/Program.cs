@@ -166,7 +166,7 @@ namespace TestSandbox
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
-            //TstParseName();
+            TstParseName();
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
@@ -176,7 +176,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

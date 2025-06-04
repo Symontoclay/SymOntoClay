@@ -1,7 +1,5 @@
 ﻿app PeaceKeeper
 {
-    
-
     on Enter =>
     {
         'Begin' >> @>log;

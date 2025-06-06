@@ -205,12 +205,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            var opt = new DebugHelperOptions()
-            {
-                HumanizedOptions = options
-            };
-
-            return ToHumanizedString(opt);
+            return ToHumanizedString(DebugHelperOptions.FromHumanizedOptions(options));
         }
 
         /// <inheritdoc/>
@@ -242,12 +237,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            var opt = new DebugHelperOptions()
-            {
-                HumanizedOptions = options
-            };
-
-            return ToHumanizedLabel(opt);
+            return ToHumanizedLabel(DebugHelperOptions.FromHumanizedOptions(options));
         }
 
         /// <inheritdoc/>

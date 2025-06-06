@@ -23,8 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +37,7 @@ namespace SymOntoClay.Core.DebugHelpers
         public MutablePartOfRuleInstance MutablePartOfRuleInstance { get; set; }
         public bool EnableMark { get; set; } = true;
         public bool EnableParamsIfEmpty { get; set; } = true;
+        public bool ShowPrefixesForConceptLikeIdentifier { get; set; } = true;
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public DebugHelperOptions Clone()
@@ -51,6 +50,7 @@ namespace SymOntoClay.Core.DebugHelpers
             result.MutablePartOfRuleInstance = MutablePartOfRuleInstance;
             result.EnableMark = EnableMark;
             result.EnableParamsIfEmpty = EnableParamsIfEmpty;
+            result.ShowPrefixesForConceptLikeIdentifier = ShowPrefixesForConceptLikeIdentifier;
 
             return result;
         }
@@ -79,8 +79,19 @@ namespace SymOntoClay.Core.DebugHelpers
             sb.PrintObjProp(n, nameof(MutablePartOfRuleInstance), MutablePartOfRuleInstance);
             sb.AppendLine($"{spaces}{nameof(EnableMark)} = {EnableMark}");
             sb.AppendLine($"{spaces}{nameof(EnableParamsIfEmpty)} = {EnableParamsIfEmpty}");
+            sb.AppendLine($"{spaces}{nameof(ShowPrefixesForConceptLikeIdentifier)} = {ShowPrefixesForConceptLikeIdentifier}");
 
             return sb.ToString();
+        }
+
+        public static DebugHelperOptions FromHumanizedOptions(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return opt;
         }
     }
 }

@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         }
 
         private readonly IEngineContext _engineContext;
+        //private readonly DebugHelperOptions _debugHelperOptions;
 
         /// <inheritdoc/>
         public ulong GetLongHashCode()

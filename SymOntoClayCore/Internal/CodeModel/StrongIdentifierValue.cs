@@ -338,28 +338,28 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
 
-            return $"{spaces}{NToHumanizedString()}";
+            return $"{spaces}{NToHumanizedString(DebugHelperOptions.FromHumanizedOptions())}";
         }
 
         /// <inheritdoc/>
         public override object ToMonitorSerializableObject(IMonitorLogger logger)
         {
-            return NToHumanizedString();
+            return NToHumanizedString(DebugHelperOptions.FromHumanizedOptions());
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return NToHumanizedString();
+            return NToHumanizedString(options);
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return NToHumanizedString();
+            return NToHumanizedString(options);
         }
 
-        private string NToHumanizedString()
+        private string NToHumanizedString(DebugHelperOptions options)
         {
             var sb = new StringBuilder();
 
@@ -386,6 +386,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Level), Level, null);
+            }
+
+            switch(KindOfName)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(KindOfName), KindOfName, null);
             }
 
             sb.Append(NameValue);
@@ -419,7 +425,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return new MonitoredHumanizedLabel()
             {
-                Label = NToHumanizedString()
+                Label = NToHumanizedString(DebugHelperOptions.FromHumanizedOptions())
             };
         }
 

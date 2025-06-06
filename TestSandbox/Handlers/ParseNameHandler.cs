@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Monitor.Common;
@@ -768,6 +769,11 @@ namespace TestSandbox.Handlers
 
             _logger.Info("3BDB92B7-82CB-4964-800F-1E695FBE2B17", $"result = {result}");
             _logger.Info("2FD545A5-D78A-49BD-A894-29B249E50572", $"result = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("0A9AB3AB-AAE8-44E1-950E-7926F0D7465F", $"result = {result.ToHumanizedLabel(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 

@@ -22,8 +22,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            throw new NotImplementedException();
-
             var maxN = 0;
 
             Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,

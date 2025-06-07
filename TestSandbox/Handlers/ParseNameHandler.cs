@@ -768,12 +768,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("3BDB92B7-82CB-4964-800F-1E695FBE2B17", $"result = {result}");
-            _logger.Info("2FD545A5-D78A-49BD-A894-29B249E50572", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("2FD545A5-D78A-49BD-A894-29B249E50572", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
 
             var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
             debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
 
-            _logger.Info("0A9AB3AB-AAE8-44E1-950E-7926F0D7465F", $"result = {result.ToHumanizedLabel(debugHelperOptions)}");
+            _logger.Info("0A9AB3AB-AAE8-44E1-950E-7926F0D7465F", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("85E90469-EE08-4D93-AC97-3938CCD657EC", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("0C8488EA-F1AC-4D03-ADD8-52976AA63BB6", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 

@@ -54,6 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public string NameValue { get; set; } = string.Empty;
 
         public string NormalizedNameValue { get; set; } = string.Empty;
+        public string NameWithoutPrefix { get; set; } = string.Empty;
 
         private bool _isNull;
 
@@ -244,6 +245,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.KindOfName = KindOfName;
             result.NameValue = NameValue;
             result.NormalizedNameValue = NormalizedNameValue;
+            result.NameWithoutPrefix = NameWithoutPrefix;
             result.IsArray = IsArray;
             result.Capacity = Capacity;
             result.HasInfiniteCapacity = HasInfiniteCapacity;
@@ -272,6 +274,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
+            sb.AppendLine($"{spaces}{nameof(NameWithoutPrefix)} = {NameWithoutPrefix}");
 
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
@@ -296,6 +299,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
+            sb.AppendLine($"{spaces}{nameof(NameWithoutPrefix)} = {NameWithoutPrefix}");
 
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
@@ -320,6 +324,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
+            sb.AppendLine($"{spaces}{nameof(NameWithoutPrefix)} = {NameWithoutPrefix}");
 
             sb.AppendLine($"{spaces}{nameof(IsArray)} = {IsArray}");
             sb.AppendLine($"{spaces}{nameof(Capacity)} = {Capacity}");
@@ -390,11 +395,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             switch(KindOfName)
             {
+                case KindOfName.CommonConcept:
+                case KindOfName.Entity:
+                case KindOfName.RuleOrFact:
+                case KindOfName.EntityCondition:
+                case KindOfName.OnceResolvedEntityCondition:
+                case KindOfName.AnonymousEntityCondition:
+                case KindOfName.OnceResolvedAnonymousEntityCondition:
+                case KindOfName.Channel:
+                case KindOfName.Var:
+                case KindOfName.SystemVar:
+                case KindOfName.LogicalVar:                
+                case KindOfName.Property:
+                        sb.Append(NameValue);
+                    break;
+
+                case KindOfName.Concept:
+                case KindOfName.LinguisticVar:
+                    if(options.ShowPrefixesForConceptLikeIdentifier)
+                    {
+                        sb.Append(NameValue);
+                    }
+                    else
+                    {
+                        sb.Append(NameWithoutPrefix);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(KindOfName), KindOfName, null);
             }
-
-            sb.Append(NameValue);
 
             if (IsArray)
             {

@@ -872,14 +872,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
 #if DEBUG
-            Info("711C4952-C769-4A7F-B7DB-2287A09C9F1F", $"nameValueSb = {nameValueSb}");
-            Info("0A91B826-A842-4757-8015-8F10297172B2", $"normalizedNameValueSb = {normalizedNameValueSb}");
-            Info("DED4F4E5-221E-4D6A-8615-2135A816C7E2", $"nameWithoutPrefixSb = {nameWithoutPrefixSb}");
-            Info("51A42AD0-4B49-4CEF-AE6F-1256697D3766", $"kindOfName = {kindOfName}");
-            Info("53C85862-4A77-4A84-86A9-E4D4FFF10EB9", $"level = {level}");
-            Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
-            Info("39D5DFC1-7E0E-4E56-9255-2A3C137CD69A", $"hasInfiniteCapacity = {hasInfiniteCapacity}");
-            Info("16324165-46D6-401C-A9E2-35731FECA78A", $"subItems = {subItems.WriteListToString()}");
+            //Info("711C4952-C769-4A7F-B7DB-2287A09C9F1F", $"nameValueSb = {nameValueSb}");
+            //Info("0A91B826-A842-4757-8015-8F10297172B2", $"normalizedNameValueSb = {normalizedNameValueSb}");
+            //Info("DED4F4E5-221E-4D6A-8615-2135A816C7E2", $"nameWithoutPrefixSb = {nameWithoutPrefixSb}");
+            //Info("51A42AD0-4B49-4CEF-AE6F-1256697D3766", $"kindOfName = {kindOfName}");
+            //Info("53C85862-4A77-4A84-86A9-E4D4FFF10EB9", $"level = {level}");
+            //Info("BEB5A1ED-AF93-4DEA-B974-3ACE0D4F18DC", $"capacity = {capacity}");
+            //Info("39D5DFC1-7E0E-4E56-9255-2A3C137CD69A", $"hasInfiniteCapacity = {hasInfiniteCapacity}");
+            //Info("16324165-46D6-401C-A9E2-35731FECA78A", $"subItems = {subItems.WriteListToString()}");
 #endif
 
             var nameValue = nameValueSb.ToString().Trim();

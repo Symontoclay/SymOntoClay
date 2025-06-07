@@ -39,10 +39,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;
+            _debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            _debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
         }
 
         private readonly IEngineContext _engineContext;
-        //private readonly DebugHelperOptions _debugHelperOptions;
+        private readonly DebugHelperOptions _debugHelperOptions;
 
         /// <inheritdoc/>
         public ulong GetLongHashCode()
@@ -61,7 +63,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         /// <inheritdoc/>
         public Value Write(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            logger.Output("90A48AF8-3AF3-4D2B-B3FD-EB80ED2E25E0", value.ToHumanizedString());
+            logger.Output("90A48AF8-3AF3-4D2B-B3FD-EB80ED2E25E0", value.ToHumanizedString(_debugHelperOptions));
 
             return value;
         }

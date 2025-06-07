@@ -70,7 +70,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("ABA4A563-E829-4B5B-9C57-655D90E84F90", $"result = {result}");
-            _logger.Info("4A2C87EA-2A9F-4264-A294-A48460089EA0", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("4A2C87EA-2A9F-4264-A294-A48460089EA0", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("DA5D5799-221E-4739-8639-08BDA51FECC5", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("5FFB497B-BA04-404C-A24F-F94A7A0B688A", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("18B0F106-794C-4BA5-B3A3-04DC2F17559C", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -100,7 +108,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("19F2C080-A816-4159-9576-186C22A430F1", $"result = {result}");
-            _logger.Info("43869980-52EA-4F14-B536-60FD513EB7EC", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("43869980-52EA-4F14-B536-60FD513EB7EC", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("0307EEF4-F8C4-4935-AB69-C8D02AAB430B", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("19980518-2156-42DF-8402-17A1A26443A2", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("9BCF2F98-E993-464D-B6FF-5DA735A9BDD3", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -130,7 +146,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("B31465E6-4E39-44D3-8B0C-CF294F0EBA96", $"result = {result}");
-            _logger.Info("410072C1-A845-4449-9F8B-E4AEC2506F8C", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("410072C1-A845-4449-9F8B-E4AEC2506F8C", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("44C74FED-8E71-41E0-B062-46BF5765C732", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("027DC12D-F41C-445A-B1FA-3C9186D3311B", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("61E849D5-1E71-49EC-AB6F-BD6A62778460", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -160,7 +184,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("9B4C3F2B-AC1C-46F6-AFE5-C61BEC1E4F86", $"result = {result}");
-            _logger.Info("AB136716-9835-433C-A6E4-62E3972AB18D", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("AB136716-9835-433C-A6E4-62E3972AB18D", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("E8189A5B-709B-4F92-9241-9E9C5BF6D6EC", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("94118B34-9C68-47BC-A36E-C07DA904B743", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("3A7E5D50-A804-47A1-B4BA-176020547001", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -190,7 +222,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("799BCFAC-726C-47DC-BBDB-124BEF912456", $"result = {result}");
-            _logger.Info("2EAD75FC-1CFF-4BF0-A077-BFC54AC5FE23", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("2EAD75FC-1CFF-4BF0-A077-BFC54AC5FE23", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("CEBB8003-FCFC-4B0C-A306-4AAEE8F96712", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("562BB8A0-26E6-49B6-93D2-8072C0BA8818", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("8CDF39B1-9118-41C2-8A05-0DBA7A33785E", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -220,7 +260,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("2C61516A-7AAF-47BE-84EB-BAFFC0211171", $"result = {result}");
-            _logger.Info("86FE1940-1E03-4E23-A4A3-7C59E8728224", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("86FE1940-1E03-4E23-A4A3-7C59E8728224", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("8876F77A-8147-48BB-A80A-7B60034DACFE", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("22BA2FEC-9DE7-4128-B4AB-C83918FBFE80", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("D948B30C-A1AD-4382-9EFE-72EE0CB4F7E1", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -250,7 +298,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("94B50052-56AE-4F7C-B359-2796455AA64B", $"result = {result}");
-            _logger.Info("DDC6F23F-A54A-460C-9CF6-42BCBD920ADA", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("DDC6F23F-A54A-460C-9CF6-42BCBD920ADA", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("BB3AE72D-A0EB-4ED1-87A8-D67352EE616B", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("F55EAE9A-A338-4375-BC9C-0BAC34936F5E", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("3159ADEE-1E53-4EEA-8945-C0E031B61A46", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -280,7 +336,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("AFFB83E0-A5FF-4EEF-90B7-15D710211BC8", $"result = {result}");
-            _logger.Info("A828FA55-1F22-4BAC-82BD-FEA871EDBF9A", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("A828FA55-1F22-4BAC-82BD-FEA871EDBF9A", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("1978916E-9A87-4F37-87A9-07B7800CD52A", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("9704D94D-A2A3-4A1B-BF5D-664499D3EAE9", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("BCE3B72A-0B65-46FB-924B-F38B9F54800F", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -310,7 +374,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("0B9D7CE5-265C-401E-8237-AFECFDE73D11", $"result = {result}");
-            _logger.Info("D9B8B4B6-D4F7-4065-BD29-732AF846E299", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("D9B8B4B6-D4F7-4065-BD29-732AF846E299", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("D1EEE8EB-2E46-4311-9058-AC7ACD4B21F7", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("FE41C9C8-7562-4D15-818E-BFC890D0C46D", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("8F72F0ED-2B2B-4106-A3EA-2C54E44F5460", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -340,7 +412,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("F397E863-CF82-4E16-9C35-7B0C968BAC93", $"result = {result}");
-            _logger.Info("F12A1488-B85D-4ACB-BEA0-4A329925C7E3", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("F12A1488-B85D-4ACB-BEA0-4A329925C7E3", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("DDDD592C-1002-4D0C-A345-05F36131500F", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("EAF8792C-C0F9-4E8A-AA1D-343063A5C77F", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("F9541FF4-F2EE-452C-A161-4E1837D115D6", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -370,7 +450,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("7CDA1037-1000-4B8A-9B2B-D3000FBE9F57", $"result = {result}");
-            _logger.Info("8AE917F3-E0DE-4785-8215-328108554674", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("8AE917F3-E0DE-4785-8215-328108554674", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("4C51C220-5378-4A48-8682-665785C665AA", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("60FF3A52-977E-4568-B5ED-A9B53A2E0357", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("C97B40D1-2DE5-4DE3-8019-DEB3FC676153", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -400,7 +488,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("BB7E2D65-5947-4545-9A58-9B710D1AEB78", $"result = {result}");
-            _logger.Info("D25A1045-84C8-475A-8CCB-624146A2DF62", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("D25A1045-84C8-475A-8CCB-624146A2DF62", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("B9639017-FD7D-460E-9AC1-F678CD2597AA", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("382DED27-D987-4B0B-8C38-1EBF27199F0D", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("737524E6-B4B7-4E99-96C8-10D844CA879C", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -434,7 +530,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("E982B6A6-8D9B-4ACB-A8BF-25A416F6CB20", $"result = {result}");
-            _logger.Info("2A6B6313-4C9C-4658-B79E-A13EF1D92C1D", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("2A6B6313-4C9C-4658-B79E-A13EF1D92C1D", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("530D9221-AB82-4483-8A35-762A6B8E6C74", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("60300145-F7EB-4B95-9FE0-BF67C6AB2307", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("768F1E4E-6A37-4031-B3CA-E463E0357285", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -468,7 +572,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("43A60565-9579-412D-8D8C-13793E430D30", $"result = {result}");
-            _logger.Info("1D327D44-1B0E-4B45-8C0F-F50C61DE5E2B", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("1D327D44-1B0E-4B45-8C0F-F50C61DE5E2B", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("693D36F9-D2B6-4FBB-A893-09412D286F58", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("40E38B00-5796-4D57-AF3A-134A32BCDCC6", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("9775A99C-3528-4CE3-8A37-DE7F79F295E8", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -498,7 +610,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("529490E8-2E41-45B5-8F52-BC4302CD4C97", $"result = {result}");
-            _logger.Info("3FC750F9-0FF9-4D14-8788-106AF7C8A5EE", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("3FC750F9-0FF9-4D14-8788-106AF7C8A5EE", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("E87CD547-17A8-4EC9-B608-B6C2B6DE8FCA", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("FED7ACCE-7834-49C3-AA5D-4F54E04A09F5", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("183B679B-50D0-42BF-B6A4-BD2B2A79B892", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -528,7 +648,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("65FB645A-BD92-4A4A-9266-17B0277941B0", $"result = {result}");
-            _logger.Info("CCD5CD7A-4C9F-47F8-BB9F-2C18D805E4F1", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("CCD5CD7A-4C9F-47F8-BB9F-2C18D805E4F1", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("54A19545-A31C-40BB-817A-EA6BB7B4B06A", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("00CE50BC-8276-4053-B91C-737A9E164B59", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("9999DF83-F3A4-414D-8A3E-0FA55CE8A9D7", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -558,7 +686,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("F795C123-5CAB-409E-958F-5121A5237BEA", $"result = {result}");
-            _logger.Info("768AB150-4F97-4093-8284-B9D1257B9A7E", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("768AB150-4F97-4093-8284-B9D1257B9A7E", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("3C5B1918-5AE1-435C-8D4F-AFB52E7A31B3", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("00B4E0AF-E92B-41ED-B73F-AAABF67D3B0A", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("82C5082E-2EF8-4131-A823-5FB9CB5949DD", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -588,7 +724,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("68CFACF1-E364-4D34-AACF-C69EF4C3C20A", $"result = {result}");
-            _logger.Info("5B71D156-4357-48FA-8A41-5A42927C67CF", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("5B71D156-4357-48FA-8A41-5A42927C67CF", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("821B6383-D676-4FB3-9E49-645282599020", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("6092F7B0-D147-4050-BFA8-4BAB98B1B502", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("7129E251-FA49-4DA9-A69B-EEBDCFC35302", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -618,7 +762,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("2917AD2E-906B-411B-A283-087FE6F6B7EA", $"result = {result}");
-            _logger.Info("E3AA932D-DAAF-4704-90C8-F86A574E5E3B", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("E3AA932D-DAAF-4704-90C8-F86A574E5E3B", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("76F3C5F1-DBC0-46CE-8E7F-F9E300917D06", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("A872810F-4A07-4829-8E7D-2834581B9FEC", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("9A9783AD-251A-4D73-A456-021D9F344783", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -648,7 +800,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("3D1AF7C2-616F-47F4-87AE-A03C712D73E7", $"result = {result}");
-            _logger.Info("EF3F6581-3830-4EEF-A83F-B9B8A7E4D2AA", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("EF3F6581-3830-4EEF-A83F-B9B8A7E4D2AA", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("77BA601D-466E-44A4-A683-B542451AFDC6", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("F3A65A73-D94C-4FB8-A656-6AD0E242205C", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("AD433838-59DB-4075-8D6E-5349493DDCE5", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -678,7 +838,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("FBD2486C-7F70-4C38-801B-ABC6CAB1E071", $"result = {result}");
-            _logger.Info("E72644B1-20E2-4773-9776-C728AC53F6A5", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("E72644B1-20E2-4773-9776-C728AC53F6A5", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("F1F3D599-AFC9-4B3A-B00C-47F605625CED", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("8FD0EAF4-1AA3-4C4E-950E-A099E448A58D", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("0AE1CC62-DFF7-405B-9393-563F1FA9F80A", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -708,7 +876,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("3D6FE328-9611-43E4-8FCD-6AAD23AB352D", $"result = {result}");
-            _logger.Info("26216FBC-9F06-4E57-B336-27E7EE0F910D", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("26216FBC-9F06-4E57-B336-27E7EE0F910D", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("CC273B13-1993-409B-AE57-DAB9B5CB2445", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("47047024-E91C-482D-BBA3-97BE6948B251", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("1ADA4958-9CBF-4C65-B99F-C206F5D7E666", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -738,7 +914,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("9D0EC83A-9032-412A-A920-73C180F02822", $"result = {result}");
-            _logger.Info("4922D53B-0585-4BCF-BDFA-DA93C4627209", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("4922D53B-0585-4BCF-BDFA-DA93C4627209", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("7278C59E-CC57-46B9-A990-737C3ED924F7", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("4C1A5336-2EB1-4387-89AE-5C87FDB3880B", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("46F3CB77-B828-46D0-99D0-A2DD72EDE78A", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -806,7 +990,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("F7C77FE6-F709-44E9-9537-5F402C00E697", $"result = {result}");
-            _logger.Info("1C600AA2-C588-4066-9E95-0F12C9E65E25", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("1C600AA2-C588-4066-9E95-0F12C9E65E25", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("3681B256-A3AD-48A4-AA53-7E6516C5F6C5", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("3AE38765-4DD5-4C8C-8B89-9337A0506B22", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("778C95D3-29A5-45B4-9F4E-B0AF8EE45774", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -836,7 +1028,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("DB2C14A3-0987-4B2A-8648-86EE0BB78508", $"result = {result}");
-            _logger.Info("A91A0409-4B52-48A4-A085-DC9E233C2ADF", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("A91A0409-4B52-48A4-A085-DC9E233C2ADF", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("A72C9469-61ED-4599-A17B-416D60097F01", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("6096EDA0-64D7-4370-8934-0C0DC5FB9CC0", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("025C51F5-A778-4DFB-8818-620CA09FEC1D", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -866,7 +1066,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("36EF1006-0E34-4133-9A47-AFFBFD0FC1B1", $"result = {result}");
-            _logger.Info("E3AE0C81-06FF-4736-B912-91F1E445DD54", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("E3AE0C81-06FF-4736-B912-91F1E445DD54", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("22FCC6AA-67C3-4013-A03E-CEA6E948BEA6", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("007150D7-834B-4BFF-9F03-A6F8001CEC08", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("73216B78-D527-4A75-83D7-3AF32A5D904A", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -896,7 +1104,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("4F20518C-2E6D-4F77-9940-1D1158124E5E", $"result = {result}");
-            _logger.Info("CF17F9F8-84B7-481D-AC8F-BE867FBF9384", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("CF17F9F8-84B7-481D-AC8F-BE867FBF9384", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("E79D8C40-F65C-49AE-B08C-78868E9C61AD", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("1290373A-107E-4A87-8945-F144672D4822", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("732BDCFD-E370-4563-B286-0FB51CDB56CE", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
@@ -928,6 +1144,14 @@ namespace TestSandbox.Handlers
             _logger.Info("1F61F194-0901-4962-A215-FFE7399077D1", $"result = {result}");
             _logger.Info("FDF0A42E-2E72-450E-8476-74DBC0C6159E", $"result = {result.ToHumanizedLabel()}");
 
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("440E65E4-0B13-488A-B509-63533B9C2545", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("E8516898-16F0-4023-9B9E-0F852DC8C561", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("B909DD2A-3F21-4723-9984-82E316130FF3", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
+
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 
             //Token token = null;
@@ -956,7 +1180,15 @@ namespace TestSandbox.Handlers
             var result = parser.Result;
 
             _logger.Info("2B79E29D-4CFB-49DD-811C-4D338BE2BF6E", $"result = {result}");
-            _logger.Info("9D7AE6E5-0462-4258-B89D-AC42312E3733", $"result = {result.ToHumanizedLabel()}");
+            _logger.Info("9D7AE6E5-0462-4258-B89D-AC42312E3733", $"result.ToHumanizedLabel() = {result.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("99AF80C0-10B4-4ED3-A8E0-AA4F98FF1281", $"result.ToHumanizedLabel(debugHelperOptions) = {result.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("6C80DA77-2D54-4985-95A0-96757957A1CF", $"result.ToHumanizedString() = {result.ToHumanizedString()}");
+            _logger.Info("92434CE1-72AA-4A81-B61D-D6609DF78DD1", $"result.ToHumanizedString(debugHelperOptions) = {result.ToHumanizedString(debugHelperOptions)}");
 
             //var lexer = new Lexer(str, _logger, LexerMode.StrongIdentifier);
 

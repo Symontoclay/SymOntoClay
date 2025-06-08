@@ -40,7 +40,7 @@ namespace SymOntoClayPlacesHardTests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
@@ -68,7 +68,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 8:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             break;
 
                         default:
@@ -120,7 +120,7 @@ namespace SymOntoClayPlacesHardTests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
@@ -148,7 +148,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 8:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             break;
 
                         default:
@@ -200,7 +200,7 @@ namespace SymOntoClayPlacesHardTests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
@@ -228,7 +228,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 8:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             break;
 
                         default:
@@ -280,7 +280,7 @@ namespace SymOntoClayPlacesHardTests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
@@ -308,7 +308,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 8:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             break;
 
                         default:
@@ -372,11 +372,11 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 4:
-                            Assert.AreEqual(,message, "GoToImpl Begin");
+                            Assert.AreEqual("GoToImpl Begin", message);
                             break;
 
                         case 5:
-                            Assert.AreEqual(,message, "ByEntity");
+                            Assert.AreEqual("ByEntity", message);
                             break;
 
                         case 6:

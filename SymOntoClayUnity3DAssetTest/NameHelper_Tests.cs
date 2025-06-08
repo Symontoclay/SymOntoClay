@@ -35,22 +35,22 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var name = new StrongIdentifierValue();
 
-            Assert.AreEqual(,name.IsEmpty, true);
-            Assert.AreEqual(,name.NameValue, string.Empty);
-            Assert.AreEqual(,name.NormalizedNameValue, string.Empty);
-            Assert.AreEqual(,name.KindOfName, KindOfName.Unknown);
+            Assert.AreEqual(true, name.IsEmpty);
+            Assert.AreEqual(string.Empty, name.NameValue);
+            Assert.AreEqual(string.Empty, name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Unknown, name.KindOfName);
 
-            Assert.AreEqual(,name.KindOfValue, KindOfValue.StrongIdentifierValue);
-            Assert.AreEqual(,name.IsStrongIdentifierValue, true);
-            Assert.AreEqual(,name.AsStrongIdentifierValue, name);
+            Assert.AreEqual(KindOfValue.StrongIdentifierValue, name.KindOfValue);
+            Assert.AreEqual(true, name.IsStrongIdentifierValue);
+            Assert.AreEqual(name, name.AsStrongIdentifierValue);
 
-            Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, false);
-            Assert.AreEqual(,name.HasInfiniteCapacity, false);
+            Assert.AreEqual(false, name.IsArray);
+            Assert.AreEqual(false, name.Capacity.HasValue);
+            Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]

@@ -380,15 +380,15 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 6:
-                            Assert.AreEqual(,message, "123");
+                            Assert.AreEqual("123", message);
                             break;
 
                         case 7:
-                            Assert.AreEqual(,message, "#wp1");
+                            Assert.AreEqual("#wp1", message);
                             break;
 
                         case 8:
-                            Assert.AreEqual(,message, "<10, 10, 10>");
+                            Assert.AreEqual("<10, 10, 10>", message);
                             break;
 
                         case 9:
@@ -428,27 +428,27 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 18:
-                            Assert.AreEqual(,message, "GoToImpl Begin");
+                            Assert.AreEqual("GoToImpl Begin", message);
                             break;
 
                         case 19:
-                            Assert.AreEqual(,message, "ByEntity");
+                            Assert.AreEqual("ByEntity", message);
                             break;
 
                         case 20:
-                            Assert.AreEqual(,message, "123");
+                            Assert.AreEqual("123", message);
                             break;
 
                         case 21:
-                            Assert.AreEqual(,message, "#wp1");
+                            Assert.AreEqual("#wp1", message);
                             break;
 
                         case 22:
-                            Assert.AreEqual(,message, "<10, 10, 10>");
+                            Assert.AreEqual("<10, 10, 10>", message);
                             break;
 
                         case 23:
-                            Assert.AreEqual(,message, "GoToImpl End");
+                            Assert.AreEqual("GoToImpl End", message);
                             break;
 
                         case 24:
@@ -562,23 +562,23 @@ action check
                             break;
 
                         case 4:
-                            Assert.AreEqual(,message, "GoToImpl Begin");
+                            Assert.AreEqual("GoToImpl Begin", message);
                             break;
 
                         case 5:
-                            Assert.AreEqual(,message, "ByEntity");
+                            Assert.AreEqual("ByEntity", message);
                             break;
 
                         case 6:
-                            Assert.AreEqual(,message, "123");
+                            Assert.AreEqual("123", message);
                             break;
 
                         case 7:
-                            Assert.AreEqual(,message, "#wp1");
+                            Assert.AreEqual("#wp1", message);
                             break;
 
                         case 8:
-                            Assert.AreEqual(,message, "<10, 10, 10>");
+                            Assert.AreEqual("<10, 10, 10>", message);
                             break;
 
                         case 9:
@@ -618,27 +618,27 @@ action check
                             break;
 
                         case 18:
-                            Assert.AreEqual(,message, "GoToImpl Begin");
+                            Assert.AreEqual("GoToImpl Begin", message);
                             break;
 
                         case 19:
-                            Assert.AreEqual(,message, "ByEntity");
+                            Assert.AreEqual("ByEntity", message);
                             break;
 
                         case 20:
-                            Assert.AreEqual(,message, "123");
+                            Assert.AreEqual("123", message);
                             break;
 
                         case 21:
-                            Assert.AreEqual(,message, "#wp1");
+                            Assert.AreEqual("#wp1", message);
                             break;
 
                         case 22:
-                            Assert.AreEqual(,message, "<10, 10, 10>");
+                            Assert.AreEqual("<10, 10, 10>", message);
                             break;
 
                         case 23:
-                            Assert.AreEqual(,message, "GoToImpl End");
+                            Assert.AreEqual("GoToImpl End", message);
                             break;
 
                         case 24:

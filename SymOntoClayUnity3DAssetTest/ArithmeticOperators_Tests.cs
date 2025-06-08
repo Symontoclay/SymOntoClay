@@ -181,7 +181,7 @@ private:
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -189,21 +189,21 @@ private:
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "1Hi");
+                            Assert.AreEqual("1Hi", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -225,7 +225,7 @@ private:
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -233,21 +233,21 @@ private:
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "2");
+                            Assert.AreEqual("2", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -269,7 +269,7 @@ private:
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -277,21 +277,21 @@ private:
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "2");
+                            Assert.AreEqual("2", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }

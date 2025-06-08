@@ -2520,7 +2520,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2539,7 +2539,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener), );
         }
 
         [Test]
@@ -2558,7 +2558,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2577,7 +2577,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2596,7 +2596,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2615,7 +2615,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2634,7 +2634,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2653,7 +2653,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2672,7 +2672,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2691,7 +2691,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2710,7 +2710,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2729,7 +2729,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2749,7 +2749,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2768,7 +2768,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2788,7 +2788,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2807,7 +2807,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2827,7 +2827,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2846,7 +2846,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2866,7 +2866,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2885,7 +2885,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2905,7 +2905,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2924,7 +2924,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2944,7 +2944,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2963,7 +2963,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -2983,7 +2983,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3002,7 +3002,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -3022,7 +3022,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3041,7 +3041,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -3060,7 +3060,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3079,7 +3079,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -3098,7 +3098,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3113,7 +3113,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -3132,7 +3132,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3151,7 +3151,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -3170,7 +3170,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3181,7 +3181,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), true);
+                }, hostListener));
         }
 
         [Test]
@@ -3204,7 +3204,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3223,7 +3223,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -3246,7 +3246,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3257,7 +3257,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]

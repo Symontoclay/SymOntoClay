@@ -139,29 +139,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, false, 0, 150, false);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]
@@ -182,29 +182,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, true, 0, 150, true);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]
@@ -225,29 +225,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]
@@ -268,29 +268,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]
@@ -311,29 +311,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]
@@ -353,29 +353,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]
@@ -395,29 +395,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, false, 0, 150, true);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]
@@ -437,27 +437,27 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, false, 0, 150, true);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.LFunction);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.LFunction, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 5"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 10"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 5"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 10"));
         }
 
         [Test]
@@ -477,28 +477,28 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, false, 0, 150, true);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.SFunction);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.SFunction, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_m = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 22"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_m = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 22"));
         }
 
         [Test]
@@ -518,28 +518,28 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, false, 0, 150, true);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, true);
+            Assert.AreEqual(true, linguisticVariable.Constraint.IsEmpty);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.SFunction);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.SFunction, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_m = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 22"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_m = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 22"));
         }
 
         [Test]
@@ -564,47 +564,47 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("age"));
+            Assert.AreEqual(NameHelper.CreateName("age"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, false, 0, 150, true);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, false);
+            Assert.AreEqual(false, linguisticVariable.Constraint.IsEmpty);
 
             var constraintItems = linguisticVariable.Constraint.Items.ToList();
 
-            Assert.AreEqual(,constraintItems.Count, 3);
+            Assert.AreEqual(3, constraintItems.Count);
 
             var item1 = constraintItems[0];
-            Assert.AreEqual(,item1.Kind, KindOfLinguisticVariableConstraintItem.Inheritance);
-            Assert.AreEqual(,item1.RelationName, null);
+            Assert.AreEqual(KindOfLinguisticVariableConstraintItem.Inheritance, item1.Kind);
+            Assert.AreEqual(null, item1.RelationName);
 
             var item2 = constraintItems[1];
 
-            Assert.AreEqual(,item2.Kind, KindOfLinguisticVariableConstraintItem.Relation);
-            Assert.AreEqual(,item2.RelationName, NameHelper.CreateName("age"));
+            Assert.AreEqual(KindOfLinguisticVariableConstraintItem.Relation, item2.Kind);
+            Assert.AreEqual(NameHelper.CreateName("age"), item2.RelationName);
 
             var item3 = constraintItems[2];
 
-            Assert.AreEqual(,item3.Kind, KindOfLinguisticVariableConstraintItem.Relation);
-            Assert.AreEqual(,item3.RelationName, NameHelper.CreateName("is"));
+            Assert.AreEqual(KindOfLinguisticVariableConstraintItem.Relation, item3.Kind);
+            Assert.AreEqual(NameHelper.CreateName("is"), item3.RelationName);
 
             var term = linguisticVariable.Values.Single();
 
-            Assert.AreEqual(,term.Name, NameHelper.CreateName("teenager"));
-            Assert.AreEqual(,term.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("teenager"), term.Name);
+            Assert.AreEqual(linguisticVariable, term.Parent);
 
             var handler = term.Handler;
 
-            Assert.AreNotEqual(,handler, null);
+            Assert.AreNotEqual(null, handler);
 
-            Assert.AreEqual(,handler.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler.Kind);
 
             var handlerStr = handler.ToString();
 
-            Assert.AreEqual(,handlerStr.Contains("_a = 10"), true);
-            Assert.AreEqual(,handlerStr.Contains("_b = 12"), true);
-            Assert.AreEqual(,handlerStr.Contains("_c = 17"), true);
-            Assert.AreEqual(,handlerStr.Contains("_d = 20"), true);
+            Assert.AreEqual(true, handlerStr.Contains("_a = 10"));
+            Assert.AreEqual(true, handlerStr.Contains("_b = 12"));
+            Assert.AreEqual(true, handlerStr.Contains("_c = 17"));
+            Assert.AreEqual(true, handlerStr.Contains("_d = 20"));
         }
 
         [Test]

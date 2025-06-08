@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -53,9 +53,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -85,7 +85,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -93,9 +93,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -126,7 +126,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -134,9 +134,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -173,9 +173,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -203,7 +203,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -240,7 +240,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -248,9 +248,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), false);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), false);
                             return false;
 
                         default:
@@ -278,7 +278,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -286,9 +286,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), false);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), false);
                             return false;
 
                         default:
@@ -316,7 +316,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -324,8 +324,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = fly"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = fly"), true);
                             return false;
 
                         default:
@@ -353,7 +353,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -361,7 +361,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -389,7 +389,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -397,9 +397,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$z = can(bird,fly)"), true);
-                            Assert.AreEqual(message.Contains("$x"), false);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$z = can(bird,fly)"), true);
+                            Assert.AreEqual(,message.Contains("$x"), false);
                             return false;
 
                         default:
@@ -426,7 +426,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -434,7 +434,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -462,7 +462,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -470,7 +470,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -498,7 +498,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -506,7 +506,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -533,7 +533,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -541,7 +541,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -568,7 +568,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -576,7 +576,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -603,7 +603,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -611,7 +611,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -638,7 +638,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -646,7 +646,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -675,7 +675,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -713,7 +713,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -721,9 +721,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = cat; $z = animal"), true);
-                            Assert.AreEqual(message.Contains("$x = #a; $z = barrel"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = cat; $z = animal"), true);
+                            Assert.AreEqual(,message.Contains("$x = #a; $z = barrel"), true);
                             return false;
 
                         default:
@@ -759,7 +759,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -767,7 +767,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -803,7 +803,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -811,7 +811,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -847,7 +847,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -855,7 +855,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -891,7 +891,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -899,7 +899,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -935,7 +935,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -943,7 +943,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -979,7 +979,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -987,7 +987,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -1023,7 +1023,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1031,7 +1031,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -1067,7 +1067,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1075,7 +1075,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -1111,7 +1111,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1119,7 +1119,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1152,7 +1152,7 @@ app PeaceKeeper
 
             var maxN = 0;
             
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1160,7 +1160,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -1196,7 +1196,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1204,7 +1204,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -1237,7 +1237,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1245,7 +1245,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -1281,7 +1281,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1289,7 +1289,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1318,7 +1318,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1326,9 +1326,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = 12"), true);
-                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = 12"), true);
+                            Assert.AreEqual(,message.Contains("$x = 50"), true);
                             return false;
 
                         default:
@@ -1357,7 +1357,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1365,7 +1365,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1393,7 +1393,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1401,8 +1401,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 12"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 12"), true);
                             return false;
 
                         default:
@@ -1430,7 +1430,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1438,8 +1438,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 12"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 12"), true);
                             return false;
 
                         default:
@@ -1467,7 +1467,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1475,7 +1475,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1503,7 +1503,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1511,8 +1511,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 50"), true);
                             return false;
 
                         default:
@@ -1540,7 +1540,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1548,7 +1548,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1576,7 +1576,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1584,7 +1584,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1612,7 +1612,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1620,8 +1620,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 50"), true);
                             return false;
 
                         default:
@@ -1649,7 +1649,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1657,8 +1657,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 5"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 5"), true);
                             return false;
 
                         default:
@@ -1686,7 +1686,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1694,7 +1694,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1722,7 +1722,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1730,7 +1730,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1758,7 +1758,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1766,7 +1766,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1794,7 +1794,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1802,8 +1802,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 4"), true);
                             return false;
 
                         default:
@@ -1831,7 +1831,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1839,7 +1839,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -1867,7 +1867,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1875,8 +1875,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 5"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 5"), true);
                             return false;
 
                         default:
@@ -1904,7 +1904,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1912,8 +1912,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 4"), true);
                             return false;
 
                         default:
@@ -1949,7 +1949,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1957,8 +1957,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 50"), true);
                             return false;
 
                         default:
@@ -1994,7 +1994,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2002,7 +2002,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2038,7 +2038,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2046,7 +2046,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2082,7 +2082,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2090,8 +2090,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 50"), true);
                             return false;
 
                         default:
@@ -2127,7 +2127,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2135,8 +2135,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 15"), true);
                             return false;
 
                         default:
@@ -2172,7 +2172,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2180,7 +2180,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2216,7 +2216,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2224,7 +2224,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2260,7 +2260,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2268,7 +2268,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2304,7 +2304,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2312,8 +2312,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 4"), true);
                             return false;
 
                         default:
@@ -2349,7 +2349,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2357,7 +2357,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2393,7 +2393,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2401,8 +2401,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 15"), true);
                             return false;
 
                         default:
@@ -2438,7 +2438,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2446,8 +2446,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 4"), true);
                             return false;
 
                         default:
@@ -2483,7 +2483,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2491,8 +2491,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 50"), true);
                             return false;
 
                         default:
@@ -2528,7 +2528,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2536,7 +2536,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2572,7 +2572,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2580,7 +2580,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2616,7 +2616,7 @@ app PeaceKeeper
 
             var maxN = 0;
             
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2624,8 +2624,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 50"), true);
                             return false;
 
                         default:
@@ -2661,7 +2661,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2669,8 +2669,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 15"), true);
                             return false;
 
                         default:
@@ -2706,7 +2706,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2714,7 +2714,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2750,7 +2750,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2758,7 +2758,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2794,7 +2794,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2802,7 +2802,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2838,7 +2838,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2846,8 +2846,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 4"), true);
                             return false;
 
                         default:
@@ -2883,7 +2883,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2891,7 +2891,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -2927,7 +2927,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2935,8 +2935,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 15"), true);
                             return false;
 
                         default:
@@ -2972,7 +2972,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2980,8 +2980,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = 4"), true);
                             return false;
 
                         default:
@@ -3008,7 +3008,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3016,12 +3016,12 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = #1234"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = #1234"), true);
                             return false;
 
                         default:
@@ -3053,21 +3053,21 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "m4a1");
+                            Assert.AreEqual(,message, "m4a1");
                             break;
 
                         case 2:
-                            Assert.AreEqual(message.StartsWith("15.588"), true);
+                            Assert.AreEqual(,message.StartsWith("15.588"), true);
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "!!!M4A1!!!!");
+                            Assert.AreEqual(,message, "!!!M4A1!!!!");
                             break;
 
                         default:
@@ -3093,7 +3093,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3101,9 +3101,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3141,9 +3141,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3181,9 +3181,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3213,7 +3213,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3221,9 +3221,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3253,7 +3253,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3261,9 +3261,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3293,7 +3293,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3301,9 +3301,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3331,7 +3331,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3339,7 +3339,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -3369,7 +3369,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3377,9 +3377,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3409,7 +3409,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3417,9 +3417,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3447,7 +3447,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3455,9 +3455,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3487,7 +3487,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3495,7 +3495,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -3523,7 +3523,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3531,9 +3531,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3563,7 +3563,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3571,9 +3571,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3603,7 +3603,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3611,9 +3611,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3643,7 +3643,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3651,9 +3651,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3683,7 +3683,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3691,9 +3691,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3723,7 +3723,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3731,7 +3731,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -3761,7 +3761,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3769,7 +3769,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -3799,7 +3799,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3807,9 +3807,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3839,7 +3839,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3847,9 +3847,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3879,7 +3879,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3887,9 +3887,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3919,7 +3919,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3927,9 +3927,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -3956,7 +3956,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3964,9 +3964,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = 15.588457107543945"), true);
-                            Assert.AreEqual(message.Contains("$x = m16"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = 15.588457107543945"), true);
+                            Assert.AreEqual(,message.Contains("$x = m16"), true);
                             return false;
 
                         default:
@@ -3993,7 +3993,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4001,9 +4001,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = 15.588457107543945"), true);
-                            Assert.AreEqual(message.Contains("$x = m16"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = 15.588457107543945"), true);
+                            Assert.AreEqual(,message.Contains("$x = m16"), true);
                             return false;
 
                         default:
@@ -4030,7 +4030,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4038,9 +4038,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = 15.588457107543945"), true);
-                            Assert.AreEqual(message.Contains("$x = m16"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = 15.588457107543945"), true);
+                            Assert.AreEqual(,message.Contains("$x = m16"), true);
                             return false;
 
                         default:
@@ -4066,7 +4066,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4074,7 +4074,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -4100,7 +4100,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4108,7 +4108,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
                             return false;
 
                         default:
@@ -4137,7 +4137,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4145,8 +4145,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
                             return false;
 
                         default:
@@ -4176,7 +4176,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4184,9 +4184,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
                             return false;
 
                         default:
@@ -4216,7 +4216,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4224,9 +4224,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
+                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
                             return false;
 
                         default:
@@ -4257,7 +4257,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4265,10 +4265,10 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(message.Contains("$x = #mark"), true);
-                            Assert.AreEqual(message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
                             return false;
 
                         default:
@@ -4307,8 +4307,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
                             return false;
 
                         default:
@@ -4341,7 +4341,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4349,9 +4349,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
                             return false;
 
                         default:
@@ -4382,7 +4382,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4390,10 +4390,10 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(message.Contains("$x = #mark"), true);
-                            Assert.AreEqual(message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
                             return false;
 
                         default:
@@ -4426,7 +4426,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4434,7 +4434,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -4465,7 +4465,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4473,7 +4473,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(,message.Contains("<no>"), true);
                             return false;
 
                         default:
@@ -4514,10 +4514,10 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(message.Contains("$x = #mark"), true);
-                            Assert.AreEqual(message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
                             return false;
 
                         default:
@@ -4556,8 +4556,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$x = #wp1"), true);
+                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(,message.Contains("$x = #wp1"), true);
                             return false;
 
                         default:

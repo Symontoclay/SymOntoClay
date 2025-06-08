@@ -52,7 +52,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -60,51 +60,51 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "10");
+                            Assert.AreEqual(,message, "10");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "9");
+                            Assert.AreEqual(,message, "9");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "8");
+                            Assert.AreEqual(,message, "8");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "7");
+                            Assert.AreEqual(,message, "7");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "6");
+                            Assert.AreEqual(,message, "6");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "5");
+                            Assert.AreEqual(,message, "5");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "4");
+                            Assert.AreEqual(,message, "4");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "3");
+                            Assert.AreEqual(,message, "3");
                             return true;
 
                         case 10:
-                            Assert.AreEqual(message, "2");
+                            Assert.AreEqual(,message, "2");
                             return true;
 
                         case 11:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(,message, "1");
                             return true;
 
                         case 12:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -144,7 +144,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -152,15 +152,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "10");
+                            Assert.AreEqual(,message, "10");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -202,7 +202,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -210,75 +210,75 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "10");
+                            Assert.AreEqual(,message, "10");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "9");
+                            Assert.AreEqual(,message, "9");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "8");
+                            Assert.AreEqual(,message, "8");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "7");
+                            Assert.AreEqual(,message, "7");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "6");
+                            Assert.AreEqual(,message, "6");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "End of while iteration");
+                            Assert.AreEqual(,message, "End of while iteration");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "5");
+                            Assert.AreEqual(,message, "5");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "End of while iteration");
+                            Assert.AreEqual(,message, "End of while iteration");
                             return true;
 
                         case 10:
-                            Assert.AreEqual(message, "4");
+                            Assert.AreEqual(,message, "4");
                             return true;
 
                         case 11:
-                            Assert.AreEqual(message, "End of while iteration");
+                            Assert.AreEqual(,message, "End of while iteration");
                             return true;
 
                         case 12:
-                            Assert.AreEqual(message, "3");
+                            Assert.AreEqual(,message, "3");
                             return true;
 
                         case 13:
-                            Assert.AreEqual(message, "End of while iteration");
+                            Assert.AreEqual(,message, "End of while iteration");
                             return true;
 
                         case 14:
-                            Assert.AreEqual(message, "2");
+                            Assert.AreEqual(,message, "2");
                             return true;
 
                         case 15:
-                            Assert.AreEqual(message, "End of while iteration");
+                            Assert.AreEqual(,message, "End of while iteration");
                             return true;
 
                         case 16:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(,message, "1");
                             return true;
 
                         case 17:
-                            Assert.AreEqual(message, "End of while iteration");
+                            Assert.AreEqual(,message, "End of while iteration");
                             return true;
 
                         case 18:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:

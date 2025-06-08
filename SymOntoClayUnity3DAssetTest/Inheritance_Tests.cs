@@ -55,7 +55,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -63,39 +63,39 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(,message, "1");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -131,7 +131,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -139,39 +139,39 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(,message, "1");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -197,7 +197,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -205,11 +205,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -235,7 +235,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -243,11 +243,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -273,7 +273,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -281,11 +281,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -334,7 +334,7 @@ app PeaceKeeper is [middle] exampleClass
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -342,39 +342,39 @@ app PeaceKeeper is [middle] exampleClass
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(,message, "1");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -423,7 +423,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -431,39 +431,39 @@ app PeaceKeeper is [very middle] exampleClass
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(,message, "1");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "0.5");
+                            Assert.AreEqual(,message, "0.5");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -495,7 +495,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -503,11 +503,11 @@ app PeaceKeeper is [very middle] exampleClass
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -538,22 +538,22 @@ app PeaceKeeper is [very middle] exampleClass
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithCategories(text, categories, (n, message) => 
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithCategories(text, categories, (n, message) => 
             {
                 maxN = n;
 
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         return true;
 
                     case 2:
-                        Assert.AreEqual(message, "1");
+                        Assert.AreEqual(,message, "1");
                         return true;
 
                     case 3:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         return false;
 
                     default:

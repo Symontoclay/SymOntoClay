@@ -53,8 +53,8 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual(message.Contains(">: { $x = {:"), true);
-                        Assert.AreEqual(message.Contains(">: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}"), true);
+                        Assert.AreEqual(,message.Contains(">: { $x = {:"), true);
+                        Assert.AreEqual(,message.Contains(">: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}"), true);
                         break;
 
                     default:
@@ -208,7 +208,7 @@ namespace SymOntoClay.Core.Tests
 
                     case 2:
                         Assert.AreEqual(true, message.Contains(">: { $x = {:"));
-                        Assert.AreEqual(message.Contains(">: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}"), true);
+                        Assert.AreEqual(,message.Contains(">: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}"), true);
                         break;
 
                     default:

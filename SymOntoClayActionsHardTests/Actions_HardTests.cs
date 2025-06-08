@@ -47,27 +47,27 @@ namespace SymOntoClay.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin go");
+                        Assert.AreEqual(,message, "Begin go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "Begin move and check");
+                        Assert.AreEqual(,message, "Begin move and check");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "I see!!!");
+                        Assert.AreEqual(,message, "I see!!!");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End go");
+                        Assert.AreEqual(,message, "End go");
                         break;
 
                     case 6:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -183,27 +183,27 @@ action check
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin go");
+                        Assert.AreEqual(,message, "Begin go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "Begin move and check");
+                        Assert.AreEqual(,message, "Begin move and check");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "I see!!!");
+                        Assert.AreEqual(,message, "I see!!!");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End go");
+                        Assert.AreEqual(,message, "End go");
                         break;
 
                     case 6:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -319,31 +319,31 @@ action check
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin go");
+                        Assert.AreEqual(,message, "Begin go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "Begin move and check");
+                        Assert.AreEqual(,message, "Begin move and check");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "Begin move");
+                        Assert.AreEqual(,message, "Begin move");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "I see!!!");
+                        Assert.AreEqual(,message, "I see!!!");
                         break;
 
                     case 6:
-                        Assert.AreEqual(message, "End go");
+                        Assert.AreEqual(,message, "End go");
                         break;
 
                     case 7:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -469,31 +469,31 @@ action move
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin go");
+                        Assert.AreEqual(,message, "Begin go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "Begin move and check");
+                        Assert.AreEqual(,message, "Begin move and check");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "Begin move");
+                        Assert.AreEqual(,message, "Begin move");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "I see!!!");
+                        Assert.AreEqual(,message, "I see!!!");
                         break;
 
                     case 6:
-                        Assert.AreEqual(message, "End go");
+                        Assert.AreEqual(,message, "End go");
                         break;
 
                     case 7:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -620,31 +620,31 @@ action move
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin go");
+                        Assert.AreEqual(,message, "Begin go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "Begin move and check");
+                        Assert.AreEqual(,message, "Begin move and check");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "Begin move");
+                        Assert.AreEqual(,message, "Begin move");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "I see!!!");
+                        Assert.AreEqual(,message, "I see!!!");
                         break;
 
                     case 6:
-                        Assert.AreEqual(message, "End go");
+                        Assert.AreEqual(,message, "End go");
                         break;
 
                     case 7:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:

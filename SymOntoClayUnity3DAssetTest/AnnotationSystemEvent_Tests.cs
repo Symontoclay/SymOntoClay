@@ -50,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -101,7 +101,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -152,7 +152,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -203,7 +203,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -252,7 +252,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -297,7 +297,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -342,7 +342,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -387,7 +387,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -432,7 +432,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -477,7 +477,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -522,7 +522,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -600,7 +600,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -661,7 +661,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1082,7 +1082,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1130,7 +1130,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1178,7 +1178,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1226,7 +1226,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1272,7 +1272,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1314,7 +1314,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1356,7 +1356,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1398,7 +1398,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1440,7 +1440,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1482,7 +1482,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1524,7 +1524,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1566,7 +1566,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1608,7 +1608,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1650,7 +1650,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1692,7 +1692,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1734,7 +1734,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1777,7 +1777,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1820,7 +1820,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1863,7 +1863,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1906,7 +1906,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1949,7 +1949,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1992,7 +1992,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2035,7 +2035,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2078,7 +2078,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2118,7 +2118,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2162,7 +2162,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2206,7 +2206,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2250,7 +2250,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2292,7 +2292,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2330,7 +2330,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2368,7 +2368,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2406,7 +2406,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2444,7 +2444,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2482,7 +2482,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2520,7 +2520,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2558,7 +2558,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2596,7 +2596,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2634,7 +2634,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2672,7 +2672,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2710,7 +2710,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2749,7 +2749,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2788,7 +2788,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2827,7 +2827,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2866,7 +2866,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2905,7 +2905,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2944,7 +2944,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2983,7 +2983,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3022,7 +3022,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3060,7 +3060,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3098,7 +3098,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3132,7 +3132,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3170,7 +3170,7 @@ action Go
 
             var hostListener = new VeryLongMehod_HostListener();
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3204,7 +3204,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3246,7 +3246,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3280,7 +3280,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3322,7 +3322,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3360,7 +3360,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3403,7 +3403,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3442,7 +3442,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {

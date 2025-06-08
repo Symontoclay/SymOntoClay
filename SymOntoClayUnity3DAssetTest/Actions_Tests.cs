@@ -70,23 +70,23 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -142,23 +142,23 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -206,19 +206,19 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "End Go");
+                        Assert.AreEqual(,message, "End Go");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -264,19 +264,19 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "End Go");
+                        Assert.AreEqual(,message, "End Go");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -326,19 +326,19 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on complete");
+                        Assert.AreEqual(,message, "on complete");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -394,23 +394,23 @@ action `my Go 1` alias `Go`
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -465,23 +465,23 @@ action `my Go 1` alias `Go`, Run
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -536,23 +536,23 @@ action `my Go 1` alias `Go`, `Run`
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -607,23 +607,23 @@ action `my Go 1` alias `Go` is `base app`
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -679,23 +679,23 @@ action `my Go 1` alias `Go`, Run is `base app`
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -750,23 +750,23 @@ action `my Go 1` alias `Go`, `Run` is `base app`
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -821,23 +821,23 @@ action `Go` is `base app`
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -892,23 +892,23 @@ action Go is `base app`
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
@@ -963,19 +963,19 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual(,message, "on Fired");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     default:
@@ -1200,27 +1200,27 @@ action Go
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "Begin Go");
+                            Assert.AreEqual(,message, "Begin Go");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "`a` has been called!");
+                            Assert.AreEqual(,message, "`a` has been called!");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "`b` has been called!");
+                            Assert.AreEqual(,message, "`b` has been called!");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "End Go");
+                            Assert.AreEqual(,message, "End Go");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -1270,19 +1270,19 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on weak cancel");
+                        Assert.AreEqual(,message, "on weak cancel");
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual(,message, "End");
                         break;
 
                     default:
@@ -1336,11 +1336,11 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual(,message, "Begin");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual(,message, "Begin Go");
                         break;
 
                     default:
@@ -1404,7 +1404,7 @@ action kill
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1516,7 +1516,7 @@ action kill
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1524,43 +1524,43 @@ action kill
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "Begin go and kill");
+                            Assert.AreEqual(,message, "Begin go and kill");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "Begin move");
+                            Assert.AreEqual(,message, "Begin move");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "move: 1");
+                            Assert.AreEqual(,message, "move: 1");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "End move");
+                            Assert.AreEqual(,message, "End move");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "Begin kill");
+                            Assert.AreEqual(,message, "Begin kill");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "kill: 2");
+                            Assert.AreEqual(,message, "kill: 2");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "End kill");
+                            Assert.AreEqual(,message, "End kill");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "End go and kill");
+                            Assert.AreEqual(,message, "End go and kill");
                             return true;
 
                         case 10:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -1632,7 +1632,7 @@ action kill
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1640,51 +1640,51 @@ action kill
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "Begin go and kill");
+                            Assert.AreEqual(,message, "Begin go and kill");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "Begin move");
+                            Assert.AreEqual(,message, "Begin move");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "move: 1");
+                            Assert.AreEqual(,message, "move: 1");
                             return true;
 
                         case 5:
-                            Assert.AreEqual(message, "move (1): 1");
+                            Assert.AreEqual(,message, "move (1): 1");
                             return true;
 
                         case 6:
-                            Assert.AreEqual(message, "End move");
+                            Assert.AreEqual(,message, "End move");
                             return true;
 
                         case 7:
-                            Assert.AreEqual(message, "Begin kill");
+                            Assert.AreEqual(,message, "Begin kill");
                             return true;
 
                         case 8:
-                            Assert.AreEqual(message, "kill: 2");
+                            Assert.AreEqual(,message, "kill: 2");
                             return true;
 
                         case 9:
-                            Assert.AreEqual(message, "kill (1): 2");
+                            Assert.AreEqual(,message, "kill (1): 2");
                             return true;
 
                         case 10:
-                            Assert.AreEqual(message, "End kill");
+                            Assert.AreEqual(,message, "End kill");
                             return true;
 
                         case 11:
-                            Assert.AreEqual(message, "End go and kill");
+                            Assert.AreEqual(,message, "End go and kill");
                             return true;
 
                         case 12:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -1760,39 +1760,39 @@ action Swim
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
+                        Assert.AreEqual(,"Begin", message);
                         break;
 
                     case 2:
-                        Assert.AreEqual("Begin Go", message);
+                        Assert.AreEqual(,"Begin Go", message);
                         break;
 
                     case 3:
-                        Assert.AreEqual("Begin Run", message);
+                        Assert.AreEqual(,"Begin Run", message);
                         break;
 
                     case 4:
-                        Assert.AreEqual("Begin Swim", message);
+                        Assert.AreEqual(,"Begin Swim", message);
                         break;
 
                     case 5:
-                        Assert.AreEqual("on Fired", message);
+                        Assert.AreEqual(,"on Fired", message);
                         break;
 
                     case 6:
-                        Assert.AreEqual("#a", message);
+                        Assert.AreEqual(,"#a", message);
                         break;
 
                     case 7:
-                        Assert.AreEqual("on complete Swim", message);
+                        Assert.AreEqual(,"on complete Swim", message);
                         break;
 
                     case 8:
-                        Assert.AreEqual("on complete Run", message);
+                        Assert.AreEqual(,"on complete Run", message);
                         break;
 
                     case 9:
-                        Assert.AreEqual("End", message);
+                        Assert.AreEqual(,"End", message);
                         break;
 
                     default:

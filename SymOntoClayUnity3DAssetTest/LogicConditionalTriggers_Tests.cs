@@ -42,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -70,13 +70,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("D"), true);
+                            Assert.AreEqual(,message.Contains("D"), true);
                             break;
 
                         default:
@@ -99,13 +99,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("D"), true);
+                            Assert.AreEqual(,message.Contains("D"), true);
                             break;
 
                         default:
@@ -126,13 +126,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("D"), true);
+                            Assert.AreEqual(,message.Contains("D"), true);
                             break;
 
                         default:
@@ -153,7 +153,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -179,13 +179,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("#a"), true);
+                            Assert.AreEqual(,message.Contains("#a"), true);
                             break;
 
                         default:
@@ -213,13 +213,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("#a"), true);
+                            Assert.AreEqual(,message.Contains("#a"), true);
                             break;
 
                         default:
@@ -244,7 +244,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -270,13 +270,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "NULL");
+                            Assert.AreEqual(,message, "NULL");
                             break;
 
                         default:
@@ -437,15 +437,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "I see!!");
+                        Assert.AreEqual(,message, "I see!!");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "14.71526");
+                        Assert.AreEqual(,message, "14.71526");
                         break;
 
                     default:
@@ -484,15 +484,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "I see!!");
+                        Assert.AreEqual(,message, "I see!!");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "14.71526");
+                        Assert.AreEqual(,message, "14.71526");
                         break;
 
                     default:
@@ -534,11 +534,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "D");
+                            Assert.AreEqual(,message, "D");
                             break;
 
                         default:
@@ -567,12 +567,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             break;
 
                         default:
@@ -601,7 +601,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -1633,11 +1633,11 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "on Fired $x in App");
+                        Assert.AreEqual(,message, "on Fired $x in App");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     default:
@@ -1673,11 +1673,11 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "on Fired $x in App");
+                        Assert.AreEqual(,message, "on Fired $x in App");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     default:
@@ -1713,11 +1713,11 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "on Fired $x in App");
+                        Assert.AreEqual(,message, "on Fired $x in App");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(,message, "#a");
                         break;
 
                     default:
@@ -1751,7 +1751,7 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "D");
+                        Assert.AreEqual(,message, "D");
                         break;
 
                     default:
@@ -1785,7 +1785,7 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "D");
+                        Assert.AreEqual(,message, "D");
                         break;
 
                     default:
@@ -1819,7 +1819,7 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "D");
+                        Assert.AreEqual(,message, "D");
                         break;
 
                     default:
@@ -1846,7 +1846,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1882,7 +1882,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)

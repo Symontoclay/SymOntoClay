@@ -50,19 +50,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "go!!!!");
+                            Assert.AreEqual(,message, "go!!!!");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message.Contains("#@{:"), true);
-                            Assert.AreEqual(message.Contains(">: { color($_,$x1) & place($_) & green($x1) } :}"), true);
+                            Assert.AreEqual(,message.Contains("#@{:"), true);
+                            Assert.AreEqual(,message.Contains(">: { color($_,$x1) & place($_) & green($x1) } :}"), true);
                             return false;
 
                         default:
@@ -94,18 +94,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "go!!!!");
+                            Assert.AreEqual(,message, "go!!!!");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "#@(place & color = green)");
+                            Assert.AreEqual(,message, "#@(place & color = green)");
                             return false;
 
                         default:
@@ -133,18 +133,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual("GoToImpl_2", message);
+                            Assert.AreEqual(,"GoToImpl_2", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual("<0, 0, 0>", message);
+                            Assert.AreEqual(,"<0, 0, 0>", message);
                             return false;
 
                         default:
@@ -175,18 +175,18 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual("GoToImpl", message);
+                            Assert.AreEqual(,"GoToImpl", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual("<0, 0, 0>", message);
+                            Assert.AreEqual(,"<0, 0, 0>", message);
                             return false;
 
                         default:

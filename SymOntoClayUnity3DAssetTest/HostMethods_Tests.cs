@@ -57,15 +57,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "BooImpl Begin");
+                            Assert.AreEqual(,message, "BooImpl Begin");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -103,19 +103,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "RotateImpl Begin");
+                            Assert.AreEqual(,message, "RotateImpl Begin");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "30");
+                            Assert.AreEqual(,message, "30");
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -153,19 +153,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "RotateImpl Begin");
+                            Assert.AreEqual(,message, "RotateImpl Begin");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, string.Empty);
+                            Assert.AreEqual(,message, string.Empty);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -203,15 +203,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             return true;
 
                         case 2:
-                            Assert.AreEqual(message, "RotateToEntityImpl Begin");
+                            Assert.AreEqual(,message, "RotateToEntityImpl Begin");
                             return true;
 
                         case 3:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             return false;
 
                         default:
@@ -233,41 +233,41 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "TakeImpl Begin");
+                            Assert.AreEqual(,message, "TakeImpl Begin");
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "(entity == null) = False");
+                            Assert.AreEqual(,message, "(entity == null) = False");
                             break;
 
                         case 4:
                             {
-                                Assert.AreNotEqual(message, string.Empty);
+                                Assert.AreNotEqual(,message, string.Empty);
 
                                 var intVal = int.Parse(message);
 
-                                Assert.AreEqual(intVal > 0, true);
+                                Assert.AreEqual(,intVal > 0, true);
                             }
                             break;
 
                         case 5:
-                            Assert.AreNotEqual(message, string.Empty);
+                            Assert.AreNotEqual(,message, string.Empty);
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "<10, 10, 10>");
+                            Assert.AreEqual(,message, "<10, 10, 10>");
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "TakeImpl End");
+                            Assert.AreEqual(,message, "TakeImpl End");
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             break;
 
                         default:
@@ -314,35 +314,35 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "TakeImpl Begin");
+                            Assert.AreEqual(,message, "TakeImpl Begin");
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "(entity == null) = False");
+                            Assert.AreEqual(,message, "(entity == null) = False");
                             break;
 
                         case 4:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(,message, "0");
                             break;
 
                         case 5:
-                            Assert.AreEqual(message, string.Empty);
+                            Assert.AreEqual(,message, string.Empty);
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, string.Empty);
+                            Assert.AreEqual(,message, string.Empty);
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "TakeImpl End");
+                            Assert.AreEqual(,message, "TakeImpl End");
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             break;
 
                         default:
@@ -381,19 +381,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual(,message, "Begin");
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "TakeImpl Begin");
+                            Assert.AreEqual(,message, "TakeImpl Begin");
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "(entity == null) = True");
+                            Assert.AreEqual(,message, "(entity == null) = True");
                             break;
 
                         case 4:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(,message, "End");
                             break;
 
                         default:
@@ -447,7 +447,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -487,7 +487,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -527,7 +527,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -579,7 +579,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -629,7 +629,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 
@@ -683,7 +683,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
                 (n, message) => {
                     maxN = n;
 

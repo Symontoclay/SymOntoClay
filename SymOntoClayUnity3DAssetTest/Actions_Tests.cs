@@ -1117,7 +1117,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1149,7 +1149,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1193,7 +1193,7 @@ action Go
 
             var maxN = 0;
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1227,7 +1227,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(6, maxN);
         }
@@ -1405,7 +1405,7 @@ action kill
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1455,7 +1455,7 @@ action kill
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(10, maxN);
         }
@@ -1517,7 +1517,7 @@ action kill
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1567,7 +1567,7 @@ action kill
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(10, maxN);
         }
@@ -1633,7 +1633,7 @@ action kill
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1691,7 +1691,7 @@ action kill
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(12, maxN);
         }

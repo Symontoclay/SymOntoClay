@@ -264,7 +264,7 @@ state Idling
             var initN = 0;
             var enterN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -302,7 +302,7 @@ state Idling
                                 throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -341,7 +341,7 @@ state Patrolling
             var appN = 0;
             var patrollingEnterN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains("Idling Enters"))
                     {
@@ -386,7 +386,7 @@ state Patrolling
                             }
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -426,7 +426,7 @@ state Patrolling
             var appEnterN = 0;
             var patrollingEnterN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -464,7 +464,7 @@ state Patrolling
                                 throw new ArgumentOutOfRangeException(nameof(appEnterN), appEnterN, null);
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -508,7 +508,7 @@ state Patrolling
             var patrollingN = 0;
             var idlingN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Patrolling "))
                     {
@@ -563,7 +563,7 @@ state Patrolling
                             }
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -597,7 +597,7 @@ state Patrolling
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -617,7 +617,7 @@ state Patrolling
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -661,7 +661,7 @@ state Patrolling
             var patrollingN = 0;
             var idlingN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Patrolling "))
                     {
@@ -716,7 +716,7 @@ state Patrolling
                             }
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -758,7 +758,7 @@ state Patrolling
             var appN = 0;
             var enterN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
@@ -792,7 +792,7 @@ state Patrolling
                                 throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1192,7 +1192,7 @@ state Idling
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1217,7 +1217,7 @@ state Idling
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1255,7 +1255,7 @@ state Idling
             var appN = 0;
             var idlingN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Idling "))
                     {
@@ -1297,7 +1297,7 @@ state Idling
                                 throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1349,7 +1349,7 @@ state Patrolling
 
             var wasPatrolling = false;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if(message.Contains(" Idling "))
                     {
@@ -1424,7 +1424,7 @@ state Patrolling
                             }
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1475,7 +1475,7 @@ state Patrolling
 
             var wasPatrolling = false;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if (message.Contains(" Idling "))
                     {
@@ -1532,7 +1532,7 @@ state Patrolling
                             }
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1560,7 +1560,7 @@ state Idling
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1582,7 +1582,7 @@ state Idling
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1635,7 +1635,7 @@ state Patrolling
 
             var wasPatrollingEnter = false;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (message) => {
                     if(message.Contains(" Idling Enter"))
                     {
@@ -1713,7 +1713,7 @@ state Patrolling
                             }
                         }
                     }
-                }), true);
+                }));
         }
 
         [Test]

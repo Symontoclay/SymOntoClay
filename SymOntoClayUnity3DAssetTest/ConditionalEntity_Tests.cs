@@ -354,7 +354,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -376,7 +376,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -401,7 +401,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -413,9 +413,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #@{:"), true);
-                            Assert.AreEqual(,message.Contains(">: { cat($_) & possess(i,$_) } :}"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #@{:"));
+                            Assert.AreEqual(true, message.Contains(">: { cat($_) & possess(i,$_) } :}"));
                             return true;
 
                         case 3:
@@ -425,7 +425,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -447,7 +447,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
             
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -469,7 +469,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -491,7 +491,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -513,7 +513,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }

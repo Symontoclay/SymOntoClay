@@ -173,9 +173,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
@@ -203,7 +203,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -218,7 +218,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -240,7 +240,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -248,15 +248,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), false);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(false, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -278,7 +278,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -286,15 +286,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), false);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(false, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -316,7 +316,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -324,14 +324,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = fly"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = fly"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -353,7 +353,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -361,13 +361,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -389,7 +389,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -397,15 +397,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$z = can(bird,fly)"), true);
-                            Assert.AreEqual(,message.Contains("$x"), false);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$z = can(bird,fly)"));
+                            Assert.AreEqual(false, message.Contains("$x"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -426,7 +426,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -434,13 +434,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -462,7 +462,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -470,13 +470,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -498,7 +498,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -506,13 +506,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -533,7 +533,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -541,13 +541,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -568,7 +568,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -576,13 +576,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -603,7 +603,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -611,13 +611,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -638,7 +638,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -646,13 +646,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -675,7 +675,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -690,7 +690,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -713,7 +713,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -721,15 +721,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = cat; $z = animal"), true);
-                            Assert.AreEqual(,message.Contains("$x = #a; $z = barrel"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = cat; $z = animal"));
+                            Assert.AreEqual(true, message.Contains("$x = #a; $z = barrel"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -759,7 +759,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -767,13 +767,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -803,7 +803,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -811,13 +811,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -847,7 +847,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -855,13 +855,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -891,7 +891,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -899,13 +899,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -935,7 +935,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -943,13 +943,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -979,7 +979,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -987,13 +987,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1023,7 +1023,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1031,13 +1031,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1067,7 +1067,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1075,13 +1075,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1111,7 +1111,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1119,13 +1119,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1152,7 +1152,7 @@ app PeaceKeeper
 
             var maxN = 0;
             
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1160,13 +1160,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1196,7 +1196,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1204,13 +1204,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1237,7 +1237,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1245,13 +1245,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1281,7 +1281,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1289,13 +1289,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1318,7 +1318,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1326,15 +1326,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = 12"), true);
-                            Assert.AreEqual(,message.Contains("$x = 50"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = 12"));
+                            Assert.AreEqual(true, message.Contains("$x = 50"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1357,7 +1357,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1365,13 +1365,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1393,7 +1393,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1401,14 +1401,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 12"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 12"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1430,7 +1430,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1438,14 +1438,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 12"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 12"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1467,7 +1467,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1475,13 +1475,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1503,7 +1503,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1511,14 +1511,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 50"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 50"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1540,7 +1540,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1548,13 +1548,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1576,7 +1576,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1584,13 +1584,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1612,7 +1612,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1620,14 +1620,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 50"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 50"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1649,7 +1649,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1657,14 +1657,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 5"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 5"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1686,7 +1686,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1694,13 +1694,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1722,7 +1722,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1730,13 +1730,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1758,7 +1758,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1766,13 +1766,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1794,7 +1794,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1802,14 +1802,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 4"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 4"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1831,7 +1831,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1839,13 +1839,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1867,7 +1867,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1875,14 +1875,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 5"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 5"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1904,7 +1904,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1912,14 +1912,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 4"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 4"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1949,7 +1949,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -1957,14 +1957,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 50"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 50"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -1994,7 +1994,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2002,13 +2002,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2038,7 +2038,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2046,13 +2046,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2082,7 +2082,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2090,14 +2090,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 50"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 50"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2127,7 +2127,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2135,14 +2135,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 15"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 15"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2172,7 +2172,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2180,13 +2180,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2216,7 +2216,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2224,13 +2224,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2260,7 +2260,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2268,13 +2268,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2304,7 +2304,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2312,14 +2312,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 4"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 4"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2349,7 +2349,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2357,13 +2357,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2393,7 +2393,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2401,14 +2401,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 15"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 15"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2438,7 +2438,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2446,14 +2446,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 4"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 4"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2483,7 +2483,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2491,14 +2491,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 50"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 50"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2528,7 +2528,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2536,13 +2536,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2572,7 +2572,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2580,13 +2580,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2616,7 +2616,7 @@ app PeaceKeeper
 
             var maxN = 0;
             
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2624,14 +2624,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 50"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 50"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2661,7 +2661,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2669,14 +2669,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 15"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 15"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2706,7 +2706,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2714,13 +2714,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2750,7 +2750,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2758,13 +2758,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2794,7 +2794,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2802,13 +2802,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2838,7 +2838,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2846,14 +2846,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 4"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 4"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2883,7 +2883,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2891,13 +2891,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2927,7 +2927,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2935,14 +2935,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 15"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 15"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -2972,7 +2972,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -2980,14 +2980,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = 4"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = 4"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3008,7 +3008,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3016,18 +3016,18 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #1234"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #1234"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(2, maxN);
         }
@@ -3053,27 +3053,27 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "m4a1");
+                            Assert.AreEqual("m4a1", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message.StartsWith("15.588"), true);
+                            Assert.AreEqual(true, message.StartsWith("15.588"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(,message, "!!!M4A1!!!!");
+                            Assert.AreEqual("!!!M4A1!!!!", message);
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -3093,7 +3093,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3101,15 +3101,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3141,9 +3141,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
@@ -3181,9 +3181,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
@@ -3213,7 +3213,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3221,15 +3221,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3253,7 +3253,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3261,15 +3261,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3293,7 +3293,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3301,15 +3301,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3331,7 +3331,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3339,13 +3339,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3369,7 +3369,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3377,15 +3377,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3409,7 +3409,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3417,15 +3417,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3447,7 +3447,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3455,15 +3455,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3487,7 +3487,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3495,13 +3495,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3523,7 +3523,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3531,15 +3531,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3563,7 +3563,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3571,15 +3571,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3603,7 +3603,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3611,15 +3611,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3643,7 +3643,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3651,15 +3651,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3683,7 +3683,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3691,15 +3691,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3723,7 +3723,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3731,13 +3731,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3761,7 +3761,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3769,13 +3769,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3799,7 +3799,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3807,15 +3807,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3839,7 +3839,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3847,15 +3847,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3879,7 +3879,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3887,15 +3887,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3919,7 +3919,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3927,15 +3927,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3956,7 +3956,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -3964,15 +3964,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = 15.588457107543945"), true);
-                            Assert.AreEqual(,message.Contains("$x = m16"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = 15.588457107543945"));
+                            Assert.AreEqual(true, message.Contains("$x = m16"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -3993,7 +3993,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4001,15 +4001,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = 15.588457107543945"), true);
-                            Assert.AreEqual(,message.Contains("$x = m16"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = 15.588457107543945"));
+                            Assert.AreEqual(true, message.Contains("$x = m16"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4030,7 +4030,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4038,15 +4038,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = 15.588457107543945"), true);
-                            Assert.AreEqual(,message.Contains("$x = m16"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = 15.588457107543945"));
+                            Assert.AreEqual(true, message.Contains("$x = m16"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4066,7 +4066,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4074,13 +4074,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4100,7 +4100,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4108,13 +4108,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4137,7 +4137,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4145,14 +4145,14 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4176,7 +4176,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4184,15 +4184,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #mark"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4216,7 +4216,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4224,15 +4224,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #mark"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4257,7 +4257,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4265,16 +4265,16 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
-                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$x = #mark"));
+                            Assert.AreEqual(true, message.Contains("$x = NULL"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4307,8 +4307,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = NULL"));
                             return false;
 
                         default:
@@ -4341,7 +4341,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4349,15 +4349,15 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$x = #mark"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4382,7 +4382,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4390,16 +4390,16 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
-                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$x = #mark"));
+                            Assert.AreEqual(true, message.Contains("$x = NULL"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4426,7 +4426,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4434,13 +4434,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4465,7 +4465,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -4473,13 +4473,13 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<no>"), true);
+                            Assert.AreEqual(true, message.Contains("<no>"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }
@@ -4514,10 +4514,10 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
-                            Assert.AreEqual(,message.Contains("$x = #mark"), true);
-                            Assert.AreEqual(,message.Contains("$x = NULL"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$x = #mark"));
+                            Assert.AreEqual(true, message.Contains("$x = NULL"));
                             return false;
 
                         default:
@@ -4556,8 +4556,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #wp1"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #wp1"));
                             return false;
 
                         default:

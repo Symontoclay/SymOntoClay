@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -53,15 +53,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(1, maxN);
         }

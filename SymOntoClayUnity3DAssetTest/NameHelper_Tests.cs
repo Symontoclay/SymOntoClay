@@ -318,7 +318,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Entity);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -341,7 +341,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Entity);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -364,7 +364,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Entity);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -387,7 +387,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Entity);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -410,7 +410,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Entity);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -433,7 +433,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Var);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -456,7 +456,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.SystemVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -479,7 +479,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.SystemVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -502,7 +502,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.SystemVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -548,7 +548,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.LogicalVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -571,7 +571,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.LogicalVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -594,7 +594,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.LinguisticVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -617,7 +617,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.LinguisticVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -640,7 +640,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.LinguisticVar);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -663,7 +663,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -686,7 +686,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -709,7 +709,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -732,7 +732,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Property);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -755,7 +755,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Property);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -778,7 +778,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.AnonymousEntityCondition);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -824,7 +824,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.EntityCondition);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -847,7 +847,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.EntityCondition);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -870,7 +870,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedAnonymousEntityCondition);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -893,7 +893,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedEntityCondition);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -916,7 +916,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedEntityCondition);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -939,7 +939,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedEntityCondition);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -962,7 +962,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -985,7 +985,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Property);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -1008,7 +1008,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -1031,7 +1031,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -1054,7 +1054,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -1099,8 +1099,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.NormalizedNameValue, "number");
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
-            Assert.AreEqual(,name.IsArray, true);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.IsArray);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 5);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -1122,9 +1122,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.NormalizedNameValue, "number");
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
-            Assert.AreEqual(,name.IsArray, true);
+            Assert.AreEqual(true, name.IsArray);
             Assert.AreEqual(,name.Capacity.HasValue, false);
-            Assert.AreEqual(,name.HasInfiniteCapacity, true);
+            Assert.AreEqual(true, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
 
@@ -1144,9 +1144,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.NormalizedNameValue, "number");
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
-            Assert.AreEqual(,name.IsArray, true);
+            Assert.AreEqual(true, name.IsArray);
             Assert.AreEqual(,name.Capacity.HasValue, false);
-            Assert.AreEqual(,name.HasInfiniteCapacity, true);
+            Assert.AreEqual(true, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
 
@@ -1166,9 +1166,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.NormalizedNameValue, "number");
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
-            Assert.AreEqual(,name.IsArray, true);
+            Assert.AreEqual(true, name.IsArray);
             Assert.AreEqual(,name.Capacity.HasValue, false);
-            Assert.AreEqual(,name.HasInfiniteCapacity, true);
+            Assert.AreEqual(true, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
 
@@ -1189,7 +1189,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -1272,7 +1272,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 
@@ -1355,7 +1355,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
+            Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(,name.Capacity.Value, 1);
             Assert.AreEqual(,name.HasInfiniteCapacity, false);
 

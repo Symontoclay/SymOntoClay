@@ -925,115 +925,115 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             linguisticVariable.CheckDirty();
 
-            Assert.AreEqual(,linguisticVariable.Name, NameHelper.CreateName("logic"));
+            Assert.AreEqual(NameHelper.CreateName("logic"), linguisticVariable.Name);
 
             CheckRange(linguisticVariable.Range, true, 0, 1, true);
 
-            Assert.AreEqual(,linguisticVariable.Constraint.IsEmpty, false);
+            Assert.AreEqual(false, linguisticVariable.Constraint.IsEmpty);
 
             var constraintItems = linguisticVariable.Constraint.Items.ToList();
 
-            Assert.AreEqual(,constraintItems.Count, 2);
+            Assert.AreEqual(2, constraintItems.Count);
 
             var item1 = constraintItems[0];
-            Assert.AreEqual(,item1.Kind, KindOfLinguisticVariableConstraintItem.Inheritance);
-            Assert.AreEqual(,item1.RelationName, null);
+            Assert.AreEqual(KindOfLinguisticVariableConstraintItem.Inheritance, item1.Kind);
+            Assert.AreEqual(null, item1.RelationName);
 
             var item2 = constraintItems[1];
 
-            Assert.AreEqual(,item2.Kind, KindOfLinguisticVariableConstraintItem.Relation);
-            Assert.AreEqual(,item2.RelationName, NameHelper.CreateName("is"));
+            Assert.AreEqual(KindOfLinguisticVariableConstraintItem.Relation, item2.Kind);
+            Assert.AreEqual(NameHelper.CreateName("is"), item2.RelationName);
 
             var termsList = linguisticVariable.Values;
 
-            Assert.AreEqual(,termsList.Count, 5);
+            Assert.AreEqual(5, termsList.Count);
 
             var term1 = termsList[0];
 
-            Assert.AreEqual(,term1.Name, NameHelper.CreateName("minimal"));
-            Assert.AreEqual(,term1.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("minimal"), term1.Name);
+            Assert.AreEqual(linguisticVariable, term1.Parent);
 
             var handler1 = term1.Handler;
 
-            Assert.AreNotEqual(,handler1, null);
+            Assert.AreNotEqual(null, handler1);
 
-            Assert.AreEqual(,handler1.Kind, KindOfFuzzyLogicMemberFunction.LFunction);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.LFunction, handler1.Kind);
 
             var handlerStr1 = handler1.ToString();
 
-            Assert.AreEqual(,handlerStr1.Contains("_a = 0"), true);
-            Assert.AreEqual(,handlerStr1.Contains("_b = 0.1"), true);
+            Assert.AreEqual(true, handlerStr1.Contains("_a = 0"));
+            Assert.AreEqual(true, handlerStr1.Contains("_b = 0.1"));
 
             var term2 = termsList[1];
 
-            Assert.AreEqual(,term2.Name, NameHelper.CreateName("low"));
-            Assert.AreEqual(,term2.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("low"), term2.Name);
+            Assert.AreEqual(linguisticVariable, term2.Parent);
 
             var handler2 = term2.Handler;
 
-            Assert.AreNotEqual(,handler2, null);
+            Assert.AreNotEqual(null, handler2);
 
-            Assert.AreEqual(,handler2.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler2.Kind);
 
             var handlerStr2 = handler2.ToString();
 
-            Assert.AreEqual(,handlerStr2.Contains("_a = 0"), true);
-            Assert.AreEqual(,handlerStr2.Contains("_b = 0.05"), true);
-            Assert.AreEqual(,handlerStr2.Contains("_c = 0.3"), true);
-            Assert.AreEqual(,handlerStr2.Contains("_d = 0.45"), true);
+            Assert.AreEqual(true, handlerStr2.Contains("_a = 0"));
+            Assert.AreEqual(true, handlerStr2.Contains("_b = 0.05"));
+            Assert.AreEqual(true, handlerStr2.Contains("_c = 0.3"));
+            Assert.AreEqual(true, handlerStr2.Contains("_d = 0.45"));
 
             var term3 = termsList[2];
 
-            Assert.AreEqual(,term3.Name, NameHelper.CreateName("middle"));
-            Assert.AreEqual(,term3.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("middle"), term3.Name);
+            Assert.AreEqual(linguisticVariable, term3.Parent);
 
             var handler3 = term3.Handler;
 
-            Assert.AreNotEqual(,handler3, null);
+            Assert.AreNotEqual(null, handler3);
 
-            Assert.AreEqual(,handler3.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler3.Kind);
 
             var handlerStr3 = handler3.ToString();
 
-            Assert.AreEqual(,handlerStr3.Contains("_a = 0.3"), true);
-            Assert.AreEqual(,handlerStr3.Contains("_b = 0.4"), true);
-            Assert.AreEqual(,handlerStr3.Contains("_c = 0.6"), true);
-            Assert.AreEqual(,handlerStr3.Contains("_d = 0.7"), true);
+            Assert.AreEqual(true, handlerStr3.Contains("_a = 0.3"));
+            Assert.AreEqual(true, handlerStr3.Contains("_b = 0.4"));
+            Assert.AreEqual(true, handlerStr3.Contains("_c = 0.6"));
+            Assert.AreEqual(true, handlerStr3.Contains("_d = 0.7"));
 
             var term4 = termsList[3];
 
-            Assert.AreEqual(,term4.Name, NameHelper.CreateName("high"));
-            Assert.AreEqual(,term4.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("high"), term4.Name);
+            Assert.AreEqual(linguisticVariable, term4.Parent);
 
             var handler4 = term4.Handler;
 
-            Assert.AreNotEqual,(handler4, null);
+            Assert.AreNotEqual(null, handler4);
 
-            Assert.AreEqual(,handler4.Kind, KindOfFuzzyLogicMemberFunction.Trapezoid);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.Trapezoid, handler4.Kind);
 
             var handlerStr4 = handler4.ToString();
 
-            Assert.AreEqual(,handlerStr4.Contains("_a = 0.55"), true);
-            Assert.AreEqual(,handlerStr4.Contains("_b = 0.7"), true);
-            Assert.AreEqual(,handlerStr4.Contains("_c = 0.95"), true);
-            Assert.AreEqual(,handlerStr4.Contains("_d = 1"), true);
+            Assert.AreEqual(true, handlerStr4.Contains("_a = 0.55"));
+            Assert.AreEqual(true, handlerStr4.Contains("_b = 0.7"));
+            Assert.AreEqual(true, handlerStr4.Contains("_c = 0.95"));
+            Assert.AreEqual(true, handlerStr4.Contains("_d = 1"));
 
             var term5 = termsList[4];
 
-            Assert.AreEqual(,term5.Name, NameHelper.CreateName("maximal"));
-            Assert.AreEqual(,term5.Parent, linguisticVariable);
+            Assert.AreEqual(NameHelper.CreateName("maximal"), term5.Name);
+            Assert.AreEqual(linguisticVariable, term5.Parent);
 
             var handler5 = term5.Handler;
 
-            Assert.AreNotEqual(,handler5, null);
+            Assert.AreNotEqual(null, handler5);
 
-            Assert.AreEqual(,handler5.Kind, KindOfFuzzyLogicMemberFunction.SFunction);
+            Assert.AreEqual(KindOfFuzzyLogicMemberFunction.SFunction, handler5.Kind);
 
             var handlerStr5 = handler5.ToString();
 
-            Assert.AreEqual(,handlerStr5.Contains("_a = 0.9"), true);
-            Assert.AreEqual(,handlerStr5.Contains("_m = 0.95"), true);
-            Assert.AreEqual(,handlerStr5.Contains("_b = 1"), true);
+            Assert.AreEqual(true, handlerStr5.Contains("_a = 0.9"));
+            Assert.AreEqual(true, handlerStr5.Contains("_m = 0.95"));
+            Assert.AreEqual(true, handlerStr5.Contains("_b = 1"));
         }
 
         [Test]
@@ -1062,52 +1062,52 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "14.777777777777782");
+                            Assert.AreEqual("14.777777777777782", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
 
         private void CheckCodeEntity(CodeItem codeEntity, string name)
         {
-            Assert.AreEqual(,codeEntity.Kind, KindOfCodeEntity.LinguisticVariable);
-            Assert.AreEqual(,codeEntity.Name, NameHelper.CreateName(name));
-            Assert.AreNotEqual(,codeEntity.AsLinguisticVariable, null);
-            Assert.AreEqual(,codeEntity.InheritanceItems.Count, 0);
+            Assert.AreEqual(KindOfCodeEntity.LinguisticVariable, codeEntity.Kind);
+            Assert.AreEqual(NameHelper.CreateName(name), codeEntity.Name);
+            Assert.AreNotEqual(null, codeEntity.AsLinguisticVariable);
+            Assert.AreEqual(0, codeEntity.InheritanceItems.Count);
         }
 
         private void CheckRange(RangeValue rangeValue)
         {
-            Assert.AreEqual(,rangeValue.LeftBoundary, null);
-            Assert.AreEqual(,rangeValue.RightBoundary, null);
+            Assert.AreEqual(null, rangeValue.LeftBoundary);
+            Assert.AreEqual(null, rangeValue.RightBoundary);
         }
 
         private void CheckRange(RangeValue rangeValue, bool leftBoundaryIncludes, double leftValue, double rightValue, bool rightValueIncludes)
         {
-            Assert.AreEqual(,rangeValue.LeftBoundary.Includes, leftBoundaryIncludes);
-            Assert.AreEqual(,rangeValue.LeftBoundary.Value.GetSystemValue(), leftValue);
-            Assert.AreEqual(,rangeValue.RightBoundary.Value.GetSystemValue(), rightValue);
-            Assert.AreEqual(,rangeValue.RightBoundary.Includes, rightValueIncludes);
+            Assert.AreEqual(leftBoundaryIncludes, rangeValue.LeftBoundary.Includes);
+            Assert.AreEqual(leftValue, rangeValue.LeftBoundary.Value.GetSystemValue());
+            Assert.AreEqual(rightValue, rangeValue.RightBoundary.Value.GetSystemValue());
+            Assert.AreEqual(rightValueIncludes, rangeValue.RightBoundary.Includes);
         }
 
         [SetUp]
@@ -1129,7 +1129,7 @@ app PeaceKeeper
 
             var result = parser.Result;
 
-            Assert.AreEqual(,result.Count, 1);
+            Assert.AreEqual(1, result.Count);
 
             var firstItem = result.Single();
 

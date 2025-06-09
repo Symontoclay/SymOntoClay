@@ -289,19 +289,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var name = NameHelper.CreateName(text);
 
-            Assert.AreEqual(,name.IsEmpty, false);
-            Assert.AreEqual(,name.NameValue, "#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`");
-            Assert.AreEqual(,name.NormalizedNameValue, "#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9");
-            Assert.AreEqual(,name.KindOfName, KindOfName.RuleOrFact);
+            Assert.AreEqual(false, name.IsEmpty);
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.NameValue);
+            Assert.AreEqual("#^91e029e7-6a4c-454b-b15b-323d2b5ff0a9", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.RuleOrFact, name.KindOfName);
 
-            Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
-            Assert.AreEqual(,name.Capacity.Value, 1);
-            Assert.AreEqual(,name.HasInfiniteCapacity, false);
+            Assert.AreEqual(false, name.IsArray);
+            Assert.AreEqual(true, name.Capacity.HasValue);
+            Assert.AreEqual(1, name.Capacity.Value);
+            Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1071,19 +1071,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var name = NameHelper.CreateName(text);
 
-            Assert.AreEqual(,name.IsEmpty, false);
-            Assert.AreEqual(,name.NameValue, "`Prop1`");
-            Assert.AreEqual(,name.NormalizedNameValue, "prop1");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(false, name.IsEmpty);
+            Assert.AreEqual("`Prop1`", name.NameValue);
+            Assert.AreEqual("prop1", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
-            Assert.AreEqual(,name.IsArray, false);
-            Assert.AreEqual(,name.Capacity.HasValue, true);
-            Assert.AreEqual(,name.Capacity.Value, 1);
-            Assert.AreEqual(,name.HasInfiniteCapacity, false);
+            Assert.AreEqual(false, name.IsArray);
+            Assert.AreEqual(true, name.Capacity.HasValue);
+            Assert.AreEqual(1, name.Capacity.Value);
+            Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.Tactical);
+            Assert.AreEqual(StrongIdentifierLevel.Tactical, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]

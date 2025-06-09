@@ -103,19 +103,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "RotateImpl Begin");
+                            Assert.AreEqual("RotateImpl Begin", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "30");
+                            Assert.AreEqual("30", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -153,19 +153,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "RotateImpl Begin");
+                            Assert.AreEqual("RotateImpl Begin", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, string.Empty);
+                            Assert.AreEqual(string.Empty, message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:

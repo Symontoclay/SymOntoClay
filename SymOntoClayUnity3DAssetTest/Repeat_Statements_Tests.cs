@@ -65,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) =>
                 {
                     maxN = n;
@@ -73,41 +73,41 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "10");
+                            Assert.AreEqual("10", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "9");
+                            Assert.AreEqual("9", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "8");
+                            Assert.AreEqual("8", message);
                             return true;
 
                         case 5:
-                            Assert.AreEqual(,message, "7");
+                            Assert.AreEqual("7", message);
                             return true;
 
                         case 6:
-                            Assert.AreEqual(,message, "6");
+                            Assert.AreEqual("6", message);
                             return true;
 
                         case 7:
-                            Assert.AreEqual(,message, "End of while iteration");
+                            Assert.AreEqual("End of while iteration", message);
                             return true;
 
                         case 8:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(8, maxN);
         }

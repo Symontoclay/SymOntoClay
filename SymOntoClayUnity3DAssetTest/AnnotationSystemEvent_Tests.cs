@@ -2539,7 +2539,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener), );
+                }, hostListener));
         }
 
         [Test]
@@ -3280,7 +3280,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3299,7 +3299,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -3322,7 +3322,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3337,7 +3337,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -3360,7 +3360,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3380,7 +3380,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -3403,7 +3403,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3418,7 +3418,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -3442,7 +3442,7 @@ action Go
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -3461,7 +3461,7 @@ action Go
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
     }
 }

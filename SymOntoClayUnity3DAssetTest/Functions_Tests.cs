@@ -49,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -70,7 +70,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -98,7 +98,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -119,7 +119,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -146,7 +146,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -171,7 +171,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -199,7 +199,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -224,7 +224,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -251,7 +251,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -276,7 +276,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -303,7 +303,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -328,7 +328,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -355,7 +355,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -380,7 +380,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -407,7 +407,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -432,7 +432,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -460,7 +460,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -485,7 +485,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -512,7 +512,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -537,7 +537,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -566,7 +566,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -591,7 +591,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -620,7 +620,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -645,7 +645,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -681,7 +681,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -706,7 +706,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -743,7 +743,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -780,7 +780,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(7, maxN);
         }
@@ -817,7 +817,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -854,7 +854,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(7, maxN);
         }
@@ -891,7 +891,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -928,7 +928,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(7, maxN);
         }
@@ -958,7 +958,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -987,7 +987,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(5, maxN);
         }
@@ -1017,7 +1017,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1046,7 +1046,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(5, maxN);
         }
@@ -1076,7 +1076,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1105,7 +1105,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(5, maxN);
         }
@@ -1135,7 +1135,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1164,7 +1164,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(5, maxN);
         }
@@ -1191,7 +1191,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1216,7 +1216,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1244,7 +1244,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1273,7 +1273,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(5, maxN);
         }
@@ -1310,7 +1310,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1335,7 +1335,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1373,7 +1373,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1398,7 +1398,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1437,7 +1437,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1462,7 +1462,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1501,7 +1501,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1526,7 +1526,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1563,7 +1563,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1588,7 +1588,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1626,7 +1626,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1651,7 +1651,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1690,7 +1690,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1715,7 +1715,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1754,7 +1754,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1779,7 +1779,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1824,7 +1824,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1849,7 +1849,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1876,7 +1876,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1901,7 +1901,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1928,7 +1928,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -1953,7 +1953,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(4, maxN);
         }
@@ -1987,7 +1987,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2020,7 +2020,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(6, maxN);
         }
@@ -2054,7 +2054,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2087,7 +2087,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(6, maxN);
         }
@@ -2127,7 +2127,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2160,7 +2160,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(6, maxN);
         }
@@ -2183,7 +2183,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2194,7 +2194,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -2214,7 +2214,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2225,7 +2225,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -2261,7 +2261,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2324,7 +2324,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -2360,7 +2360,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2423,7 +2423,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -2459,7 +2459,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2522,7 +2522,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -2558,7 +2558,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2621,7 +2621,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -2657,7 +2657,7 @@ app PeaceKeeper
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -2720,7 +2720,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -2740,7 +2740,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2761,7 +2761,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -2782,7 +2782,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2803,7 +2803,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -2830,7 +2830,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2851,7 +2851,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -2883,7 +2883,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2904,7 +2904,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -2936,7 +2936,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -2957,7 +2957,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -2989,7 +2989,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3010,7 +3010,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3037,7 +3037,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3058,7 +3058,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3085,7 +3085,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3106,7 +3106,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3133,7 +3133,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3154,7 +3154,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3176,7 +3176,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3197,7 +3197,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3223,7 +3223,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3244,7 +3244,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3271,7 +3271,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3292,7 +3292,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3318,7 +3318,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3339,7 +3339,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3370,7 +3370,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3391,7 +3391,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3422,7 +3422,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3443,7 +3443,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }
@@ -3469,7 +3469,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
                 (n, message) => {
                     maxN = n;
 
@@ -3490,7 +3490,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
 
             Assert.AreEqual(3, maxN);
         }

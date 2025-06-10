@@ -233,41 +233,41 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "TakeImpl Begin");
+                            Assert.AreEqual("TakeImpl Begin", message);
                             break;
 
                         case 3:
-                            Assert.AreEqual(,message, "(entity == null) = False");
+                            Assert.AreEqual("(entity == null) = False", message);
                             break;
 
                         case 4:
                             {
-                                Assert.AreNotEqual(,message, string.Empty);
+                                Assert.AreNotEqual(string.Empty, message);
 
                                 var intVal = int.Parse(message);
 
-                                Assert.AreEqual(,intVal > 0, true);
+                                Assert.AreEqual(true, intVal > 0);
                             }
                             break;
 
                         case 5:
-                            Assert.AreNotEqual(,message, string.Empty);
+                            Assert.AreNotEqual(string.Empty, message);
                             break;
 
                         case 6:
-                            Assert.AreEqual(,message, "<10, 10, 10>");
+                            Assert.AreEqual("<10, 10, 10>", message);
                             break;
 
                         case 7:
-                            Assert.AreEqual(,message, "TakeImpl End");
+                            Assert.AreEqual("TakeImpl End", message);
                             break;
 
                         case 8:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             break;
 
                         default:

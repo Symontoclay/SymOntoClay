@@ -273,11 +273,11 @@ state Idling
                         switch (enterN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin Enter");
+                                Assert.AreEqual("Begin Enter", message);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End Enter");
+                                Assert.AreEqual("End Enter", message);
                                 break;
 
                             default:
@@ -291,11 +291,11 @@ state Idling
                         switch (initN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin");
+                                Assert.AreEqual("Begin", message);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End");
+                                Assert.AreEqual("End", message);
                                 break;
 
                             default:

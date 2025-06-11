@@ -336,18 +336,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "#`Tom`");
-            Assert.AreEqual(,name.NormalizedNameValue, "#tom");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Entity);
+            Assert.AreEqual("#`Tom`", name.NameValue);
+            Assert.AreEqual("#tom", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Entity, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]

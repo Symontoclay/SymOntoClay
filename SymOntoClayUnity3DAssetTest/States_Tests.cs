@@ -345,7 +345,7 @@ state Patrolling
                 (message) => {
                     if (message.Contains("Idling Enters"))
                     {
-                        Assert.AreEqual(,message.Contains("Idling Enters"), true);
+                        Assert.AreEqual(true, message.Contains("Idling Enters"));
                     }
                     else
                     {
@@ -356,11 +356,11 @@ state Patrolling
                             switch (patrollingEnterN)
                             {
                                 case 1:
-                                    Assert.AreEqual(,message, "Begin Patrolling Enter");
+                                    Assert.AreEqual("Begin Patrolling Enter", message);
                                     break;
 
                                 case 2:
-                                    Assert.AreEqual(,message, "End Patrolling Enter");
+                                    Assert.AreEqual("End Patrolling Enter", message);
                                     break;
 
                                 default:
@@ -374,11 +374,11 @@ state Patrolling
                             switch (appN)
                             {
                                 case 1:
-                                    Assert.AreEqual(,message, "Begin");
+                                    Assert.AreEqual("Begin", message);
                                     break;
 
                                 case 2:
-                                    Assert.AreEqual(,message, "End");
+                                    Assert.AreEqual("End", message);
                                     break;
 
                                 default:

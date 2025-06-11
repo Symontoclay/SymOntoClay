@@ -381,19 +381,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "TakeImpl Begin");
+                            Assert.AreEqual("TakeImpl Begin", message);
                             break;
 
                         case 3:
-                            Assert.AreEqual(,message, "(entity == null) = True");
+                            Assert.AreEqual("(entity == null) = True", message);
                             break;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             break;
 
                         default:

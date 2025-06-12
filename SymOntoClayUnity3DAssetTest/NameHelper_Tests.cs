@@ -405,18 +405,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "#`020ED339-6313-459A-900D-92F809CEBDC5`");
-            Assert.AreEqual(,name.NormalizedNameValue, "#020ed339-6313-459a-900d-92f809cebdc5");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Entity);
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.NameValue);
+            Assert.AreEqual("#020ed339-6313-459a-900d-92f809cebdc5", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Entity, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -428,18 +428,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "@`a`");
-            Assert.AreEqual(,name.NormalizedNameValue, "@a");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Var);
+            Assert.AreEqual("@`a`", name.NameValue);
+            Assert.AreEqual("@a", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Var, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -457,12 +457,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -480,12 +480,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -503,12 +503,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -549,12 +549,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -572,12 +572,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -595,12 +595,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -618,12 +618,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -641,12 +641,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -664,12 +664,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -687,12 +687,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -710,12 +710,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -733,12 +733,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -756,12 +756,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -779,12 +779,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -825,12 +825,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -848,12 +848,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -871,12 +871,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -894,12 +894,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -917,12 +917,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -940,12 +940,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -963,12 +963,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.Global);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -986,12 +986,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.Global);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1009,12 +1009,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.Global);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1032,12 +1032,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.Root);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1055,12 +1055,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
             Assert.AreEqual(,name.Level, StrongIdentifierLevel.Strategic);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1104,9 +1104,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(,name.Capacity.Value, 5);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1126,9 +1126,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.Capacity.HasValue);
             Assert.AreEqual(true, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1148,9 +1148,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.Capacity.HasValue);
             Assert.AreEqual(true, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1170,9 +1170,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.Capacity.HasValue);
             Assert.AreEqual(true, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 0);
+            Assert.AreEqual(0, name.Namespaces.Count);
         }
 
         [Test]
@@ -1190,10 +1190,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(,name.Namespaces.Count, 2);
 
@@ -1208,9 +1208,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesElement.Capacity.HasValue);
             Assert.AreEqual(false, firstNamespacesElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,firstNamespacesElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, firstNamespacesElement.Level);
 
-            Assert.AreEqual(,firstNamespacesElement.Namespaces.Count, 1);
+            Assert.AreEqual(1, firstNamespacesElement.Namespaces.Count);
 
             var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
 
@@ -1223,9 +1223,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubElement.Capacity.HasValue);
             Assert.AreEqual(false, firstNamespacesSubElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,firstNamespacesSubElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, firstNamespacesSubElement.Level);
 
-            Assert.AreEqual(,firstNamespacesSubElement.Namespaces.Count, 0);
+            Assert.AreEqual(0, firstNamespacesSubElement.Namespaces.Count);
 
             var secondNamespacesElement = name.Namespaces[1];
 
@@ -1238,9 +1238,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesElement.Capacity.HasValue);
             Assert.AreEqual(false, secondNamespacesElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,secondNamespacesElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, secondNamespacesElement.Level);
 
-            Assert.AreEqual(,secondNamespacesElement.Namespaces.Count, 1);
+            Assert.AreEqual(1, secondNamespacesElement.Namespaces.Count);
 
             var secondNamespacesSubElement = secondNamespacesElement.Namespaces[0];
 
@@ -1253,9 +1253,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesSubElement.Capacity.HasValue);
             Assert.AreEqual(false, secondNamespacesSubElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,secondNamespacesSubElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, secondNamespacesSubElement.Level);
 
-            Assert.AreEqual(,secondNamespacesSubElement.Namespaces.Count, 0);
+            Assert.AreEqual(0, secondNamespacesSubElement.Namespaces.Count);
         }
 
         [Test]
@@ -1273,10 +1273,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(,name.Namespaces.Count, 2);
 
@@ -1291,9 +1291,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesElement.Capacity.HasValue);
             Assert.AreEqual(false, firstNamespacesElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,firstNamespacesElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, firstNamespacesElement.Level);
 
-            Assert.AreEqual(,firstNamespacesElement.Namespaces.Count, 1);
+            Assert.AreEqual(1, firstNamespacesElement.Namespaces.Count);
 
             var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
 
@@ -1306,9 +1306,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubElement.Capacity.HasValue);
             Assert.AreEqual(false, firstNamespacesSubElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,firstNamespacesSubElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, firstNamespacesSubElement.Level);
 
-            Assert.AreEqual(,firstNamespacesSubElement.Namespaces.Count, 0);
+            Assert.AreEqual(0, firstNamespacesSubElement.Namespaces.Count);
 
             var secondNamespacesElement = name.Namespaces[1];
 
@@ -1321,9 +1321,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesElement.Capacity.HasValue);
             Assert.AreEqual(false, secondNamespacesElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,secondNamespacesElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, secondNamespacesElement.Level);
 
-            Assert.AreEqual(,secondNamespacesElement.Namespaces.Count, 1);
+            Assert.AreEqual(1, secondNamespacesElement.Namespaces.Count);
 
             var secondNamespacesSubElement = secondNamespacesElement.Namespaces[0];
 
@@ -1336,9 +1336,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesSubElement.Capacity.HasValue);
             Assert.AreEqual(false, secondNamespacesSubElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,secondNamespacesSubElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, secondNamespacesSubElement.Level);
 
-            Assert.AreEqual(,secondNamespacesSubElement.Namespaces.Count, 0);
+            Assert.AreEqual(0, secondNamespacesSubElement.Namespaces.Count);
         }
 
         [Test]
@@ -1356,12 +1356,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
-            Assert.AreEqual(,name.Capacity.Value, 1);
+            Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 1);
+            Assert.AreEqual(1, name.Namespaces.Count);
 
             var firstNamespacesElement = name.Namespaces[0];
 
@@ -1374,9 +1374,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesElement.Capacity.HasValue);
             Assert.AreEqual(false, firstNamespacesElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,firstNamespacesElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, firstNamespacesElement.Level);
 
-            Assert.AreEqual(,firstNamespacesElement.Namespaces.Count, 1);
+            Assert.AreEqual(1, firstNamespacesElement.Namespaces.Count);
 
             var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
 
@@ -1389,9 +1389,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubElement.Capacity.HasValue);
             Assert.AreEqual(false, firstNamespacesSubElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,firstNamespacesSubElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, firstNamespacesSubElement.Level);
 
-            Assert.AreEqual(,firstNamespacesSubElement.Namespaces.Count, 1);
+            Assert.AreEqual(1, firstNamespacesSubElement.Namespaces.Count);
 
             var firstNamespacesSubSubElement = firstNamespacesSubElement.Namespaces[0];
 
@@ -1404,9 +1404,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubSubElement.Capacity.HasValue);
             Assert.AreEqual(false, firstNamespacesSubSubElement.HasInfiniteCapacity);
 
-            Assert.AreEqual(,firstNamespacesSubSubElement.Level, StrongIdentifierLevel.None);
+            Assert.AreEqual(StrongIdentifierLevel.None, firstNamespacesSubSubElement.Level);
 
-            Assert.AreEqual(,firstNamespacesSubSubElement.Namespaces.Count, 0);
+            Assert.AreEqual(0, firstNamespacesSubSubElement.Namespaces.Count);
         }
 
         [Test]

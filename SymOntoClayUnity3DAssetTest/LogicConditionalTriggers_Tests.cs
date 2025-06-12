@@ -42,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -50,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -70,19 +70,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("D"), true);
+                            Assert.AreEqual(true, message.Contains("D"));
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -99,19 +99,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("D"), true);
+                            Assert.AreEqual(true, message.Contains("D"));
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -126,19 +126,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("D"), true);
+                            Assert.AreEqual(true, message.Contains("D"));
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -161,7 +161,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -179,19 +179,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("#a"), true);
+                            Assert.AreEqual(true, message.Contains("#a"));
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -213,19 +213,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message.Contains("#a"), true);
+                            Assert.AreEqual(true, message.Contains("#a"));
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -244,7 +244,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -252,7 +252,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -270,19 +270,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "NULL");
+                            Assert.AreEqual("NULL", message);
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -529,7 +529,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -544,7 +544,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -567,7 +567,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -578,7 +578,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -601,7 +601,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -616,7 +616,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
 
@@ -1846,7 +1846,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1867,7 +1867,7 @@ app PeaceKeeper
                             Assert.AreEqual("D", message);
                             break;
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -1882,7 +1882,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(,BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -1894,7 +1894,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
     }
 }

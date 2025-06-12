@@ -57,12 +57,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "go!!!!");
+                            Assert.AreEqual("go!!!!", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message.Contains("#@{:"), true);
-                            Assert.AreEqual(,message.Contains(">: { color($_,$x1) & place($_) & green($x1) } :}"), true);
+                            Assert.AreEqual(true, message.Contains("#@{:"));
+                            Assert.AreEqual(true, message.Contains(">: { color($_,$x1) & place($_) & green($x1) } :}"));
                             return false;
 
                         default:
@@ -101,11 +101,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "go!!!!");
+                            Assert.AreEqual("go!!!!", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "#@(place & color = green)");
+                            Assert.AreEqual("#@(place & color = green)", message);
                             return false;
 
                         default:

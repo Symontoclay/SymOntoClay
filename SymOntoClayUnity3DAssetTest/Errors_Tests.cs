@@ -473,23 +473,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "1");
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "catch");
+                            Assert.AreEqual("catch", message);
                             return true;
 
                         case 5:
-                            Assert.AreEqual(,message, "End of `Enter`");
+                            Assert.AreEqual("End of `Enter`", message);
                             return false;
 
                         default:

@@ -865,9 +865,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##@");
-            Assert.AreEqual(,name.NormalizedNameValue, "##@");
-            Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedAnonymousEntityCondition);
+            Assert.AreEqual("##@", name.NameValue);
+            Assert.AreEqual("##@", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.OnceResolvedAnonymousEntityCondition, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -888,9 +888,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##@`dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "##@dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedEntityCondition);
+            Assert.AreEqual("##@`dog`", name.NameValue);
+            Assert.AreEqual("##@dog", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.OnceResolvedEntityCondition, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -913,7 +913,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "##@`dog`");
             Assert.AreEqual(,name.NormalizedNameValue, "##@dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedEntityCondition);
+            Assert.AreEqual(KindOfName.OnceResolvedEntityCondition, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -936,7 +936,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "##@`small dog`");
             Assert.AreEqual(,name.NormalizedNameValue, "##@small dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.OnceResolvedEntityCondition);
+            Assert.AreEqual(KindOfName.OnceResolvedEntityCondition, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);

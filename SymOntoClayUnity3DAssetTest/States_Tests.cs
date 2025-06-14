@@ -1096,20 +1096,20 @@ state Attacking
                     switch (idlingN)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin Idling Enter");
+                            Assert.AreEqual("Begin Idling Enter", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "End Idling Enter");
+                            Assert.AreEqual("End Idling Enter", message);
                             break;
 
                         case 3:
-                            Assert.AreEqual(,message, "Begin Idling Enter");
-                            Assert.AreEqual(,wasAttaking, true);
+                            Assert.AreEqual("Begin Idling Enter", message);
+                            Assert.AreEqual(true, wasAttaking);
                             break;
 
                         case 4:
-                            Assert.AreEqual(,message, "End Idling Enter");
+                            Assert.AreEqual("End Idling Enter", message);
                             break;
 
                         default:
@@ -1125,12 +1125,12 @@ state Attacking
                         switch (attackingN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin Attacking Enter");
-                                Assert.AreEqual(,warInit, true);
+                                Assert.AreEqual("Begin Attacking Enter", message);
+                                Assert.AreEqual(true, warInit);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End Attacking Enter");
+                                Assert.AreEqual("End Attacking Enter", message);
                                 wasAttaking = true;
                                 break;
 
@@ -1145,11 +1145,11 @@ state Attacking
                         switch (appN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin");
+                                Assert.AreEqual("Begin", message);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End");
+                                Assert.AreEqual("End", message);
                                 warInit = true;
                                 break;
 

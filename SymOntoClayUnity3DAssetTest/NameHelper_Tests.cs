@@ -842,9 +842,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "#@`small dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "#@small dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.EntityCondition);
+            Assert.AreEqual("#@`small dog`", name.NameValue);
+            Assert.AreEqual("#@small dog", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.EntityCondition, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);

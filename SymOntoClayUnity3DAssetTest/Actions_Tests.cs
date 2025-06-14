@@ -1337,11 +1337,11 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(,message, "Begin");
+                        Assert.AreEqual("Begin", message);
                         break;
 
                     case 2:
-                        Assert.AreEqual(,message, "Begin Go");
+                        Assert.AreEqual("Begin Go", message);
                         break;
 
                     default:
@@ -1525,43 +1525,43 @@ action kill
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "Begin go and kill");
+                            Assert.AreEqual("Begin go and kill", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "Begin move");
+                            Assert.AreEqual("Begin move", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "move: 1");
+                            Assert.AreEqual("move: 1", message);
                             return true;
 
                         case 5:
-                            Assert.AreEqual(,message, "End move");
+                            Assert.AreEqual("End move", message);
                             return true;
 
                         case 6:
-                            Assert.AreEqual(,message, "Begin kill");
+                            Assert.AreEqual("Begin kill", message);
                             return true;
 
                         case 7:
-                            Assert.AreEqual(,message, "kill: 2");
+                            Assert.AreEqual("kill: 2", message);
                             return true;
 
                         case 8:
-                            Assert.AreEqual(,message, "End kill");
+                            Assert.AreEqual("End kill", message);
                             return true;
 
                         case 9:
-                            Assert.AreEqual(,message, "End go and kill");
+                            Assert.AreEqual("End go and kill", message);
                             return true;
 
                         case 10:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:

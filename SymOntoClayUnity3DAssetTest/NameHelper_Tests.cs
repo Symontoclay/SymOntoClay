@@ -474,9 +474,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "@@`host`");
-            Assert.AreEqual(,name.NormalizedNameValue, "@@host");
-            Assert.AreEqual(,name.KindOfName, KindOfName.SystemVar);
+            Assert.AreEqual("@@`host`", name.NameValue);
+            Assert.AreEqual("@@host", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.SystemVar, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -497,9 +497,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "@@`big host`");
-            Assert.AreEqual(,name.NormalizedNameValue, "@@big host");
-            Assert.AreEqual(,name.KindOfName, KindOfName.SystemVar);
+            Assert.AreEqual("@@`big host`", name.NameValue);
+            Assert.AreEqual("@@big host", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.SystemVar, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);

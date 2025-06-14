@@ -437,15 +437,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(,message, "I see!!");
+                        Assert.AreEqual("I see!!", message);
                         break;
 
                     case 2:
-                        Assert.AreEqual(,message, "#a");
+                        Assert.AreEqual("#a", message);
                         break;
 
                     case 3:
-                        Assert.AreEqual(,message, "14.71526");
+                        Assert.AreEqual("14.71526", message);
                         break;
 
                     default:
@@ -484,15 +484,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(,message, "I see!!");
+                        Assert.AreEqual("I see!!", message);
                         break;
 
                     case 2:
-                        Assert.AreEqual(,message, "#a");
+                        Assert.AreEqual("#a", message);
                         break;
 
                     case 3:
-                        Assert.AreEqual(,message, "14.71526");
+                        Assert.AreEqual("14.71526", message);
                         break;
 
                     default:

@@ -503,11 +503,11 @@ app PeaceKeeper is [very middle] exampleClass
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:

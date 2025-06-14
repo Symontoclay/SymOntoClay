@@ -957,16 +957,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "`Prop1`");
-            Assert.AreEqual(,name.NormalizedNameValue, "prop1");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual("`Prop1`", name.NameValue);
+            Assert.AreEqual("prop1", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
             Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.Global);
+            Assert.AreEqual(StrongIdentifierLevel.Global, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
         }
@@ -989,7 +989,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.Global);
+            Assert.AreEqual(StrongIdentifierLevel.Global, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
         }
@@ -1012,7 +1012,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(1, name.Capacity.Value);
             Assert.AreEqual(false, name.HasInfiniteCapacity);
 
-            Assert.AreEqual(,name.Level, StrongIdentifierLevel.Global);
+            Assert.AreEqual(StrongIdentifierLevel.Global, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
         }

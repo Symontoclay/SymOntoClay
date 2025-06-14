@@ -1889,7 +1889,7 @@ action Kill
                     switch (patrollingEnterN)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin Patrolling Enter");
+                            Assert.AreEqual("Begin Patrolling Enter", message);
                             break;
 
                         default:
@@ -1905,11 +1905,11 @@ action Kill
                         switch (idlingEnterN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin Idling Enter");
+                                Assert.AreEqual("Begin Idling Enter", message);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End Idling Enter");
+                                Assert.AreEqual("End Idling Enter", message);
                                 break;
 
                             default:

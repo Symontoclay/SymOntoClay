@@ -543,9 +543,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "$`_`");
-            Assert.AreEqual(,name.NormalizedNameValue, "$_");
-            Assert.AreEqual(,name.KindOfName, KindOfName.LogicalVar);
+            Assert.AreEqual("$`_`", name.NameValue);
+            Assert.AreEqual("$_", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.LogicalVar, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -566,9 +566,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "$`_`");
-            Assert.AreEqual(,name.NormalizedNameValue, "$_");
-            Assert.AreEqual(,name.KindOfName, KindOfName.LogicalVar);
+            Assert.AreEqual("$`_`", name.NameValue);
+            Assert.AreEqual("$_", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.LogicalVar, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -589,9 +589,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "#|`teenager`");
-            Assert.AreEqual(,name.NormalizedNameValue, "#|teenager");
-            Assert.AreEqual(,name.KindOfName, KindOfName.LinguisticVar);
+            Assert.AreEqual("#|`teenager`", name.NameValue);
+            Assert.AreEqual("#|teenager", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.LinguisticVar, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -612,9 +612,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "#|`teenager`");
-            Assert.AreEqual(,name.NormalizedNameValue, "#|teenager");
-            Assert.AreEqual(,name.KindOfName, KindOfName.LinguisticVar);
+            Assert.AreEqual("#|`teenager`", name.NameValue);
+            Assert.AreEqual("#|teenager", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.LinguisticVar, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -635,9 +635,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "#|`big teenager`");
-            Assert.AreEqual(,name.NormalizedNameValue, "#|big teenager");
-            Assert.AreEqual(,name.KindOfName, KindOfName.LinguisticVar);
+            Assert.AreEqual("#|`big teenager`", name.NameValue);
+            Assert.AreEqual("#|big teenager", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.LinguisticVar, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -658,9 +658,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##`dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, text);
-            Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual("##`dog`", name.NameValue);
+            Assert.AreEqual(text, name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Concept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -681,9 +681,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##`dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "##dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual("##`dog`", name.NameValue);
+            Assert.AreEqual("##dog", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Concept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -704,9 +704,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##`small dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "##small dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual("##`small dog`", name.NameValue);
+            Assert.AreEqual("##small dog", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Concept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -727,9 +727,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "@:`Prop1`");
-            Assert.AreEqual(,name.NormalizedNameValue, "@:prop1");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Property);
+            Assert.AreEqual("@:`Prop1`", name.NameValue);
+            Assert.AreEqual("@:prop1", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Property, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -750,9 +750,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "@:`small dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "@:small dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Property);
+            Assert.AreEqual("@:`small dog`", name.NameValue);
+            Assert.AreEqual("@:small dog", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Property, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);

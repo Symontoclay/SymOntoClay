@@ -836,11 +836,11 @@ state Attacking
                     switch (enterN)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin Attacking Enter");
+                            Assert.AreEqual("Begin Attacking Enter", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "End Attacking Enter");
+                            Assert.AreEqual("End Attacking Enter", message);
                             break;
 
                         default:
@@ -854,11 +854,11 @@ state Attacking
                     switch (appN)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             break;
 
                         default:

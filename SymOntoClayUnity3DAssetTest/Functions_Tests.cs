@@ -362,19 +362,19 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "dog");
+                            Assert.AreEqual("dog", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -414,19 +414,19 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "1");
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -467,19 +467,19 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "1");
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -519,19 +519,19 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "1");
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -573,19 +573,19 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "1");
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -627,19 +627,19 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "12");
+                            Assert.AreEqual("12", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -688,19 +688,19 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` (1) has been called!");
+                            Assert.AreEqual("`a` (1) has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "12");
+                            Assert.AreEqual("12", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -750,31 +750,31 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` (1) has been called!");
+                            Assert.AreEqual("`a` (1) has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "12");
+                            Assert.AreEqual("12", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "`a` (2) has been called!");
+                            Assert.AreEqual("`a` (2) has been called!", message);
                             return true;
 
                         case 5:
-                            Assert.AreEqual(,message, "3");
+                            Assert.AreEqual("3", message);
                             return true;
 
                         case 6:
-                            Assert.AreEqual(,message, "Hi");
+                            Assert.AreEqual("Hi", message);
                             return true;
 
                         case 7:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -824,31 +824,31 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` (1) has been called!");
+                            Assert.AreEqual("`a` (1) has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "12");
+                            Assert.AreEqual("12", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "`a` (2) has been called!");
+                            Assert.AreEqual("`a` (2) has been called!", message);
                             return true;
 
                         case 5:
-                            Assert.AreEqual(,message, "3");
+                            Assert.AreEqual("3", message);
                             return true;
 
                         case 6:
-                            Assert.AreEqual(,message, "Hi");
+                            Assert.AreEqual("Hi", message);
                             return true;
 
                         case 7:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -898,31 +898,31 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` (1) has been called!");
+                            Assert.AreEqual("`a` (1) has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "12");
+                            Assert.AreEqual("12", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "`a` (2) has been called!");
+                            Assert.AreEqual("`a` (2) has been called!", message);
                             return true;
 
                         case 5:
-                            Assert.AreEqual(,message, "3");
+                            Assert.AreEqual("3", message);
                             return true;
 
                         case 6:
-                            Assert.AreEqual(,message, "Hi");
+                            Assert.AreEqual("Hi", message);
                             return true;
 
                         case 7:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:

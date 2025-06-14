@@ -534,11 +534,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "D");
+                            Assert.AreEqual("D", message);
                             break;
 
                         default:

@@ -59,15 +59,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -109,19 +109,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "NULL");
+                            Assert.AreEqual("NULL", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:

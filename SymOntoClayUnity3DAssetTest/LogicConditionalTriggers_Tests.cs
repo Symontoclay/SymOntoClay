@@ -1633,11 +1633,11 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(,message, "on Fired $x in App");
+                        Assert.AreEqual("on Fired $x in App", message);
                         break;
 
                     case 2:
-                        Assert.AreEqual(,message, "#a");
+                        Assert.AreEqual("#a", message);
                         break;
 
                     default:
@@ -1673,11 +1673,11 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(,message, "on Fired $x in App");
+                        Assert.AreEqual("on Fired $x in App", message);
                         break;
 
                     case 2:
-                        Assert.AreEqual(,message, "#a");
+                        Assert.AreEqual("#a", message);
                         break;
 
                     default:

@@ -1198,20 +1198,20 @@ state Idling
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin Idling Enter");
+                            Assert.AreEqual("Begin Idling Enter", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "<no>");
+                            Assert.AreEqual("<no>", message);
                             break;
 
                         case 3:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$x = #1234"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$x = #1234"));
                             break;
 
                         case 4:
-                            Assert.AreEqual(,message, "End Idling Enter");
+                            Assert.AreEqual("End Idling Enter", message);
                             break;
 
                         default:

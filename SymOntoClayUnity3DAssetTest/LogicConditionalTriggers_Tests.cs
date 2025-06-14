@@ -1785,7 +1785,7 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(,message, "D");
+                        Assert.AreEqual("D", message);
                         break;
 
                     default:
@@ -1819,7 +1819,7 @@ app PeaceKeeper
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(,message, "D");
+                        Assert.AreEqual("D", message);
                         break;
 
                     default:

@@ -1484,12 +1484,12 @@ state Patrolling
                         switch (idlingN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin Idling Enter");
-                                Assert.AreEqual(,wasPatrolling, true);
+                                Assert.AreEqual("Begin Idling Enter", message);
+                                Assert.AreEqual(true, wasPatrolling);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End Idling Enter");
+                                Assert.AreEqual("End Idling Enter", message);
                                 break;
 
                             default:
@@ -1505,7 +1505,7 @@ state Patrolling
                             switch (patrollingN)
                             {
                                 case 1:
-                                    Assert.AreEqual(,message, "Begin Patrolling Enter");
+                                    Assert.AreEqual("Begin Patrolling Enter", message);
                                     wasPatrolling = true;
                                     break;
 
@@ -1520,11 +1520,11 @@ state Patrolling
                             switch (appN)
                             {
                                 case 1:
-                                    Assert.AreEqual(,message, "Begin");
+                                    Assert.AreEqual("Begin", message);
                                     break;
 
                                 case 2:
-                                    Assert.AreEqual(,message, "End");
+                                    Assert.AreEqual("End", message);
                                     break;
 
                                 default:
@@ -1566,17 +1566,17 @@ state Idling
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin Idling Enter");
+                            Assert.AreEqual("Begin Idling Enter", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message.Contains("<yes>"), true);
-                            Assert.AreEqual(,message.Contains("$y = #peter"), true);
-                            Assert.AreEqual(,message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$x = #tom"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(,message, "End Idling Enter");
+                            Assert.AreEqual("End Idling Enter", message);
                             break;
 
                         default:
@@ -1644,11 +1644,11 @@ state Patrolling
                         switch (idlingEnterN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin Idling Enter");
+                                Assert.AreEqual("Begin Idling Enter", message);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End Idling Enter");
+                                Assert.AreEqual("End Idling Enter", message);
                                 break;
 
                             default:
@@ -1664,7 +1664,7 @@ state Patrolling
                             switch (patrollingEnterN)
                             {
                                 case 1:
-                                    Assert.AreEqual(,message, "Begin Patrolling Enter");
+                                    Assert.AreEqual("Begin Patrolling Enter", message);
                                     wasPatrollingEnter = true;
                                     break;
 
@@ -1681,12 +1681,12 @@ state Patrolling
                                 switch (patrollingLeaveN)
                                 {
                                     case 1:
-                                        Assert.AreEqual(,message, "Begin Patrolling Leave");
-                                        Assert.AreEqual(,wasPatrollingEnter, true);
+                                        Assert.AreEqual("Begin Patrolling Leave", message);
+                                        Assert.AreEqual(true, wasPatrollingEnter);
                                         break;
 
                                     case 2:
-                                        Assert.AreEqual(,message, "End Patrolling Leave");
+                                        Assert.AreEqual("End Patrolling Leave", message);
                                         break;
 
                                     default:
@@ -1700,11 +1700,11 @@ state Patrolling
                                 switch (appN)
                                 {
                                     case 1:
-                                        Assert.AreEqual(,message, "Begin");
+                                        Assert.AreEqual("Begin", message);
                                         break;
 
                                     case 2:
-                                        Assert.AreEqual(,message, "End");
+                                        Assert.AreEqual("End", message);
                                         break;
 
                                     default:
@@ -1763,12 +1763,12 @@ state Attacking
                     switch (enterN)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin Attacking Enter");
+                            Assert.AreEqual("Begin Attacking Enter", message);
                             wasBeginAttacking = true;
                             break;
 
                         case 2:
-                            Assert.AreEqual(,message, "End Attacking Enter");
+                            Assert.AreEqual("End Attacking Enter", message);
                             break;
 
                         default:
@@ -1779,7 +1779,7 @@ state Attacking
                 {
                     if(message == "#a")
                     {
-                        Assert.AreEqual(,wasBeginAttacking, true);
+                        Assert.AreEqual(true, wasBeginAttacking);
                     }
                     else
                     {
@@ -1788,11 +1788,11 @@ state Attacking
                         switch (appN)
                         {
                             case 1:
-                                Assert.AreEqual(,message, "Begin");
+                                Assert.AreEqual("Begin", message);
                                 break;
 
                             case 2:
-                                Assert.AreEqual(,message, "End");
+                                Assert.AreEqual("End", message);
                                 break;
 
                             default:

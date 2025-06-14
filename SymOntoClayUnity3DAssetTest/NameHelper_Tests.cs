@@ -911,8 +911,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##@`dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "##@dog");
+            Assert.AreEqual("##@`dog`", name.NameValue);
+            Assert.AreEqual("##@dog", name.NormalizedNameValue);
             Assert.AreEqual(KindOfName.OnceResolvedEntityCondition, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
@@ -934,8 +934,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##@`small dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "##@small dog");
+            Assert.AreEqual("##@`small dog`", name.NameValue);
+            Assert.AreEqual("##@small dog", name.NormalizedNameValue);
             Assert.AreEqual(KindOfName.OnceResolvedEntityCondition, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);

@@ -167,7 +167,7 @@ namespace TestSandbox
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
             //TstParseName();
-            //TstCreateName();
+            TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
             //TstBattleRoyaleHandler();//<==
@@ -176,7 +176,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -2254,6 +2254,7 @@ primitive task SomePrimitiveTask4
 
             //_logger.Info("2C88170A-6C28-48F1-98A1-980A34D8FCFC", $"name = {name}");
 
+            //var name = new StrongIdentifierValue();
             //var name = NameHelper.CreateName("#|`teenager`");
             //var name = NameHelper.CreateName("##dog");
             //var name = NameHelper.CreateName("@:Prop1");
@@ -2263,6 +2264,16 @@ primitive task SomePrimitiveTask4
             _logger.Info("8809F884-AA8E-4EAA-A423-96D3D938280B", $"name = {name}");
 
             _logger.Info("01364002-566A-4FD7-B0F7-E85D9335E48E", $"name.Namespaces.Count = {name.Namespaces.Count}");
+
+            _logger.Info("E6C44FF6-2BC1-4EED-988A-D7137F38DBA6", $"name.ToHumanizedLabel() = {name.ToHumanizedLabel()}");
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            _logger.Info("8D00A604-9101-4B82-AA9A-7507F6844E6F", $"name.ToHumanizedLabel(debugHelperOptions) = {name.ToHumanizedLabel(debugHelperOptions)}");
+
+            _logger.Info("CCFD476E-99AC-4B39-8EF0-CBE7FE0CAAE1", $"name.ToHumanizedString() = {name.ToHumanizedString()}");
+            _logger.Info("6D00F01C-0E2D-4618-8755-E4A27C9CC909", $"name.ToHumanizedString(debugHelperOptions) = {name.ToHumanizedString(debugHelperOptions)}");
 
             //var firstNamespacesElement = name.Namespaces[0];
 

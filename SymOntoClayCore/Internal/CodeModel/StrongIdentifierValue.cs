@@ -366,6 +366,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString(DebugHelperOptions options)
         {
+            if(IsEmpty)
+            {
+                return string.Empty;
+            }
+
             var sb = new StringBuilder();
 
             switch(Level)

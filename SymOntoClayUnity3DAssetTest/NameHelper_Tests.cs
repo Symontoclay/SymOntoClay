@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
@@ -51,6 +52,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual(string.Empty, name.ToHumanizedLabel());
+            Assert.AreEqual(string.Empty, name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual(string.Empty, name.ToHumanizedString());
+            Assert.AreEqual(string.Empty, name.ToHumanizedString(debugHelperOptions));
+
         }
 
         [Test]
@@ -75,6 +86,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual(string.Empty, name.ToHumanizedLabel());
+            Assert.AreEqual(string.Empty, name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual(string.Empty, name.ToHumanizedString());
+            Assert.AreEqual(string.Empty, name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -98,6 +118,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("`dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`dog`", name.ToHumanizedString());
+            Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -119,6 +148,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`Dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("`Dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`Dog`", name.ToHumanizedString());
+            Assert.AreEqual("`Dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -142,6 +180,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`small dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("`small dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`small dog`", name.ToHumanizedString());
+            Assert.AreEqual("`small dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -165,6 +212,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`__ctor`", name.ToHumanizedLabel());
+            Assert.AreEqual("`__ctor`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`__ctor`", name.ToHumanizedString());
+            Assert.AreEqual("`__ctor`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -188,6 +244,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@>`log`", name.ToHumanizedLabel());
+            Assert.AreEqual("@>`log`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@>`log`", name.ToHumanizedString());
+            Assert.AreEqual("@>`log`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -211,6 +276,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@>`log`", name.ToHumanizedLabel());
+            Assert.AreEqual("@>`log`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@>`log`", name.ToHumanizedString());
+            Assert.AreEqual("@>`log`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -234,6 +308,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@>`big log`", name.ToHumanizedLabel());
+            Assert.AreEqual("@>`big log`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@>`big log`", name.ToHumanizedString());
+            Assert.AreEqual("@>`big log`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -279,6 +362,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedLabel());
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString());
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -302,6 +394,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedLabel());
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString());
+            Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -325,6 +426,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#`dog1`", name.ToHumanizedLabel());
+            Assert.AreEqual("#`dog1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#`dog1`", name.ToHumanizedString());
+            Assert.AreEqual("#`dog1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -348,6 +458,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#`Tom`", name.ToHumanizedLabel());
+            Assert.AreEqual("#`Tom`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#`Tom`", name.ToHumanizedString());
+            Assert.AreEqual("#`Tom`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -371,6 +490,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#`Barrel 1`", name.ToHumanizedLabel());
+            Assert.AreEqual("#`Barrel 1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#`Barrel 1`", name.ToHumanizedString());
+            Assert.AreEqual("#`Barrel 1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -394,6 +522,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedLabel());
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString());
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -417,6 +554,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedLabel());
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString());
+            Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -440,6 +586,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@`a`", name.ToHumanizedLabel());
+            Assert.AreEqual("@`a`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@`a`", name.ToHumanizedString());
+            Assert.AreEqual("@`a`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -463,6 +618,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@@`host`", name.ToHumanizedLabel());
+            Assert.AreEqual("@@`host`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@@`host`", name.ToHumanizedString());
+            Assert.AreEqual("@@`host`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -486,6 +650,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@@`host`", name.ToHumanizedLabel());
+            Assert.AreEqual("@@`host`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@@`host`", name.ToHumanizedString());
+            Assert.AreEqual("@@`host`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -509,6 +682,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@@`big host`", name.ToHumanizedLabel());
+            Assert.AreEqual("@@`big host`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@@`big host`", name.ToHumanizedString());
+            Assert.AreEqual("@@`big host`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -532,6 +714,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("$`x`", name.ToHumanizedLabel());
+            Assert.AreEqual("$`x`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("$`x`", name.ToHumanizedString());
+            Assert.AreEqual("$`x`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -555,6 +746,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("$`_`", name.ToHumanizedLabel());
+            Assert.AreEqual("$`_`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("$`_`", name.ToHumanizedString());
+            Assert.AreEqual("$`_`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -578,6 +778,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("$`_`", name.ToHumanizedLabel());
+            Assert.AreEqual("$`_`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("$`_`", name.ToHumanizedString());
+            Assert.AreEqual("$`_`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -601,6 +810,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#|`teenager`", name.ToHumanizedLabel());
+            Assert.AreEqual("`teenager`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#|`teenager`", name.ToHumanizedString());
+            Assert.AreEqual("`teenager`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -624,6 +842,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#|`teenager`", name.ToHumanizedLabel());
+            Assert.AreEqual("`teenager`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#|`teenager`", name.ToHumanizedString());
+            Assert.AreEqual("`teenager`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -647,6 +874,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#|`big teenager`", name.ToHumanizedLabel());
+            Assert.AreEqual("`big teenager`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#|`big teenager`", name.ToHumanizedString());
+            Assert.AreEqual("`big teenager`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -670,6 +906,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("##`dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("`dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("##`dog`", name.ToHumanizedString());
+            Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -693,6 +938,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("##`dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("`dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("##`dog`", name.ToHumanizedString());
+            Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -716,6 +970,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("##`small dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("`small dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("##`small dog`", name.ToHumanizedString());
+            Assert.AreEqual("`small dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -739,6 +1002,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@:`Prop1`", name.ToHumanizedLabel());
+            Assert.AreEqual("@:`Prop1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@:`Prop1`", name.ToHumanizedString());
+            Assert.AreEqual("@:`Prop1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -762,6 +1034,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("@:`small dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("@:`small dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("@:`small dog`", name.ToHumanizedString());
+            Assert.AreEqual("@:`small dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -785,6 +1066,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#@", name.ToHumanizedLabel());
+            Assert.AreEqual("#@", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#@", name.ToHumanizedString());
+            Assert.AreEqual("#@", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -808,6 +1098,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#@`dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("#@`dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#@`dog`", name.ToHumanizedString());
+            Assert.AreEqual("#@`dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -831,6 +1130,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#@`dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("#@`dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#@`dog`", name.ToHumanizedString());
+            Assert.AreEqual("#@`dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -854,6 +1162,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("#@`small dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("#@`small dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("#@`small dog`", name.ToHumanizedString());
+            Assert.AreEqual("#@`small dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -877,6 +1194,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("##@", name.ToHumanizedLabel());
+            Assert.AreEqual("##@", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("##@", name.ToHumanizedString());
+            Assert.AreEqual("##@", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -900,6 +1226,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("##@`dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("##@`dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("##@`dog`", name.ToHumanizedString());
+            Assert.AreEqual("##@`dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -923,6 +1258,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("##@`dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("##@`dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("##@`dog`", name.ToHumanizedString());
+            Assert.AreEqual("##@`dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -946,6 +1290,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("##@`small dog`", name.ToHumanizedLabel());
+            Assert.AreEqual("##@`small dog`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("##@`small dog`", name.ToHumanizedString());
+            Assert.AreEqual("##@`small dog`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -969,6 +1322,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.Global, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("global::`Prop1`", name.ToHumanizedLabel());
+            Assert.AreEqual("global::`Prop1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("global::`Prop1`", name.ToHumanizedString());
+            Assert.AreEqual("global::`Prop1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -992,6 +1354,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.Global, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedLabel());
+            Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedString());
+            Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1015,6 +1386,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.Global, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("global::##`Prop1`", name.ToHumanizedLabel());
+            Assert.AreEqual("global::`Prop1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("global::##`Prop1`", name.ToHumanizedString());
+            Assert.AreEqual("global::`Prop1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1038,6 +1418,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.Root, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("root::`Prop1`", name.ToHumanizedLabel());
+            Assert.AreEqual("root::`Prop1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("root::`Prop1`", name.ToHumanizedString());
+            Assert.AreEqual("root::`Prop1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1061,6 +1450,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.Strategic, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("strategic::`Prop1`", name.ToHumanizedLabel());
+            Assert.AreEqual("strategic::`Prop1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("strategic::`Prop1`", name.ToHumanizedString());
+            Assert.AreEqual("strategic::`Prop1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1084,6 +1482,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.Tactical, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("tactical::`Prop1`", name.ToHumanizedLabel());
+            Assert.AreEqual("tactical::`Prop1`", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("tactical::`Prop1`", name.ToHumanizedString());
+            Assert.AreEqual("tactical::`Prop1`", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1107,6 +1514,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`number`[5]", name.ToHumanizedLabel());
+            Assert.AreEqual("`number`[5]", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`number`[5]", name.ToHumanizedString());
+            Assert.AreEqual("`number`[5]", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1129,6 +1545,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedLabel());
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedString());
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1151,6 +1576,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedLabel());
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedString());
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1173,6 +1607,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedLabel());
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedString());
+            Assert.AreEqual("`number`[∞]", name.ToHumanizedString(debugHelperOptions));
         }
 
         [Test]
@@ -1196,6 +1639,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(2, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `global` (`politics`))", name.ToHumanizedLabel());
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `global` (`politics`))", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `global` (`politics`))", name.ToHumanizedString());
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `global` (`politics`))", name.ToHumanizedString(debugHelperOptions));
 
             var firstNamespacesElement = name.Namespaces[0];
 
@@ -1280,6 +1732,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(2, name.Namespaces.Count);
 
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `instrument` (`big`))", name.ToHumanizedLabel());
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `instrument` (`big`))", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `instrument` (`big`))", name.ToHumanizedString());
+            Assert.AreEqual("`dog` (`animal` (`alive`) | `instrument` (`big`))", name.ToHumanizedString(debugHelperOptions));
+
             var firstNamespacesElement = name.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
@@ -1363,6 +1824,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(1, name.Namespaces.Count);
 
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`dog` (`big` (`animal` (`alive`)))", name.ToHumanizedLabel());
+            Assert.AreEqual("`dog` (`big` (`animal` (`alive`)))", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`dog` (`big` (`animal` (`alive`)))", name.ToHumanizedString());
+            Assert.AreEqual("`dog` (`big` (`animal` (`alive`)))", name.ToHumanizedString(debugHelperOptions));
+
             var firstNamespacesElement = name.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
@@ -1430,6 +1900,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(2, name.Namespaces.Count);
+
+            var debugHelperOptions = DebugHelperOptions.FromHumanizedOptions();
+            debugHelperOptions.ShowPrefixesForConceptLikeIdentifier = false;
+
+            Assert.AreEqual("`dog` (`animal` | `instrument`)", name.ToHumanizedLabel());
+            Assert.AreEqual("`dog` (`animal` | `instrument`)", name.ToHumanizedLabel(debugHelperOptions));
+
+            Assert.AreEqual("`dog` (`animal` | `instrument`)", name.ToHumanizedString());
+            Assert.AreEqual("`dog` (`animal` | `instrument`)", name.ToHumanizedString(debugHelperOptions));
 
             var firstNamespacesElement = name.Namespaces[0];
 

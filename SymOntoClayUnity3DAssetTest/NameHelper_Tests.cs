@@ -1028,7 +1028,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`Prop1`");
             Assert.AreEqual(,name.NormalizedNameValue, "prop1");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -1049,9 +1049,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "`Prop1`");
-            Assert.AreEqual(,name.NormalizedNameValue, "prop1");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual("`Prop1`", name.NameValue);
+            Assert.AreEqual("prop1", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -1097,7 +1097,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`number`");
             Assert.AreEqual(,name.NormalizedNameValue, "number");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(true, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -1120,7 +1120,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`number`");
             Assert.AreEqual(,name.NormalizedNameValue, "number");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(true, name.IsArray);
             Assert.AreEqual(false, name.Capacity.HasValue);
@@ -1142,7 +1142,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`number`");
             Assert.AreEqual(,name.NormalizedNameValue, "number");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(true, name.IsArray);
             Assert.AreEqual(false, name.Capacity.HasValue);
@@ -1164,7 +1164,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`number`");
             Assert.AreEqual(,name.NormalizedNameValue, "number");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(true, name.IsArray);
             Assert.AreEqual(false, name.Capacity.HasValue);
@@ -1186,7 +1186,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`dog`");
             Assert.AreEqual(,name.NormalizedNameValue, "dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -1202,7 +1202,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
             Assert.AreEqual(,firstNamespacesElement.NameValue, "`animal`");
             Assert.AreEqual(,firstNamespacesElement.NormalizedNameValue, "animal");
-            Assert.AreEqual(,firstNamespacesElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesElement.IsArray);
             Assert.AreEqual(false, firstNamespacesElement.Capacity.HasValue);
@@ -1217,7 +1217,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubElement.IsEmpty);
             Assert.AreEqual(,firstNamespacesSubElement.NameValue, "`alive`");
             Assert.AreEqual(,firstNamespacesSubElement.NormalizedNameValue, "alive");
-            Assert.AreEqual(,firstNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsArray);
             Assert.AreEqual(false, firstNamespacesSubElement.Capacity.HasValue);
@@ -1232,7 +1232,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesElement.IsEmpty);
             Assert.AreEqual(,secondNamespacesElement.NameValue, "`global`");
             Assert.AreEqual(,secondNamespacesElement.NormalizedNameValue, "global");
-            Assert.AreEqual(,secondNamespacesElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesElement.IsArray);
             Assert.AreEqual(false, secondNamespacesElement.Capacity.HasValue);
@@ -1247,7 +1247,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesSubElement.IsEmpty);
             Assert.AreEqual(,secondNamespacesSubElement.NameValue, "`politics`");
             Assert.AreEqual(,secondNamespacesSubElement.NormalizedNameValue, "politics");
-            Assert.AreEqual(,secondNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesSubElement.IsArray);
             Assert.AreEqual(false, secondNamespacesSubElement.Capacity.HasValue);
@@ -1269,7 +1269,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`dog`");
             Assert.AreEqual(,name.NormalizedNameValue, "dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -1285,7 +1285,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
             Assert.AreEqual(,firstNamespacesElement.NameValue, "`animal`");
             Assert.AreEqual(,firstNamespacesElement.NormalizedNameValue, "animal");
-            Assert.AreEqual(,firstNamespacesElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesElement.IsArray);
             Assert.AreEqual(false, firstNamespacesElement.Capacity.HasValue);
@@ -1300,7 +1300,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubElement.IsEmpty);
             Assert.AreEqual(,firstNamespacesSubElement.NameValue, "`alive`");
             Assert.AreEqual(,firstNamespacesSubElement.NormalizedNameValue, "alive");
-            Assert.AreEqual(,firstNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsArray);
             Assert.AreEqual(false, firstNamespacesSubElement.Capacity.HasValue);
@@ -1315,7 +1315,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesElement.IsEmpty);
             Assert.AreEqual(,secondNamespacesElement.NameValue, "`instrument`");
             Assert.AreEqual(,secondNamespacesElement.NormalizedNameValue, "instrument");
-            Assert.AreEqual(,secondNamespacesElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesElement.IsArray);
             Assert.AreEqual(false, secondNamespacesElement.Capacity.HasValue);
@@ -1330,7 +1330,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, secondNamespacesSubElement.IsEmpty);
             Assert.AreEqual(,secondNamespacesSubElement.NameValue, "`big`");
             Assert.AreEqual(,secondNamespacesSubElement.NormalizedNameValue, "big");
-            Assert.AreEqual(,secondNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesSubElement.IsArray);
             Assert.AreEqual(false, secondNamespacesSubElement.Capacity.HasValue);
@@ -1352,7 +1352,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, name.IsEmpty);
             Assert.AreEqual(,name.NameValue, "`dog`");
             Assert.AreEqual(,name.NormalizedNameValue, "dog");
-            Assert.AreEqual(,name.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -1368,7 +1368,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
             Assert.AreEqual(,firstNamespacesElement.NameValue, "`big`");
             Assert.AreEqual(,firstNamespacesElement.NormalizedNameValue, "big");
-            Assert.AreEqual(,firstNamespacesElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesElement.IsArray);
             Assert.AreEqual(false, firstNamespacesElement.Capacity.HasValue);
@@ -1383,7 +1383,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubElement.IsEmpty);
             Assert.AreEqual(,firstNamespacesSubElement.NameValue, "`animal`");
             Assert.AreEqual(,firstNamespacesSubElement.NormalizedNameValue, "animal");
-            Assert.AreEqual(,firstNamespacesSubElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsArray);
             Assert.AreEqual(false, firstNamespacesSubElement.Capacity.HasValue);
@@ -1398,7 +1398,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(false, firstNamespacesSubSubElement.IsEmpty);
             Assert.AreEqual(,firstNamespacesSubSubElement.NameValue, "`alive`");
             Assert.AreEqual(,firstNamespacesSubSubElement.NormalizedNameValue, "alive");
-            Assert.AreEqual(,firstNamespacesSubSubElement.KindOfName, KindOfName.CommonConcept);
+            Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubSubElement.IsArray);
             Assert.AreEqual(false, firstNamespacesSubSubElement.Capacity.HasValue);

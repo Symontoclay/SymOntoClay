@@ -2188,7 +2188,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             break;
 
                         default:
@@ -2219,7 +2219,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "`a` has been called!");
+                            Assert.AreEqual("`a` has been called!", message);
                             break;
 
                         default:

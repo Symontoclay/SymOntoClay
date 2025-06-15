@@ -625,15 +625,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "0");
+                            Assert.AreEqual("0", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -667,15 +667,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "readonlyprop");
+                            Assert.AreEqual("readonlyprop", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -711,15 +711,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "16");
+                            Assert.AreEqual("16", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -756,15 +756,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "22");
+                            Assert.AreEqual("22", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -799,15 +799,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "15");
+                            Assert.AreEqual("15", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:
@@ -861,51 +861,51 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(,message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             return true;
 
                         case 2:
-                            Assert.AreEqual(,message, "Run Fun1");
+                            Assert.AreEqual("Run Fun1", message);
                             return true;
 
                         case 3:
-                            Assert.AreEqual(,message, "Before SomeProp:");
+                            Assert.AreEqual("Before SomeProp:", message);
                             return true;
 
                         case 4:
-                            Assert.AreEqual(,message, "someprop");
+                            Assert.AreEqual("someprop", message);
                             return true;
 
                         case 5:
-                            Assert.AreEqual(,message, "After SomeProp:");
+                            Assert.AreEqual("After SomeProp:", message);
                             return true;
 
                         case 6:
-                            Assert.AreEqual(,message, "16");
+                            Assert.AreEqual("16", message);
                             return true;
 
                         case 7:
-                            Assert.AreEqual(,message, "Run Fun2");
+                            Assert.AreEqual("Run Fun2", message);
                             return true;
 
                         case 8:
-                            Assert.AreEqual(,message, "SomeProp:");
+                            Assert.AreEqual("SomeProp:", message);
                             return true;
 
                         case 9:
-                            Assert.AreEqual(,message, "16");
+                            Assert.AreEqual("16", message);
                             return true;
 
                         case 10:
-                            Assert.AreEqual(,message, "SomeProp:");
+                            Assert.AreEqual("SomeProp:", message);
                             return true;
 
                         case 11:
-                            Assert.AreEqual(,message, "16");
+                            Assert.AreEqual("16", message);
                             return true;
 
                         case 12:
-                            Assert.AreEqual(,message, "End");
+                            Assert.AreEqual("End", message);
                             return false;
 
                         default:

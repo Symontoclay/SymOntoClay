@@ -1184,8 +1184,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "`dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "dog");
+            Assert.AreEqual("`dog`", name.NameValue);
+            Assert.AreEqual("dog", name.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
@@ -1195,13 +1195,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 2);
+            Assert.AreEqual(2, name.Namespaces.Count);
 
             var firstNamespacesElement = name.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
-            Assert.AreEqual(,firstNamespacesElement.NameValue, "`animal`");
-            Assert.AreEqual(,firstNamespacesElement.NormalizedNameValue, "animal");
+            Assert.AreEqual("`animal`", firstNamespacesElement.NameValue);
+            Assert.AreEqual("animal", firstNamespacesElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesElement.IsArray);
@@ -1215,8 +1215,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsEmpty);
-            Assert.AreEqual(,firstNamespacesSubElement.NameValue, "`alive`");
-            Assert.AreEqual(,firstNamespacesSubElement.NormalizedNameValue, "alive");
+            Assert.AreEqual("`alive`", firstNamespacesSubElement.NameValue);
+            Assert.AreEqual("alive", firstNamespacesSubElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsArray);
@@ -1230,8 +1230,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var secondNamespacesElement = name.Namespaces[1];
 
             Assert.AreEqual(false, secondNamespacesElement.IsEmpty);
-            Assert.AreEqual(,secondNamespacesElement.NameValue, "`global`");
-            Assert.AreEqual(,secondNamespacesElement.NormalizedNameValue, "global");
+            Assert.AreEqual("`global`", secondNamespacesElement.NameValue);
+            Assert.AreEqual("global", secondNamespacesElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesElement.IsArray);
@@ -1245,8 +1245,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var secondNamespacesSubElement = secondNamespacesElement.Namespaces[0];
 
             Assert.AreEqual(false, secondNamespacesSubElement.IsEmpty);
-            Assert.AreEqual(,secondNamespacesSubElement.NameValue, "`politics`");
-            Assert.AreEqual(,secondNamespacesSubElement.NormalizedNameValue, "politics");
+            Assert.AreEqual("`politics`", secondNamespacesSubElement.NameValue);
+            Assert.AreEqual("politics", secondNamespacesSubElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesSubElement.IsArray);
@@ -1267,8 +1267,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "`dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "dog");
+            Assert.AreEqual("`dog`", name.NameValue);
+            Assert.AreEqual("dog", name.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
@@ -1278,13 +1278,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
-            Assert.AreEqual(,name.Namespaces.Count, 2);
+            Assert.AreEqual(2, name.Namespaces.Count);
 
             var firstNamespacesElement = name.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
-            Assert.AreEqual(,firstNamespacesElement.NameValue, "`animal`");
-            Assert.AreEqual(,firstNamespacesElement.NormalizedNameValue, "animal");
+            Assert.AreEqual("`animal`", firstNamespacesElement.NameValue);
+            Assert.AreEqual("animal", firstNamespacesElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesElement.IsArray);
@@ -1298,8 +1298,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsEmpty);
-            Assert.AreEqual(,firstNamespacesSubElement.NameValue, "`alive`");
-            Assert.AreEqual(,firstNamespacesSubElement.NormalizedNameValue, "alive");
+            Assert.AreEqual("`alive`", firstNamespacesSubElement.NameValue);
+            Assert.AreEqual("alive", firstNamespacesSubElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsArray);
@@ -1313,8 +1313,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var secondNamespacesElement = name.Namespaces[1];
 
             Assert.AreEqual(false, secondNamespacesElement.IsEmpty);
-            Assert.AreEqual(,secondNamespacesElement.NameValue, "`instrument`");
-            Assert.AreEqual(,secondNamespacesElement.NormalizedNameValue, "instrument");
+            Assert.AreEqual("`instrument`", secondNamespacesElement.NameValue);
+            Assert.AreEqual("instrument", secondNamespacesElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesElement.IsArray);
@@ -1328,8 +1328,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var secondNamespacesSubElement = secondNamespacesElement.Namespaces[0];
 
             Assert.AreEqual(false, secondNamespacesSubElement.IsEmpty);
-            Assert.AreEqual(,secondNamespacesSubElement.NameValue, "`big`");
-            Assert.AreEqual(,secondNamespacesSubElement.NormalizedNameValue, "big");
+            Assert.AreEqual("`big`", secondNamespacesSubElement.NameValue);
+            Assert.AreEqual("big", secondNamespacesSubElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, secondNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, secondNamespacesSubElement.IsArray);
@@ -1350,8 +1350,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "`dog`");
-            Assert.AreEqual(,name.NormalizedNameValue, "dog");
+            Assert.AreEqual("`dog`", name.NameValue);
+            Assert.AreEqual("dog", name.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
@@ -1366,8 +1366,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var firstNamespacesElement = name.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
-            Assert.AreEqual(,firstNamespacesElement.NameValue, "`big`");
-            Assert.AreEqual(,firstNamespacesElement.NormalizedNameValue, "big");
+            Assert.AreEqual("`big`", firstNamespacesElement.NameValue);
+            Assert.AreEqual("big", firstNamespacesElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesElement.IsArray);
@@ -1381,8 +1381,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var firstNamespacesSubElement = firstNamespacesElement.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsEmpty);
-            Assert.AreEqual(,firstNamespacesSubElement.NameValue, "`animal`");
-            Assert.AreEqual(,firstNamespacesSubElement.NormalizedNameValue, "animal");
+            Assert.AreEqual("`animal`", firstNamespacesSubElement.NameValue);
+            Assert.AreEqual("animal", firstNamespacesSubElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubElement.IsArray);
@@ -1396,8 +1396,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var firstNamespacesSubSubElement = firstNamespacesSubElement.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesSubSubElement.IsEmpty);
-            Assert.AreEqual(,firstNamespacesSubSubElement.NameValue, "`alive`");
-            Assert.AreEqual(,firstNamespacesSubSubElement.NormalizedNameValue, "alive");
+            Assert.AreEqual("`alive`", firstNamespacesSubSubElement.NameValue);
+            Assert.AreEqual("alive", firstNamespacesSubSubElement.NormalizedNameValue);
             Assert.AreEqual(KindOfName.CommonConcept, firstNamespacesSubSubElement.KindOfName);
 
             Assert.AreEqual(false, firstNamespacesSubSubElement.IsArray);

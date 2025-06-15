@@ -81,6 +81,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 Result = resultsList.Single();
             }
 
+            AddForResolvingItem(Result);
+
             //Result = PostProcessDoubleColonParts(_items, true);
 
 #if DEBUG
@@ -268,6 +270,43 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void StopParsingSubParts()
         {
             _currentItemsList = _itemsListStack.Pop();
+        }
+
+        private void AddForResolvingItem(StrongIdentifierValue source)
+        {
+            if(source.IsEmpty)
+            {
+                return;
+            }
+
+            var kindOfName = source.KindOfName;
+
+#if DEBUG
+            Info("79846B24-55D1-4333-926E-4F932F13C187", $"kindOfName = {kindOfName}");
+#endif
+
+            switch(kindOfName)
+            {
+                case KindOfName.CommonConcept:
+                case KindOfName.Entity:
+                case KindOfName.RuleOrFact:
+                case KindOfName.EntityCondition:
+                case KindOfName.OnceResolvedEntityCondition:
+                case KindOfName.AnonymousEntityCondition:
+                case KindOfName.OnceResolvedAnonymousEntityCondition:
+                case KindOfName.Channel:
+                case KindOfName.Var:
+                case KindOfName.SystemVar:
+                case KindOfName.LogicalVar:
+                case KindOfName.Property:
+                    source.ForResolving = source;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"In `{Text}`.");
+            }
+
+            //throw new NotImplementedException("54EB6986-BC4C-4436-96E5-5BF8EC1374DA");
         }
 
         private List<StrongIdentifierValue> PostProcessParts(List<StrongIdentifierPart> items, bool isRootItem)

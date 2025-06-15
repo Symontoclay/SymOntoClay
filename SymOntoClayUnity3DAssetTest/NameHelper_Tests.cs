@@ -62,7 +62,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(string.Empty, name.ToHumanizedString());
             Assert.AreEqual(string.Empty, name.ToHumanizedString(debugHelperOptions));
 
-
+            Assert.IsNull(name.ForResolving);
         }
 
         [Test]
@@ -96,6 +96,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(string.Empty, name.ToHumanizedString());
             Assert.AreEqual(string.Empty, name.ToHumanizedString(debugHelperOptions));
+
+            Assert.IsNull(name.ForResolving);
         }
 
         [Test]
@@ -128,6 +130,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`dog`", name.ToHumanizedString());
             Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -158,6 +162,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`Dog`", name.ToHumanizedString());
             Assert.AreEqual("`Dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -190,6 +196,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`small dog`", name.ToHumanizedString());
             Assert.AreEqual("`small dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -222,6 +230,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`__ctor`", name.ToHumanizedString());
             Assert.AreEqual("`__ctor`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -254,6 +264,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@>`log`", name.ToHumanizedString());
             Assert.AreEqual("@>`log`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -286,6 +298,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@>`log`", name.ToHumanizedString());
             Assert.AreEqual("@>`log`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -318,6 +332,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@>`big log`", name.ToHumanizedString());
             Assert.AreEqual("@>`big log`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -340,6 +356,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(StrongIdentifierLevel.None, name.Level);
 
             Assert.AreEqual(0, name.Namespaces.Count);
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -372,6 +390,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString());
             Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -404,6 +424,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString());
             Assert.AreEqual("#^`91e029e7-6a4c-454b-b15b-323d2b5ff0a9`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -436,6 +458,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#`dog1`", name.ToHumanizedString());
             Assert.AreEqual("#`dog1`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -468,6 +492,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#`Tom`", name.ToHumanizedString());
             Assert.AreEqual("#`Tom`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -500,6 +526,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#`Barrel 1`", name.ToHumanizedString());
             Assert.AreEqual("#`Barrel 1`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -532,6 +560,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString());
             Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -564,6 +594,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString());
             Assert.AreEqual("#`020ED339-6313-459A-900D-92F809CEBDC5`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -596,6 +628,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@`a`", name.ToHumanizedString());
             Assert.AreEqual("@`a`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -628,6 +662,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@@`host`", name.ToHumanizedString());
             Assert.AreEqual("@@`host`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -660,6 +696,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@@`host`", name.ToHumanizedString());
             Assert.AreEqual("@@`host`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -692,6 +730,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@@`big host`", name.ToHumanizedString());
             Assert.AreEqual("@@`big host`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -724,6 +764,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("$`x`", name.ToHumanizedString());
             Assert.AreEqual("$`x`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -756,6 +798,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("$`_`", name.ToHumanizedString());
             Assert.AreEqual("$`_`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -788,6 +832,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("$`_`", name.ToHumanizedString());
             Assert.AreEqual("$`_`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -820,6 +866,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#|`teenager`", name.ToHumanizedString());
             Assert.AreEqual("`teenager`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -852,6 +900,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#|`teenager`", name.ToHumanizedString());
             Assert.AreEqual("`teenager`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -884,6 +934,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#|`big teenager`", name.ToHumanizedString());
             Assert.AreEqual("`big teenager`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -916,6 +968,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("##`dog`", name.ToHumanizedString());
             Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -948,6 +1002,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("##`dog`", name.ToHumanizedString());
             Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -980,6 +1036,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("##`small dog`", name.ToHumanizedString());
             Assert.AreEqual("`small dog`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -1012,6 +1070,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@:`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("@:`Prop1`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -1044,6 +1104,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("@:`small dog`", name.ToHumanizedString());
             Assert.AreEqual("@:`small dog`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -1076,6 +1138,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#@", name.ToHumanizedString());
             Assert.AreEqual("#@", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1108,6 +1172,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#@`dog`", name.ToHumanizedString());
             Assert.AreEqual("#@`dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1140,6 +1206,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#@`dog`", name.ToHumanizedString());
             Assert.AreEqual("#@`dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1172,6 +1240,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("#@`small dog`", name.ToHumanizedString());
             Assert.AreEqual("#@`small dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1204,6 +1274,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("##@", name.ToHumanizedString());
             Assert.AreEqual("##@", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1236,6 +1308,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("##@`dog`", name.ToHumanizedString());
             Assert.AreEqual("##@`dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1268,6 +1342,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("##@`dog`", name.ToHumanizedString());
             Assert.AreEqual("##@`dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1300,6 +1376,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("##@`small dog`", name.ToHumanizedString());
             Assert.AreEqual("##@`small dog`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1332,6 +1410,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("global::`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("global::`Prop1`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1364,6 +1444,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -1396,6 +1478,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("global::##`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("global::`Prop1`", name.ToHumanizedString(debugHelperOptions));
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -1428,6 +1512,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("root::`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("root::`Prop1`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1460,6 +1546,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("strategic::`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("strategic::`Prop1`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1492,6 +1580,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("tactical::`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("tactical::`Prop1`", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1524,6 +1614,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`number`[5]", name.ToHumanizedString());
             Assert.AreEqual("`number`[5]", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1555,6 +1647,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`number`[∞]", name.ToHumanizedString());
             Assert.AreEqual("`number`[∞]", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1586,6 +1680,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`number`[∞]", name.ToHumanizedString());
             Assert.AreEqual("`number`[∞]", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1617,6 +1713,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`number`[∞]", name.ToHumanizedString());
             Assert.AreEqual("`number`[∞]", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
         }
 
         [Test]
@@ -1649,6 +1747,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`dog` (`animal` (`alive`) | `global` (`politics`))", name.ToHumanizedString());
             Assert.AreEqual("`dog` (`animal` (`alive`) | `global` (`politics`))", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
 
             var firstNamespacesElement = name.Namespaces[0];
 
@@ -1742,6 +1842,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("`dog` (`animal` (`alive`) | `instrument` (`big`))", name.ToHumanizedString());
             Assert.AreEqual("`dog` (`animal` (`alive`) | `instrument` (`big`))", name.ToHumanizedString(debugHelperOptions));
 
+            Assert.AreSame(name, name.ForResolving);
+
             var firstNamespacesElement = name.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
@@ -1834,6 +1936,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("`dog` (`big` (`animal` (`alive`)))", name.ToHumanizedString());
             Assert.AreEqual("`dog` (`big` (`animal` (`alive`)))", name.ToHumanizedString(debugHelperOptions));
 
+            Assert.AreSame(name, name.ForResolving);
+
             var firstNamespacesElement = name.Namespaces[0];
 
             Assert.AreEqual(false, firstNamespacesElement.IsEmpty);
@@ -1910,6 +2014,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("`dog` (`animal` | `instrument`)", name.ToHumanizedString());
             Assert.AreEqual("`dog` (`animal` | `instrument`)", name.ToHumanizedString(debugHelperOptions));
+
+            Assert.AreSame(name, name.ForResolving);
 
             var firstNamespacesElement = name.Namespaces[0];
 

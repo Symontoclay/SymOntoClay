@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public List<StrongIdentifierValue> Namespaces { get; set; } = new List<StrongIdentifierValue>();
 
-        public StrongIdentifierValue ForResolving { get; set; }
+        public StrongIdentifierValue ForResolving { get; set; } = null;
 
         private List<StrongIdentifierValue> _builtInSuperTypes;
 
@@ -287,7 +287,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjListProp(n, nameof(Namespaces), Namespaces);
 
-            sb.PrintObjProp(n, nameof(ForResolving), ForResolving);
+            sb.PrintBriefObjProp(n, nameof(ForResolving), ForResolving);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

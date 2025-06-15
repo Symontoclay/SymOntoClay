@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 Result = resultsList.Single();
             }
 
-            AddForResolvingItem(Result);
+            AddItemForResolving(Result);
 
             //Result = PostProcessDoubleColonParts(_items, true);
 
@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _currentItemsList = _itemsListStack.Pop();
         }
 
-        private void AddForResolvingItem(StrongIdentifierValue source)
+        private void AddItemForResolving(StrongIdentifierValue source)
         {
             if(source.IsEmpty)
             {
@@ -282,7 +282,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var kindOfName = source.KindOfName;
 
 #if DEBUG
-            Info("79846B24-55D1-4333-926E-4F932F13C187", $"kindOfName = {kindOfName}");
+            //Info("79846B24-55D1-4333-926E-4F932F13C187", $"kindOfName = {kindOfName}");
 #endif
 
             switch(kindOfName)
@@ -297,16 +297,58 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KindOfName.Channel:
                 case KindOfName.Var:
                 case KindOfName.SystemVar:
-                case KindOfName.LogicalVar:
-                case KindOfName.Property:
+                case KindOfName.LogicalVar:                
                     source.ForResolving = source;
+                    break;
+
+                case KindOfName.Concept:
+                case KindOfName.LinguisticVar:
+                case KindOfName.Property:
+                    source.ForResolving = GetItemForResolving(source);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"In `{Text}`.");
+            }
+        }
+
+        private StrongIdentifierValue GetItemForResolving(StrongIdentifierValue source)
+        {
+#if DEBUG
+            //Info("C05D8C23-E6FC-4A66-946B-8F6A5883CA31", $"source = {source}");
+#endif
+
+            var kindOfName = source.KindOfName;
+
+            var result = source.Clone();
+
+#if DEBUG
+            //Info("5F673AB6-014B-4A41-A983-28852EF5A898", $"result (before) = {result}");
+#endif
+
+            result.KindOfName = KindOfName.CommonConcept;
+            result.ForResolving = result;
+
+            switch (kindOfName)
+            {
+                case KindOfName.Concept:
+                case KindOfName.LinguisticVar:
+                case KindOfName.Property:
+                    result.NameValue = result.NameValue.Substring(2);
+                    result.NormalizedNameValue = result.NormalizedNameValue.Substring(2);
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, $"In `{Text}`.");
             }
 
+#if DEBUG
+            //Info("D63D9330-80D6-4656-8F73-FBC989EFF1FA", $"result (after) = {result}");
+#endif
+
             //throw new NotImplementedException("54EB6986-BC4C-4436-96E5-5BF8EC1374DA");
+
+            return result;
         }
 
         private List<StrongIdentifierValue> PostProcessParts(List<StrongIdentifierPart> items, bool isRootItem)

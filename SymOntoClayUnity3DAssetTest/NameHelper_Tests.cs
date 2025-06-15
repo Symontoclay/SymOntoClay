@@ -867,7 +867,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("#|`teenager`", name.ToHumanizedString());
             Assert.AreEqual("`teenager`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`teenager`", forResolving.NameValue);
+            Assert.AreEqual("teenager", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
+
+            Assert.AreSame(forResolving, forResolving.ForResolving);
         }
 
         [Test]
@@ -901,7 +919,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("#|`teenager`", name.ToHumanizedString());
             Assert.AreEqual("`teenager`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`teenager`", forResolving.NameValue);
+            Assert.AreEqual("teenager", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
+
+            Assert.AreSame(forResolving, forResolving.ForResolving);
         }
 
         [Test]
@@ -935,7 +971,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("#|`big teenager`", name.ToHumanizedString());
             Assert.AreEqual("`big teenager`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`big teenager`", forResolving.NameValue);
+            Assert.AreEqual("big teenager", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
+
+            Assert.AreSame(forResolving, forResolving.ForResolving);
         }
 
         [Test]
@@ -969,7 +1023,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("##`dog`", name.ToHumanizedString());
             Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`dog`", forResolving.NameValue);
+            Assert.AreEqual("dog", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
+
+            Assert.AreSame(forResolving, forResolving.ForResolving);
         }
 
         [Test]
@@ -1003,7 +1075,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("##`dog`", name.ToHumanizedString());
             Assert.AreEqual("`dog`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`dog`", forResolving.NameValue);
+            Assert.AreEqual("dog", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
+
+            Assert.AreSame(forResolving, forResolving.ForResolving);
         }
 
         [Test]
@@ -1037,7 +1127,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("##`small dog`", name.ToHumanizedString());
             Assert.AreEqual("`small dog`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`small dog`", forResolving.NameValue);
+            Assert.AreEqual("small dog", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
+
+            Assert.AreSame(forResolving, forResolving.ForResolving);
         }
 
         [Test]
@@ -1071,7 +1179,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("@:`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("@:`Prop1`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`Prop1`", forResolving.NameValue);
+            Assert.AreEqual("prop1", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
+
+            Assert.AreSame(forResolving, forResolving.ForResolving);
         }
 
         [Test]
@@ -1105,7 +1231,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("@:`small dog`", name.ToHumanizedString());
             Assert.AreEqual("@:`small dog`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`small dog`", forResolving.NameValue);
+            Assert.AreEqual("small dog", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.None, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
         }
 
         [Test]
@@ -1445,7 +1587,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("global::@:`Prop1`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`Prop1`", forResolving.NameValue);
+            Assert.AreEqual("prop1", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.Global, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
         }
 
         [Test]
@@ -1479,7 +1637,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual("global::##`Prop1`", name.ToHumanizedString());
             Assert.AreEqual("global::`Prop1`", name.ToHumanizedString(debugHelperOptions));
 
-            throw new NotImplementedException();
+            var forResolving = name.ForResolving;
+
+            Assert.AreNotSame(name, forResolving);
+
+            Assert.AreEqual(false, forResolving.IsEmpty);
+            Assert.AreEqual("`Prop1`", forResolving.NameValue);
+            Assert.AreEqual("prop1", forResolving.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.CommonConcept, forResolving.KindOfName);
+
+            Assert.AreEqual(false, forResolving.IsArray);
+            Assert.AreEqual(true, forResolving.Capacity.HasValue);
+            Assert.AreEqual(1, forResolving.Capacity.Value);
+            Assert.AreEqual(false, forResolving.HasInfiniteCapacity);
+
+            Assert.AreEqual(StrongIdentifierLevel.Global, forResolving.Level);
+
+            Assert.AreEqual(0, forResolving.Namespaces.Count);
         }
 
         [Test]

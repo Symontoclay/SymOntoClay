@@ -980,9 +980,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "@:`Prop1`");
-            Assert.AreEqual(,name.NormalizedNameValue, "@:prop1");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Property);
+            Assert.AreEqual("@:`Prop1`", name.NameValue);
+            Assert.AreEqual("@:prop1", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Property, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);
@@ -1003,9 +1003,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(false, name.IsEmpty);
-            Assert.AreEqual(,name.NameValue, "##`Prop1`");
-            Assert.AreEqual(,name.NormalizedNameValue, "##prop1");
-            Assert.AreEqual(,name.KindOfName, KindOfName.Concept);
+            Assert.AreEqual("##`Prop1`", name.NameValue);
+            Assert.AreEqual("##prop1", name.NormalizedNameValue);
+            Assert.AreEqual(KindOfName.Concept, name.KindOfName);
 
             Assert.AreEqual(false, name.IsArray);
             Assert.AreEqual(true, name.Capacity.HasValue);

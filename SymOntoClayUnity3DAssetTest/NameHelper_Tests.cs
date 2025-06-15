@@ -62,6 +62,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(string.Empty, name.ToHumanizedString());
             Assert.AreEqual(string.Empty, name.ToHumanizedString(debugHelperOptions));
 
+
         }
 
         [Test]

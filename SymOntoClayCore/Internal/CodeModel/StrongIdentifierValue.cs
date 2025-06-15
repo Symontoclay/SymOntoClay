@@ -66,6 +66,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public List<StrongIdentifierValue> Namespaces { get; set; } = new List<StrongIdentifierValue>();
 
+        public StrongIdentifierValue ForResolving { get; set; }
+
         private List<StrongIdentifierValue> _builtInSuperTypes;
 
         /// <inheritdoc/>
@@ -251,6 +253,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.HasInfiniteCapacity = HasInfiniteCapacity;
             result.Level = Level;
             result.Namespaces = Namespaces?.Select(p => p.Clone(context))?.ToList();
+            result.ForResolving = ForResolving?.Clone(context);
 
             result.AppendAnnotations(this, context);
 
@@ -283,6 +286,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
 
             sb.PrintObjListProp(n, nameof(Namespaces), Namespaces);
+
+            sb.PrintObjProp(n, nameof(ForResolving), ForResolving);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

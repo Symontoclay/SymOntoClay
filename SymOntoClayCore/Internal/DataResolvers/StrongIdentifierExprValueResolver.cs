@@ -58,12 +58,25 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new CallResult(NullValue.Instance);
             }
 
+            var kindOfName = name.KindOfName;
+
+            switch(kindOfName)
+            {
+                case KindOfName.CommonConcept:
+                    return GetValueFromCommonConcept(logger, name, instance, localCodeExecutionContext, options);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+            }
+        }
+
+        private CallResult GetValueFromCommonConcept(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
             var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name, null, null, localCodeExecutionContext, options);
 
-            if (targetFuzzyLogicItem != null)
-            {
-                return new CallResult(name);
-            }
+#if DEBUG
+            //Info("0D08A130-16C5-4906-8E76-F0AFC9AB94EA", $"targetFuzzyLogicItem != null = {targetFuzzyLogicItem != null}");
+#endif
 
             var property = _propertiesResolver.Resolve(logger, name, localCodeExecutionContext, options);
 
@@ -71,17 +84,37 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Info("E16D50F3-4AC5-4E80-BCF9-AB72FE95A6CE", $"property?.KindOfProperty = {property?.KindOfProperty}");
 #endif
 
-            if(property != null)
+            if (targetFuzzyLogicItem != null && property != null)
+            {
+                throw new AmbiguousDataResolvingException(name);
+            }
+
+            if (targetFuzzyLogicItem != null && (name == _trueValueLiteral || name == _falseValueLiteral))
+            {
+                throw new AmbiguousDataResolvingException(name);
+            }
+
+            if (property != null && (name == _trueValueLiteral || name == _falseValueLiteral))
+            {
+                throw new AmbiguousDataResolvingException(name);
+            }
+
+            if (targetFuzzyLogicItem != null)
+            {
+                return new CallResult(name);
+            }
+
+            if (property != null)
             {
                 return _propertiesResolver.ConvertPropertyInstanceToCallResult(property);
             }
 
-            if(name == _trueValueLiteral)
+            if (name == _trueValueLiteral)
             {
                 return new CallResult(LogicalValue.TrueValue);
             }
 
-            if(name == _falseValueLiteral)
+            if (name == _falseValueLiteral)
             {
                 return new CallResult(LogicalValue.FalseValue);
             }

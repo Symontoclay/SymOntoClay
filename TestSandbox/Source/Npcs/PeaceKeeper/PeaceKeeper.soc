@@ -12,7 +12,7 @@ app PeaceKeeper
     on Enter =>
     {
         'Begin' >> @>log;
-        var @b: number = `teenager`;
+        var @b: number = #|`teenager`;
         @b >> @>log;
         'End' >> @>log;
     }

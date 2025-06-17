@@ -1,21 +1,11 @@
-﻿linvar age for range (0, 150]
-{
-	constraints:
-		for relation age;
-
-	terms:
-        `teenager` = Trapezoid(10, 12, 17, 20);
-}
-
-app PeaceKeeper
+﻿app PeaceKeeper
 {
     on Enter =>
     {
         'Begin' >> @>log;
-        var @b: number = #|`teenager`;
-        @b >> @>log;
+        @:SomeAutoProp >> @>log;
         'End' >> @>log;
     }
 
-    prop Teenager: number = 16;
+    prop SomeAutoProp: number = 16;
 }

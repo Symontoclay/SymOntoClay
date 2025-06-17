@@ -99,8 +99,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         switch (name.KindOfName)
                         {
                             case KindOfName.Var:
-                            case KindOfName.SystemVar:
-                                if(internalVarKindOfCompilePushValItem.HasValue)
+                            case KindOfName.SystemVar:                            
+                                if (internalVarKindOfCompilePushValItem.HasValue)
                                 {
                                     switch (internalVarKindOfCompilePushValItem)
                                     {
@@ -118,7 +118,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                 break;
 
                             case KindOfName.CommonConcept:
-                                if(internalPropKindOfCompilePushValItem.HasValue)
+                            case KindOfName.LinguisticVar:
+                            case KindOfName.Property:
+                                if (internalPropKindOfCompilePushValItem.HasValue)
                                 {
                                     switch (internalPropKindOfCompilePushValItem)
                                     {

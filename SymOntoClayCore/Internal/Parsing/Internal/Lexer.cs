@@ -57,7 +57,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Channel,
             Entity,
             EntityCondition,
-            EntityRefByConcept
+            EntityRefByConcept,
+            LinguisticVar
         }
 
         private Lexer()
@@ -113,13 +114,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 _currentPos++;
 
 #if DEBUG
-                _logger.Info("F30F90D1-F2FA-49E5-8A09-30F0C187551A", $"_mode = {_mode}");
-                _logger.Info("63869F33-9EDD-4C0E-AD5C-0A40A2A7D247", $"tmpChar = {tmpChar}");
-                _logger.Info("2440A33D-A1F1-45BF-9AEC-2F5B05AF6CF6", $"_currentPos = {_currentPos}");
-                _logger.Info("2A1A450C-E1C9-4168-B124-423E1B5CB1AD", $"_state = {_state}");
-                _logger.Info("38B84256-148B-407F-AADB-1855BB8F2D9C", $"_kindOfPrefix = {_kindOfPrefix}");
-                _logger.Info("88DF13BA-DBD3-4A20-9A61-27413870733B", $"buffer == null = {buffer == null}");
-                _logger.Info("A7CD854B-679A-4A04-84A6-C24213E5D47B", $"buffer = {buffer}");
+                //_logger.Info("F30F90D1-F2FA-49E5-8A09-30F0C187551A", $"_mode = {_mode}");
+                //_logger.Info("63869F33-9EDD-4C0E-AD5C-0A40A2A7D247", $"tmpChar = {tmpChar}");
+                //_logger.Info("2440A33D-A1F1-45BF-9AEC-2F5B05AF6CF6", $"_currentPos = {_currentPos}");
+                //_logger.Info("2A1A450C-E1C9-4168-B124-423E1B5CB1AD", $"_state = {_state}");
+                //_logger.Info("38B84256-148B-407F-AADB-1855BB8F2D9C", $"_kindOfPrefix = {_kindOfPrefix}");
+                //_logger.Info("88DF13BA-DBD3-4A20-9A61-27413870733B", $"buffer == null = {buffer == null}");
+                //_logger.Info("A7CD854B-679A-4A04-84A6-C24213E5D47B", $"buffer = {buffer}");
 #endif
 
                 switch (_state)
@@ -933,6 +934,47 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                         default:
                                             if(char.IsLetterOrDigit(nextChar))
+                                            {
+                                                _state = State.InWord;
+                                            }
+                                            else
+                                            {
+                                                throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                            }
+                                            break;
+                                    }
+                                }
+                                break;
+
+                            case '|':
+                                {
+                                    buffer.Append(tmpChar);
+                                    _kindOfPrefix = KindOfPrefix.LinguisticVar;
+
+                                    if (_items.Count == 0)
+                                    {
+                                        throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                    }
+
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Info("8EBDE5A0-CADD-4570-8B01-4FE1C1CA8E0F", $"nextChar = {nextChar}");
+#endif
+
+                                    switch (nextChar)
+                                    {
+                                        case '`':
+                                            _items.Dequeue();
+                                            _state = State.InIdentifier;
+                                            break;
+
+                                        case '_':
+                                            _state = State.InWord;
+                                            break;
+
+                                        default:
+                                            if (char.IsLetterOrDigit(nextChar))
                                             {
                                                 _state = State.InWord;
                                             }

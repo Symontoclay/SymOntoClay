@@ -65,9 +65,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 case KindOfName.CommonConcept:
                     return GetValueFromCommonConcept(logger, name, instance, localCodeExecutionContext, options);
 
+                case KindOfName.LinguisticVar:
+                    return GetValueFromLinguisticVar(logger, name, instance, localCodeExecutionContext, options);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
+        }
+
+        private CallResult GetValueFromLinguisticVar(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name.ForResolving, null, null, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Info("5CE2BC84-0769-4A58-A9CB-D657D170F682", $"targetFuzzyLogicItem != null = {targetFuzzyLogicItem != null}");
+#endif
+
+            if(targetFuzzyLogicItem == null)
+            {
+                throw new UnresolvedLinguisticVariableException(name);
+            }
+
+            return new CallResult(name);
         }
 
         private CallResult GetValueFromCommonConcept(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)

@@ -1088,6 +1088,60 @@ app PeaceKeeper
             Assert.AreEqual(3, maxN);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Case18()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @b: number = #|`teenager`;
+        @b >> @>log;
+        'End' >> @>log;
+    }
+
+    prop Teenager: number = 16;
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) => {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("14.777777777777782", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
+
+            Assert.AreEqual(3, maxN);
+        }
+
         private void CheckCodeEntity(CodeItem codeEntity, string name)
         {
             Assert.AreEqual(KindOfCodeEntity.LinguisticVariable, codeEntity.Kind);

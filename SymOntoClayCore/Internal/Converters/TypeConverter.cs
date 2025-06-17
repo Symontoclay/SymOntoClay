@@ -121,7 +121,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private string BuildIsNotFitErrorMessage(Value value, IList<StrongIdentifierValue> typesList)
         {
-            return $"The value '{value.ToHumanizedString()}' does not fit to type `{typesList.TypesListToHumanizedString()}`";
+            return $"The value '{value.ToHumanizedString()}' does not fit to type {typesList.TypesListToHumanizedString()}";
         }
 
         /// <inheritdoc/>
@@ -241,7 +241,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 case StandardNamesConstants.NumberTypeName:
                     if(value.IsStrongIdentifierValue)
                     {
-                        return Defuzzificate(logger, value.AsStrongIdentifierValue, localCodeExecutionContext, options);
+                        return Defuzzificate(logger, value.AsStrongIdentifierValue.ForResolving, localCodeExecutionContext, options);
                     }
                     else
                     {

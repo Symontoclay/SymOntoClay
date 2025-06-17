@@ -6,7 +6,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class AmbiguousDataResolvingException : Exception
     {
         public AmbiguousDataResolvingException(StrongIdentifierValue name)
-            : base($"Ambiguous name resolving '{name.ForResolving?.ToHumanizedLabel()}'")
+            : base($"Ambiguous name resolving '{name.ForResolving?.ToHumanizedLabel()}'.")
         {
         }
     }

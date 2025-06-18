@@ -58,7 +58,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Entity,
             EntityCondition,
             EntityRefByConcept,
-            LinguisticVar
+            LinguisticVar,
+            Property
         }
 
         private Lexer()
@@ -665,6 +666,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     case KindOfPrefix.LogicalVar:
                                         return CreateToken(TokenKind.LogicalVar, buffer.ToString());
 
+                                    case KindOfPrefix.LinguisticVar:
+                                        return CreateToken(TokenKind.Identifier, buffer.ToString());
+
+                                    case KindOfPrefix.Property:
+                                        return CreateToken(TokenKind.Identifier, buffer.ToString());
+
                                     default:
                                         throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
                                 }
@@ -796,6 +803,37 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 {
                                     buffer.Append(tmpChar);
                                     _kindOfPrefix = KindOfPrefix.SystemVar;
+
+                                    if (_items.Count == 0)
+                                    {
+                                        throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                    }
+
+                                    var nextChar = _items.Peek();
+
+                                    if (nextChar == '`')
+                                    {
+                                        _items.Dequeue();
+                                        _state = State.InIdentifier;
+                                    }
+                                    else
+                                    {
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                        }
+                                    }
+                                }
+                                break;
+
+                            case ':':
+                                {
+                                    buffer.Append(tmpChar);
+                                    _kindOfPrefix = KindOfPrefix.Property;
 
                                     if (_items.Count == 0)
                                     {

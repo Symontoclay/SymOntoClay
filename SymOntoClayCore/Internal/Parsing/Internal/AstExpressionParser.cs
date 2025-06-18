@@ -583,6 +583,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KindOfName.Channel:
                 case KindOfName.Entity:
                 case KindOfName.LinguisticVar:
+                case KindOfName.Property:
                 {
                         var node = new ConstValueAstExpression();
                         node.Value = value;

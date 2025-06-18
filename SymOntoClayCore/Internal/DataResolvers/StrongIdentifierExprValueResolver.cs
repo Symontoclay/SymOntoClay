@@ -68,9 +68,41 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 case KindOfName.LinguisticVar:
                     return GetValueFromLinguisticVar(logger, name, instance, localCodeExecutionContext, options);
 
+                case KindOfName.Property:
+                    return GetValueFromProperty(logger, name, instance, localCodeExecutionContext, options);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
+        }
+
+        private CallResult GetValueFromProperty(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var property = _propertiesResolver.Resolve(logger, name.ForResolving, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Info("1CD4D730-2013-4CBF-B172-915D0F36AA8A", $"property?.KindOfProperty = {property?.KindOfProperty}");
+#endif
+
+            if(property == null)
+            {
+                var value = _propertiesResolver.ResolveImplicitProperty(logger, name.ForResolving, instance, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Info("0E381D35-017E-4C24-A0B1-368416D1422C", $"value = {value}");
+#endif
+
+                if (value == null)
+                {
+                    return new CallResult(name);
+                }
+                else
+                {
+                    return new CallResult(value);
+                }
+            }
+
+            return _propertiesResolver.ConvertPropertyInstanceToCallResult(property);
         }
 
         private CallResult GetValueFromLinguisticVar(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -141,7 +173,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var value = _propertiesResolver.ResolveImplicitProperty(logger, name, instance, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");
+            //Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");
 #endif
 
             if (value == null)

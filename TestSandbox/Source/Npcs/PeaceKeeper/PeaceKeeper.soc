@@ -1,11 +1,15 @@
 ﻿app PeaceKeeper
 {
+    fun a(): boolean => 
+    {
+        '`a` has been called!' >> @>log;
+        return {: enemy($_) & see(I, $_) & alive($_, true) :};
+    }
+
     on Enter =>
     {
         'Begin' >> @>log;
-        @:SomeAutoProp >> @>log;
+        a() >> @>log;
         'End' >> @>log;
     }
-
-    prop SomeAutoProp: number = 16;
 }

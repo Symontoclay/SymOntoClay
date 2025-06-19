@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotNamedFunctionMark,
             GotName,
             GotParameters,
-            GotWidth,
+            GotWith,
             WaitForAction,
             GotAction
         }
@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotWidth:
+                case State.GotWith:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:
@@ -220,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new WithParser(_namedFunction, _context, TokenKind.Lambda, TokenKind.OpenFigureBracket);
             parser.Run();
 
-            _state = State.GotWidth;
+            _state = State.GotWith;
         }
     }
 }

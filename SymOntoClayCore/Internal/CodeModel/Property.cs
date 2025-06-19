@@ -138,7 +138,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(DefaultValue), DefaultValue);
             sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 
-
             sb.PrintBriefObjListProp(n, nameof(GetStatements), GetStatements);
             sb.PrintBriefObjProp(n, nameof(GetCompiledFunctionBody), GetCompiledFunctionBody);
 

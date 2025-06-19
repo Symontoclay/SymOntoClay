@@ -164,10 +164,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case State.WaitForReturnType:
                     {
-                        var typeList = ParseTypesOfParameterOrVar();
+                        _namedFunction.TypesList = ParseTypesOfParameterOrVar();
 
 #if DEBUG
-                        Info("A6533BEF-BCA8-48BD-9887-2BF517BBB5EF", $"typeList = {typeList.WriteListToString()}");
+                        Info("A6533BEF-BCA8-48BD-9887-2BF517BBB5EF", $"_namedFunction.TypesList = {_namedFunction.TypesList.WriteListToString()}");
 #endif
 
                         throw new NotImplementedException("BC650CCD-F0F8-4C73-987D-C1482E4D9860");

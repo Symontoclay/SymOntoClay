@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IVarDecl AsIVarDecl => this;
 
         public AstExpression DefaultValue { get; set; }
-
+        
         /// <inheritdoc/>
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
         

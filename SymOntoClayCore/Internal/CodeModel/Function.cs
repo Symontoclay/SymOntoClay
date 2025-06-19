@@ -34,7 +34,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class Function: CodeItem, IExecutable
+    public abstract class Function: CodeItem, IExecutable, IReturnable
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Function;
@@ -45,10 +45,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Function AsFunction => this;
 
+        /// <inheritdoc/>
+        public override bool IsIReturnable => true;
+
+        /// <inheritdoc/>
+        public override IReturnable AsIReturnable => this;
+
         public List<FunctionArgumentInfo> Arguments { get; set; } = new List<FunctionArgumentInfo>();
 
         /// <inheritdoc/>
         IList<IFunctionArgument> IExecutable.Arguments => _iArgumentsList;
+
+        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+
+        /// <inheritdoc/>
+        IList<StrongIdentifierValue> IReturnable.TypesList => TypesList;
 
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
@@ -145,6 +156,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             Arguments = source.Arguments?.Select(p => p.Clone(context)).ToList();
 
+            TypesList = source.TypesList?.Select(p => p.Clone(context)).ToList();
+
             Statements = source.Statements.Select(p => p.CloneAstStatement(context)).ToList();
 
             CompiledFunctionBody = source.CompiledFunctionBody?.Clone(context);
@@ -181,6 +194,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjListProp(n, nameof(Arguments), Arguments);
+            sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
             sb.PrintObjListProp(n, nameof(Statements), Statements);
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
@@ -196,6 +210,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjListProp(n, nameof(Arguments), Arguments);
+            sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
@@ -211,6 +226,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjListProp(n, nameof(Arguments), Arguments);
+            sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
@@ -281,6 +297,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 sb.Append(")");
             }
+
+            sb.Append($": {TypesList.TypesListToHumanizedString()}");
 
             return sb.ToString();
         }

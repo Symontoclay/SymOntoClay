@@ -33,7 +33,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("76C28F53-42A2-4CF2-AE7A-09C18DF4DE77");
 
             var text = @"app PeaceKeeper
 {
@@ -77,7 +77,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1_a()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("7BD4E638-627B-4EE2-A7D2-A4D0F891EE1F");
 
             var text = @"app PeaceKeeper
 {
@@ -120,7 +120,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case2()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("97E44039-FB7C-4095-88BD-30CA7EB80173");
 
             var text = @"app PeaceKeeper
 {
@@ -159,7 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case2_a()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("7F07A3B5-9690-447A-A017-2889E809289D");
 
             var text = @"synonym to for direction;
 

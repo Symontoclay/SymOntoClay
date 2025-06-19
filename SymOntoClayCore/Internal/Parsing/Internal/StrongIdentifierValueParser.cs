@@ -570,7 +570,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         subItems.AddRange(convertedSubItems);
                     }
 
-                    //throw new NotImplementedException();
+                    //throw new NotImplementedException("4C119E49-828E-4DDC-9A26-78DD9DE137A0");
 
                     continue;
                 }

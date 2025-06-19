@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
@@ -36,6 +37,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotNamedFunctionMark,
             GotName,
             GotParameters,
+            WaitForReturnType,
             GotWith,
             WaitForAction,
             GotAction
@@ -139,6 +141,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForAction;
                             break;
 
+                        case TokenKind.Colon:
+                            _state = State.WaitForReturnType;
+                            break;
+
                         case TokenKind.Word:
                             switch(_currToken.KeyWordTokenKind)
                             {
@@ -153,6 +159,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         default:
                             throw new UnexpectedTokenException(Text, _currToken);
+                    }
+                    break;
+
+                case State.WaitForReturnType:
+                    {
+                        var typeList = ParseTypesOfParameterOrVar();
+
+#if DEBUG
+                        Info("A6533BEF-BCA8-48BD-9887-2BF517BBB5EF", $"typeList = {typeList.WriteListToString()}");
+#endif
+
+                        throw new NotImplementedException("BC650CCD-F0F8-4C73-987D-C1482E4D9860");
                     }
                     break;
 

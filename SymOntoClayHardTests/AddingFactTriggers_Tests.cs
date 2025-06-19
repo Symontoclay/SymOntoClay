@@ -407,7 +407,7 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case3()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("BDC8C689-5B75-4D9F-9619-E82603F59ABE");
 
             using var instance = new AdvancedBehaviorTestEngineInstance();
 
@@ -508,7 +508,7 @@ namespace SymOntoClay.Core.Tests
         [Parallelizable]
         public void Case4()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("FF5BC06E-442C-424E-9205-318538935D2C");
 
             using var instance = new AdvancedBehaviorTestEngineInstance();
 

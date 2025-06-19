@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             //if (mode == LexerMode.StrongIdentifier)
             //{
-            //    //throw new NotImplementedException();
+            //    //throw new NotImplementedException("B7F2E1D9-F37C-4E72-8295-7765F0756714");
             //}
 #endif
 

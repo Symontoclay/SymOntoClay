@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotName,
             GotParameters,
             WaitForReturnType,
+            GotReturnType,
             GotWith,
             WaitForAction,
             GotAction
@@ -76,6 +77,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            //Info("E280C53F-8C22-4B82-B7E5-056FBA3CEB48", $"_state = {_state}");
+            //Info("C73BF371-BFD9-416B-BB67-FB03B86A38DC", $"_currToken = {_currToken}");
+#endif
+
             switch (_state)
             {
                 case State.Init:
@@ -130,6 +136,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotParameters:
+                case State.GotReturnType:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:
@@ -167,10 +174,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         _namedFunction.TypesList = ParseTypesOfParameterOrVar();
 
 #if DEBUG
-                        Info("A6533BEF-BCA8-48BD-9887-2BF517BBB5EF", $"_namedFunction.TypesList = {_namedFunction.TypesList.WriteListToString()}");
+                        //Info("A6533BEF-BCA8-48BD-9887-2BF517BBB5EF", $"_namedFunction.TypesList = {_namedFunction.TypesList.WriteListToString()}");
 #endif
 
-                        throw new NotImplementedException("BC650CCD-F0F8-4C73-987D-C1482E4D9860");
+                        _state = State.GotReturnType;
                     }
                     break;
 

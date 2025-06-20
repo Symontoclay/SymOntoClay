@@ -1,15 +1,15 @@
 ﻿app PeaceKeeper
 {
-    fun a(): boolean => 
+    fun a(@param_1: boolean)
     {
         '`a` has been called!' >> @>log;
-        return {: enemy($_) & see(I, $_) & alive($_, true) :};
+        @param_1 >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a() >> @>log;
+        a({: enemy($_) & see(I, $_) & alive($_, true) :});
         'End' >> @>log;
     }
 }

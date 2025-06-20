@@ -5729,6 +5729,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.ToMonitorSerializableObject(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>

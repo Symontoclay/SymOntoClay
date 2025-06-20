@@ -397,6 +397,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override object ToMonitorSerializableObject(IMonitorLogger logger)
+        {
+            throw new NotImplementedException("696518C0-297C-46C4-B123-95A5137344E9");
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
 #if DEBUG

@@ -75,6 +75,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            Info("344D2180-43CD-4AEA-A308-D2CEF95E03D6", $"_state = {_state}");
+            Info("200D2045-E688-476B-9219-815760A3471F", $"_currToken = {_currToken}");
+#endif
+
             switch (_state)
             {
                 case State.Init:
@@ -116,7 +121,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _currentParameter = new CallingParameter();
                             Result.Parameters.Add(_currentParameter);
 
-                            var value = NameHelper.CreateName(_currToken.Content);
+                            var value = NameHelper.CreateName(_currToken.Content, Logger);
 
                             var node = new ConstValueAstExpression();
                             node.Value = value;
@@ -169,6 +174,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _state = State.GotPositionedMainParameter;
                             }
                             break;
+
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _currentParameter = new CallingParameter();
+                                Result.Parameters.Add(_currentParameter);
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new LogicalQueryParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Info("2F3CBE2F-D17C-462E-8C96-2C51EC9B32BF", $"parser.Result = {parser.Result}");
+#endif
+
+                                var node = new ConstValueAstExpression();
+                                node.Value = parser.Result;
+
+                                _currentParameter.Value = node;
+
+                                _state = State.GotPositionedMainParameter;
+                            }
+                            break;
+
 
                         case TokenKind.CloseRoundBracket:
                             Exit();

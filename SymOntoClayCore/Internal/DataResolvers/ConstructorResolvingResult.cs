@@ -1,13 +1,16 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class ParameterRank : IObjectToString
+    public class ConstructorResolvingResult : IObjectToString
     {
-        public uint Distance { get; set; }
+        public Constructor Constructor { get; set; }
         public bool NeedTypeConversion { get; set; }
+        public List<ParameterRank> ParametersRankMatrix { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -24,10 +27,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
         {
+            return PropertiesToString(n);
+        }
+
+        protected virtual string PropertiesToString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
+
             sb.AppendLine($"{spaces}{nameof(NeedTypeConversion)} = {NeedTypeConversion}");
+            sb.PrintObjListProp(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
+
             return sb.ToString();
         }
     }

@@ -761,28 +761,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var executionsList = new List<(CodeFrame, IExecutionCoordinator)>();
 
-            IExecutable constructor = null;
+            ConstructorResolvingResult constructorResolvingResult = null;
 
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructorResolvingResult = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructorResolvingResult = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructorResolvingResult = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-            if (constructor != null)
+            if (constructorResolvingResult != null)
             {
+                if(constructorResolvingResult.NeedTypeConversion)
+                {
+                    throw new NotImplementedException("448090B6-3163-4BC0-8E33-B2284D7402EB");
+                }
+
+                IExecutable constructor = constructorResolvingResult.Constructor;
+
                 var coordinator = ((IExecutable)constructor).GetCoordinator(Logger, _context, newInstance.LocalCodeExecutionContext);
 
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, newInstance, constructor, kindOfParameters, namedParameters, positionedParameters, newInstance.LocalCodeExecutionContext, null);
@@ -1851,25 +1858,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 constructorName = _currentCodeFrame.LocalContext.Owner;
             }
 
-            IExecutable constructor = null;
+            ConstructorResolvingResult constructorResolvingResult = null;
 
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
+
+            if(constructorResolvingResult.NeedTypeConversion)
+            {
+                throw new NotImplementedException("E5818EA6-6D9F-42D7-84C8-67AEDE002D6A");
+            }
+
+            IExecutable constructor = constructorResolvingResult.Constructor;
 
             CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, SyncOption.Ctor);
         }
@@ -1901,12 +1915,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             foreach(var targetSuperClass in targetSuperClassesList)
             {
-                var constructor = _constructorsResolver.ResolveOnlyOwn(Logger, targetSuperClass, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                var constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, targetSuperClass, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
-                if(constructor == null)
+                if(constructorResolvingResult == null)
                 {
                     continue;
                 }
+
+                if(constructorResolvingResult.NeedTypeConversion)
+                {
+                    throw new NotImplementedException("96995AA8-0685-4705-B42A-26240AC959E8");
+                }
+
+                var constructor = constructorResolvingResult.Constructor;
 
                 var coordinator = ((IExecutable)constructor).GetCoordinator(Logger, _context, _currentCodeFrame.LocalContext);
 
@@ -2394,6 +2415,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
+            }
+
+            if(methodResolvingResult.NeedTypeConversion)
+            {
+#if DEBUG
+                Info("749B55BB-87E6-4867-A6C9-014670811073", $"methodResolvingResult.ParametersRankMatrix = {methodResolvingResult.ParametersRankMatrix.WriteListToString()}");
+#endif
+
+                throw new NotImplementedException("E0AB87C4-9A86-46F0-9DBC-9BF6611AA45A");
             }
 
             CallExecutable(callMethodId, methodResolvingResult.Instance, methodResolvingResult.Executable, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);

@@ -416,16 +416,18 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunConstructors(IMonitorLogger logger)
         {
-            var constructorsList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var constructorsResolvingResultList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-            if (constructorsList.Any())
+            if (constructorsResolvingResultList.Any())
             {
                 var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(logger, _localCodeExecutionContext.Storage, this);
 
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 
-                foreach (var constructor in constructorsList)
+                foreach (var constructorResolvingResult in constructorsResolvingResultList)
                 {
+                    var constructor = constructorResolvingResult.Constructor;
+
                     var targetHolder = constructor.Holder;
 
                     var targetStorage = superClassesStoragesDict[targetHolder];

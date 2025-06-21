@@ -60,23 +60,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //ctx.DbgPrintContextChain(logger, "E86C0575-54D2-4EED-8D25-3F4EF18B0AB7");
 #endif
 
-                var method = ResolveMethod(logger, callMethodId, name, ctx, options);
+                var methodResolvingResult = ResolveMethod(logger, callMethodId, name, ctx, options);
 
-                if (method == null)
+                if (methodResolvingResult == null)
                 {
-                    method = ResolveAction(logger, callMethodId, name, ctx, options);
+                    methodResolvingResult = ResolveAction(logger, callMethodId, name, ctx, options);
 
-                    if(method == null)
+                    if(methodResolvingResult == null)
                     {
                         return null;
                     }
                 }
 
-                return new MethodResolvingResult 
-                { 
-                    Executable = method,
-                    Instance = ctx.Instance
-                };                    
+                methodResolvingResult.Instance = ctx.Instance;
+
+                return methodResolvingResult;
             });
 
             return result;
@@ -90,23 +88,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public MethodResolvingResult Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var result = EnumerateLocalCodeExecutionContext<MethodResolvingResult>(logger, localCodeExecutionContext, (ctx) => {
-                var method = ResolveMethod(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
+                var methodResolvingResult = ResolveMethod(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
 
-                if (method == null)
+                if (methodResolvingResult == null)
                 {
-                    method = ResolveAction(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
+                    methodResolvingResult = ResolveAction(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
 
-                    if (method == null)
+                    if (methodResolvingResult == null)
                     {
                         return null;
                     }
                 }
 
-                return new MethodResolvingResult
-                {
-                    Executable = method,
-                    Instance = ctx.Instance
-                };
+                methodResolvingResult.Instance = ctx.Instance;
+
+                return methodResolvingResult;
             });
 
             return result;
@@ -128,23 +124,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Info("2872E907-C173-4771-B558-908525EC7B1F", "Iteration");
 #endif
 
-                var method = ResolveMethod(logger, callMethodId, name, positionedParameters, ctx, options);
+                var methodResolvingResult = ResolveMethod(logger, callMethodId, name, positionedParameters, ctx, options);
 
-                if (method == null)
+                if (methodResolvingResult == null)
                 {
-                    method = ResolveAction(logger, callMethodId, name, positionedParameters, ctx, options);
+                    methodResolvingResult = ResolveAction(logger, callMethodId, name, positionedParameters, ctx, options);
 
-                    if (method == null)
+                    if (methodResolvingResult == null)
                     {
                         return null;
                     }
                 }
 
-                return new MethodResolvingResult
-                {
-                    Executable = method,
-                    Instance = ctx.Instance
-                };
+                methodResolvingResult.Instance = ctx.Instance;
+
+                return methodResolvingResult;
             });
 
             return result;
@@ -213,7 +207,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #endregion
 
         #region private methods
-        private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private MethodResolvingResult ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             logger.MethodResolving("976907DE-71BF-4083-8AC4-7CEB631CCF2B", callMethodId);
 
@@ -254,7 +248,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                var result = filteredList.Single().ResultItem;
+                var targetItem = filteredList.Single();
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndMethodResolving("C0E1449A-BD6E-4D7E-818D-2920F3DF8E54", callMethodId);
 
@@ -262,7 +263,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             {
-                var result = GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+                var targetItem = GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndMethodResolving("F09F2B55-078C-41C6-8C7E-D173A5EFFC05", callMethodId);
 
@@ -270,7 +278,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private MethodResolvingResult ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             logger.MethodResolving("484228EB-B4DA-4663-AEC3-F7DA1CFCD6A0", callMethodId);
 
@@ -314,7 +322,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                var result = filteredList.Single().ResultItem;
+                var targetItem = filteredList.Single();
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndMethodResolving("2959C0BA-89F9-4F3F-9150-CB0D2CE2B049", callMethodId);
 
@@ -322,7 +337,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             {
-                var result = GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+                var targetItem = GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndMethodResolving("9827CC29-F394-47E1-84BC-28A24E8217A6", callMethodId);
 
@@ -330,7 +352,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private MethodResolvingResult ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             logger.MethodResolving("0D121D2D-4396-4D2B-A10E-D8869F837EE0", callMethodId);
 
@@ -384,7 +406,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                var result = filteredList.Single().ResultItem;
+                var targetItem = filteredList.Single();
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndMethodResolving("FE6647BE-2E28-4E2E-8D44-0A22EB6B27E7", callMethodId);
 
@@ -392,7 +421,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             {
-                var result = GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+                var targetItem = GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndMethodResolving("159D1775-2BB9-4536-8303-88665B085540", callMethodId);
 
@@ -400,7 +436,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private MethodResolvingResult ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             logger.ActionResolving("ECC4EA61-A29D-4C1C-9BA5-C92A929BAFC2", callMethodId);
 
@@ -433,7 +469,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                var result = filteredList.Single().ResultItem;
+                var targetItem = filteredList.Single();
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndActionResolving("62FDF518-9FB9-44E5-84FF-C3DE20FB6E92", callMethodId);
 
@@ -441,7 +484,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             {
-                var result = GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+                var targetItem = GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndActionResolving("41E4F23F-99A2-4D7A-BDBB-A585CE78787B", callMethodId);
 
@@ -449,7 +499,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }            
         }
 
-        private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private MethodResolvingResult ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             logger.ActionResolving("E91CA7A9-F2EE-4766-A597-63636B76C6F0", callMethodId);
 
@@ -493,7 +543,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                var result = filteredList.Single().ResultItem;
+                var targetItem = filteredList.Single();
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndActionResolving("2CE7572C-28B9-4238-B7D7-324D647AAD7B", callMethodId);
 
@@ -501,7 +558,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             {
-                var result = GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+                var targetItem = GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndActionResolving("CB480087-B5F7-40AB-BFAE-8D149B4871F0", callMethodId);
 
@@ -509,7 +573,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }            
         }
 
-        private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private MethodResolvingResult ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             logger.ActionResolving("8A6FE64C-3B5E-4C1F-AA2F-B8DC23D7399C", callMethodId);
 
@@ -551,7 +615,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                var result = filteredList.Single().ResultItem;
+                var targetItem = filteredList.Single();
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndActionResolving("A34370C9-70B0-4B2E-A3A4-0313D7D25D38", callMethodId);
 
@@ -559,7 +630,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             {
-                var result = GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+                var targetItem = GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+
+                var result = new MethodResolvingResult
+                {
+                    Executable = targetItem.ResultItem,
+                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                };
 
                 logger.EndActionResolving("4C6AADA0-3ABC-4B71-87B7-C04AC654833C", callMethodId);
 

@@ -2,6 +2,7 @@
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
@@ -10,13 +11,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public IExecutable Executable { get; set; }
         public IInstance Instance { get; set; }
+        public bool NeedTypeConversion { get; set; }
+        public List<ParameterRank> ParametersRankMatrix { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
         }
-
+        
         /// <inheritdoc/>
         public string ToString(uint n)
         {
@@ -34,7 +37,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
+            sb.AppendLine($"{spaces}{nameof(NeedTypeConversion)} = {NeedTypeConversion}");
+            sb.PrintObjListProp(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
             //sb.PrintObjProp(n, nameof(Value), Value);
             //sb.PrintObjProp(n, nameof(Executable), Executable);
             //sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
@@ -67,7 +71,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
+            sb.AppendLine($"{spaces}{nameof(NeedTypeConversion)} = {NeedTypeConversion}");
+            sb.PrintObjListProp(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
             //sb.PrintShortObjProp(n, nameof(Value), Value);
             //sb.PrintShortObjProp(n, nameof(Executable), Executable);
             //sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
@@ -100,7 +105,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
+            sb.AppendLine($"{spaces}{nameof(NeedTypeConversion)} = {NeedTypeConversion}");
+            sb.PrintObjListProp(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
             //sb.PrintBriefObjProp(n, nameof(Value), Value);
             //sb.PrintBriefObjProp(n, nameof(Executable), Executable);
             //sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");

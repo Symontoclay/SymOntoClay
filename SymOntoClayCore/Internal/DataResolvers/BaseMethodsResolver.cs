@@ -65,6 +65,46 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private StrongIdentifierValue _fuzzyTypeName;
         private StrongIdentifierValue _numberTypeName;
 
+        public List<Value> PrepareParameters(IMonitorLogger logger, List<Value> positionedParameters, List<ParameterRank> parametersRankMatrix, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            Info("21089E3F-62CA-44FB-A9BA-7B535FBD7AD8", $"positionedParameters = {positionedParameters.WriteListToString()}");
+            Info("FE8208C0-C454-46A6-8B8A-670D2CA95AE8", $"parametersRankMatrix = {parametersRankMatrix.WriteListToString()}");
+#endif
+
+            var result = new List<Value>();
+
+            var parametersRankMatrixEnumerator = parametersRankMatrix.GetEnumerator();
+
+            foreach (var positionedParameter in positionedParameters)
+            {
+                if(!parametersRankMatrixEnumerator.MoveNext())
+                {
+                    throw new NotImplementedException("A8B73562-A107-45D5-A2F4-8C658ECCF0D7");
+                }
+
+                var parametersRankMatrixItem = parametersRankMatrixEnumerator.Current;
+
+                if(parametersRankMatrixItem.NeedTypeConversion)
+                {
+#if DEBUG
+                    Info("3921263B-471F-4699-8B2F-0FD819BA5782", $"parametersRankMatrixItem.TypeFitCheckingResult = {parametersRankMatrixItem.TypeFitCheckingResult}");
+                    Info("D4E30457-E70C-4F1F-9E93-7261FE6D9D43", $"positionedParameter = {positionedParameter.ToHumanizedLabel()}");
+#endif
+
+                    result.Add(_typeConverter.TryConvertToValue(logger, positionedParameter, parametersRankMatrixItem.TypeFitCheckingResult, localCodeExecutionContext));
+
+                    //throw new NotImplementedException("C1FA7501-4071-4130-9FC8-95EFF83B1405");
+                }
+                else
+                {
+                    result.Add(positionedParameter);
+                }
+            }
+
+            return result;
+        }
+
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
@@ -157,7 +197,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         return null;
                     }
 
-                    result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = true });
+                    result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = true, TypeFitCheckingResult = checkResult });
                 }
             }
 
@@ -219,7 +259,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return null;
                 }
 
-                result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = true });
+                result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = true, TypeFitCheckingResult = checkResult });
             }
 
             return result;

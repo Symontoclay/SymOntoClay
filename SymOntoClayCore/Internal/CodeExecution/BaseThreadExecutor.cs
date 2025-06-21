@@ -2423,7 +2423,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Info("749B55BB-87E6-4867-A6C9-014670811073", $"methodResolvingResult.ParametersRankMatrix = {methodResolvingResult.ParametersRankMatrix.WriteListToString()}");
 #endif
 
-                throw new NotImplementedException("E0AB87C4-9A86-46F0-9DBC-9BF6611AA45A");
+                switch (kindOfParameters)
+                {
+                    case KindOfFunctionParameters.NoParameters:
+                        break;
+
+                    case KindOfFunctionParameters.PositionedParameters:
+                        positionedParameters = _methodsResolver.PrepareParameters(Logger, positionedParameters, methodResolvingResult.ParametersRankMatrix, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                        Info("FE20FB02-F9A5-4314-A9F3-88E465D0E40A", $"positionedParameters = {positionedParameters.WriteListToString()}");
+#endif
+
+                        throw new NotImplementedException("E0AB87C4-9A86-46F0-9DBC-9BF6611AA45A");
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                }
             }
 
             CallExecutable(callMethodId, methodResolvingResult.Instance, methodResolvingResult.Executable, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);

@@ -125,6 +125,24 @@ namespace SymOntoClay.Core.Internal.Converters
         }
 
         /// <inheritdoc/>
+        public Value TryConvertToValue(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return TryConvertToValue(logger, value, checkingResult, localCodeExecutionContext, DefaultOptions);
+        }
+
+        /// <inheritdoc/>
+        public Value TryConvertToValue(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options);
+
+        /// <inheritdoc/>
+        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return TryConvertToCallResult(logger, value, checkingResult, localCodeExecutionContext, DefaultOptions);
+        }
+
+        /// <inheritdoc/>
+        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options);
+
+        /// <inheritdoc/>
         public TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return CheckFitValue(logger, value, typesList, localCodeExecutionContext, DefaultOptions);

@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public int StorageDistance { get; set; }
         public IStorage Storage { get; set; }
-        public List<uint> ParametersRankMatrix { get; set; }
+        public List<ParameterRank> ParametersRankMatrix { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(StorageDistance)} = {StorageDistance}");
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
-            sb.PrintPODList(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
+            sb.PrintObjListProp(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(StorageDistance)} = {StorageDistance}");
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
-            sb.PrintPODList(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
+            sb.PrintObjListProp(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -82,7 +82,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(StorageDistance)} = {StorageDistance}");
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
-            sb.PrintPODList(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
+            sb.PrintObjListProp(n, nameof(ParametersRankMatrix), ParametersRankMatrix);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

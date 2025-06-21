@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.DataResolvers.Exceptions;
 using SymOntoClay.Monitor.Common;
 using System;
 

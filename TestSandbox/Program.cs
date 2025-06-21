@@ -37,6 +37,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.Compiling.Internal.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing.Internal;
@@ -91,6 +92,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            //TstSorting();
             //TstKindOfCompilePushValHelper();
             //TstLogFileBuilderAppCommandLineParserHandler();
             //TstThreadTask();
@@ -180,6 +182,29 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstSorting()
+        {
+            _globalLogger.Info("Begin");
+
+            var initialList = new List<(int Item1, int Item2, bool Item3)>
+            {
+                (12, 5, true),
+                (9, 6, true),
+                (12, 5, false),
+                (9, 7, false),
+                (9, 7, true),
+                (9, 6, false)
+            };
+
+            _globalLogger.Info($"initialList = {JsonConvert.SerializeObject(initialList, Formatting.Indented)}");
+
+            var sortedList = initialList.OrderBy(p => p.Item1).ThenBy(p => p.Item2).ThenBy(p => p.Item3).ToList();
+
+            _globalLogger.Info($"sortedList = {JsonConvert.SerializeObject(sortedList, Formatting.Indented)}");
+
+            _globalLogger.Info("End");
         }
 
         private static void TstKindOfCompilePushValHelper()

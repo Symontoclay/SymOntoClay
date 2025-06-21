@@ -1,7 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using System;
 
-namespace SymOntoClay.Core.Internal.DataResolvers
+namespace SymOntoClay.Core.Internal.DataResolvers.Exceptions
 {
     public class AmbiguousDataResolvingException : Exception
     {

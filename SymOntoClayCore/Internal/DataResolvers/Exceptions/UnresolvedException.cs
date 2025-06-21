@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SymOntoClay.Core.Internal.DataResolvers
+namespace SymOntoClay.Core.Internal.DataResolvers.Exceptions
 {
     public class UnresolvedException : Exception
     {

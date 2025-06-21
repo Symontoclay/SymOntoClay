@@ -228,6 +228,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var rawList = GetRawMethodsList(logger, name, 0, storagesList, weightedInheritanceItems);
 
+#if DEBUG
+            //Info("B37E2669-5336-4FC8-A185-E6351EB7775F", $"rawList.Count = {rawList.Count}");
+#endif
+
             if (!rawList.Any())
             {
                 logger.EndMethodResolving("82F40AB7-4635-4F1F-9F98-1BCB038D439C", callMethodId);
@@ -236,6 +240,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext);
+
+#if DEBUG
+            //Info("7EE7E2F3-ABB2-4491-A4DD-063F791083D5", $"filteredList.Count = {filteredList.Count}");
+#endif
 
             if (!filteredList.Any())
             {
@@ -337,6 +345,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var rawList = GetRawMethodsList(logger, name, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
+#if DEBUG
+            Info("1D096FB1-542E-48FC-85D1-316D91ED905E", $"rawList.Count = {rawList.Count}");
+#endif
+
             if (!rawList.Any())
             {
                 logger.EndMethodResolving("39FC45C0-48BB-402F-98B1-CA78B61F3E18", callMethodId);
@@ -346,6 +358,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var filteredList = Filter(logger, rawList);
 
+#if DEBUG
+            Info("8128D974-2021-42AB-A19B-D22996C3BD94", $"filteredList.Count = {filteredList.Count}");
+#endif
+
             if (!filteredList.Any())
             {
                 logger.EndMethodResolving("5F8E02C0-CB45-414B-9C4B-626B45CEBFDC", callMethodId);
@@ -354,6 +370,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             filteredList = FilterByTypeOfParameters(logger, filteredList, positionedParameters, localCodeExecutionContext, options);
+
+#if DEBUG
+            Info("3759D2B6-0032-495E-98F4-D6D553C9525E", $"filteredList.Count (2) = {filteredList.Count}");
+#endif
 
             if (!filteredList.Any())
             {

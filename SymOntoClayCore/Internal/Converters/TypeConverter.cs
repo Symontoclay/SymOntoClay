@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Converters
             _fuzzyTypeName = commonNamesStorage.FuzzyTypeName;
             _numberTypeName = commonNamesStorage.NumberTypeName;
 
-            _needConversionToBooleanTypeFitCheckingResult = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConvesion, _booleanTypeName);
+            _needConversionToBooleanTypeFitCheckingResult = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConversion, _booleanTypeName);
         }
 
         /// <inheritdoc/>
@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 case KindOfTypeFitCheckingResult.IsFit:
                     return new CallResult(value);
 
-                case KindOfTypeFitCheckingResult.NeedConvesion:
+                case KindOfTypeFitCheckingResult.NeedConversion:
                     {
                         var conversionResult = Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext, options);
 
@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Converters
             {
                 if (value.IsStrongIdentifierValue)
                 {
-                    return new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConvesion, _numberTypeName);
+                    return new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConversion, _numberTypeName);
                 }
             }
 
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Converters
             {
                 if (value.IsStrongIdentifierValue)
                 {
-                    return new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConvesion, _fuzzyTypeName);
+                    return new TypeFitCheckingResult(KindOfTypeFitCheckingResult.NeedConversion, _fuzzyTypeName);
                 }
             }
 

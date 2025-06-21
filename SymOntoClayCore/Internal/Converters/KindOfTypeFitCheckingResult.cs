@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.Converters
     {
         Unknown,
         IsFit,
-        NeedConvesion,
+        NeedConversion,
         IsNotFit
     }
 }

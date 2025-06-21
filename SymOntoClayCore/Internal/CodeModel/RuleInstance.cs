@@ -26,6 +26,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
@@ -399,7 +400,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object ToMonitorSerializableObject(IMonitorLogger logger)
         {
-            throw new NotImplementedException("696518C0-297C-46C4-B123-95A5137344E9");
+            var result = new RuleInstanceMonitorSerializableObject();
+
+            result.LogicalQuery = ToHumanizedString();
+
+            return result;
         }
 
         /// <inheritdoc/>

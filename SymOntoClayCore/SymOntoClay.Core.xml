@@ -4690,6 +4690,15 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects.ConditionalEntityValueMonitorSerializableObject.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects.RuleInstanceMonitorSerializableObject.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects.RuleInstanceMonitorSerializableObject.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects.RuleInstanceMonitorSerializableObject.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.Clone">
             <summary>
 			Clones the instance and returns cloned instance.

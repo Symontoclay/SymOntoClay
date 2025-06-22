@@ -3546,5 +3546,57 @@ app PeaceKeeper
 
             Assert.AreEqual(4, maxN);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case24_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a(@param_1: boolean)
+    {
+        '`a` has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        a(param_1: {: enemy($_) & see(I, $_) & alive($_, true) :});
+        'End' >> @>log;
+    }
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) => {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("`a` has been called!", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("0", message);
+                            return true;
+
+                        case 4:
+                            Assert.AreEqual("End", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
+
+            Assert.AreEqual(4, maxN);
+        }
     }
 }

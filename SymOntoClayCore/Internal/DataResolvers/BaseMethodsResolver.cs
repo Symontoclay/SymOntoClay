@@ -68,8 +68,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public Dictionary<StrongIdentifierValue, Value> PrepareParameters(IMonitorLogger logger, Dictionary<StrongIdentifierValue, Value> namedParameters, List<ParameterRank> parametersRankMatrix, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Info("52839197-6A43-4F4D-A5F3-18374533D2A3", $"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            Info("E70875A6-B782-495F-96BE-296C2D7DEFB1", $"parametersRankMatrix = {parametersRankMatrix.WriteListToString()}");
+            //Info("52839197-6A43-4F4D-A5F3-18374533D2A3", $"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Info("E70875A6-B782-495F-96BE-296C2D7DEFB1", $"parametersRankMatrix = {parametersRankMatrix.WriteListToString()}");
 #endif
 
             var result = new Dictionary<StrongIdentifierValue, Value>();
@@ -86,27 +86,22 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                Info("51F4BADF-867E-4104-B3F1-9DAEA785DEB0", $"parametersRankMatrixItem = {parametersRankMatrixItem}");
+                //Info("51F4BADF-867E-4104-B3F1-9DAEA785DEB0", $"parametersRankMatrixItem = {parametersRankMatrixItem}");
 #endif
-
 
                 if (parametersRankMatrixItem.NeedTypeConversion)
                 {
 #if DEBUG
-                    Info("A6D61C2D-1232-4AAA-964F-87057794466C", $"parametersRankMatrixItem.TypeFitCheckingResult = {parametersRankMatrixItem.TypeFitCheckingResult}");
+                    //Info("A6D61C2D-1232-4AAA-964F-87057794466C", $"parametersRankMatrixItem.TypeFitCheckingResult = {parametersRankMatrixItem.TypeFitCheckingResult}");
 #endif
 
                     result[parameterName] = _typeConverter.TryConvertToValue(logger, parameter.Value, parametersRankMatrixItem.TypeFitCheckingResult, localCodeExecutionContext);
-
-                    //throw new NotImplementedException("AD94B87E-7641-460B-B7CB-081783DA94C3");
                 }
                 else
                 {
                     result[parameterName] = parameter.Value;
                 }
             }
-
-            //throw new NotImplementedException("2802E595-C480-4BCC-8AE9-1F9923753BD1");
 
             return result;
         }

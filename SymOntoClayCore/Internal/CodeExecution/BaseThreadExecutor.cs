@@ -2442,7 +2442,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Info("FE20FB02-F9A5-4314-A9F3-88E465D0E40A", $"positionedParameters = {positionedParameters.WriteListToString()}");
-                Info("66B61BB0-7017-4AE8-8F15-82F142AB7721", $"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+                //Info("66B61BB0-7017-4AE8-8F15-82F142AB7721", $"namedParameters = {namedParameters.WriteDict_1_ToString()}");
 #endif
             }
 

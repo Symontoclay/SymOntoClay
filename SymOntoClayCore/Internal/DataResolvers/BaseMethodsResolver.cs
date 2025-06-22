@@ -68,8 +68,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public List<Value> PrepareParameters(IMonitorLogger logger, List<Value> positionedParameters, List<ParameterRank> parametersRankMatrix, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Info("21089E3F-62CA-44FB-A9BA-7B535FBD7AD8", $"positionedParameters = {positionedParameters.WriteListToString()}");
-            Info("FE8208C0-C454-46A6-8B8A-670D2CA95AE8", $"parametersRankMatrix = {parametersRankMatrix.WriteListToString()}");
+            //Info("21089E3F-62CA-44FB-A9BA-7B535FBD7AD8", $"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Info("FE8208C0-C454-46A6-8B8A-670D2CA95AE8", $"parametersRankMatrix = {parametersRankMatrix.WriteListToString()}");
 #endif
 
             var result = new List<Value>();
@@ -88,13 +88,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 if(parametersRankMatrixItem.NeedTypeConversion)
                 {
 #if DEBUG
-                    Info("3921263B-471F-4699-8B2F-0FD819BA5782", $"parametersRankMatrixItem.TypeFitCheckingResult = {parametersRankMatrixItem.TypeFitCheckingResult}");
-                    Info("D4E30457-E70C-4F1F-9E93-7261FE6D9D43", $"positionedParameter = {positionedParameter.ToHumanizedLabel()}");
+                    //Info("3921263B-471F-4699-8B2F-0FD819BA5782", $"parametersRankMatrixItem.TypeFitCheckingResult = {parametersRankMatrixItem.TypeFitCheckingResult}");
+                    //Info("D4E30457-E70C-4F1F-9E93-7261FE6D9D43", $"positionedParameter = {positionedParameter.ToHumanizedLabel()}");
 #endif
 
                     result.Add(_typeConverter.TryConvertToValue(logger, positionedParameter, parametersRankMatrixItem.TypeFitCheckingResult, localCodeExecutionContext));
-
-                    //throw new NotImplementedException("C1FA7501-4071-4130-9FC8-95EFF83B1405");
                 }
                 else
                 {

@@ -368,7 +368,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawMethodsList(logger, name, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Info("1D096FB1-542E-48FC-85D1-316D91ED905E", $"rawList.Count = {rawList.Count}");
+            //Info("1D096FB1-542E-48FC-85D1-316D91ED905E", $"rawList.Count = {rawList.Count}");
 #endif
 
             if (!rawList.Any())
@@ -381,7 +381,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = Filter(logger, rawList);
 
 #if DEBUG
-            Info("8128D974-2021-42AB-A19B-D22996C3BD94", $"filteredList.Count = {filteredList.Count}");
+            //Info("8128D974-2021-42AB-A19B-D22996C3BD94", $"filteredList.Count = {filteredList.Count}");
 #endif
 
             if (!filteredList.Any())
@@ -394,7 +394,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             filteredList = FilterByTypeOfParameters(logger, filteredList, positionedParameters, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("3759D2B6-0032-495E-98F4-D6D553C9525E", $"filteredList.Count (2) = {filteredList.Count}");
+            //Info("3759D2B6-0032-495E-98F4-D6D553C9525E", $"filteredList.Count (2) = {filteredList.Count}");
 #endif
 
             if (!filteredList.Any())

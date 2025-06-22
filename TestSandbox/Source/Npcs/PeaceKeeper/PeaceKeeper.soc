@@ -9,7 +9,7 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        a({: enemy($_) & see(I, $_) & alive($_, true) :});
+        a(param_1: {: enemy($_) & see(I, $_) & alive($_, true) :});
         'End' >> @>log;
     }
 }

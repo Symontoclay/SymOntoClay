@@ -33,6 +33,8 @@ namespace SymOntoClay.Core.Internal.Converters
         private StrongIdentifierValue _fuzzyTypeName;
         private StrongIdentifierValue _numberTypeName;
 
+        private IList<StrongIdentifierValue> _emptyTypesList = new List<StrongIdentifierValue>();
+
         private TypeFitCheckingResult _needConversionToBooleanTypeFitCheckingResult;        
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
@@ -86,37 +88,13 @@ namespace SymOntoClay.Core.Internal.Converters
             //Info("95E681A8-1612-4252-B477-F70B51097823", $"typesList = {typesList.WriteListToString()}");
 #endif
 
-            var checkResult = CheckFitValue(logger, value, typesList, localCodeExecutionContext, options);
+            var checkingResult = CheckFitValue(logger, value, typesList, localCodeExecutionContext, options);
 
 #if DEBUG
-            //Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkResult = {checkResult}");
+            //Info("AB5669E1-4B92-45A8-A562-5162241198CD", $"checkingResult = {checkingResult}");
 #endif
 
-            var kindOfResult = checkResult.KindOfResult;
-
-            switch(kindOfResult)
-            {
-                case KindOfTypeFitCheckingResult.IsFit:
-                    return new CallResult(value);
-
-                case KindOfTypeFitCheckingResult.NeedConversion:
-                    {
-                        var conversionResult = Convert(logger, value, checkResult.SuggestedType, localCodeExecutionContext, options);
-
-                        if(conversionResult == null)
-                        {
-                            throw new Exception($"7B409E1B-0273-40AE-A8F4-4720C93DEBC3: {BuildIsNotFitErrorMessage(value, typesList)}");
-                        }
-
-                        return new CallResult(conversionResult);
-                    }                    
-
-                case KindOfTypeFitCheckingResult.IsNotFit:
-                    throw new Exception($"435AEB0F-4EB7-4219-89D3-D63871296755: {BuildIsNotFitErrorMessage(value, typesList)}");
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
-            }
+            return TryConvertToCallResult(logger, value, typesList, checkingResult, localCodeExecutionContext, options);
         }
 
         private string BuildIsNotFitErrorMessage(Value value, IList<StrongIdentifierValue> typesList)
@@ -127,20 +105,56 @@ namespace SymOntoClay.Core.Internal.Converters
         /// <inheritdoc/>
         public Value TryConvertToValue(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return TryConvertToValue(logger, value, checkingResult, localCodeExecutionContext, DefaultOptions);
+            return TryConvertToValue(logger, value, _emptyTypesList, checkingResult, localCodeExecutionContext, DefaultOptions);
         }
 
         /// <inheritdoc/>
-        public Value TryConvertToValue(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options);
-
-        /// <inheritdoc/>
-        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value TryConvertToValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return TryConvertToCallResult(logger, value, checkingResult, localCodeExecutionContext, DefaultOptions);
+            return TryConvertToValue(logger, value, typesList, checkingResult, localCodeExecutionContext, DefaultOptions);
         }
 
         /// <inheritdoc/>
-        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options);
+        public Value TryConvertToValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var kindOfResult = checkingResult.KindOfResult;
+
+            switch (kindOfResult)
+            {
+                case KindOfTypeFitCheckingResult.IsFit:
+                    return value;
+
+                case KindOfTypeFitCheckingResult.NeedConversion:
+                    {
+                        var conversionResult = Convert(logger, value, checkingResult.SuggestedType, localCodeExecutionContext, options);
+
+                        if (conversionResult == null)
+                        {
+                            throw new Exception($"7B409E1B-0273-40AE-A8F4-4720C93DEBC3: {BuildIsNotFitErrorMessage(value, typesList)}");
+                        }
+
+                        return conversionResult;
+                    }
+
+                case KindOfTypeFitCheckingResult.IsNotFit:
+                    throw new Exception($"435AEB0F-4EB7-4219-89D3-D63871296755: {BuildIsNotFitErrorMessage(value, typesList)}");
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+            }
+        }
+
+        /// <inheritdoc/>
+        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return TryConvertToCallResult(logger, value, typesList, checkingResult, localCodeExecutionContext, DefaultOptions);
+        }
+
+        /// <inheritdoc/>
+        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            return new CallResult(TryConvertToValue(logger, value, typesList, checkingResult, localCodeExecutionContext, options));
+        }
 
         /// <inheritdoc/>
         public TypeFitCheckingResult CheckFitValue(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext)

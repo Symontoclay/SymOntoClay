@@ -25,8 +25,6 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
@@ -183,6 +181,28 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             }
 
             return CreateName($"@{nameValue}", logger);
+        }
+
+        public static string GetNormalizedNameWithoutPrefixes(string value)
+        {
+            if(string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            if(value.Contains("@@"))
+            {
+                value = value.Replace("@@", string.Empty);
+            }
+            else
+            {
+                if(value.Contains("@"))
+                {
+                    value = value.Replace("@", string.Empty);
+                }
+            }
+
+            return value.Trim();
         }
     }
 }

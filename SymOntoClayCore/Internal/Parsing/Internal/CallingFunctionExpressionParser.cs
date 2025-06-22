@@ -142,15 +142,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.SystemVar:
                         case TokenKind.Entity:
                         case TokenKind.OpenFigureBracket:
-                        {
+                           {
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
-                                _context.Recovery(_currToken);
-                                var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
-                                parser.Run();
-
-                                _currentParameter.Value = parser.Result;
+                                _currentParameter.Value = ParseParameterValue();
 
                                 _state = State.GotPositionedMainParameter;
                             }
@@ -161,15 +157,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
-                                _context.Recovery(_currToken);
-
-                                var parser = new ConditionalEntityParser(_context);
-                                parser.Run();
-
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
-
-                                _currentParameter.Value = node;
+                                _currentParameter.Value = ParseEntityConditionValue();
 
                                 _state = State.GotPositionedMainParameter;
                             }
@@ -180,19 +168,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
-                                _context.Recovery(_currToken);
-
-                                var parser = new LogicalQueryParser(_context);
-                                parser.Run();
-
-#if DEBUG
-                                //Info("2F3CBE2F-D17C-462E-8C96-2C51EC9B32BF", $"parser.Result = {parser.Result}");
-#endif
-
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
-
-                                _currentParameter.Value = node;
+                                _currentParameter.Value = ParseLogicalQueryValue();
 
                                 _state = State.GotPositionedMainParameter;
                             }
@@ -299,11 +275,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Entity:
                         case TokenKind.OpenFigureBracket:
                             {
-                                _context.Recovery(_currToken);
-                                var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
-                                parser.Run();
-
-                                _currentParameter.Value = parser.Result;
+                                _currentParameter.Value = ParseParameterValue();
 
                                 _state = State.GotValueOfNamedMainParameter;
                             }
@@ -311,15 +283,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.EntityCondition:
                             {
-                                _context.Recovery(_currToken);
+                                _currentParameter.Value = ParseEntityConditionValue();
 
-                                var parser = new ConditionalEntityParser(_context);
-                                parser.Run();
+                                _state = State.GotValueOfNamedMainParameter;
+                            }
+                            break;
 
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
-
-                                _currentParameter.Value = node;
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _currentParameter.Value = ParseLogicalQueryValue();
 
                                 _state = State.GotValueOfNamedMainParameter;
                             }
@@ -364,6 +336,45 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, $"In `{Text}`.");
             }
+        }
+
+        private AstExpression ParseParameterValue()
+        {
+            _context.Recovery(_currToken);
+            var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
+            parser.Run();
+
+            return parser.Result;
+        }
+
+        private AstExpression ParseEntityConditionValue()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new ConditionalEntityParser(_context);
+            parser.Run();
+
+            var node = new ConstValueAstExpression();
+            node.Value = parser.Result;
+
+            return node;
+        }
+
+        private AstExpression ParseLogicalQueryValue()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new LogicalQueryParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Info("2F3CBE2F-D17C-462E-8C96-2C51EC9B32BF", $"parser.Result = {parser.Result}");
+#endif
+
+            var node = new ConstValueAstExpression();
+            node.Value = parser.Result;
+
+            return node;
         }
 
         private AstExpression ConvertValueExprToNameExpr(AstExpression expression)

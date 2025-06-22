@@ -65,6 +65,52 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private StrongIdentifierValue _fuzzyTypeName;
         private StrongIdentifierValue _numberTypeName;
 
+        public Dictionary<StrongIdentifierValue, Value> PrepareParameters(IMonitorLogger logger, Dictionary<StrongIdentifierValue, Value> namedParameters, List<ParameterRank> parametersRankMatrix, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            Info("52839197-6A43-4F4D-A5F3-18374533D2A3", $"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            Info("E70875A6-B782-495F-96BE-296C2D7DEFB1", $"parametersRankMatrix = {parametersRankMatrix.WriteListToString()}");
+#endif
+
+            var result = new Dictionary<StrongIdentifierValue, Value>();
+
+            var parametersRankDict = parametersRankMatrix.ToDictionary(p => NameHelper.GetNormalizedNameWithoutPrefixes(p.ParameterActualName.NormalizedNameValue), p => p);
+
+            foreach (var parameter in namedParameters)
+            {
+                var parameterName = parameter.Key;
+
+                if (!parametersRankDict.TryGetValue(NameHelper.GetNormalizedNameWithoutPrefixes(parameterName.NormalizedNameValue), out var parametersRankMatrixItem))
+                {
+                    throw new NotImplementedException("B7BBBA42-C431-4116-8AF5-A8EC9882A75A");
+                }
+
+#if DEBUG
+                Info("51F4BADF-867E-4104-B3F1-9DAEA785DEB0", $"parametersRankMatrixItem = {parametersRankMatrixItem}");
+#endif
+
+
+                if (parametersRankMatrixItem.NeedTypeConversion)
+                {
+#if DEBUG
+                    Info("A6D61C2D-1232-4AAA-964F-87057794466C", $"parametersRankMatrixItem.TypeFitCheckingResult = {parametersRankMatrixItem.TypeFitCheckingResult}");
+#endif
+
+                    result[parameterName] = _typeConverter.TryConvertToValue(logger, parameter.Value, parametersRankMatrixItem.TypeFitCheckingResult, localCodeExecutionContext);
+
+                    //throw new NotImplementedException("AD94B87E-7641-460B-B7CB-081783DA94C3");
+                }
+                else
+                {
+                    result[parameterName] = parameter.Value;
+                }
+            }
+
+            //throw new NotImplementedException("2802E595-C480-4BCC-8AE9-1F9923753BD1");
+
+            return result;
+        }
+
         public List<Value> PrepareParameters(IMonitorLogger logger, List<Value> positionedParameters, List<ParameterRank> parametersRankMatrix, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
@@ -161,13 +207,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var argumentName = argument.Name;
 
-                var parameterValue = GetParameterValue(logger, argumentName, namedParameters, localCodeExecutionContext);
+                var parameterResult = GetParameterValueAndActualName(logger, argumentName, namedParameters, localCodeExecutionContext);
+
+                var parameterValue = parameterResult.Value;
+                var parameterActualName = parameterResult.ActualName;
 
                 if (parameterValue == null)
                 {
                     if (argument.HasDefaultValue)
                     {
-                        result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = false });
+                        result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = false, ParameterActualName = parameterActualName });
 
                         continue;
                     }
@@ -184,7 +233,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     if (distance.HasValue)
                     {
-                        result.Add(new ParameterRank { Distance = distance.Value, NeedTypeConversion = false });
+                        result.Add(new ParameterRank { Distance = distance.Value, NeedTypeConversion = false, ParameterActualName = parameterActualName });
                         continue;
                     }
 
@@ -195,7 +244,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         return null;
                     }
 
-                    result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = true, TypeFitCheckingResult = checkResult });
+                    result.Add(new ParameterRank { Distance = 0u, NeedTypeConversion = true, TypeFitCheckingResult = checkResult, ParameterActualName = parameterActualName });
                 }
             }
 
@@ -263,11 +312,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected Value GetParameterValue(IMonitorLogger logger, StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
+        protected (StrongIdentifierValue ActualName, Value Value) GetParameterValueAndActualName(IMonitorLogger logger, StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (namedParameters.ContainsKey(argumentName))
             {
-                return namedParameters[argumentName];
+                return (argumentName, namedParameters[argumentName]);
             }
 
             var synonymsList = _synonymsResolver.GetSynonyms(logger, argumentName, localCodeExecutionContext);
@@ -276,14 +325,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 if (namedParameters.ContainsKey(synonym))
                 {
-                    return namedParameters[synonym];
+                    return (synonym, namedParameters[synonym]);
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym, logger);
 
                 if (namedParameters.ContainsKey(alternativeSynonym))
                 {
-                    return namedParameters[alternativeSynonym];
+                    return (alternativeSynonym, namedParameters[alternativeSynonym]);
                 }
             }
 
@@ -295,18 +344,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 if (namedParameters.ContainsKey(synonym))
                 {
-                    return namedParameters[synonym];
+                    return (synonym, namedParameters[synonym]);
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym, logger);
 
                 if (namedParameters.ContainsKey(alternativeSynonym))
                 {
-                    return namedParameters[alternativeSynonym];
+                    return (alternativeSynonym, namedParameters[alternativeSynonym]);
                 }
             }
 
-            return null;
+            return (null, null);
         }
 
         protected WeightedInheritanceResultItemWithStorageInfo<T> GetTargetValueFromList<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)

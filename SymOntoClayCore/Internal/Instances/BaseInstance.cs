@@ -409,7 +409,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
+                var threadExecutor = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
 
             }
         }
@@ -451,7 +451,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
+                var threadExecutor = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
 
             }
         }
@@ -475,9 +475,9 @@ namespace SymOntoClay.Core.Internal.Instances
             IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
 #if DEBUG
-            //logger.Info("025CA7CC-B1BA-4BD5-802A-B6F94E138F55", $"kindOfSystemEvent = {kindOfSystemEvent}");
-            //logger.Info("40735ECF-A7D4-4F87-9756-F90A6FCE2856", $"holder = {holder}");
-            //logger.Info("B8A1FBCD-50B3-4CD0-A817-07323E59E929", $"Name = {Name}");
+            logger.Info("025CA7CC-B1BA-4BD5-802A-B6F94E138F55", $"kindOfSystemEvent = {kindOfSystemEvent}");
+            logger.Info("40735ECF-A7D4-4F87-9756-F90A6FCE2856", $"holder = {holder}");
+            logger.Info("B8A1FBCD-50B3-4CD0-A817-07323E59E929", $"Name = {Name}");
 #endif
 
             var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(logger, kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
@@ -496,11 +496,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 foreach (var targetTrigger in targetSystemEventsTriggersList)
                 {
 #if DEBUG
-                    //logger.Info("F67C5A2A-2397-403A-BE32-175BB091FF37", $"targetTrigger.KindOfInlineTrigger = {targetTrigger.KindOfInlineTrigger}");
-                    //logger.Info("1153D67C-BC9E-4DA9-9AA8-484E26472D27", $"targetTrigger.KindOfSystemEvent = {targetTrigger.KindOfSystemEvent}");
-                    //logger.Info("651D3594-EB5A-4E8F-8D33-A0B70A9E9E5F", $"{nameof(targetTrigger)}.ToHumanizedLabel() = {targetTrigger.ToHumanizedLabel()}");
-                    //logger.Info("60696ED7-12B3-4298-B6BC-D1AD220324A0", $"{nameof(targetTrigger)}.ToHumanizedString() = {targetTrigger.ToHumanizedString()}");
-                    //logger.Info("F940CFA1-FC58-46A4-824B-C425D313FDC4", $"{nameof(targetTrigger)}.ToLabel(logger) = {targetTrigger.ToLabel(logger)}");
+                    logger.Info("F67C5A2A-2397-403A-BE32-175BB091FF37", $"targetTrigger.KindOfInlineTrigger = {targetTrigger.KindOfInlineTrigger}");
+                    logger.Info("1153D67C-BC9E-4DA9-9AA8-484E26472D27", $"targetTrigger.KindOfSystemEvent = {targetTrigger.KindOfSystemEvent}");
+                    logger.Info("651D3594-EB5A-4E8F-8D33-A0B70A9E9E5F", $"{nameof(targetTrigger)}.ToHumanizedLabel() = {targetTrigger.ToHumanizedLabel()}");
+                    logger.Info("60696ED7-12B3-4298-B6BC-D1AD220324A0", $"{nameof(targetTrigger)}.ToHumanizedString() = {targetTrigger.ToHumanizedString()}");
+                    logger.Info("F940CFA1-FC58-46A4-824B-C425D313FDC4", $"{nameof(targetTrigger)}.ToLabel(logger) = {targetTrigger.ToLabel(logger)}");
 #endif
                     var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
@@ -519,7 +519,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(logger, processInitialInfoList, logger.Id);
+                var threadExecutor = _context.CodeExecutor.ExecuteBatchAsync(logger, processInitialInfoList, logger.Id);
             }
         }
 

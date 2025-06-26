@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public abstract class BaseFunctor : IBaseFunctor, IOnCompletedAsyncActiveOnceObjectHandler
+    public abstract class BaseFunctor : IBaseFunctor, IOnCompletedActiveObjectHandler
     {
         protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
@@ -33,7 +33,7 @@ namespace SymOntoClay.ActiveObject.Functors
             _asyncActiveOnceObject.Start();
         }
 
-        void IOnCompletedAsyncActiveOnceObjectHandler.Invoke()
+        void IOnCompletedActiveObjectHandler.Invoke()
         {
             OnCompletedHandler();
         }
@@ -47,7 +47,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract class BaseFunctor<TResult> : IBaseFunctor, IOnCompletedAsyncActiveOnceObjectHandler
+    public abstract class BaseFunctor<TResult> : IBaseFunctor, IOnCompletedActiveObjectHandler
     {
         protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
@@ -75,7 +75,7 @@ namespace SymOntoClay.ActiveObject.Functors
             _asyncActiveOnceObject.Start();
         }
 
-        void IOnCompletedAsyncActiveOnceObjectHandler.Invoke()
+        void IOnCompletedActiveObjectHandler.Invoke()
         {
             OnCompletedHandler();
         }

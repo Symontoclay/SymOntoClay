@@ -21,9 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json.Linq;
+using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
@@ -46,7 +48,8 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public abstract class BaseThreadExecutor : BaseLoggedComponent, IThreadExecutor
+    public abstract class BaseThreadExecutor : BaseLoggedComponent, IThreadExecutor,
+        IOnCompletedActiveObjectHandler
     {
         protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context)
         {
@@ -85,6 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _instancesStorage = _context.InstancesStorage;
 
             _activeObject = activeObject;
+            activeObject.AddOnCompletedHandler(this);
             activeObject.PeriodicMethod = CommandLoop;
 
             var dataResolversFactory = context.DataResolversFactory;
@@ -240,7 +244,55 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public void Dispose()
         {
             _activeObject.Dispose();
+
+            _onCompletedHandlers.Clear();
         }
+
+        /// <inheritdoc/>
+        public void AddOnCompletedHandler(IOnCompletedThreadExecutorHandler handler)
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                if (_onCompletedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onCompletedHandlers.Add(handler);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnCompletedHandler(IOnCompletedThreadExecutorHandler handler)
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                if (_onCompletedHandlers.Contains(handler))
+                {
+                    _onCompletedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        void IOnCompletedActiveObjectHandler.Invoke()
+        {
+            EmitOnCompletedHandlers();
+            _activeObject.RemoveOnCompletedHandler(this);
+        }
+
+        private void EmitOnCompletedHandlers()
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                foreach (var handler in _onCompletedHandlers.ToArray())
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onCompletedHandlersLockObj = new object();
+        private List<IOnCompletedThreadExecutorHandler> _onCompletedHandlers = new List<IOnCompletedThreadExecutorHandler>();
 
         private bool CommandLoop(CancellationToken cancellationToken)
         {

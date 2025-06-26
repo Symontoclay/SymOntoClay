@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.ActiveObject.EventsInterfaces;
+using System;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
@@ -6,5 +7,8 @@ namespace SymOntoClay.ActiveObject.Threads
     {
         bool IsActive { get; }
         bool IsWaited { get; }
+
+        void AddOnCompletedHandler(IOnCompletedActiveObjectHandler handler);
+        void RemoveOnCompletedHandler(IOnCompletedActiveObjectHandler handler);
     }
 }

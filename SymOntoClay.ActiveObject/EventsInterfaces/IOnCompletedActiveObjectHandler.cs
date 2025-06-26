@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.ActiveObject.EventsInterfaces
 {
-    public interface IOnCompletedAsyncActiveOnceObjectHandler
+    public interface IOnCompletedActiveObjectHandler
     {
         void Invoke();
     }

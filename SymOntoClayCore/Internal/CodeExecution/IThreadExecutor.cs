@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Threading;
+﻿using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
@@ -7,5 +8,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         ThreadTaskStatus RunningStatus { get; }
         void Cancel();
         void Wait();
+
+        void AddOnCompletedHandler(IOnCompletedThreadExecutorHandler handler);
+        void RemoveOnCompletedHandler(IOnCompletedThreadExecutorHandler handler);
     }
 }

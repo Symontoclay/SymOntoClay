@@ -30,6 +30,7 @@ using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Instances.InternalRunners;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -480,7 +481,12 @@ namespace SymOntoClay.Core.Internal.Instances
             logger.Info("B8A1FBCD-50B3-4CD0-A817-07323E59E929", $"Name = {Name}");
 #endif
 
-            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(logger, kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+#if DEBUG
+            var tmpRunner = new BaseLifecycleTriggersRunner(Logger, _context, this, holder, _localCodeExecutionContext, executionCoordinator, _storage, kindOfSystemEvent, normalOrder, true);
+            tmpRunner.RunAsync(logger);
+#endif
+
+            /*var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(logger, kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (targetSystemEventsTriggersList.Any())
             {
@@ -520,7 +526,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
                 var threadExecutor = _context.CodeExecutor.ExecuteBatchAsync(logger, processInitialInfoList, logger.Id);
-            }
+            }*/
         }
 
         protected virtual void RunMutuallyExclusiveStatesSets(IMonitorLogger logger)

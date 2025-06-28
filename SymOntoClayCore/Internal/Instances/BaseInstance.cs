@@ -461,19 +461,9 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
-        {
-            RunLifecycleTriggers(logger, kindOfSystemEvent, Name);
-        }
-
         protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
             RunLifecycleTriggers(logger, kindOfSystemEvent, Name, executionCoordinator, normalOrder);
-        }
-
-        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder)
-        {
-            RunLifecycleTriggers(logger, kindOfSystemEvent, holder, _executionCoordinator);
         }
 
         protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder,

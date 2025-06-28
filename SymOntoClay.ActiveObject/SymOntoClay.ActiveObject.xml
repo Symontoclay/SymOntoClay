@@ -79,6 +79,12 @@
         <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.TaskValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.AddOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.RemoveOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.Start">
             <inheritdoc/>
         </member>
@@ -97,6 +103,12 @@
         <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.TaskValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.AddOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.RemoveOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.Start">
             <inheritdoc/>
         </member>
@@ -113,6 +125,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.AddOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.RemoveOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.Start">
@@ -141,6 +159,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.AddOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.RemoveOnCompletedHandler(SymOntoClay.ActiveObject.EventsInterfaces.IOnCompletedActiveObjectHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.Start">

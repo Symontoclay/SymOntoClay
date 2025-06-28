@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.EventsCollections;
+using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.Threading;
 using System.Threading;
 
@@ -56,6 +58,20 @@ namespace SymOntoClay.ActiveObject.Threads
         public IThreadTask TaskValue => _taskValue;
 
         /// <inheritdoc/>
+        public void AddOnCompletedHandler(IOnCompletedActiveObjectHandler handler)
+        {
+            _onCompletedHandlersCollection.AddHandler(handler);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnCompletedHandler(IOnCompletedActiveObjectHandler handler)
+        {
+            _onCompletedHandlersCollection.RemoveHandler(handler);
+        }
+
+        private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
+
+        /// <inheritdoc/>
         public IThreadTask Start()
         {
             _isActive = true;
@@ -64,12 +80,14 @@ namespace SymOntoClay.ActiveObject.Threads
             {
                 if (_cancellationToken.IsCancellationRequested)
                 {
+                    _onCompletedHandlersCollection.Emit();
                     return _taskValue;
                 }
 
                 if (!PeriodicMethod(_cancellationToken))
                 {
                     _isActive = false;
+                    _onCompletedHandlersCollection.Emit();
                     return _taskValue;
                 }
             }
@@ -83,6 +101,7 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public void Dispose()
         {
+            _onCompletedHandlersCollection.Clear();
         }
     }
 }

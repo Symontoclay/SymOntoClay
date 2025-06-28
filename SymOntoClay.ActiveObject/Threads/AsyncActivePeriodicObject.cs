@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.EventsCollections;
+using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -74,6 +76,20 @@ namespace SymOntoClay.ActiveObject.Threads
         }
 
         /// <inheritdoc/>
+        public void AddOnCompletedHandler(IOnCompletedActiveObjectHandler handler)
+        {
+            _onCompletedHandlersCollection.AddHandler(handler);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnCompletedHandler(IOnCompletedActiveObjectHandler handler)
+        {
+            _onCompletedHandlersCollection.RemoveHandler(handler);
+        }
+
+        private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
+
+        /// <inheritdoc/>
         public IThreadTask Start()
         {
             lock (_lockObj)
@@ -103,6 +119,7 @@ namespace SymOntoClay.ActiveObject.Threads
                         {
                             if (_cancellationToken.IsCancellationRequested)
                             {
+                                _onCompletedHandlersCollection.Emit();
                                 return;
                             }
 
@@ -115,16 +132,19 @@ namespace SymOntoClay.ActiveObject.Threads
 
                             if (_isExited)
                             {
+                                _onCompletedHandlersCollection.Emit();
                                 return;
                             }
 
                             if (_cancellationToken.IsCancellationRequested)
                             {
+                                _onCompletedHandlersCollection.Emit();
                                 return;
                             }
 
                             if (!PeriodicMethod(linkedCancellationTokenSource.Token))
                             {
+                                _onCompletedHandlersCollection.Emit();
                                 return;
                             }
                         }
@@ -183,6 +203,8 @@ namespace SymOntoClay.ActiveObject.Threads
                 _isExited = true;
 
                 _context.RemoveChildActiveObject(this);
+
+                _onCompletedHandlersCollection.Clear();
 
                 _task = null;
             }

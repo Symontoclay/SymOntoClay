@@ -433,6 +433,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.AddOnCompletedHandler(SymOntoClay.Core.EventsInterfaces.IOnCompletedThreadExecutorHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.RemoveOnCompletedHandler(SymOntoClay.Core.EventsInterfaces.IOnCompletedThreadExecutorHandler)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>

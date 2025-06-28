@@ -225,43 +225,19 @@ namespace SymOntoClay.ActiveObject.Threads
             }
         }
 
+        /// <inheritdoc/>
         public void AddOnCompletedHandler(IOnCompletedActiveObjectHandler handler)
         {
-            lock (_onCompletedHandlersLockObj)
-            {
-                if (_onCompletedHandlers.Contains(handler))
-                {
-                    return;
-                }
-
-                _onCompletedHandlers.Add(handler);
-            }
+            _onCompletedHandlersCollection.AddHandler(handler);
         }
 
+        /// <inheritdoc/>
         public void RemoveOnCompletedHandler(IOnCompletedActiveObjectHandler handler)
         {
-            lock (_onCompletedHandlersLockObj)
-            {
-                if (_onCompletedHandlers.Contains(handler))
-                {
-                    _onCompletedHandlers.Remove(handler);
-                }
-            }
+            _onCompletedHandlersCollection.RemoveHandler(handler);
         }
 
-        private void EmitOnCompletedHandlers()
-        {
-            lock (_onCompletedHandlersLockObj)
-            {
-                foreach (var handler in _onCompletedHandlers)
-                {
-                    handler.Invoke();
-                }
-            }
-        }
-
-        private object _onCompletedHandlersLockObj = new object();
-        private List<IOnCompletedActiveObjectHandler> _onCompletedHandlers = new List<IOnCompletedActiveObjectHandler>();
+        private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
 
         /// <inheritdoc/>
         public IThreadTask Start()
@@ -291,6 +267,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                         if (_cancellationToken.IsCancellationRequested)
                         {
+                            _onCompletedHandlersCollection.Emit();
                             return default;
                         }
 
@@ -303,12 +280,17 @@ namespace SymOntoClay.ActiveObject.Threads
 
                         if (_cancellationToken.IsCancellationRequested)
                         {
+                            _onCompletedHandlersCollection.Emit();
                             return default;
                         }
 
                         _isExited = true;
 
-                        return OnceMethod(linkedCancellationTokenSource.Token);
+                        var result = OnceMethod(linkedCancellationTokenSource.Token);
+
+                        _onCompletedHandlersCollection.Emit();
+
+                        return result;
                     }
                     catch (Exception e)
                     {
@@ -317,8 +299,6 @@ namespace SymOntoClay.ActiveObject.Threads
                         return default;
                     }
                 }, _threadPool, _cancellationToken);
-
-                task.OnCompleted += EmitOnCompletedHandlers;//no need
 
                 _task = task;
 
@@ -346,10 +326,9 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 _context.RemoveChildActiveObject(this);
 
-                _task.OnCompleted -= EmitOnCompletedHandlers;
                 _task = null;
 
-                _onCompletedHandlers.Clear();
+                _onCompletedHandlersCollection.Clear();
             }
         }
     }

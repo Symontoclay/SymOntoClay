@@ -105,6 +105,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     varStorage.Append(Logger, varItem);
                 }
             }
+
+            _enterLifecycleTriggersRunner = new EnterLifecycleTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
         }
 
         /// <inheritdoc/>
@@ -161,6 +163,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
         /// <inheritdoc/>
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
+
+        private readonly EnterLifecycleTriggersRunner _enterLifecycleTriggersRunner;
 
         /// <inheritdoc/>
         public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "")
@@ -373,7 +377,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunInitialTriggers(IMonitorLogger logger)
         {
-            RunLifecycleTriggers(logger, KindOfSystemEventOfInlineTrigger.Enter);
+            _enterLifecycleTriggersRunner.RunAsync(logger);
         }
 
         protected virtual void RunPreConstructors(IMonitorLogger logger)

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
@@ -106,6 +107,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
+            _preConstructorsRunner = new PreConstructorsRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator);
+            _constructors = new ConstructorsRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
+
             _enterLifecycleTriggersRunner = new EnterLifecycleTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
             _finalizationTriggersRunner = new FinalizationTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _storage);
         }
@@ -164,6 +168,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         /// <inheritdoc/>
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
+
+        private readonly PreConstructorsRunner _preConstructorsRunner;
+        private readonly ConstructorsRunner _constructors;
 
         private readonly EnterLifecycleTriggersRunner _enterLifecycleTriggersRunner;
         private readonly FinalizationTriggersRunner _finalizationTriggersRunner;
@@ -384,83 +391,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunPreConstructors(IMonitorLogger logger)
         {
-            var preConstructors = _constructorsResolver.ResolvePreConstructors(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-            if (preConstructors.Any())
-            {
-                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(logger, _localCodeExecutionContext.Storage, this);
-
-                var processInitialInfoList = new List<ProcessInitialInfo>();
-
-                foreach (var preConstructor in preConstructors)
-                {
-                    var targetHolder = preConstructor.Holder;
-
-                    var targetStorage = superClassesStoragesDict[targetHolder];
-
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
-                    localCodeExecutionContext.Storage = targetStorage;
-                    localCodeExecutionContext.Holder = targetHolder;
-                    localCodeExecutionContext.Instance = this;
-                    localCodeExecutionContext.Owner = targetHolder;
-                    localCodeExecutionContext.OwnerStorage= targetStorage;                    
-                    localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.PreConstructor;
-
-                    var processInitialInfo = new ProcessInitialInfo();
-                    processInitialInfo.CompiledFunctionBody = preConstructor.CompiledFunctionBody;
-                    processInitialInfo.LocalContext = localCodeExecutionContext;
-                    processInitialInfo.Metadata = preConstructor;
-                    processInitialInfo.Instance = this;
-                    processInitialInfo.ExecutionCoordinator = _executionCoordinator;
-
-                    processInitialInfoList.Add(processInitialInfo);
-                }
-
-                var threadExecutor = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
-
-            }
+            _preConstructorsRunner.Run(logger);
         }
 
         protected virtual void RunConstructors(IMonitorLogger logger)
         {
-            var constructorsResolvingResultList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-            if (constructorsResolvingResultList.Any())
-            {
-                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(logger, _localCodeExecutionContext.Storage, this);
-
-                var processInitialInfoList = new List<ProcessInitialInfo>();
-
-                foreach (var constructorResolvingResult in constructorsResolvingResultList)
-                {
-                    var constructor = constructorResolvingResult.Constructor;
-
-                    var targetHolder = constructor.Holder;
-
-                    var targetStorage = superClassesStoragesDict[targetHolder];
-
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
-
-                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
-                    localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
-                    localCodeExecutionContext.Holder = Name;
-                    localCodeExecutionContext.Instance = this;
-                    localCodeExecutionContext.Owner = targetHolder;
-                    localCodeExecutionContext.OwnerStorage = targetStorage;
-
-                    var processInitialInfo = new ProcessInitialInfo();
-                    processInitialInfo.CompiledFunctionBody = constructor.CompiledFunctionBody;
-                    processInitialInfo.LocalContext = localCodeExecutionContext;
-                    processInitialInfo.Metadata = constructor;
-                    processInitialInfo.Instance = this;
-                    processInitialInfo.ExecutionCoordinator = _executionCoordinator;
-
-                    processInitialInfoList.Add(processInitialInfo);
-                }
-
-                var threadExecutor = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
-
-            }
+            _constructors.Run(logger);
         }
 
         protected virtual void RunMutuallyExclusiveStatesSets(IMonitorLogger logger)

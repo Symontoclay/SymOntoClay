@@ -107,6 +107,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _enterLifecycleTriggersRunner = new EnterLifecycleTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
+            _finalizationTriggersRunner = new FinalizationTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _storage);
         }
 
         /// <inheritdoc/>
@@ -165,6 +166,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         private readonly EnterLifecycleTriggersRunner _enterLifecycleTriggersRunner;
+        private readonly FinalizationTriggersRunner _finalizationTriggersRunner;
 
         /// <inheritdoc/>
         public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "")
@@ -461,68 +463,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator executionCoordinator, bool normalOrder = true)
-        {
-            RunLifecycleTriggers(logger, kindOfSystemEvent, Name, executionCoordinator, normalOrder);
-        }
-
-        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder,
-            IExecutionCoordinator executionCoordinator, bool normalOrder = true)
-        {
-#if DEBUG
-            logger.Info("025CA7CC-B1BA-4BD5-802A-B6F94E138F55", $"kindOfSystemEvent = {kindOfSystemEvent}");
-            logger.Info("40735ECF-A7D4-4F87-9756-F90A6FCE2856", $"holder = {holder}");
-            logger.Info("B8A1FBCD-50B3-4CD0-A817-07323E59E929", $"Name = {Name}");
-#endif
-
-#if DEBUG
-            var tmpRunner = new BaseLifecycleTriggersRunner(Logger, _context, this, holder, _localCodeExecutionContext, executionCoordinator, _storage, kindOfSystemEvent, normalOrder, true);
-            tmpRunner.RunAsync(logger);
-#endif
-
-            /*var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(logger, kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-            if (targetSystemEventsTriggersList.Any())
-            {
-                if(normalOrder)
-                {
-                    targetSystemEventsTriggersList.Reverse();
-                }
-
-                logger.RunLifecycleTrigger("D3922E27-5527-44D0-BDB6-0F64632555E0", Name?.ToHumanizedLabel(), holder?.ToHumanizedLabel(), kindOfSystemEvent);
-
-                var processInitialInfoList = new List<ProcessInitialInfo>();
-
-                foreach (var targetTrigger in targetSystemEventsTriggersList)
-                {
-#if DEBUG
-                    logger.Info("F67C5A2A-2397-403A-BE32-175BB091FF37", $"targetTrigger.KindOfInlineTrigger = {targetTrigger.KindOfInlineTrigger}");
-                    logger.Info("1153D67C-BC9E-4DA9-9AA8-484E26472D27", $"targetTrigger.KindOfSystemEvent = {targetTrigger.KindOfSystemEvent}");
-                    logger.Info("651D3594-EB5A-4E8F-8D33-A0B70A9E9E5F", $"{nameof(targetTrigger)}.ToHumanizedLabel() = {targetTrigger.ToHumanizedLabel()}");
-                    logger.Info("60696ED7-12B3-4298-B6BC-D1AD220324A0", $"{nameof(targetTrigger)}.ToHumanizedString() = {targetTrigger.ToHumanizedString()}");
-                    logger.Info("F940CFA1-FC58-46A4-824B-C425D313FDC4", $"{nameof(targetTrigger)}.ToLabel(logger) = {targetTrigger.ToLabel(logger)}");
-#endif
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
-
-                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
-                    localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
-                    localCodeExecutionContext.Holder = holder;
-                    localCodeExecutionContext.Instance = this;
-
-                    var processInitialInfo = new ProcessInitialInfo();
-                    processInitialInfo.CompiledFunctionBody = targetTrigger.SetCompiledFunctionBody;
-                    processInitialInfo.LocalContext = localCodeExecutionContext;
-                    processInitialInfo.Metadata = targetTrigger;
-                    processInitialInfo.Instance = this;
-                    processInitialInfo.ExecutionCoordinator = executionCoordinator;
-
-                    processInitialInfoList.Add(processInitialInfo);
-                }
-
-                var threadExecutor = _context.CodeExecutor.ExecuteBatchAsync(logger, processInitialInfoList, logger.Id);
-            }*/
-        }
-
         protected virtual void RunMutuallyExclusiveStatesSets(IMonitorLogger logger)
         {
         }
@@ -541,10 +481,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunFinalizationTriggers(IMonitorLogger logger)
         {
-            var finalizationExecutionCoordinator = new ExecutionCoordinator(this);
-            finalizationExecutionCoordinator.SetExecutionStatus(logger, "86865B32-9839-4442-8EEF-5522E6DAADB4", ActionExecutionStatus.Executing);
-
-            RunLifecycleTriggers(logger, KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
+            _finalizationTriggersRunner.RunAsync(logger);
         }
 
         void IOnFinishedExecutionCoordinatorHandler.Invoke()

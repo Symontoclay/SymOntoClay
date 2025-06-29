@@ -10,9 +10,9 @@ using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 {
-    public class BaseLifecycleTriggersRunner
+    public abstract class BaseLifecycleTriggersRunner
     {
-        public BaseLifecycleTriggersRunner(IMonitorLogger logger, IEngineContext context, IInstance instance, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator, IStorage storage, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, bool normalOrder, bool runOnce)
+        protected BaseLifecycleTriggersRunner(IMonitorLogger logger, IEngineContext context, IInstance instance, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator, IStorage storage, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, bool normalOrder, bool runOnce)
         {
             _logger = logger;
             _context = context;
@@ -46,17 +46,22 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
         private bool _wasRun;
         private IThreadExecutor _threadExecutor;
 
+        private object _lockObj = new object();
+
         public void Run(IMonitorLogger logger)
         {
-            if(_runOnce)
+            lock(_lockObj)
             {
-                if(_wasRun)
+                if (_runOnce)
                 {
-                    return;
-                }
-                else
-                {
-                    _wasRun = true;
+                    if (_wasRun)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        _wasRun = true;
+                    }
                 }
             }
 
@@ -70,15 +75,18 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 
         public void RunAsync(IMonitorLogger logger)
         {
-            if (_runOnce)
+            lock (_lockObj)
             {
-                if (_wasRun)
+                if (_runOnce)
                 {
-                    return;
-                }
-                else
-                {
-                    _wasRun = true;
+                    if (_wasRun)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        _wasRun = true;
+                    }
                 }
             }
 

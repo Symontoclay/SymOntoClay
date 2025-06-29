@@ -116,11 +116,11 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
                 foreach (var targetTrigger in targetSystemEventsTriggersList)
                 {
 #if DEBUG
-                    logger.Info("89D5530C-F6F6-4C6A-A629-9E479A97658C", $"targetTrigger.KindOfInlineTrigger = {targetTrigger.KindOfInlineTrigger}");
-                    logger.Info("9E7AC0D4-9205-452B-BDAA-95442DD6887D", $"targetTrigger.KindOfSystemEvent = {targetTrigger.KindOfSystemEvent}");
-                    logger.Info("D354AC21-F24F-4133-9E0C-9EFF1A0F81C0", $"{nameof(targetTrigger)}.ToHumanizedLabel() = {targetTrigger.ToHumanizedLabel()}");
-                    logger.Info("DBBAA783-AC0E-4E87-A117-B0F4F703E756", $"{nameof(targetTrigger)}.ToHumanizedString() = {targetTrigger.ToHumanizedString()}");
-                    logger.Info("FD422325-65BB-4E70-BC77-CC9C21925C07", $"{nameof(targetTrigger)}.ToLabel(logger) = {targetTrigger.ToLabel(logger)}");
+                    //logger.Info("89D5530C-F6F6-4C6A-A629-9E479A97658C", $"targetTrigger.KindOfInlineTrigger = {targetTrigger.KindOfInlineTrigger}");
+                    //logger.Info("9E7AC0D4-9205-452B-BDAA-95442DD6887D", $"targetTrigger.KindOfSystemEvent = {targetTrigger.KindOfSystemEvent}");
+                    //logger.Info("D354AC21-F24F-4133-9E0C-9EFF1A0F81C0", $"{nameof(targetTrigger)}.ToHumanizedLabel() = {targetTrigger.ToHumanizedLabel()}");
+                    //logger.Info("DBBAA783-AC0E-4E87-A117-B0F4F703E756", $"{nameof(targetTrigger)}.ToHumanizedString() = {targetTrigger.ToHumanizedString()}");
+                    //logger.Info("FD422325-65BB-4E70-BC77-CC9C21925C07", $"{nameof(targetTrigger)}.ToLabel(logger) = {targetTrigger.ToLabel(logger)}");
 #endif
                     var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 

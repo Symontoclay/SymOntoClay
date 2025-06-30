@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             var node = new ExpressionNode(_context, null);
             node.Run(statement.Expression);
-
+            
             AddCommands(node.Result);
 
             AddCommand(new IntermediateScriptCommand()

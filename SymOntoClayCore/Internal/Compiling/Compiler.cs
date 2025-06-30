@@ -43,6 +43,21 @@ namespace SymOntoClay.Core.Internal.Compiling
         private readonly IMainStorageContext _context;
 
         /// <inheritdoc/>
+        public CompiledFunctionBody Compile(AstExpression expression)
+        {
+            return ConvertToCompiledFunctionBody(CompileToIntermediateCommands(expression));
+        }
+
+        /// <inheritdoc/>
+        public List<IntermediateScriptCommand> CompileToIntermediateCommands(AstExpression expression)
+        {
+            var node = new ExpressionNode(_context, null);
+            node.Run(expression);
+
+            return node.Result;
+        }
+
+        /// <inheritdoc/>
         public CompiledFunctionBody Compile(AstStatement statement)
         {
             return Compile(new List<AstStatement> { statement}, null, KindOfCompilation.Usual);

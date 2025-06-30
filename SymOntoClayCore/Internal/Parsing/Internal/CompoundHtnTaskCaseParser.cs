@@ -92,11 +92,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var parser = new AstExpressionParser(_context, TokenKind.OpenFigureBracket);
                         parser.Run();
 
+                        var conditionExpr = parser.Result;
+
 #if DEBUG
-                        //Info("B0F268ED-E78B-4D08-AF64-FC932A334429", $"parser.Result = {parser.Result}");
+                        //Info("B0F268ED-E78B-4D08-AF64-FC932A334429", $"conditionExpr = {conditionExpr}");
 #endif
 
-                        Result.ConditionExpression = parser.Result;
+                        Result.ConditionExpression = conditionExpr;
+                        Result.ConditionCompiledFunctionBody = _context.Compiler.Compile(conditionExpr);
 
                         _state = State.GotCondition;
                     }

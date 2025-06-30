@@ -34,6 +34,8 @@ namespace SymOntoClay.Core.Internal.Compiling
 {
     public interface ICompiler
     {
+        CompiledFunctionBody Compile(AstExpression expression);
+        List<IntermediateScriptCommand> CompileToIntermediateCommands(AstExpression expression);
         CompiledFunctionBody Compile(AstStatement statement);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(AstStatement statement);
         CompiledFunctionBody Compile(List<AstStatement> statements);

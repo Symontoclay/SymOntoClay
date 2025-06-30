@@ -390,7 +390,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 Info("0BEBD584-A2F2-496E-800B-E04E6F5F7CED", $"taskCase = {taskCase}");
 #endif
 
-                if(!CheckTaskCase(taskCase))
+                if(!CheckTaskCase(taskCase, buildPlanIterationContext))
                 {
                     continue;
                 }
@@ -401,7 +401,7 @@ namespace SymOntoClay.Core.Internal.Htn
             //throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
         }
 
-        private bool CheckTaskCase(CompoundHtnTaskCase taskCase)
+        private bool CheckTaskCase(CompoundHtnTaskCase taskCase, BuildPlanIterationContext buildPlanIterationContext)
         {
             if(taskCase.ConditionExpression == null)
             {

@@ -2431,7 +2431,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             IAnnotatedItem annotatedItem, SyncOption syncOption, bool mayCallHost)
         {
 #if DEBUG
-            Info("03ED4F39-8D56-49C9-9E33-80B4C7674FEA", $"methodName = {methodName.ToHumanizedString()}");
+            //Info("03ED4F39-8D56-49C9-9E33-80B4C7674FEA", $"methodName = {methodName.ToHumanizedString()}");
 #endif
 
             MethodResolvingResult methodResolvingResult = null;

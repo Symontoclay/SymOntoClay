@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawMethodsList(logger, name, 0, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Info("B37E2669-5336-4FC8-A185-E6351EB7775F", $"rawList.Count = {rawList.Count}");
+            //Info("B37E2669-5336-4FC8-A185-E6351EB7775F", $"rawList.Count = {rawList.Count}");
 #endif
 
             if (!rawList.Any())
@@ -237,7 +237,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext);
 
 #if DEBUG
-            Info("7EE7E2F3-ABB2-4491-A4DD-063F791083D5", $"filteredList.Count = {filteredList.Count}");
+            //Info("7EE7E2F3-ABB2-4491-A4DD-063F791083D5", $"filteredList.Count = {filteredList.Count}");
 #endif
 
             if (!filteredList.Any())
@@ -252,7 +252,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetItem = filteredList.Single();
 
 #if DEBUG
-                Info("7B3DB491-CDA9-44FC-9065-80CA7708B501", $"targetItem?.ParametersRankMatrix?.Count = {targetItem?.ParametersRankMatrix?.Count}");
+                //Info("7B3DB491-CDA9-44FC-9065-80CA7708B501", $"targetItem?.ParametersRankMatrix?.Count = {targetItem?.ParametersRankMatrix?.Count}");
 #endif
 
                 var result = new MethodResolvingResult

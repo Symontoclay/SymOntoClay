@@ -9,6 +9,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             GotCaseMark,
+            WaitForCondition,
+            GotCondition,
             ContentStarted
         }
 
@@ -67,6 +69,40 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotCaseMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
+                            break;
+
+                        case TokenKind.Word:
+                        case TokenKind.OpenFactBracket:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForCondition;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(Text, _currToken);
+                    }
+                    break;
+
+                case State.WaitForCondition:
+                    {
+                        _context.Recovery(_currToken);
+                        var parser = new AstExpressionParser(_context, TokenKind.OpenFigureBracket);
+                        parser.Run();
+
+#if DEBUG
+                        //Info("B0F268ED-E78B-4D08-AF64-FC932A334429", $"parser.Result = {parser.Result}");
+#endif
+
+                        Result.ConditionExpression = parser.Result;
+
+                        _state = State.GotCondition;
+                    }
+                    break;
+
+                case State.GotCondition:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFigureBracket:

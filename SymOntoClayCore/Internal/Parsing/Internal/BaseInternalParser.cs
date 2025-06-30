@@ -305,7 +305,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (nextToken.TokenKind != TokenKind.CloseRoundBracket)
             {
-                throw new UnexpectedTokenException(nextToken);
+                throw new UnexpectedTokenException(Text, nextToken);
             }
 
             return parser.Result;

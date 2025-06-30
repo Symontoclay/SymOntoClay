@@ -293,7 +293,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 var kindOfCurrentTask = currentBuiltPlanItem.ProcessedTask.KindOfTask;
 
 #if DEBUG
-                //Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
+                Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
 #endif
 
                 switch(kindOfCurrentTask)
@@ -341,13 +341,13 @@ namespace SymOntoClay.Core.Internal.Htn
         private void ProcessBaseCompoundTask(BuiltPlanItem builtPlanItem, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
-            //Info("DF3B0700-5B7E-4101-BB8B-FF159ADF9080", "Begin");
+            Info("DF3B0700-5B7E-4101-BB8B-FF159ADF9080", "Begin");
 #endif
 
             var processedTask = builtPlanItem.ProcessedTask.AsBaseCompoundHtnTask;
 
 #if DEBUG
-            //Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
+            Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
 #endif
 
             if(buildPlanIterationContext.VisitedCompoundTasks.Contains(processedTask.Name))
@@ -387,7 +387,7 @@ namespace SymOntoClay.Core.Internal.Htn
             foreach (var taskCase in processedTask.Cases)
             {
 #if DEBUG
-                //Info("0BEBD584-A2F2-496E-800B-E04E6F5F7CED", $"taskCase = {taskCase}");
+                Info("0BEBD584-A2F2-496E-800B-E04E6F5F7CED", $"taskCase = {taskCase}");
 #endif
 
                 if(!CheckTaskCase(taskCase))
@@ -403,8 +403,15 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private bool CheckTaskCase(CompoundHtnTaskCase taskCase)
         {
+            if(taskCase.ConditionExpression == null)
+            {
+                return true;
+            }
+
+            throw new NotImplementedException("3466F5EC-C2B1-46CF-9F11-93284C91291B");
+
             //It will be implemented when case will have conditions.
-            return true;
+            //return true;
         }
 
         private void ProcessTaskCase(CompoundHtnTaskCase taskCase, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)

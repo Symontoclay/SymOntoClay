@@ -204,6 +204,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         #region private fields
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
+        private readonly List<ParameterRank> _emptyParametersRankMatrix = new List<ParameterRank>();
         #endregion
 
         #region private methods
@@ -223,7 +224,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawMethodsList(logger, name, 0, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            //Info("B37E2669-5336-4FC8-A185-E6351EB7775F", $"rawList.Count = {rawList.Count}");
+            Info("B37E2669-5336-4FC8-A185-E6351EB7775F", $"rawList.Count = {rawList.Count}");
 #endif
 
             if (!rawList.Any())
@@ -236,7 +237,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext);
 
 #if DEBUG
-            //Info("7EE7E2F3-ABB2-4491-A4DD-063F791083D5", $"filteredList.Count = {filteredList.Count}");
+            Info("7EE7E2F3-ABB2-4491-A4DD-063F791083D5", $"filteredList.Count = {filteredList.Count}");
 #endif
 
             if (!filteredList.Any())
@@ -250,11 +251,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var targetItem = filteredList.Single();
 
+#if DEBUG
+                Info("7B3DB491-CDA9-44FC-9065-80CA7708B501", $"targetItem?.ParametersRankMatrix?.Count = {targetItem?.ParametersRankMatrix?.Count}");
+#endif
+
                 var result = new MethodResolvingResult
                 {
                     Executable = targetItem.ResultItem,
-                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
-                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                    NeedTypeConversion = false,
+                    ParametersRankMatrix = _emptyParametersRankMatrix
                 };
 
                 logger.EndMethodResolving("C0E1449A-BD6E-4D7E-818D-2920F3DF8E54", callMethodId);
@@ -268,8 +273,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var result = new MethodResolvingResult
                 {
                     Executable = targetItem.ResultItem,
-                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
-                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                    NeedTypeConversion = false,
+                    ParametersRankMatrix = _emptyParametersRankMatrix
                 };
 
                 logger.EndMethodResolving("F09F2B55-078C-41C6-8C7E-D173A5EFFC05", callMethodId);
@@ -474,8 +479,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var result = new MethodResolvingResult
                 {
                     Executable = targetItem.ResultItem,
-                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
-                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                    NeedTypeConversion = false,
+                    ParametersRankMatrix = _emptyParametersRankMatrix
                 };
 
                 logger.EndActionResolving("62FDF518-9FB9-44E5-84FF-C3DE20FB6E92", callMethodId);
@@ -489,8 +494,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var result = new MethodResolvingResult
                 {
                     Executable = targetItem.ResultItem,
-                    NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
-                    ParametersRankMatrix = targetItem.ParametersRankMatrix
+                    NeedTypeConversion = false,
+                    ParametersRankMatrix = _emptyParametersRankMatrix
                 };
 
                 logger.EndActionResolving("41E4F23F-99A2-4D7A-BDBB-A585CE78787B", callMethodId);

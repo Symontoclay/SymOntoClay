@@ -43,21 +43,6 @@ namespace SymOntoClay.Core.Internal.Compiling
         private readonly IMainStorageContext _context;
 
         /// <inheritdoc/>
-        public CompiledFunctionBody Compile(AstExpression expression)
-        {
-            return ConvertToCompiledFunctionBody(CompileToIntermediateCommands(expression));
-        }
-
-        /// <inheritdoc/>
-        public List<IntermediateScriptCommand> CompileToIntermediateCommands(AstExpression expression)
-        {
-            var node = new ExpressionNode(_context, null);
-            node.Run(expression);
-
-            return node.Result;
-        }
-
-        /// <inheritdoc/>
         public CompiledFunctionBody Compile(AstStatement statement)
         {
             return Compile(new List<AstStatement> { statement}, null, KindOfCompilation.Usual);
@@ -101,6 +86,15 @@ namespace SymOntoClay.Core.Internal.Compiling
         {
             var node = new LambdaNode(_context);
             node.Run(statement);
+
+            return ConvertToCompiledFunctionBody(node.Result);
+        }
+
+        /// <inheritdoc/>
+        public CompiledFunctionBody CompileLambda(AstExpression expression)
+        {
+            var node = new LambdaNode(_context);
+            node.Run(expression);
 
             return ConvertToCompiledFunctionBody(node.Result);
         }

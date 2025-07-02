@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 
@@ -19,8 +20,17 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             var astExpressionStatement = statement as AstExpressionStatement;
 
+            Run(astExpressionStatement.Expression);
+
+#if DEBUG
+            //DbgPrintCommands();
+#endif
+        }
+
+        public void Run(AstExpression expression)
+        {
             var node = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
-            node.Run(astExpressionStatement.Expression);
+            node.Run(expression);
 
             AddCommands(node.Result);
 
@@ -28,10 +38,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 OperationCode = OperationCode.ReturnVal
             });
-
-#if DEBUG
-            //DbgPrintCommands();
-#endif
         }
     }
 }

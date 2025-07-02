@@ -6705,12 +6705,6 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.FalseValueLiteral">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileToIntermediateCommands(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
             <inheritdoc/>
         </member>
@@ -6730,6 +6724,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileLambda(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileLambda(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Field})">

@@ -34,8 +34,6 @@ namespace SymOntoClay.Core.Internal.Compiling
 {
     public interface ICompiler
     {
-        CompiledFunctionBody Compile(AstExpression expression);
-        List<IntermediateScriptCommand> CompileToIntermediateCommands(AstExpression expression);
         CompiledFunctionBody Compile(AstStatement statement);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(AstStatement statement);
         CompiledFunctionBody Compile(List<AstStatement> statements);
@@ -43,6 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         CompiledFunctionBody CompileLambda(AstStatement statement);
+        CompiledFunctionBody CompileLambda(AstExpression expression);
         CompiledFunctionBody Compile(List<Field> fields);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Field> fields);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Property> properties);

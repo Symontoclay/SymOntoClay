@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
                         Result.ConditionExpression = conditionExpr;
-                        Result.ConditionCompiledFunctionBody = _context.Compiler.Compile(conditionExpr);
+                        Result.ConditionCompiledFunctionBody = _context.Compiler.CompileLambda(conditionExpr);
 
                         _state = State.GotCondition;
                     }

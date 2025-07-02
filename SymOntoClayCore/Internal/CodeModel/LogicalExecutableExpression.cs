@@ -1,10 +1,28 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalExecutableExpression: BaseExecutableExpression
     {
+        private static List<StrongIdentifierValue> _builtInSuperTypes = new List<StrongIdentifierValue> 
+        { 
+            NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName),
+            NameHelper.CreateName(StandardNamesConstants.BooleanTypeName) 
+        };
+
+        private LogicalExecutableExpression()
+            : base()
+        {
+        }
+
+        public LogicalExecutableExpression(AstExpression expression)
+            : base(expression, _builtInSuperTypes)
+        {
+        }
+
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {
@@ -27,7 +45,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public LogicalExecutableExpression Clone(Dictionary<object, object> context)
         {
-            throw new NotImplementedException("4AFEDB4F-4925-4FA9-9775-EA60779BD072");
+            if (context.ContainsKey(this))
+            {
+                return (LogicalExecutableExpression)context[this];
+            }
+
+            var result = new LogicalExecutableExpression();
+            context[this] = result;
+
+            result.AppendExecutableExpression(this, context);
+
+            return result;
         }
     }
 }

@@ -1,17 +1,35 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseExecutableExpression : CodeItem, IExecutable, IReturnable
     {
+        protected BaseExecutableExpression()
+        {
+        }
+
+        protected BaseExecutableExpression(AstExpression expression)
+        {
+            Expression = expression;
+        }
+
+        protected BaseExecutableExpression(AstExpression expression, List<StrongIdentifierValue> typesList)
+        {
+            Expression = expression;
+            TypesList = typesList;
+        }
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.ExecutableExpression;
 
@@ -31,10 +49,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IList<IFunctionArgument> IExecutable.Arguments => _iArgumentsList;
         private IList<IFunctionArgument> _iArgumentsList = new List<IFunctionArgument>();
 
-        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<StrongIdentifierValue> TypesList { get; private set; } = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>
         IList<StrongIdentifierValue> IReturnable.TypesList => TypesList;
+
+        public AstExpression Expression { get; private set; }
 
         /// <inheritdoc/>
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
@@ -86,58 +106,60 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract BaseExecutableExpression CloneExecutableExpression(Dictionary<object, object> context);
 
+        protected void AppendExecutableExpression(BaseExecutableExpression source, Dictionary<object, object> context)
+        {
+            TypesList = source.TypesList?.Select(p => p.Clone(context)).ToList();
+
+            Expression = source.Expression?.CloneAstExpression(context);
+
+            CompiledFunctionBody = source.CompiledFunctionBody?.Clone(context);
+
+            AppendCodeItem(this, context);
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
-            throw new NotImplementedException("3995AE12-302D-4983-98CF-82C160C6F9D8");
-
-            /*var spaces = DisplayHelper.Spaces(n);
+            var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(Arguments), Arguments);
             sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
-            sb.PrintObjListProp(n, nameof(Statements), Statements);
+            sb.PrintObjProp(n, nameof(Expression), Expression);
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToString(n));
-            return sb.ToString();*/
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         protected override string PropertiesToShortString(uint n)
         {
-            throw new NotImplementedException("D2F78F85-A5D2-4F5E-BDF6-E68E5D892CA5");
-
-            /*var spaces = DisplayHelper.Spaces(n);
+            var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(Arguments), Arguments);
             sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
-            sb.PrintShortObjListProp(n, nameof(Statements), Statements);
+            sb.PrintShortObjProp(n, nameof(Expression), Expression);
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToShortString(n));
-            return sb.ToString();*/
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         protected override string PropertiesToBriefString(uint n)
         {
-            throw new NotImplementedException("6D0D291C-40E7-4A6E-90B4-374007A6C152");
-
-            /*var spaces = DisplayHelper.Spaces(n);
+            var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(Arguments), Arguments);
             sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 
-            sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
+            sb.PrintBriefObjProp(n, nameof(Expression), Expression);
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToBriefString(n));
-            return sb.ToString();*/
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

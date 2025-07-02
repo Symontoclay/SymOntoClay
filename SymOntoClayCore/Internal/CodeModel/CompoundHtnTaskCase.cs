@@ -54,9 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             
             result.Items = Items?.Select(p => p.Clone(context))?.ToList();
 
-            result.ConditionExpression = ConditionExpression?.CloneAstExpression(context);
-
-            result.ConditionCompiledFunctionBody = ConditionCompiledFunctionBody?.Clone(context);
+            result.Condition = Condition?.Clone(context);
 
             result.AppendCodeItem(this, context);
 
@@ -66,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override ulong GetLongHashCode(CheckDirtyOptions options)
         {
-            ConditionExpression.CheckDirty(options);
+            Condition.CheckDirty(options);
 
             var result = base.CalculateLongHashCode(options);
 
@@ -103,8 +101,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjListProp(n, nameof(Items), Items);
 
-            sb.PrintObjProp(n, nameof(ConditionExpression), ConditionExpression);
-            sb.PrintObjProp(n, nameof(ConditionCompiledFunctionBody), ConditionCompiledFunctionBody);
+            sb.PrintObjProp(n, nameof(Condition), Condition);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -118,8 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjListProp(n, nameof(Items), Items);
 
-            sb.PrintShortObjProp(n, nameof(ConditionExpression), ConditionExpression);
-            sb.PrintShortObjProp(n, nameof(ConditionCompiledFunctionBody), ConditionCompiledFunctionBody);
+            sb.PrintShortObjProp(n, nameof(Condition), Condition);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -133,8 +129,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(Items), Items);
 
-            sb.PrintBriefObjProp(n, nameof(ConditionExpression), ConditionExpression);
-            sb.PrintBriefObjProp(n, nameof(ConditionCompiledFunctionBody), ConditionCompiledFunctionBody);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -152,12 +147,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("case");
+            sb.Append("case");
             
-            if(ConditionExpression != null)
+            if(Condition != null)
             {
-                throw new NotImplementedException("B8250B83-587D-46F9-A249-F540FC468C95");
+                sb.Append($" {Condition.ToHumanizedString(options)}");
             }
+
+            sb.AppendLine();
 
             sb.AppendLine("{");
 

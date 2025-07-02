@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
 
@@ -18,8 +19,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
         }
 
-        public LogicalExecutableExpression(AstExpression expression)
-            : base(expression, _builtInSuperTypes)
+        public LogicalExecutableExpression(AstExpression expression, CompiledFunctionBody compiledFunctionBody)
+            : base(expression, _builtInSuperTypes, compiledFunctionBody)
         {
         }
 

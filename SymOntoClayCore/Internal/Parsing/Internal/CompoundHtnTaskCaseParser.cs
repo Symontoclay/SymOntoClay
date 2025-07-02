@@ -98,8 +98,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         //Info("B0F268ED-E78B-4D08-AF64-FC932A334429", $"conditionExpr = {conditionExpr}");
 #endif
 
-                        Result.ConditionExpression = conditionExpr;
-                        Result.ConditionCompiledFunctionBody = _context.Compiler.CompileLambda(conditionExpr);
+                        var compiledFunctionBody = _context.Compiler.CompileLambda(conditionExpr);
+
+                        Result.Condition = new LogicalExecutableExpression(conditionExpr, compiledFunctionBody);
 
                         _state = State.GotCondition;
                     }

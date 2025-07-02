@@ -19,14 +19,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
         }
 
-        protected BaseExecutableExpression(AstExpression expression)
+        protected BaseExecutableExpression(AstExpression expression, CompiledFunctionBody compiledFunctionBody)
         {
             Expression = expression;
+            CompiledFunctionBody = compiledFunctionBody;
         }
 
-        protected BaseExecutableExpression(AstExpression expression, List<StrongIdentifierValue> typesList)
+        protected BaseExecutableExpression(AstExpression expression, List<StrongIdentifierValue> typesList, CompiledFunctionBody compiledFunctionBody)
         {
             Expression = expression;
+            CompiledFunctionBody = compiledFunctionBody;
             TypesList = typesList;
         }
 
@@ -57,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public AstExpression Expression { get; private set; }
 
         /// <inheritdoc/>
-        public CompiledFunctionBody CompiledFunctionBody { get; set; }
+        public CompiledFunctionBody CompiledFunctionBody { get; private set; }
 
         /// <inheritdoc/>
         public bool IsSystemDefined => false;

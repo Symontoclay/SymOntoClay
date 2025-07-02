@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
 using System;
@@ -403,10 +404,16 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private bool CheckTaskCase(CompoundHtnTaskCase taskCase, BuildPlanIterationContext buildPlanIterationContext)
         {
-            if(taskCase.ConditionExpression == null)
+            if(taskCase.Condition == null)
             {
                 return true;
             }
+
+            var value = _context.CodeExecutor.CallExecutableSync(Logger, taskCase.Condition, null, _context.InstancesStorage.MainEntity.LocalCodeExecutionContext, CallMode.Default);
+
+#if DEBUG
+            Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
+#endif
 
             throw new NotImplementedException("3466F5EC-C2B1-46CF-9F11-93284C91291B");
 

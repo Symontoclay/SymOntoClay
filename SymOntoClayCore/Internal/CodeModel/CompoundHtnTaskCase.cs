@@ -26,10 +26,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         
         public List<CompoundHtnTaskCaseItem> Items { get; set; } = new List<CompoundHtnTaskCaseItem>();
 
-        public AstExpression ConditionExpression { get; set; }
-
-        public CompiledFunctionBody ConditionCompiledFunctionBody { get; set; }
-
+        public LogicalExecutableExpression Condition { get; set; }
+        
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {

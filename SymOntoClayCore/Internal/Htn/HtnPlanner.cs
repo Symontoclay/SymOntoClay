@@ -121,6 +121,13 @@ namespace SymOntoClay.Core.Internal.Htn
         {
             if (completedIterations.Count > 1)
             {
+#if DEBUG
+                foreach(var tmpItem in completedIterations)
+                {
+                    Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"tmpItem = {tmpItem.ToDbgString()}");
+                }
+#endif
+
                 throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
             }
 
@@ -385,6 +392,8 @@ namespace SymOntoClay.Core.Internal.Htn
                 //throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
             //}
 
+            var hasApprovedConditionalCase = false;
+
             foreach (var taskCase in processedTask.Cases)
             {
 #if DEBUG
@@ -393,7 +402,23 @@ namespace SymOntoClay.Core.Internal.Htn
 
                 if(!CheckTaskCase(taskCase, buildPlanIterationContext))
                 {
+#if DEBUG
+                    Info("5487F697-56DD-4B80-AD8D-D1D3167A80C1", "!CheckTaskCase");
+#endif
+
                     continue;
+                }
+
+                if(taskCase.Condition == null)
+                {
+                    if(hasApprovedConditionalCase)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    hasApprovedConditionalCase = true;
                 }
 
                 ProcessTaskCase(taskCase, processedTask.KindOfTask, tasksPlannerGlobalContext, buildPlanIterationContext);
@@ -415,10 +440,7 @@ namespace SymOntoClay.Core.Internal.Htn
             Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
 #endif
 
-            throw new NotImplementedException("3466F5EC-C2B1-46CF-9F11-93284C91291B");
-
-            //It will be implemented when case will have conditions.
-            //return true;
+            return LogicalValue.TrueValue.Equals(value);
         }
 
         private void ProcessTaskCase(CompoundHtnTaskCase taskCase, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)

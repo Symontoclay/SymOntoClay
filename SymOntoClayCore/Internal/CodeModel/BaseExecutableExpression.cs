@@ -171,96 +171,37 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return $"{spaces}'{ToHumanizedString()}'";
         }
 
+        private string NToHumanizedString()
+        {
+            var sb = new StringBuilder("expr:");
+
+            if(Expression != null)
+            {
+                sb.Append($" {Expression.ToHumanizedLabel()}");
+            }
+
+            return sb.ToString();
+        }
+
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("68F73E80-974E-45DA-B9D4-B07BD6A0CAC6");
-
-            /*var sb = new StringBuilder();
-
-            sb.AppendLine(ToHumanizedLabel(options));
-
-            sb.AppendLine("{");
-
-            if (!Statements.IsNullOrEmpty())
-            {
-                foreach (var statement in Statements)
-                {
-                    sb.AppendLine(statement.ToHumanizedString(options));
-                }
-            }
-
-            sb.AppendLine("}");
-
-            return sb.ToString();*/
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("4D7FA87C-C331-4692-9F27-B7785E42F13E");
-
-            /*var sb = new StringBuilder();
-
-            if (options?.EnableMark ?? false)
-            {
-                sb.Append("fun");
-            }
-
-            if (Name != null && !IsAnonymous)
-            {
-                sb.Append($" {Name.NameValue}");
-            }
-
-            if (!Arguments.IsNullOrEmpty() || ((options?.EnableParamsIfEmpty ?? false) && Arguments.IsNullOrEmpty()))
-            {
-                sb.Append("(");
-
-                if (!Arguments.IsNullOrEmpty())
-                {
-                    var argumentsList = new List<string>();
-
-                    foreach (var argument in Arguments)
-                    {
-                        argumentsList.Add(argument.ToHumanizedString(options));
-                    }
-
-                    sb.Append(string.Join(", ", argumentsList));
-                }
-
-                sb.Append(")");
-            }
-
-            sb.Append($": {TypesList.TypesListToHumanizedString()}");
-
-            return sb.ToString();*/
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("FA45E119-B805-4113-A7EA-723C613512D8");
-
-            /*var result = new MonitoredHumanizedLabel()
+            return new MonitoredHumanizedLabel()
             {
-                KindOfCodeItemDescriptor = "fun"
+                Label = NToHumanizedString()
             };
-
-            result.Label = $"fun {Name.NameValue}";
-
-            if (!Arguments.IsNullOrEmpty())
-            {
-                var signatures = new List<MonitoredHumanizedMethodArgument>();
-
-                foreach (var argument in Arguments)
-                {
-                    signatures.Add(argument.ToMonitoredHumanizedMethodArgument(logger));
-                }
-
-                result.Signatures = signatures;
-            }
-
-            return result;*/
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
+using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -56,6 +58,32 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 default:
                     throw new UnexpectedTokenException(Text, _currToken);
+            }
+        }
+
+        protected virtual void Validate()
+        {
+            ValidateCases();
+        }
+
+        private void ValidateCases()
+        {
+            var cases = Result.Cases;
+
+            if(cases.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var defaultCasesCount = cases.Count(p => p.Condition == null);
+
+#if DEBUG
+            Info("26DB4C8B-9BE4-415D-BE1F-5C6CE0252DB0", $"defaultCasesCount = {defaultCasesCount}");
+#endif
+
+            if(defaultCasesCount > 1)
+            {
+                throw new NotImplementedException();
             }
         }
     }

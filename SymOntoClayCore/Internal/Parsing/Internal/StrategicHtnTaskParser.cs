@@ -33,6 +33,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
+            Validate();
+
             RemoveCurrentCodeEntity();
         }
 

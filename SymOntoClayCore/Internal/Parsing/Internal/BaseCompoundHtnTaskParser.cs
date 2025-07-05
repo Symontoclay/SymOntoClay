@@ -75,16 +75,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 return;
             }
 
-            var defaultCasesCount = cases.Count(p => p.Condition == null);
+            var defaultCases = cases.Where(p => p.Condition == null);
+
+            var defaultCasesCount = defaultCases.Count();
 
 #if DEBUG
-            Info("26DB4C8B-9BE4-415D-BE1F-5C6CE0252DB0", $"defaultCasesCount = {defaultCasesCount}");
+            //Info("26DB4C8B-9BE4-415D-BE1F-5C6CE0252DB0", $"defaultCasesCount = {defaultCasesCount}");
 #endif
 
             if(defaultCasesCount > 1)
             {
-                throw new NotImplementedException();
+                throw new DuplicatedCompoundHtnTaskCaseException(Result.Name.ToHumanizedLabel(), defaultCases.First().ToHumanizedLabel(), defaultCasesCount);
             }
+
+            Result.Cases = cases.OrderBy(p => p.Condition == null).ToList();
         }
     }
 }

@@ -1,9 +1,14 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Common;
+using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
 using SymOntoClay.Core.Internal.Storage.ConstructorsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging;
+using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.Core.Internal.Storage.MetadataStoraging;
 using SymOntoClay.Core.Internal.Storage.MethodsStoraging;
@@ -17,6 +22,7 @@ using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
@@ -25,13 +31,12 @@ namespace SymOntoClay.Core.Internal.Htn
         private BuildPlanIterationStorage(IMonitorLogger logger)
             : base(logger)
         {
-            _logger = logger;
         }
 
         public BuildPlanIterationStorage(IMonitorLogger logger, IMainStorageContext mainStorageContext, IStorage parentStorage)
             : base(logger)
         {
-            _logger = logger;
+            _parentStorage = parentStorage;
 
             _logicalStorage = new EmptyLogicalStorage(this, logger);
             _inheritanceStorage = new EmptyInheritanceStorage(this, logger);
@@ -52,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Htn
             _propertyStorage = new BuildPlanIterationPropertyStorage(this, logger);
         }
 
-        private IMonitorLogger _logger;
+        private readonly IStorage _parentStorage;
 
         private EmptyLogicalStorage _logicalStorage;
         private EmptyInheritanceStorage _inheritanceStorage;
@@ -139,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Htn
         public IPropertyStorage PropertyStorage => _propertyStorage;
 
         /// <inheritdoc/>
-        public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => throw new NotImplementedException("4A2B1219-DFD2-4E7B-AC69-AB3A1882B6EA"); set => throw new NotImplementedException("85116340-8597-4C29-95AE-682646D5B5BF"); }
+        public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => _parentStorage.DefaultSettingsOfCodeEntity; set => throw new NotImplementedException("85116340-8597-4C29-95AE-682646D5B5BF"); }
 
         /// <inheritdoc/>
         public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
@@ -151,6 +156,7 @@ namespace SymOntoClay.Core.Internal.Htn
             return Clone(context);
         }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public BuildPlanIterationStorage Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
@@ -158,10 +164,184 @@ namespace SymOntoClay.Core.Internal.Htn
                 return (BuildPlanIterationStorage)context[this];
             }
 
-            var result = new BuildPlanIterationStorage(_logger);
+            var result = new BuildPlanIterationStorage(Logger);
             context[this] = result;
 
+            result._propertyStorage = _propertyStorage.Clone(context);
+
             return result;
+        }
+
+        /// <inheritdoc/>
+        public void AddParentStorage(IMonitorLogger logger, IStorage storage)
+        {
+            throw new NotImplementedException("60D8BC4D-7704-4029-849D-AB8A51FFC903");
+        }
+
+        /// <inheritdoc/>
+        public void RemoveParentStorage(IMonitorLogger logger, IStorage storage)
+        {
+            throw new NotImplementedException("B939F0D9-29D2-4CEC-8504-C6948D79B326");
+        }
+
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
+        {
+            if (usedStorages.Contains(this))
+            {
+                return;
+            }
+
+            usedStorages.Add(this);
+
+            level++;
+
+            var item = new StorageUsingOptions()
+            {
+                Priority = level,
+                Storage = this,
+                UseFacts = true,
+                UseProductions = true,
+                UseInheritanceFacts = true
+            };
+
+            result.Add(item);
+
+            _parentStorage.CollectChainOfStorages(logger, result, usedStorages, level, options);
+        }
+
+        /// <inheritdoc/>
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result)
+        {
+            CollectChainOfStorages(logger, result);
+        }
+
+        private void CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result)
+        {
+            if (result.Contains(this))
+            {
+                return;
+            }
+
+            result.Add(this);
+
+            _parentStorage.CollectChainOfStorages(logger, result);
+        }
+
+        /// <inheritdoc/>
+        public IList<IStorage> GetStorages(IMonitorLogger logger)
+        {
+            var result = new List<IStorage>();
+
+            CollectChainOfStorages(logger, result);
+
+            return result;
+        }
+
+        void IStorage.AddOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+        }
+
+        void IStorage.RemoveOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+        }
+
+#if DEBUG
+        /// <inheritdoc/>
+        public void DbgPrintFactsAndRules(IMonitorLogger logger)
+        {
+        }
+#endif
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _logicalStorage.Dispose();
+            _inheritanceStorage.Dispose();
+            _triggersStorage.Dispose();
+            _varStorage.Dispose();
+            _statesStorage.Dispose();
+            _relationsStorage.Dispose();
+            _methodsStorage.Dispose();
+            _actionsStorage.Dispose();
+            _synonymsStorage.Dispose();
+            _operatorsStorage.Dispose();
+            _channelsStorage.Dispose();
+            _metadataStorage.Dispose();
+            _fuzzyLogicStorage.Dispose();
+
+            base.OnDisposed();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + DisplayHelper.IndentationStep;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString()
+        {
+            return ToShortString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString(uint n)
+        {
+            return this.GetDefaultToShortStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        public string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + DisplayHelper.IndentationStep;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString()
+        {
+            return ToBriefString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString(uint n)
+        {
+            return this.GetDefaultToBriefStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        public string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + DisplayHelper.IndentationStep;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
+            return sb.ToString();
         }
     }
 }

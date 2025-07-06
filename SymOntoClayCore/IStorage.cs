@@ -58,7 +58,7 @@ namespace SymOntoClay.Core
         IIdleActionItemsStorage IdleActionItemsStorage { get; }
         ITasksStorage TasksStorage { get; }
         IPropertyStorage PropertyStorage { get; }
-
+        
         void AddParentStorage(IMonitorLogger logger, IStorage storage);
         void RemoveParentStorage(IMonitorLogger logger, IStorage storage);
         void CollectChainOfStorages(IMonitorLogger logger, IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options);

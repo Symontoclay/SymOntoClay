@@ -346,7 +346,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
             usedStorages.Add(this);
 
-
             level++;
 
             var item = new StorageUsingOptions()

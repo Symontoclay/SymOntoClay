@@ -79,17 +79,37 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
         }
 
-        /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
+        private static List<LogicalQueryNode> _getAllRelationsEmptyList = new List<LogicalQueryNode>();
 
         /// <inheritdoc/>
-        public IList<RuleInstance> GetAllOriginFacts(IMonitorLogger logger);
+        public IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        {
+            return _getAllRelationsEmptyList;
+        }
+
+        private static List<RuleInstance> _getAllOriginFactsEmptyList = new List<RuleInstance>();
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
+        public IList<RuleInstance> GetAllOriginFacts(IMonitorLogger logger)
+        {
+            return _getAllOriginFactsEmptyList;
+        }
+
+        private static List<BaseRulePart> _getIndexedRulePartOfFactsByKeyOfRelationEmptyList = new List<BaseRulePart>();
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        {
+            return _getIndexedRulePartOfFactsByKeyOfRelationEmptyList;
+        }
+
+        private static List<BaseRulePart> _getIndexedRulePartWithOneRelationWithVarsByKeyOfRelationEmptyList = new List<BaseRulePart>();
+
+        /// <inheritdoc/>
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        {
+            return _getIndexedRulePartWithOneRelationWithVarsByKeyOfRelationEmptyList;
+        }
 
         private static List<LogicalQueryNode> _getLogicalQueryNodesEmptyList = new List<LogicalQueryNode>();
 

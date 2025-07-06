@@ -30,10 +30,18 @@ namespace SymOntoClay.Core.Internal.Htn
             throw new NotImplementedException("D552B92B-998B-4FFB-AB79-0D3A725C3228");
         }
 
+        private static List<WeightedInheritanceResultItem<PropertyInstance>> _getPropertyDirectlyEmptyList = new List<WeightedInheritanceResultItem<PropertyInstance>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<PropertyInstance>> GetPropertyDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            throw new NotImplementedException("262837C7-151F-44DF-BC7A-9B547CC4EAF5");
+#if DEBUG
+            Info("54446AC9-2652-4C32-A3D8-AC856B1A74E0", $"name = {name}");
+#endif
+
+            //throw new NotImplementedException("262837C7-151F-44DF-BC7A-9B547CC4EAF5");
+
+            return _getPropertyDirectlyEmptyList;//tmp
         }
 
         /// <inheritdoc/>

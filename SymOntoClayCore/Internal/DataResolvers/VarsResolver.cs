@@ -211,7 +211,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(logger, name, weightedInheritanceItems);
 
-                if (!itemsList.Any())
+                if (itemsList.Count == 0)
                 {
                     continue;
                 }

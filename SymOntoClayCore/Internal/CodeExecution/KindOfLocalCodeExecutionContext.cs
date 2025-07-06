@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         Usual,
         AddingFact,
-        PreConstructor
+        PreConstructor,
+        HtnBuildPlanIteration
     }
 }

@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Storage
             : base(logger)
         {
             _kind = kind;
-
+            
             _logicalStorage = new ConsolidatedPublicFactsLogicalStorage(this, logger, kind, settings);
             _inheritanceStorage =  new ConsolidatedPublicFactsInheritanceStorage(this, logger, kind);
             _triggersStorage = new EmptyTriggersStorage(this, logger);

@@ -52,6 +52,7 @@ namespace SymOntoClay.Core
         VisiblePublicFacts,
         GlobalVisible,
         Categories,
-        BackpackStorage
+        BackpackStorage,
+        HtnBuildPlanIterationStorage
     }
 }

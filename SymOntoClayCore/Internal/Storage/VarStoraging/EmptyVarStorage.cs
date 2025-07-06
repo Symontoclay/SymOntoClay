@@ -24,11 +24,8 @@ using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
@@ -55,10 +52,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         {
         }
 
+        private static List<WeightedInheritanceResultItem<VarInstance>> _getVarDirectlyEmptyList = new List<WeightedInheritanceResultItem<VarInstance>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<VarInstance>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            return new List<WeightedInheritanceResultItem<VarInstance>>();
+            return _getVarDirectlyEmptyList;
         }
 
         /// <inheritdoc/>

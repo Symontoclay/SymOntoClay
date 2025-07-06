@@ -7638,6 +7638,82 @@
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationContext.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Parent">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.UseParentInResolving">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.IsIsolated">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Holder">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Instance">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Owner">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.OwnerStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.KindOfAddFactResult">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.MutablePart">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.AddedRuleInstance">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.DbgPrintContextChain(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.Clone">
             <summary>
 			Clones the instance and returns cloned instance.

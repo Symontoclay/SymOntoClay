@@ -13,6 +13,7 @@ namespace SymOntoClay.Core.Internal.Htn
         public int ProcessedIndex { get; set; } = -1;
         public List<BuiltPlanItem> TasksToProcess { get; set; } = new List<BuiltPlanItem>();
         public List<StrongIdentifierValue> VisitedCompoundTasks { get; set; } = new List<StrongIdentifierValue>();
+        public BuildPlanIterationLocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public BuildPlanIterationContext Clone()
@@ -35,6 +36,7 @@ namespace SymOntoClay.Core.Internal.Htn
             result.ProcessedIndex = ProcessedIndex;
             result.TasksToProcess = TasksToProcess.Select(p => p.Clone(context)).ToList();
             result.VisitedCompoundTasks = VisitedCompoundTasks.Select(p => p.Clone(context)).ToList();
+            result.LocalCodeExecutionContext = LocalCodeExecutionContext.Clone(context);
 
             return result;
         }
@@ -60,6 +62,7 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
+            sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
 
             return sb.ToString();
         }
@@ -85,6 +88,7 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintShortObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
+            sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
 
             return sb.ToString();
         }
@@ -110,6 +114,7 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintBriefObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
+            sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
 
             return sb.ToString();
         }

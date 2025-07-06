@@ -53,6 +53,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var tasksPlannerGlobalContext = new HtnPlannerGlobalContext();
 
             var buildPlanIterationContext = new BuildPlanIterationContext();
+            buildPlanIterationContext.LocalCodeExecutionContext = new BuildPlanIterationLocalCodeExecutionContext(_context, _context.InstancesStorage.MainEntity.LocalCodeExecutionContext);
             buildPlanIterationContext.TasksToProcess.Add(new BuiltPlanItem
             {
                 ProcessedTask = rootTask
@@ -434,7 +435,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 return true;
             }
 
-            var value = _context.CodeExecutor.CallExecutableSync(Logger, taskCase.Condition, null, _context.InstancesStorage.MainEntity.LocalCodeExecutionContext, CallMode.Default);
+            var value = _context.CodeExecutor.CallExecutableSync(Logger, taskCase.Condition, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
 
 #if DEBUG
             Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");

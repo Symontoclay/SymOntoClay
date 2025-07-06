@@ -39,25 +39,25 @@ namespace SymOntoClay.Core.Internal.Htn
         /// <inheritdoc/>
         public void AddOnChangedHandler(IOnChangedPropertyStorageHandler handler)
         {
-            throw new NotImplementedException("5AADCE05-A0A2-4D43-8D43-00BC82CDB5B2");
+            //throw new NotImplementedException("5AADCE05-A0A2-4D43-8D43-00BC82CDB5B2");
         }
 
         /// <inheritdoc/>
         public void RemoveOnChangedHandler(IOnChangedPropertyStorageHandler handler)
         {
-            throw new NotImplementedException("BE964648-5934-4972-A603-9C5EB1B87F5F");
+            //throw new NotImplementedException("BE964648-5934-4972-A603-9C5EB1B87F5F");
         }
 
         /// <inheritdoc/>
         public void AddOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler)
         {
-            throw new NotImplementedException("7E130BFF-FE19-4153-B4E2-15E878D844A8");
+            //throw new NotImplementedException("7E130BFF-FE19-4153-B4E2-15E878D844A8");
         }
 
         /// <inheritdoc/>
         public void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler)
         {
-            throw new NotImplementedException("BE729409-D67A-426D-B39A-C3EA5EDBF2A4");
+            //throw new NotImplementedException("BE729409-D67A-426D-B39A-C3EA5EDBF2A4");
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />

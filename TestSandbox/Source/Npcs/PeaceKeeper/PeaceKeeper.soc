@@ -21,6 +21,7 @@
     }
 
     prop SomeAutoProp: number = 16;
+    prop OtherAutoProp: number = 17;
 }
 
 compound task SomeCompoundTask
@@ -30,7 +31,7 @@ compound task SomeCompoundTask
        SomePrimitiveTask;
    }
 
-   case SomeAutoProp > 16
+   case OtherAutoProp > 16
    {
        SomePrimitiveTask2;
    }

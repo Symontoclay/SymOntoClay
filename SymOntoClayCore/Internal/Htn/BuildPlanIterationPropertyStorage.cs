@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Htn
         public IList<WeightedInheritanceResultItem<PropertyInstance>> GetPropertyDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            Info("54446AC9-2652-4C32-A3D8-AC856B1A74E0", $"name = {name}");
+            //Info("54446AC9-2652-4C32-A3D8-AC856B1A74E0", $"name = {name}");
 #endif
 
             //throw new NotImplementedException("262837C7-151F-44DF-BC7A-9B547CC4EAF5");

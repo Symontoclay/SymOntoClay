@@ -302,7 +302,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 var kindOfCurrentTask = currentBuiltPlanItem.ProcessedTask.KindOfTask;
 
 #if DEBUG
-                Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
+                //Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
 #endif
 
                 switch(kindOfCurrentTask)
@@ -350,13 +350,13 @@ namespace SymOntoClay.Core.Internal.Htn
         private void ProcessBaseCompoundTask(BuiltPlanItem builtPlanItem, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
-            Info("DF3B0700-5B7E-4101-BB8B-FF159ADF9080", "Begin");
+            //Info("DF3B0700-5B7E-4101-BB8B-FF159ADF9080", "Begin");
 #endif
 
             var processedTask = builtPlanItem.ProcessedTask.AsBaseCompoundHtnTask;
 
 #if DEBUG
-            Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
+            //Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
 #endif
 
             if(buildPlanIterationContext.VisitedCompoundTasks.Contains(processedTask.Name))
@@ -398,13 +398,13 @@ namespace SymOntoClay.Core.Internal.Htn
             foreach (var taskCase in processedTask.Cases)
             {
 #if DEBUG
-                Info("0BEBD584-A2F2-496E-800B-E04E6F5F7CED", $"taskCase = {taskCase}");
+                //Info("0BEBD584-A2F2-496E-800B-E04E6F5F7CED", $"taskCase = {taskCase}");
 #endif
 
                 if(!CheckTaskCase(taskCase, buildPlanIterationContext))
                 {
 #if DEBUG
-                    Info("5487F697-56DD-4B80-AD8D-D1D3167A80C1", "!CheckTaskCase");
+                    //Info("5487F697-56DD-4B80-AD8D-D1D3167A80C1", "!CheckTaskCase");
 #endif
 
                     continue;
@@ -438,7 +438,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var value = _context.CodeExecutor.CallExecutableSync(Logger, taskCase.Condition, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
 
 #if DEBUG
-            Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
+            //Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
 #endif
 
             return LogicalValue.TrueValue.Equals(value);

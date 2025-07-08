@@ -119,6 +119,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Primitive,
         Strategic,
         Tactical,
-        Global
+        Global,
+        Preconditions
     }
 }

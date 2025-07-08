@@ -9800,6 +9800,12 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimitiveHtnTaskParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimitiveHtnTaskPreconditionsParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimitiveHtnTaskPreconditionsParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PropertyParser.OnEnter">
             <inheritdoc/>
         </member>

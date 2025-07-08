@@ -135,6 +135,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     }
                                     break;
 
+                                case KeyWordTokenKind.Preconditions:
+                                    {
+                                        _context.Recovery(_currToken);
+
+                                        var parser = new PrimitiveHtnTaskPreconditionsParser(_context);
+                                        parser.Run();
+
+#if DEBUG
+                                        Info("5D09A258-38A9-466C-81B9-9B42A7A79ECA", $"parser.Result = {parser.Result}");
+#endif
+
+                                        throw new NotImplementedException("D5619F08-2285-4B9D-BE99-7DF836D98A82");
+                                    }
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(Text, _currToken);
                             }

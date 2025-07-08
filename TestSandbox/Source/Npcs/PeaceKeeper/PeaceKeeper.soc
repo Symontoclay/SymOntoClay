@@ -22,6 +22,7 @@
 
     prop SomeAutoProp: number = 16;
     prop OtherAutoProp: number = 17;
+    prop ThirdAutoProp: number = 12;
 }
 
 compound task SomeCompoundTask
@@ -44,6 +45,7 @@ compound task SomeCompoundTask
 
 primitive task SomePrimitiveTask
 {
+    preconditions ThirdAutoProp is 12;
     operator SomeOperator();
 }
 

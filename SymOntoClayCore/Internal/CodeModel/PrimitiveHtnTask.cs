@@ -9,6 +9,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class PrimitiveHtnTask: BasePrimitiveHtnTask
     {
+        public LogicalExecutableExpression Precondition { get; set; }
+
         public PrimitiveHtnTaskOperator Operator { get; set; }
 
         /// <inheritdoc/>
@@ -56,7 +58,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new PrimitiveHtnTask();
             context[this] = result;
 
-            result.Operator = Operator?.Clone(context);
+            result.Precondition = Precondition?.Clone(context);
+            result.Operator = Operator?.Clone(context);            
 
             result.AppendCodeItem(this, context);
 
@@ -92,6 +95,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            Precondition.CheckDirty(options);
+
             var result = base.CalculateLongHashCode(options);
 
             //if (!Cases.IsNullOrEmpty())
@@ -127,6 +132,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(Precondition), Precondition);
             sb.PrintObjProp(n, nameof(Operator), Operator);
 
             //sb.PrintObjListProp(n, nameof(Cases), Cases);
@@ -141,6 +147,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintShortObjProp(n, nameof(Precondition), Precondition);
             sb.PrintShortObjProp(n, nameof(Operator), Operator);
 
             //sb.PrintShortObjListProp(n, nameof(Cases), Cases);
@@ -155,6 +162,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintBriefObjProp(n, nameof(Precondition), Precondition);
             sb.PrintBriefObjProp(n, nameof(Operator), Operator);
 
             //sb.PrintBriefObjListProp(n, nameof(Cases), Cases);

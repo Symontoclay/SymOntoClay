@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         Info("5D09A258-38A9-466C-81B9-9B42A7A79ECA", $"parser.Result = {parser.Result}");
 #endif
 
-                                        throw new NotImplementedException("D5619F08-2285-4B9D-BE99-7DF836D98A82");
+                                        Result.Precondition = parser.Result;
                                     }
                                     break;
 

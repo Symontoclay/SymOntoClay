@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
@@ -268,22 +269,42 @@ namespace SymOntoClay.Core.Internal.Htn
 #endif
 
 #if DEBUG
-            //Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+            Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
             //Info("2CD7257B-DEA0-4C75-83B4-5F037BA1DDA0", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
             while(true)
             {
-                if(buildPlanIterationContext.ProcessedIndex == -1 || buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask.IsBasePrimitiveHtnTask)
+                if(buildPlanIterationContext.ProcessedIndex == -1)
                 {
                     buildPlanIterationContext.ProcessedIndex++;
                 }
 
+                var currentProcessedTask = buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask;
+
+                if (currentProcessedTask.IsBasePrimitiveHtnTask)
+                {
+                    if(currentProcessedTask.IsPrimitiveTask)
+                    {
+                        var currentProcessedPrimitiveTask = currentProcessedTask.AsPrimitiveTask;
+
+                        if(!CheckCondition(currentProcessedPrimitiveTask.Precondition, buildPlanIterationContext))
+                        {
+                            return;
+                        }
+                    }
+
+                    buildPlanIterationContext.ProcessedIndex++;
+                }
 #if DEBUG
-                //Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
+                Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
                 var tasksToProcess = buildPlanIterationContext.TasksToProcess;
+
+#if DEBUG
+                Info("636F6B73-4499-4A09-9E76-70D7012A288D", $"tasksToProcess = {tasksToProcess.WriteListToString()}");
+#endif
 
                 if (buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count)
                 {
@@ -316,16 +337,13 @@ namespace SymOntoClay.Core.Internal.Htn
                         ProcessBaseCompoundTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
                         break;
 
-                    case KindOfTask.Primitive:
-                        ProcessPrimitiveTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
-                        break;
-
                     case KindOfTask.EndCompound:
                         break;
 
                     case KindOfTask.Replaced:
                         return;
 
+                    case KindOfTask.Primitive:
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfCurrentTask), kindOfCurrentTask, null);
                 }
@@ -334,20 +352,6 @@ namespace SymOntoClay.Core.Internal.Htn
             }
         }
 
-        private void ProcessPrimitiveTask(BuiltPlanItem builtPlanItem, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
-        {
-#if DEBUG
-            //Info("2707CB78-462A-4BB8-A076-5527C51789DB", "Begin");
-#endif
-
-            var processedTask = builtPlanItem.ProcessedTask.AsPrimitiveTask;
-
-#if DEBUG
-            Info("5FED19BB-FF10-4804-8FBC-79C0FA1028E4", $"processedTask = {processedTask}");
-#endif
-
-            //throw new NotImplementedException("774AF910-A2C3-4175-8A84-3A09BFBA87E9");
-        }
 
         private void ProcessBaseCompoundTask(BuiltPlanItem builtPlanItem, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
@@ -432,15 +436,20 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private bool CheckTaskCase(CompoundHtnTaskCase taskCase, BuildPlanIterationContext buildPlanIterationContext)
         {
-            if(taskCase.Condition == null)
+            return CheckCondition(taskCase.Condition, buildPlanIterationContext);
+        }
+
+        private bool CheckCondition(LogicalExecutableExpression condition, BuildPlanIterationContext buildPlanIterationContext)
+        {
+            if (condition == null)
             {
                 return true;
             }
 
-            var value = _context.CodeExecutor.CallExecutableSync(Logger, taskCase.Condition, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
+            var value = _context.CodeExecutor.CallExecutableSync(Logger, condition, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
 
 #if DEBUG
-            //Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
+            Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
 #endif
 
             return LogicalValue.TrueValue.Equals(value);
@@ -603,7 +612,6 @@ namespace SymOntoClay.Core.Internal.Htn
                 tasksToProcess[index] = item;
             }
             
-
             //throw new NotImplementedException("FF3B8DCF-DAAF-473D-96E8-A38359E75BBB");
         }
 

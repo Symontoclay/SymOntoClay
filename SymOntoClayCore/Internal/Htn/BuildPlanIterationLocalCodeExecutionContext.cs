@@ -80,6 +80,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var result = new BuildPlanIterationLocalCodeExecutionContext();
             context[this] = result;
 
+            result.Parent = Parent;
             result._context = _context;
             result._storage = _storage.Clone(context);
 

@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Htn
             _propertyStorage = new BuildPlanIterationPropertyStorage(this, logger);
         }
 
-        private readonly IStorage _parentStorage;
+        private IStorage _parentStorage;
 
         private EmptyLogicalStorage _logicalStorage;
         private EmptyInheritanceStorage _inheritanceStorage;
@@ -167,6 +167,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var result = new BuildPlanIterationStorage(Logger);
             context[this] = result;
 
+            result._parentStorage = _parentStorage;
             result._propertyStorage = _propertyStorage.Clone(context);
 
             return result;

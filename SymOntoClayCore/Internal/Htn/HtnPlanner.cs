@@ -269,7 +269,7 @@ namespace SymOntoClay.Core.Internal.Htn
 #endif
 
 #if DEBUG
-            Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+            //Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
             //Info("2CD7257B-DEA0-4C75-83B4-5F037BA1DDA0", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
@@ -297,13 +297,13 @@ namespace SymOntoClay.Core.Internal.Htn
                     buildPlanIterationContext.ProcessedIndex++;
                 }
 #if DEBUG
-                Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
+                //Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
                 var tasksToProcess = buildPlanIterationContext.TasksToProcess;
 
 #if DEBUG
-                Info("636F6B73-4499-4A09-9E76-70D7012A288D", $"tasksToProcess = {tasksToProcess.WriteListToString()}");
+                //Info("636F6B73-4499-4A09-9E76-70D7012A288D", $"tasksToProcess = {tasksToProcess.WriteListToString()}");
 #endif
 
                 if (buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count)
@@ -325,7 +325,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 var kindOfCurrentTask = currentBuiltPlanItem.ProcessedTask.KindOfTask;
 
 #if DEBUG
-                Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
+                //Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
 #endif
 
                 switch(kindOfCurrentTask)
@@ -449,7 +449,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var value = _context.CodeExecutor.CallExecutableSync(Logger, condition, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
 
 #if DEBUG
-            Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
+            //Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");
 #endif
 
             return LogicalValue.TrueValue.Equals(value);
@@ -479,13 +479,13 @@ namespace SymOntoClay.Core.Internal.Htn
             foreach (var item in items)
             {
 #if DEBUG
-                Info("D99601A0-5F07-417D-921A-0B77E84956AB", $"item = {item}");
+                //Info("D99601A0-5F07-417D-921A-0B77E84956AB", $"item = {item}");
 #endif
 
                 var task = _tasksStorage.GetBaseTaskByName(Logger, item.Name, requestingKindOfTask);
 
 #if DEBUG
-                Info("2A728ED1-B0C8-4FC5-AB66-D978F97A91E3", $"task = {task}");
+                //Info("2A728ED1-B0C8-4FC5-AB66-D978F97A91E3", $"task = {task}");
 #endif
 
                 if(task == null)

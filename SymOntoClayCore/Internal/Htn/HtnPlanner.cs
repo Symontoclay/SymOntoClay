@@ -304,7 +304,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 var kindOfCurrentTask = currentBuiltPlanItem.ProcessedTask.KindOfTask;
 
 #if DEBUG
-                //Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
+                Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
 #endif
 
                 switch(kindOfCurrentTask)
@@ -343,7 +343,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var processedTask = builtPlanItem.ProcessedTask.AsPrimitiveTask;
 
 #if DEBUG
-            //Info("5FED19BB-FF10-4804-8FBC-79C0FA1028E4", $"processedTask = {processedTask}");
+            Info("5FED19BB-FF10-4804-8FBC-79C0FA1028E4", $"processedTask = {processedTask}");
 #endif
 
             //throw new NotImplementedException("774AF910-A2C3-4175-8A84-3A09BFBA87E9");
@@ -470,13 +470,13 @@ namespace SymOntoClay.Core.Internal.Htn
             foreach (var item in items)
             {
 #if DEBUG
-                //Info("D99601A0-5F07-417D-921A-0B77E84956AB", $"item = {item}");
+                Info("D99601A0-5F07-417D-921A-0B77E84956AB", $"item = {item}");
 #endif
 
                 var task = _tasksStorage.GetBaseTaskByName(Logger, item.Name, requestingKindOfTask);
 
 #if DEBUG
-                //Info("2A728ED1-B0C8-4FC5-AB66-D978F97A91E3", $"task = {task}");
+                Info("2A728ED1-B0C8-4FC5-AB66-D978F97A91E3", $"task = {task}");
 #endif
 
                 if(task == null)

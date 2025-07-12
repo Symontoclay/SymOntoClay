@@ -25,8 +25,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("D99532FA-6FA7-444A-B6DD-678033D29E63", $"_state = {_state}");
-            Info("A4A5D717-394B-4067-8C78-4F96BC1DC9BC", $"_currToken = {_currToken}");
+            //Info("D99532FA-6FA7-444A-B6DD-678033D29E63", $"_state = {_state}");
+            //Info("A4A5D717-394B-4067-8C78-4F96BC1DC9BC", $"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var conditionExpr = parser.Result;
 
 #if DEBUG
-                        Info("CF50DF8B-E604-43FB-BB80-E21937EABBAE", $"conditionExpr = {conditionExpr}");
+                        //Info("CF50DF8B-E604-43FB-BB80-E21937EABBAE", $"conditionExpr = {conditionExpr}");
 #endif
 
                         var compiledFunctionBody = _context.Compiler.CompileLambda(conditionExpr);

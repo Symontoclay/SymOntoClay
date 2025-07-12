@@ -45,7 +45,7 @@ compound task SomeCompoundTask
 
 primitive task SomePrimitiveTask
 {
-    preconditions ThirdAutoProp is 12;
+    preconditions ThirdAutoProp is 15;
     operator SomeOperator();
 }
 

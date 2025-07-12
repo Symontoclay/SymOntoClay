@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Common;
+﻿using NLog;
+using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -31,6 +32,7 @@ namespace SymOntoClay.Core.Internal.Htn
         private BuildPlanIterationStorage(IMonitorLogger logger)
             : base(logger)
         {
+            CreateEmptyStorages(logger);
         }
 
         public BuildPlanIterationStorage(IMonitorLogger logger, IMainStorageContext mainStorageContext, IStorage parentStorage)
@@ -38,6 +40,13 @@ namespace SymOntoClay.Core.Internal.Htn
         {
             _parentStorage = parentStorage;
 
+            CreateEmptyStorages(logger);
+
+            _propertyStorage = new BuildPlanIterationPropertyStorage(this, logger);
+        }
+
+        private void CreateEmptyStorages(IMonitorLogger logger)
+        {
             _logicalStorage = new EmptyLogicalStorage(this, logger);
             _inheritanceStorage = new EmptyInheritanceStorage(this, logger);
             _triggersStorage = new EmptyTriggersStorage(this, logger);
@@ -54,7 +63,6 @@ namespace SymOntoClay.Core.Internal.Htn
             _fuzzyLogicStorage = new EmptyFuzzyLogicStorage(this, logger);
             _idleActionItemsStorage = new EmptyIdleActionItemsStorage(this, logger);
             _tasksStorage = new EmptyTasksStorage(this, logger);
-            _propertyStorage = new BuildPlanIterationPropertyStorage(this, logger);
         }
 
         private IStorage _parentStorage;

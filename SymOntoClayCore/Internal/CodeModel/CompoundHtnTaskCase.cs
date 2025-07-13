@@ -13,7 +13,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class CompoundHtnTaskCase: CodeItem
+    public class CompoundHtnTaskCase: CompoundHtnTaskItemsSection
     {
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.CompoundTaskCase;
@@ -24,8 +24,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override CompoundHtnTaskCase AsCompoundTaskHtnCase => this;
         
-        public List<CompoundHtnTaskCaseItem> Items { get; set; } = new List<CompoundHtnTaskCaseItem>();
-
         public LogicalExecutableExpression Condition { get; set; }
         
         /// <inheritdoc/>
@@ -52,11 +50,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new CompoundHtnTaskCase();
             context[this] = result;
             
-            result.Items = Items?.Select(p => p.Clone(context))?.ToList();
-
             result.Condition = Condition?.Clone(context);
 
-            result.AppendCodeItem(this, context);
+            FillUpCompoundHtnTaskItemsSection(result, context);
 
             return result;
         }
@@ -68,29 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             var result = base.CalculateLongHashCode(options);
 
-            if (!Items.IsNullOrEmpty())
-            {
-                foreach (var item in Items)
-                {
-                    result ^= item.GetLongHashCode(options);
-                }
-            }
-
             return result;
-        }
-
-        /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<Annotation> result)
-        {
-            base.DiscoverAllAnnotations(result);
-
-            if (!Items.IsNullOrEmpty())
-            {
-                foreach (var item in Items)
-                {
-                    item.DiscoverAllAnnotations(result);
-                }
-            }
         }
 
         /// <inheritdoc/>
@@ -98,8 +72,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintObjListProp(n, nameof(Items), Items);
 
             sb.PrintObjProp(n, nameof(Condition), Condition);
 
@@ -113,8 +85,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(Items), Items);
-
             sb.PrintShortObjProp(n, nameof(Condition), Condition);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -126,8 +96,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintBriefObjListProp(n, nameof(Items), Items);
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
 
@@ -156,17 +124,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine();
 
-            sb.AppendLine("{");
-
-            if (!Items.IsNullOrEmpty())
-            {
-                foreach (var item in Items)
-                {
-                    sb.AppendLine(item.ToHumanizedString(options));
-                }
-            }
-
-            sb.AppendLine("}");
+            sb.Append(ContentToHumanizedString(options));
 
             return sb.ToString();
         }

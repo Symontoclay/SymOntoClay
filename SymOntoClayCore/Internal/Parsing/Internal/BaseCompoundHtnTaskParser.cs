@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new CompoundHtnTaskBeforeParser(_context);
                                 parser.Run();
 
-                                Result.Cases.Add(parser.Result);
+                                Result.Before = parser.Result;
                             }
                             break;
 
@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new CompoundHtnTaskAfterParser(_context);
                                 parser.Run();
 
-                                Result.Cases.Add(parser.Result);
+                                Result.After = parser.Result;
                             }
                             break;
 

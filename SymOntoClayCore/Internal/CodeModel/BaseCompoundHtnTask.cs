@@ -15,12 +15,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override BaseCompoundHtnTask AsBaseCompoundHtnTask => this;
 
+        public CompoundHtnTaskBefore Before { get; set; }
+        public CompoundHtnTaskAfter After { get; set; }
+
         public List<CompoundHtnTaskCase> Cases { get; set; } = new List<CompoundHtnTaskCase>();
 
         public abstract BaseCompoundHtnTask CloneBaseCompoundTask(Dictionary<object, object> context);
 
         protected void AppendBaseCompoundTask(BaseCompoundHtnTask source, Dictionary<object, object> context)
         {
+            Before = source.Before?.Clone(context);
+            After = source.After?.Clone(context);
             Cases = source.Cases?.Select(p => p.Clone(context))?.ToList();
 
             AppendCodeItem(source, context);
@@ -47,6 +52,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
+            Before?.DiscoverAllAnnotations(result);
+            After?.DiscoverAllAnnotations(result);
+
             if (!Cases.IsNullOrEmpty())
             {
                 foreach (var item in Cases)
@@ -62,6 +70,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(Before), Before);
+            sb.PrintObjProp(n, nameof(After), After);
             sb.PrintObjListProp(n, nameof(Cases), Cases);
 
             sb.Append(base.PropertiesToString(n));
@@ -74,6 +84,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintShortObjProp(n, nameof(Before), Before);
+            sb.PrintShortObjProp(n, nameof(After), After);
             sb.PrintShortObjListProp(n, nameof(Cases), Cases);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -86,6 +98,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintBriefObjProp(n, nameof(Before), Before);
+            sb.PrintBriefObjProp(n, nameof(After), After);
             sb.PrintBriefObjListProp(n, nameof(Cases), Cases);
 
             sb.Append(base.PropertiesToBriefString(n));

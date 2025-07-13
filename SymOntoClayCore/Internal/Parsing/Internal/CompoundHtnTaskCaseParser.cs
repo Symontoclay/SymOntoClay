@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class CompoundHtnTaskCaseParser : BaseInternalParser
+    public class CompoundHtnTaskCaseParser : BaseCompoundHtnTaskItemsSectionParser
     {
         private enum State
         {
@@ -28,6 +28,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Result = new CompoundHtnTaskCase();
 
+            RegisterResult(Result);
+
             SetCurrentCodeItem(Result);
         }
 
@@ -43,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Info("DE93DB33-2003-45CD-BBFA-A1466C4FCB7B", $"_state = {_state}");
             //Info("11A79601-440A-4241-AEA1-ABE664DADA99", $"_currToken = {_currToken}");
-            //Info(, $"Result = {Result}");
+            //Info("1C1F3464-5B88-4571-807F-715241E9FFF7", $"Result = {Result}");
 #endif
 
             switch (_state)
@@ -119,26 +121,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.ContentStarted:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.CloseFigureBracket:
-                            Exit();
-                            break;
-
-                        case TokenKind.Word:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new CompoundHtnTaskCaseItemParser(_context);
-                                parser.Run();
-
-                                Result.Items.Add(parser.Result);
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(Text, _currToken);
-                    }
+                    ParseCompoundHtnTaskItemsSectionContent();
                     break;
 
                 default:

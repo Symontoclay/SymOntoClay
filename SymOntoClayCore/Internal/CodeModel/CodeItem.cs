@@ -243,6 +243,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsCompoundTaskHtnCase => false;
         public virtual CompoundHtnTaskCase AsCompoundTaskHtnCase => null;
 
+        public virtual bool IsCompoundHtnTaskBefore => false;
+        public virtual CompoundHtnTaskBefore AsCompoundHtnTaskBefore => null;
+
+        public virtual bool IsCompoundHtnTaskAfter => false;
+        public virtual CompoundHtnTaskAfter AsCompoundHtnTaskAfter => null;
+
         public virtual bool IsBasePrimitiveHtnTask => false;
         public virtual BasePrimitiveHtnTask AsBasePrimitiveHtnTask => null;
 

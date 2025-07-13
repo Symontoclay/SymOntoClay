@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #if DEBUG
                 //Info("B5B76ECE-D653-4D41-B0C7-22D59DDCE2CC", $"kindOfPrimitiveTask = {kindOfPrimitiveTask}");
 #endif
-
+                
                 switch (kindOfPrimitiveTask)
                 {
                     case KindOfPrimitiveTask.BeginCompound:

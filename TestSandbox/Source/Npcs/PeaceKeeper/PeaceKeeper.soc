@@ -2,59 +2,54 @@
 {
     root task `SomeCompoundTask`;
 
+    fun SomeBeforeOperator()
+    {
+       'Run SomeBeforeOperator' >> @>log;
+       wait 1;
+    }
+
     fun SomeOperator()
     {
        'Run SomeOperator' >> @>log;
        wait 1;
     }
 
-    fun SomeOperator2()
+    fun SomeAfterOperator()
     {
-       'Run SomeOperator2' >> @>log;
+       'Run SomeAfterOperator' >> @>log;
        wait 1;
     }
-
-    fun SomeOperator3()
-    {
-       'Run SomeOperator3' >> @>log;
-       wait 1;
-    }
-
-    prop SomeAutoProp: number = 16;
-    prop OtherAutoProp: number = 17;
-    prop ThirdAutoProp: number = 12;
 }
 
 compound task SomeCompoundTask
 {
-   case SomeAutoProp is 16
-   {
-       SomePrimitiveTask;
-   }
+    before
+    {
+        SomeBeforePrimitiveTask;
+    }
 
-   case OtherAutoProp > 16
-   {
-       SomePrimitiveTask2;
-   }
+    case
+    {
+        SomePrimitiveTask;
+    }
 
-   case 
-   {
-       SomePrimitiveTask3;
-   }
+    after
+    {
+        SomeAfterPrimitiveTask;
+    }
+}
+
+primitive task SomeBeforePrimitiveTask
+{
+    operator SomeBeforeOperator();
 }
 
 primitive task SomePrimitiveTask
 {
-    preconditions ThirdAutoProp is 15;
     operator SomeOperator();
 }
 
-primitive task SomePrimitiveTask2
+primitive task SomeAfterPrimitiveTask
 {
-    operator SomeOperator2();
-}
-
-primitive task SomePrimitiveTask3
-{
-    operator SomeOperator3();
+    operator SomeAfterOperator();
 }

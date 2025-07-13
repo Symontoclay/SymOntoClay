@@ -1686,6 +1686,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Preconditions;
                             break;
                         }
+
+                        if (string.Equals(content, "before", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Before;
+                            break;
+                        }
+
+                        if (string.Equals(content, "after", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.After;
+                            break;
+                        }
                     }
                     break;
 

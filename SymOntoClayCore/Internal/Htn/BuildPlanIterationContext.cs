@@ -15,6 +15,15 @@ namespace SymOntoClay.Core.Internal.Htn
         public List<StrongIdentifierValue> VisitedCompoundTasks { get; set; } = new List<StrongIdentifierValue>();
         public BuildPlanIterationLocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
 
+        public bool IsNormal => _isNormal;
+
+        private bool _isNormal = true;
+
+        public void MarkAsFailed()
+        {
+            _isNormal = false;
+        }
+
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public BuildPlanIterationContext Clone()
         {
@@ -37,6 +46,7 @@ namespace SymOntoClay.Core.Internal.Htn
             result.TasksToProcess = TasksToProcess.Select(p => p.Clone(context)).ToList();
             result.VisitedCompoundTasks = VisitedCompoundTasks.Select(p => p.Clone(context)).ToList();
             result.LocalCodeExecutionContext = LocalCodeExecutionContext.Clone(context);
+            result._isNormal = _isNormal;
 
             return result;
         }
@@ -59,6 +69,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsNormal)} = {IsNormal}");
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
@@ -85,6 +96,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsNormal)} = {IsNormal}");
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintShortObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
@@ -111,6 +123,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsNormal)} = {IsNormal}");
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintBriefObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
@@ -142,6 +155,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsNormal)}: {IsNormal}");
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)}: {ProcessedIndex}");
             sb.AppendLine($"{spaces}Tasks to process:");
             var i = 0;

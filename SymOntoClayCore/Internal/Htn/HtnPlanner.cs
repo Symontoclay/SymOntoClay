@@ -297,7 +297,7 @@ namespace SymOntoClay.Core.Internal.Htn
                     Info("B98C9500-A74D-411F-B6BF-0F1FB98EA58D", $"buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count");
 #endif
 
-                    if (tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveHtnTask))
+                    if (buildPlanIterationContext.IsNormal && tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveHtnTask))
                     {
                         tasksPlannerGlobalContext.CompletedIterations.Add(PrepareBuildPlanIterationContext(buildPlanIterationContext));
                     }
@@ -315,6 +315,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
                         if(!CheckCondition(currentProcessedPrimitiveTask.Precondition, buildPlanIterationContext))
                         {
+                            buildPlanIterationContext.MarkAsFailed();
                             return;
                         }
                     }

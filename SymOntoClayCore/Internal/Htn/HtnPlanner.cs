@@ -405,8 +405,6 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("BD768CC6-94F8-4888-B29D-3C8373751DD1", $"buildPlanIterationContext (--) = {buildPlanIterationContext.ToDbgString()}");
 #endif
 
-            //ProcessBefore(processedTask.Before, processedTask.KindOfTask, tasksPlannerGlobalContext, buildPlanIterationContext);
-
             //if(processedTask.IsStrategicTask)
             //{
             //throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
@@ -466,47 +464,6 @@ namespace SymOntoClay.Core.Internal.Htn
 #endif
 
             return LogicalValue.TrueValue.Equals(value);
-        }
-
-        private void ProcessBefore(CompoundHtnTaskBefore taskBefore, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
-        {
-            if(taskBefore == null)
-            {
-                return;
-            }
-
-            var items = taskBefore.Items;
-
-            if (items.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            var tasksList = new List<BaseHtnTask>();
-
-            foreach (var item in items)
-            {
-#if DEBUG
-                Info("9038DEDA-C46B-49A0-865A-D56E76DDB5C1", $"item = {item}");
-#endif
-
-                var task = _tasksStorage.GetBaseTaskByName(Logger, item.Name, requestingKindOfTask);
-
-#if DEBUG
-                Info("45F32794-DBE7-484F-8E11-2ED8C003C454", $"task = {task}");
-#endif
-
-                if (task == null)
-                {
-                    return;
-                }
-
-                tasksList.Add(task);
-            }
-
-            ReplaceBuiltPlanItems(tasksList, buildPlanIterationContext);
-
-            //throw new NotImplementedException("71423803-86B2-41A1-9E65-8B5EE08096C8");
         }
 
         private void ProcessTaskCase(CompoundHtnTaskCase taskCase, BaseCompoundHtnTask processedTask, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)

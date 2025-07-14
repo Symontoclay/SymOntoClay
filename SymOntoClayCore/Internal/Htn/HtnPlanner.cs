@@ -472,16 +472,34 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
 #endif
 
-            var items = taskCase.Items.ToList();
+            var caseItems = taskCase.Items;
 
-            if (items.IsNullOrEmpty())
+            if (caseItems.IsNullOrEmpty())
             {
                 return;
             }
 
-            if(processedTask.Before != null)
+            List<CompoundHtnTaskCaseItem> items = null;
+
+            if (processedTask.Before == null || processedTask.After == null)
             {
-                items.AddRange(processedTask.Before.Items);
+                items = caseItems;
+            }
+            else
+            {
+                items = new List<CompoundHtnTaskCaseItem>();
+
+                if (processedTask.Before != null)
+                {
+                    items.AddRange(processedTask.Before.Items);
+                }
+
+                items.AddRange(caseItems);
+
+                if(processedTask.After != null)
+                {
+                    items.AddRange(processedTask.After.Items);
+                }
             }
 
             var clonedBuildPlanIterationContext = buildPlanIterationContext.Clone();

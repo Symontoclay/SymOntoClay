@@ -265,22 +265,47 @@ namespace SymOntoClay.Core.Internal.Htn
         private void ProcessIteration(HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
-            //Info("FDD9D703-6231-450A-9B55-AA2734952558", "Begin");
-#endif
-
-#if DEBUG
-            //Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
-            //Info("2CD7257B-DEA0-4C75-83B4-5F037BA1DDA0", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
+            Info("FDD9D703-6231-450A-9B55-AA2734952558", "Begin");
 #endif
 
             while(true)
             {
-                if(buildPlanIterationContext.ProcessedIndex == -1)
+#if DEBUG
+                Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+                Info("2CD7257B-DEA0-4C75-83B4-5F037BA1DDA0", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
+#endif
+
+                if (buildPlanIterationContext.ProcessedIndex == -1)
                 {
                     buildPlanIterationContext.ProcessedIndex++;
+                    continue;
                 }
 
-                var currentProcessedTask = buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask;
+#if DEBUG
+                Info("C168FD2F-C8E4-4090-B6AA-0D212F6D2947", $"buildPlanIterationContext.TasksToProcess.Count = {buildPlanIterationContext.TasksToProcess.Count}");
+#endif
+
+                var tasksToProcess = buildPlanIterationContext.TasksToProcess;
+
+#if DEBUG
+                //Info("636F6B73-4499-4A09-9E76-70D7012A288D", $"tasksToProcess = {tasksToProcess.WriteListToString()}");
+#endif
+
+                if (buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count)
+                {
+#if DEBUG
+                    Info("B98C9500-A74D-411F-B6BF-0F1FB98EA58D", $"buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count");
+#endif
+
+                    if (tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveHtnTask))
+                    {
+                        tasksPlannerGlobalContext.CompletedIterations.Add(PrepareBuildPlanIterationContext(buildPlanIterationContext));
+                    }
+
+                    return;
+                }
+
+                var currentProcessedTask = tasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask;
 
                 if (currentProcessedTask.IsBasePrimitiveHtnTask)
                 {
@@ -295,26 +320,11 @@ namespace SymOntoClay.Core.Internal.Htn
                     }
 
                     buildPlanIterationContext.ProcessedIndex++;
+                    continue;
                 }
 #if DEBUG
                 //Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
 #endif
-
-                var tasksToProcess = buildPlanIterationContext.TasksToProcess;
-
-#if DEBUG
-                //Info("636F6B73-4499-4A09-9E76-70D7012A288D", $"tasksToProcess = {tasksToProcess.WriteListToString()}");
-#endif
-
-                if (buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count)
-                {
-                    if(tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveHtnTask))
-                    {
-                        tasksPlannerGlobalContext.CompletedIterations.Add(PrepareBuildPlanIterationContext(buildPlanIterationContext));
-                    }
-
-                    return;
-                }
 
                 var currentBuiltPlanItem = tasksToProcess[buildPlanIterationContext.ProcessedIndex];
 
@@ -394,9 +404,11 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("BD768CC6-94F8-4888-B29D-3C8373751DD1", $"buildPlanIterationContext (--) = {buildPlanIterationContext.ToDbgString()}");
 #endif
 
+            //ProcessBefore(processedTask.Before, processedTask.KindOfTask, tasksPlannerGlobalContext, buildPlanIterationContext);
+
             //if(processedTask.IsStrategicTask)
             //{
-                //throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
+            //throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
             //}
 
             var hasApprovedConditionalCase = false;
@@ -428,7 +440,7 @@ namespace SymOntoClay.Core.Internal.Htn
                     hasApprovedConditionalCase = true;
                 }
 
-                ProcessTaskCase(taskCase, processedTask.KindOfTask, tasksPlannerGlobalContext, buildPlanIterationContext);
+                ProcessTaskCase(taskCase, processedTask, processedTask.KindOfTask, tasksPlannerGlobalContext, buildPlanIterationContext);
             }
 
             //throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
@@ -455,23 +467,70 @@ namespace SymOntoClay.Core.Internal.Htn
             return LogicalValue.TrueValue.Equals(value);
         }
 
-        private void ProcessTaskCase(CompoundHtnTaskCase taskCase, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        private void ProcessBefore(CompoundHtnTaskBefore taskBefore, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
-#if DEBUG
-            //Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
-#endif
+            if(taskBefore == null)
+            {
+                return;
+            }
 
-            var items = taskCase.Items;
+            var items = taskBefore.Items;
 
             if (items.IsNullOrEmpty())
             {
                 return;
             }
 
+            var tasksList = new List<BaseHtnTask>();
+
+            foreach (var item in items)
+            {
+#if DEBUG
+                Info("9038DEDA-C46B-49A0-865A-D56E76DDB5C1", $"item = {item}");
+#endif
+
+                var task = _tasksStorage.GetBaseTaskByName(Logger, item.Name, requestingKindOfTask);
+
+#if DEBUG
+                Info("45F32794-DBE7-484F-8E11-2ED8C003C454", $"task = {task}");
+#endif
+
+                if (task == null)
+                {
+                    return;
+                }
+
+                tasksList.Add(task);
+            }
+
+            ReplaceBuiltPlanItems(tasksList, buildPlanIterationContext);
+
+            //throw new NotImplementedException("71423803-86B2-41A1-9E65-8B5EE08096C8");
+        }
+
+        private void ProcessTaskCase(CompoundHtnTaskCase taskCase, BaseCompoundHtnTask processedTask, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        {
+#if DEBUG
+            //Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
+#endif
+
+            var items = taskCase.Items.ToList();
+
+            if (items.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            if(processedTask.Before != null)
+            {
+                items.AddRange(processedTask.Before.Items);
+            }
+
             var clonedBuildPlanIterationContext = buildPlanIterationContext.Clone();
 
 #if DEBUG
             //Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext.ToDbgString()}");
+            Info("ABD7A72A-2562-46EA-A42A-74CB6136D89D", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 
             var tasksList = new List<BaseHtnTask>();
@@ -533,7 +592,7 @@ namespace SymOntoClay.Core.Internal.Htn
             ReplaceBuiltPlanItems(newBuiltPlanItems, buildPlanIterationContext.TasksToProcess, buildPlanIterationContext.ProcessedIndex);
 
 #if DEBUG
-            //Info("B2424A2E-6B2F-4BC7-AC33-46853F5989A2", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+            Info("B2424A2E-6B2F-4BC7-AC33-46853F5989A2", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
 #endif
 
             //buildPlanIterationContext.ProcessedIndex--;

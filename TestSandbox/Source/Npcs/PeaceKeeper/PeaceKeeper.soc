@@ -8,10 +8,27 @@
        wait 1;
     }
 
-    fun SomeAfterOperator()
+    fun SomeOperator2()
     {
-       'Run SomeAfterOperator' >> @>log;
+       'Run SomeOperator2' >> @>log;
        wait 1;
+    }
+
+    fun SomeOperator3()
+    {
+       'Run SomeOperator3' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator4()
+    {
+       'Run SomeOperator4' >> @>log;
+       wait 1;
+    }
+
+    fun SomeBackgroundPrimitiveTaskOperator()
+    {
+        'Run SomeBackgroundPrimitiveTaskOperator' >> @>log;
     }
 }
 
@@ -22,9 +39,9 @@ compound task SomeCompoundTask
         SomePrimitiveTask;
     }
 
-    after
+    background each 1
     {
-        SomeAfterPrimitiveTask;
+        SomeBackgroundPrimitiveTask;
     }
 }
 
@@ -33,7 +50,7 @@ primitive task SomePrimitiveTask
     operator SomeOperator();
 }
 
-primitive task SomeAfterPrimitiveTask
+primitive task SomeBackgroundPrimitiveTask
 {
-    operator SomeAfterOperator();
+    operator SomeBackgroundPrimitiveTaskOperator();
 }

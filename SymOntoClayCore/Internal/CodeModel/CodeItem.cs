@@ -249,6 +249,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsCompoundHtnTaskAfter => false;
         public virtual CompoundHtnTaskAfter AsCompoundHtnTaskAfter => null;
 
+        public virtual bool IsCompoundHtnTaskBackground => false;
+        public virtual CompoundHtnTaskBackground AsCompoundHtnTaskBackground => null;
+
         public virtual bool IsBasePrimitiveHtnTask => false;
         public virtual BasePrimitiveHtnTask AsBasePrimitiveHtnTask => null;
 

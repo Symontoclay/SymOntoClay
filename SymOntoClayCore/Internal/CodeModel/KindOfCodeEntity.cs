@@ -57,6 +57,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         CompoundTaskCase,
         CompoundHtnTaskBefore,
         CompoundHtnTaskAfter,
+        CompoundHtnTaskBackground,
         PrimitiveTask,
         BeginCompoundTask,
         EndCompoundTask,

@@ -73,6 +73,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.Background:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new CompoundHtnTaskBackgroundParser(_context);
+                                parser.Run();
+
+                                throw new NotImplementedException("E6EBDE99-4A36-421C-A6CC-F965953DAEB7");
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(Text, _currToken);
                     }

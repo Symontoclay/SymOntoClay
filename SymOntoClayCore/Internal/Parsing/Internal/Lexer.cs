@@ -1698,6 +1698,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.After;
                             break;
                         }
+
+                        if (string.Equals(content, "background", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Background;
+                            break;
+                        }
                     }
                     break;
 

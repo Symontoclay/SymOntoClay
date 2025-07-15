@@ -122,6 +122,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Global,
         Preconditions,
         Before,
-        After
+        After,
+        Background,
     }
 }

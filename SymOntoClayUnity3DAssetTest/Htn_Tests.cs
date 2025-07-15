@@ -1259,7 +1259,112 @@ primitive task SomePrimitiveTask3
         }
 
         [Test]
+#if PARALLELIZABLE_TESTS
         [Parallelizable]
+#endif
+        public void CompoundHtnTaskBeforeAndAfter_Case1()
+        {
+            var text = @"app PeaceKeeper
+{
+    root task `SomeCompoundTask`;
+
+    fun SomeBeforeOperator()
+    {
+       'Run SomeBeforeOperator' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator()
+    {
+       'Run SomeOperator' >> @>log;
+       wait 1;
+    }
+
+    fun SomeAfterOperator()
+    {
+       'Run SomeAfterOperator' >> @>log;
+       wait 1;
+    }
+}
+
+compound task SomeCompoundTask
+{
+    before
+    {
+        SomeBeforePrimitiveTask;
+    }
+
+    case
+    {
+        SomePrimitiveTask;
+    }
+
+    after
+    {
+        SomeAfterPrimitiveTask;
+    }
+}
+
+primitive task SomeBeforePrimitiveTask
+{
+    operator SomeBeforeOperator();
+}
+
+primitive task SomePrimitiveTask
+{
+    operator SomeOperator();
+}
+
+primitive task SomeAfterPrimitiveTask
+{
+    operator SomeAfterOperator();
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) =>
+                {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Run SomeBeforeOperator", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("Run SomeOperator", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("Run SomeAfterOperator", message);
+                            return true;
+
+                        case 4:
+                            Assert.AreEqual("Run SomeBeforeOperator", message);
+                            return true;
+
+                        case 5:
+                            Assert.AreEqual("Run SomeOperator", message);
+                            return true;
+
+                        case 6:
+                            Assert.AreEqual("Run SomeAfterOperator", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
+
+            Assert.AreEqual(6, maxN);
+        }
+
+        [Test]
+#if PARALLELIZABLE_TESTS
+        [Parallelizable]
+#endif
         public void PrimitiveHtnTaskPrecondition_Case1()
         {
             var text = @"app PeaceKeeper
@@ -1350,7 +1455,9 @@ primitive task SomePrimitiveTask3
         }
 
         [Test]
+#if PARALLELIZABLE_TESTS
         [Parallelizable]
+#endif
         public void PrimitiveHtnTaskPrecondition_Case2()
         {
             var text = @"app PeaceKeeper

@@ -481,7 +481,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             List<CompoundHtnTaskCaseItem> items = null;
 
-            if (processedTask.Before == null || processedTask.After == null)
+            if (processedTask.Before == null && processedTask.After == null)
             {
                 items = caseItems;
             }

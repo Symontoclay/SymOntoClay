@@ -2,12 +2,6 @@
 {
     root task `SomeCompoundTask`;
 
-    fun SomeBeforeOperator()
-    {
-       'Run SomeBeforeOperator' >> @>log;
-       wait 1;
-    }
-
     fun SomeOperator()
     {
        'Run SomeOperator' >> @>log;
@@ -23,11 +17,6 @@
 
 compound task SomeCompoundTask
 {
-    before
-    {
-        SomeBeforePrimitiveTask;
-    }
-
     case
     {
         SomePrimitiveTask;
@@ -37,11 +26,6 @@ compound task SomeCompoundTask
     {
         SomeAfterPrimitiveTask;
     }
-}
-
-primitive task SomeBeforePrimitiveTask
-{
-    operator SomeBeforeOperator();
 }
 
 primitive task SomePrimitiveTask

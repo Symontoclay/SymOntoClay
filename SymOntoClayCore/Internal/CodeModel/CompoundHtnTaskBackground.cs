@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -18,6 +19,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override CompoundHtnTaskBackground AsCompoundHtnTaskBackground => this;
+
+        public TriggerConditionNode Condition { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -43,7 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new CompoundHtnTaskBackground();
             context[this] = result;
 
-            
+            result.Condition = Condition?.Clone(context);
 
             FillUpCompoundHtnTaskItemsSection(result, context);
 
@@ -57,6 +60,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             var result = base.CalculateLongHashCode(options);
 
+            if (Condition != null)
+            {
+                Condition.CheckDirty(options);
+
+                result ^= Condition.GetLongHashCode(options);
+            }
+
             return result;
         }
 
@@ -67,6 +77,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             //sb.PrintObjProp(n, nameof(Condition), Condition);
+
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -80,6 +92,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             //sb.PrintShortObjProp(n, nameof(Condition), Condition);
 
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -91,6 +105,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             //sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -110,10 +126,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append("background");
 
-            //if (Condition != null)
-            //{
-            //    sb.Append($" {Condition.ToHumanizedString(options)}");
-            //}
+            if (Condition != null)
+            {
+                sb.Append($" {Condition.ToHumanizedString(options)}");
+            }
 
             sb.AppendLine();
 

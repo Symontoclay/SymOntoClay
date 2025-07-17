@@ -10,7 +10,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            WaitForCondition
+            WaitForCondition,
+            GotCondition,
+            ContentStarted
         }
 
         public CompoundHtnTaskBackgroundParser(InternalParserContext context)
@@ -86,8 +88,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         Info("B230D054-A69A-4FF0-B647-4FEE833A6CEE", $"parser.Result = {parser.Result}");
 #endif
 
-                                        throw new NotImplementedException("CAAAE0DE-E87F-4029-A4FF-657F9D0CB31F");
+                                        Result.Condition = parser.Result;
+
+                                        _state = State.GotCondition;
                                     }
+                                    break;
 
                                 default:
                                     throw new UnexpectedTokenException(Text, _currToken);
@@ -97,6 +102,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         default:
                             throw new UnexpectedTokenException(Text, _currToken);
                     }
+                    break;
+
+                case State.GotCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(Text, _currToken);
+                    }
+                    break;
+
+                case State.ContentStarted:
+                    ParseCompoundHtnTaskItemsSectionContent();
                     break;
 
                 default:

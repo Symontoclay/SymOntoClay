@@ -51,6 +51,11 @@ namespace SymOntoClay.Core.Internal.Htn
             //TODO: make processing multiple root task for working with voice commands.
             var rootTask = rootTasks.Single();
 
+            return BuildPlan(rootTask);
+        }
+
+        private HtnPlan BuildPlan(BaseCompoundHtnTask rootTask)
+        {
             var tasksPlannerGlobalContext = new HtnPlannerGlobalContext();
 
             var buildPlanIterationContext = new BuildPlanIterationContext();
@@ -73,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             var completedIterations = tasksPlannerGlobalContext.CompletedIterations;
 
-            if(completedIterations.Count == 0)
+            if (completedIterations.Count == 0)
             {
                 return HtnPlan.EmptyPlan;
             }

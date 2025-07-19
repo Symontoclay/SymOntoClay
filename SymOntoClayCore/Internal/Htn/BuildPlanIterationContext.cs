@@ -192,7 +192,7 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}Previous Root tasks: [{string.Join(", ", PreviousRootTasks.Select(p => p.ToSystemString()))}]");
             sb.AppendLine($"{spaces}Root task: {RootTask.ToHumanizedString()}");
             sb.AppendLine($"{spaces}All Root tasks: [{string.Join(", ", AllRootTasks.Select(p => p.ToSystemString()))}]");
-            sb.AppendLine($"{spaces}Tasks with background: [{string.Join(", ", TasksWithBackground.Select(p => p.ToSystemString()))}]");
+            sb.AppendLine($"{spaces}Tasks with background: [{string.Join(", ", TasksWithBackground.Select(p => p.ToHumanizedString()))}]");
 
             return sb.ToString();
         }

@@ -146,16 +146,16 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private BuildPlanIterationContext GetTargetCompletedIteration(List<BuildPlanIterationContext> completedIterations)
         {
-            
 
-//            if (completedIterations.Count > 1)
-//            {
-//#if DEBUG
-//                foreach(var tmpItem in completedIterations)
-//                {
-//                    Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"tmpItem = {tmpItem.ToDbgString()}");
-//                }
-//#endif
+
+            //            if (completedIterations.Count > 1)
+            //            {
+#if DEBUG
+            foreach (var tmpItem in completedIterations)
+            {
+                Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"tmpItem = {tmpItem.ToDbgString()}");
+            }
+#endif
 
             //throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
             //}
@@ -442,6 +442,11 @@ namespace SymOntoClay.Core.Internal.Htn
             //{
             //throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
             //}
+
+            if(!processedTask.Backgrounds.IsNullOrEmpty())
+            {
+                buildPlanIterationContext.TasksWithBackground.Add(processedTask);
+            }
 
             var hasApprovedConditionalCase = false;
 

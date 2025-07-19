@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
@@ -53,7 +54,9 @@ namespace SymOntoClay.Core.Internal.Htn
             result.VisitedCompoundTasks = VisitedCompoundTasks.Select(p => p.Clone(context)).ToList();
             result.LocalCodeExecutionContext = LocalCodeExecutionContext.Clone(context);
             result._isNormal = _isNormal;
-            result.RootTasks = RootTasks.Select(p => p.Clone(context)).ToList();
+            result.PreviousRootTasks = PreviousRootTasks.Select(p => p.Clone(context)).ToList();
+            result.RootTask = RootTask?.Clone(context);
+            result.AllRootTasks = AllRootTasks.Select(p => p.Clone(context)).ToList();
             result.TasksWithBackground = TasksWithBackground.Select(p => p.CloneBaseCompoundTask(context)).ToList();
 
             return result;
@@ -82,7 +85,9 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
             sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
-            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+            sb.PrintObjListProp(n, nameof(PreviousRootTasks), PreviousRootTasks);
+            sb.PrintObjProp(n, nameof(RootTask), RootTask);
+            sb.PrintObjListProp(n, nameof(AllRootTasks), AllRootTasks);
             sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
 
             return sb.ToString();
@@ -109,9 +114,11 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(IsNormal)} = {IsNormal}");
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintShortObjListProp(n, nameof(TasksToProcess), TasksToProcess);
-            sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
+            sb.PrintShortObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
             sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
-            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+            sb.PrintShortObjListProp(n, nameof(PreviousRootTasks), PreviousRootTasks);
+            sb.PrintShortObjProp(n, nameof(RootTask), RootTask);
+            sb.PrintShortObjListProp(n, nameof(AllRootTasks), AllRootTasks);
             sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
 
             return sb.ToString();
@@ -140,7 +147,9 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintBriefObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
             sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
-            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+            sb.PrintObjListProp(n, nameof(PreviousRootTasks), PreviousRootTasks);
+            sb.PrintBriefObjProp(n, nameof(RootTask), RootTask);
+            sb.PrintObjListProp(n, nameof(AllRootTasks), AllRootTasks);
             sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
 
             return sb.ToString();
@@ -182,7 +191,9 @@ namespace SymOntoClay.Core.Internal.Htn
             }
 
             sb.AppendLine($"{spaces}Visited compound tasks: [{string.Join(", ", VisitedCompoundTasks.Select(p => p.ToSystemString()))}]");
-            sb.AppendLine($"{spaces}Root tasks: [{string.Join(", ", RootTasks.Select(p => p.ToSystemString()))}]");
+            sb.AppendLine($"{spaces}Previous Root tasks: [{string.Join(", ", PreviousRootTasks.Select(p => p.ToSystemString()))}]");
+            sb.AppendLine($"{spaces}Root task: {RootTask.ToHumanizedString()}");
+            sb.AppendLine($"{spaces}All Root tasks: [{string.Join(", ", AllRootTasks.Select(p => p.ToSystemString()))}]");
             sb.AppendLine($"{spaces}Tasks with background: [{string.Join(", ", TasksWithBackground.Select(p => p.ToSystemString()))}]");
 
             return sb.ToString();

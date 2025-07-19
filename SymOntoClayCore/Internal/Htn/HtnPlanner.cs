@@ -66,13 +66,17 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private HtnPlan BuildPlan(HtnPlannerGlobalContext tasksPlannerGlobalContext, BaseCompoundHtnTask rootTask, List<StrongIdentifierValue> previousRootTasks)
         {
-            var rootTasks = new List<StrongIdentifierValue>();
-            rootTasks.AddRange(previousRootTasks);
-            rootTasks.Add(rootTask.Name);
+            var rootTaskName = rootTask.Name;
+
+            var allRootTasks = new List<StrongIdentifierValue>();
+            allRootTasks.AddRange(previousRootTasks);
+            allRootTasks.Add(rootTaskName);
 
             var buildPlanIterationContext = new BuildPlanIterationContext()
             {
-                RootTasks = rootTasks
+                PreviousRootTasks = previousRootTasks,
+                RootTask = rootTaskName,
+                AllRootTasks = allRootTasks
             };
 
             buildPlanIterationContext.LocalCodeExecutionContext = new BuildPlanIterationLocalCodeExecutionContext(_context, _context.InstancesStorage.MainEntity.LocalCodeExecutionContext);
@@ -406,7 +410,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 return;
             }
 
-            if(buildPlanIterationContext.RootTasks.Contains(processedTaskName))
+            if(buildPlanIterationContext.PreviousRootTasks.Contains(processedTaskName))
             {
                 buildPlanIterationContext.MarkAsFailed();
                 return;

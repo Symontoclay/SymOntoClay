@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Info("62D56D5A-937D-4241-9B02-4AF70948401F", $"parser.Result = {parser.Result}");
+                                //Info("62D56D5A-937D-4241-9B02-4AF70948401F", $"parser.Result = {parser.Result}");
                                 //throw new NotImplementedException("7FD4F4FA-ADCF-4611-B9CE-0153096B325D");
 #endif
 

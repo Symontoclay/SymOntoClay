@@ -453,7 +453,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
 #if DEBUG
             //Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
-            Info("09D1E8B4-09D0-4C0F-826F-20B50B016019", $"processedTask = {processedTask}");
+            //Info("09D1E8B4-09D0-4C0F-826F-20B50B016019", $"processedTask = {processedTask}");
 #endif
 
             var processedTaskName = processedTask.Name;
@@ -596,14 +596,14 @@ namespace SymOntoClay.Core.Internal.Htn
             }
 
 #if DEBUG
-            Info("BE38C2B1-B314-454D-936B-7C0DF5A1EAD9", $"buildPlanIterationContext = {buildPlanIterationContext}");
+            //Info("BE38C2B1-B314-454D-936B-7C0DF5A1EAD9", $"buildPlanIterationContext = {buildPlanIterationContext}");
 #endif
 
             var clonedBuildPlanIterationContext = buildPlanIterationContext.Clone();
 
 #if DEBUG
             //Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext.ToDbgString()}");
-            Info("BB7CE2CE-D819-4035-8B8D-F32FF8A105FA", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext}");
+            //Info("BB7CE2CE-D819-4035-8B8D-F32FF8A105FA", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext}");
             //Info("ABD7A72A-2562-46EA-A42A-74CB6136D89D", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 

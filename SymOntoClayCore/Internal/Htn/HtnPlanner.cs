@@ -148,21 +148,12 @@ namespace SymOntoClay.Core.Internal.Htn
         {
             var filteredCompletedIterations = new List<BuildPlanIterationContext>();
 
-            foreach (var item in completedIterations)
+            foreach (var completedIteration in completedIterations)
             {
-#if DEBUG
-                Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"item = {item.ToDbgString()}");
-#endif
-
-                var tasksWithBackground = item.TasksWithBackground;
-
-                if (tasksWithBackground.IsNullOrEmpty())
+                if(TryResolveBackground(completedIteration))
                 {
-                    filteredCompletedIterations.Add(item);
-                    continue;
+                    filteredCompletedIterations.Add(completedIteration);
                 }
-
-                throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
             }
 
 #if DEBUG
@@ -173,6 +164,57 @@ namespace SymOntoClay.Core.Internal.Htn
 #endif
 
             return filteredCompletedIterations.FirstOrDefault();
+        }
+
+        private bool TryResolveBackground(BuildPlanIterationContext completedIteration)
+        {
+#if DEBUG
+            Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"completedIteration = {completedIteration.ToDbgString()}");
+#endif
+
+            var tasksWithBackground = completedIteration.TasksWithBackground;
+
+            if (tasksWithBackground.IsNullOrEmpty())
+            {
+                return true;
+            }
+
+            foreach (var task in tasksWithBackground)
+            {
+                if(!TryResolveBackground(task))
+                {
+                    completedIteration.MarkAsFailed();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool TryResolveBackground(BaseCompoundHtnTask task)
+        {
+#if DEBUG
+            Info("907C3ACD-58A6-4A63-AA46-D7507E892FF0", $"task = {task}");
+#endif
+
+            foreach(var item in task.Backgrounds)
+            {
+                if(!TryResolveBackground(task, item))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool TryResolveBackground(BaseCompoundHtnTask task, CompoundHtnTaskBackground background)
+        {
+#if DEBUG
+            Info("86FC3019-CBF5-4AD5-AA4D-0E20BD12536E", $"background = {background}");
+#endif
+
+            throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
         }
 
         private enum PrepareBuildPlanIterationContextState
@@ -411,6 +453,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
 #if DEBUG
             //Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
+            Info("09D1E8B4-09D0-4C0F-826F-20B50B016019", $"processedTask = {processedTask}");
 #endif
 
             var processedTaskName = processedTask.Name;
@@ -552,10 +595,15 @@ namespace SymOntoClay.Core.Internal.Htn
                 }
             }
 
+#if DEBUG
+            Info("BE38C2B1-B314-454D-936B-7C0DF5A1EAD9", $"buildPlanIterationContext = {buildPlanIterationContext}");
+#endif
+
             var clonedBuildPlanIterationContext = buildPlanIterationContext.Clone();
 
 #if DEBUG
             //Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext.ToDbgString()}");
+            Info("BB7CE2CE-D819-4035-8B8D-F32FF8A105FA", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext}");
             //Info("ABD7A72A-2562-46EA-A42A-74CB6136D89D", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 

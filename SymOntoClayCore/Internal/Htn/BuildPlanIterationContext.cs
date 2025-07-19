@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintObjListProp(n, nameof(PreviousRootTasks), PreviousRootTasks);
             sb.PrintObjProp(n, nameof(RootTask), RootTask);
             sb.PrintObjListProp(n, nameof(AllRootTasks), AllRootTasks);
-            sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
+            sb.PrintObjListProp(n, nameof(TasksWithBackground), TasksWithBackground);
 
             return sb.ToString();
         }

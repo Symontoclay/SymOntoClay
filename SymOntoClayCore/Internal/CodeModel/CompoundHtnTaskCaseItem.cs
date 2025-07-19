@@ -30,6 +30,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new CompoundHtnTaskCaseItem();
             context[this] = result;
 
+            result.Name = Name?.Clone();
+
             return result;
         }
 

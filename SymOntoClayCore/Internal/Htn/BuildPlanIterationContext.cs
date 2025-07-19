@@ -13,6 +13,10 @@ namespace SymOntoClay.Core.Internal.Htn
         public int ProcessedIndex { get; set; } = -1;
         public List<BuiltPlanItem> TasksToProcess { get; set; } = new List<BuiltPlanItem>();
         public List<StrongIdentifierValue> VisitedCompoundTasks { get; set; } = new List<StrongIdentifierValue>();
+        public List<StrongIdentifierValue> PreviousRootTasks { get; set; } = new List<StrongIdentifierValue>();
+        public StrongIdentifierValue RootTask { get; set; }
+        public List<StrongIdentifierValue> AllRootTasks { get; set; } = new List<StrongIdentifierValue>();
+
         public BuildPlanIterationLocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
 
         public bool IsNormal => _isNormal;
@@ -23,6 +27,8 @@ namespace SymOntoClay.Core.Internal.Htn
         {
             _isNormal = false;
         }
+
+        public List<BaseCompoundHtnTask> TasksWithBackground { get; set; } = new List<BaseCompoundHtnTask>();
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public BuildPlanIterationContext Clone()
@@ -47,6 +53,8 @@ namespace SymOntoClay.Core.Internal.Htn
             result.VisitedCompoundTasks = VisitedCompoundTasks.Select(p => p.Clone(context)).ToList();
             result.LocalCodeExecutionContext = LocalCodeExecutionContext.Clone(context);
             result._isNormal = _isNormal;
+            result.RootTasks = RootTasks.Select(p => p.Clone(context)).ToList();
+            result.TasksWithBackground = TasksWithBackground.Select(p => p.CloneBaseCompoundTask(context)).ToList();
 
             return result;
         }
@@ -74,6 +82,8 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
             sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
+            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+            sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
 
             return sb.ToString();
         }
@@ -101,6 +111,8 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintShortObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
             sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
+            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+            sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
 
             return sb.ToString();
         }
@@ -128,6 +140,8 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintBriefObjListProp(n, nameof(TasksToProcess), TasksToProcess);
             sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
             sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
+            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+            sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
 
             return sb.ToString();
         }
@@ -168,6 +182,8 @@ namespace SymOntoClay.Core.Internal.Htn
             }
 
             sb.AppendLine($"{spaces}Visited compound tasks: [{string.Join(", ", VisitedCompoundTasks.Select(p => p.ToSystemString()))}]");
+            sb.AppendLine($"{spaces}Root tasks: [{string.Join(", ", RootTasks.Select(p => p.ToSystemString()))}]");
+            sb.AppendLine($"{spaces}Tasks with background: [{string.Join(", ", TasksWithBackground.Select(p => p.ToSystemString()))}]");
 
             return sb.ToString();
         }

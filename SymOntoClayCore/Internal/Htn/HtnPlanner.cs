@@ -59,12 +59,17 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private static List<StrongIdentifierValue> _previousRootTasksEmptyList = new List<StrongIdentifierValue>();
 
-        private HtnPlan BuildPlan(HtnPlannerGlobalContext tasksPlannerGlobalContext, BaseCompoundHtnTask rootTask)
+        private HtnPlan BuildPlan(HtnPlannerGlobalContext tasksPlannerGlobalContext, BaseHtnTask rootTask)
         {
             return BuildPlan(tasksPlannerGlobalContext, rootTask, _previousRootTasksEmptyList);
         }
 
-        private HtnPlan BuildPlan(HtnPlannerGlobalContext tasksPlannerGlobalContext, BaseCompoundHtnTask rootTask, List<StrongIdentifierValue> previousRootTasks)
+        private HtnPlan BuildPlan(HtnPlannerGlobalContext tasksPlannerGlobalContext, BaseHtnTask rootTask, List<StrongIdentifierValue> previousRootTasks)
+        {
+            return BuildPlan(tasksPlannerGlobalContext, rootTask, previousRootTasks, new List<BaseHtnTask> { rootTask });
+        }
+
+        private HtnPlan BuildPlan(HtnPlannerGlobalContext tasksPlannerGlobalContext, BaseHtnTask rootTask, List<StrongIdentifierValue> previousRootTasks, List<BaseHtnTask> processedTasks)
         {
             var rootTaskName = rootTask.Name;
 
@@ -80,10 +85,14 @@ namespace SymOntoClay.Core.Internal.Htn
             };
 
             buildPlanIterationContext.LocalCodeExecutionContext = new BuildPlanIterationLocalCodeExecutionContext(_context, _context.InstancesStorage.MainEntity.LocalCodeExecutionContext);
-            buildPlanIterationContext.TasksToProcess.Add(new BuiltPlanItem
+            
+            foreach(var processedTask in processedTasks)
             {
-                ProcessedTask = rootTask
-            });
+                buildPlanIterationContext.TasksToProcess.Add(new BuiltPlanItem
+                {
+                    ProcessedTask = processedTask
+                });
+            }
 
 #if DEBUG
             //Info("1E36D336-39B2-4548-BFCD-12E072D51755", $"buildPlanIterationContext = {buildPlanIterationContext}");
@@ -181,7 +190,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             foreach (var task in tasksWithBackground)
             {
-                if(!TryResolveBackground(task))
+                if(!TryResolveBackground(task, completedIteration))
                 {
                     completedIteration.MarkAsFailed();
                     return false;
@@ -191,7 +200,7 @@ namespace SymOntoClay.Core.Internal.Htn
             return true;
         }
 
-        private bool TryResolveBackground(BaseCompoundHtnTask task)
+        private bool TryResolveBackground(BaseCompoundHtnTask task, BuildPlanIterationContext completedIteration)
         {
 #if DEBUG
             Info("907C3ACD-58A6-4A63-AA46-D7507E892FF0", $"task = {task}");
@@ -199,7 +208,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             foreach(var item in task.Backgrounds)
             {
-                if(!TryResolveBackground(task, item))
+                if(!TryResolveBackground(task, item, completedIteration))
                 {
                     return false;
                 }
@@ -208,10 +217,24 @@ namespace SymOntoClay.Core.Internal.Htn
             return true;
         }
 
-        private bool TryResolveBackground(BaseCompoundHtnTask task, CompoundHtnTaskBackground background)
+        private bool TryResolveBackground(BaseCompoundHtnTask task, CompoundHtnTaskBackground background, BuildPlanIterationContext completedIteration)
         {
 #if DEBUG
             Info("86FC3019-CBF5-4AD5-AA4D-0E20BD12536E", $"background = {background}");
+#endif
+
+            var tasksPlannerGlobalContext = new HtnPlannerGlobalContext();
+
+            var tasksList = ConvertHtnCaseItemsToHtnTasks(background.Items, task.KindOfTask);
+
+#if DEBUG
+            Info("E385666D-485F-40B3-A53E-D7AFA67873B1", $"tasksList.Count = {tasksList.Count}");
+#endif
+
+            var backgroundPlan = BuildPlan(tasksPlannerGlobalContext, task, completedIteration.AllRootTasks, tasksList);
+
+#if DEBUG
+            Info("12B59D03-DD9C-4196-B8F8-E3DB3F4DE1F9", $"backgroundPlan = {backgroundPlan.ToDbgString()}");
 #endif
 
             throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
@@ -607,6 +630,22 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("ABD7A72A-2562-46EA-A42A-74CB6136D89D", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 
+            var tasksList = ConvertHtnCaseItemsToHtnTasks(items, requestingKindOfTask);
+
+            if(tasksList.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            ReplaceBuiltPlanItems(tasksList, clonedBuildPlanIterationContext);
+
+            ProcessIteration(tasksPlannerGlobalContext, clonedBuildPlanIterationContext);
+
+            //throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
+        }
+
+        private List<BaseHtnTask> ConvertHtnCaseItemsToHtnTasks(List<CompoundHtnTaskCaseItem> items, KindOfTask requestingKindOfTask)
+        {
             var tasksList = new List<BaseHtnTask>();
 
             foreach (var item in items)
@@ -621,19 +660,15 @@ namespace SymOntoClay.Core.Internal.Htn
                 //Info("2A728ED1-B0C8-4FC5-AB66-D978F97A91E3", $"task = {task}");
 #endif
 
-                if(task == null)
+                if (task == null)
                 {
-                    return;
+                    return null;
                 }
 
                 tasksList.Add(task);
             }
 
-            ReplaceBuiltPlanItems(tasksList, clonedBuildPlanIterationContext);
-
-            ProcessIteration(tasksPlannerGlobalContext, clonedBuildPlanIterationContext);
-
-            //throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
+            return tasksList;
         }
 
         private void ReplaceBuiltPlanItems(List<BaseHtnTask> tasksList, BuildPlanIterationContext buildPlanIterationContext)

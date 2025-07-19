@@ -146,21 +146,33 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private BuildPlanIterationContext GetTargetCompletedIteration(List<BuildPlanIterationContext> completedIterations)
         {
+            var filteredCompletedIterations = new List<BuildPlanIterationContext>();
 
-
-            //            if (completedIterations.Count > 1)
-            //            {
-#if DEBUG
-            foreach (var tmpItem in completedIterations)
+            foreach (var item in completedIterations)
             {
-                Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"tmpItem = {tmpItem.ToDbgString()}");
+#if DEBUG
+                Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"item = {item.ToDbgString()}");
+#endif
+
+                var tasksWithBackground = item.TasksWithBackground;
+
+                if (tasksWithBackground.IsNullOrEmpty())
+                {
+                    filteredCompletedIterations.Add(item);
+                    continue;
+                }
+
+                throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
+            }
+
+#if DEBUG
+            foreach (var item in filteredCompletedIterations)
+            {
+                Info("0DAE374E-968B-49C1-879C-EA62BC8CA4CB", $"item = {item.ToDbgString()}");
             }
 #endif
 
-            //throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
-            //}
-
-            return completedIterations.FirstOrDefault();
+            return filteredCompletedIterations.FirstOrDefault();
         }
 
         private enum PrepareBuildPlanIterationContextState

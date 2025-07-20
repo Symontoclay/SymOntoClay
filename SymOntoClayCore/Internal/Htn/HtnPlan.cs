@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Common;
+using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -18,6 +20,8 @@ namespace SymOntoClay.Core.Internal.Htn
         public static HtnPlan EmptyPlan { get; } = new HtnPlan();
 
         public List<HtnPlanItem> Items { get; set; } = new List<HtnPlanItem>();
+
+        public bool IsEmpty => Items.IsNullOrEmpty();
 
         /// <inheritdoc/>
         public override string ToString()
@@ -37,6 +41,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
             sb.PrintObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
@@ -60,6 +65,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
             sb.PrintShortObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
@@ -83,6 +89,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
             sb.PrintBriefObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
@@ -110,7 +117,8 @@ namespace SymOntoClay.Core.Internal.Htn
             var nextNSpaces = DisplayHelper.Spaces(nextN);
 
             var sb = new StringBuilder();
-            
+
+            sb.AppendLine($"{spaces}IsEmpty: {IsEmpty}");
             sb.AppendLine($"{spaces}Tasks to execution:");
             var i = 0;
             foreach(var item in Items)

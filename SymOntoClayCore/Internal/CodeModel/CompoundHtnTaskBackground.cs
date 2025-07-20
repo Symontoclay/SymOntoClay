@@ -1,10 +1,12 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Core.Internal.Htn;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -21,6 +23,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override CompoundHtnTaskBackground AsCompoundHtnTaskBackground => this;
 
         public TriggerConditionNode Condition { get; set; }
+
+        public HtnPlan Plan { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -47,6 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.Condition = Condition?.Clone(context);
+            result.Plan = Plan;
 
             FillUpCompoundHtnTaskItemsSection(result, context);
 
@@ -79,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //sb.PrintObjProp(n, nameof(Condition), Condition);
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-
+            Plan
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -93,7 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //sb.PrintShortObjProp(n, nameof(Condition), Condition);
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-
+            Plan
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -107,7 +112,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //sb.PrintBriefObjProp(n, nameof(Condition), Condition);
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-
+            Plan
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

@@ -237,6 +237,11 @@ namespace SymOntoClay.Core.Internal.Htn
             Info("12B59D03-DD9C-4196-B8F8-E3DB3F4DE1F9", $"backgroundPlan = {backgroundPlan.ToDbgString()}");
 #endif
 
+            if(backgroundPlan.IsEmpty)
+            {
+                return false;
+            }
+
             throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
         }
 

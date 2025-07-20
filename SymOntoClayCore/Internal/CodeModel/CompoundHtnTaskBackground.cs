@@ -84,7 +84,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //sb.PrintObjProp(n, nameof(Condition), Condition);
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            Plan
+            sb.PrintExisting(n, nameof(Plan), Plan);
+            
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -98,7 +99,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //sb.PrintShortObjProp(n, nameof(Condition), Condition);
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            Plan
+            sb.PrintExisting(n, nameof(Plan), Plan);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -112,7 +114,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //sb.PrintBriefObjProp(n, nameof(Condition), Condition);
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            Plan
+            sb.PrintExisting(n, nameof(Plan), Plan);
+
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

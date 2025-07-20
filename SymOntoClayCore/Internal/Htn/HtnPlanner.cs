@@ -242,7 +242,9 @@ namespace SymOntoClay.Core.Internal.Htn
                 return false;
             }
 
-            throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
+            background.Plan = backgroundPlan;
+
+            return true;
         }
 
         private enum PrepareBuildPlanIterationContextState

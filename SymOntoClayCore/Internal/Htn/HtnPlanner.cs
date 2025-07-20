@@ -166,10 +166,10 @@ namespace SymOntoClay.Core.Internal.Htn
             }
 
 #if DEBUG
-            foreach (var item in filteredCompletedIterations)
-            {
-                Info("0DAE374E-968B-49C1-879C-EA62BC8CA4CB", $"item = {item.ToDbgString()}");
-            }
+            //foreach (var item in filteredCompletedIterations)
+            //{
+            //    Info("0DAE374E-968B-49C1-879C-EA62BC8CA4CB", $"item = {item.ToDbgString()}");
+            //}
 #endif
 
             return filteredCompletedIterations.FirstOrDefault();
@@ -178,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Htn
         private bool TryResolveBackground(BuildPlanIterationContext completedIteration)
         {
 #if DEBUG
-            Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"completedIteration = {completedIteration.ToDbgString()}");
+            //Info("78AACDEE-639D-4F24-B5A6-46858255F991", $"completedIteration = {completedIteration.ToDbgString()}");
 #endif
 
             var tasksWithBackground = completedIteration.TasksWithBackground;
@@ -203,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Htn
         private bool TryResolveBackground(BaseCompoundHtnTask task, BuildPlanIterationContext completedIteration)
         {
 #if DEBUG
-            Info("907C3ACD-58A6-4A63-AA46-D7507E892FF0", $"task = {task}");
+            //Info("907C3ACD-58A6-4A63-AA46-D7507E892FF0", $"task = {task}");
 #endif
 
             foreach(var item in task.Backgrounds)
@@ -220,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Htn
         private bool TryResolveBackground(BaseCompoundHtnTask task, CompoundHtnTaskBackground background, BuildPlanIterationContext completedIteration)
         {
 #if DEBUG
-            Info("86FC3019-CBF5-4AD5-AA4D-0E20BD12536E", $"background = {background}");
+            //Info("86FC3019-CBF5-4AD5-AA4D-0E20BD12536E", $"background = {background}");
 #endif
 
             var tasksPlannerGlobalContext = new HtnPlannerGlobalContext();
@@ -228,13 +228,13 @@ namespace SymOntoClay.Core.Internal.Htn
             var tasksList = ConvertHtnCaseItemsToHtnTasks(background.Items, task.KindOfTask);
 
 #if DEBUG
-            Info("E385666D-485F-40B3-A53E-D7AFA67873B1", $"tasksList.Count = {tasksList.Count}");
+            //Info("E385666D-485F-40B3-A53E-D7AFA67873B1", $"tasksList.Count = {tasksList.Count}");
 #endif
 
             var backgroundPlan = BuildPlan(tasksPlannerGlobalContext, task, completedIteration.AllRootTasks, tasksList);
 
 #if DEBUG
-            Info("12B59D03-DD9C-4196-B8F8-E3DB3F4DE1F9", $"backgroundPlan = {backgroundPlan.ToDbgString()}");
+            //Info("12B59D03-DD9C-4196-B8F8-E3DB3F4DE1F9", $"backgroundPlan = {backgroundPlan.ToDbgString()}");
 #endif
 
             if(backgroundPlan.IsEmpty)

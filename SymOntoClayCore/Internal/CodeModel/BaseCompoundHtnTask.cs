@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             AppendCodeItem(source, context);
         }
-
+        
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {

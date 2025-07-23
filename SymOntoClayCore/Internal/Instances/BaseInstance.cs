@@ -242,20 +242,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-            if (targetLogicConditionalTriggersList.Any())
-            {
-                foreach (var targetTrigger in targetLogicConditionalTriggersList)
-                {
-                    var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
-                    _logicConditionalTriggersList.Add(triggerInstance);
-
-                    _globalTriggersStorage.Append(logger, triggerInstance);
-
-                    triggerInstance.Init(logger);
-                }
-            }
+            CreateConditionalTriggers(logger);
 
             _instanceState = InstanceState.Initialized;            
         }
@@ -413,6 +400,24 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunDeactivatorsOfStates(IMonitorLogger logger)
         {
+        }
+
+        protected virtual void CreateConditionalTriggers(IMonitorLogger logger)
+        {
+            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+            if (targetLogicConditionalTriggersList.Any())
+            {
+                foreach (var targetTrigger in targetLogicConditionalTriggersList)
+                {
+                    var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
+                    _logicConditionalTriggersList.Add(triggerInstance);
+
+                    _globalTriggersStorage.Append(logger, triggerInstance);
+
+                    triggerInstance.Init(logger);
+                }
+            }
         }
 
         protected virtual void RunFinalizationTriggers(IMonitorLogger logger)

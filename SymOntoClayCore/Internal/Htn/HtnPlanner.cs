@@ -227,11 +227,6 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("86FC3019-CBF5-4AD5-AA4D-0E20BD12536E", $"background = {background}");
 #endif
 
-            /*if(background.Plan != null)
-            {
-                throw new NotImplementedException();
-            }*/
-
             var tasksPlannerGlobalContext = new HtnPlannerGlobalContext();
 
             var tasksList = ConvertHtnCaseItemsToHtnTasks(background.Items, task.KindOfTask);
@@ -255,7 +250,7 @@ namespace SymOntoClay.Core.Internal.Htn
             background.CompiledFunctionBody = _compiler.Compile(backgroundPlan);
 
 #if DEBUG
-            Info("D6D35AE8-6082-4133-961E-CB359DBCA1D1", $"background.CompiledFunctionBody = {background.CompiledFunctionBody.ToDbgString()}");
+            //Info("D6D35AE8-6082-4133-961E-CB359DBCA1D1", $"background.CompiledFunctionBody = {background.CompiledFunctionBody.ToDbgString()}");
 #endif
 
             return true;

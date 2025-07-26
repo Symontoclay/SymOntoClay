@@ -48,14 +48,14 @@ namespace SymOntoClay.Core.Internal.Htn
             context[this] = result;
 
             result.ProcessedIndex = ProcessedIndex;
-            result.TasksToProcess = TasksToProcess/*.Select(p => p.Clone(context))*/.ToList();
-            result.VisitedCompoundTasks = VisitedCompoundTasks/*.Select(p => p.Clone(context))*/.ToList();
+            result.TasksToProcess = TasksToProcess.ToList();
+            result.VisitedCompoundTasks = VisitedCompoundTasks.ToList();
             result.LocalCodeExecutionContext = LocalCodeExecutionContext.Clone(context);
             result._isNormal = _isNormal;
-            result.PreviousRootTasks = PreviousRootTasks/*.Select(p => p.Clone(context))*/.ToList();
-            result.RootTask = RootTask;//?.Clone(context);
-            result.AllRootTasks = AllRootTasks/*.Select(p => p.Clone(context))*/.ToList();
-            result.TasksWithBackground = TasksWithBackground/*.Select(p => p.CloneBaseCompoundTask(context))*/.ToList();
+            result.PreviousRootTasks = PreviousRootTasks.ToList();
+            result.RootTask = RootTask;
+            result.AllRootTasks = AllRootTasks.ToList();
+            result.TasksWithBackground = TasksWithBackground.ToList();
 
             return result;
         }

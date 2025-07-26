@@ -21,9 +21,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _background = background;
 
 #if DEBUG
-            Info("9B79EC73-F673-4A56-B79C-4DBCBBB2ABDF", $"background.CompiledFunctionBody = {background.CompiledFunctionBody?.ToDbgString()}");
-            Info("D1D74832-CC30-45E2-95C1-1C1EE7216E90", $"background.Plan = {background.Plan?.ToDbgString()}");
-            Info("6E9FC834-A3D8-4ECB-AFD3-3D938E41C1B2", $"background.Condition == null = {background.Condition == null}");
+            //Info("9B79EC73-F673-4A56-B79C-4DBCBBB2ABDF", $"background.CompiledFunctionBody = {background.CompiledFunctionBody?.ToDbgString()}");
+            //Info("D1D74832-CC30-45E2-95C1-1C1EE7216E90", $"background.Plan = {background.Plan?.ToDbgString()}");
+            //Info("6E9FC834-A3D8-4ECB-AFD3-3D938E41C1B2", $"background.Condition == null = {background.Condition == null}");
 #endif
 
             var setBindingVariables = new BindingVariables();
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void DoSearch(IMonitorLogger logger)
         {
 #if DEBUG
-            Info("A113FF1E-EF91-480A-BED9-A888FC27CC10", "Run DoSearch");
+            //Info("A113FF1E-EF91-480A-BED9-A888FC27CC10", "Run DoSearch");
             //Info("0BC15273-C0D4-4103-A091-2A7D8260DBF1", $"_background.Holder = {_background.Holder}");
 #endif
 
@@ -137,7 +137,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private void ProcessSetResultWithNoItems(IMonitorLogger logger, string doTriggerSearchId, bool isPeriodic)
         {
 #if DEBUG
-            Info("22A115BC-1646-4250-9D91-AF5D02A1FAE6", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn};{_background.ToHumanizedLabel()}");
+            //Info("22A115BC-1646-4250-9D91-AF5D02A1FAE6", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn};{_background.ToHumanizedLabel()}");
 #endif
 
             if (_triggerConditionNodeObserverContext.IsOn)
@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("70DD5C0C-5DA9-46AD-AE3A-AF452F48E1CA", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};{_background.ToHumanizedLabel()}");
+            //Info("70DD5C0C-5DA9-46AD-AE3A-AF452F48E1CA", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};{_background.ToHumanizedLabel()}");
 #endif
 
             if (!isPeriodic)
@@ -159,11 +159,11 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("2595428A-7F07-4B7A-8969-82A31A6821A1", $"doTriggerSearchId = {doTriggerSearchId};{_background.ToHumanizedLabel()}");
+            //Info("2595428A-7F07-4B7A-8969-82A31A6821A1", $"doTriggerSearchId = {doTriggerSearchId};{_background.ToHumanizedLabel()}");
 #endif
 
 #if DEBUG
-            Info("433C2DBE-5065-4B3A-A3C4-F29375389A81", $"doTriggerSearchId = {doTriggerSearchId};Run!!!!!!!!!!!!;{_background.ToHumanizedLabel()}");
+            //Info("433C2DBE-5065-4B3A-A3C4-F29375389A81", $"doTriggerSearchId = {doTriggerSearchId};Run!!!!!!!!!!!!;{_background.ToHumanizedLabel()}");
 #endif
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);

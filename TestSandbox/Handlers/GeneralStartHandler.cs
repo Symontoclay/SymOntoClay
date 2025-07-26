@@ -120,6 +120,8 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
+            _world.Dispose();
+
             _logger.Info("40669EA9-0F77-4447-B128-5E940A3DCE2D", "End");
 
             Thread.Sleep(500);

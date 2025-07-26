@@ -5,25 +5,7 @@
     fun SomeOperator()
     {
        'Run SomeOperator' >> @>log;
-       wait 1;
-    }
-
-    fun SomeOperator2()
-    {
-       'Run SomeOperator2' >> @>log;
-       wait 1;
-    }
-
-    fun SomeOperator3()
-    {
-       'Run SomeOperator3' >> @>log;
-       wait 1;
-    }
-
-    fun SomeOperator4()
-    {
-       'Run SomeOperator4' >> @>log;
-       wait 1;
+       wait 5;
     }
 
     fun SomeBackgroundPrimitiveTaskOperator()

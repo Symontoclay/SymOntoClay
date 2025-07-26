@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Instances.TaskInstances
         {
             if(!codeItem.Backgrounds.IsNullOrEmpty())
             {
-                throw new NotImplementedException("53FF3664-A55F-41CC-880F-804F41FEC037");
+                //throw new NotImplementedException("53FF3664-A55F-41CC-880F-804F41FEC037");
             }
         }
 
@@ -23,7 +23,21 @@ namespace SymOntoClay.Core.Internal.Instances.TaskInstances
         {
             base.CreateConditionalTriggers(logger);
 
+#if DEBUG
+            Info("AF9E476B-3E6B-4BAF-ACCE-9A7F9523A6AB", $"BaseCompoundTaskInstance CreateConditionalTriggers");
+#endif
+
             //CompoundHtnTaskBackgroundTriggerInstance
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+#if DEBUG
+            Info("129AC325-98AB-40F8-A65D-D85084488B67", $"BaseCompoundTaskInstance OnDisposed");
+#endif
+
+            base.OnDisposed();
         }
     }
 }

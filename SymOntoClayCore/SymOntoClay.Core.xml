@@ -9382,6 +9382,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.TaskInstances.BaseCompoundTaskInstance.CreateConditionalTriggers(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.TaskInstances.BaseCompoundTaskInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.CompoundTaskInstance.KindOfInstance">
             <inheritdoc/>
         </member>

@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public BindingVariables ResetBindingVariables { get; set; } = new BindingVariables();
         public List<AstStatement> SetStatements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody SetCompiledFunctionBody { get; set; }
-
+        
         public List<AstStatement> ResetStatements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody ResetCompiledFunctionBody { get; set; }
 

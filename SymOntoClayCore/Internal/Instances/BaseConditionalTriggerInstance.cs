@@ -118,6 +118,47 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected abstract void DoSearch(IMonitorLogger logger);
 
+        protected void SetInitialTime()
+        {
+            var currentTicks = _dateTimeProvider.CurrentTicks;
+
+            if (_triggerConditionNodeObserverContext.IsOn)
+            {
+                if (!_triggerConditionNodeObserverContext.InitialResetTime.HasValue)
+                {
+                    _triggerConditionNodeObserverContext.InitialResetTime = currentTicks;
+                }
+
+                _triggerConditionNodeObserverContext.InitialSetTime = currentTicks;
+            }
+            else
+            {
+                if (_triggerConditionNodeObserverContext.InitialResetTime.HasValue)
+                {
+                    _triggerConditionNodeObserverContext.InitialResetTime = null;
+                }
+
+                if (!_triggerConditionNodeObserverContext.InitialSetTime.HasValue)
+                {
+                    _triggerConditionNodeObserverContext.InitialSetTime = currentTicks;
+                }
+            }
+        }
+
+        protected void SetIsOn(IMonitorLogger logger, string messagePointId, string doTriggerSearchId, bool value)
+        {
+            _triggerConditionNodeObserverContext.IsOn = value;
+
+            if (value)
+            {
+                logger.SetConditionalTrigger(messagePointId, doTriggerSearchId);
+            }
+            else
+            {
+                logger.ResetConditionalTrigger(messagePointId, doTriggerSearchId);
+            }
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

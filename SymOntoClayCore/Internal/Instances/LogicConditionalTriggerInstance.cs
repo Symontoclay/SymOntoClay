@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 setBindingVariables = new BindingVariables();
             }
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, KindOfTriggerCondition.SetCondition, trigger.SetBindingVariables, _localCodeExecutionContext);
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, KindOfTriggerCondition.SetCondition, setBindingVariables, _localCodeExecutionContext);
 
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
             _setConditionalTriggerObserver.AddOnChangedHandler(this);
@@ -220,29 +220,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 DoSearchWithNoResetCondition(logger, doTriggerSearchId);
             }
 
-            var currentTicks = _dateTimeProvider.CurrentTicks;
-
-            if (_triggerConditionNodeObserverContext.IsOn)
-            {
-                if(!_triggerConditionNodeObserverContext.InitialResetTime.HasValue)
-                {
-                    _triggerConditionNodeObserverContext.InitialResetTime = currentTicks;
-                }
-
-                _triggerConditionNodeObserverContext.InitialSetTime = currentTicks;
-            }
-            else
-            {
-                if(_triggerConditionNodeObserverContext.InitialResetTime.HasValue)
-                {
-                    _triggerConditionNodeObserverContext.InitialResetTime = null;
-                }
-
-                if(!_triggerConditionNodeObserverContext.InitialSetTime.HasValue)
-                {
-                    _triggerConditionNodeObserverContext.InitialSetTime = currentTicks;
-                }
-            }
+            SetInitialTime();
 
             if(_hasRuleInstancesList && oldIsOn != _triggerConditionNodeObserverContext.IsOn)
             {
@@ -262,20 +240,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             logger.EndDoTriggerSearch("4BB95054-441B-4372-9B33-7429D189BF5D", doTriggerSearchId);
-        }
-
-        private void SetIsOn(IMonitorLogger logger, string messagePointId, string doTriggerSearchId, bool value)
-        {
-            _triggerConditionNodeObserverContext.IsOn = value;
-
-            if (value)
-            {
-                logger.SetConditionalTrigger(messagePointId, doTriggerSearchId);
-            }
-            else
-            {
-                logger.ResetConditionalTrigger(messagePointId, doTriggerSearchId);
-            }            
         }
 
         private void DoSearchWithEqualConditions(IMonitorLogger logger, string doTriggerSearchId)

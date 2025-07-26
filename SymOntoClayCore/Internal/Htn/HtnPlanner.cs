@@ -2,10 +2,12 @@
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Instances;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Htn
@@ -16,13 +18,15 @@ namespace SymOntoClay.Core.Internal.Htn
             : base(context.Logger)
         {
             _context = context;
-            _mainEntity = _context.InstancesStorage.MainEntity;
-            _tasksStorage = _context.Storage.GlobalStorage.TasksStorage;
+            _mainEntity = context.InstancesStorage.MainEntity;
+            _tasksStorage = context.Storage.GlobalStorage.TasksStorage;
+            _compiler = context.Compiler;
         }
 
         private readonly IEngineContext _context;
         private readonly AppInstance _mainEntity;
         private readonly ITasksStorage _tasksStorage;
+        private ICompiler _compiler;
 
         public bool HasRootTasks => _mainEntity == null ? false : GetRootTasks().Count > 0;
 
@@ -243,6 +247,11 @@ namespace SymOntoClay.Core.Internal.Htn
             }
 
             background.Plan = backgroundPlan;
+            background.CompiledFunctionBody = _compiler.Compile(backgroundPlan);
+
+#if DEBUG
+            Info("D6D35AE8-6082-4133-961E-CB359DBCA1D1", $"background.CompiledFunctionBody = {background.CompiledFunctionBody.ToDbgString()}");
+#endif
 
             return true;
         }

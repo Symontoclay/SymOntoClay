@@ -2,6 +2,7 @@
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.Htn;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -25,6 +26,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public TriggerConditionNode Condition { get; set; }
 
         public HtnPlan Plan { get; set; }
+
+        public CompiledFunctionBody CompiledFunctionBody { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -52,6 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Condition = Condition?.Clone(context);
             result.Plan = Plan;
+            result.CompiledFunctionBody = CompiledFunctionBody?.Clone(context);
 
             FillUpCompoundHtnTaskItemsSection(result, context);
 
@@ -85,7 +89,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintExisting(n, nameof(Plan), Plan);
-            
+            sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -100,6 +105,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintExisting(n, nameof(Plan), Plan);
+            sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -115,6 +121,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintExisting(n, nameof(Plan), Plan);
+            sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -132,14 +139,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var sb = new StringBuilder();
 
-            sb.Append("background");
-
-            if (Condition != null)
-            {
-                sb.Append($" {Condition.ToHumanizedString(options)}");
-            }
-
-            sb.AppendLine();
+            sb.AppendLine(ToHumanizedLabel(options));
 
             sb.Append(ContentToHumanizedString(options));
 
@@ -149,13 +149,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return ToHumanizedString(options);
+            var sb = new StringBuilder();
+
+            sb.Append("background");
+
+            if (Condition != null)
+            {
+                sb.Append($" {Condition.ToHumanizedString(options)}");
+            }
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("2BC5DCEF-B94B-4F58-B1F8-D21F9B518565");
+            return new MonitoredHumanizedLabel()
+            {
+                Label = ToHumanizedLabel()
+            };
         }
     }
 }

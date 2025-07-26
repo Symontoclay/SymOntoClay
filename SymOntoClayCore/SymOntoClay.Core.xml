@@ -8740,6 +8740,39 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseAddingFactTriggerInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.IsOn">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.ActivateIdleAction(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
@@ -8926,33 +8959,6 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseSimpleConditionalTriggerInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.Id">
             <inheritdoc/>
         </member>
@@ -9100,9 +9106,6 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.NamesList">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.IsOn">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.GetLongHashCode">
             <inheritdoc/>
         </member>
@@ -9115,34 +9118,10 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.RemoveOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedNamedTriggerInstanceHandler)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.DoSearch(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.BaseTriggerConditionNodeObserver.OnDisposed">

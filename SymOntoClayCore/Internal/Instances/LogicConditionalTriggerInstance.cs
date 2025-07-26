@@ -22,13 +22,10 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
-using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
-using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using SymOntoClay.Core.Internal.Storage;
@@ -37,44 +34,20 @@ using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstance : BaseComponent, INamedTriggerInstance,
-        IObjectToString, IObjectToShortString, IObjectToBriefString,
+    public class LogicConditionalTriggerInstance : BaseConditionalTriggerInstance, INamedTriggerInstance,
         IOnChangedLogicConditionalTriggerObserverHandler,
         ILogicConditionalTriggerInstanceSerializedEventsHandler
     {
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
-            : base(context.Logger)
+            : base(parent, context, parentStorage, parentCodeExecutionContext)
         {
-            Id = NameHelper.GetNewEntityNameString();
-
-            _executionCoordinator = parent.ExecutionCoordinator;
-            _context = context;
-            _globalLogicalStorage = context.Storage.GlobalStorage.LogicalStorage;
-            _parent = parent;
             _trigger = trigger;
             _namesList = trigger.NamesList;
             _hasNames = !_namesList.IsNullOrEmpty();
-            _dateTimeProvider = _context.DateTimeProvider;
-
-            _activeObjectContext = context.ActiveObjectContext;
-            _threadPool = context.AsyncEventsThreadPool;
-            _serializationAnchor = new SerializationAnchor();
-
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
-            var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
-            _storage = new LocalStorage(localStorageSettings);
-            localCodeExecutionContext.Storage = _storage;
-            localCodeExecutionContext.Holder = parent.Name;
-            localCodeExecutionContext.Instance = parent;
-
-            _localCodeExecutionContext = localCodeExecutionContext;
-
-            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
             _ruleInstancesList = _trigger.RuleInstancesList;
 
@@ -115,51 +88,24 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
                 _resetConditionalTriggerObserver.AddOnChangedHandler(this);
             }
-
-            _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
-            _activeObject.PeriodicMethod = Handler;
         }
         
-        public string Id { get; }
-
-        private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
-        private readonly IDateTimeProvider _dateTimeProvider;
-
-        private IActiveObjectContext _activeObjectContext;
-        private ICustomThreadPool _threadPool;
-        private SerializationAnchor _serializationAnchor;
-
-        private readonly IExecutionCoordinator _executionCoordinator;
-        private readonly IEngineContext _context;
-        private readonly ILogicalStorage _globalLogicalStorage;
-        private readonly BaseInstance _parent;
         private readonly InlineTrigger _trigger;
         private readonly IList<StrongIdentifierValue> _namesList;
         private readonly bool _hasNames;
         private readonly List<RuleInstance> _ruleInstancesList;
         private readonly bool _hasRuleInstancesList;
-        private readonly IStorage _storage;
-        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
+        
         private readonly LogicConditionalTriggerObserver _setConditionalTriggerObserver;
         private readonly LogicConditionalTriggerObserver _resetConditionalTriggerObserver;
         private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
         private readonly LogicConditionalTriggerExecutor _resetConditionalTriggerExecutor;
 
-        private readonly object _lockObj = new object();
-        private volatile bool _needRun;
-
-        private int _runInterval = 100;
-
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
 
-        private IActivePeriodicObject _activeObject;
-
         /// <inheritdoc/>
         public IList<StrongIdentifierValue> NamesList => _namesList;
-
-        /// <inheritdoc/>
-        public bool IsOn => _triggerConditionNodeObserverContext.IsOn;
 
         /// <inheritdoc/>
         public ulong GetLongHashCode()
@@ -213,13 +159,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private object _onChangedHandlersLockObj = new object();
         private List<IOnChangedNamedTriggerInstanceHandler> _onChangedHandlers = new List<IOnChangedNamedTriggerInstanceHandler>();
 
-        public void Init(IMonitorLogger logger)
-        {
-            _activeObject.Start();
-
-            _needRun = true;
-        }
-
         void IOnChangedLogicConditionalTriggerObserverHandler.Invoke()
         {
             lock (_lockObj)
@@ -249,39 +188,8 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private bool Handler(CancellationToken cancellationToken)
-        {
-            try
-            {
-#if DEBUG
-                //Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", $"_needRun = {_needRun};{_trigger.ToHumanizedLabel()}");
-#endif
-
-                Thread.Sleep(_runInterval);
-
-                lock (_lockObj)
-                {
-                    if (!_needRun)
-                    {
-                        return true;
-                    }
-
-                    _needRun = false;
-                }
-
-                DoSearch(Logger);
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                Error("BB283A28-43CB-4B3B-957A-054B699039EE", e);
-
-                throw;
-            }
-        }
-
-        private void DoSearch(IMonitorLogger logger)
+        /// <inheritdoc/>
+        protected override void DoSearch(IMonitorLogger logger)
         {
             var doTriggerSearchId = logger.DoTriggerSearch("8817B327-D587-4D5E-A5B6-25D7DFED1FDA", _parent.Name.ToHumanizedLabel(), _trigger.Holder.ToHumanizedLabel(), _trigger.ToLabel(logger));
 
@@ -698,10 +606,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _activeObject.Dispose();
-
-            _serializationAnchor.Dispose();
-
             _setConditionalTriggerObserver.RemoveOnChangedHandler(this);
             _setConditionalTriggerObserver.Dispose();
 
@@ -717,69 +621,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _onChangedHandlers.Clear();
 
             base.OnDisposed();
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return ToString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            sb.Append($"{spaces}{nameof(Id)} = {Id}");
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString()
-        {
-            return ToShortString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString(uint n)
-        {
-            return this.GetDefaultToShortStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToShortString.PropertiesToShortString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            sb.Append($"{spaces}{nameof(Id)} = {Id}");
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString()
-        {
-            return ToBriefString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString(uint n)
-        {
-            return this.GetDefaultToBriefStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToBriefString.PropertiesToBriefString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            sb.Append($"{spaces}{nameof(Id)} = {Id}");
-            return sb.ToString();
         }
     }
 }

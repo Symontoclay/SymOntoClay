@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Before = source.Before?.Clone(context);
             After = source.After?.Clone(context);
             Cases = source.Cases?.Select(p => p.Clone(context))?.ToList();
-            Backgrounds = source.Backgrounds?.Select(p => p.Clone(context))?.ToList();
+            Backgrounds = source.Backgrounds.Select(p => p.Clone(context))?.ToList();
 
             AppendCodeItem(source, context);
         }

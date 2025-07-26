@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Condition = Condition?.Clone(context);
             result.Plan = Plan;
-            result.CompiledFunctionBody = CompiledFunctionBody?.Clone(context);
+            result.CompiledFunctionBody = CompiledFunctionBody;
 
             FillUpCompoundHtnTaskItemsSection(result, context);
 

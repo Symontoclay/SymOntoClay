@@ -227,6 +227,11 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("86FC3019-CBF5-4AD5-AA4D-0E20BD12536E", $"background = {background}");
 #endif
 
+            /*if(background.Plan != null)
+            {
+                throw new NotImplementedException();
+            }*/
+
             var tasksPlannerGlobalContext = new HtnPlannerGlobalContext();
 
             var tasksList = ConvertHtnCaseItemsToHtnTasks(background.Items, task.KindOfTask);

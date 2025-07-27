@@ -66,14 +66,14 @@ namespace SymOntoClay.Core.Internal.Htn
                 (_executionState == ExecutionState.Init || _executionState == ExecutionState.WaitingForPlanBuilding))
             {
 #if DEBUG
-                Info("A45BC6E5-469E-4842-8890-CAC83FAF8CBE", $"_planExecutionIterationsMaxCount = {_planExecutionIterationsMaxCount}");
-                Info("BEF87933-2FF6-4D52-95CE-E938FB8D18AA", $"_runPlanExecutionIterations = {_runPlanExecutionIterations}");
+                //Info("A45BC6E5-469E-4842-8890-CAC83FAF8CBE", $"_planExecutionIterationsMaxCount = {_planExecutionIterationsMaxCount}");
+                //Info("BEF87933-2FF6-4D52-95CE-E938FB8D18AA", $"_runPlanExecutionIterations = {_runPlanExecutionIterations}");
 #endif
 
                 if(_runPlanExecutionIterations >= _planExecutionIterationsMaxCount)
                 {
 #if DEBUG
-                    Info("F57594AA-164C-48AF-A7BA-020E46F0E993", $"_runPlanExecutionIterations >= _planExecutionIterationsMaxCount");
+                    //Info("F57594AA-164C-48AF-A7BA-020E46F0E993", $"_runPlanExecutionIterations >= _planExecutionIterationsMaxCount");
 #endif
 
                     return false;
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
 #if DEBUG
                 //Info("3271453A-496B-4BE6-8D14-EDF93444E44B", $"_plan = {_plan}");
-                Info("204B2435-FC12-46EB-B869-CADAEB74FD9A", $"_plan = {_plan.ToDbgString()}");
+                //Info("204B2435-FC12-46EB-B869-CADAEB74FD9A", $"_plan = {_plan.ToDbgString()}");
 #endif
 
                 _executionState = ExecutionState.WaitingForStartPlanExecution;
@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 var compiledFunctionBody = _compiler.Compile(_plan);
 
 #if DEBUG
-                Info("4B419A0B-0396-4714-AAA9-4E94F4251178", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
+                //Info("4B419A0B-0396-4714-AAA9-4E94F4251178", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
 #endif
 
                 var mainEntity = _context.InstancesStorage.MainEntity;

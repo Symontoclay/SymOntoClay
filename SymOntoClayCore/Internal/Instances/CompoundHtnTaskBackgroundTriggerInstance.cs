@@ -28,16 +28,15 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var setBindingVariables = new BindingVariables();
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, background.Condition, KindOfTriggerCondition.SetCondition, setBindingVariables, _localCodeExecutionContext);
+            _conditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, background.Condition, KindOfTriggerCondition.SetCondition, setBindingVariables, _localCodeExecutionContext);
 
-            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, background.Condition, KindOfTriggerCondition.SetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
-            _setConditionalTriggerObserver.AddOnChangedHandler(this);
+            _conditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, background.Condition, KindOfTriggerCondition.SetCondition, _conditionalTriggerExecutor.LocalCodeExecutionContext);
+            _conditionalTriggerObserver.AddOnChangedHandler(this);
         }
 
-        private CompoundHtnTaskBackground _background;
-        //private 
-        private readonly LogicConditionalTriggerObserver _setConditionalTriggerObserver;
-        private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
+        private CompoundHtnTaskBackground _background; 
+        private readonly LogicConditionalTriggerObserver _conditionalTriggerObserver;
+        private readonly LogicConditionalTriggerExecutor _conditionalTriggerExecutor;
 
         void IOnChangedLogicConditionalTriggerObserverHandler.Invoke()
         {
@@ -89,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             logger.RunSetExprOfConditionalTrigger("9048A5A9-8FC7-4090-82FC-AD301169DB48", doTriggerSearchId, _background.Condition.ToLabel(logger));
 
-            var setResult = _setConditionalTriggerExecutor.Run(out List<List<VarInstance>> setVarList);
+            var setResult = _conditionalTriggerExecutor.Run(out List<List<VarInstance>> setVarList);
 
             logger.EndRunSetExprOfConditionalTrigger("F2774531-0FD2-40F3-AE74-25E62317C0A1", doTriggerSearchId, _background.Condition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 

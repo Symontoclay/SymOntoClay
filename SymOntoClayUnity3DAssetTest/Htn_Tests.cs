@@ -1646,6 +1646,83 @@ primitive task SomeAfterPrimitiveTask
 #if PARALLELIZABLE_TESTS
         [Parallelizable]
 #endif
+        public void CompoundHtnTaskBackground_Case1()
+        {
+            var text = """"
+                app PeaceKeeper
+                {
+                    root task `SomeCompoundTask`;
+
+                    fun SomeOperator()
+                    {
+                       'Run SomeOperator' >> @>log;
+                       wait 5;
+                    }
+
+                    fun SomeBackgroundPrimitiveTaskOperator()
+                    {
+                        'Run SomeBackgroundPrimitiveTaskOperator' >> @>log;
+                    }
+                }
+
+                compound task SomeCompoundTask
+                {
+                    case
+                    {
+                        SomePrimitiveTask;
+                    }
+
+                    background each 1
+                    {
+                        SomeBackgroundPrimitiveTask;
+                    }
+                }
+
+                primitive task SomePrimitiveTask
+                {
+                    operator SomeOperator();
+                }
+
+                primitive task SomeBackgroundPrimitiveTask
+                {
+                    operator SomeBackgroundPrimitiveTaskOperator();
+                }
+                """";
+
+            var wasRunSomeOperator = false;
+            var wasSomeBackgroundPrimitiveTaskOperator = false;
+
+            var builder = new BehaviorTestEngineInstanceBuilder();
+            builder.UseTimeoutToEnd(15000);
+            builder.TestedCode(text);
+            builder.LogHandler((message) => { 
+                switch(message)
+                {
+                    case "Run SomeOperator":
+                        wasRunSomeOperator = true;
+                        break;
+
+                    case "Run SomeBackgroundPrimitiveTaskOperator":
+                        wasSomeBackgroundPrimitiveTaskOperator = true; 
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(message), message, null);
+                }
+            });
+
+            var testInstance = builder.Build();
+            var executionResult = testInstance.Run();
+
+            Assert.AreEqual(true, executionResult);
+            Assert.AreEqual(true, wasRunSomeOperator);
+            Assert.AreEqual(true, wasSomeBackgroundPrimitiveTaskOperator);
+        }
+
+        [Test]
+#if PARALLELIZABLE_TESTS
+        [Parallelizable]
+#endif
         public void PrimitiveHtnTaskPrecondition_Case1()
         {
             var text = @"app PeaceKeeper

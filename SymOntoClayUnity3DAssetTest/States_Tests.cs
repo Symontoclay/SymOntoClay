@@ -30,7 +30,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     public class States_Tests
     {
         [Test]
+#if PARALLELIZABLE_TESTS
         [Parallelizable]
+#endif
         public void Case1()
         {
             var text = @"app PeaceKeeper

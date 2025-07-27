@@ -50,7 +50,7 @@
         /// Enables using timeout and sets a custom timeout.
         /// Only for using with handlers which don't return any result.
         /// </summary>
-        /// <param name="timeoutToEnd">Custom timeout.</param>
+        /// <param name="timeoutToEnd">Custom timeout in milliseconds.</param>
         /// <returns>The instance of the builder (self reference).</returns>
         IBehaviorTestEngineInstanceBuilder UseTimeoutToEnd(int timeoutToEnd);
 

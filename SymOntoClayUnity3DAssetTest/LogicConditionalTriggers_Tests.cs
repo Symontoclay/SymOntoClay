@@ -441,7 +441,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual("#a", message);
+                        Assert.AreEqual("#`a`", message);
                         break;
 
                     case 3:
@@ -1677,7 +1677,7 @@ app PeaceKeeper
                         break;
 
                     case 2:
-                        Assert.AreEqual("#a", message);
+                        Assert.AreEqual("#`a`", message);
                         break;
 
                     default:
@@ -1717,7 +1717,7 @@ app PeaceKeeper
                         break;
 
                     case 2:
-                        Assert.AreEqual("#a", message);
+                        Assert.AreEqual("#`a`", message);
                         break;
 
                     default:

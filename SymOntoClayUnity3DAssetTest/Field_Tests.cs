@@ -504,7 +504,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(barrel)", message);
+                            Assert.AreEqual("#@(`barrel`)", message);
                             return true;
 
                         case 3:
@@ -637,7 +637,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("dog", message);
+                            Assert.AreEqual("`dog`", message);
                             return true;
 
                         case 3:

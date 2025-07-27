@@ -3059,7 +3059,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual("m4a1", message);
+                            Assert.AreEqual("`M4A1`", message);
                             break;
 
                         case 2:

@@ -159,7 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var varNamesList = RuleInstanceHelper.GetUniqueVarNames(fact);
             Assert.IsNotNull(varNamesList);
             Assert.AreEqual(1, varNamesList.Count);
-            Assert.AreEqual("$y", varNamesList[0]);
+            Assert.AreEqual("$`y`", varNamesList[0]);
         }
 
         [Test]
@@ -197,8 +197,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var varNamesList = RuleInstanceHelper.GetUniqueVarNames(fact);
             Assert.IsNotNull(varNamesList);
             Assert.AreEqual(2, varNamesList.Count);
-            Assert.AreEqual("$x", varNamesList[0]);
-            Assert.AreEqual("$y", varNamesList[1]);
+            Assert.AreEqual("$`x`", varNamesList[0]);
+            Assert.AreEqual("$`y`", varNamesList[1]);
         }
 
         [Test]
@@ -212,7 +212,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var varNamesList = RuleInstanceHelper.GetUniqueVarNamesWithPrefix(baseVarName, fact);
             Assert.IsNotNull(varNamesList);
             Assert.AreEqual(1, varNamesList.Count);
-            Assert.AreEqual("$x", varNamesList[0]);
+            Assert.AreEqual("$`x`", varNamesList[0]);
         }
 
         [Test]

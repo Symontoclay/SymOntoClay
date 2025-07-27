@@ -42,10 +42,18 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             var kindOfOperator = expression.KindOfOperator;
 
+#if DEBUG
+            Info("A626E223-CC31-4EA1-8985-878123435CB4", $"kindOfOperator = {kindOfOperator}");
+#endif
+
             switch(kindOfOperator)
             {
                 case KindOfOperator.Assign:
                     RunAssignBinaryOperator(expression);
+                    break;
+
+                case KindOfOperator.Point:
+                    RunPointOperator(expression);
                     break;
 
                 default:
@@ -143,6 +151,19 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                 }
                                 break;
 
+                            case KindOfOperator.Point:
+                                {
+                                    RunPointOperator(expression as BinaryOperatorAstExpression);
+
+                                    var command = new IntermediateScriptCommand();
+                                    command.OperationCode = OperationCode.CallBinOp;
+                                    command.KindOfOperator = KindOfOperator.Assign;
+                                    command.AnnotatedItem = expression;
+
+                                    AddCommand(command);
+                                }                                
+                                break;
+
                             default:
                                 {
                                     RunUsualBinaryOperator(expression as BinaryOperatorAstExpression);
@@ -166,6 +187,24 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #if DEBUG
             //DbgPrintCommands();
 #endif
+        }
+
+        private void RunPointOperator(BinaryOperatorAstExpression expression)
+        {
+            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
+            leftNode.Run(expression.Left);
+            AddCommands(leftNode.Result);
+
+            var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.DirectAllCases);
+            rightNode.Run(expression.Right);
+            AddCommands(rightNode.Result);
+
+            var command = new IntermediateScriptCommand();
+            command.OperationCode = OperationCode.CallBinOp;
+            command.KindOfOperator = expression.KindOfOperator;
+            command.AnnotatedItem = expression;
+
+            AddCommand(command);
         }
 
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)

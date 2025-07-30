@@ -794,11 +794,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parametersCount);
+                    namedParameters = TakeNamedParametersOld(parametersCount);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParameters(parametersCount);
+                    positionedParameters = TakePositionedParametersOld(parametersCount);
                     break;
 
                 default:
@@ -1202,7 +1202,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCallUnOp(ScriptCommand currentCommand)
         {
-            var paramsList = TakePositionedParameters(1);
+            var paramsList = TakePositionedParametersOld(1);
 
             var kindOfOperator = currentCommand.KindOfOperator;
 
@@ -1214,7 +1214,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCallBinOp(ScriptCommand currentCommand)
         {
-            var paramsList = TakePositionedParameters(2);
+            var paramsList = TakePositionedParametersOld(2);
 
             var kindOfOperator = currentCommand.KindOfOperator;
 
@@ -1402,6 +1402,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
+        [Obsolete]
         private void ProcessLoadFromVar()
         {
             var varName = _currentCodeFrame.ValuesStack.Pop();
@@ -1421,6 +1422,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
+        [Obsolete]
         private void ProcessTryLoadFromStrongIdentifier()
         {
             var conceptValue = _currentCodeFrame.ValuesStack.Pop();
@@ -1505,7 +1507,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            var positionedParameters = TakePositionedParameters(currentCommand.CountParams);
+            var positionedParameters = TakePositionedParametersOld(currentCommand.CountParams);
 
             if (positionedParameters.Count == 1)
             {
@@ -1837,7 +1839,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<Value> TakePositionedParameters(int count)
+        [Obsolete]
+        private List<Value> TakePositionedParametersOld(int count)
         {
             var result = new List<Value>();
 
@@ -1853,9 +1856,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(int count)
+        [Obsolete]
+        private Dictionary<StrongIdentifierValue, Value> TakeNamedParametersOld(int count)
         {
-            var rawParamsList = TakePositionedParameters(count * 2);
+            var rawParamsList = TakePositionedParametersOld(count * 2);
 
             var result = new Dictionary<StrongIdentifierValue, Value>();
 
@@ -1890,11 +1894,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parametersCount);
+                    namedParameters = TakeNamedParametersOld(parametersCount);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParameters(parametersCount);
+                    positionedParameters = TakePositionedParametersOld(parametersCount);
                     break;
 
                 default:
@@ -2138,7 +2142,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parametersCount);
+                    namedParameters = TakeNamedParametersOld(parametersCount);
                     foreach(var item in namedParameters)
                     {
                         Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", callMethodId, item.Key, item.Value);
@@ -2146,7 +2150,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParameters(parametersCount);
+                    positionedParameters = TakePositionedParametersOld(parametersCount);
                     {
                         var n = 0;
 
@@ -2919,7 +2923,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessSetInheritance()
         {
-            var paramsList = TakePositionedParameters(4);
+            var paramsList = TakePositionedParametersOld(4);
 
             var inheritanceItem = new InheritanceItem();
             DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritanceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
@@ -2941,7 +2945,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessSetNotInheritance()
         {
-            var paramsList = TakePositionedParameters(4);
+            var paramsList = TakePositionedParametersOld(4);
 
             var inheritanceItem = new InheritanceItem();
             DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritanceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);

@@ -395,11 +395,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.LoadFromVar:
-                        ProcessLoadFromVar();
+                        //ProcessLoadFromVar();
                         break;
 
                     case OperationCode.TryLoadFromStrongIdentifier:
-                        ProcessTryLoadFromStrongIdentifier();
+                        //ProcessTryLoadFromStrongIdentifier();
                         break;
 
                     case OperationCode.VarDecl:

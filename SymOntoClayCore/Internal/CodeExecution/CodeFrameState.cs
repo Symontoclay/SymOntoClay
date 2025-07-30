@@ -6,6 +6,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public enum CodeFrameState
     {
-        BeginningCommandExacution
+        BeginningCommandExecution
     }
 }

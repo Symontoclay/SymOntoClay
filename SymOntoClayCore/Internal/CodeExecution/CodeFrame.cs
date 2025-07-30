@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
+        public CodeFrameState State { get; set; } = CodeFrameState.BeginningCommandExacution;
         public SEHGroup CurrentSEHGroup { get; set; }
         public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
         public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();        
@@ -65,6 +66,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public Stack<CodeFrameEvnPart> CodeFrameEvnPartsStack { get; set; } = new Stack<CodeFrameEvnPart>();
         public IInstance CompoundTaskInstance { get; set; }
         public CallMode CallMode => Metadata?.Kind == KindOfCodeEntity.PreConstructor ? CallMode.PreConstructor : CallMode.Default;
+        public bool ForParameterValueResolving { get; set; }
+        public List<Value> ResolvedParameterValues { get; set; }
+        public int CurrentPositionOfResolvedParameter { get; set; }
+        public Value CurrentParameterValue { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -88,6 +93,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
+
+            sb.AppendLine($"{spaces}{nameof(State)} = {State}");
 
             sb.PrintObjProp(n, nameof(CurrentSEHGroup), CurrentSEHGroup);
 
@@ -125,6 +132,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
+            sb.AppendLine($"{spaces}{nameof(ForParameterValueResolving)} = {ForParameterValueResolving}");
+            sb.PrintObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvedParameter)} = {CurrentPositionOfResolvedParameter}");
+            sb.PrintObjProp(n, nameof(CurrentParameterValue), CurrentParameterValue);
+
             return sb.ToString();
         }
 
@@ -150,6 +162,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
+
+            sb.AppendLine($"{spaces}{nameof(State)} = {State}");
 
             sb.PrintShortObjProp(n, nameof(CurrentSEHGroup), CurrentSEHGroup);
 
@@ -187,6 +201,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
+            sb.AppendLine($"{spaces}{nameof(ForParameterValueResolving)} = {ForParameterValueResolving}");
+            sb.PrintShortObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvedParameter)} = {CurrentPositionOfResolvedParameter}");
+            sb.PrintShortObjProp(n, nameof(CurrentParameterValue), CurrentParameterValue);
+
             return sb.ToString();
         }
 
@@ -212,6 +231,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
+
+            sb.AppendLine($"{spaces}{nameof(State)} = {State}");
 
             sb.PrintBriefObjProp(n, nameof(CurrentSEHGroup), CurrentSEHGroup);
 
@@ -248,6 +269,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(CompoundTaskInstance), CompoundTaskInstance);
 
             sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
+
+            sb.AppendLine($"{spaces}{nameof(ForParameterValueResolving)} = {ForParameterValueResolving}");
+            sb.PrintBriefObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvedParameter)} = {CurrentPositionOfResolvedParameter}");
+            sb.PrintBriefObjProp(n, nameof(CurrentParameterValue), CurrentParameterValue);
 
             return sb.ToString();
         }
@@ -310,6 +336,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             sb.AppendLine($"{spaces}End Arguments");
 
+            sb.AppendLine($"{spaces}State: {State}");
+            sb.AppendLine($"{spaces}ForParameterValueResolving: {ForParameterValueResolving}");
+
             sb.AppendLine($"{spaces}Begin Code");
 
             foreach (var commandItem in CompiledFunctionBody.Commands)
@@ -337,6 +366,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 sb.AppendLine(stackItem.ToDbgString(nextN));
             }
             sb.AppendLine($"{spaces}End CodeFrameEvnParts Stack");
+
+            /*ResolvedParameterValues
+            CurrentPositionOfResolvedParameter
+            CurrentParameterValue*/
 
             return sb.ToString();
         }

@@ -1214,7 +1214,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCallBinOp(ScriptCommand currentCommand)
         {
-            var paramsList = TakePositionedParametersOld(2);
+            _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+
+            var paramsList = TakePositionedParameters(2);
 
             var kindOfOperator = currentCommand.KindOfOperator;
 
@@ -1837,6 +1839,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 SetUpCurrentCodeFrame(lastProcessStatus);
             }
+        }
+
+        private List<Value> TakePositionedParameters(int count)
+        {
+#if DEBUG
+            Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
+#endif
+
+            throw new NotImplementedException("137754CB-26DF-4F7A-A223-E9289235F558");
         }
 
         [Obsolete]

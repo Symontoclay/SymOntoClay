@@ -362,6 +362,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
+#if DEBUG
+                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+#endif
+
                 var currentPosition = currentCodeFrame.CurrentPosition;
 
                 var compiledFunctionBodyCommands = currentCodeFrame.CompiledFunctionBody.Commands;
@@ -1216,9 +1220,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
 
-            var paramsList = TakePositionedParameters(2);
-
             var kindOfOperator = currentCommand.KindOfOperator;
+
+#if DEBUG
+            Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"kindOfOperator = {kindOfOperator}");
+#endif
+
+            var callBinOpTakeParametersSettings = GetCallBinOpTakeParametersSettings(kindOfOperator);
+
+#if DEBUG
+            Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callBinOpTakeParametersSettings.NeedRevers = {callBinOpTakeParametersSettings.NeedRevers}");
+            Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix}");
+#endif
+
+            var paramsList = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
+
+#if DEBUG
+            Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"paramsList = {paramsList.WriteListToString()}");
+#endif
 
             if (kindOfOperator == KindOfOperator.IsNot)
             {
@@ -1236,6 +1255,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 result = result.AsLogicalValue.Inverse();
 
                 _currentCodeFrame.ValuesStack.Push(result);
+            }
+        }
+
+        private (bool NeedRevers, bool[] LoadingMatrix) GetCallBinOpTakeParametersSettings(KindOfOperator kindOfOperator)
+        {
+#if DEBUG
+            Info("CA8916E7-8D93-4278-87ED-B86D34604206", $"kindOfOperator = {kindOfOperator}");
+#endif
+
+            switch(kindOfOperator)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
             }
         }
 
@@ -1278,52 +1310,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentVarStorage.Append(Logger, varInstance);
 
-            _currentCodeFrame.ValuesStack.Push(varInstance.Name);
+            //_currentCodeFrame.ValuesStack.Push(varInstance.Name);
             _currentCodeFrame.CurrentPosition++;
 
-            //throw new NotImplementedException("AA206960-E5A1-4691-844D-F8CB43F7357C");
-
-            //var typesCount = currentCommand.CountParams;
-
-            //var varPtr = new Var();
-
-            //var annotatedItem = currentCommand.AnnotatedItem;
-
-            //if(annotatedItem is Field)
-            //{
-            //    var field = (Field)annotatedItem;
-
-            //    varPtr.Holder = field.Holder;
-            //    varPtr.TypeOfAccess = field.TypeOfAccess;
-            //}
-
-            //while (typesCount > 0)
-            //{
-            //    var typeName = valueStack.Pop();
-
-            //    if (!typeName.IsStrongIdentifierValue)
-            //    {
-            //        throw new Exception($"TypeName should be StrongIdentifierValue.");
-            //    }
-
-            //    varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
-
-            //    typesCount--;
-            //}
-
-            //var varName = valueStack.Pop();
-
-            //if (!varName.IsStrongIdentifierValue)
-            //{
-            //    throw new Exception($"VarName should be StrongIdentifierValue.");
-            //}
-
-            //varPtr.Name = varName.AsStrongIdentifierValue;
-
-            //_currentVarStorage.Append(Logger, varPtr);
-
-            //_currentCodeFrame.ValuesStack.Push(varName);
-            //_currentCodeFrame.CurrentPosition++;
+#if DEBUG
+            Info("2CA46DEF-5DAE-44AF-A4A8-2CC7C6F303B0", $"QQQ _currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
         }
 
         private void ProcessPropDecl(ScriptCommand currentCommand)
@@ -1351,7 +1343,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentPropertyStorage.Append(Logger, propertyInstance);
 
-            _currentCodeFrame.ValuesStack.Push(property.Name);
+            //_currentCodeFrame.ValuesStack.Push(property.Name);
             _currentCodeFrame.CurrentPosition++;
 
             //throw new NotImplementedException("EEC6043C-D675-4E21-83A3-72AEB3C38F2F");
@@ -1402,6 +1394,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentCodeFrame.ValuesStack.Push(value);
             _currentCodeFrame.CurrentPosition++;
+
+#if DEBUG
+            Info("10865BFD-1DD3-4FBE-AF2D-BB6E7C317921", $"LLL _currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
         }
 
         [Obsolete]
@@ -1841,10 +1837,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<Value> TakePositionedParameters(int count)
+        private List<Value> TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
         {
 #if DEBUG
             Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
+            Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
+            Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
 #endif
 
             throw new NotImplementedException("137754CB-26DF-4F7A-A223-E9289235F558");

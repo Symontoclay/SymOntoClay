@@ -58,9 +58,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         }
         
         protected void CompileVarDecl(IVarDecl varDeclAstExpression)
-        {            
+        {
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.VarDecl;
+            command.Value = varDeclAstExpression.Name;
             command.AnnotatedItem = varDeclAstExpression;
 
             AddCommand(command);
@@ -249,13 +250,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveHtnTask:
                 case OperationCode.EndPrimitiveHtnTask:
-                case OperationCode.VarDecl:
-                case OperationCode.PropDecl:
                 case OperationCode.LoadFromVar:
                 case OperationCode.TryLoadFromStrongIdentifier:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:
+                case OperationCode.VarDecl:
+                case OperationCode.PropDecl:
                     return $"{operationCode} {commandItem.Value.ToDbgString()}";
 
                 case OperationCode.CallUnOp:

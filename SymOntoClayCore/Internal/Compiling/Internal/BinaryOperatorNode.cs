@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             var kindOfOperator = expression.KindOfOperator;
 
 #if DEBUG
-            Info("A626E223-CC31-4EA1-8985-878123435CB4", $"kindOfOperator = {kindOfOperator}");
+            //Info("A626E223-CC31-4EA1-8985-878123435CB4", $"kindOfOperator = {kindOfOperator}");
 #endif
 
             switch(kindOfOperator)

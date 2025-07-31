@@ -50,6 +50,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PropDecl;
+            command.Value = property.Name;
             command.AnnotatedItem = property;
 
             AddCommand(command);

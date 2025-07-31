@@ -1258,6 +1258,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
+        private static bool[] _assignBinOpTakeParametersSettings = [false, true];
+
         private (bool NeedRevers, bool[] LoadingMatrix) GetCallBinOpTakeParametersSettings(KindOfOperator kindOfOperator)
         {
 #if DEBUG
@@ -1266,6 +1268,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             switch(kindOfOperator)
             {
+                case KindOfOperator.Assign:
+                    return (false, _assignBinOpTakeParametersSettings);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
             }
@@ -1314,7 +1319,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
 
 #if DEBUG
-            Info("2CA46DEF-5DAE-44AF-A4A8-2CC7C6F303B0", $"QQQ _currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("2CA46DEF-5DAE-44AF-A4A8-2CC7C6F303B0", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
         }
 
@@ -1396,7 +1401,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
 
 #if DEBUG
-            Info("10865BFD-1DD3-4FBE-AF2D-BB6E7C317921", $"LLL _currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("10865BFD-1DD3-4FBE-AF2D-BB6E7C317921", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
         }
 
@@ -1839,17 +1844,51 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private List<Value> TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
         {
+            _currentCodeFrame.State = CodeFrameState.TakingParameters;
+
 #if DEBUG
             Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
             Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
             Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
 #endif
 
+            var rawParamsList = NTakePositionedParameters(count, needRevers);
+
+#if DEBUG
+            Info("6D0A80B5-D63B-4F20-B70E-069C53B1DE40", $"rawParamsList = {rawParamsList.WriteListToString()}");
+#endif
+            _currentCodeFrame.ResolvingParameterValues = rawParamsList;
+            _currentCodeFrame.ResolvedParameterValues = new List<Value>();
+
+            _currentCodeFrame.CurrentPositionOfResolvingParameter = 0;
+
+            foreach (var rawParam in rawParamsList)
+            {
+#if DEBUG
+                Info("7D4F0934-7EAA-45CC-AE08-1194A58497D5", $"rawParam = {rawParam}");
+                Info("C7DB006B-B05A-4D88-A5B5-81562472D174", $"_currentCodeFrame.CurrentPositionOfResolvedParameter = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+#endif
+
+                var loadingMatrixValue = loadingMatrix[_currentCodeFrame.CurrentPositionOfResolvingParameter];
+
+#if DEBUG
+                Info("A1C62064-EED1-46E1-BFF1-D57BF0657E62", $"loadingMatrixValue = {loadingMatrixValue}");
+#endif
+
+                _currentCodeFrame.CurrentPositionOfResolvingParameter++;
+
+                if(loadingMatrixValue == false)
+                {
+                    _currentCodeFrame.ResolvedParameterValues.Add(rawParam);
+
+                    continue;
+                }
+            }
+
             throw new NotImplementedException("137754CB-26DF-4F7A-A223-E9289235F558");
         }
 
-        [Obsolete]
-        private List<Value> TakePositionedParametersOld(int count)
+        private List<Value> NTakePositionedParameters(int count, bool needRevers)
         {
             var result = new List<Value>();
 
@@ -1860,15 +1899,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 result.Add(valueStack.Pop());
             }
 
-            result.Reverse();
+            if(needRevers)
+            {
+                result.Reverse();
+            }            
 
             return result;
         }
 
         [Obsolete]
+        private List<Value> TakePositionedParametersOld(int count)
+        {
+            return NTakePositionedParameters(count, true);
+        }
+
+        [Obsolete]
         private Dictionary<StrongIdentifierValue, Value> TakeNamedParametersOld(int count)
         {
-            var rawParamsList = TakePositionedParametersOld(count * 2);
+            var rawParamsList = NTakePositionedParameters(count * 2, true);
 
             var result = new Dictionary<StrongIdentifierValue, Value>();
 

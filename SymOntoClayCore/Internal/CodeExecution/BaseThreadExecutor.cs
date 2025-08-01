@@ -399,11 +399,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.LoadFromVar:
-                        //ProcessLoadFromVar();
+                        ProcessLoadFromVar();
                         break;
 
                     case OperationCode.TryLoadFromStrongIdentifier:
-                        //ProcessTryLoadFromStrongIdentifier();
+                        ProcessTryLoadFromStrongIdentifier();
                         break;
 
                     case OperationCode.VarDecl:
@@ -1230,7 +1230,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callBinOpTakeParametersSettings.NeedRevers = {callBinOpTakeParametersSettings.NeedRevers}");
-            Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix}");
+            Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
 #endif
 
             var paramsList = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
@@ -1258,6 +1258,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
+        private static bool[] _leftRightStreamBinOpTakeParametersSettings = [true, false];
         private static bool[] _assignBinOpTakeParametersSettings = [false, true];
 
         private (bool NeedRevers, bool[] LoadingMatrix) GetCallBinOpTakeParametersSettings(KindOfOperator kindOfOperator)
@@ -1268,6 +1269,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             switch(kindOfOperator)
             {
+                case KindOfOperator.LeftRightStream:
+                    return (true, _leftRightStreamBinOpTakeParametersSettings);
+
                 case KindOfOperator.Assign:
                     return (false, _assignBinOpTakeParametersSettings);
 
@@ -1315,7 +1319,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentVarStorage.Append(Logger, varInstance);
 
-            //_currentCodeFrame.ValuesStack.Push(varInstance.Name);
+            _currentCodeFrame.ValuesStack.Push(varInstance.Name);
             _currentCodeFrame.CurrentPosition++;
 
 #if DEBUG
@@ -1348,7 +1352,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentPropertyStorage.Append(Logger, propertyInstance);
 
-            //_currentCodeFrame.ValuesStack.Push(property.Name);
+            _currentCodeFrame.ValuesStack.Push(property.Name);
             _currentCodeFrame.CurrentPosition++;
 
             //throw new NotImplementedException("EEC6043C-D675-4E21-83A3-72AEB3C38F2F");
@@ -1408,7 +1412,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         [Obsolete]
         private void ProcessLoadFromVar()
         {
-            var varName = _currentCodeFrame.ValuesStack.Pop();
+            /*var varName = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
             //Info("ABCC2FF2-9EB1-47A9-9B8D-14C98AC1C87F", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
@@ -1421,14 +1425,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("F6C7FB1C-BFA9-4871-9090-5EF56C8462AF", $"value = {value}");
 #endif
 
-            _currentCodeFrame.ValuesStack.Push(value);
+            _currentCodeFrame.ValuesStack.Push(value);*/
             _currentCodeFrame.CurrentPosition++;
         }
 
         [Obsolete]
         private void ProcessTryLoadFromStrongIdentifier()
         {
-            var conceptValue = _currentCodeFrame.ValuesStack.Pop();
+            /*var conceptValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
             //Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
@@ -1459,14 +1463,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return;
 
                 case KindOfCallResult.NeedExecuteGetProperty:
-                case KindOfCallResult.NeenExecuteCode:
+                case KindOfCallResult.NeedExecuteCode:
                     CallExecutable(callResult.Executable);
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
-            }
-
+            }*/
+            _currentCodeFrame.CurrentPosition++;//tmp
             //throw new NotImplementedException("4EB61280-1522-422E-88F8-301A9ACA25AD");
         }
 

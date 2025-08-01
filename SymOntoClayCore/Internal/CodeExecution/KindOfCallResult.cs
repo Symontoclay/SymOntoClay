@@ -4,7 +4,7 @@
     {
         Unknown,
         Value,
-        NeenExecuteCode,
+        NeedExecuteCode,
         NeedExecuteSetProperty,
         NeedExecuteGetProperty,
         WasSystemException,

@@ -1862,6 +1862,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentCodeFrame.CurrentPositionOfResolvingParameter = 0;
 
+            _currentCodeFrame.State = CodeFrameState.ResolvingParameters;
+
             foreach (var rawParam in rawParamsList)
             {
 #if DEBUG
@@ -1883,9 +1885,33 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     continue;
                 }
+
+                _currentCodeFrame.ResolvedParameterValues.Add(TryResolveFromVarOrExpr(rawParam));
             }
 
-            throw new NotImplementedException("137754CB-26DF-4F7A-A223-E9289235F558");
+            _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
+
+            var result = _currentCodeFrame.ResolvedParameterValues;
+
+            _currentCodeFrame.ResolvingParameterValues = null;
+            _currentCodeFrame.ResolvedParameterValues = null;
+            _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
+
+            return result;
+        }
+
+        private Value TryResolveFromVarOrExpr(Value operand)
+        {
+#if DEBUG
+            Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
+#endif
+
+            if(operand.IsStrongIdentifierValue)
+            {
+                throw new NotImplementedException("13E679AC-5997-46D1-B0C7-5ED4719B63B5");
+            }
+
+            return operand;
         }
 
         private List<Value> NTakePositionedParameters(int count, bool needRevers)

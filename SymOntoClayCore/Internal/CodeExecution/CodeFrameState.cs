@@ -7,6 +7,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public enum CodeFrameState
     {
         BeginningCommandExecution,
-        TakingParameters
+        TakingParameters,
+        ResolvingParameters,
+        ResolvedParameters
     }
 }

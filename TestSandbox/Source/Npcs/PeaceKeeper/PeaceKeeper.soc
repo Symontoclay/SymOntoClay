@@ -11,7 +11,7 @@
         'End' >> @>log;
     }
 }*/
-app PeaceKeeper
+/*app PeaceKeeper
 {
     on Enter =>
     {
@@ -21,4 +21,17 @@ app PeaceKeeper
     }
 
     prop SomeAutoProp: number = 16;
+}*/
+app PeaceKeeper
+{
+    var @b: number = 2;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeGetProp >> @>log;
+        'End' >> @>log;
+    }
+
+    prop SomeGetProp: number => @b;
 }

@@ -1920,6 +1920,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case KindOfCallResult.Value:
                     return callResult.Value;
 
+                case KindOfCallResult.NeedExecuteGetProperty:
+                    //CallExecutable(callResult.Executable);
+                    //break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
             }
@@ -2717,9 +2721,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
 #if DEBUG
             //Info("B39E497B-B02E-41DD-AC8F-A69910597590", $"Begin");
-            //Info("8248ABAF-2A3B-44CB-A229-365F0FF8DC8B", $"executable == null = {executable == null}");
-            //Info("93048AF5-9F86-417D-9C67-05707B8421EF", $"kindOfParameters = {kindOfParameters}");
-            //Info("B235F9CD-642F-46C3-A1E8-52CA99572538", $"syncOption = {syncOption}");
+            Info("8248ABAF-2A3B-44CB-A229-365F0FF8DC8B", $"executable == null = {executable == null}");
+            Info("93048AF5-9F86-417D-9C67-05707B8421EF", $"kindOfParameters = {kindOfParameters}");
+            Info("B235F9CD-642F-46C3-A1E8-52CA99572538", $"syncOption = {syncOption}");
 #endif
 
             if (executable == null)
@@ -2861,7 +2865,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(IAnnotatedItem annotatedItem, ILocalCodeExecutionContext ownLocalCodeExecutionContext)
+        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(IAnnotatedItem annotatedItem, ILocalCodeExecutionContext ownLocalCodeExecutionContext/*, bool forParameterValueResolving*/)
         {
             var timeout = GetTimeoutFromAnnotation(annotatedItem);
             var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotatedItem);
@@ -2871,23 +2875,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (timeout.HasValue || priority.HasValue)
             {
-                additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
-                {
-                    Timeout = timeout,
-                    TimeoutCancellationMode = timeoutCancellationMode,
-                    Priority = priority,
-                    AllowParentLocalStorages = ownLocalCodeExecutionContext == null ? false : true
-                };
+                additionalSettings ??= new ConversionExecutableToCodeFrameAdditionalSettings();
+
+                additionalSettings.Timeout = timeout;
+                additionalSettings.TimeoutCancellationMode = timeoutCancellationMode;
             }
-            else
+
+            if(priority.HasValue)
             {
-                if (ownLocalCodeExecutionContext != null)
-                {
-                    additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
-                    {
-                        AllowParentLocalStorages = true
-                    };
-                }
+                additionalSettings ??= new ConversionExecutableToCodeFrameAdditionalSettings();
+
+                additionalSettings.Priority = priority;
+            }
+
+            if (ownLocalCodeExecutionContext != null)
+            {
+                additionalSettings ??= new ConversionExecutableToCodeFrameAdditionalSettings();
+
+                additionalSettings.AllowParentLocalStorages = true;
             }
 
             return additionalSettings;

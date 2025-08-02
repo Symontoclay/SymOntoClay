@@ -66,6 +66,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsInstanceValue => false;
         public virtual InstanceValue AsInstanceValue => null;
 
+        public virtual bool IsMemberValue => false;
+        public virtual MemberValue AsMemberValue => null;
+
         public virtual bool IsHostValue => false;
         public virtual HostValue AsHostValue => null;
 

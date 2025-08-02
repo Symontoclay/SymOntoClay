@@ -51,54 +51,74 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            //Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
-            //Info("FC6F4EC4-4CE9-45EE-97B7-898DD8D83051", $"rightOperand = {rightOperand}");
+            Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
+            Info("FC6F4EC4-4CE9-45EE-97B7-898DD8D83051", $"rightOperand = {rightOperand}");
 #endif
 
             Value valueFromSource = null;
 
-            if(leftOperand.KindOfValue == KindOfValue.StrongIdentifierValue)
+            var leftOperandKindOfValue = leftOperand.KindOfValue;
+
+#if DEBUG
+            Info("D349C868-0F5D-467E-98AB-697E1DA8478F", $"leftOperandKindOfValue = {leftOperandKindOfValue}");
+#endif
+
+            switch(leftOperandKindOfValue)
             {
-                var strongIdentifier = leftOperand.AsStrongIdentifierValue;
+                case KindOfValue.StrongIdentifierValue:
+                    var strongIdentifier = leftOperand.AsStrongIdentifierValue;
 
-                var kindOfName = strongIdentifier.KindOfName;
+                    var kindOfName = strongIdentifier.KindOfName;
 
-                switch(kindOfName)
-                {
-                    case KindOfName.CommonConcept:
-                    case KindOfName.Concept:
-                    case KindOfName.Entity:
-                        valueFromSource = leftOperand;
-                        break;
+                    switch (kindOfName)
+                    {
+                        case KindOfName.CommonConcept:
+                        case KindOfName.Concept:
+                        case KindOfName.Entity:
+                            valueFromSource = leftOperand;
+                            break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-                }
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                    }
+                    break;
+
+                case KindOfValue.MemberValue:
+                    throw new NotImplementedException("13BD0801-FB72-4A29-BDBB-54211D30503E");
+                    //break;
+
+                default:
+                    valueFromSource = leftOperand;
+                    break;
             }
-            else
+
+            var rightOperandKindOfValue = rightOperand.KindOfValue;
+
+#if DEBUG
+            Info("78B92AA4-7527-49E2-8A9D-278C57524F9D", $"rightOperandKindOfValue = {rightOperandKindOfValue}");
+#endif
+
+            switch(rightOperandKindOfValue)
             {
-                valueFromSource = leftOperand;
-            }
+                case KindOfValue.StrongIdentifierValue:
+                    {
+                        var identifier = rightOperand.AsStrongIdentifierValue;
 
-            if(rightOperand.KindOfValue == KindOfValue.StrongIdentifierValue)
-            {
-                var identifier = rightOperand.AsStrongIdentifierValue;
+                        if (identifier.KindOfName == KindOfName.Channel)
+                        {
+                            var channel = _channelsResolver.GetChannel(logger, identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-                if(identifier.KindOfName == KindOfName.Channel)
-                {
-                    var channel = _channelsResolver.GetChannel(logger, identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+                            return new CallResult(channel.Handler.Write(logger, valueFromSource, localCodeExecutionContext));
+                        }
+                        else
+                        {
+                            throw new Exception("Right operand should be a channel.");
+                        }
+                    }
 
-                    return new CallResult(channel.Handler.Write(logger, valueFromSource, localCodeExecutionContext));
-                }
-                else
-                {
+                default:
                     throw new Exception("Right operand should be a channel.");
-                }
-            }
-            else
-            {
-                throw new Exception("Right operand should be a channel.");
-            }          
+            }        
         }
     }
 }

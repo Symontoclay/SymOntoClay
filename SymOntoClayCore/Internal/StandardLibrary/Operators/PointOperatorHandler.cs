@@ -60,7 +60,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
 #endif
 
-                throw new NotImplementedException("13A4130F-3247-49DD-B3C7-39B052053787");
+                var value = new MemberValue(member);
+                return new CallResult(value);
             }
 
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)

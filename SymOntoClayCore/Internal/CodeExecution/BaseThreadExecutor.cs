@@ -1224,6 +1224,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCallBinOp(ScriptCommand currentCommand)
         {
+#if DEBUG
+            Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
+            if(_currentCodeFrame.State != CodeFrameState.Init
+                && _currentCodeFrame.State != CodeFrameState.EndCommandExecution)
+            {
+                throw new NotImplementedException("DD672EEB-A0CC-4CC2-92C9-39DB673FB3E0");
+            }
+#endif
+
             _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
 
             var kindOfOperator = currentCommand.KindOfOperator;
@@ -1239,7 +1248,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
 #endif
 
-            var paramsList = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
+            var paramsListCallResult = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
+
+#if DEBUG
+            Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
+#endif
+
+            var paramsListCallResultKindOfResult = paramsListCallResult.KindOfResult;
+
+#if DEBUG
+            Info("EE7E2DAA-E392-4B9F-B61C-395EADE19B11", $"paramsListCallResultKindOfResult = {paramsListCallResultKindOfResult}");
+#endif
+
+            List<Value> paramsList = null;
+
+            switch (paramsListCallResultKindOfResult)
+            {
+                case KindOfCallResult.Values:
+                    paramsList = paramsListCallResult.Values;
+                    break;
+
+                case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                    return;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, null);
+            }
 
 #if DEBUG
             //Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"paramsList = {paramsList.WriteListToString()}");
@@ -1249,6 +1283,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 kindOfOperator = KindOfOperator.Is;
             }
+
+            _currentCodeFrame.State = CodeFrameState.CommandExecution;
 
             var operatorInfo = _operatorsResolver.GetOperator(Logger, kindOfOperator, _currentCodeFrame.LocalContext);
 
@@ -1262,6 +1298,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 _currentCodeFrame.ValuesStack.Push(result);
             }
+
+            _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
         }
 
         private static bool[] _leftRightStreamBinOpTakeParametersSettings = [true, false];
@@ -1856,7 +1894,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<Value> TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
+        private CallResult TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
         {
             _currentCodeFrame.State = CodeFrameState.TakingParameters;
 
@@ -1900,7 +1938,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     continue;
                 }
 
-                _currentCodeFrame.ResolvedParameterValues.Add(TryResolveFromVarOrExpr(rawParam));
+                var conversionCallResult = TryResolveFromVarOrExpr(rawParam);
+
+                var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
+
+#if DEBUG
+                Info("585CE384-A233-4069-B5A9-242DA909DA0B", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
+#endif
+
+                switch (conversionCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        _currentCodeFrame.ResolvedParameterValues.Add(conversionCallResult.Value);
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return conversionCallResult;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
+                }
             }
 
             _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
@@ -1911,10 +1968,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.ResolvedParameterValues = null;
             _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
 
-            return result;
+            return new CallResult(result);
         }
 
-        private Value TryResolveFromVarOrExpr(Value operand)
+        private static CallResult _executingCodeInOtherCodeFrameCallResult = new CallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
+
+        private CallResult TryResolveFromVarOrExpr(Value operand)
         {
 #if DEBUG
             //Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
@@ -1931,14 +1990,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch(kindOfResult)
             {
                 case KindOfCallResult.Value:
-                    return callResult.Value;
+                    return callResult;
 
                 case KindOfCallResult.NeedExecuteGetProperty:
+                    _currentCodeFrame.State = CodeFrameState.ResolvingParameterInCodeFrame;
                     CallExecutable(
                         executable: callResult.Executable,
                         forParameterValueResolving: true);
-                    throw new NotImplementedException("13CF86AA-BD4C-41BD-ABBB-5C166A1DEC71");
-                    //break;
+                    return _executingCodeInOtherCodeFrameCallResult;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);

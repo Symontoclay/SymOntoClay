@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
-        public CodeFrameState State { get; set; } = CodeFrameState.BeginningCommandExecution;
+        public CodeFrameState State { get; set; } = CodeFrameState.Init;
         public SEHGroup CurrentSEHGroup { get; set; }
         public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
         public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();        

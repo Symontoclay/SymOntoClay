@@ -4,10 +4,12 @@
     {
         Unknown,
         Value,
+        Values,
         NeedExecuteCode,
         NeedExecuteSetProperty,
         NeedExecuteGetProperty,
         WasSystemException,
-        WasDslException
+        WasDslException,
+        ExecutingCodeInOtherCodeFrame
     }
 }

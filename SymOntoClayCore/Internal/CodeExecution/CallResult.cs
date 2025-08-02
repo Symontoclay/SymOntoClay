@@ -3,6 +3,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -19,8 +20,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfResult = KindOfCallResult.Value;
         }
 
+        public CallResult(List<Value> values)
+        {
+            Values = values;
+            KindOfResult = KindOfCallResult.Values;
+        }
+
         public KindOfCallResult KindOfResult { get; set; }
         public Value Value { get; set; }
+        public List<Value> Values { get; set; }
         public IExecutable Executable { get; set; }
         public Exception SystemException { get; set; }
         public RuleInstance DslException { get; set; }
@@ -52,6 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
             sb.PrintObjProp(n, nameof(Value), Value);
+            sb.PrintObjListProp(n, nameof(Values), Values);
             sb.PrintObjProp(n, nameof(Executable), Executable);
             sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
             sb.PrintObjProp(n, nameof(DslException), DslException);
@@ -85,6 +94,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
             sb.PrintShortObjProp(n, nameof(Value), Value);
+            sb.PrintShortObjListProp(n, nameof(Values), Values);
             sb.PrintShortObjProp(n, nameof(Executable), Executable);
             sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
             sb.PrintShortObjProp(n, nameof(DslException), Executable);
@@ -118,6 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
             sb.PrintBriefObjProp(n, nameof(Value), Value);
+            sb.PrintBriefObjListProp(n, nameof(Values), Values);
             sb.PrintBriefObjProp(n, nameof(Executable), Executable);
             sb.AppendLine($"{spaces}{nameof(SystemException)} = {SystemException}");
             sb.PrintBriefObjProp(n, nameof(DslException), DslException);

@@ -54,8 +54,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
-            Info("FC6F4EC4-4CE9-45EE-97B7-898DD8D83051", $"rightOperand = {rightOperand}");
+            //Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
+            //Info("FC6F4EC4-4CE9-45EE-97B7-898DD8D83051", $"rightOperand = {rightOperand}");
 #endif
 
             Value valueFromSource = null;
@@ -63,19 +63,19 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var leftOperandKindOfValue = leftOperand.KindOfValue;
 
 #if DEBUG
-            Info("D349C868-0F5D-467E-98AB-697E1DA8478F", $"leftOperandKindOfValue = {leftOperandKindOfValue}");
+            //Info("D349C868-0F5D-467E-98AB-697E1DA8478F", $"leftOperandKindOfValue = {leftOperandKindOfValue}");
 #endif
 
             var leftOperandCallResult = _valueResolvingHelper.TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
 
 #if DEBUG
-            Info("5AF75343-8D96-48AA-B2F1-EA5A77D8BA7C", $"leftOperandCallResult = {leftOperandCallResult}");
+            //Info("5AF75343-8D96-48AA-B2F1-EA5A77D8BA7C", $"leftOperandCallResult = {leftOperandCallResult}");
 #endif
 
             var leftOperandCallResultKindOfResult = leftOperandCallResult.KindOfResult;
 
 #if DEBUG
-            Info("003D3104-A009-4284-8F8D-C729AC409849", $"leftOperandCallResultKindOfResult = {leftOperandCallResultKindOfResult}");
+            //Info("003D3104-A009-4284-8F8D-C729AC409849", $"leftOperandCallResultKindOfResult = {leftOperandCallResultKindOfResult}");
 #endif
 
             switch (leftOperandCallResultKindOfResult)
@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var rightOperandKindOfValue = rightOperand.KindOfValue;
 
 #if DEBUG
-            Info("78B92AA4-7527-49E2-8A9D-278C57524F9D", $"rightOperandKindOfValue = {rightOperandKindOfValue}");
+            //Info("78B92AA4-7527-49E2-8A9D-278C57524F9D", $"rightOperandKindOfValue = {rightOperandKindOfValue}");
 #endif
 
             switch(rightOperandKindOfValue)

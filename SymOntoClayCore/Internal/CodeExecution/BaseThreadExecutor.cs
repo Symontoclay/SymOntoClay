@@ -1216,20 +1216,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var kindOfOperator = currentCommand.KindOfOperator;
 
 #if DEBUG
-            Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"kindOfOperator = {kindOfOperator}");
+            //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"kindOfOperator = {kindOfOperator}");
 #endif
 
             var callBinOpTakeParametersSettings = GetCallBinOpTakeParametersSettings(kindOfOperator);
 
 #if DEBUG
-            Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callBinOpTakeParametersSettings.NeedRevers = {callBinOpTakeParametersSettings.NeedRevers}");
-            Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
+            //Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callBinOpTakeParametersSettings.NeedRevers = {callBinOpTakeParametersSettings.NeedRevers}");
+            //Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
 #endif
 
             var paramsList = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
 
 #if DEBUG
-            Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"paramsList = {paramsList.WriteListToString()}");
+            //Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"paramsList = {paramsList.WriteListToString()}");
 #endif
 
             if (kindOfOperator == KindOfOperator.IsNot)
@@ -1258,7 +1258,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private (bool NeedRevers, bool[] LoadingMatrix) GetCallBinOpTakeParametersSettings(KindOfOperator kindOfOperator)
         {
 #if DEBUG
-            Info("CA8916E7-8D93-4278-87ED-B86D34604206", $"kindOfOperator = {kindOfOperator}");
+            //Info("CA8916E7-8D93-4278-87ED-B86D34604206", $"kindOfOperator = {kindOfOperator}");
 #endif
 
             switch(kindOfOperator)
@@ -1848,15 +1848,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.State = CodeFrameState.TakingParameters;
 
 #if DEBUG
-            Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
-            Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
-            Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
+            //Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
+            //Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
+            //Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
 #endif
 
             var rawParamsList = NTakePositionedParameters(count, needRevers);
 
 #if DEBUG
-            Info("6D0A80B5-D63B-4F20-B70E-069C53B1DE40", $"rawParamsList = {rawParamsList.WriteListToString()}");
+            //Info("6D0A80B5-D63B-4F20-B70E-069C53B1DE40", $"rawParamsList = {rawParamsList.WriteListToString()}");
 #endif
             _currentCodeFrame.ResolvingParameterValues = rawParamsList;
             _currentCodeFrame.ResolvedParameterValues = new List<Value>();
@@ -1868,14 +1868,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             foreach (var rawParam in rawParamsList)
             {
 #if DEBUG
-                Info("7D4F0934-7EAA-45CC-AE08-1194A58497D5", $"rawParam = {rawParam}");
-                Info("C7DB006B-B05A-4D88-A5B5-81562472D174", $"_currentCodeFrame.CurrentPositionOfResolvedParameter = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+                //Info("7D4F0934-7EAA-45CC-AE08-1194A58497D5", $"rawParam = {rawParam}");
+                //Info("C7DB006B-B05A-4D88-A5B5-81562472D174", $"_currentCodeFrame.CurrentPositionOfResolvedParameter = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
 #endif
 
                 var loadingMatrixValue = loadingMatrix[_currentCodeFrame.CurrentPositionOfResolvingParameter];
 
 #if DEBUG
-                Info("A1C62064-EED1-46E1-BFF1-D57BF0657E62", $"loadingMatrixValue = {loadingMatrixValue}");
+                //Info("A1C62064-EED1-46E1-BFF1-D57BF0657E62", $"loadingMatrixValue = {loadingMatrixValue}");
 #endif
 
                 _currentCodeFrame.CurrentPositionOfResolvingParameter++;
@@ -1904,13 +1904,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private Value TryResolveFromVarOrExpr(Value operand)
         {
 #if DEBUG
-            Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
+            //Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
 #endif
 
             var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            Info("6C51558E-F0C3-40AB-9CAD-DE253758EB89", $"callResult = {callResult}");
+            //Info("6C51558E-F0C3-40AB-9CAD-DE253758EB89", $"callResult = {callResult}");
 #endif
 
             var kindOfResult = callResult.KindOfResult;

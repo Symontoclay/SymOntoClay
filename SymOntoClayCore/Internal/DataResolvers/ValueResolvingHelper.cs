@@ -51,13 +51,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
+            //Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
 #endif
 
             var kindOfValue = operand.KindOfValue;
 
 #if DEBUG
-            Info("387ABF8B-71F9-44F3-B4D5-504FCDB930EF", $"kindOfValue = {kindOfValue}");
+            //Info("387ABF8B-71F9-44F3-B4D5-504FCDB930EF", $"kindOfValue = {kindOfValue}");
 #endif
 
             switch(kindOfValue)
@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var kindOfName = identifier.KindOfName;
 
 #if DEBUG
-                        Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
+                        //Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
 #endif
 
                         switch (kindOfName)
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var kindOfMember = memberValue.KindOfMember;
 
 #if DEBUG
-                        Info("48A11334-C950-4AA7-81B1-E8EDC44A2A5B", $"kindOfMember = {kindOfMember}");
+                        //Info("48A11334-C950-4AA7-81B1-E8EDC44A2A5B", $"kindOfMember = {kindOfMember}");
 #endif
 
                         return memberValue.GetValue(logger);

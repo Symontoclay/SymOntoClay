@@ -1921,7 +1921,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return callResult.Value;
 
                 case KindOfCallResult.NeedExecuteGetProperty:
-                    //CallExecutable(callResult.Executable);
+                    CallExecutable(
+                        executable: callResult.Executable,
+                        forParameterValueResolving: true);
+                    throw new NotImplementedException("13CF86AA-BD4C-41BD-ABBB-5C166A1DEC71");
                     //break;
 
                 default:
@@ -2039,7 +2042,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             IExecutable constructor = constructorResolvingResult.Constructor;
 
-            CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, SyncOption.Ctor);
+            CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, SyncOption.Ctor, false);
         }
 
         private void CallDefaultCtors()
@@ -2301,9 +2304,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var executable = caller.GetExecutable(Logger, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(callMethodId, caller.InstanceInfo, executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(
+                callMethodId: callMethodId,
+                instance: caller.InstanceInfo,
+                executable: executable,
+                ownLocalCodeExecutionContext: executable.OwnLocalCodeExecutionContext,
+                kindOfParameters:kindOfParameters,
+                namedParameters:namedParameters,
+                positionedParameters:positionedParameters,
+                annotatedItem:annotatedItem,
+                syncOption:syncOption,
+                forParameterValueResolving: false);
         }
-
+         
         private void CallPointRefValue(string callMethodId, PointRefValue caller,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             IAnnotatedItem annotatedItem, SyncOption syncOption)
@@ -2326,7 +2339,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var method = callerLeftOperand.GetMethod(Logger, methodName, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(callMethodId, null, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(callMethodId, null, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, false);
         }
 
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
@@ -2600,7 +2613,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
             }
 
-            CallExecutable(callMethodId, methodResolvingResult.Instance, methodResolvingResult.Executable, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(callMethodId, methodResolvingResult.Instance, methodResolvingResult.Executable, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, false);
         }
 
         private void ExecRuleInstanceValue(RuleInstance ruleInstance)
@@ -2699,25 +2712,60 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallOperator(Operator op, List<Value> positionedParameters)
         {
-            CallExecutable(op, positionedParameters);
+            CallExecutable(
+                executable: op,
+                positionedParameters:positionedParameters);
         }
 
         private void CallExecutable(IExecutable executable)
         {
-            CallExecutable(executable, null, KindOfFunctionParameters.NoParameters, null, null, null, SyncOption.Sync);
+            CallExecutable(
+                executable: executable,
+                forParameterValueResolving: false);
         }
 
+        private void CallExecutable(IExecutable executable, bool forParameterValueResolving)
+        {
+            CallExecutable(
+                executable: executable,
+                ownLocalCodeExecutionContext: null,
+                kindOfParameters: KindOfFunctionParameters.NoParameters,
+                namedParameters: null,
+                positionedParameters: null,
+                annotatedItem: null,
+                syncOption: SyncOption.Sync,
+                forParameterValueResolving: forParameterValueResolving);
+        }
+        
         private void CallExecutable(IExecutable executable, List<Value> positionedParameters)
         {
-            CallExecutable(executable, null, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, SyncOption.Sync);
+            CallExecutable(
+                executable: executable,
+                ownLocalCodeExecutionContext: null,
+                kindOfParameters: KindOfFunctionParameters.PositionedParameters,
+                namedParameters: null,
+                positionedParameters: positionedParameters,
+                annotatedItem: null,
+                syncOption: SyncOption.Sync,
+                forParameterValueResolving: false);
         }
 
-        private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption)
+        private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption, bool forParameterValueResolving)
         {
-            CallExecutable(string.Empty, null, executable, ownLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+            CallExecutable(
+                callMethodId: string.Empty,
+                instance: null,
+                executable: executable,
+                ownLocalCodeExecutionContext: ownLocalCodeExecutionContext,
+                kindOfParameters:kindOfParameters,
+                namedParameters:namedParameters,
+                positionedParameters:positionedParameters,
+                annotatedItem: annotatedItem,
+                syncOption: syncOption,
+                forParameterValueResolving: forParameterValueResolving);
         }
-
-        private void CallExecutable(string callMethodId, IInstance instance, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption)
+        
+        private void CallExecutable(string callMethodId, IInstance instance, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption, bool forParameterValueResolving)
         {
 #if DEBUG
             //Info("B39E497B-B02E-41DD-AC8F-A69910597590", $"Begin");
@@ -2830,7 +2878,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     targetLocalContext = executable.OwnLocalCodeExecutionContext;
                 }
 
-                var additionalSettings = GetAdditionalSettingsFromAnnotation(annotatedItem, ownLocalCodeExecutionContext);
+                var additionalSettings = GetAdditionalSettingsFromAnnotation(
+                    annotatedItem: annotatedItem,
+                    ownLocalCodeExecutionContext: ownLocalCodeExecutionContext,
+                    forParameterValueResolving: forParameterValueResolving);
 
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, callMethodId, instance, executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
                     additionalSettings);
@@ -2865,7 +2916,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(IAnnotatedItem annotatedItem, ILocalCodeExecutionContext ownLocalCodeExecutionContext/*, bool forParameterValueResolving*/)
+        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(IAnnotatedItem annotatedItem, ILocalCodeExecutionContext ownLocalCodeExecutionContext, bool forParameterValueResolving)
         {
             var timeout = GetTimeoutFromAnnotation(annotatedItem);
             var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotatedItem);
@@ -2893,6 +2944,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 additionalSettings ??= new ConversionExecutableToCodeFrameAdditionalSettings();
 
                 additionalSettings.AllowParentLocalStorages = true;
+            }
+
+            if(forParameterValueResolving)
+            {
+                throw new NotImplementedException("13C238C2-8FFE-426C-BBBE-A10199CB0845");
             }
 
             return additionalSettings;

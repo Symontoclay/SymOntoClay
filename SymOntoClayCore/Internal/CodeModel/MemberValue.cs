@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -26,6 +27,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override MemberValue AsMemberValue => this;
 
         public IMember Member { get; private set; }
+
+        public KindOfMember KindOfMember => Member.KindOfMember;
+        public CallResult GetValue(IMonitorLogger logger) => Member.GetValue(logger);
 
         /// <inheritdoc/>
         public override object GetSystemValue()

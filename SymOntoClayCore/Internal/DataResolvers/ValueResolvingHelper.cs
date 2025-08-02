@@ -87,13 +87,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var memberValue = operand.AsMemberValue;
 
-                        var kindOfMember = memberValue.Member.KindOfMember;
+                        var kindOfMember = memberValue.KindOfMember;
 
 #if DEBUG
                         Info("48A11334-C950-4AA7-81B1-E8EDC44A2A5B", $"kindOfMember = {kindOfMember}");
 #endif
 
-                        return memberValue.Member.GetValue(logger);
+                        return memberValue.GetValue(logger);
                     }
 
                 default:

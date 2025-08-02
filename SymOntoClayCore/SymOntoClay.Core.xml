@@ -9460,6 +9460,12 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.TacticalTaskInstance.KindOfInstance">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.VarInstance.KindOfMember">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.GetValue(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>

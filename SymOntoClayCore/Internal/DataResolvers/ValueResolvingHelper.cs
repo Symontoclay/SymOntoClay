@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Monitor.Common;
 using System;
 
@@ -49,38 +48,60 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly IMainStorageContext _context;
         private VarsResolver _varsResolver;
 
-        [Obsolete("Implement compilation instead of this one")]
-        public Value TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            if (operand.IsStrongIdentifierValue)
+#if DEBUG
+            Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
+#endif
+
+            var kindOfValue = operand.KindOfValue;
+
+#if DEBUG
+            Info("387ABF8B-71F9-44F3-B4D5-504FCDB930EF", $"kindOfValue = {kindOfValue}");
+#endif
+
+            switch(kindOfValue)
             {
-                var identifier = operand.AsStrongIdentifierValue;
+                case KindOfValue.StrongIdentifierValue:
+                    {
+                        var identifier = operand.AsStrongIdentifierValue.ForResolving;
 
-                if (identifier.KindOfName == KindOfName.Var || identifier.KindOfName == KindOfName.SystemVar)
-                {
-                    return _varsResolver.GetVarValue(logger, identifier, localCodeExecutionContext);
-                }
+                        var kindOfName = identifier.KindOfName;
+
+#if DEBUG
+                        Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
+#endif
+
+                        switch (kindOfName)
+                        {
+                            case KindOfName.Var:
+                            case KindOfName.SystemVar:
+                                return new CallResult(_varsResolver.GetVarValue(logger, identifier, localCodeExecutionContext));
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                        }
+                    }
+
+                case KindOfValue.MemberValue:
+                    {
+                        var memberValue = operand.AsMemberValue;
+
+                        var kindOfMember = memberValue.Member.KindOfMember;
+
+#if DEBUG
+                        Info("48A11334-C950-4AA7-81B1-E8EDC44A2A5B", $"kindOfMember = {kindOfMember}");
+#endif
+
+                        return memberValue.Member.GetValue(logger);
+                    }
+
+                default:
+                    return new CallResult(operand);
             }
-
-            if(operand.IsPointRefValue)
-            {
-                var pointRef = operand.AsPointRefValue;
-                var leftOperand = pointRef.LeftOperand;
-                var rightOperand = pointRef.RightOperand;
-
-                if(leftOperand.IsHostValue)
-                {
-                    return operand;
-                }
-
-                leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
-
-                return leftOperand.GetMemberValue(logger, rightOperand.AsStrongIdentifierValue);
-            }
-
-            return operand;
         }
 
+        /*
         public void CheckWrongValue(IMonitorLogger logger, Value operand)
         {
             if (operand.IsStrongIdentifierValue)
@@ -97,6 +118,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 throw new NotSupportedException($"Unresolved value {operand.ToHumanizedString()}. {operand.KindOfValue} has to be resolved by some new command.");
             }
-        }
+        }*/
     }
 }

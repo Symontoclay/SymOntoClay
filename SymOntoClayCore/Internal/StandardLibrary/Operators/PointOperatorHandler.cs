@@ -22,13 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {

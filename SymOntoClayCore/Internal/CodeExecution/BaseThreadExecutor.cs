@@ -1915,28 +1915,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
 #endif
 
-            if(operand.IsStrongIdentifierValue)
-            {
-                var identifier = operand.AsStrongIdentifierValue.ForResolving;
-
-                var kindOfName = identifier.KindOfName;
+            var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
+            Info("6C51558E-F0C3-40AB-9CAD-DE253758EB89", $"callResult = {callResult}");
 #endif
 
-                switch(kindOfName)
-                {
-                    case KindOfName.Var:
-                    case KindOfName.SystemVar:
-                        return _varsResolver.GetVarValue(Logger, identifier, _currentCodeFrame.LocalContext);
+            var kindOfResult = callResult.KindOfResult;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-                }
+            switch(kindOfResult)
+            {
+                case KindOfCallResult.Value:
+                    return callResult.Value;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
             }
-
-            return operand;
         }
 
         private List<Value> NTakePositionedParameters(int count, bool needRevers)

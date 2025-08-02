@@ -83,6 +83,9 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
+        /// <inheritdoc/>
+        public KindOfMember KindOfMember => KindOfMember.Field;
+
         private ITypeConverter _typeConverter;
 
         public StrongIdentifierValue Name { get; private set; }
@@ -103,6 +106,12 @@ namespace SymOntoClay.Core.Internal.Instances
                     return _value;
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public CallResult GetValue(IMonitorLogger logger)
+        {
+            return new CallResult(Value);
         }
 
         /// <inheritdoc/>

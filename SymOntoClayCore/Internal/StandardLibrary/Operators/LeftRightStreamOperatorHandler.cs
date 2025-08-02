@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -42,10 +43,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var dataResolversFactory = engineContext.DataResolversFactory;
 
             _channelsResolver = dataResolversFactory.GetChannelsResolver();
+            _valueResolvingHelper = dataResolversFactory.GetValueResolvingHelper();
         }
 
         private readonly IEngineContext _engineContext;
         private readonly ChannelsResolver _channelsResolver;
+        private readonly ValueResolvingHelper _valueResolvingHelper;
 
         /// <inheritdoc/>
         public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
@@ -63,33 +66,26 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             Info("D349C868-0F5D-467E-98AB-697E1DA8478F", $"leftOperandKindOfValue = {leftOperandKindOfValue}");
 #endif
 
-            switch(leftOperandKindOfValue)
+            var leftOperandCallResult = _valueResolvingHelper.TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
+
+#if DEBUG
+            Info("5AF75343-8D96-48AA-B2F1-EA5A77D8BA7C", $"leftOperandCallResult = {leftOperandCallResult}");
+#endif
+
+            var leftOperandCallResultKindOfResult = leftOperandCallResult.KindOfResult;
+
+#if DEBUG
+            Info("003D3104-A009-4284-8F8D-C729AC409849", $"leftOperandCallResultKindOfResult = {leftOperandCallResultKindOfResult}");
+#endif
+
+            switch (leftOperandCallResultKindOfResult)
             {
-                case KindOfValue.StrongIdentifierValue:
-                    var strongIdentifier = leftOperand.AsStrongIdentifierValue;
-
-                    var kindOfName = strongIdentifier.KindOfName;
-
-                    switch (kindOfName)
-                    {
-                        case KindOfName.CommonConcept:
-                        case KindOfName.Concept:
-                        case KindOfName.Entity:
-                            valueFromSource = leftOperand;
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-                    }
+                case KindOfCallResult.Value:
+                    valueFromSource = leftOperandCallResult.Value;
                     break;
-
-                case KindOfValue.MemberValue:
-                    throw new NotImplementedException("13BD0801-FB72-4A29-BDBB-54211D30503E");
-                    //break;
 
                 default:
-                    valueFromSource = leftOperand;
-                    break;
+                    throw new ArgumentOutOfRangeException(nameof(leftOperandCallResultKindOfResult), leftOperandCallResultKindOfResult, null);
             }
 
             var rightOperandKindOfValue = rightOperand.KindOfValue;

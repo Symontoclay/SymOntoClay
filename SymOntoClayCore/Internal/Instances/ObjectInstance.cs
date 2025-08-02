@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
+            _strongIdentifierExprValueResolver = dataResolversFactory.GetStrongIdentifierExprValueResolver();
 
             _function = codeItem.AsFunction;
 
@@ -56,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly ExecutableWithTargetLocalContext _functionExecutable;
         private readonly MethodsResolver _methodsResolver;
         private readonly VarsResolver _varsResolver;
+        private readonly StrongIdentifierExprValueResolver _strongIdentifierExprValueResolver;
 
         /// <inheritdoc/>
         public override IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
@@ -71,6 +73,16 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             throw new NotImplementedException("5B3EB4DF-A09D-4DB2-B28E-038F2F8E6CB9");
+        }
+
+        /// <inheritdoc/>
+        public override IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName)
+        {
+#if DEBUG
+            Info("63F8DB00-73FF-4A5C-91AE-F5BB80D71742", $"memberName = {memberName}");
+#endif
+
+            return _strongIdentifierExprValueResolver.GetMember(logger, memberName, this, _localCodeExecutionContext);
         }
 
         /// <inheritdoc/>

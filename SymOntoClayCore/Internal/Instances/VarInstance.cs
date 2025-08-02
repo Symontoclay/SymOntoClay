@@ -15,7 +15,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class VarInstance : BaseComponent, IFilteredCodeItem,
+    public class VarInstance : BaseComponent, IFilteredCodeItem, IMember,
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
         public VarInstance(StrongIdentifierValue varName, TypeOfAccess typeOfAccess, IMainStorageContext context)

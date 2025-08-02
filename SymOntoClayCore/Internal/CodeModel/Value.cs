@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -195,6 +196,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual void SetValue(IMonitorLogger logger, Value value)
         {
             throw new NotImplementedException($"E4583867-F52A-443A-A926-7BBDD35F826D: {GetType().FullName}");
+        }
+
+        public virtual IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName)
+        {
+            throw new NotImplementedException($"D0150E58-94E9-46C0-BA19-5C8022763D24: {GetType().FullName}");
         }
 
         public Value GetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName)

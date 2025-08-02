@@ -460,31 +460,37 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
         {
-            throw new NotImplementedException("51ED45A6-37FF-42A8-AEFE-6835C71D404F");
+            throw new NotImplementedException($"51ED45A6-37FF-42A8-AEFE-6835C71D404F: {GetType().FullName}");
+        }
+
+        /// <inheritdoc/>
+        public virtual IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName)
+        {
+            throw new NotImplementedException($"49C32992-4E0D-44AC-B8F4-9EFE6925A67C: {GetType().FullName}");
         }
 
         /// <inheritdoc/>
         public virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
-            throw new NotImplementedException("BAC477C7-7E75-4636-9860-645189734004");
+            throw new NotImplementedException($"BAC477C7-7E75-4636-9860-645189734004: {GetType().FullName}");
         }
 
         /// <inheritdoc/>
         public virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            throw new NotImplementedException("D22BB4AA-41CE-4A77-B1DD-138E9C74229F");
+            throw new NotImplementedException($"D22BB4AA-41CE-4A77-B1DD-138E9C74229F: {GetType().FullName}");
         }
 
         /// <inheritdoc/>
         public virtual Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
-            throw new NotImplementedException("F7A9893C-4C76-4920-8EEF-744B43CFB7B6");
+            throw new NotImplementedException($"F7A9893C-4C76-4920-8EEF-744B43CFB7B6: {GetType().FullName}");
         }
 
         /// <inheritdoc/>
         public virtual Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            throw new NotImplementedException("4BB83DBC-6514-4EDE-9B77-F023715DE7B8");
+            throw new NotImplementedException($"4BB83DBC-6514-4EDE-9B77-F023715DE7B8: {GetType().FullName}");
         }
 
         /// <inheritdoc/>

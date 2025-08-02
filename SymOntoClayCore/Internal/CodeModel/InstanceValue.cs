@@ -72,6 +72,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName)
+        {
+            return InstanceInfo.GetMember(logger, memberName);
+        }
+
+        /// <inheritdoc/>
         protected override Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
             return InstanceInfo.GetPropertyValue(logger, propertyName);

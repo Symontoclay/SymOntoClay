@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json.Linq;
+using NLog;
 using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
@@ -1259,6 +1260,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private static bool[] _leftRightStreamBinOpTakeParametersSettings = [true, false];
+        private static bool[] _pointBinOpTakeParametersSettings = [true, false];
         private static bool[] _assignBinOpTakeParametersSettings = [false, true];
 
         private (bool NeedRevers, bool[] LoadingMatrix) GetCallBinOpTakeParametersSettings(KindOfOperator kindOfOperator)
@@ -1271,6 +1273,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 case KindOfOperator.LeftRightStream:
                     return (true, _leftRightStreamBinOpTakeParametersSettings);
+
+                case KindOfOperator.Point:
+                    return (true, _pointBinOpTakeParametersSettings);
 
                 case KindOfOperator.Assign:
                     return (false, _assignBinOpTakeParametersSettings);
@@ -1912,7 +1917,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(operand.IsStrongIdentifierValue)
             {
-                throw new NotImplementedException("13E679AC-5997-46D1-B0C7-5ED4719B63B5");
+                var identifier = operand.AsStrongIdentifierValue.ForResolving;
+
+                var kindOfName = identifier.KindOfName;
+
+#if DEBUG
+                Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
+#endif
+
+                switch(kindOfName)
+                {
+                    case KindOfName.Var:
+                    case KindOfName.SystemVar:
+                        return _varsResolver.GetVarValue(Logger, identifier, _currentCodeFrame.LocalContext);
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                }
             }
 
             return operand;

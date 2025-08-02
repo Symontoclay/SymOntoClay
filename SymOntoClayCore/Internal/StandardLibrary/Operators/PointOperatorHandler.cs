@@ -48,11 +48,19 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             Info("8C57ECA2-FE45-4263-9003-6AB0765C7862", $"callMode = {callMode}");
 #endif
 
-            if ((leftOperand.IsHostValue || leftOperand.IsThreadExecutorValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue/* && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept*/)
+            if ((leftOperand.IsHostValue || leftOperand.IsThreadExecutorValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue)
             {
-                var result = new PointRefValue(leftOperand, rightOperand);
+                /*var result = new PointRefValue(leftOperand, rightOperand);
                 result.CheckDirty();
-                return new CallResult(result);
+                return new CallResult(result);*/
+
+                var member = leftOperand.GetMember(logger, rightOperand.AsStrongIdentifierValue.ForResolving);
+
+#if DEBUG
+                Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
+#endif
+
+                throw new NotImplementedException("13A4130F-3247-49DD-B3C7-39B052053787");
             }
 
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)

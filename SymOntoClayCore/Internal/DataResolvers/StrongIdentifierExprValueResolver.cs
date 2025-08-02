@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.DataResolvers.Exceptions;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
 
@@ -22,6 +23,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var dataResolversFactory = _context.DataResolversFactory;
             _propertiesResolver = dataResolversFactory.GetPropertiesResolver();
             _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
+            _varsResolver = dataResolversFactory.GetVarsResolver();
         }
 
         /// <inheritdoc/>
@@ -37,11 +39,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private PropertiesResolver _propertiesResolver;
         private FuzzyLogicResolver _fuzzyLogicResolver;
+        private VarsResolver _varsResolver;
 
         private StrongIdentifierValue _trueValueLiteral;
         private StrongIdentifierValue _falseValueLiteral;
 
         public ResolverOptions DefaultOptions { get; private set; } = ResolverOptions.GetDefaultOptions();
+
+        public IMember GetMember(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetMember(logger, name, instance, localCodeExecutionContext, DefaultOptions);
+        }
+
+        public IMember GetMember(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            Info("4E645F88-DA47-41E1-8448-CC9B460FF617", $"name = {name}");
+#endif
+
+            var kindOfName = name.KindOfName;
+
+            switch (kindOfName)
+            {
+                case KindOfName.Var:
+                    return _varsResolver.Resolve(logger, name, localCodeExecutionContext, options);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+            }
+        }
 
         public CallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
         {

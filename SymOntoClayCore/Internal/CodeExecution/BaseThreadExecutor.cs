@@ -1050,7 +1050,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                _currentCodeFrame.ValuesStack.Push(currentValue);
+                if(_currentCodeFrame.ForParameterValueResolving)
+                {
+                    _currentCodeFrame.CurrentResolvedParameterValue = currentValue;
+                }
+                else
+                {
+                    _currentCodeFrame.ValuesStack.Push(currentValue);
+                }                
             }
         }
 
@@ -1068,7 +1075,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                _currentCodeFrame.ValuesStack.Push(currentValue);
+                if (_currentCodeFrame.ForParameterValueResolving)
+                {
+                    _currentCodeFrame.CurrentResolvedParameterValue = currentValue;
+                }
+                else
+                {
+                    _currentCodeFrame.ValuesStack.Push(currentValue);
+                }
             }
         }
 
@@ -1206,7 +1220,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var operatorInfo = _operatorsResolver.GetOperator(Logger, kindOfOperator, _currentCodeFrame.LocalContext);
 
             CallOperator(operatorInfo, paramsList);
-
         }
 
         private void ProcessCallBinOp(ScriptCommand currentCommand)
@@ -2948,7 +2961,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(forParameterValueResolving)
             {
-                throw new NotImplementedException("13C238C2-8FFE-426C-BBBE-A10199CB0845");
+                additionalSettings ??= new ConversionExecutableToCodeFrameAdditionalSettings();
+
+                additionalSettings.ForParameterValueResolving = true;
             }
 
             return additionalSettings;

@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
         public TimeoutCancellationMode TimeoutCancellationMode { get; set; } = TimeoutCancellationMode.WeakCancel;
         public float? Priority { get; set; }
         public bool AllowParentLocalStorages { get; set; }
+        public bool ForParameterValueResolving { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -58,6 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             sb.AppendLine($"{spaces}{nameof(TimeoutCancellationMode)} = {TimeoutCancellationMode}");
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
             sb.AppendLine($"{spaces}{nameof(AllowParentLocalStorages)} = {AllowParentLocalStorages}");
+            sb.AppendLine($"{spaces}{nameof(ForParameterValueResolving)} = {ForParameterValueResolving}");
 
             return sb.ToString();
         }

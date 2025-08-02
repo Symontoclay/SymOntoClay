@@ -202,6 +202,13 @@ namespace SymOntoClay.Core.Internal.Services
                 }
             }
 
+            var forParameterValueResolving = additionalSettings?.ForParameterValueResolving;
+
+            if(forParameterValueResolving.HasValue)
+            {
+                codeFrame.ForParameterValueResolving = forParameterValueResolving.Value;
+            }
+
             return codeFrame;
         }
 

@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public List<Value> ResolvingParameterValues { get; set; }
         public int CurrentPositionOfResolvingParameter { get; set; }
         public List<Value> ResolvedParameterValues { get; set; }
-        public Value CurrentParameterValue { get; set; }
+        public Value CurrentResolvedParameterValue { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -137,7 +137,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
-            sb.PrintObjProp(n, nameof(CurrentParameterValue), CurrentParameterValue);
+            sb.PrintObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             return sb.ToString();
         }
@@ -207,7 +207,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintShortObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
-            sb.PrintShortObjProp(n, nameof(CurrentParameterValue), CurrentParameterValue);
+            sb.PrintShortObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             return sb.ToString();
         }
@@ -277,7 +277,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintBriefObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
-            sb.PrintBriefObjProp(n, nameof(CurrentParameterValue), CurrentParameterValue);
+            sb.PrintBriefObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             return sb.ToString();
         }

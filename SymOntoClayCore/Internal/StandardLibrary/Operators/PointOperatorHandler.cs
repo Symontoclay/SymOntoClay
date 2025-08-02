@@ -38,21 +38,17 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            Info("099033EE-C837-4106-B08B-136AE6CA7497", $"leftOperand = {leftOperand}");
-            Info("2ACF6A1F-431D-43FB-984D-D62298CF4B44", $"rightOperand = {rightOperand}");
-            Info("8C57ECA2-FE45-4263-9003-6AB0765C7862", $"callMode = {callMode}");
+            //Info("099033EE-C837-4106-B08B-136AE6CA7497", $"leftOperand = {leftOperand}");
+            //Info("2ACF6A1F-431D-43FB-984D-D62298CF4B44", $"rightOperand = {rightOperand}");
+            //Info("8C57ECA2-FE45-4263-9003-6AB0765C7862", $"callMode = {callMode}");
 #endif
 
             if ((leftOperand.IsHostValue || leftOperand.IsThreadExecutorValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue)
             {
-                /*var result = new PointRefValue(leftOperand, rightOperand);
-                result.CheckDirty();
-                return new CallResult(result);*/
-
                 var member = leftOperand.GetMember(logger, rightOperand.AsStrongIdentifierValue.ForResolving);
 
 #if DEBUG
-                Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
+                //Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
 #endif
 
                 var value = new MemberValue(member);

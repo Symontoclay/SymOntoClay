@@ -1,4 +1,4 @@
-﻿app PeaceKeeper
+﻿/*app PeaceKeeper
 {
     @b = 15;
     on Enter
@@ -10,4 +10,15 @@
         @a.@b >> @>log;
         'End' >> @>log;
     }
+}*/
+app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeAutoProp >> @>log;
+        'End' >> @>log;
+    }
+
+    prop SomeAutoProp: number = 16;
 }

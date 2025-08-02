@@ -22,9 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
@@ -37,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         
         public void Run(AstExecStatement statement)
         {
-            var node = new ExpressionNode(_context, null);
+            var node = new ExpressionNode(_context);
             node.Run(statement.Expression);
 
             AddCommands(node.Result);

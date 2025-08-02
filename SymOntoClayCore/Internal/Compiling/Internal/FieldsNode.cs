@@ -45,12 +45,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     continue;
                 }
 
-                var node = new ExpressionNode(_context, null);
+                var node = new ExpressionNode(_context);
                 node.Run(field.DefaultValue);
 
                 AddCommands(node.Result);
 
-                CompilePushVal(field.Name, KindOfCompilePushVal.DirectAllCases);
+                CompilePushVal(field.Name);
 
                 var command = new IntermediateScriptCommand();
                 command.OperationCode = OperationCode.CallBinOp;

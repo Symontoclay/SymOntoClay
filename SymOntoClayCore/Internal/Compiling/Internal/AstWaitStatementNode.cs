@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             foreach(var item in statement.Items)
             {
-                var node = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
+                var node = new ExpressionNode(_context);
                 node.Run(item);
                 AddCommands(node.Result);
             }

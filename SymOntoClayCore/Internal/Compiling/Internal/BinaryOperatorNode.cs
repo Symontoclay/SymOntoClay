@@ -47,10 +47,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     RunAssignBinaryOperator(expression);
                     break;
 
-                case KindOfOperator.Point:
-                    RunPointOperator(expression);
-                    break;
-
                 default:
                     RunUsualBinaryOperator(expression);
                     break;
@@ -64,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Info("25DEC754-44BF-49DF-B1AA-496AD2B76595", $"expression.Right = {expression.Right}");
 #endif
 
-            var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
+            var rightNode = new ExpressionNode(_context);
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 
@@ -86,7 +82,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case KindOfAstExpression.ConstValue:
                 case KindOfAstExpression.Var:
                     {
-                        var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.DirectAllCases);
+                        var leftNode = new ExpressionNode(_context);
                         leftNode.Run(expression);
                         AddCommands(leftNode.Result);
 
@@ -131,7 +127,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             case KindOfOperator.Assign:
                                 {
-                                    var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.DirectAllCases);
+                                    var rightNode = new ExpressionNode(_context);
                                     rightNode.Run(binOpExpr.Right);
                                     AddCommands(rightNode.Result);
 
@@ -144,19 +140,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                                     RunLeftAssignNode(binOpExpr.Left);
                                 }
-                                break;
-
-                            case KindOfOperator.Point:
-                                {
-                                    RunPointOperator(expression as BinaryOperatorAstExpression);
-
-                                    var command = new IntermediateScriptCommand();
-                                    command.OperationCode = OperationCode.CallBinOp;
-                                    command.KindOfOperator = KindOfOperator.Assign;
-                                    command.AnnotatedItem = expression;
-
-                                    AddCommand(command);
-                                }                                
                                 break;
 
                             default:
@@ -184,31 +167,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #endif
         }
 
-        private void RunPointOperator(BinaryOperatorAstExpression expression)
-        {
-            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
-            leftNode.Run(expression.Left);
-            AddCommands(leftNode.Result);
-
-            var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.DirectAllCases);
-            rightNode.Run(expression.Right);
-            AddCommands(rightNode.Result);
-
-            var command = new IntermediateScriptCommand();
-            command.OperationCode = OperationCode.CallBinOp;
-            command.KindOfOperator = expression.KindOfOperator;
-            command.AnnotatedItem = expression;
-
-            AddCommand(command);
-        }
-
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)
         {
-            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
+            var leftNode = new ExpressionNode(_context);
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 
-            var rightNode = new ExpressionNode(_context, null);
+            var rightNode = new ExpressionNode(_context);
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 

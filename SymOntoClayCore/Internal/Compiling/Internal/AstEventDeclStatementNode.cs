@@ -38,13 +38,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstEventDeclStatement statement)
         {
-            var node = new ExpressionNode(_context, null);
+            var node = new ExpressionNode(_context);
             node.Run(statement.Expression);
             AddCommands(node.Result);
 
-            CompilePushVal(statement.KindOfLifeCycleEvent, KindOfCompilePushVal.DirectAllCases);
+            CompilePushVal(statement.KindOfLifeCycleEvent);
 
-            CompilePushVal(statement.Handler, KindOfCompilePushVal.DirectAllCases);
+            CompilePushVal(statement.Handler);
 
             AddCommand(new IntermediateScriptCommand()
             {

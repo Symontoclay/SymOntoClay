@@ -399,14 +399,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         ProcessPushVal(currentCommand);
                         break;
 
-                    case OperationCode.LoadFromVar:
-                        ProcessLoadFromVar();
-                        break;
-
-                    case OperationCode.TryLoadFromStrongIdentifier:
-                        ProcessTryLoadFromStrongIdentifier();
-                        break;
-
                     case OperationCode.VarDecl:
                         ProcessVarDecl(currentCommand);
                         break;

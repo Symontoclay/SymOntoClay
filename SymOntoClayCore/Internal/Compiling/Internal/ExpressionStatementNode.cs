@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         
         public void Run(AstExpressionStatement statement)
         {
-            var node = new ExpressionNode(_context, null);
+            var node = new ExpressionNode(_context);
             node.Run(statement.Expression);
             
             AddCommands(node.Result);

@@ -22,9 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
@@ -37,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(UnaryOperatorAstExpression expression)
         {
-            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
+            var leftNode = new ExpressionNode(_context);
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 

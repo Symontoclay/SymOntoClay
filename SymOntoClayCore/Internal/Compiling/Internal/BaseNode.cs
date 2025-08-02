@@ -20,15 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Compiling.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
@@ -67,104 +64,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(command);
         }
 
-        protected void CompilePushVal(Value value, KindOfCompilePushVal kindOfCompilePushVal)
+        protected void CompilePushVal(Value value)
         {
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;
             command.Value = value;
 
             AddCommand(command);
-
-            var internalKindOfCompilePushValItems = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
-
-#if DEBUG
-            //Info("A683D34C-505F-46D2-BEC6-282CA9C075BB", $"internalKindOfCompilePushValItems = {JsonConvert.SerializeObject(internalKindOfCompilePushValItems.Select(p => p.ToString()), Formatting.Indented)}");
-#endif
-            var internalVarKindOfCompilePushValItems = internalKindOfCompilePushValItems.Where(p => p == InternalKindOfCompilePushVal.DirectVar || p == InternalKindOfCompilePushVal.SetVar || p == InternalKindOfCompilePushVal.GetVar);
-            var internalPropKindOfCompilePushValItems = internalKindOfCompilePushValItems.Where(p => p == InternalKindOfCompilePushVal.DirectProp || p == InternalKindOfCompilePushVal.SetProp || p == InternalKindOfCompilePushVal.GetProp);
-
-            InternalKindOfCompilePushVal? internalVarKindOfCompilePushValItem = internalVarKindOfCompilePushValItems.Any() ? internalVarKindOfCompilePushValItems.SingleOrDefault() : (InternalKindOfCompilePushVal?)null;
-            InternalKindOfCompilePushVal? internalPropKindOfCompilePushValItem = internalPropKindOfCompilePushValItems.Any() ? internalPropKindOfCompilePushValItems.SingleOrDefault() : (InternalKindOfCompilePushVal?)null;
-
-#if DEBUG
-            //Info("41A07939-3F85-45B9-92C0-EE317CD48ED8", $"internalVarKindOfCompilePushValItem  = {internalVarKindOfCompilePushValItem}");
-            //Info("DEF74918-104E-4F00-9DD5-C419F0C74DE7", $"internalPropKindOfCompilePushValItem = {internalPropKindOfCompilePushValItem}");
-#endif
-
-            switch (value.KindOfValue)
-            {
-                case KindOfValue.StrongIdentifierValue:
-                    {
-                        var name = value.AsStrongIdentifierValue;
-
-                        switch (name.KindOfName)
-                        {
-                            case KindOfName.Var:
-                            case KindOfName.SystemVar:                            
-                                if (internalVarKindOfCompilePushValItem.HasValue)
-                                {
-                                    switch (internalVarKindOfCompilePushValItem)
-                                    {
-                                        case InternalKindOfCompilePushVal.DirectVar:
-                                            break;
-
-                                        case InternalKindOfCompilePushVal.GetVar:
-                                            CompileLoadFromVar();
-                                            break;
-
-                                        default:
-                                            throw new ArgumentOutOfRangeException(nameof(internalVarKindOfCompilePushValItem), internalVarKindOfCompilePushValItem, null);
-                                    }
-                                }
-                                break;
-
-                            case KindOfName.CommonConcept:
-                            case KindOfName.LinguisticVar:
-                            case KindOfName.Property:
-                                if (internalPropKindOfCompilePushValItem.HasValue)
-                                {
-                                    switch (internalPropKindOfCompilePushValItem)
-                                    {
-                                        case InternalKindOfCompilePushVal.DirectProp:
-                                            break;
-
-                                        case InternalKindOfCompilePushVal.GetProp:
-                                            CompileTryLoadFromProperty();
-                                            break;
-
-                                        default:
-                                            throw new ArgumentOutOfRangeException(nameof(internalPropKindOfCompilePushValItem), internalPropKindOfCompilePushValItem, null);
-                                    }
-                                }
-                                break;
-                        }
-                    }
-                    break;
-
-                case KindOfValue.PointRefValue:
-                    if (internalVarKindOfCompilePushValItem.HasValue || internalPropKindOfCompilePushValItem.HasValue)
-                    {
-                        //Check TryResolveFromVarOrExpr in the ValueResolvingHelper
-                        throw new NotImplementedException("18036216-1223-4190-8DC3-A17FC4522D24");
-                    }
-                    break;
-            }
-        }
-
-        private void CompileLoadFromVar()
-        {
-            var cmd = new IntermediateScriptCommand();
-            cmd.OperationCode = OperationCode.LoadFromVar;
-
-            AddCommand(cmd);
-        }
-
-        private void CompileTryLoadFromProperty()
-        {
-            var cmd = new IntermediateScriptCommand();
-            cmd.OperationCode = OperationCode.TryLoadFromStrongIdentifier;
-
-            AddCommand(cmd);
         }
 
 #if DEBUG
@@ -250,8 +156,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveHtnTask:
                 case OperationCode.EndPrimitiveHtnTask:
-                case OperationCode.LoadFromVar:
-                case OperationCode.TryLoadFromStrongIdentifier:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

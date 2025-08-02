@@ -20,12 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
@@ -38,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(CodeItemAstExpression expression)
         {
-            CompilePushVal(expression.CodeItem, KindOfCompilePushVal.DirectAllCases);
+            CompilePushVal(expression.CodeItem);
 
             if(expression.CodeItem.IsAnonymous)
             {

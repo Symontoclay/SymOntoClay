@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             }
             else
             {
-                var node = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
+                var node = new ExpressionNode(_context);
                 node.Run(statement.Expression);
 
                 AddCommands(node.Result);

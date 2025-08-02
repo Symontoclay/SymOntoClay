@@ -220,8 +220,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveHtnTask:
                 case OperationCode.EndPrimitiveHtnTask:
-                case OperationCode.LoadFromVar:
-                case OperationCode.TryLoadFromStrongIdentifier:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:

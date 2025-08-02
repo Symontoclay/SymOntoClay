@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstExpression expression)
         {
-            var node = new ExpressionNode(_context, KindOfCompilePushVal.GetAllCases);
+            var node = new ExpressionNode(_context);
             node.Run(expression);
 
             AddCommands(node.Result);

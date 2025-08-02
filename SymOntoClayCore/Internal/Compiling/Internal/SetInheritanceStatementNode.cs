@@ -22,9 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
@@ -37,9 +34,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstSetInheritanceStatement statement)
         {
-            CompilePushVal(statement.SubName, KindOfCompilePushVal.DirectAllCases);
-            CompilePushVal(statement.SuperName, KindOfCompilePushVal.DirectAllCases);
-            CompilePushVal(statement.Rank, KindOfCompilePushVal.DirectAllCases);
+            CompilePushVal(statement.SubName);
+            CompilePushVal(statement.SuperName);
+            CompilePushVal(statement.Rank);
 
             var command = new IntermediateScriptCommand();
             command.AnnotatedItem = statement;

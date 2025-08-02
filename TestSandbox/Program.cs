@@ -21,10 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using DictionaryGenerator;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Newtonsoft.Json;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.CLI;
@@ -35,9 +32,6 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Compiling.Internal;
-using SymOntoClay.Core.Internal.Compiling.Internal.Helpers;
-using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing.Internal;
@@ -93,7 +87,6 @@ namespace TestSandbox
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
             //TstSorting();
-            //TstKindOfCompilePushValHelper();
             //TstLogFileBuilderAppCommandLineParserHandler();
             //TstThreadTask();
             //TstThreadPoolCount();
@@ -203,22 +196,6 @@ namespace TestSandbox
             var sortedList = initialList.OrderBy(p => p.Item1).ThenBy(p => p.Item2).ThenBy(p => p.Item3).ToList();
 
             _globalLogger.Info($"sortedList = {JsonConvert.SerializeObject(sortedList, Formatting.Indented)}");
-
-            _globalLogger.Info("End");
-        }
-
-        private static void TstKindOfCompilePushValHelper()
-        {
-            _globalLogger.Info("Begin");
-
-            var kindOfCompilePushVal = KindOfCompilePushVal.SetOther | KindOfCompilePushVal.GetOther;
-
-            _globalLogger.Info($"kindOfCompilePushVal = {kindOfCompilePushVal}");
-
-            var result = KindOfCompilePushValHelper.ConvertToInternalItems(kindOfCompilePushVal);
-
-            _globalLogger.Info($"result.Count = {result.Count}");
-            _globalLogger.Info($"result = {JsonConvert.SerializeObject(result.Select(p => p.ToString()), Formatting.Indented)}");
 
             _globalLogger.Info("End");
         }

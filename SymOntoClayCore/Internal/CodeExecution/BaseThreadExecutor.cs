@@ -1255,65 +1255,77 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
 #if DEBUG
             Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
-            if(_currentCodeFrame.State != CodeFrameState.Init
-                && _currentCodeFrame.State != CodeFrameState.EndCommandExecution)
+            //if(_currentCodeFrame.State != CodeFrameState.Init
+            //    && _currentCodeFrame.State != CodeFrameState.EndCommandExecution)
+            //{
+            //    throw new NotImplementedException("DD672EEB-A0CC-4CC2-92C9-39DB673FB3E0");
+            //}
+#endif
+
+            if(_currentCodeFrame.State == CodeFrameState.Init ||
+                _currentCodeFrame.State != CodeFrameState.EndCommandExecution)
             {
-                throw new NotImplementedException("DD672EEB-A0CC-4CC2-92C9-39DB673FB3E0");
-            }
-#endif
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            }            
 
-            _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
-
-            var kindOfOperator = currentCommand.KindOfOperator;
-
-#if DEBUG
-            //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"kindOfOperator = {kindOfOperator}");
-#endif
-
-            var callBinOpTakeParametersSettings = GetCallBinOpTakeParametersSettings(kindOfOperator);
-
-#if DEBUG
-            //Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callBinOpTakeParametersSettings.NeedRevers = {callBinOpTakeParametersSettings.NeedRevers}");
-            //Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
-#endif
-
-            var paramsListCallResult = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
-
-#if DEBUG
-            Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
-#endif
-
-            var paramsListCallResultKindOfResult = paramsListCallResult.KindOfResult;
-
-#if DEBUG
-            Info("EE7E2DAA-E392-4B9F-B61C-395EADE19B11", $"paramsListCallResultKindOfResult = {paramsListCallResultKindOfResult}");
-#endif
-
-            List<Value> paramsList = null;
-
-            switch (paramsListCallResultKindOfResult)
+            if(_currentCodeFrame.State == CodeFrameState.BeginningCommandExecution ||
+                _currentCodeFrame.State == CodeFrameState.TakingParameters ||
+                _currentCodeFrame.State == CodeFrameState.ResolvingParameters)
             {
-                case KindOfCallResult.Values:
-                    paramsList = paramsListCallResult.Values;
-                    break;
-
-                case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
-                    return;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, null);
-            }
+                var kindOfOperator = currentCommand.KindOfOperator;
 
 #if DEBUG
-            //Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"paramsList = {paramsList.WriteListToString()}");
+                //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"kindOfOperator = {kindOfOperator}");
 #endif
 
-            if (kindOfOperator == KindOfOperator.IsNot)
-            {
-                kindOfOperator = KindOfOperator.Is;
+                var callBinOpTakeParametersSettings = GetCallBinOpTakeParametersSettings(kindOfOperator);
+
+#if DEBUG
+                //Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callBinOpTakeParametersSettings.NeedRevers = {callBinOpTakeParametersSettings.NeedRevers}");
+                //Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
+#endif
+
+                var paramsListCallResult = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
+
+#if DEBUG
+                Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
+#endif
+
+                var paramsListCallResultKindOfResult = paramsListCallResult.KindOfResult;
+
+#if DEBUG
+                Info("EE7E2DAA-E392-4B9F-B61C-395EADE19B11", $"paramsListCallResultKindOfResult = {paramsListCallResultKindOfResult}");
+#endif
+
+                List<Value> paramsList = null;
+
+                switch (paramsListCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Values:
+                        paramsList = paramsListCallResult.Values;
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, null);
+                }
+
+#if DEBUG
+                //Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"paramsList = {paramsList.WriteListToString()}");
+#endif
+
+                if (kindOfOperator == KindOfOperator.IsNot)
+                {
+                    kindOfOperator = KindOfOperator.Is;
+                }
             }
 
-            _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            if(_currentCodeFrame.State == CodeFrameState.ResolvedParameters)
+            {
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            }
 
             var operatorInfo = _operatorsResolver.GetOperator(Logger, kindOfOperator, _currentCodeFrame.LocalContext);
 
@@ -1925,6 +1937,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private CallResult TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
         {
+#if DEBUG
+            Info("14B2B20F-631C-4713-AC8E-CD6B99C7A1AA", $"%%%% _currentCodeFrame.State = {_currentCodeFrame.State}");
+            if (_currentCodeFrame.State != CodeFrameState.Init
+                && _currentCodeFrame.State != CodeFrameState.EndCommandExecution)
+            {
+                throw new NotImplementedException("444079B7-6E2D-4D60-8BF1-FFD0FA066064");
+            }
+#endif
+
             _currentCodeFrame.State = CodeFrameState.TakingParameters;
 
 #if DEBUG

@@ -1005,13 +1005,40 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessReturnVal()
         {
+            _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            _currentCodeFrame.State = CodeFrameState.TakingParameters;
+
             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-            //Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
-            //Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
+            Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
             //Info("4F2C17C8-9410-491B-9DF5-0872F61B45B0", $"_currentCodeFrame.Metadata.GetType().FullName = {_currentCodeFrame.Metadata.GetType().FullName}");
 #endif
+
+            var conversionCallResult = TryResolveFromVarOrExpr(currentValue);
+
+#if DEBUG
+            Info("ABDD8A9C-6843-437B-A4DC-4F763FA9CC04", $"conversionCallResult = {conversionCallResult}");
+#endif
+
+            var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
+
+#if DEBUG
+            Info("A9C224B6-F30A-4D5D-873B-BE6E0A529703", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
+#endif
+
+            switch (conversionCallResultKindOfResult)
+            {
+                case KindOfCallResult.Value:
+                    currentValue = conversionCallResult.Value;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
+            }
+
+            _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
 
             var returnable = _currentCodeFrame.Metadata.AsIReturnable;
 
@@ -1039,6 +1066,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
                 }
             }
+
+            _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
 
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "17EFD6A4-C466-4A2E-AB3E-E7C90CC3547C", ProcessStatus.Completed);
 
@@ -2026,13 +2055,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         [Obsolete]
         private List<Value> TakePositionedParametersOld(int count)
         {
-            return NTakePositionedParameters(count, true);
+            throw new NotImplementedException("131EAE27-B27C-4E7A-B178-E1B7D2D92786");
+            //return NTakePositionedParameters(count, true);
         }
 
         [Obsolete]
         private Dictionary<StrongIdentifierValue, Value> TakeNamedParametersOld(int count)
         {
-            var rawParamsList = NTakePositionedParameters(count * 2, true);
+            throw new NotImplementedException("135A0D8C-6DC5-460C-880F-0A570858520D");
+
+            /*var rawParamsList = NTakePositionedParameters(count * 2, true);
 
             var result = new Dictionary<StrongIdentifierValue, Value>();
 
@@ -2049,7 +2081,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 result[name] = value;
             }
 
-            return result;
+            return result;*/
         }
 
         private void CallConstructor(KindOfFunctionParameters kindOfParameters, int parametersCount, IAnnotatedItem annotatedItem)

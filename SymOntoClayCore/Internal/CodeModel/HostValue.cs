@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             lock(_getMemberLockObj)
             {
 #if DEBUG
-                logger.Info("B59CDE49-C77A-4580-A22A-D33E031A7200", $"memberName = {memberName}");
+                //logger.Info("B59CDE49-C77A-4580-A22A-D33E031A7200", $"memberName = {memberName}");
 #endif
 
                 if(_membersDict.TryGetValue(memberName, out var foundMember))

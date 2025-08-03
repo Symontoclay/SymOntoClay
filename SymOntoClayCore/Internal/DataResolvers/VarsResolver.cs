@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private Value GetSystemVarValue(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("C1EAD31A-2B86-4042-935F-899E3389E8FD", $"varName = {varName}");
+            //Info("C1EAD31A-2B86-4042-935F-899E3389E8FD", $"varName = {varName}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 if(targetValue != null)
                 {
 #if DEBUG
-                    Info("9E823016-CE30-46FA-835E-4A6AB98A5743", $"targetValue = {targetValue}");
+                    //Info("9E823016-CE30-46FA-835E-4A6AB98A5743", $"targetValue = {targetValue}");
 #endif
 
                     return targetValue;

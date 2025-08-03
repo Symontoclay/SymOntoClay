@@ -364,7 +364,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
 #if DEBUG
-                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                //Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -2406,8 +2406,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var caller = valueStack.Pop();
 
 #if DEBUG
-            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
-            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
+            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
+            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
             //Info("5D38AC5A-D24F-4CA3-9AA7-7D9A76DF0BA7", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
             //Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToHumanizedString() = {_currentCodeFrame.ProcessInfo.ToHumanizedString()}");
             //Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToLabel(Logger) = {_currentCodeFrame.ProcessInfo.ToLabel(Logger)}");
@@ -2470,7 +2470,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(caller.IsHostMethodValue)
             {
-                throw new NotImplementedException("312CE485-FFC0-4E60-B948-3409549EEA45");
+                CallHost(callMethodId, caller.AsHostMethodValue.MethodName, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+
+                Logger.EndCallMethod("26A17EE4-DD14-42BD-B885-189BF8D28F89", callMethodId);
+
+                return;
             }
 
             if (caller.IsStrongIdentifierValue)
@@ -2517,7 +2521,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
-            var callerLeftOperand = caller.LeftOperand;
+            throw new NotImplementedException("7A74E818-3F41-44F7-A16A-BE4AA4AD5075");
+
+            /*var callerLeftOperand = caller.LeftOperand;
             var callerRightOperand = caller.RightOperand;
 
             if (callerLeftOperand.IsHostValue)
@@ -2535,7 +2541,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var method = callerLeftOperand.GetMethod(Logger, methodName, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(callMethodId, null, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, false);
+            CallExecutable(callMethodId, null, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, false);*/
         }
 
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 

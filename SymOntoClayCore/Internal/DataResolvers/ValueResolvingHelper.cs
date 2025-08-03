@@ -71,8 +71,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var kindOfName = identifier.KindOfName;
 
 #if DEBUG
-                        //Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
-                        //Info("8FAE3943-8A07-47AE-AD56-EFBEE868C00B", $"localCodeExecutionContext.Instance?.Name = {localCodeExecutionContext.Instance?.Name}");
+                        Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
+                        Info("8FAE3943-8A07-47AE-AD56-EFBEE868C00B", $"localCodeExecutionContext.Instance?.Name = {localCodeExecutionContext.Instance?.Name}");
 #endif
 
                         switch (kindOfName)

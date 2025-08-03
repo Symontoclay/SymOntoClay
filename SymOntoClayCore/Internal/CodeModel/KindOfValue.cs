@@ -41,6 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         InstanceValue,
         MemberValue,
         HostValue,
+        HostMethodValue,
         PointRefValue,
         RuleInstance,
         MutablePartOfRuleInstance,

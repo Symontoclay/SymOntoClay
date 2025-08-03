@@ -8,6 +8,7 @@ namespace SymOntoClay.Core.Internal.Instances
     {
         Method,
         Field,
-        Property
+        Property,
+        HostMethod
     }
 }

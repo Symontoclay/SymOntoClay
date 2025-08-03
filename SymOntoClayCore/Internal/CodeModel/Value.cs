@@ -72,6 +72,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsHostValue => false;
         public virtual HostValue AsHostValue => null;
 
+        public virtual bool IsHostMethodValue => false;
+        public virtual HostMethodValue AsHostMethodValue => null;
+
         public virtual bool IsPointRefValue => false;
         public virtual PointRefValue AsPointRefValue => null;
 

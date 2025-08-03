@@ -32,6 +32,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CallResult GetValue(IMonitorLogger logger) => Member.GetValue(logger);
 
         /// <inheritdoc/>
+        public override bool IsHostMethodValue => Member.IsHostMethodValue;
+
+        /// <inheritdoc/>
+        public override HostMethodValue AsHostMethodValue => Member.AsHostMethodValue;
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return Member;

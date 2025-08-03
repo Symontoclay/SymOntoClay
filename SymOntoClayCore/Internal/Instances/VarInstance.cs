@@ -86,6 +86,12 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public KindOfMember KindOfMember => KindOfMember.Field;
 
+        /// <inheritdoc/>
+        public bool IsHostMethodValue => false;
+
+        /// <inheritdoc/>
+        public HostMethodValue AsHostMethodValue => null;
+
         private ITypeConverter _typeConverter;
 
         public StrongIdentifierValue Name { get; private set; }

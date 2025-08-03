@@ -13,6 +13,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         ResolvingParameterInCodeFrame,
         ResolvedParameters,
         CommandExecution,
+        CommandPostExecution,
         EndCommandExecution
     }
 }

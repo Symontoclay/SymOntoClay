@@ -24,6 +24,7 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using System.Collections.Generic;
@@ -71,6 +72,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public int CurrentPositionOfResolvingParameter { get; set; }
         public List<Value> ResolvedParameterValues { get; set; }
         public Value CurrentResolvedParameterValue { get; set; }
+        public KindOfOperator CurrentKindOfOperator { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -138,6 +140,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
             sb.PrintObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
+
+            sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
 
             return sb.ToString();
         }
@@ -209,6 +213,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
             sb.PrintShortObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
+            sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
+
             return sb.ToString();
         }
 
@@ -278,6 +284,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintBriefObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
             sb.PrintBriefObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
+
+            sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
 
             return sb.ToString();
         }

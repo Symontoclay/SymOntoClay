@@ -1348,6 +1348,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private static bool[] _leftRightStreamBinOpTakeParametersSettings = [true, false];
         private static bool[] _pointBinOpTakeParametersSettings = [true, false];
         private static bool[] _assignBinOpTakeParametersSettings = [false, true];
+        private static bool[] _usualBinOpTakeParametersSettings = [true, true];
 
         private (bool NeedRevers, bool[] LoadingMatrix) GetCallBinOpTakeParametersSettings(KindOfOperator kindOfOperator)
         {
@@ -1365,6 +1366,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case KindOfOperator.Assign:
                     return (false, _assignBinOpTakeParametersSettings);
+
+                case KindOfOperator.Add:
+                case KindOfOperator.Sub:
+                case KindOfOperator.Mul:
+                case KindOfOperator.Div:
+                    return (true, _usualBinOpTakeParametersSettings);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);

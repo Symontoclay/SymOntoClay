@@ -1,11 +1,11 @@
 ﻿app PeaceKeeper
 {
+private:
     on Enter =>
     {
         'Begin' >> @>log;
-
-        @@host.`boo`();
-
+        @a = 2;
+        2 * -@a >> @>log;
         'End' >> @>log;
     }
 }

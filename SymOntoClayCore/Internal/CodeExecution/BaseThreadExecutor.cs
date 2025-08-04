@@ -364,7 +364,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
 #if DEBUG
-                //Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -1244,13 +1244,79 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCallUnOp(ScriptCommand currentCommand)
         {
-            var paramsList = TakePositionedParametersOld(1);
+#if DEBUG
+            Info("21DF4338-0B0E-4956-81DB-3EA5DFA255B5", $"^^^^ _currentCodeFrame.State = {_currentCodeFrame.State}");
+#endif
 
-            var kindOfOperator = currentCommand.KindOfOperator;
+            var currentCodeFrameState = _currentCodeFrame.State;
 
-            var operatorInfo = _operatorsResolver.GetOperator(Logger, kindOfOperator, _currentCodeFrame.LocalContext);
+            if (currentCodeFrameState == CodeFrameState.Init ||
+                currentCodeFrameState == CodeFrameState.EndCommandExecution)
+            {
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+                _currentCodeFrame.CurrentKindOfOperator = currentCommand.KindOfOperator;
+            }
 
-            CallOperator(operatorInfo, paramsList);
+            currentCodeFrameState = _currentCodeFrame.State;
+
+            if (currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
+                currentCodeFrameState == CodeFrameState.TakingParameters ||
+                currentCodeFrameState == CodeFrameState.ResolvingParameters ||
+                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame)
+            {
+#if DEBUG
+                Info("127B8EB8-251D-4CCC-9C79-F16ED03BDE71", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
+#endif
+
+                var callOpTakeParametersSettings = GetCallOpTakeParametersSettings(currentCommand.KindOfOperator);
+
+#if DEBUG
+                Info("7962C449-72E8-4F20-BC92-9D1549BC1534", $"callOpTakeParametersSettings.NeedRevers = {callOpTakeParametersSettings.NeedRevers}");
+                Info("0CBD60A5-1EAF-422B-BFBC-D0D41890D41A", $"callOpTakeParametersSettings.LoadingMatrix = {callOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
+#endif
+
+                var paramsListCallResult = TakePositionedParameters(1, callOpTakeParametersSettings.NeedRevers, callOpTakeParametersSettings.LoadingMatrix);
+
+#if DEBUG
+                Info("27766105-A33C-4FFD-9194-F15F6FC3442A", $"paramsListCallResult = {paramsListCallResult}");
+#endif
+
+                var paramsListCallResultKindOfResult = paramsListCallResult.KindOfResult;
+
+#if DEBUG
+                Info("2E10CEDE-A0A2-4C6B-B9D0-744BA6EC0DA5", $"paramsListCallResultKindOfResult = {paramsListCallResultKindOfResult}");
+#endif
+
+                switch (paramsListCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Values:
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, null);
+                }
+
+#if DEBUG
+                Info("2B32E913-7D27-4C7E-943A-EBF343CFA996", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedParameterValues.WriteListToString()}");
+#endif
+            }
+
+            if (_currentCodeFrame.State == CodeFrameState.ResolvedParameters)
+            {
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            }
+
+            if (_currentCodeFrame.State == CodeFrameState.CommandExecution)
+            {
+                var operatorInfo = _operatorsResolver.GetOperator(Logger, _currentCodeFrame.CurrentKindOfOperator, _currentCodeFrame.LocalContext);
+
+                CallOperator(operatorInfo, _currentCodeFrame.ResolvedParameterValues);
+
+                _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+            }
         }
 
         private void ProcessCallBinOp(ScriptCommand currentCommand)
@@ -1259,30 +1325,34 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
-            if(_currentCodeFrame.State == CodeFrameState.Init ||
-                _currentCodeFrame.State == CodeFrameState.EndCommandExecution)
+            var currentCodeFrameState = _currentCodeFrame.State;
+
+            if (currentCodeFrameState == CodeFrameState.Init ||
+                currentCodeFrameState == CodeFrameState.EndCommandExecution)
             {
                 _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
                 _currentCodeFrame.CurrentKindOfOperator = currentCommand.KindOfOperator;
             }
 
-            if(_currentCodeFrame.State == CodeFrameState.BeginningCommandExecution ||
-                _currentCodeFrame.State == CodeFrameState.TakingParameters ||
-                _currentCodeFrame.State == CodeFrameState.ResolvingParameters ||
-                _currentCodeFrame.State == CodeFrameState.ResolvingParameterInCodeFrame)
+            currentCodeFrameState = _currentCodeFrame.State;
+
+            if (currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
+                currentCodeFrameState == CodeFrameState.TakingParameters ||
+                currentCodeFrameState == CodeFrameState.ResolvingParameters ||
+                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame)
             {
 #if DEBUG
                 //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
 #endif
 
-                var callBinOpTakeParametersSettings = GetCallBinOpTakeParametersSettings(currentCommand.KindOfOperator);
+                var callOpTakeParametersSettings = GetCallOpTakeParametersSettings(currentCommand.KindOfOperator);
 
 #if DEBUG
-                //Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callBinOpTakeParametersSettings.NeedRevers = {callBinOpTakeParametersSettings.NeedRevers}");
-                //Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callBinOpTakeParametersSettings.LoadingMatrix = {callBinOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
+                //Info("9AC1FC46-2CD3-4086-ADF3-C2B52E8E3F81", $"callOpTakeParametersSettings.NeedRevers = {callOpTakeParametersSettings.NeedRevers}");
+                //Info("05E8E573-73FB-4145-AD0A-1112DE404B57", $"callOpTakeParametersSettings.LoadingMatrix = {callOpTakeParametersSettings.LoadingMatrix.WritePODListToString()}");
 #endif
 
-                var paramsListCallResult = TakePositionedParameters(2, callBinOpTakeParametersSettings.NeedRevers, callBinOpTakeParametersSettings.LoadingMatrix);
+                var paramsListCallResult = TakePositionedParameters(2, callOpTakeParametersSettings.NeedRevers, callOpTakeParametersSettings.LoadingMatrix);
 
 #if DEBUG
                 //Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
@@ -1349,8 +1419,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private static bool[] _pointBinOpTakeParametersSettings = [true, false];
         private static bool[] _assignBinOpTakeParametersSettings = [false, true];
         private static bool[] _usualBinOpTakeParametersSettings = [true, true];
+        private static bool[] _usualUnOpTakeParametersSettings = [true];
 
-        private (bool NeedRevers, bool[] LoadingMatrix) GetCallBinOpTakeParametersSettings(KindOfOperator kindOfOperator)
+        private (bool NeedRevers, bool[] LoadingMatrix) GetCallOpTakeParametersSettings(KindOfOperator kindOfOperator)
         {
 #if DEBUG
             //Info("CA8916E7-8D93-4278-87ED-B86D34604206", $"kindOfOperator = {kindOfOperator}");
@@ -1372,6 +1443,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case KindOfOperator.Mul:
                 case KindOfOperator.Div:
                     return (true, _usualBinOpTakeParametersSettings);
+
+                case KindOfOperator.UnaryPlus:
+                case KindOfOperator.UnaryMinus:
+                    return (true, _usualUnOpTakeParametersSettings);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);

@@ -1,11 +1,18 @@
 ﻿app PeaceKeeper
 {
-private:
     on Enter =>
     {
         'Begin' >> @>log;
-        @a = 2;
-        2 * -@a >> @>log;
+        
+        @a = 1;
+
+        if(@a > 0)
+        {
+            'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
+        }
+
         'End' >> @>log;
     }
 }

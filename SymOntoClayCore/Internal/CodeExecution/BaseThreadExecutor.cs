@@ -1449,6 +1449,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case KindOfOperator.Or:
                 case KindOfOperator.And:
                 case KindOfOperator.Is:
+                case KindOfOperator.IsNot:
                     return (true, _usualBinOpTakeParametersSettings);
 
                 case KindOfOperator.UnaryPlus:

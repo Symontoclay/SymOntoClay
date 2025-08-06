@@ -1735,6 +1735,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void JumpToIf(float targetValue, int targetPosition)
         {
+            _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            _currentCodeFrame.State = CodeFrameState.TakingParameters;
+
             var currLogicValue = GetLogicalValueFromCurrentStackValue();
 
             if (currLogicValue == targetValue)
@@ -1745,6 +1748,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 _currentCodeFrame.CurrentPosition++;
             }
+
+            _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
         }
 
         private float? GetLogicalValueFromCurrentStackValue()
@@ -1754,6 +1759,30 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             //Info("2CC01662-FE1B-4963-9C26-271664A4B1FE", $"currentValue = {currentValue}");
 #endif
+
+            var conversionCallResult = TryResolveFromVarOrExpr(currentValue);
+
+#if DEBUG
+            //Info("094B79F8-D2B9-4104-8F67-B50E22D1B9DA", $"conversionCallResult = {conversionCallResult}");
+#endif
+
+            var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
+
+#if DEBUG
+            //Info("4AD601D7-4FD3-493C-9EBD-AE8DC7CF93E2", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
+#endif
+
+            switch (conversionCallResultKindOfResult)
+            {
+                case KindOfCallResult.Value:
+                    currentValue = conversionCallResult.Value;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
+            }
+
+            _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
 
             var kindOfValue = currentValue.KindOfValue;
 

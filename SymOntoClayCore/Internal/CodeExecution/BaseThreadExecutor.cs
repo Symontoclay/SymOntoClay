@@ -1442,10 +1442,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case KindOfOperator.Sub:
                 case KindOfOperator.Mul:
                 case KindOfOperator.Div:
+                case KindOfOperator.More:
+                case KindOfOperator.MoreOrEqual:
+                case KindOfOperator.Less:
+                case KindOfOperator.LessOrEqual:
+                case KindOfOperator.Or:
+                case KindOfOperator.And:
+                case KindOfOperator.Is:
                     return (true, _usualBinOpTakeParametersSettings);
 
                 case KindOfOperator.UnaryPlus:
                 case KindOfOperator.UnaryMinus:
+                case KindOfOperator.Not:
                     return (true, _usualUnOpTakeParametersSettings);
 
                 default:

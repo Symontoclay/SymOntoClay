@@ -1005,90 +1005,122 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessReturnVal()
         {
-            _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
-            _currentCodeFrame.State = CodeFrameState.TakingParameters;
+            var currentCodeFrameState = _currentCodeFrame.State;
 
-            var currentValue = _currentCodeFrame.ValuesStack.Pop();
-
-#if DEBUG
-            //Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
-            //Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            //Info("4F2C17C8-9410-491B-9DF5-0872F61B45B0", $"_currentCodeFrame.Metadata.GetType().FullName = {_currentCodeFrame.Metadata.GetType().FullName}");
-#endif
-
-            var conversionCallResult = TryResolveFromVarOrExpr(currentValue);
-
-#if DEBUG
-            //Info("ABDD8A9C-6843-437B-A4DC-4F763FA9CC04", $"conversionCallResult = {conversionCallResult}");
-#endif
-
-            var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
-
-#if DEBUG
-            //Info("A9C224B6-F30A-4D5D-873B-BE6E0A529703", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
-#endif
-
-            switch (conversionCallResultKindOfResult)
+            if (currentCodeFrameState == CodeFrameState.Init ||
+                currentCodeFrameState == CodeFrameState.EndCommandExecution)
             {
-                case KindOfCallResult.Value:
-                    currentValue = conversionCallResult.Value;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
             }
 
-            _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
-
-            var returnable = _currentCodeFrame.Metadata.AsIReturnable;
-
-            if(returnable != null)
+            if(_currentCodeFrame.State == CodeFrameState.BeginningCommandExecution)
             {
+                _currentCodeFrame.State = CodeFrameState.TakingParameters;
+            }
+
+            if(_currentCodeFrame.State == CodeFrameState.TakingParameters)
+            {
+                var currentValue = _currentCodeFrame.ValuesStack.Pop();
+
 #if DEBUG
-                //Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
+                //Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
+                //Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Info("4F2C17C8-9410-491B-9DF5-0872F61B45B0", $"_currentCodeFrame.Metadata.GetType().FullName = {_currentCodeFrame.Metadata.GetType().FullName}");
 #endif
 
-                var conversionResult = _typeConverter.CheckAndTryConvert(Logger, currentValue, returnable.TypesList, _currentCodeFrame.LocalContext);
+                _currentCodeFrame.State = CodeFrameState.ResolvingParameters;
+            }
+
+            currentCodeFrameState = _currentCodeFrame.State;
+
+            if (currentCodeFrameState == CodeFrameState.ResolvingParameters ||
+                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame)
+            {
+                var conversionCallResult = TryResolveFromVarOrExpr(currentValue);
 
 #if DEBUG
-                //Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
+                //Info("ABDD8A9C-6843-437B-A4DC-4F763FA9CC04", $"conversionCallResult = {conversionCallResult}");
 #endif
 
-                var kindOfResult = conversionResult.KindOfResult;
+                var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
 
-                switch(kindOfResult)
+#if DEBUG
+                //Info("A9C224B6-F30A-4D5D-873B-BE6E0A529703", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
+#endif
+
+                switch (conversionCallResultKindOfResult)
                 {
                     case KindOfCallResult.Value:
-                        currentValue = conversionResult.Value;
+                        currentValue = conversionCallResult.Value;
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
                 }
+
+                _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
             }
 
-            _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
-
-            _currentCodeFrame.ProcessInfo.SetStatus(Logger, "17EFD6A4-C466-4A2E-AB3E-E7C90CC3547C", ProcessStatus.Completed);
-
-            var forParameterValueResolving = _currentCodeFrame.ForParameterValueResolving;
-
-            GoBackToPrevCodeFrame("E2204170-6974-4F11-83F0-D078939C58C4", ActionExecutionStatus.Complete);
-
-            if (_currentCodeFrame == null)
+            if (_currentCodeFrame.State == CodeFrameState.ResolvedParameters)
             {
-                ExternalReturn = currentValue;
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
             }
-            else
+
+            if (_currentCodeFrame.State == CodeFrameState.CommandExecution)
             {
-                if(forParameterValueResolving)
+                var returnable = _currentCodeFrame.Metadata.AsIReturnable;
+
+                if (returnable != null)
                 {
-                    _currentCodeFrame.CurrentResolvedParameterValue = currentValue;
+#if DEBUG
+                    //Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
+#endif
+
+                    var conversionResult = _typeConverter.CheckAndTryConvert(Logger, currentValue, returnable.TypesList, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                    //Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
+#endif
+
+                    var kindOfResult = conversionResult.KindOfResult;
+
+                    switch (kindOfResult)
+                    {
+                        case KindOfCallResult.Value:
+                            currentValue = conversionResult.Value;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                    }
+                }
+
+                _currentCodeFrame.ProcessInfo.SetStatus(Logger, "17EFD6A4-C466-4A2E-AB3E-E7C90CC3547C", ProcessStatus.Completed);
+
+                _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+            }
+
+            if(_currentCodeFrame.State == CodeFrameState.EndCommandExecution)
+            {
+                var forParameterValueResolving = _currentCodeFrame.ForParameterValueResolving;
+
+                GoBackToPrevCodeFrame("E2204170-6974-4F11-83F0-D078939C58C4", ActionExecutionStatus.Complete);
+
+                if (_currentCodeFrame == null)
+                {
+                    ExternalReturn = currentValue;
                 }
                 else
                 {
-                    _currentCodeFrame.ValuesStack.Push(currentValue);
-                }                
+                    if (forParameterValueResolving)
+                    {
+                        _currentCodeFrame.CurrentResolvedParameterValue = currentValue;
+                    }
+                    else
+                    {
+                        _currentCodeFrame.ValuesStack.Push(currentValue);
+                    }
+                }
             }
         }
 
@@ -2091,10 +2123,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
 #endif
 
-                _currentCodeFrame.ResolvingParameterValues = null;
-                _currentCodeFrame.ResolvedParameterValues = null;
-                _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
-                _currentCodeFrame.CurrentResolvedParameterValue = null;
+                BeginningClearResolvingParameter();
 
                 var rawParamsList = NTakePositionedParameters(count, needRevers);
 
@@ -2197,14 +2226,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var result = _currentCodeFrame.ResolvedParameterValues;
 
-                _currentCodeFrame.ResolvingParameterValues = null;
-                _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
-                _currentCodeFrame.CurrentResolvedParameterValue = null;
+                EndClearResolvingParameter();
 
                 return new ValueListCallResult(result);
             }
 
             throw new NotImplementedException("7ED884E5-4A5B-40DE-921D-FD93212D08EB");
+        }
+
+        private void BeginningClearResolvingParameter()
+        {
+            _currentCodeFrame.ResolvingParameterValues = null;
+            _currentCodeFrame.ResolvedParameterValues = null;
+            _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
+            _currentCodeFrame.CurrentResolvedParameterValue = null;
+        }
+
+        private void EndClearResolvingParameter()
+        {
+            _currentCodeFrame.ResolvingParameterValues = null;
+            _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
+            _currentCodeFrame.CurrentResolvedParameterValue = null;
         }
 
         private static ValueCallResult _executingCodeInOtherCodeFrameCallResult = new ValueCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };

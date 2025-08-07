@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfMember KindOfMember => KindOfMember.HostMethod;
 
         /// <inheritdoc/>
-        public CallResult GetValue(IMonitorLogger logger)
+        public ValueCallResult GetValue(IMonitorLogger logger)
         {
             throw new NotImplementedException("2A89A5E7-4610-4C37-9A2E-3DB36E2BD551");
         }

@@ -1289,7 +1289,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 switch (paramsListCallResultKindOfResult)
                 {
-                    case KindOfCallResult.Values:
+                    case KindOfCallResult.Value:
                         break;
 
                     case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
@@ -1366,7 +1366,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 switch (paramsListCallResultKindOfResult)
                 {
-                    case KindOfCallResult.Values:
+                    case KindOfCallResult.Value:
                         break;
 
                     case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
@@ -2069,10 +2069,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <param name="count">Target amount of parameters.</param>
         /// <param name="needRevers">Needs revers of not.</param>
         /// <param name="loadingMatrix">Settings which parameter needs conversion and which need not.</param>
-        /// <returns>Returns CallResult, which describes which action should be done.</returns>
+        /// <returns>Returns ValueListCallResult, which describes which action should be done.</returns>
         /// <exception cref="NotImplementedException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        private CallResult TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
+        private ValueListCallResult TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
         {
 #if DEBUG
             //Info("14B2B20F-631C-4713-AC8E-CD6B99C7A1AA", $"%%%% _currentCodeFrame.State = {_currentCodeFrame.State}");
@@ -2186,7 +2186,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             break;
 
                         case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
-                            return conversionCallResult;
+                            return new ValueListCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
@@ -2201,15 +2201,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
                 _currentCodeFrame.CurrentResolvedParameterValue = null;
 
-                return new CallResult(result);
+                return new ValueListCallResult(result);
             }
 
             throw new NotImplementedException("7ED884E5-4A5B-40DE-921D-FD93212D08EB");
         }
 
-        private static CallResult _executingCodeInOtherCodeFrameCallResult = new CallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
+        private static ValueCallResult _executingCodeInOtherCodeFrameCallResult = new ValueCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
 
-        private CallResult TryResolveFromVarOrExpr(Value operand)
+        private ValueCallResult TryResolveFromVarOrExpr(Value operand)
         {
 #if DEBUG
             //Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");

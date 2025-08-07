@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private VarsResolver _varsResolver;
         private StrongIdentifierExprValueResolver _strongIdentifierExprValueResolver;
 
-        public CallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             case KindOfName.Var:
                             case KindOfName.SystemVar:
-                                return new CallResult(_varsResolver.GetVarValue(logger, identifier, localCodeExecutionContext));
+                                return new ValueCallResult(_varsResolver.GetVarValue(logger, identifier, localCodeExecutionContext));
 
                             case KindOfName.CommonConcept:
                                 return _strongIdentifierExprValueResolver.GetValue(logger, identifier, localCodeExecutionContext.Instance, localCodeExecutionContext);
@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    return new CallResult(operand);
+                    return new ValueCallResult(operand);
             }
         }
 

@@ -1,24 +1,17 @@
-﻿using SymOntoClay.Common.Disposing;
-using SymOntoClay.Common;
+﻿using SymOntoClay.Common;
+using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Converters;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Monitor.Common.Models;
-using System.Xml.Linq;
-using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Common.CollectionsHelpers;
-using System.Linq;
-using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.EventsInterfaces;
-using SymOntoClay.Core.Internal.CommonNames;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Converters;
-using System.ComponentModel;
-using System.Collections;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -93,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public IExecutable GetMethodExecutable => _propertyGetMethodExecutable;
 
-        public CallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
@@ -101,7 +94,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (_value == value)
             {
-                return new CallResult(value);
+                return new ValueCallResult(value);
             }
 
             var callResult = _typeConverter.CheckAndTryConvert(logger, value, CodeItem.TypesList, localCodeExecutionContext);
@@ -146,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             EmitOnChangedHandlers(Name);
 
-            return new CallResult(value);
+            return new ValueCallResult(value);
         }
 
         private RuleInstance BuildPropertyFactInstance(StrongIdentifierValue propertyName, Value propertyValue)

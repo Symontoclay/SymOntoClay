@@ -115,13 +115,13 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public CallResult GetValue(IMonitorLogger logger)
+        public ValueCallResult GetValue(IMonitorLogger logger)
         {
-            return new CallResult(Value);
+            return new ValueCallResult(Value);
         }
 
         /// <inheritdoc/>
-        public CallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)
             {
@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if (_value == value)
                 {
-                    return new CallResult(value);
+                    return new ValueCallResult(value);
                 }
 
                 var callResult = _typeConverter.CheckAndTryConvert(logger, value, TypesList, localCodeExecutionContext);
@@ -145,7 +145,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 EmitOnChangedHandlers(Name);
 
-                return new CallResult(value);
+                return new ValueCallResult(value);
             }
         }
 

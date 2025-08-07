@@ -20,16 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog.Fluent;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
@@ -51,7 +46,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ValueResolvingHelper _valueResolvingHelper;
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
             //Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
@@ -104,7 +99,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                         {
                             var channel = _channelsResolver.GetChannel(logger, identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-                            return new CallResult(channel.Handler.Write(logger, valueFromSource, localCodeExecutionContext));
+                            return new ValueCallResult(channel.Handler.Write(logger, valueFromSource, localCodeExecutionContext));
                         }
                         else
                         {

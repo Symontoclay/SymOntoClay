@@ -24,8 +24,6 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
@@ -37,11 +35,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             if (leftOperand.IsNullValue || rightOperand.IsNullValue)
             {
-                return new CallResult(NullValue.Instance);
+                return new ValueCallResult(NullValue.Instance);
             }
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
@@ -51,15 +49,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 if (leftOperandValue == null || rightOperandValue == null)
                 {
-                    return new CallResult(NullValue.Instance);
+                    return new ValueCallResult(NullValue.Instance);
                 }
 
-                return new CallResult(new NumberValue((double)leftOperandValue + (double)rightOperandValue));
+                return new ValueCallResult(new NumberValue((double)leftOperandValue + (double)rightOperandValue));
             }
 
             if(leftOperand.IsStringValue || rightOperand.IsStringValue)
             {
-                return new CallResult(new StringValue(leftOperand.ToSystemString() + rightOperand.ToSystemString()));
+                return new ValueCallResult(new StringValue(leftOperand.ToSystemString() + rightOperand.ToSystemString()));
             }
 
             throw new NotImplementedException("C47589B8-3736-4184-AE41-CF5D39E21899");

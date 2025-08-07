@@ -4,7 +4,6 @@
     {
         Unknown,
         Value,
-        Values,
         NeedExecuteCode,
         NeedExecuteSetProperty,
         NeedExecuteGetProperty,

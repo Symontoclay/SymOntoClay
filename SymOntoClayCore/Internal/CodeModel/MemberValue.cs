@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IMember Member { get; private set; }
 
         public KindOfMember KindOfMember => Member.KindOfMember;
-        public CallResult GetValue(IMonitorLogger logger) => Member.GetValue(logger);
+        public ValueCallResult GetValue(IMonitorLogger logger) => Member.GetValue(logger);
 
         /// <inheritdoc/>
         public override bool IsHostMethodValue => Member.IsHostMethodValue;

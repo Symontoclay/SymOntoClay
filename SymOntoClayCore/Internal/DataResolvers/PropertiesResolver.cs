@@ -42,12 +42,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public ResolverOptions DefaultOptions { get; private set; } = ResolverOptions.GetDefaultOptions();
 
-        public CallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             return SetPropertyValue(logger, propertyName, value, localCodeExecutionContext, callMode, DefaultOptions);
         }
 
-        public CallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
+        public ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
             //Info("BAEC7F05-B0F0-42C2-BFEB-43B5AC51B208", $"propertyName = {propertyName}");
@@ -124,12 +124,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return propertyInstance;
         }
 
-        public CallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetPropertyValue(logger, propertyName, instance, localCodeExecutionContext, DefaultOptions);
         }
 
-        public CallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public ValueCallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
@@ -151,11 +151,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (value == null)
                 {
-                    return new CallResult(NullValue.Instance);
+                    return new ValueCallResult(NullValue.Instance);
                 }
                 else
                 {
-                    return new CallResult(value);
+                    return new ValueCallResult(value);
                 }
             }
 
@@ -164,21 +164,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //throw new NotImplementedException("3F5085DB-DF7C-4864-8E92-03EFB497FC6A");
         }
 
-        public CallResult ConvertPropertyInstanceToCallResult(PropertyInstance property)
+        public ValueCallResult ConvertPropertyInstanceToCallResult(PropertyInstance property)
         {
             var kindOfProperty = property.KindOfProperty;
 
             switch (kindOfProperty)
             {
                 case KindOfProperty.Auto:
-                    return new CallResult(property.GetValue());
+                    return new ValueCallResult(property.GetValue());
 
                 case KindOfProperty.Readonly:
                 case KindOfProperty.GetSet:
                     {
                         var executable = property.GetMethodExecutable;
 
-                        return new CallResult()
+                        return new ValueCallResult()
                         {
                             KindOfResult = KindOfCallResult.NeedExecuteGetProperty,
                             Executable = executable

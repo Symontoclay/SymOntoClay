@@ -24,8 +24,6 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
@@ -37,11 +35,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             if (leftOperand.IsSystemNull || rightOperand.IsSystemNull)
             {
-                return new CallResult(NullValue.Instance);
+                return new ValueCallResult(NullValue.Instance);
             }
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
@@ -49,7 +47,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 var leftOperandValue = leftOperand.GetSystemValue();
                 var rightOperandValue = rightOperand.GetSystemValue();
 
-                return new CallResult(new NumberValue((double)leftOperandValue - (double)rightOperandValue));
+                return new ValueCallResult(new NumberValue((double)leftOperandValue - (double)rightOperandValue));
             }
 
             throw new NotImplementedException("EF1C5C64-88FC-4125-BFB4-21076CB94698");

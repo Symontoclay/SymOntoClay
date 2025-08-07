@@ -9,7 +9,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public interface IMember: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
         KindOfMember KindOfMember { get; }
-        CallResult GetValue(IMonitorLogger logger);
+        ValueCallResult GetValue(IMonitorLogger logger);
 
         bool IsHostMethodValue { get; }
         HostMethodValue AsHostMethodValue { get; }

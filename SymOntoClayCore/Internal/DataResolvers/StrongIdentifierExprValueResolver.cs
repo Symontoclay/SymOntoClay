@@ -1,6 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.DataResolvers.Exceptions;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
@@ -69,12 +68,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public CallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetValue(logger, name, instance, localCodeExecutionContext, DefaultOptions);
         }
 
-        public CallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public ValueCallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Info("C83986EF-4A7C-4ED8-8CA1-C9F39C04815A", $"name = {name}");
@@ -82,7 +81,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(name.IsNullValue)
             {
-                return new CallResult(NullValue.Instance);
+                return new ValueCallResult(NullValue.Instance);
             }
 
             var kindOfName = name.KindOfName;
@@ -103,7 +102,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private CallResult GetValueFromProperty(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private ValueCallResult GetValueFromProperty(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var property = _propertiesResolver.Resolve(logger, name.ForResolving, localCodeExecutionContext, options);
 
@@ -121,18 +120,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (value == null)
                 {
-                    return new CallResult(name);
+                    return new ValueCallResult(name);
                 }
                 else
                 {
-                    return new CallResult(value);
+                    return new ValueCallResult(value);
                 }
             }
 
             return _propertiesResolver.ConvertPropertyInstanceToCallResult(property);
         }
 
-        private CallResult GetValueFromLinguisticVar(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private ValueCallResult GetValueFromLinguisticVar(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name.ForResolving, null, null, localCodeExecutionContext, options);
 
@@ -145,10 +144,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 throw new UnresolvedLinguisticVariableException(name);
             }
 
-            return new CallResult(name);
+            return new ValueCallResult(name);
         }
 
-        private CallResult GetValueFromCommonConcept(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private ValueCallResult GetValueFromCommonConcept(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name, null, null, localCodeExecutionContext, options);
 
@@ -179,7 +178,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (targetFuzzyLogicItem != null)
             {
-                return new CallResult(name);
+                return new ValueCallResult(name);
             }
 
             if (property != null)
@@ -189,12 +188,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (name == _trueValueLiteral)
             {
-                return new CallResult(LogicalValue.TrueValue);
+                return new ValueCallResult(LogicalValue.TrueValue);
             }
 
             if (name == _falseValueLiteral)
             {
-                return new CallResult(LogicalValue.FalseValue);
+                return new ValueCallResult(LogicalValue.FalseValue);
             }
 
             var value = _propertiesResolver.ResolveImplicitProperty(logger, name, instance, localCodeExecutionContext, options);
@@ -205,11 +204,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (value == null)
             {
-                return new CallResult(name);
+                return new ValueCallResult(name);
             }
             else
             {
-                return new CallResult(value);
+                return new ValueCallResult(value);
             }
         }
     }

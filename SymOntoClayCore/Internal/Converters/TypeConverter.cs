@@ -75,13 +75,13 @@ namespace SymOntoClay.Core.Internal.Converters
         }
 
         /// <inheritdoc/>
-        public CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return CheckAndTryConvert(logger, value, typesList, localCodeExecutionContext, DefaultOptions);
         }
 
         /// <inheritdoc/>
-        public CallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public ValueCallResult CheckAndTryConvert(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Info("50526CB3-643C-4602-8B17-58CB31D522CA", $"value = {value?.ToHumanizedString()}");
@@ -145,15 +145,15 @@ namespace SymOntoClay.Core.Internal.Converters
         }
 
         /// <inheritdoc/>
-        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult TryConvertToCallResult(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return TryConvertToCallResult(logger, value, typesList, checkingResult, localCodeExecutionContext, DefaultOptions);
         }
 
         /// <inheritdoc/>
-        public CallResult TryConvertToCallResult(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public ValueCallResult TryConvertToCallResult(IMonitorLogger logger, Value value, IList<StrongIdentifierValue> typesList, TypeFitCheckingResult checkingResult, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            return new CallResult(TryConvertToValue(logger, value, typesList, checkingResult, localCodeExecutionContext, options));
+            return new ValueCallResult(TryConvertToValue(logger, value, typesList, checkingResult, localCodeExecutionContext, options));
         }
 
         /// <inheritdoc/>

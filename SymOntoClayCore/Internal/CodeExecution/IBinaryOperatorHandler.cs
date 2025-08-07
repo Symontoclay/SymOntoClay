@@ -27,6 +27,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IBinaryOperatorHandler
     {
-        CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
+        ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
     }
 }

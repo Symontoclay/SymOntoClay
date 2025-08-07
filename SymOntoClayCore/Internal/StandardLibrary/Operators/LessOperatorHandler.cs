@@ -45,11 +45,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             if (leftOperand.IsNullValue || rightOperand.IsNullValue)
             {
-                return new CallResult(NullValue.Instance);
+                return new ValueCallResult(NullValue.Instance);
             }
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (eqResult)
                                             {
-                                                return new CallResult(LogicalValue.FalseValue);
+                                                return new ValueCallResult(LogicalValue.FalseValue);
                                             }
 
                                             var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (!systemDeffuzzificatedValue.HasValue)
                                             {
-                                                return new CallResult(LogicalValue.FalseValue);
+                                                return new ValueCallResult(LogicalValue.FalseValue);
                                             }
 
                                             return CompareSystemValues(logger, leftNumVal.SystemValue.Value, systemDeffuzzificatedValue.Value);
@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (eqResult)
                                 {
-                                    return new CallResult(LogicalValue.FalseValue);
+                                    return new ValueCallResult(LogicalValue.FalseValue);
                                 }
 
                                 var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (!systemDeffuzzificatedValue.HasValue)
                                 {
-                                    return new CallResult(LogicalValue.FalseValue);
+                                    return new ValueCallResult(LogicalValue.FalseValue);
                                 }
 
                                 return CompareSystemValues(logger, leftNumVal.SystemValue.Value, systemDeffuzzificatedValue.Value);
@@ -197,7 +197,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (eqResult)
                                             {
-                                                return new CallResult(LogicalValue.FalseValue);
+                                                return new ValueCallResult(LogicalValue.FalseValue);
                                             }
 
                                             var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (!systemDeffuzzificatedValue.HasValue)
                                             {
-                                                return new CallResult(LogicalValue.FalseValue);
+                                                return new ValueCallResult(LogicalValue.FalseValue);
                                             }
 
                                             return CompareSystemValues(logger, systemDeffuzzificatedValue.Value, rightNumVal.SystemValue.Value);
@@ -222,7 +222,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (eqResult)
                                 {
-                                    return new CallResult(LogicalValue.FalseValue);
+                                    return new ValueCallResult(LogicalValue.FalseValue);
                                 }
 
                                 var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (!systemDeffuzzificatedValue.HasValue)
                                 {
-                                    return new CallResult(LogicalValue.FalseValue);
+                                    return new ValueCallResult(LogicalValue.FalseValue);
                                 }
 
                                 return CompareSystemValues(logger, systemDeffuzzificatedValue.Value, rightNumVal.SystemValue.Value);
@@ -250,9 +250,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException("8489B320-7E9E-4F6B-A7FB-B4F1EA60C0D6");
         }
 
-        private CallResult CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)
+        private ValueCallResult CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)
         {
-            return new CallResult(new LogicalValue(leftValue < rightValue));
+            return new ValueCallResult(new LogicalValue(leftValue < rightValue));
         }
     }
 }

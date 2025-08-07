@@ -20,16 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Visitors;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
@@ -55,7 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ILogicalStorage _globalLogicalStorage;        
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult Call(IMonitorLogger logger, Value operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (!operand.IsLogicalQueryOperationValue)
             {
@@ -79,7 +75,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             }
         }
 
-        private CallResult ProcessSelect(IMonitorLogger logger, LogicalQueryOperationValue operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
+        private ValueCallResult ProcessSelect(IMonitorLogger logger, LogicalQueryOperationValue operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if(operand.Target == null)
             {
@@ -113,10 +109,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             var searchResult = _searcher.Run(logger, searchOptions);
 
-            return new CallResult(new LogicalSearchResultValue(searchResult));
+            return new ValueCallResult(new LogicalSearchResultValue(searchResult));
         }
 
-        private CallResult ProcessInsert(IMonitorLogger logger, LogicalQueryOperationValue operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
+        private ValueCallResult ProcessInsert(IMonitorLogger logger, LogicalQueryOperationValue operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (operand.Target == null)
             {
@@ -165,7 +161,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             _globalLogicalStorage.Append(logger, ruleInstance);
 
-            return new CallResult(target);
+            return new ValueCallResult(target);
         }
     }
 }

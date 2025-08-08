@@ -1289,12 +1289,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame.CurrentKindOfOperator = currentCommand.KindOfOperator;
             }
 
-            currentCodeFrameState = _currentCodeFrame.State;
-
-            if (currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
-                currentCodeFrameState == CodeFrameState.TakingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame)
+            if (ShouldCallTakeParameters(_currentCodeFrame.State))
             {
 #if DEBUG
                 //Info("127B8EB8-251D-4CCC-9C79-F16ED03BDE71", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
@@ -1366,12 +1361,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame.CurrentKindOfOperator = currentCommand.KindOfOperator;
             }
 
-            currentCodeFrameState = _currentCodeFrame.State;
-
-            if (currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
-                currentCodeFrameState == CodeFrameState.TakingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame)
+            if (ShouldCallTakeParameters(_currentCodeFrame.State))
             {
 #if DEBUG
                 //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
@@ -2087,6 +2077,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 SetUpCurrentCodeFrame(lastProcessStatus);
             }
+        }
+
+        /// <summary>
+        /// Returns true if a taking parameters method should be called, otherwise returns false.
+        /// </summary>
+        /// <param name="currentCodeFrameState">Current code frame state.</param>
+        /// <returns>True if a taking parameters method should be called, otherwise returns false.</returns>
+        private bool ShouldCallTakeParameters(CodeFrameState currentCodeFrameState)
+        {
+            return currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
+                currentCodeFrameState == CodeFrameState.TakingParameters ||
+                currentCodeFrameState == CodeFrameState.ResolvingParameters ||
+                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame;
         }
 
         /// <summary>

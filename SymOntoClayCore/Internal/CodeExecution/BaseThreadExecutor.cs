@@ -1013,52 +1013,31 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
             }
 
-            if(_currentCodeFrame.State == CodeFrameState.BeginningCommandExecution)
+            if(ShouldCallTakeParameters(_currentCodeFrame.State))
             {
-                _currentCodeFrame.State = CodeFrameState.TakingParameters;
-            }
-
-            if(_currentCodeFrame.State == CodeFrameState.TakingParameters)
-            {
-                var currentValue = _currentCodeFrame.ValuesStack.Pop();
+                var currentValueCallResult = TakeAndResolveCurrentValue();
 
 #if DEBUG
-                //Info("E3685837-FF92-4755-8D19-B5612684EFA5", $"currentValue = {currentValue.ToHumanizedString()}");
-                //Info("A0886E41-AF18-4927-B0EF-81BFDF7EFC00", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-                //Info("4F2C17C8-9410-491B-9DF5-0872F61B45B0", $"_currentCodeFrame.Metadata.GetType().FullName = {_currentCodeFrame.Metadata.GetType().FullName}");
+                Info("E4C239A7-017E-4260-9326-AC0721172209", $"currentValueCallResult = {currentValueCallResult}");
 #endif
 
-                _currentCodeFrame.State = CodeFrameState.ResolvingParameters;
-            }
-
-            currentCodeFrameState = _currentCodeFrame.State;
-
-            if (currentCodeFrameState == CodeFrameState.ResolvingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame)
-            {
-                var conversionCallResult = TryResolveFromVarOrExpr(currentValue);
+                var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
 
 #if DEBUG
-                //Info("ABDD8A9C-6843-437B-A4DC-4F763FA9CC04", $"conversionCallResult = {conversionCallResult}");
+                Info("E3F528B0-6F74-4A86-812E-241776E0CB6D", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
 #endif
 
-                var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
-
-#if DEBUG
-                //Info("A9C224B6-F30A-4D5D-873B-BE6E0A529703", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
-#endif
-
-                switch (conversionCallResultKindOfResult)
+                switch (currentValueCallResultKindOfResult)
                 {
                     case KindOfCallResult.Value:
-                        currentValue = conversionCallResult.Value;
                         break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
-                }
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
 
-                _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                }
             }
 
             if (_currentCodeFrame.State == CodeFrameState.ResolvedParameters)
@@ -1073,13 +1052,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (returnable != null)
                 {
 #if DEBUG
-                    //Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
+                    Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
 #endif
 
-                    var conversionResult = _typeConverter.CheckAndTryConvert(Logger, currentValue, returnable.TypesList, _currentCodeFrame.LocalContext);
+                    var conversionResult = _typeConverter.CheckAndTryConvert(Logger, _currentCodeFrame.ResolvedParameterValues.First(), returnable.TypesList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                    //Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
+                    Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
 #endif
 
                     var kindOfResult = conversionResult.KindOfResult;
@@ -1087,7 +1066,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     switch (kindOfResult)
                     {
                         case KindOfCallResult.Value:
-                            currentValue = conversionResult.Value;
+                            _currentCodeFrame.ResolvedParameterValues = new List<Value> { conversionResult.Value };
                             break;
 
                         default:
@@ -1102,6 +1081,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(_currentCodeFrame.State == CodeFrameState.EndCommandExecution)
             {
+                var currentValue = _currentCodeFrame.ResolvedParameterValues.First();
+
                 var forParameterValueResolving = _currentCodeFrame.ForParameterValueResolving;
 
                 GoBackToPrevCodeFrame("E2204170-6974-4F11-83F0-D078939C58C4", ActionExecutionStatus.Complete);
@@ -2090,6 +2071,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 currentCodeFrameState == CodeFrameState.TakingParameters ||
                 currentCodeFrameState == CodeFrameState.ResolvingParameters ||
                 currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame;
+        }
+
+        private static bool[] _takeAndResolveCurrentValueLoadingMatrix = [true];
+
+        private ValueListCallResult TakeAndResolveCurrentValue()
+        {
+            return TakePositionedParameters(1, false, _takeAndResolveCurrentValueLoadingMatrix);
         }
 
         /// <summary>

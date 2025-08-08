@@ -439,6 +439,13 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.RemoveOnCompletedHandler(SymOntoClay.Core.EventsInterfaces.IOnCompletedThreadExecutorHandler)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.ShouldCallTakeParameters(SymOntoClay.Core.Internal.CodeExecution.CodeFrameState)">
+            <summary>
+            Returns true if a taking parameters method should be called, otherwise returns false.
+            </summary>
+            <param name="currentCodeFrameState">Current code frame state.</param>
+            <returns>True if a taking parameters method should be called, otherwise returns false.</returns>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.TakePositionedParameters(System.Int32,System.Boolean,System.Boolean[])">
             <summary>
             Takes some amount of parameters from stack of current CodeFrame.

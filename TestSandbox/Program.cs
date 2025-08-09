@@ -198,6 +198,30 @@ namespace TestSandbox
 
             _globalLogger.Info($"sb = {sb}");
 
+            sb = new StringBuilder();
+            sb.PrintUnknownObjPropOptShortString(0u, nameof(valueList), valueList);
+            sb.PrintUnknownObjPropOptShortString(0u, nameof(numberValue), numberValue);
+            sb.PrintUnknownObjPropOptShortString(0u, nameof(podObj), podObj);
+            sb.PrintUnknownObjPropOptShortString(0u, nameof(podList), podList);
+
+            _globalLogger.Info($"sb = {sb}");
+
+            sb = new StringBuilder();
+            sb.PrintUnknownObjPropOptBriefString(0u, nameof(valueList), valueList);
+            sb.PrintUnknownObjPropOptBriefString(0u, nameof(numberValue), numberValue);
+            sb.PrintUnknownObjPropOptBriefString(0u, nameof(podObj), podObj);
+            sb.PrintUnknownObjPropOptBriefString(0u, nameof(podList), podList);
+
+            _globalLogger.Info($"sb = {sb}");
+
+            sb = new StringBuilder();
+            sb.PrintUnknownObjPropOptDbgString(0u, nameof(valueList), valueList);
+            sb.PrintUnknownObjPropOptDbgString(0u, nameof(numberValue), numberValue);
+            sb.PrintUnknownObjPropOptDbgString(0u, nameof(podObj), podObj);
+            sb.PrintUnknownObjPropOptDbgString(0u, nameof(podList), podList);
+
+            _globalLogger.Info($"sb = {sb}");
+
             _globalLogger.Info("End");
         }
 

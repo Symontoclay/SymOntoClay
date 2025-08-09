@@ -196,6 +196,177 @@ namespace SymOntoClay.CoreHelper
             sb.PrintPODListProp(n, propName, ConvertToListWithKnownType<object>(sourceList));
         }
 
+        public static void PrintUnknownObjPropOptShortString(this StringBuilder sb, uint n, string propName, object value)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+
+            if (value == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+                return;
+            }
+
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var type = value.GetType();
+
+#if DEBUG
+            //_globalLogger.Info($"type.FullName = {type.FullName}");
+            //_globalLogger.Info($"type.Name = {type.Name}");
+            //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if (type.IsGenericType && type.Name == "List`1")
+            {
+                NPrintUnknownObjListPropOptShortString(sb, n, propName, value, type);
+                return;
+            }
+
+            if (Implements(type, typeof(IObjectToShortString)))
+            {
+                var convertedValue = (IObjectToShortString)value;
+
+                sb.PrintShortObjProp(n, propName, convertedValue);
+                return;
+            }
+
+            sb.AppendLine($"{spaces}{propName} = {value}");
+        }
+
+        private static void NPrintUnknownObjListPropOptShortString(StringBuilder sb, uint n, string propName, object value, Type type)
+        {
+            var genericParamType = type.GetGenericArguments()[0];
+
+#if DEBUG
+            //_globalLogger.Info($"genericParamType.FullName = {genericParamType.FullName}");
+#endif
+
+            var sourceList = (IEnumerable)value;
+
+            if (Implements(genericParamType, typeof(IObjectToShortString)))
+            {
+                sb.PrintShortObjListProp(n, propName, ConvertToListWithKnownType<IObjectToShortString>(sourceList));
+
+                return;
+            }
+
+            sb.PrintPODListProp(n, propName, ConvertToListWithKnownType<object>(sourceList));
+        }
+
+        public static void PrintUnknownObjPropOptBriefString(this StringBuilder sb, uint n, string propName, object value)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+
+            if (value == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+                return;
+            }
+
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var type = value.GetType();
+
+#if DEBUG
+            //_globalLogger.Info($"type.FullName = {type.FullName}");
+            //_globalLogger.Info($"type.Name = {type.Name}");
+            //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if (type.IsGenericType && type.Name == "List`1")
+            {
+                NPrintUnknownObjListPropOptBriefString(sb, n, propName, value, type);
+                return;
+            }
+
+            if (Implements(type, typeof(IObjectToBriefString)))
+            {
+                var convertedValue = (IObjectToBriefString)value;
+
+                sb.PrintBriefObjProp(n, propName, convertedValue);
+                return;
+            }
+
+            sb.AppendLine($"{spaces}{propName} = {value}");
+        }
+
+        private static void NPrintUnknownObjListPropOptBriefString(StringBuilder sb, uint n, string propName, object value, Type type)
+        {
+            var genericParamType = type.GetGenericArguments()[0];
+
+#if DEBUG
+            //_globalLogger.Info($"genericParamType.FullName = {genericParamType.FullName}");
+#endif
+
+            var sourceList = (IEnumerable)value;
+
+            if (Implements(genericParamType, typeof(IObjectToBriefString)))
+            {
+                sb.PrintBriefObjListProp(n, propName, ConvertToListWithKnownType<IObjectToBriefString>(sourceList));
+
+                return;
+            }
+
+            sb.PrintPODListProp(n, propName, ConvertToListWithKnownType<object>(sourceList));
+        }
+
+        public static void PrintUnknownObjPropOptDbgString(this StringBuilder sb, uint n, string propName, object value)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+
+            if (value == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+                return;
+            }
+
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var type = value.GetType();
+
+#if DEBUG
+            //_globalLogger.Info($"type.FullName = {type.FullName}");
+            //_globalLogger.Info($"type.Name = {type.Name}");
+            //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if (type.IsGenericType && type.Name == "List`1")
+            {
+                NPrintUnknownObjListPropOptDbgString(sb, n, propName, value, type);
+                return;
+            }
+
+            if (Implements(type, typeof(IObjectToDbgString)))
+            {
+                var convertedValue = (IObjectToDbgString)value;
+
+                sb.PrintDbgObjProp(n, propName, convertedValue);
+                return;
+            }
+
+            sb.AppendLine($"{spaces}{propName} = {value}");
+        }
+
+        private static void NPrintUnknownObjListPropOptDbgString(StringBuilder sb, uint n, string propName, object value, Type type)
+        {
+            var genericParamType = type.GetGenericArguments()[0];
+
+#if DEBUG
+            //_globalLogger.Info($"genericParamType.FullName = {genericParamType.FullName}");
+#endif
+
+            var sourceList = (IEnumerable)value;
+
+            if (Implements(genericParamType, typeof(IObjectToDbgString)))
+            {
+                sb.PrintDbgObjListProp(n, propName, ConvertToListWithKnownType<IObjectToDbgString>(sourceList));
+
+                return;
+            }
+
+            sb.PrintPODListProp(n, propName, ConvertToListWithKnownType<object>(sourceList));
+        }
+
         private static bool Implements(Type type, Type interfaceType)
         {
             return type.FindInterfaces((m, filterCriteria) => { return (m == interfaceType) ? true : false; }, null).Length > 0;

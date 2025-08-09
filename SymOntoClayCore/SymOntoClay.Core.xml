@@ -439,13 +439,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.RemoveOnCompletedHandler(SymOntoClay.Core.EventsInterfaces.IOnCompletedThreadExecutorHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.ShouldCallTakeParameters(SymOntoClay.Core.Internal.CodeExecution.CodeFrameState)">
-            <summary>
-            Returns true if a taking parameters method should be called, otherwise returns false.
-            </summary>
-            <param name="currentCodeFrameState">Current code frame state.</param>
-            <returns>True if a taking parameters method should be called, otherwise returns false.</returns>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.TakePositionedParameters(System.Int32,System.Boolean,System.Boolean[])">
             <summary>
             Takes some amount of parameters from stack of current CodeFrame.
@@ -690,6 +683,20 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.CodeFrameStateHelper.CanBeginCommandExecution(SymOntoClay.Core.Internal.CodeExecution.CodeFrameState)">
+            <summary>
+            Returns true if command execution can be begun, otherwise returns false.
+            </summary>
+            <param name="currentCodeFrameState"></param>
+            <returns>True if command execution can be begun, otherwise returns false.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.CodeFrameStateHelper.ShouldCallTakeParameters(SymOntoClay.Core.Internal.CodeExecution.CodeFrameState)">
+            <summary>
+            Returns true if a taking parameters method should be called, otherwise returns false.
+            </summary>
+            <param name="currentCodeFrameState">Current code frame state.</param>
+            <returns>True if a taking parameters method should be called, otherwise returns false.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings.ToString">
             <inheritdoc/>

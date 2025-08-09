@@ -350,7 +350,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, null);
                         }
 
-                        
                         return true;
                     }
                 }
@@ -364,7 +363,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
 #if DEBUG
-                //Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -1005,15 +1004,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessReturnVal()
         {
-            var currentCodeFrameState = _currentCodeFrame.State;
-
-            if (currentCodeFrameState == CodeFrameState.Init ||
-                currentCodeFrameState == CodeFrameState.EndCommandExecution)
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
                 _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
             }
 
-            if(ShouldCallTakeParameters(_currentCodeFrame.State))
+            if(CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
             {
                 var currentValueCallResult = TakeAndResolveCurrentValue();
 
@@ -1261,16 +1257,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("21DF4338-0B0E-4956-81DB-3EA5DFA255B5", $"^^^^ _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
-            var currentCodeFrameState = _currentCodeFrame.State;
-
-            if (currentCodeFrameState == CodeFrameState.Init ||
-                currentCodeFrameState == CodeFrameState.EndCommandExecution)
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
                 _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
                 _currentCodeFrame.CurrentKindOfOperator = currentCommand.KindOfOperator;
             }
 
-            if (ShouldCallTakeParameters(_currentCodeFrame.State))
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
             {
 #if DEBUG
                 //Info("127B8EB8-251D-4CCC-9C79-F16ED03BDE71", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
@@ -1333,16 +1326,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
-            var currentCodeFrameState = _currentCodeFrame.State;
-
-            if (currentCodeFrameState == CodeFrameState.Init ||
-                currentCodeFrameState == CodeFrameState.EndCommandExecution)
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
                 _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
                 _currentCodeFrame.CurrentKindOfOperator = currentCommand.KindOfOperator;
             }
 
-            if (ShouldCallTakeParameters(_currentCodeFrame.State))
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
             {
 #if DEBUG
                 //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
@@ -2058,19 +2048,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 SetUpCurrentCodeFrame(lastProcessStatus);
             }
-        }
-
-        /// <summary>
-        /// Returns true if a taking parameters method should be called, otherwise returns false.
-        /// </summary>
-        /// <param name="currentCodeFrameState">Current code frame state.</param>
-        /// <returns>True if a taking parameters method should be called, otherwise returns false.</returns>
-        private bool ShouldCallTakeParameters(CodeFrameState currentCodeFrameState)
-        {
-            return currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
-                currentCodeFrameState == CodeFrameState.TakingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame;
         }
 
         private static bool[] _takeAndResolveCurrentValueLoadingMatrix = [true];

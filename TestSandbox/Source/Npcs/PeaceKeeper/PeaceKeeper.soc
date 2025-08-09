@@ -1,4 +1,4 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
 {
     fun a(@param_1)
     {
@@ -22,29 +22,4 @@
         a(1);
         'End' >> @>log;
     }
-}*/
-
-/*app PeaceKeeper
-{
-    @b = 15;
-    on Enter
-    {
-        'Begin' >> @>log;
-        var @a = {
-            @b = 1;
-        };
-        @a.@b >> @>log;
-        'End' >> @>log;
-    }
-}*/
-app PeaceKeeper
-{
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        SomeAutoProp >> @>log;
-        'End' >> @>log;
-    }
-
-    prop SomeAutoProp: number = 16;
 }

@@ -154,9 +154,9 @@ namespace SymOntoClay.CoreHelper
             var type = value.GetType();
 
 #if DEBUG
-            _globalLogger.Info($"type.FullName = {type.FullName}");
-            _globalLogger.Info($"type.Name = {type.Name}");
-            _globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
+            //_globalLogger.Info($"type.FullName = {type.FullName}");
+            //_globalLogger.Info($"type.Name = {type.Name}");
+            //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
             if(type.IsGenericType && type.Name == "List`1")
@@ -165,7 +165,15 @@ namespace SymOntoClay.CoreHelper
                 return;
             }
 
-            throw new NotImplementedException("13A09CF6-35D6-42F3-8BFB-38CD601337E7");
+            if(Implements(type, typeof(IObjectToString)))
+            {
+                var convertedValue = (IObjectToString)value;
+
+                sb.PrintObjProp(n, propName, convertedValue);
+                return;
+            }
+
+            sb.AppendLine($"{spaces}{propName} = {value}");
         }
 
         private static void NPrintUnknownObjListPropOptString(StringBuilder sb, uint n, string propName, object value, Type type)
@@ -173,33 +181,19 @@ namespace SymOntoClay.CoreHelper
             var genericParamType = type.GetGenericArguments()[0];
 
 #if DEBUG
-            _globalLogger.Info($"genericParamType.FullName = {genericParamType.FullName}");
+            //_globalLogger.Info($"genericParamType.FullName = {genericParamType.FullName}");
 #endif
 
-            if(Implements(genericParamType, typeof(IObjectToString)))
+            var sourceList = (IEnumerable)value;
+
+            if (Implements(genericParamType, typeof(IObjectToString)))
             {
-#if DEBUG
-                _globalLogger.Info("Yes!!!!6666");
-#endif
-
-                var sourceList = (IEnumerable)value;
-
-#if DEBUG
-                _globalLogger.Info("Yes!!!!77777777777");
-#endif
-
-                var convertedList = ConvertToListWithKnownType<IObjectToString>(sourceList);
-
-#if DEBUG
-                _globalLogger.Info($"convertedList.Count = {convertedList.Count}");
-#endif
-
-                sb.PrintObjListProp(n, propName, convertedList);
+                sb.PrintObjListProp(n, propName, ConvertToListWithKnownType<IObjectToString>(sourceList));
 
                 return;
             }
 
-            throw new NotImplementedException("52D13BF2-F350-422A-91F5-38B11A9F389E");
+            sb.PrintPODListProp(n, propName, ConvertToListWithKnownType<object>(sourceList));
         }
 
         private static bool Implements(Type type, Type interfaceType)

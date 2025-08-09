@@ -182,10 +182,19 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            var valueList = new List<Value> { new NumberValue(1) };
+            var numberValue = new NumberValue(1);
+
+            var valueList = new List<Value> { numberValue };
+
+            var podObj = 16;
+
+            var podList = new List<string> { "Hi!", "From", "List" };
 
             var sb = new StringBuilder();
             sb.PrintUnknownObjPropOptString(0u, nameof(valueList), valueList);
+            sb.PrintUnknownObjPropOptString(0u, nameof(numberValue), numberValue);
+            sb.PrintUnknownObjPropOptString(0u, nameof(podObj), podObj);
+            sb.PrintUnknownObjPropOptString(0u, nameof(podList), podList);
 
             _globalLogger.Info($"sb = {sb}");
 

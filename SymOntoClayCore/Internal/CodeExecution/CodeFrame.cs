@@ -73,6 +73,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public int CurrentPositionOfResolvingParameter { get; set; }
         public List<Value> ResolvedParameterValues { get; set; }
         public Value CurrentResolvedParameterValue { get; set; }
+        public Value CurrentCaller { get; set; }
         public KindOfOperator CurrentKindOfOperator { get; set; }
 
         /// <inheritdoc/>
@@ -141,6 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.PrintObjProp(n, nameof(CurrentCaller), CurrentCaller);
             sb.PrintObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
@@ -214,6 +216,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintShortObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.PrintShortObjProp(n, nameof(CurrentCaller), CurrentCaller);
             sb.PrintShortObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
@@ -287,6 +290,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
             sb.PrintBriefObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.PrintBriefObjProp(n, nameof(CurrentCaller), CurrentCaller);
             sb.PrintBriefObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");

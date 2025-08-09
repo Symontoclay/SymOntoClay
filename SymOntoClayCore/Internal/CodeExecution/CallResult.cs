@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -23,7 +24,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintPODProp(n, nameof(Value), Value?.ToString());
+            sb.PrintUnknownObjPropOptString(n, nameof(Value), Value);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

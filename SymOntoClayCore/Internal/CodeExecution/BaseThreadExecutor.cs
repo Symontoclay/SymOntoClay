@@ -2588,7 +2588,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption, IAnnotatedItem annotatedItem)
         {
 #if DEBUG
-            Info("7F3384D3-5741-41D8-89CD-4A0A515AA647", "Begin");
+            Info("7F3384D3-5741-41D8-89CD-4A0A515AA647", $"Begin _currentCodeFrame.State = {_currentCodeFrame.State}");
             Info("7B518325-43A0-4457-BA92-BC77E99C96BE", $"kindOfParameters = {kindOfParameters}");
             Info("D793791F-5F17-478E-8243-A5FA6F944D85", $"parametersCount = {parametersCount}");
             Info("606CEBF8-80AE-4767-B341-BE1FDF2A26F6", $"syncOption = {syncOption}");
@@ -2624,6 +2624,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
                 }
+            }
+
+#if DEBUG
+            Info("98B50AA5-2AD9-4439-8B1D-6C9097502F44", $"@@@ _currentCodeFrame.State = {_currentCodeFrame.State}");
+#endif
+
+            if (_currentCodeFrame.State == CodeFrameState.ResolvedCaller)
+            {
+                _currentCodeFrame.CurrentCaller = _currentCodeFrame.ResolvedParameterValues.First();
+
+#if DEBUG
+                Info("C87402DC-BF0A-4FBF-ABA1-91B2F5B3B2B1", $"_currentCodeFrame.CurrentCaller = {_currentCodeFrame.CurrentCaller}");
+#endif
+
+                _currentCodeFrame.State = CodeFrameState.TakingParameters;
+            }
+
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State, false))
+            {
+                throw new NotImplementedException("13B1164A-6AAB-4755-B103-A7D8007EF930");
             }
 
             throw new NotImplementedException("1380BB1B-5823-49D8-8739-DC435F87CA93");

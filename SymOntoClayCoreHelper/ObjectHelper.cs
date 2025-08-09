@@ -20,14 +20,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common;
+using SymOntoClay.Common.DebugHelpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.CoreHelper
 {
     public static class ObjectHelper
     {
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         public static bool IsNumber(object value)
         {
             if(value == null)
@@ -129,6 +137,86 @@ namespace SymOntoClay.CoreHelper
             result.Add(type);
 
             FillUpBaseTypes(type.BaseType, result);
+        }
+
+        public static void PrintUnknownObjPropOptString(this StringBuilder sb, uint n, string propName, object value)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+
+            if(value == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+                return;
+            }
+
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var type = value.GetType();
+
+#if DEBUG
+            _globalLogger.Info($"type.FullName = {type.FullName}");
+            _globalLogger.Info($"type.Name = {type.Name}");
+            _globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if(type.IsGenericType && type.Name == "List`1")
+            {
+                NPrintUnknownObjListPropOptString(sb, n, propName, value, type);
+                return;
+            }
+
+            throw new NotImplementedException("13A09CF6-35D6-42F3-8BFB-38CD601337E7");
+        }
+
+        private static void NPrintUnknownObjListPropOptString(StringBuilder sb, uint n, string propName, object value, Type type)
+        {
+            var genericParamType = type.GetGenericArguments()[0];
+
+#if DEBUG
+            _globalLogger.Info($"genericParamType.FullName = {genericParamType.FullName}");
+#endif
+
+            if(Implements(genericParamType, typeof(IObjectToString)))
+            {
+#if DEBUG
+                _globalLogger.Info("Yes!!!!6666");
+#endif
+
+                var sourceList = (IEnumerable)value;
+
+#if DEBUG
+                _globalLogger.Info("Yes!!!!77777777777");
+#endif
+
+                var convertedList = ConvertToListWithKnownType<IObjectToString>(sourceList);
+
+#if DEBUG
+                _globalLogger.Info($"convertedList.Count = {convertedList.Count}");
+#endif
+
+                sb.PrintObjListProp(n, propName, convertedList);
+
+                return;
+            }
+
+            throw new NotImplementedException("52D13BF2-F350-422A-91F5-38B11A9F389E");
+        }
+
+        private static bool Implements(Type type, Type interfaceType)
+        {
+            return type.FindInterfaces((m, filterCriteria) => { return (m == interfaceType) ? true : false; }, null).Length > 0;
+        }
+
+        private static List<T> ConvertToListWithKnownType<T>(IEnumerable sourceList)
+        {
+            var convertedList = new List<T>();
+
+            foreach (object item in sourceList)
+            {
+                convertedList.Add((T)item);
+            }
+
+            return convertedList;
         }
     }
 }

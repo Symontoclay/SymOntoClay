@@ -86,6 +86,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstPrintUnknownObjPropOptString();
             //TstSorting();
             //TstLogFileBuilderAppCommandLineParserHandler();
             //TstThreadTask();
@@ -171,10 +172,24 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstPrintUnknownObjPropOptString()
+        {
+            _globalLogger.Info("Begin");
+
+            var valueList = new List<Value> { new NumberValue(1) };
+
+            var sb = new StringBuilder();
+            sb.PrintUnknownObjPropOptString(0u, nameof(valueList), valueList);
+
+            _globalLogger.Info($"sb = {sb}");
+
+            _globalLogger.Info("End");
         }
 
         private static void TstSorting()

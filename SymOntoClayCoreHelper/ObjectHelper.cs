@@ -274,10 +274,19 @@ namespace SymOntoClay.CoreHelper
             //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-            if (type.IsGenericType && type.Name == "List`1")
+            if (type.IsGenericType)
             {
-                NPrintUnknownObjListPropOptShortString(sb, n, propName, value, type);
-                return;
+                if(type.Name == "List`1")
+                {
+                    NPrintUnknownObjListPropOptShortString(sb, n, propName, value, type);
+                    return;
+                }
+
+                if (type.Name == "Dictionary`2")
+                {
+                    NPrintUnknownObjDictPropOpt String(sb, n, propName, value, type);
+                    return;
+                }
             }
 
             if (Implements(type, typeof(IObjectToShortString)))
@@ -331,10 +340,19 @@ namespace SymOntoClay.CoreHelper
             //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-            if (type.IsGenericType && type.Name == "List`1")
+            if (type.IsGenericType)
             {
-                NPrintUnknownObjListPropOptBriefString(sb, n, propName, value, type);
-                return;
+                if(type.Name == "List`1")
+                {
+                    NPrintUnknownObjListPropOptBriefString(sb, n, propName, value, type);
+                    return;
+                }
+
+                if (type.Name == "Dictionary`2")
+                {
+                    NPrintUnknownObjDictPropOpt String(sb, n, propName, value, type);
+                    return;
+                }
             }
 
             if (Implements(type, typeof(IObjectToBriefString)))
@@ -388,10 +406,19 @@ namespace SymOntoClay.CoreHelper
             //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-            if (type.IsGenericType && type.Name == "List`1")
+            if (type.IsGenericType)
             {
-                NPrintUnknownObjListPropOptDbgString(sb, n, propName, value, type);
-                return;
+                if(type.Name == "List`1")
+                {
+                    NPrintUnknownObjListPropOptDbgString(sb, n, propName, value, type);
+                    return;
+                }
+
+                if (type.Name == "Dictionary`2")
+                {
+                    NPrintUnknownObjDictPropOpt String(sb, n, propName, value, type);
+                    return;
+                }
             }
 
             if (Implements(type, typeof(IObjectToDbgString)))

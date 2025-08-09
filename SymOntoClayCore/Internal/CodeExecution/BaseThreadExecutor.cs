@@ -1729,54 +1729,65 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void JumpToIf(float targetValue, int targetPosition)
         {
-            _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
-            _currentCodeFrame.State = CodeFrameState.TakingParameters;
-
-            var currLogicValue = GetLogicalValueFromCurrentStackValue();
-
-            if (currLogicValue == targetValue)
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
-                _currentCodeFrame.CurrentPosition = targetPosition;
-            }
-            else
-            {
-                _currentCodeFrame.CurrentPosition++;
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
             }
 
-            _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
+            {
+                var currentValueCallResult = TakeAndResolveCurrentValue();
+
+#if DEBUG
+                Info("220C40BF-E109-4D9C-A9F4-5D19E352DBF0", $"currentValueCallResult = {currentValueCallResult}");
+#endif
+
+                var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
+
+#if DEBUG
+                Info("99BF879A-3D19-4F75-BA5C-A3EB870371D5", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
+#endif
+
+                switch (currentValueCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                }
+            }
+
+            if (_currentCodeFrame.State == CodeFrameState.ResolvedParameters)
+            {
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            }
+
+            if (_currentCodeFrame.State == CodeFrameState.CommandExecution)
+            {
+                var currLogicValue = GetLogicalValueFromCurrentStackValue(_currentCodeFrame.ResolvedParameterValues.First());
+
+                if (currLogicValue == targetValue)
+                {
+                    _currentCodeFrame.CurrentPosition = targetPosition;
+                }
+                else
+                {
+                    _currentCodeFrame.CurrentPosition++;
+                }
+
+                _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+            }
         }
 
-        private float? GetLogicalValueFromCurrentStackValue()
+        private float? GetLogicalValueFromCurrentStackValue(Value currentValue)
         {
-            var currentValue = _currentCodeFrame.ValuesStack.Pop();
-
 #if DEBUG
-            //Info("2CC01662-FE1B-4963-9C26-271664A4B1FE", $"currentValue = {currentValue}");
+            //Info("1798D2A6-18EA-4120-96B9-E0129967469B", $"currentValue = {currentValue}");
 #endif
-
-            var conversionCallResult = TryResolveFromVarOrExpr(currentValue);
-
-#if DEBUG
-            //Info("094B79F8-D2B9-4104-8F67-B50E22D1B9DA", $"conversionCallResult = {conversionCallResult}");
-#endif
-
-            var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
-
-#if DEBUG
-            //Info("4AD601D7-4FD3-493C-9EBD-AE8DC7CF93E2", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
-#endif
-
-            switch (conversionCallResultKindOfResult)
-            {
-                case KindOfCallResult.Value:
-                    currentValue = conversionCallResult.Value;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
-            }
-
-            _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
 
             var kindOfValue = currentValue.KindOfValue;
 

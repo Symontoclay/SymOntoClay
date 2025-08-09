@@ -439,7 +439,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.RemoveOnCompletedHandler(SymOntoClay.Core.EventsInterfaces.IOnCompletedThreadExecutorHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.TakePositionedParameters(System.Int32,System.Boolean,System.Boolean[])">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.TakePositionedParameters(System.Int32,System.Boolean,System.Boolean[],System.Nullable{SymOntoClay.Core.Internal.CodeExecution.CodeFrameState},System.Nullable{SymOntoClay.Core.Internal.CodeExecution.CodeFrameState})">
             <summary>
             Takes some amount of parameters from stack of current CodeFrame.
             Converts to values if needs.
@@ -452,6 +452,8 @@
             <param name="count">Target amount of parameters.</param>
             <param name="needRevers">Needs revers of not.</param>
             <param name="loadingMatrix">Settings which parameter needs conversion and which need not.</param>
+            <param name="codeFrameStateDuringResolvingValueInCodeFrame">Which CodeFrameState should be set during resolving value in code frame.</param>
+            <param name="codeFrameStateAfterEnd">Which CodeFrameState should be set after the end of the resolving.</param>
             <returns>Returns ValueListCallResult, which describes which action should be done.</returns>
             <exception cref="T:System.NotImplementedException"></exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>

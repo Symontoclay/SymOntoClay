@@ -2054,7 +2054,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private ValueListCallResult TakeAndResolveCurrentValue()
         {
-            return TakePositionedParameters(1, false, _takeAndResolveCurrentValueLoadingMatrix);
+            return TakePositionedParameters(
+                count: 1,
+                needRevers: false,
+                loadingMatrix: _takeAndResolveCurrentValueLoadingMatrix,
+                codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingParameterInCodeFrame,
+                codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
+        }
+
+        private ValueListCallResult TakePositionedParameters(int count,
+            bool needRevers,
+            bool[] loadingMatrix)
+        {
+            return TakePositionedParameters(
+                count: count,
+                needRevers: needRevers,
+                loadingMatrix: loadingMatrix,
+                codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingParameterInCodeFrame,
+                codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
 
         /// <summary>
@@ -2069,26 +2086,36 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <param name="count">Target amount of parameters.</param>
         /// <param name="needRevers">Needs revers of not.</param>
         /// <param name="loadingMatrix">Settings which parameter needs conversion and which need not.</param>
+        /// <param name="codeFrameStateDuringResolvingValueInCodeFrame">Which CodeFrameState should be set during resolving value in code frame.</param>
+        /// <param name="codeFrameStateAfterEnd">Which CodeFrameState should be set after the end of the resolving.</param>
         /// <returns>Returns ValueListCallResult, which describes which action should be done.</returns>
         /// <exception cref="NotImplementedException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        private ValueListCallResult TakePositionedParameters(int count, bool needRevers, bool[] loadingMatrix)
+        private ValueListCallResult TakePositionedParameters(
+            int count,
+            bool needRevers,
+            bool[] loadingMatrix,
+            CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame,
+            CodeFrameState? codeFrameStateAfterEnd)
         {
 #if DEBUG
-            //Info("14B2B20F-631C-4713-AC8E-CD6B99C7A1AA", $"%%%% _currentCodeFrame.State = {_currentCodeFrame.State}");
+            Info("14B2B20F-631C-4713-AC8E-CD6B99C7A1AA", $"%%%% _currentCodeFrame.TakingValuesState = {_currentCodeFrame.TakingValuesState}");
 #endif
 
-            if(_currentCodeFrame.State == CodeFrameState.BeginningCommandExecution)
+            if(_currentCodeFrame.TakingValuesState == TakingValuesState.Init ||
+                _currentCodeFrame.TakingValuesState == TakingValuesState.ResolvedValues)
             {
-                _currentCodeFrame.State = CodeFrameState.TakingParameters;
-            }            
+                _currentCodeFrame.TakingValuesState = TakingValuesState.TakingValues;
+            }
 
-            if(_currentCodeFrame.State == CodeFrameState.TakingParameters)
+            if(_currentCodeFrame.TakingValuesState == TakingValuesState.TakingValues)
             {
 #if DEBUG
-                //Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
-                //Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
-                //Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
+                Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
+                Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
+                Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
+                Info("FB1698B6-CB5F-41C6-9B9C-600F1E0C085A", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
+                Info("B8F8501A-727B-4028-A13D-DEFF2075EC6B", $"codeFrameStateAfterEnd = {codeFrameStateAfterEnd}");
 #endif
 
                 BeginningClearResolvingParameter();
@@ -2104,11 +2131,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
 
-                _currentCodeFrame.State = CodeFrameState.ResolvingParameters;
+                _currentCodeFrame.TakingValuesState = TakingValuesState.ResolvingValues;
             }
 
-            if(_currentCodeFrame.State == CodeFrameState.ResolvingParameters ||
-                _currentCodeFrame.State == CodeFrameState.ResolvingParameterInCodeFrame)
+            if(_currentCodeFrame.TakingValuesState == TakingValuesState.ResolvingValues ||
+                _currentCodeFrame.TakingValuesState == TakingValuesState.ResolvingValueInCodeFrame)
             {
 #if DEBUG
                 //Info("C75CB66C-CF10-4032-8031-53D66898D3F7", $"##### _currentCodeFrame.CurrentPositionOfResolvingParameter = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
@@ -2131,7 +2158,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
                     else
                     {
-                        if(_currentCodeFrame.State == CodeFrameState.ResolvingParameterInCodeFrame &&
+                        if(_currentCodeFrame.TakingValuesState == TakingValuesState.ResolvingValueInCodeFrame &&
                             n == _currentCodeFrame.CurrentPositionOfResolvingParameter)
                         {
 #if DEBUG
@@ -2139,7 +2166,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                             _currentCodeFrame.ResolvedParameterValues.Add(_currentCodeFrame.CurrentResolvedParameterValue);
-                            _currentCodeFrame.State = CodeFrameState.ResolvingParameters;
+                            _currentCodeFrame.TakingValuesState = TakingValuesState.ResolvingValues;
                         }
 
                         continue;
@@ -2168,7 +2195,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         continue;
                     }
 
-                    var conversionCallResult = TryResolveFromVarOrExpr(rawParam);
+                    var conversionCallResult = TryResolveFromVarOrExpr(rawParam, codeFrameStateDuringResolvingValueInCodeFrame);
 
                     var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
 
@@ -2190,7 +2217,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
                 }
 
-                _currentCodeFrame.State = CodeFrameState.ResolvedParameters;
+                _currentCodeFrame.TakingValuesState = TakingValuesState.ResolvedValues;
+
+                if(codeFrameStateAfterEnd.HasValue)
+                {
+                    _currentCodeFrame.State = codeFrameStateAfterEnd.Value;
+                }
 
                 var result = _currentCodeFrame.ResolvedParameterValues;
 
@@ -2219,10 +2251,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private static ValueCallResult _executingCodeInOtherCodeFrameCallResult = new ValueCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
 
-        private ValueCallResult TryResolveFromVarOrExpr(Value operand)
+        private ValueCallResult TryResolveFromVarOrExpr(Value operand, CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame)
         {
 #if DEBUG
-            //Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
+            Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
+            Info("9B35028D-80AC-4666-A21D-8307CE803586", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
 #endif
 
             var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, _currentCodeFrame.LocalContext);
@@ -2239,11 +2272,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return callResult;
 
                 case KindOfCallResult.NeedExecuteGetProperty:
-                    _currentCodeFrame.State = CodeFrameState.ResolvingParameterInCodeFrame;
-                    CallExecutable(
-                        executable: callResult.Executable,
-                        forParameterValueResolving: true);
-                    return _executingCodeInOtherCodeFrameCallResult;
+                    {
+                        var currentCodeFrame = _currentCodeFrame;
+                        currentCodeFrame.TakingValuesState = TakingValuesState.ResolvingValueInCodeFrame;
+
+                        if(codeFrameStateDuringResolvingValueInCodeFrame.HasValue)
+                        {
+                            currentCodeFrame.State = codeFrameStateDuringResolvingValueInCodeFrame.Value;
+                        }
+                        
+                        CallExecutable(
+                            executable: callResult.Executable,
+                            forParameterValueResolving: true);
+                        return _executingCodeInOtherCodeFrameCallResult;
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);

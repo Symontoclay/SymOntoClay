@@ -2306,7 +2306,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Info("A21683E9-F475-408C-8107-A70FBF95BEFB", $"codeFrameStateAfterEnd = {codeFrameStateAfterEnd}");
 #endif
 
+                var rawParamsList = NTakePositionedParameters(count * 2, true);
 
+#if DEBUG
+                Info("88EF202A-1611-403F-8EAB-0338EE3D81C3", $"rawParamsList = {rawParamsList.WriteListToString()}");
+#endif
             }
 
             throw new NotImplementedException("1B13AFCA-24E2-4168-AE5F-DE0AF1FF99CF");

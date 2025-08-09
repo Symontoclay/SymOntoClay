@@ -67,6 +67,7 @@ using TestSandbox.Navigations;
 using TestSandbox.Parsing;
 using TestSandbox.SoundBusHandler;
 using TestSandbox.Threads;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TestSandbox
 {
@@ -86,7 +87,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
-            //TstPrintUnknownObjPropOptString();
+            TstPrintUnknownObjPropOptString();
             //TstSorting();
             //TstLogFileBuilderAppCommandLineParserHandler();
             //TstThreadTask();
@@ -172,7 +173,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -190,11 +191,23 @@ namespace TestSandbox
 
             var podList = new List<string> { "Hi!", "From", "List" };
 
+            var namedValues = new Dictionary<StrongIdentifierValue, Value>();
+            namedValues[NameHelper.CreateName("@someParam")] = numberValue;
+
+            var dict1 = new Dictionary<string, Value>();
+            dict1["Hi"] = numberValue;
+
+            var dict2 = new Dictionary<string, int>();
+            dict2["From"] = 16;
+
             var sb = new StringBuilder();
             sb.PrintUnknownObjPropOptString(0u, nameof(valueList), valueList);
             sb.PrintUnknownObjPropOptString(0u, nameof(numberValue), numberValue);
             sb.PrintUnknownObjPropOptString(0u, nameof(podObj), podObj);
             sb.PrintUnknownObjPropOptString(0u, nameof(podList), podList);
+            sb.PrintUnknownObjPropOptString(0u, nameof(namedValues), namedValues);
+            sb.PrintUnknownObjPropOptString(0u, nameof(dict1), dict1);
+            sb.PrintUnknownObjPropOptString(0u, nameof(dict2), dict2);
 
             _globalLogger.Info($"sb = {sb}");
 
@@ -203,6 +216,9 @@ namespace TestSandbox
             sb.PrintUnknownObjPropOptShortString(0u, nameof(numberValue), numberValue);
             sb.PrintUnknownObjPropOptShortString(0u, nameof(podObj), podObj);
             sb.PrintUnknownObjPropOptShortString(0u, nameof(podList), podList);
+            sb.PrintUnknownObjPropOptShortString(0u, nameof(namedValues), namedValues);
+            sb.PrintUnknownObjPropOptShortString(0u, nameof(dict1), dict1);
+            sb.PrintUnknownObjPropOptShortString(0u, nameof(dict2), dict2);
 
             _globalLogger.Info($"sb = {sb}");
 
@@ -211,6 +227,9 @@ namespace TestSandbox
             sb.PrintUnknownObjPropOptBriefString(0u, nameof(numberValue), numberValue);
             sb.PrintUnknownObjPropOptBriefString(0u, nameof(podObj), podObj);
             sb.PrintUnknownObjPropOptBriefString(0u, nameof(podList), podList);
+            sb.PrintUnknownObjPropOptBriefString(0u, nameof(namedValues), namedValues);
+            sb.PrintUnknownObjPropOptBriefString(0u, nameof(dict1), dict1);
+            sb.PrintUnknownObjPropOptBriefString(0u, nameof(dict2), dict2);
 
             _globalLogger.Info($"sb = {sb}");
 
@@ -219,6 +238,9 @@ namespace TestSandbox
             sb.PrintUnknownObjPropOptDbgString(0u, nameof(numberValue), numberValue);
             sb.PrintUnknownObjPropOptDbgString(0u, nameof(podObj), podObj);
             sb.PrintUnknownObjPropOptDbgString(0u, nameof(podList), podList);
+            sb.PrintUnknownObjPropOptDbgString(0u, nameof(namedValues), namedValues);
+            sb.PrintUnknownObjPropOptDbgString(0u, nameof(dict1), dict1);
+            sb.PrintUnknownObjPropOptDbgString(0u, nameof(dict2), dict2);
 
             _globalLogger.Info($"sb = {sb}");
 

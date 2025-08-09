@@ -159,10 +159,19 @@ namespace SymOntoClay.CoreHelper
             //_globalLogger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-            if(type.IsGenericType && type.Name == "List`1")
+            if(type.IsGenericType)
             {
-                NPrintUnknownObjListPropOptString(sb, n, propName, value, type);
-                return;
+                if(type.Name == "List`1")
+                {
+                    NPrintUnknownObjListPropOptString(sb, n, propName, value, type);
+                    return;
+                }
+
+                if(type.Name == "Dictionary`2")
+                {
+                    NPrintUnknownObjDictPropOptString(sb, n, propName, value, type);
+                    return;
+                }
             }
 
             if(Implements(type, typeof(IObjectToString)))
@@ -194,6 +203,55 @@ namespace SymOntoClay.CoreHelper
             }
 
             sb.PrintPODListProp(n, propName, ConvertToListWithKnownType<object>(sourceList));
+        }
+
+        private static void NPrintUnknownObjDictPropOptString(StringBuilder sb, uint n, string propName, object value, Type type)
+        {
+            var keyGenericParamType = type.GetGenericArguments()[0];
+            var valueGenericParamType = type.GetGenericArguments()[1];
+
+#if DEBUG
+            //_globalLogger.Info($"keyGenericParamType.FullName = {keyGenericParamType.FullName}");
+            //_globalLogger.Info($"valueGenericParamType.FullName = {valueGenericParamType.FullName}");
+#endif
+
+            var sourceDict = (IDictionary)value;
+
+            if (Implements(keyGenericParamType, typeof(IObjectToString)))
+            {
+                if(Implements(valueGenericParamType, typeof(IObjectToString)))
+                {
+                    sb.PrintObjDict_1_Prop(n, propName, ConvertToDictionaryKnownTypes<IObjectToString, IObjectToString>(sourceDict));
+
+                    return;
+                }
+            }
+            else
+            {
+                if(keyGenericParamType == typeof(string))
+                {
+                    if (Implements(valueGenericParamType, typeof(IObjectToString)))
+                    {
+                        sb.PrintObjDict_3_Prop(n, propName, ConvertToDictionaryKnownTypes<string, IObjectToString>(sourceDict));
+
+                        return;
+                    }
+                    else
+                    {
+                        sb.PrintPODDictProp(n, propName, ConvertToDictionaryKnownTypes<object, object>(sourceDict));
+
+                        return;
+                    }
+                }
+                else
+                {
+                    sb.PrintPODDictProp(n, propName, ConvertToDictionaryKnownTypes<object, object>(sourceDict));
+
+                    return;
+                }
+            }
+
+            sb.PrintPODDictProp(n, propName, ConvertToDictionaryKnownTypes<object, object>(sourceDict));
         }
 
         public static void PrintUnknownObjPropOptShortString(this StringBuilder sb, uint n, string propName, object value)
@@ -382,6 +440,23 @@ namespace SymOntoClay.CoreHelper
             }
 
             return convertedList;
+        }
+
+        private static Dictionary<K, V> ConvertToDictionaryKnownTypes<K, V>(IDictionary sourceDict)
+        {
+            var convertedDictionary = new Dictionary<K, V>();
+
+            foreach(DictionaryEntry item in sourceDict)
+            {
+#if DEBUG
+                _globalLogger.Info($"item = {item}");
+                _globalLogger.Info($"item.GetType().FullName = {item.GetType().FullName}");
+#endif
+
+                convertedDictionary[(K)item.Key] = (V)item.Value;
+            }
+
+            return convertedDictionary;
         }
     }
 }

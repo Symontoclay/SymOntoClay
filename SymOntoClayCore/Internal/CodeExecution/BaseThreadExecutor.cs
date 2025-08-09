@@ -2083,6 +2083,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
 
+        private ValueListCallResult TakePositionedParameters(int count)
+        {
+            return TakePositionedParameters(
+                count: count,
+                needRevers: true,
+                loadingMatrix: Enumerable.Repeat<bool>(true, count).ToArray(),
+                codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingParameterInCodeFrame,
+                codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
+        }
+
         private ValueListCallResult TakePositionedParameters(int count,
             bool needRevers,
             bool[] loadingMatrix)
@@ -2667,47 +2677,76 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State, false))
             {
+                Dictionary<StrongIdentifierValue, Value> namedParameters = null;
+                List<Value> positionedParameters = null;
 
+                switch (kindOfParameters)
+                {
+                    case KindOfFunctionParameters.NoParameters:
+                        break;
+
+                    case KindOfFunctionParameters.NamedParameters:
+                        namedParameters = TakeNamedParametersOld(parametersCount);
+                        foreach (var item in namedParameters)
+                        {
+                            Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", _currentCodeFrame.CurrentFunctionCallMethodId, item.Key, item.Value);
+                        }
+                        break;
+
+                    case KindOfFunctionParameters.PositionedParameters:
+                        {
+                            var positionedParametersCallResult = TakePositionedParameters(parametersCount);
+
+#if DEBUG
+                            Info("CE4C463C-0104-414C-911D-68AEACB10724", $"positionedParametersCallResult = {positionedParametersCallResult}");
+#endif
+
+                            var positionedParametersCallResultKindOfResult = positionedParametersCallResult.KindOfResult;
+
+#if DEBUG
+                            Info("DC372854-0CCD-4038-8607-72CABB256039", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
+#endif
+
+                            switch (positionedParametersCallResultKindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    break;
+
+                                case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                                    return;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                            }
+
+#if DEBUG
+                            Info("A73F1E31-E837-44BD-8F39-5358C1C55C22", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedParameterValues.WriteListToString()}");
+#endif
+
+                            /*positionedParameters = 
+                            {
+                                var n = 0;
+
+                                foreach (var item in positionedParameters)
+                                {
+                                    n++;
+
+                                    Logger.Parameter("44E75D5D-FF36-4696-9174-243ED77568AE", _currentCodeFrame.CurrentFunctionCallMethodId, n.ToString(), item);
+                                }
+                            }*/
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                }
 
                 throw new NotImplementedException("13B1164A-6AAB-4755-B103-A7D8007EF930");
             }
 
             throw new NotImplementedException("1380BB1B-5823-49D8-8739-DC435F87CA93");
 
-            Dictionary<StrongIdentifierValue, Value> namedParameters = null;
-            List<Value> positionedParameters = null;
-
-            switch (kindOfParameters)
-            {
-                case KindOfFunctionParameters.NoParameters:
-                    break;
-
-                case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParametersOld(parametersCount);
-                    foreach(var item in namedParameters)
-                    {
-                        Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", _currentCodeFrame.CurrentFunctionCallMethodId, item.Key, item.Value);
-                    }
-                    break;
-
-                case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParametersOld(parametersCount);
-                    {
-                        var n = 0;
-
-                        foreach (var item in positionedParameters)
-                        {
-                            n++;
-
-                            Logger.Parameter("44E75D5D-FF36-4696-9174-243ED77568AE", _currentCodeFrame.CurrentFunctionCallMethodId, n.ToString(), item);
-                        }
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
-            }
-
+            /*
             var caller = _currentCodeFrame.CurrentCaller;
 
             var callMethodId = _currentCodeFrame.CurrentFunctionCallMethodId;
@@ -2748,7 +2787,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            throw new NotImplementedException("7FFA67FB-7766-4D73-9AAE-08E63138A383");
+            throw new NotImplementedException("7FFA67FB-7766-4D73-9AAE-08E63138A383");*/
         }
 
         private void CallInstanceValue(string callMethodId, InstanceValue caller,

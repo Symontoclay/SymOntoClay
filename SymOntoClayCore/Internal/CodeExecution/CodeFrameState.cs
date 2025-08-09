@@ -7,6 +7,7 @@
         TakingCaller,
         ResolvingCallerInCodeFrame,
         ResolvedCaller,
+        LoggingCall,
         TakingParameters,
         ResolvingParameterInCodeFrame,
         ResolvedParameters,

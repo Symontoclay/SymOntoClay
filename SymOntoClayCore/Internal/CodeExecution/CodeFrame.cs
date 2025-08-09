@@ -75,6 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public Value CurrentResolvedParameterValue { get; set; }
         public Value CurrentCaller { get; set; }
         public KindOfOperator CurrentKindOfOperator { get; set; }
+        public string CurrentFunctionCallMethodId { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -146,6 +147,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
+
+            sb.AppendLine($"{spaces}{nameof(CurrentFunctionCallMethodId)} = {CurrentFunctionCallMethodId}");
 
             return sb.ToString();
         }
@@ -221,6 +224,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
 
+            sb.AppendLine($"{spaces}{nameof(CurrentFunctionCallMethodId)} = {CurrentFunctionCallMethodId}");
+
             return sb.ToString();
         }
 
@@ -294,6 +299,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
+
+            sb.AppendLine($"{spaces}{nameof(CurrentFunctionCallMethodId)} = {CurrentFunctionCallMethodId}");
 
             return sb.ToString();
         }

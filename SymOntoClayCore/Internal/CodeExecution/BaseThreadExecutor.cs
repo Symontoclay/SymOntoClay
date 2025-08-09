@@ -2636,6 +2636,30 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 Info("C87402DC-BF0A-4FBF-ABA1-91B2F5B3B2B1", $"_currentCodeFrame.CurrentCaller = {_currentCodeFrame.CurrentCaller}");
+                Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"_currentCodeFrame.CurrentCaller = {_currentCodeFrame.CurrentCaller.ToHumanizedString()}");
+#endif
+
+                _currentCodeFrame.State = CodeFrameState.LoggingCall;
+            }
+
+            if(_currentCodeFrame.State == CodeFrameState.LoggingCall)
+            {
+#if DEBUG
+                Info("5D38AC5A-D24F-4CA3-9AA7-7D9A76DF0BA7", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
+                Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToHumanizedString() = {_currentCodeFrame.ProcessInfo.ToHumanizedString()}");
+                Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToLabel(Logger) = {_currentCodeFrame.ProcessInfo.ToLabel(Logger)}");
+#endif
+
+                var chainOfProcessInfo = _currentCodeFrame.ProcessInfo.ToChainOfProcessInfoLabels(Logger);
+
+#if DEBUG
+                Info("36B2ED7D-786B-4B1E-B46B-7CEF2728A45C", $"chainOfProcessInfo = {chainOfProcessInfo.WriteListToString()}");
+#endif
+
+                _currentCodeFrame.CurrentFunctionCallMethodId = Logger.CallMethod("7854EEB4-52A1-4B41-95BD-5417B983EB27", _currentCodeFrame.CurrentCaller, chainOfProcessInfo, syncOption == SyncOption.Sync);
+
+#if DEBUG
+                Info("06192378-BE2C-4F6E-9664-C6DFF60EBDDE", $"_currentCodeFrame.CurrentFunctionCallMethodId = {_currentCodeFrame.CurrentFunctionCallMethodId}");
 #endif
 
                 _currentCodeFrame.State = CodeFrameState.TakingParameters;
@@ -2643,34 +2667,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State, false))
             {
+
+
                 throw new NotImplementedException("13B1164A-6AAB-4755-B103-A7D8007EF930");
             }
 
             throw new NotImplementedException("1380BB1B-5823-49D8-8739-DC435F87CA93");
-
-            var valueStack = _currentCodeFrame.ValuesStack;
-
-            var caller = valueStack.Pop();
-
-#if DEBUG
-            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
-            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
-            //Info("5D38AC5A-D24F-4CA3-9AA7-7D9A76DF0BA7", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
-            //Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToHumanizedString() = {_currentCodeFrame.ProcessInfo.ToHumanizedString()}");
-            //Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToLabel(Logger) = {_currentCodeFrame.ProcessInfo.ToLabel(Logger)}");
-#endif
-
-            var chainOfProcessInfo = _currentCodeFrame.ProcessInfo.ToChainOfProcessInfoLabels(Logger);
-
-#if DEBUG
-            //Info("36B2ED7D-786B-4B1E-B46B-7CEF2728A45C", $"chainOfProcessInfo = {chainOfProcessInfo.WriteListToString()}");
-#endif
-
-            var callMethodId = Logger.CallMethod("7854EEB4-52A1-4B41-95BD-5417B983EB27", caller, chainOfProcessInfo, syncOption == SyncOption.Sync);
-
-#if DEBUG
-            //Info("06192378-BE2C-4F6E-9664-C6DFF60EBDDE", $"callMethodId = {callMethodId}");
-#endif
 
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
             List<Value> positionedParameters = null;
@@ -2684,7 +2686,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     namedParameters = TakeNamedParametersOld(parametersCount);
                     foreach(var item in namedParameters)
                     {
-                        Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", callMethodId, item.Key, item.Value);
+                        Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", _currentCodeFrame.CurrentFunctionCallMethodId, item.Key, item.Value);
                     }
                     break;
 
@@ -2697,7 +2699,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         {
                             n++;
 
-                            Logger.Parameter("44E75D5D-FF36-4696-9174-243ED77568AE", callMethodId, n.ToString(), item);
+                            Logger.Parameter("44E75D5D-FF36-4696-9174-243ED77568AE", _currentCodeFrame.CurrentFunctionCallMethodId, n.ToString(), item);
                         }
                     }
                     break;
@@ -2705,6 +2707,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
+
+            var caller = _currentCodeFrame.CurrentCaller;
+
+            var callMethodId = _currentCodeFrame.CurrentFunctionCallMethodId;
 
             if (caller.IsPointRefValue)
             {

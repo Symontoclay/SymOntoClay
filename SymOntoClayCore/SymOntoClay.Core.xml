@@ -693,11 +693,19 @@
             <param name="currentCodeFrameState"></param>
             <returns>True if command execution can be begun, otherwise returns false.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.CodeFrameStateHelper.ShouldCallTakeParameters(SymOntoClay.Core.Internal.CodeExecution.CodeFrameState)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.CodeFrameStateHelper.ShouldCallTakeCaller(SymOntoClay.Core.Internal.CodeExecution.CodeFrameState)">
+            <summary>
+            Returns true if a taking caller method should be called, otherwise returns false.
+            </summary>
+            <param name="currentCodeFrameState">Current code frame state.</param>
+            <returns>True if a taking caller method should be called, otherwise returns false.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.CodeFrameStateHelper.ShouldCallTakeParameters(SymOntoClay.Core.Internal.CodeExecution.CodeFrameState,System.Boolean)">
             <summary>
             Returns true if a taking parameters method should be called, otherwise returns false.
             </summary>
             <param name="currentCodeFrameState">Current code frame state.</param>
+            <param name="needCheckingBeginningCommandExecution">Needs to check case with CodeFrameState.BeginningCommandExecution or not.</param>
             <returns>True if a taking parameters method should be called, otherwise returns false.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings.ToString">

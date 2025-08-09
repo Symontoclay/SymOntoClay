@@ -2063,6 +2063,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private static bool[] _takeAndResolveCurrentValueLoadingMatrix = [true];
 
+        private ValueListCallResult TakeAndResolveCurrentValueAsCaller()
+        {
+            return TakePositionedParameters(
+                count: 1,
+                needRevers: false,
+                loadingMatrix: _takeAndResolveCurrentValueLoadingMatrix,
+                codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingCallerInCodeFrame,
+                codeFrameStateAfterEnd: CodeFrameState.ResolvedCaller);
+        }
+
         private ValueListCallResult TakeAndResolveCurrentValue()
         {
             return TakePositionedParameters(
@@ -2578,11 +2588,45 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption, IAnnotatedItem annotatedItem)
         {
 #if DEBUG
-            //Info("7F3384D3-5741-41D8-89CD-4A0A515AA647", "Begin");
-            //Info("7B518325-43A0-4457-BA92-BC77E99C96BE", $"kindOfParameters = {kindOfParameters}");
-            //Info("D793791F-5F17-478E-8243-A5FA6F944D85", $"parametersCount = {parametersCount}");
-            //Info("606CEBF8-80AE-4767-B341-BE1FDF2A26F6", $"syncOption = {syncOption}");
+            Info("7F3384D3-5741-41D8-89CD-4A0A515AA647", "Begin");
+            Info("7B518325-43A0-4457-BA92-BC77E99C96BE", $"kindOfParameters = {kindOfParameters}");
+            Info("D793791F-5F17-478E-8243-A5FA6F944D85", $"parametersCount = {parametersCount}");
+            Info("606CEBF8-80AE-4767-B341-BE1FDF2A26F6", $"syncOption = {syncOption}");
 #endif
+
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
+            {
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            }
+
+            if(CodeFrameStateHelper.ShouldCallTakeCaller(_currentCodeFrame.State))
+            {
+                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller();
+
+#if DEBUG
+                Info("BC98D423-8D49-4129-961A-66C4BA25E942", $"currentValueCallResult = {currentValueCallResult}");
+#endif
+
+                var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
+
+#if DEBUG
+                Info("251716B4-A98D-422A-B8C3-583250864373", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
+#endif
+
+                switch (currentValueCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                }
+            }
+
+            throw new NotImplementedException("1380BB1B-5823-49D8-8739-DC435F87CA93");
 
             var valueStack = _currentCodeFrame.ValuesStack;
 

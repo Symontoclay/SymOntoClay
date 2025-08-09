@@ -18,15 +18,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
         }
 
         /// <summary>
+        /// Returns true if a taking caller method should be called, otherwise returns false.
+        /// </summary>
+        /// <param name="currentCodeFrameState">Current code frame state.</param>
+        /// <returns>True if a taking caller method should be called, otherwise returns false.</returns>
+        public static bool ShouldCallTakeCaller(CodeFrameState currentCodeFrameState)
+        {
+            return currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
+                currentCodeFrameState == CodeFrameState.TakingCaller ||
+                currentCodeFrameState == CodeFrameState.ResolvingCallerInCodeFrame;
+        }
+
+        /// <summary>
         /// Returns true if a taking parameters method should be called, otherwise returns false.
         /// </summary>
         /// <param name="currentCodeFrameState">Current code frame state.</param>
+        /// <param name="needCheckingBeginningCommandExecution">Needs to check case with CodeFrameState.BeginningCommandExecution or not.</param>
         /// <returns>True if a taking parameters method should be called, otherwise returns false.</returns>
-        public static bool ShouldCallTakeParameters(CodeFrameState currentCodeFrameState)
+        public static bool ShouldCallTakeParameters(CodeFrameState currentCodeFrameState, bool needCheckingBeginningCommandExecution = true)
         {
-            return currentCodeFrameState == CodeFrameState.BeginningCommandExecution ||
+            return (needCheckingBeginningCommandExecution && currentCodeFrameState == CodeFrameState.BeginningCommandExecution) ||
                 currentCodeFrameState == CodeFrameState.TakingParameters ||
-                currentCodeFrameState == CodeFrameState.ResolvingParameters ||
                 currentCodeFrameState == CodeFrameState.ResolvingParameterInCodeFrame;
         }
     }

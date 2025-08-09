@@ -4,8 +4,10 @@
     {
         Init,
         BeginningCommandExecution,
+        TakingCaller,
+        ResolvingCallerInCodeFrame,
+        ResolvedCaller,
         TakingParameters,
-        ResolvingParameters,
         ResolvingParameterInCodeFrame,
         ResolvedParameters,
         CommandExecution,

@@ -575,7 +575,7 @@ namespace SymOntoClay.CoreHelper
             {
                 if (keyGenericParamType == typeof(string))
                 {
-                    if (Implements(valueGenericParamType, typeof()))
+                    if (Implements(valueGenericParamType, typeof(IObjectToDbgString)))
                     {
                         sb.PrintDbgObjDict_3_Prop(n, propName, ConvertToDictionaryKnownTypes<string, IObjectToDbgString>(sourceDict));
 
@@ -623,8 +623,8 @@ namespace SymOntoClay.CoreHelper
             foreach(DictionaryEntry item in sourceDict)
             {
 #if DEBUG
-                _globalLogger.Info($"item = {item}");
-                _globalLogger.Info($"item.GetType().FullName = {item.GetType().FullName}");
+                //_globalLogger.Info($"item = {item}");
+                //_globalLogger.Info($"item.GetType().FullName = {item.GetType().FullName}");
 #endif
 
                 convertedDictionary[(K)item.Key] = (V)item.Value;

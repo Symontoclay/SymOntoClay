@@ -879,7 +879,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var positionedParametersCallResult = TakePositionedParameters(parametersCount);
 
 #if DEBUG
-                            Info("F8791C41-1571-4ECA-99BB-6529D650B23C", $"positionedParametersCallResult = {positionedParametersCallResult}");
+                            //Info("F8791C41-1571-4ECA-99BB-6529D650B23C", $"positionedParametersCallResult = {positionedParametersCallResult}");
 #endif
 
                             var positionedParametersCallResultKindOfResult = positionedParametersCallResult.KindOfResult;
@@ -2661,67 +2661,194 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallConstructor(KindOfFunctionParameters kindOfParameters, int parametersCount, IAnnotatedItem annotatedItem)
         {
-            var valueStack = _currentCodeFrame.ValuesStack;
+#if DEBUG
+            Info("BE6D4B61-ADBB-4B94-B444-33D9808591DB", $"Begin _currentCodeFrame.State = {_currentCodeFrame.State}");
+            Info("503CC1D0-B5A4-499A-A9BD-210078A5BB4E", $"kindOfParameters = {kindOfParameters}");
+            Info("16840F7F-1F0A-419F-B881-006F029CB6B7", $"parametersCount = {parametersCount}");
+#endif
 
-            var caller = valueStack.Pop();
-
-            Dictionary<StrongIdentifierValue, Value> namedParameters = null;
-            List<Value> positionedParameters = null;
-
-            switch (kindOfParameters)
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
-                case KindOfFunctionParameters.NoParameters:
-                    break;
-
-                case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParametersOld(parametersCount);
-                    break;
-
-                case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParametersOld(parametersCount);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                _currentCodeFrame.KindOfParameters = kindOfParameters;
+                _currentCodeFrame.ParametersCount = parametersCount;
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
             }
 
-            var constructorName = caller.AsStrongIdentifierValue;
-
-            _currentCodeFrame.CalledCtorsList.Add(constructorName);
-
-            if (constructorName == _defaultCtorName)
+            if (CodeFrameStateHelper.ShouldCallTakeCaller(_currentCodeFrame.State))
             {
-                constructorName = _currentCodeFrame.LocalContext.Owner;
+                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller();
+
+#if DEBUG
+                Info("5E2D5466-BA50-48CC-ABD7-5284817D612D", $"currentValueCallResult = {currentValueCallResult}");
+#endif
+
+                var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
+
+#if DEBUG
+                Info("73AA9EF6-4400-4C74-993A-B661BACF4FC5", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
+#endif
+
+                switch (currentValueCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                }
             }
 
-            ConstructorResolvingResult constructorResolvingResult = null;
+#if DEBUG
+            Info("4B250438-CAFA-4CB6-B027-01663C9C2B80", $"@@@ _currentCodeFrame.State = {_currentCodeFrame.State}");
+#endif
 
-            switch (kindOfParameters)
+            if (_currentCodeFrame.State == CodeFrameState.ResolvedCaller)
             {
-                case KindOfFunctionParameters.NoParameters:
-                    constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-                    break;
+                _currentCodeFrame.CurrentCaller = _currentCodeFrame.ResolvedPositionedParameterValues.First();
 
-                case KindOfFunctionParameters.NamedParameters:
-                    constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-                    break;
+#if DEBUG
+                Info("16A89F45-D1C9-43CC-948D-4E2FDE9AA50E", $"_currentCodeFrame.CurrentCaller = {_currentCodeFrame.CurrentCaller}");
+                Info("1F9F2981-43F9-47AE-A47A-8851E39B3FE8", $"_currentCodeFrame.CurrentCaller = {_currentCodeFrame.CurrentCaller.ToHumanizedString()}");
+#endif
 
-                case KindOfFunctionParameters.PositionedParameters:
-                    constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                _currentCodeFrame.State = CodeFrameState.TakingParameters;
             }
 
-            if(constructorResolvingResult.NeedTypeConversion)
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State, false))
             {
-                throw new NotImplementedException("E5818EA6-6D9F-42D7-84C8-67AEDE002D6A");
+                switch (_currentCodeFrame.KindOfParameters)
+                {
+                    case KindOfFunctionParameters.NoParameters:
+                        break;
+
+                    case KindOfFunctionParameters.NamedParameters:
+                        {
+                            var namedParametersCallResult = TakeNamedParameters(parametersCount);
+
+#if DEBUG
+                            Info("F33F683F-614B-43F4-991D-0A58D497C05A", $"namedParametersCallResult = {namedParametersCallResult}");
+#endif
+
+                            var namedParametersCallResultKindOfResult = namedParametersCallResult.KindOfResult;
+
+#if DEBUG
+                            Info("1A70B614-FCF7-45F9-BE6E-7992D1EDC674", $"namedParametersCallResultKindOfResult = {namedParametersCallResultKindOfResult}");
+#endif
+
+                            switch (namedParametersCallResultKindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    break;
+
+                                case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                                    return;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, null);
+                            }
+
+#if DEBUG
+                            Info("53BB413D-32A6-4F6A-BE69-D519D4C1AA17", $"_currentCodeFrame.ResolvedNamedParameterValues = {_currentCodeFrame.ResolvedNamedParameterValues.WriteDict_1_ToString()}");
+                            Info("F90A060E-7FEB-432F-A7E6-0BCFDB5497B1", $"namedParametersCallResult.Value = {namedParametersCallResult.Value.WriteDict_1_ToString()}");
+#endif
+                        }
+                        break;
+
+                    case KindOfFunctionParameters.PositionedParameters:
+                        {
+                            var positionedParametersCallResult = TakePositionedParameters(parametersCount);
+
+#if DEBUG
+                            Info("3A9FA2E9-3E60-4771-A918-5AB92B251C06", $"positionedParametersCallResult = {positionedParametersCallResult}");
+#endif
+
+                            var positionedParametersCallResultKindOfResult = positionedParametersCallResult.KindOfResult;
+
+#if DEBUG
+                            Info("0CEF1776-06A8-4060-824E-9DA8C7FFA266", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
+#endif
+
+                            switch (positionedParametersCallResultKindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    break;
+
+                                case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                                    return;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                            }
+
+#if DEBUG
+                            Info("45F21C10-08FE-4E20-9F28-9102EF96A214", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+                            Info("D528976F-B760-43B0-8D96-CEA42922D670", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
+#endif
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(_currentCodeFrame.KindOfParameters), _currentCodeFrame.KindOfParameters, null);
+                }
+
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
             }
 
-            IExecutable constructor = constructorResolvingResult.Constructor;
+            if (_currentCodeFrame.State == CodeFrameState.CommandExecution)
+            {
+                var caller = _currentCodeFrame.CurrentCaller;
 
-            CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, SyncOption.Ctor, false);
+                var namedParameters = _currentCodeFrame.ResolvedNamedParameterValues;
+                var positionedParameters = _currentCodeFrame.ResolvedPositionedParameterValues;
+
+                var constructorName = caller.AsStrongIdentifierValue;
+
+                if(!_currentCodeFrame.CalledCtorsList.Contains(constructorName))
+                {
+                    _currentCodeFrame.CalledCtorsList.Add(constructorName);
+                }
+
+                if (constructorName == _defaultCtorName)
+                {
+                    constructorName = _currentCodeFrame.LocalContext.Owner;
+                }
+
+                ConstructorResolvingResult constructorResolvingResult = null;
+
+                switch (kindOfParameters)
+                {
+                    case KindOfFunctionParameters.NoParameters:
+                        constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                        break;
+
+                    case KindOfFunctionParameters.NamedParameters:
+                        constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                        break;
+
+                    case KindOfFunctionParameters.PositionedParameters:
+                        constructorResolvingResult = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                }
+
+                if (constructorResolvingResult.NeedTypeConversion)
+                {
+                    throw new NotImplementedException("E5818EA6-6D9F-42D7-84C8-67AEDE002D6A");
+                }
+
+                var currentCodeFrame = _currentCodeFrame;
+
+                IExecutable constructor = constructorResolvingResult.Constructor;
+
+                CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, SyncOption.Ctor, false);
+
+                currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+            }
         }
 
         private void CallDefaultCtors()

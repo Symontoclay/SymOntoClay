@@ -138,10 +138,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return _emptyConstructorsList;
             }
 
+#if DEBUG
+            //Info("B84C2134-16D1-49B8-8414-4D3AD9A65CFF", $"filteredList.Count = {filteredList.Count}");
+#endif
+
             return filteredList.Select(p => new ConstructorResolvingResult
             {
                 Constructor = p.ResultItem,
-                NeedTypeConversion = p.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                NeedTypeConversion = p.ParametersRankMatrix?.Any(x => x.NeedTypeConversion) ?? false,
                 ParametersRankMatrix = p.ParametersRankMatrix
             }).ToList();
         }

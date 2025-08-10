@@ -6,7 +6,6 @@ namespace SymOntoClay.Core.DebugHelpers
     {
         public static List<string> Ids = new List<string> 
         {
-"4C132037-6496-44A9-BC58-B01439E83385",
 "C1151D3D-5977-47E0-921D-1861C020C2E3",
 "5B299293-16F1-469E-ACE7-784B455B9C25",
 "F9AD2D41-EA65-49A5-B3F9-DBC52F052FF0",

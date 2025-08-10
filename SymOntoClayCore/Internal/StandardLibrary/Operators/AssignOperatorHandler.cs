@@ -86,12 +86,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     }
 
                 case KindOfValue.MemberValue:
-                    {
-                        var memberValue = leftOperand.AsMemberValue;
-
-                        throw new NotImplementedException("3FAE13EE-4955-42AA-8E52-F7044A992AC7");
-                    }
-
                 case KindOfValue.PointRefValue:
                     return leftOperand.SetValue(logger, rightOperand);
 

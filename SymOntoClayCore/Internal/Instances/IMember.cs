@@ -10,6 +10,7 @@ namespace SymOntoClay.Core.Internal.Instances
     {
         KindOfMember KindOfMember { get; }
         ValueCallResult GetValue(IMonitorLogger logger);
+        ValueCallResult SetValue(IMonitorLogger logger, Value value);
 
         bool IsHostMethodValue { get; }
         HostMethodValue AsHostMethodValue { get; }

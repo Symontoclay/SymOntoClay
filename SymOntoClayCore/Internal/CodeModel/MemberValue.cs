@@ -32,6 +32,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ValueCallResult GetValue(IMonitorLogger logger) => Member.GetValue(logger);
 
         /// <inheritdoc/>
+        public override ValueCallResult SetValue(IMonitorLogger logger, Value value) => Member.SetValue(logger, value);
+
+        /// <inheritdoc/>
         public override bool IsHostMethodValue => Member.IsHostMethodValue;
 
         /// <inheritdoc/>

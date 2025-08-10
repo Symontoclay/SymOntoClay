@@ -121,6 +121,12 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public ValueCallResult SetValue(IMonitorLogger logger, Value value)
+        {
+            throw new NotImplementedException("4C132037-6496-44A9-BC58-B01439E83385");
+        }
+
+        /// <inheritdoc/>
         public ValueCallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)

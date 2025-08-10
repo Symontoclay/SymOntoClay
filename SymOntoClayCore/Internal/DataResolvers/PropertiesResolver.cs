@@ -67,18 +67,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     if (property == null)
                     {
                         property = CreateAndSaveGlobalProperty(logger, propertyName, localCodeExecutionContext);
-                        return property.SetValue(logger, value, localCodeExecutionContext);                        
+                        return property.SetValue(logger, value);                        
                     }
                     else
                     {
-                        return property.SetValue(logger, value, localCodeExecutionContext);
+                        return property.SetValue(logger, value);
                     }
 
                 case CallMode.Default:
                     if (property == null)
                     {
                         property = CreateAndSaveGlobalProperty(logger, propertyName, localCodeExecutionContext);
-                        return property.SetValue(logger, value, localCodeExecutionContext);
+                        return property.SetValue(logger, value);
                     }
                     else
                     {
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         switch (kindOfProperty)
                         {
                             case KindOfProperty.Auto:
-                                return property.SetValue(logger, value, localCodeExecutionContext);
+                                return property.SetValue(logger, value);
 
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);

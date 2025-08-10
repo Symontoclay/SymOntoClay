@@ -9583,9 +9583,6 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.VarInstance.TypeOfAccess">
             <inheritdoc/>
         </member>

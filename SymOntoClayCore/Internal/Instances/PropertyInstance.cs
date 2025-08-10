@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public IExecutable GetMethodExecutable => _propertyGetMethodExecutable;
 
-        public ValueCallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult SetValue(IMonitorLogger logger, Value value)
         {
 #if DEBUG
             //logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return new ValueCallResult(value);
             }
 
-            var callResult = _typeConverter.CheckAndTryConvert(logger, value, CodeItem.TypesList, localCodeExecutionContext);
+            var callResult = _typeConverter.CheckAndTryConvert(logger, value, CodeItem.TypesList, _instance.LocalCodeExecutionContext);
 
             if(callResult.IsError)
             {

@@ -67,12 +67,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 varPtr = CreateAndSaveLocalVariable(logger, varName, localCodeExecutionContext);
             }
 
-            return varPtr.SetValue(logger, value, localCodeExecutionContext);
+            return varPtr.SetValue(logger, value);
         }
 
         private VarInstance CreateAndSaveLocalVariable(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            var result = new VarInstance(varName, TypeOfAccess.Local, _context);
+            var result = new VarInstance(varName, TypeOfAccess.Local, _context, localCodeExecutionContext);
 
             localCodeExecutionContext.Storage.VarStorage.Append(logger, result);
 

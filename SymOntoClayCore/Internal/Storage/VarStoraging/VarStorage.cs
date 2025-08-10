@@ -319,15 +319,15 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             {
                 if (_localVariablesDict.ContainsKey(varName))
                 {
-                    _localVariablesDict[varName].SetValue(logger, value, localCodeExecutionContext);
+                    _localVariablesDict[varName].SetValue(logger, value);
                     return;
                 }
 
-                var varItem = new VarInstance(varName, TypeOfAccess.Local, _mainStorageContext);
+                var varItem = new VarInstance(varName, TypeOfAccess.Local, _mainStorageContext, localCodeExecutionContext);
 
                 NAppendVar(logger, varItem);
 
-                varItem.SetValue(logger, value, localCodeExecutionContext);
+                varItem.SetValue(logger, value);
             }
         }
 

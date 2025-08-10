@@ -1465,17 +1465,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("FAE862E7-9313-4F14-A950-D3F243046302", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
 #endif
 
+            var localCodeExecutionContext = _currentCodeFrame.LocalContext;
+
             VarInstance varInstance = null;
 
             if(annotatedItem is Var)
             {
-                varInstance = new VarInstance(annotatedItem as Var, _context);
+                varInstance = new VarInstance(annotatedItem as Var, _context, localCodeExecutionContext);
             }
             else
             {
                 if(annotatedItem is Field)
                 {
-                    varInstance = new VarInstance(annotatedItem as Field, _context);
+                    varInstance = new VarInstance(annotatedItem as Field, _context, localCodeExecutionContext);
                 }
                 else
                 {
@@ -1483,7 +1485,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     {
                         var varDecl = annotatedItem as VarDeclAstExpression;
 
-                        varInstance = new VarInstance(varDecl.Name, varDecl.TypesList, TypeOfAccess.Local, _context);
+                        varInstance = new VarInstance(varDecl.Name, varDecl.TypesList, TypeOfAccess.Local, _context, localCodeExecutionContext);
                     }
                     else
                     {

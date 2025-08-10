@@ -116,9 +116,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                             {
                                 processedRuleInstance.CheckDirty();
 
-                                var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext);
+                                var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext, _localCodeExecutionContext);
                                 
-                                varItem.SetValue(Logger, processedRuleInstance, _localCodeExecutionContext);                                
+                                varItem.SetValue(Logger, processedRuleInstance);                                
 
                                 resultVarList.Add(varItem);
                             }                            
@@ -135,8 +135,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                                 continue;
                             }
 
-                            var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext);
-                            varItem.SetValue(Logger, value, _localCodeExecutionContext);
+                            var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext, _localCodeExecutionContext);
+                            varItem.SetValue(Logger, value);
                             
                             resultVarList.Add(varItem);
                         }

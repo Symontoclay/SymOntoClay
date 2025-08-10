@@ -18,12 +18,12 @@ namespace SymOntoClay.Core.Internal.Instances
     public class VarInstance : BaseComponent, IFilteredCodeItem, IMember,
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
-        public VarInstance(StrongIdentifierValue varName, TypeOfAccess typeOfAccess, IMainStorageContext context)
-            : this (varName, null, typeOfAccess, context)
+        public VarInstance(StrongIdentifierValue varName, TypeOfAccess typeOfAccess, IMainStorageContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+            : this (varName, null, typeOfAccess, context, localCodeExecutionContext)
         {
         }
 
-        public VarInstance(StrongIdentifierValue varName, List<StrongIdentifierValue> typesList, TypeOfAccess typeOfAccess, IMainStorageContext context)
+        public VarInstance(StrongIdentifierValue varName, List<StrongIdentifierValue> typesList, TypeOfAccess typeOfAccess, IMainStorageContext context, ILocalCodeExecutionContext localCodeExecutionContext)
             : base(context.Logger)
         {
             var varItem = new Var();
@@ -37,11 +37,12 @@ namespace SymOntoClay.Core.Internal.Instances
             TypesList = typesList ?? varItem.TypesList;
 
             _typeConverter = context.TypeConverter;
+            _localCodeExecutionContext = localCodeExecutionContext;
 
             CheckAndInitArray();
         }
 
-        public VarInstance(Var varItem, IMainStorageContext context)
+        public VarInstance(Var varItem, IMainStorageContext context, ILocalCodeExecutionContext localCodeExecutionContext)
             : base(context.Logger)
         {
             Name = varItem.Name;
@@ -50,11 +51,12 @@ namespace SymOntoClay.Core.Internal.Instances
             TypesList = varItem.TypesList;
 
             _typeConverter = context.TypeConverter;
+            _localCodeExecutionContext = localCodeExecutionContext;
 
             CheckAndInitArray();
         }
 
-        public VarInstance(Field field, IMainStorageContext context)
+        public VarInstance(Field field, IMainStorageContext context, ILocalCodeExecutionContext localCodeExecutionContext)
             : base(context.Logger)
         {
             Name = field.Name;
@@ -63,8 +65,9 @@ namespace SymOntoClay.Core.Internal.Instances
             TypesList = field.TypesList;
 
             _typeConverter = context.TypeConverter;
+            _localCodeExecutionContext = localCodeExecutionContext;
 
-            CheckAndInitArray();
+            CheckAndInitArray();            
         }
 
         private void CheckAndInitArray()
@@ -93,6 +96,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public HostMethodValue AsHostMethodValue => null;
 
         private ITypeConverter _typeConverter;
+        private ILocalCodeExecutionContext _localCodeExecutionContext;
 
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
@@ -123,12 +127,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public ValueCallResult SetValue(IMonitorLogger logger, Value value)
         {
-            throw new NotImplementedException("4C132037-6496-44A9-BC58-B01439E83385");
-        }
-
-        /// <inheritdoc/>
-        public ValueCallResult SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
-        {
             lock (_lockObj)
             {
 #if DEBUG
@@ -140,7 +138,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     return new ValueCallResult(value);
                 }
 
-                var callResult = _typeConverter.CheckAndTryConvert(logger, value, TypesList, localCodeExecutionContext);
+                var callResult = _typeConverter.CheckAndTryConvert(logger, value, TypesList, _localCodeExecutionContext);
 
                 if (callResult.IsError)
                 {

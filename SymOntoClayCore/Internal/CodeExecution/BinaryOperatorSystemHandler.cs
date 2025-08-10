@@ -47,8 +47,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public ValueCallResult Call(IMonitorLogger logger, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            logger.Info("7FD4A78D-850D-47A9-A84D-94E4BDB270DE", $"paramsList.Count = {paramsList.Count}");
-            logger.Info("4EF055E4-1B5E-472A-8F15-162271DD69AE", $"paramsList = {paramsList.WriteListToString()}");
+            //logger.Info("7FD4A78D-850D-47A9-A84D-94E4BDB270DE", $"paramsList.Count = {paramsList.Count}");
+            //logger.Info("4EF055E4-1B5E-472A-8F15-162271DD69AE", $"paramsList = {paramsList.WriteListToString()}");
 #endif
 
             var leftOperand = paramsList[0];

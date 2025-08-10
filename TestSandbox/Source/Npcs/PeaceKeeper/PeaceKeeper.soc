@@ -1,4 +1,4 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
 {
     fun a(@param_1)
     {
@@ -22,8 +22,8 @@
         a(1);
         'End' >> @>log;
     }
-}*/
-app PeaceKeeper
+}
+/*app PeaceKeeper
 {
     fun a(@param_1)
     {
@@ -37,4 +37,4 @@ app PeaceKeeper
         a(@param_1: 1);
         'End' >> @>log;
     }
-}
+}*/

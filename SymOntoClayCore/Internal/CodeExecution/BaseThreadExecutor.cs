@@ -363,7 +363,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
 #if DEBUG
-                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                //Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -1323,7 +1323,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessCallBinOp(ScriptCommand currentCommand)
         {
 #if DEBUG
-            Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
+            //Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
@@ -1335,7 +1335,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
             {
 #if DEBUG
-                Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
+                //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
 #endif
 
                 var callOpTakeParametersSettings = GetCallOpTakeParametersSettings(currentCommand.KindOfOperator);
@@ -1348,7 +1348,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var paramsListCallResult = TakePositionedParameters(2, callOpTakeParametersSettings.NeedRevers, callOpTakeParametersSettings.LoadingMatrix);
 
 #if DEBUG
-                Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
+                //Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
 #endif
 
                 var paramsListCallResultKindOfResult = paramsListCallResult.KindOfResult;
@@ -1370,7 +1370,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"_currentCodeFrame.ResolvedPositionedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+                //Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"_currentCodeFrame.ResolvedPositionedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
 #endif
 
                 if (_currentCodeFrame.CurrentKindOfOperator == KindOfOperator.IsNot)
@@ -2285,7 +2285,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CodeFrameState? codeFrameStateAfterEnd)
         {
 #if DEBUG
-            Info("8A19F518-A9E1-4851-B70E-5E518BC152CC", $"%%%% _currentCodeFrame.TakingValuesState = {_currentCodeFrame.TakingValuesState}");
+            //Info("8A19F518-A9E1-4851-B70E-5E518BC152CC", $"%%%% _currentCodeFrame.TakingValuesState = {_currentCodeFrame.TakingValuesState}");
 #endif
 
             var takingValuesState = _currentCodeFrame.TakingValuesState;
@@ -2299,17 +2299,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if(_currentCodeFrame.TakingValuesState == TakingValuesState.TakingValues)
             {
 #if DEBUG
-                Info("028625A9-45A9-4A13-B046-BFB5F1C9E596", $"count = {count}");
-                Info("D91F9766-9439-4B7A-8AE2-4F75AC26C3D8", $"needRevers = {needRevers}");
-                Info("1CC9A19F-814F-4F5E-B5B9-32ABBF4780BF", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
-                Info("A4CF80E3-377F-4088-AE12-A2BAABA17B17", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
-                Info("A21683E9-F475-408C-8107-A70FBF95BEFB", $"codeFrameStateAfterEnd = {codeFrameStateAfterEnd}");
+                //Info("028625A9-45A9-4A13-B046-BFB5F1C9E596", $"count = {count}");
+                //Info("D91F9766-9439-4B7A-8AE2-4F75AC26C3D8", $"needRevers = {needRevers}");
+                //Info("1CC9A19F-814F-4F5E-B5B9-32ABBF4780BF", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
+                //Info("A4CF80E3-377F-4088-AE12-A2BAABA17B17", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
+                //Info("A21683E9-F475-408C-8107-A70FBF95BEFB", $"codeFrameStateAfterEnd = {codeFrameStateAfterEnd}");
 #endif
 
                 var rawParamsList = NTakePositionedParameters(count * 2, true);
 
 #if DEBUG
-                Info("88EF202A-1611-403F-8EAB-0338EE3D81C3", $"rawParamsList = {rawParamsList.WriteListToString()}");
+                //Info("88EF202A-1611-403F-8EAB-0338EE3D81C3", $"rawParamsList = {rawParamsList.WriteListToString()}");
 #endif
 
                 _currentCodeFrame.ResolvingParameterValues = rawParamsList;
@@ -2324,7 +2324,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame.TakingValuesState == TakingValuesState.ResolvingValueInCodeFrame)
             {
 #if DEBUG
-                Info("B750C445-4E6D-47AB-96A5-0E5FC9FCE32E", $"#-#-#-#-# _currentCodeFrame.CurrentPositionOfResolvingParameter = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+                //Info("B750C445-4E6D-47AB-96A5-0E5FC9FCE32E", $"#-#-#-#-# _currentCodeFrame.CurrentPositionOfResolvingParameter = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
 #endif
 
                 var n = -1;
@@ -2340,10 +2340,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var value = enumerator.Current;
 
 #if DEBUG
-                    Info("6626749C-065C-437D-9CCF-33CB7ACF21C6", $"name = {name}");
-                    Info("8E56BDBB-B115-441C-9309-B1C2672F3334", $"value = {value}");
-                    Info("F603E818-0173-4497-AE25-07EFFCD458DA", $"n (before) = {n}");
-                    Info("994A65E5-F6F1-4166-B60E-CC74C858C14F", $"_currentCodeFrame.CurrentPositionOfResolvingParameter (before) = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+                    //Info("6626749C-065C-437D-9CCF-33CB7ACF21C6", $"name = {name}");
+                    //Info("8E56BDBB-B115-441C-9309-B1C2672F3334", $"value = {value}");
+                    //Info("F603E818-0173-4497-AE25-07EFFCD458DA", $"n (before) = {n}");
+                    //Info("994A65E5-F6F1-4166-B60E-CC74C858C14F", $"_currentCodeFrame.CurrentPositionOfResolvingParameter (before) = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
 #endif
                     n++;
 
@@ -2357,7 +2357,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             n == _currentCodeFrame.CurrentPositionOfResolvingParameter)
                         {
 #if DEBUG
-                            Info("77D332D1-E0B8-478E-9AE8-0390AF9C3B01", $"_currentCodeFrame.CurrentResolvedParameterValue = {_currentCodeFrame.CurrentResolvedParameterValue}");
+                            //Info("77D332D1-E0B8-478E-9AE8-0390AF9C3B01", $"_currentCodeFrame.CurrentResolvedParameterValue = {_currentCodeFrame.CurrentResolvedParameterValue}");
 #endif
 
                             _currentCodeFrame.ResolvedNamedParameterValues[name] = _currentCodeFrame.CurrentResolvedParameterValue;
@@ -2368,14 +2368,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
 #if DEBUG
-                    Info("2D0FDEF3-7848-4C01-832E-7B026A3154A0", $"n (after) = {n}");
-                    Info("755715D9-F828-4CE2-B9A0-3AFFE0ACC758", $"_currentCodeFrame.CurrentPositionOfResolvingParameter (after) = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+                    //Info("2D0FDEF3-7848-4C01-832E-7B026A3154A0", $"n (after) = {n}");
+                    //Info("755715D9-F828-4CE2-B9A0-3AFFE0ACC758", $"_currentCodeFrame.CurrentPositionOfResolvingParameter (after) = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
 #endif
 
                     var loadingMatrixValue = loadingMatrix[_currentCodeFrame.CurrentPositionOfResolvingParameter];
 
 #if DEBUG
-                    Info("1A71DF28-5BDC-4809-95C5-DD5C04E2B3E1", $"loadingMatrixValue = {loadingMatrixValue}");
+                    //Info("1A71DF28-5BDC-4809-95C5-DD5C04E2B3E1", $"loadingMatrixValue = {loadingMatrixValue}");
 #endif
 
                     if (loadingMatrixValue == false)
@@ -2390,7 +2390,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
 
 #if DEBUG
-                    Info("AEC17C0D-A8AF-43F2-9D60-A55DC65199F5", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
+                    //Info("AEC17C0D-A8AF-43F2-9D60-A55DC65199F5", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
 #endif
 
                     switch (conversionCallResultKindOfResult)
@@ -2797,7 +2797,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Info("98B50AA5-2AD9-4439-8B1D-6C9097502F44", $"@@@ _currentCodeFrame.State = {_currentCodeFrame.State}");
+            //Info("98B50AA5-2AD9-4439-8B1D-6C9097502F44", $"@@@ _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if (_currentCodeFrame.State == CodeFrameState.ResolvedCaller)

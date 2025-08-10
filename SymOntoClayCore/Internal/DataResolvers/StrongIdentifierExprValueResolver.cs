@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IMember GetMember(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("4E645F88-DA47-41E1-8448-CC9B460FF617", $"name = {name}");
+            //Info("4E645F88-DA47-41E1-8448-CC9B460FF617", $"name = {name}");
 #endif
 
             var kindOfName = name.KindOfName;

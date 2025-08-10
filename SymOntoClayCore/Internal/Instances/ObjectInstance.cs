@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public override IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName)
         {
 #if DEBUG
-            Info("63F8DB00-73FF-4A5C-91AE-F5BB80D71742", $"memberName = {memberName}");
+            //Info("63F8DB00-73FF-4A5C-91AE-F5BB80D71742", $"memberName = {memberName}");
 #endif
 
             return _strongIdentifierExprValueResolver.GetMember(logger, memberName, this, _localCodeExecutionContext);

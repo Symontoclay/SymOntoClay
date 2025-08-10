@@ -2926,53 +2926,64 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
                 }
 
-                throw new NotImplementedException("13B1164A-6AAB-4755-B103-A7D8007EF930");
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
             }
 
-            throw new NotImplementedException("1380BB1B-5823-49D8-8739-DC435F87CA93");
-
-            /*
-            var caller = _currentCodeFrame.CurrentCaller;
-
-            var callMethodId = _currentCodeFrame.CurrentFunctionCallMethodId;
-
-            if (caller.IsPointRefValue)
+            if(_currentCodeFrame.State == CodeFrameState.CommandExecution)
             {
-                CallPointRefValue(callMethodId, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+                var caller = _currentCodeFrame.CurrentCaller;
 
-                Logger.EndCallMethod("A96D8714-A701-4367-844C-51B0F2AD95F5", callMethodId);
+                var callMethodId = _currentCodeFrame.CurrentFunctionCallMethodId;
 
-                return;
+                var namedParameters = _currentCodeFrame.ResolvedNamedParameterValues;
+                var positionedParameters = _currentCodeFrame.ResolvedPositionedParameterValues;
+
+                if (caller.IsPointRefValue)
+                {
+                    CallPointRefValue(callMethodId, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+
+                    Logger.EndCallMethod("A96D8714-A701-4367-844C-51B0F2AD95F5", callMethodId);
+
+                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+
+                    return;
+                }
+
+                if (caller.IsHostMethodValue)
+                {
+                    CallHost(callMethodId, caller.AsHostMethodValue.MethodName, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+
+                    Logger.EndCallMethod("26A17EE4-DD14-42BD-B885-189BF8D28F89", callMethodId);
+
+                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+
+                    return;
+                }
+
+                if (caller.IsStrongIdentifierValue)
+                {
+                    CallStrongIdentifierValue(callMethodId, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, true);
+
+                    Logger.EndCallMethod("EAEBB22E-DAD3-4359-9EA6-B5B73EF65587", callMethodId);
+
+                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+
+                    return;
+                }
+
+                if (caller.IsInstanceValue)
+                {
+                    CallInstanceValue(callMethodId, caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
+
+                    Logger.EndCallMethod("8AFEC685-DFF0-4C36-9942-A475C4313BEF", callMethodId);
+
+                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+
+                    return;
+                }
             }
 
-            if(caller.IsHostMethodValue)
-            {
-                CallHost(callMethodId, caller.AsHostMethodValue.MethodName, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
-
-                Logger.EndCallMethod("26A17EE4-DD14-42BD-B885-189BF8D28F89", callMethodId);
-
-                return;
-            }
-
-            if (caller.IsStrongIdentifierValue)
-            {
-                CallStrongIdentifierValue(callMethodId, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, true);
-
-                Logger.EndCallMethod("EAEBB22E-DAD3-4359-9EA6-B5B73EF65587", callMethodId);
-
-                return;
-            }
-
-            if(caller.IsInstanceValue)
-            {
-                CallInstanceValue(callMethodId, caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
-
-                Logger.EndCallMethod("8AFEC685-DFF0-4C36-9942-A475C4313BEF", callMethodId);
-
-                return;
-            }
-
-            throw new NotImplementedException("7FFA67FB-7766-4D73-9AAE-08E63138A383");*/
+            throw new NotImplementedException("7FFA67FB-7766-4D73-9AAE-08E63138A383");
         }
 
         private void CallInstanceValue(string callMethodId, InstanceValue caller,

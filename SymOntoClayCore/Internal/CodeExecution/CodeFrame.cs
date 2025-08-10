@@ -71,7 +71,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public TakingValuesState TakingValuesState { get; set; }
         public List<Value> ResolvingParameterValues { get; set; }
         public int CurrentPositionOfResolvingParameter { get; set; }
-        public List<Value> ResolvedParameterValues { get; set; }
+        public List<Value> ResolvedPositionedParameterValues { get; set; }
+        public Dictionary<StrongIdentifierValue, Value> ResolvedNamedParameterValues { get; set; }
         public Value CurrentResolvedParameterValue { get; set; }
         public Value CurrentCaller { get; set; }
         public KindOfOperator CurrentKindOfOperator { get; set; }
@@ -142,7 +143,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(TakingValuesState)} = {TakingValuesState}");
             sb.PrintObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
-            sb.PrintObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.PrintObjListProp(n, nameof(ResolvedPositionedParameterValues), ResolvedPositionedParameterValues);
+            sb.PrintObjDict_1_Prop(n, nameof(ResolvedNamedParameterValues), ResolvedNamedParameterValues);
             sb.PrintObjProp(n, nameof(CurrentCaller), CurrentCaller);
             sb.PrintObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
@@ -218,7 +220,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(TakingValuesState)} = {TakingValuesState}");
             sb.PrintShortObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
-            sb.PrintShortObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.PrintShortObjListProp(n, nameof(ResolvedPositionedParameterValues), ResolvedPositionedParameterValues);
+            sb.PrintShortObjDict_1_Prop(n, nameof(ResolvedNamedParameterValues), ResolvedNamedParameterValues);
             sb.PrintShortObjProp(n, nameof(CurrentCaller), CurrentCaller);
             sb.PrintShortObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
@@ -294,7 +297,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(TakingValuesState)} = {TakingValuesState}");
             sb.PrintBriefObjListProp(n, nameof(ResolvingParameterValues), ResolvingParameterValues);
             sb.AppendLine($"{spaces}{nameof(CurrentPositionOfResolvingParameter)} = {CurrentPositionOfResolvingParameter}");
-            sb.PrintBriefObjListProp(n, nameof(ResolvedParameterValues), ResolvedParameterValues);
+            sb.PrintBriefObjListProp(n, nameof(ResolvedPositionedParameterValues), ResolvedPositionedParameterValues);
+            sb.PrintBriefObjDict_1_Prop(n, nameof(ResolvedNamedParameterValues), ResolvedNamedParameterValues);
             sb.PrintBriefObjProp(n, nameof(CurrentCaller), CurrentCaller);
             sb.PrintBriefObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 

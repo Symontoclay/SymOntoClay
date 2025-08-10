@@ -1051,7 +1051,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
 #endif
 
-                    var conversionResult = _typeConverter.CheckAndTryConvert(Logger, _currentCodeFrame.ResolvedParameterValues.First(), returnable.TypesList, _currentCodeFrame.LocalContext);
+                    var conversionResult = _typeConverter.CheckAndTryConvert(Logger, _currentCodeFrame.ResolvedPositionedParameterValues.First(), returnable.TypesList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                     Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
@@ -1062,7 +1062,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     switch (kindOfResult)
                     {
                         case KindOfCallResult.Value:
-                            _currentCodeFrame.ResolvedParameterValues = new List<Value> { conversionResult.Value };
+                            _currentCodeFrame.ResolvedPositionedParameterValues = new List<Value> { conversionResult.Value };
                             break;
 
                         default:
@@ -1077,7 +1077,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(_currentCodeFrame.State == CodeFrameState.EndCommandExecution)
             {
-                var currentValue = _currentCodeFrame.ResolvedParameterValues.First();
+                var currentValue = _currentCodeFrame.ResolvedPositionedParameterValues.First();
 
                 var forParameterValueResolving = _currentCodeFrame.ForParameterValueResolving;
 
@@ -1314,7 +1314,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var operatorInfo = _operatorsResolver.GetOperator(Logger, _currentCodeFrame.CurrentKindOfOperator, _currentCodeFrame.LocalContext);
 
-                CallOperator(operatorInfo, _currentCodeFrame.ResolvedParameterValues);
+                CallOperator(operatorInfo, _currentCodeFrame.ResolvedPositionedParameterValues);
 
                 _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
             }
@@ -1388,7 +1388,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var operatorInfo = _operatorsResolver.GetOperator(Logger, _currentCodeFrame.CurrentKindOfOperator, _currentCodeFrame.LocalContext);
 
-                CallOperator(operatorInfo, _currentCodeFrame.ResolvedParameterValues);
+                CallOperator(operatorInfo, _currentCodeFrame.ResolvedPositionedParameterValues);
 
                 _currentCodeFrame.State = CodeFrameState.CommandPostExecution;
             }
@@ -1768,7 +1768,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (_currentCodeFrame.State == CodeFrameState.CommandExecution)
             {
-                var currLogicValue = GetLogicalValueFromCurrentStackValue(_currentCodeFrame.ResolvedParameterValues.First());
+                var currLogicValue = GetLogicalValueFromCurrentStackValue(_currentCodeFrame.ResolvedPositionedParameterValues.First());
 
                 if (currLogicValue == targetValue)
                 {
@@ -2160,7 +2160,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                 _currentCodeFrame.ResolvingParameterValues = rawParamsList;
-                _currentCodeFrame.ResolvedParameterValues = new List<Value>();
+                _currentCodeFrame.ResolvedPositionedParameterValues = new List<Value>();
 
                 _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
 
@@ -2200,7 +2200,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Info("3DF206A5-EDC6-4112-B032-3434348D7BB8", $"_currentCodeFrame.CurrentResolvedParameterValue = {_currentCodeFrame.CurrentResolvedParameterValue}");
 #endif
 
-                            _currentCodeFrame.ResolvedParameterValues.Add(_currentCodeFrame.CurrentResolvedParameterValue);
+                            _currentCodeFrame.ResolvedPositionedParameterValues.Add(_currentCodeFrame.CurrentResolvedParameterValue);
                             _currentCodeFrame.TakingValuesState = TakingValuesState.ResolvingValues;
                         }
 
@@ -2225,7 +2225,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (loadingMatrixValue == false)
                     {
-                        _currentCodeFrame.ResolvedParameterValues.Add(rawParam);
+                        _currentCodeFrame.ResolvedPositionedParameterValues.Add(rawParam);
 
                         continue;
                     }
@@ -2241,7 +2241,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     switch (conversionCallResultKindOfResult)
                     {
                         case KindOfCallResult.Value:
-                            _currentCodeFrame.ResolvedParameterValues.Add(conversionCallResult.Value);
+                            _currentCodeFrame.ResolvedPositionedParameterValues.Add(conversionCallResult.Value);
                             break;
 
                         case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
@@ -2259,7 +2259,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     _currentCodeFrame.State = codeFrameStateAfterEnd.Value;
                 }
 
-                var result = _currentCodeFrame.ResolvedParameterValues;
+                var result = _currentCodeFrame.ResolvedPositionedParameterValues;
 
                 EndClearResolvingParameter();
 
@@ -2311,15 +2311,124 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 Info("88EF202A-1611-403F-8EAB-0338EE3D81C3", $"rawParamsList = {rawParamsList.WriteListToString()}");
 #endif
+
+                _currentCodeFrame.ResolvingParameterValues = rawParamsList;
+                _currentCodeFrame.ResolvedNamedParameterValues = new Dictionary<StrongIdentifierValue, Value>();
+
+                _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
+
+                _currentCodeFrame.TakingValuesState = TakingValuesState.ResolvingValues;
             }
 
-            throw new NotImplementedException("1B13AFCA-24E2-4168-AE5F-DE0AF1FF99CF");
+            if (_currentCodeFrame.TakingValuesState == TakingValuesState.ResolvingValues ||
+                _currentCodeFrame.TakingValuesState == TakingValuesState.ResolvingValueInCodeFrame)
+            {
+#if DEBUG
+                Info("B750C445-4E6D-47AB-96A5-0E5FC9FCE32E", $"#-#-#-#-# _currentCodeFrame.CurrentPositionOfResolvingParameter = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+#endif
+
+                var n = -1;
+
+                var enumerator = _currentCodeFrame.ResolvingParameterValues.GetEnumerator();
+
+                while (enumerator.MoveNext())
+                {
+                    var name = enumerator.Current.AsStrongIdentifierValue;
+
+                    enumerator.MoveNext();
+
+                    var value = enumerator.Current;
+
+#if DEBUG
+                    Info("6626749C-065C-437D-9CCF-33CB7ACF21C6", $"name = {name}");
+                    Info("8E56BDBB-B115-441C-9309-B1C2672F3334", $"value = {value}");
+                    Info("F603E818-0173-4497-AE25-07EFFCD458DA", $"n (before) = {n}");
+                    Info("994A65E5-F6F1-4166-B60E-CC74C858C14F", $"_currentCodeFrame.CurrentPositionOfResolvingParameter (before) = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+#endif
+                    n++;
+
+                    if (n > _currentCodeFrame.CurrentPositionOfResolvingParameter)
+                    {
+                        _currentCodeFrame.CurrentPositionOfResolvingParameter = n;
+                    }
+                    else
+                    {
+                        if (_currentCodeFrame.TakingValuesState == TakingValuesState.ResolvingValueInCodeFrame &&
+                            n == _currentCodeFrame.CurrentPositionOfResolvingParameter)
+                        {
+#if DEBUG
+                            Info("77D332D1-E0B8-478E-9AE8-0390AF9C3B01", $"_currentCodeFrame.CurrentResolvedParameterValue = {_currentCodeFrame.CurrentResolvedParameterValue}");
+#endif
+
+                            _currentCodeFrame.ResolvedNamedParameterValues[name] = _currentCodeFrame.CurrentResolvedParameterValue;
+                            _currentCodeFrame.TakingValuesState = TakingValuesState.ResolvingValues;
+                        }
+
+                        continue;
+                    }
+
+#if DEBUG
+                    Info("2D0FDEF3-7848-4C01-832E-7B026A3154A0", $"n (after) = {n}");
+                    Info("755715D9-F828-4CE2-B9A0-3AFFE0ACC758", $"_currentCodeFrame.CurrentPositionOfResolvingParameter (after) = {_currentCodeFrame.CurrentPositionOfResolvingParameter}");
+#endif
+
+                    var loadingMatrixValue = loadingMatrix[_currentCodeFrame.CurrentPositionOfResolvingParameter];
+
+#if DEBUG
+                    Info("1A71DF28-5BDC-4809-95C5-DD5C04E2B3E1", $"loadingMatrixValue = {loadingMatrixValue}");
+#endif
+
+                    if (loadingMatrixValue == false)
+                    {
+                        _currentCodeFrame.ResolvedNamedParameterValues[name] = value;
+
+                        continue;
+                    }
+
+                    var conversionCallResult = TryResolveFromVarOrExpr(value, codeFrameStateDuringResolvingValueInCodeFrame);
+
+                    var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
+
+#if DEBUG
+                    Info("AEC17C0D-A8AF-43F2-9D60-A55DC65199F5", $"conversionCallResultKindOfResult = {conversionCallResultKindOfResult}");
+#endif
+
+                    switch (conversionCallResultKindOfResult)
+                    {
+                        case KindOfCallResult.Value:
+                            _currentCodeFrame.ResolvedNamedParameterValues[name] = conversionCallResult.Value;
+                            break;
+
+                        case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                            return new NamedParametersCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
+                    }
+                }
+
+                _currentCodeFrame.TakingValuesState = TakingValuesState.ResolvedValues;
+
+                if (codeFrameStateAfterEnd.HasValue)
+                {
+                    _currentCodeFrame.State = codeFrameStateAfterEnd.Value;
+                }
+
+                var result = _currentCodeFrame.ResolvedNamedParameterValues;
+
+                EndClearResolvingParameter();
+
+                return new NamedParametersCallResult(result);
+            }
+
+            throw new NotImplementedException("E16C5BBF-CC87-4423-A05D-9857DB87448C");
         }
 
         private void BeginningClearResolvingParameter()
         {
             _currentCodeFrame.ResolvingParameterValues = null;
-            _currentCodeFrame.ResolvedParameterValues = null;
+            _currentCodeFrame.ResolvedPositionedParameterValues = null;
+            _currentCodeFrame.ResolvedNamedParameterValues = null;
             _currentCodeFrame.CurrentPositionOfResolvingParameter = -1;
             _currentCodeFrame.CurrentResolvedParameterValue = null;
         }
@@ -2693,7 +2802,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (_currentCodeFrame.State == CodeFrameState.ResolvedCaller)
             {
-                _currentCodeFrame.CurrentCaller = _currentCodeFrame.ResolvedParameterValues.First();
+                _currentCodeFrame.CurrentCaller = _currentCodeFrame.ResolvedPositionedParameterValues.First();
 
 #if DEBUG
                 Info("C87402DC-BF0A-4FBF-ABA1-91B2F5B3B2B1", $"_currentCodeFrame.CurrentCaller = {_currentCodeFrame.CurrentCaller}");
@@ -2728,8 +2837,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State, false))
             {
-                Dictionary<StrongIdentifierValue, Value> namedParameters = null;
-                
                 switch (kindOfParameters)
                 {
                     case KindOfFunctionParameters.NoParameters:
@@ -2743,11 +2850,33 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Info("96C01AB0-905F-4013-B72A-70AB142A8E09", $"namedParametersCallResult = {namedParametersCallResult}");
 #endif
 
-                            /*namedParameters = TakeNamedParametersOld(parametersCount);
-                            foreach (var item in namedParameters)
+                            var namedParametersCallResultKindOfResult = namedParametersCallResult.KindOfResult;
+
+#if DEBUG
+                            Info("69A24EFD-A6A0-4CBD-8B64-895629478DA1", $"namedParametersCallResultKindOfResult = {namedParametersCallResultKindOfResult}");
+#endif
+
+                            switch (namedParametersCallResultKindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    break;
+
+                                case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                                    return;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, null);
+                            }
+
+#if DEBUG
+                            Info("191546BD-9204-4159-B153-3B9355F20909", $"_currentCodeFrame.ResolvedNamedParameterValues = {_currentCodeFrame.ResolvedNamedParameterValues.WriteDict_1_ToString()}");
+                            Info("B62C895B-ED8E-4573-A6F4-699DAB542180", $"namedParametersCallResult.Value = {namedParametersCallResult.Value.WriteDict_1_ToString()}");
+#endif
+
+                            foreach (var item in namedParametersCallResult.Value)
                             {
                                 Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", _currentCodeFrame.CurrentFunctionCallMethodId, item.Key, item.Value);
-                            }*/
+                            }
                         }
                         break;
 
@@ -2778,12 +2907,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             }
 
 #if DEBUG
-                            Info("A73F1E31-E837-44BD-8F39-5358C1C55C22", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedParameterValues.WriteListToString()}");
+                            Info("A73F1E31-E837-44BD-8F39-5358C1C55C22", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+                            Info("0A27972E-30C4-4C0D-846D-EC83942D1932", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
 #endif
 
                             var n = 0;
 
-                            foreach (var item in _currentCodeFrame.ResolvedParameterValues)
+                            foreach (var item in positionedParametersCallResult.Value)
                             {
                                 n++;
 

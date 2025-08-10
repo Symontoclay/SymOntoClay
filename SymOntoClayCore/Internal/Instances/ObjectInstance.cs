@@ -86,15 +86,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
+        public override ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
             throw new NotImplementedException("E9A0088C-5940-455B-9FE3-9FC23431B078");
         }
 
         /// <inheritdoc/>
-        public override void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
+        public override ValueCallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            _varsResolver.SetVarValue(logger, varName, value, _localCodeExecutionContext);
+            return _varsResolver.SetVarValue(logger, varName, value, _localCodeExecutionContext);
         }
 
         /// <inheritdoc/>

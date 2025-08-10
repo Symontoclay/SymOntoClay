@@ -170,36 +170,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
             throw new NotImplementedException($"A3C123A9-471D-4477-B5FC-D93A74A1B710: {GetType().FullName}");
         }
 
-        public void SetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName, Value value)
+        public ValueCallResult SetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName, Value value)
         {
             var kindOfName = memberName.KindOfName;
 
             switch (kindOfName)
             {
                 case KindOfName.Var:
-                    SetVarValue(logger, memberName, value);
-                    break;
+                    return SetVarValue(logger, memberName, value);
 
                 case KindOfName.CommonConcept:
-                    SetPropertyValue(logger, memberName, value);
-                    break;
+                    return SetPropertyValue(logger, memberName, value);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
         }
 
-        protected virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
+        protected virtual ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
              throw new NotImplementedException($"0B65BA6A-37C0-4C99-B911-A9450744EA17: {GetType().FullName}");
         }
 
-        protected virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
+        protected virtual ValueCallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
             throw new NotImplementedException($"AA45CD1D-2E04-440F-88A2-37907994FB76: {GetType().FullName}");
         }
 
-        public virtual void SetValue(IMonitorLogger logger, Value value)
+        public virtual ValueCallResult SetValue(IMonitorLogger logger, Value value)
         {
             throw new NotImplementedException($"E4583867-F52A-443A-A926-7BBDD35F826D: {GetType().FullName}");
         }

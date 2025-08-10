@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -69,7 +70,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
+        protected override ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
             var propertyNameStr = propertyName.NormalizedNameValue;
 
@@ -86,6 +87,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 default:
                     throw new ArgumentOutOfRangeException(nameof(propertyNameStr), propertyNameStr, null);
             }
+
+            return new ValueCallResult(value);
         }
 
         /// <inheritdoc/>

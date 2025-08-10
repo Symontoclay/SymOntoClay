@@ -87,15 +87,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
+        protected override ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
-            InstanceInfo.SetPropertyValue(logger, propertyName, value);
+            return InstanceInfo.SetPropertyValue(logger, propertyName, value);
         }
 
         /// <inheritdoc/>
-        protected override void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
+        protected override ValueCallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            InstanceInfo.SetVarValue(logger, varName, value);
+            return InstanceInfo.SetVarValue(logger, varName, value);
         }
 
         /// <inheritdoc/>

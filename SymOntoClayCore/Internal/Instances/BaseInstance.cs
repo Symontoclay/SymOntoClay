@@ -470,13 +470,13 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
+        public virtual ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
             throw new NotImplementedException($"BAC477C7-7E75-4636-9860-645189734004: {GetType().FullName}");
         }
 
         /// <inheritdoc/>
-        public virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
+        public virtual ValueCallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
             throw new NotImplementedException($"D22BB4AA-41CE-4A77-B1DD-138E9C74229F: {GetType().FullName}");
         }

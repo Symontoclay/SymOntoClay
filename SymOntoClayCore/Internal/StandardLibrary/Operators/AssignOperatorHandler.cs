@@ -46,9 +46,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            //Info("7313472E-E3BC-4724-9083-629F1017E0E5", $"leftOperand = {leftOperand}");
-            //Info("51F20A26-2F61-4129-BB92-DB538A43A7C2", $"callMode = {callMode}");
-            //Info("AA897067-F227-481B-9AA5-072BA7723338", $"rightOperand = {rightOperand}");
+            Info("7313472E-E3BC-4724-9083-629F1017E0E5", $"leftOperand = {leftOperand}");
+            Info("51F20A26-2F61-4129-BB92-DB538A43A7C2", $"callMode = {callMode}");
+            Info("AA897067-F227-481B-9AA5-072BA7723338", $"rightOperand = {rightOperand}");
 #endif
 
             var kindOfLeftOperand = leftOperand.KindOfValue;
@@ -85,9 +85,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                         }
                     }
 
+                case KindOfValue.MemberValue:
+                    {
+                        var memberValue = leftOperand.AsMemberValue;
+
+                        throw new NotImplementedException("3FAE13EE-4955-42AA-8E52-F7044A992AC7");
+                    }
+
                 case KindOfValue.PointRefValue:
-                    leftOperand.SetValue(logger, rightOperand);
-                    return new ValueCallResult(rightOperand);
+                    return leftOperand.SetValue(logger, rightOperand);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfLeftOperand), kindOfLeftOperand, null);

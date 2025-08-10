@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -66,12 +67,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override void SetValue(IMonitorLogger logger, Value value)
+        public override ValueCallResult SetValue(IMonitorLogger logger, Value value)
         {
             if(RightOperand.IsStrongIdentifierValue)
             {
-                LeftOperand.SetMemberValue(logger, RightOperand.AsStrongIdentifierValue, value);
-                return;
+                return LeftOperand.SetMemberValue(logger, RightOperand.AsStrongIdentifierValue, value);
             }
 
             throw new NotImplementedException("CDE2D17B-296F-40D0-B154-EE0E48A06DCC");

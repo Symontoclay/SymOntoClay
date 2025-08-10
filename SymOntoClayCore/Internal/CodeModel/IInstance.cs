@@ -53,8 +53,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         bool ActivateIdleAction(IMonitorLogger logger);
         IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters);
         IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName);
-        void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value);
-        void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
+        ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value);
+        ValueCallResult SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
         Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName);
         Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName);
     }

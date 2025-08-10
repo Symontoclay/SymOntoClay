@@ -76,6 +76,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public Value CurrentResolvedParameterValue { get; set; }
         public Value CurrentCaller { get; set; }
         public KindOfOperator CurrentKindOfOperator { get; set; }
+        public KindOfFunctionParameters KindOfParameters { get; set; }
+        public int ParametersCount { get; set; }
         public string CurrentFunctionCallMethodId { get; set; }
 
         /// <inheritdoc/>
@@ -149,6 +151,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
+            sb.AppendLine($"{spaces}{nameof(KindOfParameters)} = {KindOfParameters}");
+            sb.AppendLine($"{spaces}{nameof(ParametersCount)} = {ParametersCount}");
 
             sb.AppendLine($"{spaces}{nameof(CurrentFunctionCallMethodId)} = {CurrentFunctionCallMethodId}");
 
@@ -226,6 +230,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
+            sb.AppendLine($"{spaces}{nameof(KindOfParameters)} = {KindOfParameters}");
+            sb.AppendLine($"{spaces}{nameof(ParametersCount)} = {ParametersCount}");
 
             sb.AppendLine($"{spaces}{nameof(CurrentFunctionCallMethodId)} = {CurrentFunctionCallMethodId}");
 
@@ -303,6 +309,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(CurrentResolvedParameterValue), CurrentResolvedParameterValue);
 
             sb.AppendLine($"{spaces}{nameof(CurrentKindOfOperator)} = {CurrentKindOfOperator}");
+            sb.AppendLine($"{spaces}{nameof(KindOfParameters)} = {KindOfParameters}");
+            sb.AppendLine($"{spaces}{nameof(ParametersCount)} = {ParametersCount}");
 
             sb.AppendLine($"{spaces}{nameof(CurrentFunctionCallMethodId)} = {CurrentFunctionCallMethodId}");
 

@@ -1323,7 +1323,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessCallBinOp(ScriptCommand currentCommand)
         {
 #if DEBUG
-            //Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
+            Info("693D9520-6EB3-40A5-9497-E7772582C3C6", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
@@ -1335,7 +1335,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
             {
 #if DEBUG
-                //Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
+                Info("DECE2D4F-FEE3-4B36-ADA1-43DEB1BC0060", $"currentCommand.KindOfOperator = {currentCommand.KindOfOperator}");
 #endif
 
                 var callOpTakeParametersSettings = GetCallOpTakeParametersSettings(currentCommand.KindOfOperator);
@@ -1348,7 +1348,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var paramsListCallResult = TakePositionedParameters(2, callOpTakeParametersSettings.NeedRevers, callOpTakeParametersSettings.LoadingMatrix);
 
 #if DEBUG
-                //Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
+                Info("57B18051-0C08-4AA8-AF84-8E84FFF78DE7", $"paramsListCallResult = {paramsListCallResult}");
 #endif
 
                 var paramsListCallResultKindOfResult = paramsListCallResult.KindOfResult;
@@ -1370,7 +1370,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                //Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedParameterValues.WriteListToString()}");
+                Info("A38F33A2-BF35-44E9-97EE-EC2A9AA9840B", $"_currentCodeFrame.ResolvedPositionedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
 #endif
 
                 if (_currentCodeFrame.CurrentKindOfOperator == KindOfOperator.IsNot)
@@ -2940,44 +2940,52 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (caller.IsPointRefValue)
                 {
+                    var currentCodeFrame = _currentCodeFrame;
+
                     CallPointRefValue(callMethodId, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
 
                     Logger.EndCallMethod("A96D8714-A701-4367-844C-51B0F2AD95F5", callMethodId);
 
-                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                    currentCodeFrame.State = CodeFrameState.EndCommandExecution;
 
                     return;
                 }
 
                 if (caller.IsHostMethodValue)
                 {
+                    var currentCodeFrame = _currentCodeFrame;
+
                     CallHost(callMethodId, caller.AsHostMethodValue.MethodName, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
 
                     Logger.EndCallMethod("26A17EE4-DD14-42BD-B885-189BF8D28F89", callMethodId);
 
-                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                    currentCodeFrame.State = CodeFrameState.EndCommandExecution;
 
                     return;
                 }
 
                 if (caller.IsStrongIdentifierValue)
                 {
+                    var currentCodeFrame = _currentCodeFrame;
+
                     CallStrongIdentifierValue(callMethodId, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, true);
 
                     Logger.EndCallMethod("EAEBB22E-DAD3-4359-9EA6-B5B73EF65587", callMethodId);
 
-                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                    currentCodeFrame.State = CodeFrameState.EndCommandExecution;
 
                     return;
                 }
 
                 if (caller.IsInstanceValue)
                 {
+                    var currentCodeFrame = _currentCodeFrame;
+
                     CallInstanceValue(callMethodId, caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
 
                     Logger.EndCallMethod("8AFEC685-DFF0-4C36-9942-A475C4313BEF", callMethodId);
 
-                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                    currentCodeFrame.State = CodeFrameState.EndCommandExecution;
 
                     return;
                 }

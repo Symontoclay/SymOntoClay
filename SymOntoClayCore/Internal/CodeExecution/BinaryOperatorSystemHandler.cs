@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
@@ -45,6 +46,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public ValueCallResult Call(IMonitorLogger logger, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
+#if DEBUG
+            logger.Info("7FD4A78D-850D-47A9-A84D-94E4BDB270DE", $"paramsList.Count = {paramsList.Count}");
+            logger.Info("4EF055E4-1B5E-472A-8F15-162271DD69AE", $"paramsList = {paramsList.WriteListToString()}");
+#endif
+
             var leftOperand = paramsList[0];
             var rightOperand = paramsList[1];
             

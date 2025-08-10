@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.1.4" />
-    <PackageReference Include="SymOntoClay.Threading" Version="0.5.5.10" />
+    <PackageReference Include="SymOntoClay.Threading" Version="0.5.5.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />

@@ -50,7 +50,20 @@ class cls2 is cls0
         @b = 2;
 }
 
-app PeaceKeeper is cls1, cls2
+class cls3
+{
+    ctor()
+    {
+        'Begin ctor of cls3' >> @>log;
+        @b >> @>log;
+        'End ctor of cls3' >> @>log;
+    }
+
+    private:
+        @b = 3;
+}
+
+app PeaceKeeper is cls1, cls2, cls3
 {
     ctor()
         : ('Hi')
@@ -71,5 +84,5 @@ app PeaceKeeper is cls1, cls2
     }
 
     private:
-        @b = 3;
+        @b = 4;
 }

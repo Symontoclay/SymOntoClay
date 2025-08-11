@@ -23,9 +23,8 @@ SOFTWARE.*/
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -36,10 +35,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
     public abstract class BaseSpecialHandler : IExecutable, ISystemHandler
     {
         /// <inheritdoc/>
-        public abstract ValueCallResult Call(IMonitorLogger logger, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
+        public abstract ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
 
         /// <inheritdoc/>
-        public abstract ValueCallResult Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
+        public abstract ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
 
         /// <inheritdoc/>
         public bool IsSystemDefined => true;

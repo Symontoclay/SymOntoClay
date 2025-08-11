@@ -50,10 +50,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private VarsResolver _varsResolver;
         private StrongIdentifierExprValueResolver _strongIdentifierExprValueResolver;
 
-        public ValueCallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, KindOfValueConversion kindOfValueConversion, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
+            Info("FABDB406-3D13-4A57-961E-DF6B8745409F", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
             var kindOfValue = operand.KindOfValue;

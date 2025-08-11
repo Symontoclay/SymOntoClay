@@ -28,8 +28,7 @@ using SymOntoClay.Threading;
 namespace SymOntoClay.Core.Internal
 {
     public interface IEngineContext: IMainStorageContext
-    {   
-        ICodeExecutorComponent CodeExecutor { get; }
+    {
         IHtnExecutorComponent HtnExecutor { get; }
 
         IHostSupport HostSupport { get; }

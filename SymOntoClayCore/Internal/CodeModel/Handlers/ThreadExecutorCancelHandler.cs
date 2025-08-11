@@ -1,7 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Handlers
 {
@@ -15,13 +15,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         private readonly IThreadExecutor _threadExecutor;
 
         /// <inheritdoc/>
-        public override ValueCallResult Call(IMonitorLogger logger, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public override ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             return NCall(logger);
         }
 
         /// <inheritdoc/>
-        public override ValueCallResult Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public override ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             return NCall(logger);
         }

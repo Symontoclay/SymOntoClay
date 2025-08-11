@@ -69,7 +69,6 @@ namespace SymOntoClay.Core.Internal
         public ICustomThreadPool TriggersThreadPool { get; set; }
 
         ICodeExecutorComponent IMainStorageContext.CodeExecutor => CodeExecutor;
-        ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
 
         IHtnExecutorComponent IEngineContext.HtnExecutor => HtnExecutor;
 

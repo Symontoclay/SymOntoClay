@@ -21,17 +21,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ISystemHandler
     {
-        ValueCallResult Call(IMonitorLogger logger, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
-        ValueCallResult Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
+        ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
+        ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
     }
 }

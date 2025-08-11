@@ -439,7 +439,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.RemoveOnCompletedHandler(SymOntoClay.Core.EventsInterfaces.IOnCompletedThreadExecutorHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.TakePositionedParameters(System.Int32,System.Boolean,System.Boolean[],System.Nullable{SymOntoClay.Core.Internal.CodeExecution.CodeFrameState},System.Nullable{SymOntoClay.Core.Internal.CodeExecution.CodeFrameState})">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.TakePositionedParameters(System.Int32,System.Boolean,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion[],System.Nullable{SymOntoClay.Core.Internal.CodeExecution.CodeFrameState},System.Nullable{SymOntoClay.Core.Internal.CodeExecution.CodeFrameState})">
             <summary>
             Takes some amount of parameters from stack of current CodeFrame.
             Converts to values if needs.
@@ -458,10 +458,10 @@
             <exception cref="T:System.NotImplementedException"></exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CallResult`1.PropertiesToString(System.UInt32)">
@@ -938,10 +938,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.VoidCallResult.ToString">
@@ -4075,10 +4075,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.IsSystemDefined">
@@ -4153,10 +4153,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.ThreadExecutorCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.ThreadExecutorCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.ThreadExecutorCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.ThreadExecutorCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.HostMethodValue.KindOfValue">
@@ -10852,58 +10852,58 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,System.Double)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionDef)">

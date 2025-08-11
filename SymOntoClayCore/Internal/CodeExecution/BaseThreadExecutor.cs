@@ -793,7 +793,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (CodeFrameStateHelper.ShouldCallTakeCaller(_currentCodeFrame.State))
             {
-                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller();
+                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller(KindOfValueConversion.Var);
 
 #if DEBUG
                 //Info("51155646-96CC-4547-9B6A-0C052F13C5C2", $"currentValueCallResult = {currentValueCallResult}");
@@ -1134,7 +1134,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
             {
-                var currentValueCallResult = TakeAndResolveCurrentValue();
+                var currentValueCallResult = TakeAndResolveCurrentValue(KindOfValueConversion.All);
 
 #if DEBUG
                 Info("E4C239A7-017E-4260-9326-AC0721172209", $"currentValueCallResult = {currentValueCallResult}");
@@ -1531,13 +1531,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private static bool[] _leftRightStreamBinOpTakeParametersSettings = [true, false];
-        private static bool[] _pointBinOpTakeParametersSettings = [true, false];
-        private static bool[] _assignBinOpTakeParametersSettings = [false, true];
-        private static bool[] _usualBinOpTakeParametersSettings = [true, true];
-        private static bool[] _usualUnOpTakeParametersSettings = [true];
+        private static KindOfValueConversion[] _leftRightStreamBinOpTakeParametersSettings = [KindOfValueConversion.All, KindOfValueConversion.None];
+        private static KindOfValueConversion[] _pointBinOpTakeParametersSettings = [KindOfValueConversion.All, KindOfValueConversion.None];
+        private static KindOfValueConversion[] _assignBinOpTakeParametersSettings = [KindOfValueConversion.None, KindOfValueConversion.All];
+        private static KindOfValueConversion[] _usualBinOpTakeParametersSettings = [KindOfValueConversion.All, KindOfValueConversion.All];
+        private static KindOfValueConversion[] _usualUnOpTakeParametersSettings = [KindOfValueConversion.All];
 
-        private (bool NeedRevers, bool[] LoadingMatrix) GetCallOpTakeParametersSettings(KindOfOperator kindOfOperator)
+        private (bool NeedRevers, KindOfValueConversion[] LoadingMatrix) GetCallOpTakeParametersSettings(KindOfOperator kindOfOperator)
         {
 #if DEBUG
             //Info("CA8916E7-8D93-4278-87ED-B86D34604206", $"kindOfOperator = {kindOfOperator}");
@@ -1861,7 +1861,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
             {
-                var currentValueCallResult = TakeAndResolveCurrentValue();
+                var currentValueCallResult = TakeAndResolveCurrentValue(KindOfValueConversion.All);
 
 #if DEBUG
                 //Info("220C40BF-E109-4D9C-A9F4-5D19E352DBF0", $"currentValueCallResult = {currentValueCallResult}");
@@ -2186,24 +2186,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private static bool[] _takeAndResolveCurrentValueLoadingMatrix = [true];
-
-        private ValueListCallResult TakeAndResolveCurrentValueAsCaller()
+        private ValueListCallResult TakeAndResolveCurrentValueAsCaller(KindOfValueConversion kindOfValueConversion)
         {
             return TakePositionedParameters(
                 count: 1,
                 needRevers: false,
-                loadingMatrix: _takeAndResolveCurrentValueLoadingMatrix,
+                loadingMatrix: [kindOfValueConversion],
                 codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingCallerInCodeFrame,
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedCaller);
         }
 
-        private ValueListCallResult TakeAndResolveCurrentValue()
+        private ValueListCallResult TakeAndResolveCurrentValue(KindOfValueConversion kindOfValueConversion)
         {
             return TakePositionedParameters(
                 count: 1,
                 needRevers: false,
-                loadingMatrix: _takeAndResolveCurrentValueLoadingMatrix,
+                loadingMatrix: [kindOfValueConversion],
                 codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingParameterInCodeFrame,
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
@@ -2213,14 +2211,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return TakePositionedParameters(
                 count: count,
                 needRevers: true,
-                loadingMatrix: Enumerable.Repeat<bool>(true, count).ToArray(),
+                loadingMatrix: Enumerable.Repeat<KindOfValueConversion>(KindOfValueConversion.All, count).ToArray(),
                 codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingParameterInCodeFrame,
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
 
         private ValueListCallResult TakePositionedParameters(int count,
             bool needRevers,
-            bool[] loadingMatrix)
+            KindOfValueConversion[] loadingMatrix)
         {
             return TakePositionedParameters(
                 count: count,
@@ -2250,7 +2248,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private ValueListCallResult TakePositionedParameters(
             int count,
             bool needRevers,
-            bool[] loadingMatrix,
+            KindOfValueConversion[] loadingMatrix,
             CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame,
             CodeFrameState? codeFrameStateAfterEnd)
         {
@@ -2348,14 +2346,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Info("A1C62064-EED1-46E1-BFF1-D57BF0657E62", $"loadingMatrixValue = {loadingMatrixValue}");
 #endif
 
-                    if (loadingMatrixValue == false)
+                    if (loadingMatrixValue.HasFlag(KindOfValueConversion.None))
                     {
                         _currentCodeFrame.ResolvedPositionedParameterValues.Add(rawParam);
 
                         continue;
                     }
 
-                    var conversionCallResult = TryResolveFromVarOrExpr(rawParam, codeFrameStateDuringResolvingValueInCodeFrame);
+                    var conversionCallResult = TryResolveFromVarOrExpr(rawParam, loadingMatrixValue, codeFrameStateDuringResolvingValueInCodeFrame);
 
                     var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
 
@@ -2398,14 +2396,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             return TakeNamedParameters(count: count,
                 needRevers: true,
-                loadingMatrix: Enumerable.Repeat<bool>(true, count).ToArray(),
+                loadingMatrix: Enumerable.Repeat<KindOfValueConversion>(KindOfValueConversion.All, count).ToArray(),
                 codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingParameterInCodeFrame,
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
 
         private NamedParametersCallResult TakeNamedParameters(int count,
             bool needRevers,
-            bool[] loadingMatrix,
+            KindOfValueConversion[] loadingMatrix,
             CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame,
             CodeFrameState? codeFrameStateAfterEnd)
         {
@@ -2503,14 +2501,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Info("1A71DF28-5BDC-4809-95C5-DD5C04E2B3E1", $"loadingMatrixValue = {loadingMatrixValue}");
 #endif
 
-                    if (loadingMatrixValue == false)
+                    if (loadingMatrixValue.HasFlag(KindOfValueConversion.None))
                     {
                         _currentCodeFrame.ResolvedNamedParameterValues[name] = value;
 
                         continue;
                     }
 
-                    var conversionCallResult = TryResolveFromVarOrExpr(value, codeFrameStateDuringResolvingValueInCodeFrame);
+                    var conversionCallResult = TryResolveFromVarOrExpr(value, loadingMatrixValue, codeFrameStateDuringResolvingValueInCodeFrame);
 
                     var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
 
@@ -2567,14 +2565,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private static ValueCallResult _executingCodeInOtherCodeFrameCallResult = new ValueCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
 
-        private ValueCallResult TryResolveFromVarOrExpr(Value operand, CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame)
+        private ValueCallResult TryResolveFromVarOrExpr(Value operand, KindOfValueConversion kindOfValueConversion, CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame)
         {
 #if DEBUG
-            //Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
-            //Info("9B35028D-80AC-4666-A21D-8307CE803586", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
+            Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
+            Info("9B35028D-80AC-4666-A21D-8307CE803586", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
+            Info("5B02CDB3-6DB0-464B-AC97-DE92499E2A9C", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
-            var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, _currentCodeFrame.LocalContext);
+            var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, kindOfValueConversion, _currentCodeFrame.LocalContext);
 
 #if DEBUG
             //Info("6C51558E-F0C3-40AB-9CAD-DE253758EB89", $"callResult = {callResult}");
@@ -2651,7 +2650,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (CodeFrameStateHelper.ShouldCallTakeCaller(_currentCodeFrame.State))
             {
-                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller();
+                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller(KindOfValueConversion.Var);
 
 #if DEBUG
                 //Info("5E2D5466-BA50-48CC-ABD7-5284817D612D", $"currentValueCallResult = {currentValueCallResult}");
@@ -3000,7 +2999,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(CodeFrameStateHelper.ShouldCallTakeCaller(_currentCodeFrame.State))
             {
-                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller();
+                var currentValueCallResult = TakeAndResolveCurrentValueAsCaller(KindOfValueConversion.All);
 
 #if DEBUG
                 //Info("BC98D423-8D49-4129-961A-66C4BA25E942", $"currentValueCallResult = {currentValueCallResult}");
@@ -3234,6 +3233,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 instance: caller.InstanceInfo,
                 executable: executable,
                 ownLocalCodeExecutionContext: executable.OwnLocalCodeExecutionContext,
+                KindOfValueConversion.All,
                 kindOfParameters:kindOfParameters,
                 namedParameters:namedParameters,
                 positionedParameters:positionedParameters,
@@ -3540,7 +3540,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
             }
 
-            CallExecutable(callMethodId, methodResolvingResult.Instance, methodResolvingResult.Executable, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, false);
+            CallExecutable(callMethodId, methodResolvingResult.Instance, methodResolvingResult.Executable, null, KindOfValueConversion.All, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, false);
         }
 
         private void ExecRuleInstanceValue(RuleInstance ruleInstance)
@@ -3636,7 +3636,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return initialValue;
         }
 
-
         private void CallOperator(Operator op, List<Value> positionedParameters)
         {
             CallExecutable(
@@ -3684,6 +3683,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 instance: null,
                 executable: executable,
                 ownLocalCodeExecutionContext: ownLocalCodeExecutionContext,
+                kindOfValueConversion: KindOfValueConversion.All,
                 kindOfParameters:kindOfParameters,
                 namedParameters:namedParameters,
                 positionedParameters:positionedParameters,
@@ -3692,12 +3692,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 forParameterValueResolving: forParameterValueResolving);
         }
         
-        private void CallExecutable(string callMethodId, IInstance instance, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption, bool forParameterValueResolving)
+        private void CallExecutable(string callMethodId, IInstance instance, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfValueConversion kindOfValueConversion, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption, bool forParameterValueResolving)
         {
 #if DEBUG
             //Info("B39E497B-B02E-41DD-AC8F-A69910597590", $"Begin");
             //Info("8248ABAF-2A3B-44CB-A229-365F0FF8DC8B", $"executable == null = {executable == null}");
             //Info("93048AF5-9F86-417D-9C67-05707B8421EF", $"kindOfParameters = {kindOfParameters}");
+            //Info("66DBE14E-7F6E-419B-93A5-72440EBA8991", $"kindOfValueConversion = {kindOfValueConversion}");
             //Info("B235F9CD-642F-46C3-A1E8-52CA99572538", $"syncOption = {syncOption}");
 #endif
 
@@ -3720,7 +3721,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     case KindOfFunctionParameters.NoParameters:
                         {
-                            var callResult = executable.SystemHandler.Call(Logger, new List<Value>(), annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
+                            var callResult = executable.SystemHandler.Call(Logger, kindOfValueConversion, new List<Value>(), annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
 
                             switch(callResult.KindOfResult)
                             {
@@ -3736,7 +3737,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case KindOfFunctionParameters.PositionedParameters:
                         {
-                            var callResult = executable.SystemHandler.Call(Logger, positionedParameters, annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
+                            var callResult = executable.SystemHandler.Call(Logger, kindOfValueConversion, positionedParameters, annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
 
                             switch (callResult.KindOfResult)
                             {
@@ -3752,7 +3753,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case KindOfFunctionParameters.NamedParameters:
                         {
-                            var callResult = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
+                            var callResult = executable.SystemHandler.Call(Logger, kindOfValueConversion, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
 
                             switch (callResult.KindOfResult)
                             {

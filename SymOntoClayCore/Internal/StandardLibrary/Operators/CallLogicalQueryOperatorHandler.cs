@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ILogicalStorage _globalLogicalStorage;        
 
         /// <inheritdoc/>
-        public ValueCallResult Call(IMonitorLogger logger, Value operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, Value operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (!operand.IsLogicalQueryOperationValue)
             {

@@ -73,10 +73,11 @@ namespace TestSandbox.CodeExecution
             _logger.Info("End");
         }
 
-        public ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             _logger.Info($"leftOperand = {leftOperand}");
             _logger.Info($"rightOperand = {rightOperand}");
+            _logger.Info($"kindOfValueConversion = {kindOfValueConversion}");
 
             var result = new NumberValue(5);
 

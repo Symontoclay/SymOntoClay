@@ -46,11 +46,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ValueResolvingHelper _valueResolvingHelper;
 
         /// <inheritdoc/>
-        public ValueCallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
             //Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
             //Info("FC6F4EC4-4CE9-45EE-97B7-898DD8D83051", $"rightOperand = {rightOperand}");
+            //Info("BBAEB65F-B26B-430B-AF94-2E07E71273DE", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
             Value valueFromSource = null;
@@ -61,7 +62,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Info("D349C868-0F5D-467E-98AB-697E1DA8478F", $"leftOperandKindOfValue = {leftOperandKindOfValue}");
 #endif
 
-            var leftOperandCallResult = _valueResolvingHelper.TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
+            var leftOperandCallResult = _valueResolvingHelper.TryResolveFromVarOrExpr(logger, leftOperand, kindOfValueConversion, localCodeExecutionContext);
 
 #if DEBUG
             //Info("5AF75343-8D96-48AA-B2F1-EA5A77D8BA7C", $"leftOperandCallResult = {leftOperandCallResult}");

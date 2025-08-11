@@ -21,16 +21,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IUnaryOperatorHandler
     {
-        ValueCallResult Call(IMonitorLogger logger, Value operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext);
+        ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, Value operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext);
     }
 }

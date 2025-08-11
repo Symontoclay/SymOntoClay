@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
 using System;
@@ -44,26 +45,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IBinaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public ValueCallResult Call(IMonitorLogger logger, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
             //logger.Info("7FD4A78D-850D-47A9-A84D-94E4BDB270DE", $"paramsList.Count = {paramsList.Count}");
             //logger.Info("4EF055E4-1B5E-472A-8F15-162271DD69AE", $"paramsList = {paramsList.WriteListToString()}");
+            //Info("240341E2-7EB2-4497-920E-15278E3FFF27", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
             var leftOperand = paramsList[0];
             var rightOperand = paramsList[1];
             
-            return _operatorHandler.Call(logger, leftOperand, rightOperand, annotatedItem, localCodeExecutionContext, callMode);
+            return _operatorHandler.Call(logger, kindOfValueConversion, leftOperand, rightOperand, annotatedItem, localCodeExecutionContext, callMode);
         }
         
         /// <inheritdoc/>
-        public ValueCallResult Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             var leftOperand = paramsDict[_leftOperandKey];
             var rightOperand = paramsDict[_rightOperandKey];
 
-            return _operatorHandler.Call(logger, leftOperand, rightOperand, annotatedItem, localCodeExecutionContext, callMode);
+            return _operatorHandler.Call(logger, kindOfValueConversion, leftOperand, rightOperand, annotatedItem, localCodeExecutionContext, callMode);
         }
     }
 }

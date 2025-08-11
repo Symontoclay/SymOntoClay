@@ -189,7 +189,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     case KindOfFunctionParameters.PositionedParameters:
                         {
-                            var callResult = executable.SystemHandler.Call(logger, positionedParameters, null, parentLocalCodeExecutionContext, callMode);
+                            var callResult = executable.SystemHandler.Call(logger, KindOfValueConversion.All, positionedParameters, null, parentLocalCodeExecutionContext, callMode);
 
                             switch(callResult.KindOfResult)
                             {

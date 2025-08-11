@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using System.Collections.Generic;
 
@@ -38,19 +39,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IUnaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public ValueCallResult Call(IMonitorLogger logger, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IList<Value> paramsList, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             var operand = paramsList[0];
             
-            return _operatorHandler.Call(logger, operand, annotatedItem, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, kindOfValueConversion, operand, annotatedItem, localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        public ValueCallResult Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, IDictionary<string, Value> paramsDict, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             var operand = paramsDict[_operandKey];
 
-            return _operatorHandler.Call(logger, operand, annotatedItem, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, kindOfValueConversion, operand, annotatedItem, localCodeExecutionContext);
         }
     }
 }

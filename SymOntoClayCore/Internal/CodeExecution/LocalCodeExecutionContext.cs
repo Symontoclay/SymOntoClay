@@ -41,6 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public LocalCodeExecutionContext(ILocalCodeExecutionContext parent)
         {
             Parent = parent;
+            Instance ??= parent?.Instance;
         }
 
         /// <inheritdoc/>

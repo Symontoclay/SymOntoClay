@@ -84,10 +84,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             case KindOfName.Var:
                             case KindOfName.SystemVar:
-                                return new ValueCallResult(_varsResolver.GetVarValue(logger, identifier, localCodeExecutionContext));
-
+                                if(kindOfValueConversion.HasFlag(KindOfValueConversion.All) ||
+                                    kindOfValueConversion.HasFlag(KindOfValueConversion.Var))
+                                {
+                                    return new ValueCallResult(_varsResolver.GetVarValue(logger, identifier, localCodeExecutionContext));
+                                }
+                                else
+                                {
+                                    return new ValueCallResult(operand);
+                                }
+                                
                             case KindOfName.CommonConcept:
-                                return _strongIdentifierExprValueResolver.GetValue(logger, identifier, localCodeExecutionContext.Instance, localCodeExecutionContext);
+                                return _strongIdentifierExprValueResolver.GetValue(logger, identifier, kindOfValueConversion, localCodeExecutionContext.Instance, localCodeExecutionContext);
 
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);

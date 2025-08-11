@@ -68,20 +68,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public ValueCallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, KindOfValueConversion kindOfValueConversion, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetValue(logger, name, instance, localCodeExecutionContext, DefaultOptions);
+            return GetValue(logger, name, kindOfValueConversion, instance, localCodeExecutionContext, DefaultOptions);
         }
 
-        public ValueCallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public ValueCallResult GetValue(IMonitorLogger logger, StrongIdentifierValue name, KindOfValueConversion kindOfValueConversion, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Info("C83986EF-4A7C-4ED8-8CA1-C9F39C04815A", $"name = {name}");
+            Info("4CDC55CF-BF49-4739-9A4C-16AF545F0C99", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
-            if(name.IsNullValue)
+            if (name.IsNullValue)
             {
                 return new ValueCallResult(NullValue.Instance);
+            }
+
+            if(kindOfValueConversion.HasFlag(KindOfValueConversion.None))
+            {
+                return new ValueCallResult(name);
             }
 
             var kindOfName = name.KindOfName;
@@ -89,22 +95,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch(kindOfName)
             {
                 case KindOfName.CommonConcept:
-                    return GetValueFromCommonConcept(logger, name, instance, localCodeExecutionContext, options);
+                    return GetValueFromCommonConcept(logger, name, kindOfValueConversion, instance, localCodeExecutionContext, options);
 
                 case KindOfName.LinguisticVar:
-                    return GetValueFromLinguisticVar(logger, name, instance, localCodeExecutionContext, options);
+                    return GetValueFromLinguisticVar(logger, name, kindOfValueConversion, instance, localCodeExecutionContext, options);
 
                 case KindOfName.Property:
-                    return GetValueFromProperty(logger, name, instance, localCodeExecutionContext, options);
+                    return GetValueFromProperty(logger, name, kindOfValueConversion, instance, localCodeExecutionContext, options);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
         }
 
-        private ValueCallResult GetValueFromProperty(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private ValueCallResult GetValueFromProperty(IMonitorLogger logger, StrongIdentifierValue name, KindOfValueConversion kindOfValueConversion, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var property = _propertiesResolver.Resolve(logger, name.ForResolving, localCodeExecutionContext, options);
+            PropertyInstance property = null;
+
+            if (kindOfValueConversion.HasFlag(KindOfValueConversion.Property) ||
+                kindOfValueConversion.HasFlag(KindOfValueConversion.All))
+            {
+                property = _propertiesResolver.Resolve(logger, name.ForResolving, localCodeExecutionContext, options);
+            }
 
 #if DEBUG
             //Info("1CD4D730-2013-4CBF-B172-915D0F36AA8A", $"property?.KindOfProperty = {property?.KindOfProperty}");
@@ -112,7 +124,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(property == null)
             {
-                var value = _propertiesResolver.ResolveImplicitProperty(logger, name.ForResolving, instance, localCodeExecutionContext, options);
+                Value value = null;
+
+                if (kindOfValueConversion.HasFlag(KindOfValueConversion.ImplicitProperty) ||
+                    kindOfValueConversion.HasFlag(KindOfValueConversion.All))
+                {
+                    value = _propertiesResolver.ResolveImplicitProperty(logger, name.ForResolving, instance, localCodeExecutionContext, options);
+                }                
 
 #if DEBUG
                 //Info("0E381D35-017E-4C24-A0B1-368416D1422C", $"value = {value}");
@@ -131,9 +149,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return _propertiesResolver.ConvertPropertyInstanceToCallResult(property);
         }
 
-        private ValueCallResult GetValueFromLinguisticVar(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private ValueCallResult GetValueFromLinguisticVar(IMonitorLogger logger, StrongIdentifierValue name, KindOfValueConversion kindOfValueConversion, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name.ForResolving, null, null, localCodeExecutionContext, options);
+            FuzzyLogicNonNumericValue targetFuzzyLogicItem = null;
+
+            if (kindOfValueConversion.HasFlag(KindOfValueConversion.LinVar) 
+                || kindOfValueConversion.HasFlag(KindOfValueConversion.All))
+            {
+                targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name.ForResolving, null, null, localCodeExecutionContext, options);
+            }
 
 #if DEBUG
             //Info("5CE2BC84-0769-4A58-A9CB-D657D170F682", $"targetFuzzyLogicItem != null = {targetFuzzyLogicItem != null}");
@@ -147,15 +171,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new ValueCallResult(name);
         }
 
-        private ValueCallResult GetValueFromCommonConcept(IMonitorLogger logger, StrongIdentifierValue name, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private ValueCallResult GetValueFromCommonConcept(IMonitorLogger logger, StrongIdentifierValue name, KindOfValueConversion kindOfValueConversion, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name, null, null, localCodeExecutionContext, options);
+            FuzzyLogicNonNumericValue targetFuzzyLogicItem = null;
+
+            if (kindOfValueConversion.HasFlag(KindOfValueConversion.LinVar) 
+                || kindOfValueConversion.HasFlag(KindOfValueConversion.All))
+            {
+                targetFuzzyLogicItem = _fuzzyLogicResolver.GetTargetFuzzyLogicNonNumericValue(logger, name, null, null, localCodeExecutionContext, options);
+            }
 
 #if DEBUG
             Info("0D08A130-16C5-4906-8E76-F0AFC9AB94EA", $"targetFuzzyLogicItem != null = {targetFuzzyLogicItem != null}");
 #endif
 
-            var property = _propertiesResolver.Resolve(logger, name, localCodeExecutionContext, options);
+            PropertyInstance property = null;
+
+            if(kindOfValueConversion.HasFlag(KindOfValueConversion.Property)
+                || kindOfValueConversion.HasFlag(KindOfValueConversion.All))
+            {
+                property = _propertiesResolver.Resolve(logger, name, localCodeExecutionContext, options);
+            }
 
 #if DEBUG
             Info("E16D50F3-4AC5-4E80-BCF9-AB72FE95A6CE", $"property?.KindOfProperty = {property?.KindOfProperty}");
@@ -200,7 +236,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Info("392126EE-3551-4B18-8209-A72C11B7B9BB", $"instance?.Name = {instance?.Name}");
 #endif
 
-            var value = _propertiesResolver.ResolveImplicitProperty(logger, name, instance, localCodeExecutionContext, options);
+            Value value = null;
+
+            if(kindOfValueConversion.HasFlag(KindOfValueConversion.ImplicitProperty) 
+                || kindOfValueConversion.HasFlag(KindOfValueConversion.All))
+            {
+                value = _propertiesResolver.ResolveImplicitProperty(logger, name, instance, localCodeExecutionContext, options);
+            }            
 
 #if DEBUG
             Info("38CEA52A-DE78-42DA-B03D-B8901AFB6A97", $"value = {value}");

@@ -32,6 +32,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing.Internal;
@@ -87,6 +88,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstKindOfValueConversion();
             //TstPrintUnknownObjPropOptString();
             //TstSorting();
             //TstLogFileBuilderAppCommandLineParserHandler();
@@ -173,10 +175,53 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstKindOfValueConversion()
+        {
+            _globalLogger.Info("Begin");
+
+            var kindOfValueConversion = KindOfValueConversion.All;
+
+            _globalLogger.Info($"kindOfValueConversion.HasFlag(KindOfValueConversion.None) = {kindOfValueConversion.HasFlag(KindOfValueConversion.None)}");
+            _globalLogger.Info($"kindOfValueConversion.HasFlag(KindOfValueConversion.Var) = {kindOfValueConversion.HasFlag(KindOfValueConversion.Var)}");
+            _globalLogger.Info($"kindOfValueConversion.HasFlag(KindOfValueConversion.Property) = {kindOfValueConversion.HasFlag(KindOfValueConversion.Property)}");
+            _globalLogger.Info($"kindOfValueConversion.HasFlag(KindOfValueConversion.ImplicitProperty) = {kindOfValueConversion.HasFlag(KindOfValueConversion.ImplicitProperty)}");
+            _globalLogger.Info($"kindOfValueConversion.HasFlag(KindOfValueConversion.LinVar) = {kindOfValueConversion.HasFlag(KindOfValueConversion.LinVar)}");
+            _globalLogger.Info($"kindOfValueConversion.HasFlag(KindOfValueConversion.All) = {kindOfValueConversion.HasFlag(KindOfValueConversion.All)}");
+
+            var kindOfValueConversion2 = KindOfValueConversion.None;
+
+            _globalLogger.Info($"kindOfValueConversion2.HasFlag(KindOfValueConversion2.None) = {kindOfValueConversion2.HasFlag(KindOfValueConversion.None)}");
+            _globalLogger.Info($"kindOfValueConversion2.HasFlag(KindOfValueConversion2.Var) = {kindOfValueConversion2.HasFlag(KindOfValueConversion.Var)}");
+            _globalLogger.Info($"kindOfValueConversion2.HasFlag(KindOfValueConversion2.Property) = {kindOfValueConversion2.HasFlag(KindOfValueConversion.Property)}");
+            _globalLogger.Info($"kindOfValueConversion2.HasFlag(KindOfValueConversion2.ImplicitProperty) = {kindOfValueConversion2.HasFlag(KindOfValueConversion.ImplicitProperty)}");
+            _globalLogger.Info($"kindOfValueConversion2.HasFlag(KindOfValueConversion2.LinVar) = {kindOfValueConversion2.HasFlag(KindOfValueConversion.LinVar)}");
+            _globalLogger.Info($"kindOfValueConversion2.HasFlag(KindOfValueConversion2.All) = {kindOfValueConversion2.HasFlag(KindOfValueConversion.All)}");
+
+            var kindOfValueConversion3 = KindOfValueConversion.LinVar;
+
+            _globalLogger.Info($"kindOfValueConversion3.HasFlag(KindOfValueConversion.None) = {kindOfValueConversion3.HasFlag(KindOfValueConversion.None)}");
+            _globalLogger.Info($"kindOfValueConversion3.HasFlag(KindOfValueConversion.Var) = {kindOfValueConversion3.HasFlag(KindOfValueConversion.Var)}");
+            _globalLogger.Info($"kindOfValueConversion3.HasFlag(KindOfValueConversion.Property) = {kindOfValueConversion3.HasFlag(KindOfValueConversion.Property)}");
+            _globalLogger.Info($"kindOfValueConversion3.HasFlag(KindOfValueConversion.ImplicitProperty) = {kindOfValueConversion3.HasFlag(KindOfValueConversion.ImplicitProperty)}");
+            _globalLogger.Info($"kindOfValueConversion3.HasFlag(KindOfValueConversion.LinVar) = {kindOfValueConversion3.HasFlag(KindOfValueConversion.LinVar)}");
+            _globalLogger.Info($"kindOfValueConversion3.HasFlag(KindOfValueConversion.All) = {kindOfValueConversion3.HasFlag(KindOfValueConversion.All)}");
+
+            var kindOfValueConversion4 = KindOfValueConversion.Var | KindOfValueConversion.Property;
+
+            _globalLogger.Info($"kindOfValueConversion4.HasFlag(KindOfValueConversion.None) = {kindOfValueConversion4.HasFlag(KindOfValueConversion.None)}");
+            _globalLogger.Info($"kindOfValueConversion4.HasFlag(KindOfValueConversion.Var) = {kindOfValueConversion4.HasFlag(KindOfValueConversion.Var)}");
+            _globalLogger.Info($"kindOfValueConversion4.HasFlag(KindOfValueConversion.Property) = {kindOfValueConversion4.HasFlag(KindOfValueConversion.Property)}");
+            _globalLogger.Info($"kindOfValueConversion4.HasFlag(KindOfValueConversion.ImplicitProperty) = {kindOfValueConversion4.HasFlag(KindOfValueConversion.ImplicitProperty)}");
+            _globalLogger.Info($"kindOfValueConversion4.HasFlag(KindOfValueConversion.LinVar) = {kindOfValueConversion4.HasFlag(KindOfValueConversion.LinVar)}");
+            _globalLogger.Info($"kindOfValueConversion4.HasFlag(KindOfValueConversion.All) = {kindOfValueConversion4.HasFlag(KindOfValueConversion.All)}");
+
+            _globalLogger.Info("End");
         }
 
         private static void TstPrintUnknownObjPropOptString()

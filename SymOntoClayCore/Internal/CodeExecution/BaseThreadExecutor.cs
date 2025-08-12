@@ -2568,9 +2568,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private ValueCallResult TryResolveFromVarOrExpr(Value operand, KindOfValueConversion kindOfValueConversion, CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame)
         {
 #if DEBUG
-            Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
-            Info("9B35028D-80AC-4666-A21D-8307CE803586", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
-            Info("5B02CDB3-6DB0-464B-AC97-DE92499E2A9C", $"kindOfValueConversion = {kindOfValueConversion}");
+            //Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
+            //Info("9B35028D-80AC-4666-A21D-8307CE803586", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
+            //Info("5B02CDB3-6DB0-464B-AC97-DE92499E2A9C", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
             var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, kindOfValueConversion, _currentCodeFrame.LocalContext);

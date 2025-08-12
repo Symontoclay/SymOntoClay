@@ -53,14 +53,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public ValueCallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, KindOfValueConversion kindOfValueConversion, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
-            Info("FABDB406-3D13-4A57-961E-DF6B8745409F", $"kindOfValueConversion = {kindOfValueConversion}");
+            //Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
+            //Info("FABDB406-3D13-4A57-961E-DF6B8745409F", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
             var kindOfValue = operand.KindOfValue;
 
 #if DEBUG
-            Info("387ABF8B-71F9-44F3-B4D5-504FCDB930EF", $"kindOfValue = {kindOfValue}");
+            //Info("387ABF8B-71F9-44F3-B4D5-504FCDB930EF", $"kindOfValue = {kindOfValue}");
 #endif
 
             switch(kindOfValue)
@@ -72,12 +72,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var kindOfName = identifier.KindOfName;
 
 #if DEBUG
-                        Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
-                        Info("8FAE3943-8A07-47AE-AD56-EFBEE868C00B", $"localCodeExecutionContext.Instance?.Name = {localCodeExecutionContext.Instance?.Name}");
-                        if(localCodeExecutionContext.Instance == null)
-                        {
-                            localCodeExecutionContext.DbgPrintContextChain(logger, "9CF526E2-9860-49E2-9067-CD554BD8CEB6");
-                        }
+                        //Info("9347D620-94CC-48AA-B07A-3B49252A9236", $"kindOfName = {kindOfName}");
+                        //Info("8FAE3943-8A07-47AE-AD56-EFBEE868C00B", $"localCodeExecutionContext.Instance?.Name = {localCodeExecutionContext.Instance?.Name}");
+                        //if(localCodeExecutionContext.Instance == null)
+                        //{
+                        //    localCodeExecutionContext.DbgPrintContextChain(logger, "9CF526E2-9860-49E2-9067-CD554BD8CEB6");
+                        //}
 #endif
                         
                         switch (kindOfName)

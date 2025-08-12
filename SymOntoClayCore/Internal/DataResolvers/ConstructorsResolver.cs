@@ -262,7 +262,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new ConstructorResolvingResult
             {
                 Constructor = targetItem.ResultItem,
-                NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                NeedTypeConversion = targetItem.ParametersRankMatrix?.Any(x => x.NeedTypeConversion) ?? false,
                 ParametersRankMatrix = targetItem.ParametersRankMatrix
             };
         }
@@ -302,7 +302,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new ConstructorResolvingResult
             {
                 Constructor = targetItem.ResultItem,
-                NeedTypeConversion = targetItem.ParametersRankMatrix.Any(x => x.NeedTypeConversion),
+                NeedTypeConversion = targetItem.ParametersRankMatrix?.Any(x => x.NeedTypeConversion) ?? false,
                 ParametersRankMatrix = targetItem.ParametersRankMatrix
             };
         }

@@ -97,6 +97,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             case KindOfName.CommonConcept:
                                 return _strongIdentifierExprValueResolver.GetValue(logger, identifier, kindOfValueConversion, localCodeExecutionContext.Instance, localCodeExecutionContext);
 
+                            case KindOfName.Entity:
+                                return new ValueCallResult(operand);
+
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
                         }

@@ -1,10 +1,10 @@
 ﻿app PeaceKeeper
 {
-    {: can(bird, fly) :}
-    {: bird(#Alisa_12) :}
-
-    on Enter =>
-    {
-        ? {: $z(#Alisa_12, $x) :} >> @>log;
-    }
+	{: male(#Tom) :}
+	{: parent(#Peter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+    @a = #Tom;
+	on Enter => {
+	    select {: son(@a, $y) :} >> @>log;
+	}
 }

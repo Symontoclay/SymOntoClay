@@ -214,31 +214,13 @@ namespace SymOntoClay.Core
         {
             name = name.Trim().ToLower().Replace("`", string.Empty);
 
-#if DEBUG
-            Info("6713DC12-B5F6-4D4C-81B9-0C729CB7DD50", $"name = {name}");
-            Info("07321083-E518-44E8-A10F-D8FF17AC66A7", $"_libDirs = {_libDirs.WritePODListToString()}");
-#endif
-
             foreach (var baseDirName in _libDirs)
             {
-#if DEBUG
-                Info("08BA11B9-15CB-4916-AE39-3AB55E007E33", $"baseDirName = {baseDirName}");
-#endif
-
                 var subDirectories = Directory.EnumerateDirectories(baseDirName);
 
                 foreach(var subDirectory in subDirectories)
                 {
-#if DEBUG
-                    Info("A4FF9097-0D53-4BE7-935A-DF51BDFC99F2", $"subDirectory = {subDirectory}");
-#endif
-
                     var directoryInfo = new DirectoryInfo(subDirectory);
-
-#if DEBUG
-                    Info("A9DA9CC7-0A67-44A9-A88E-EE22F1351449", $"directoryInfo.Name = {directoryInfo.Name}");
-                    Info("4D5D3F87-CBF7-4CE1-8B56-69EAB149FA3E", $"directoryInfo.Name.ToLower() = {directoryInfo.Name.ToLower()}");
-#endif
 
                     if (directoryInfo.Name.ToLower() == name)
                     {

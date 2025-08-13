@@ -1571,6 +1571,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case KindOfOperator.UnaryPlus:
                 case KindOfOperator.UnaryMinus:
                 case KindOfOperator.Not:
+                case KindOfOperator.CallLogicalQuery:
                     return (true, _usualUnOpTakeParametersSettings);
 
                 default:

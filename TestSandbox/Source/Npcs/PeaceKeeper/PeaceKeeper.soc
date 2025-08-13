@@ -1,10 +1,11 @@
 ﻿app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) :}
 	{: parent(#Peter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
-    @a = #Tom;
+	
 	on Enter => {
-	    select {: son(@a, $y) :} >> @>log;
+	    select {: son($x, $y) :} >> @>log;
 	}
 }

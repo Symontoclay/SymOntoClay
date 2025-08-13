@@ -48,7 +48,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
             var firstItem = Parse(text);
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
-            Assert.AreEqual(firstItem.Name.NameValue, "enemy");
+            Assert.AreEqual(firstItem.Name.NameValue, "`Enemy`");
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 0);
@@ -58,7 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
         [Parallelizable]
         public void Parser_Tests_Case2()
         {
-            var text = @"app PixKeeper
+            var text = @"app PeaceKeeper
 {
     on Enter => {
 	     'Hello world!' >> @>log;
@@ -68,7 +68,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
             var firstItem = Parse(text);
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
-            Assert.AreEqual(firstItem.Name.NameValue, "pixkeeper");
+            Assert.AreEqual(firstItem.Name.NameValue, "`PeaceKeeper`");
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.CommonConcept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 1);
@@ -101,7 +101,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var rightNode = (ConstValueAstExpression)binOpExpr.Right;
 
-            Assert.AreEqual(rightNode.Value.AsStrongIdentifierValue.NameValue, "@>log");
+            Assert.AreEqual(rightNode.Value.AsStrongIdentifierValue.NameValue, "@>`log`");
             Assert.AreEqual(rightNode.Value.AsStrongIdentifierValue.KindOfName, KindOfName.Channel);
         }
 

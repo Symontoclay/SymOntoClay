@@ -71,7 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `direction`($`x1`,#@{: >: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}) & $`x1` = `go`(`someone`,`self`) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `direction`($`x1`,#@{: >: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}) & $`x1` = `go`(`someone`,`self`) } o: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `parent`(#`Peter`,#`Tom`) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } so: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `direction`($`x1`,#@{: >: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}) & $`x1` = `go`(`someone`,`self`) } so: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `direction`($`x1`,#@{: >: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}) & $`x1` = `go`(`someone`,`self`) } so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `direction`($`x1`,#@{: >: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}) & $`x1` = `go`(`someone`,`self`) } o: 1 so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `direction`($`x1`,#@{: >: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}) & $`x1` = `go`(`someone`,`self`) } o: 1 so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `parent`(#`Peter`,#`Tom`) } o: `middle` :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: very middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `parent`(#`Peter`,#`Tom`) } o: `very` `middle` :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `parent`(#`Peter`,#`Tom`) } o: `middle` so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: very middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `parent`(#`Peter`,#`Tom`) } o: `very` `middle` so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
     }
 }

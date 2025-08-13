@@ -1,11 +1,10 @@
 ﻿app PeaceKeeper
 {
-    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
-    {: age(#Tom, 50) :}
-    {: distance(I, #Tom, 12) :}
+    {: can(bird, fly) :}
+    {: bird(#Alisa_12) :}
 
     on Enter =>
     {
-        select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
+        ? {: $z(#Alisa_12, $x) :} >> @>log;
     }
 }

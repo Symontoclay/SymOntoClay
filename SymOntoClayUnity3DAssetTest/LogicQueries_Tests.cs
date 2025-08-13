@@ -325,7 +325,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = fly"));
+                            Assert.AreEqual(true, message.Contains("$`x` = `fly`"));
                             return false;
 
                         default:
@@ -398,8 +398,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$z = can(bird,fly)"));
-                            Assert.AreEqual(false, message.Contains("$x"));
+                            Assert.AreEqual(true, message.Contains("$`z` = `can`(`bird`,`fly`)"));
                             return false;
 
                         default:
@@ -1658,7 +1657,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 5"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 5"));
                             return false;
 
                         default:
@@ -1803,7 +1802,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 4"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 4"));
                             return false;
 
                         default:
@@ -1876,7 +1875,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 5"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 5"));
                             return false;
 
                         default:
@@ -1913,7 +1912,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 4"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 4"));
                             return false;
 
                         default:
@@ -2136,7 +2135,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 15"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 15"));
                             return false;
 
                         default:
@@ -2313,7 +2312,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 4"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 4"));
                             return false;
 
                         default:
@@ -2402,7 +2401,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 15"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 15"));
                             return false;
 
                         default:
@@ -2447,7 +2446,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 4"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 4"));
                             return false;
 
                         default:
@@ -2670,7 +2669,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 15"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 15"));
                             return false;
 
                         default:
@@ -2847,7 +2846,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 4"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 4"));
                             return false;
 
                         default:
@@ -2936,7 +2935,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 15"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 15"));
                             return false;
 
                         default:
@@ -2981,7 +2980,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 4"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 4"));
                             return false;
 
                         default:
@@ -3021,7 +3020,7 @@ app PeaceKeeper
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #1234"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`1234`"));
                             return false;
 
                         default:
@@ -3102,8 +3101,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3142,8 +3141,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3182,8 +3181,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3222,8 +3221,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3262,8 +3261,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3302,8 +3301,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3378,8 +3377,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3418,8 +3417,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3456,8 +3455,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3532,8 +3531,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3572,8 +3571,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3612,8 +3611,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3652,8 +3651,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3692,8 +3691,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3808,8 +3807,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3848,8 +3847,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3888,8 +3887,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3928,8 +3927,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -3965,8 +3964,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = 15.588457107543945"));
-                            Assert.AreEqual(true, message.Contains("$x = m16"));
+                            Assert.AreEqual(true, message.Contains("$`y` = 15.588457107543945"));
+                            Assert.AreEqual(true, message.Contains("$`x` = `M16`"));
                             return false;
 
                         default:
@@ -4002,8 +4001,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = 15.588457107543945"));
-                            Assert.AreEqual(true, message.Contains("$x = m16"));
+                            Assert.AreEqual(true, message.Contains("$`y` = 15.588457107543945"));
+                            Assert.AreEqual(true, message.Contains("$`x` = `M16`"));
                             return false;
 
                         default:
@@ -4039,8 +4038,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = 15.588457107543945"));
-                            Assert.AreEqual(true, message.Contains("$x = m16"));
+                            Assert.AreEqual(true, message.Contains("$`y` = 15.588457107543945"));
+                            Assert.AreEqual(true, message.Contains("$`x` = `M16`"));
                             return false;
 
                         default:
@@ -4146,7 +4145,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return false;
 
                         default:
@@ -4185,8 +4184,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #mark"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Mark`"));
                             return false;
 
                         default:
@@ -4225,8 +4224,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #mark"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Mark`"));
                             return false;
 
                         default:
@@ -4266,9 +4265,9 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
-                            Assert.AreEqual(true, message.Contains("$x = #mark"));
-                            Assert.AreEqual(true, message.Contains("$x = NULL"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Mark`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = NULL"));
                             return false;
 
                         default:
@@ -4308,7 +4307,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = NULL"));
+                            Assert.AreEqual(true, message.Contains("$`x` = NULL"));
                             return false;
 
                         default:
@@ -4350,8 +4349,8 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
-                            Assert.AreEqual(true, message.Contains("$x = #mark"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Mark`"));
                             return false;
 
                         default:
@@ -4391,9 +4390,9 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
-                            Assert.AreEqual(true, message.Contains("$x = #mark"));
-                            Assert.AreEqual(true, message.Contains("$x = NULL"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Mark`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = NULL"));
                             return false;
 
                         default:
@@ -4515,9 +4514,9 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
-                            Assert.AreEqual(true, message.Contains("$x = #mark"));
-                            Assert.AreEqual(true, message.Contains("$x = NULL"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Mark`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = NULL"));
                             return false;
 
                         default:
@@ -4557,7 +4556,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #wp1"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`wp1`"));
                             return false;
 
                         default:

@@ -1,10 +1,11 @@
 ﻿app PeaceKeeper
 {
-	{: male(#Tom) :}
-	{: parent(#Peter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: age(#Tom, 50) :}
+    {: distance(I, #Tom, 12) :}
 
-	on Enter => {
-	    select {: son($x, $y) :} >> @>log;
-	}
+    on Enter =>
+    {
+        select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
+    }
 }

@@ -364,7 +364,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
 #if DEBUG
-                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                //Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -4034,7 +4034,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessSetInheritance()
         {
 #if DEBUG
-            Info("DB586FB4-F99B-4F35-90FE-EBAFBCE5D57B", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
+            //Info("DB586FB4-F99B-4F35-90FE-EBAFBCE5D57B", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
@@ -4047,20 +4047,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var takeParametersSettings = GetProcessInheritanceSettings();
 
 #if DEBUG
-                Info("617915F0-253C-4B98-A546-8218C8C01721", $"takeParametersSettings.NeedRevers = {takeParametersSettings.NeedRevers}");
-                Info("83B6BC6C-8739-42B5-80B4-34A53E047E30", $"takeParametersSettings.LoadingMatrix = {takeParametersSettings.LoadingMatrix.WritePODListToString()}");
+                //Info("617915F0-253C-4B98-A546-8218C8C01721", $"takeParametersSettings.NeedRevers = {takeParametersSettings.NeedRevers}");
+                //Info("83B6BC6C-8739-42B5-80B4-34A53E047E30", $"takeParametersSettings.LoadingMatrix = {takeParametersSettings.LoadingMatrix.WritePODListToString()}");
 #endif
 
                 var positionedParametersCallResult = TakePositionedParameters(_processInheritanceParametersCount);
 
 #if DEBUG
-                Info("CAD2E491-F019-4F50-83E3-BCB0B111C35A", $"positionedParametersCallResult = {positionedParametersCallResult}");
+                //Info("CAD2E491-F019-4F50-83E3-BCB0B111C35A", $"positionedParametersCallResult = {positionedParametersCallResult}");
 #endif
 
                 var positionedParametersCallResultKindOfResult = positionedParametersCallResult.KindOfResult;
 
 #if DEBUG
-                Info("28C73B01-C615-4E1E-9158-0C264DFB5C5A", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
+                //Info("28C73B01-C615-4E1E-9158-0C264DFB5C5A", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
 #endif
 
                 switch (positionedParametersCallResultKindOfResult)
@@ -4076,8 +4076,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Info("0F58FD83-5A0F-4F07-8E0A-8348FD4B3BA5", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
-                Info("061FE982-353D-4AF0-85E1-66B5F88EC26E", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
+                //Info("0F58FD83-5A0F-4F07-8E0A-8348FD4B3BA5", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+                //Info("061FE982-353D-4AF0-85E1-66B5F88EC26E", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
 #endif
 
                 _currentCodeFrame.State = CodeFrameState.CommandExecution;
@@ -4111,7 +4111,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessSetNotInheritance()
         {
 #if DEBUG
-            Info("71AF0577-0CB8-4DC1-9258-2E5CC4CD4FDD", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
+            //Info("71AF0577-0CB8-4DC1-9258-2E5CC4CD4FDD", $"!!!!!! _currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
@@ -4124,20 +4124,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var takeParametersSettings = GetProcessInheritanceSettings();
 
 #if DEBUG
-                Info("E1D22CFE-C398-4378-BDCA-772073EAB714", $"takeParametersSettings.NeedRevers = {takeParametersSettings.NeedRevers}");
-                Info("204A4D1E-E11C-46C9-B480-DDF30D95DE1D", $"takeParametersSettings.LoadingMatrix = {takeParametersSettings.LoadingMatrix.WritePODListToString()}");
+                //Info("E1D22CFE-C398-4378-BDCA-772073EAB714", $"takeParametersSettings.NeedRevers = {takeParametersSettings.NeedRevers}");
+                //Info("204A4D1E-E11C-46C9-B480-DDF30D95DE1D", $"takeParametersSettings.LoadingMatrix = {takeParametersSettings.LoadingMatrix.WritePODListToString()}");
 #endif
 
                 var positionedParametersCallResult = TakePositionedParameters(_processInheritanceParametersCount);
 
 #if DEBUG
-                Info("1AD77C45-9A2B-405A-B671-4E0C08F218E9", $"positionedParametersCallResult = {positionedParametersCallResult}");
+                //Info("1AD77C45-9A2B-405A-B671-4E0C08F218E9", $"positionedParametersCallResult = {positionedParametersCallResult}");
 #endif
 
                 var positionedParametersCallResultKindOfResult = positionedParametersCallResult.KindOfResult;
 
 #if DEBUG
-                Info("287DE7D5-E24C-41EA-A3BF-99F808059B67", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
+                //Info("287DE7D5-E24C-41EA-A3BF-99F808059B67", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
 #endif
 
                 switch (positionedParametersCallResultKindOfResult)
@@ -4153,8 +4153,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Info("38A4FA20-6EF9-4483-98E2-BD6AB42EE342", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
-                Info("A3EEE0AE-90AE-4844-8E1C-3B462BB1B9D5", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
+                //Info("38A4FA20-6EF9-4483-98E2-BD6AB42EE342", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+                //Info("A3EEE0AE-90AE-4844-8E1C-3B462BB1B9D5", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
 #endif
 
                 _currentCodeFrame.State = CodeFrameState.CommandExecution;

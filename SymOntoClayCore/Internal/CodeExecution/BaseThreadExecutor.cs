@@ -1789,66 +1789,115 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void Wait(ScriptCommand currentCommand)
         {
-            if (_endOfTargetDuration.HasValue)
+            if(_currentCodeFrame.State == CodeFrameState.CommandExecution)
             {
-                var currentTick = _dateTimeProvider.CurrentTicks;
-
-                if (currentTick >= _endOfTargetDuration.Value)
+                if (_endOfTargetDuration.HasValue)
                 {
-                    _endOfTargetDuration = null;
-                    _currentCodeFrame.CurrentPosition++;
-                    return;
-                }
-
-                return;
-            }
-
-            if (!_waitedThreadExecutorsList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
-            {
-                if ((_waitedThreadExecutorsList != null && _waitedThreadExecutorsList.Any(p => p.RunningStatus == ThreadTaskStatus.Running)) || 
-                    (_waitedProcessInfoList != null && _waitedProcessInfoList.Any(p => p.Status == ProcessStatus.Running)))
-                {
-                    return;
-                }
-
-                _waitedThreadExecutorsList = null;
-                _currentCodeFrame.CurrentPosition++;
-                return;
-            }
-
-            var positionedParameters = TakePositionedParametersOld(currentCommand.CountParams);
-
-            if (positionedParameters.Count == 1)
-            {
-                var firstParameter = positionedParameters[0];
-
-                if (firstParameter.KindOfValue != KindOfValue.ThreadExecutorValue
-                    && firstParameter.KindOfValue != KindOfValue.ProcessInfoValue)
-                {
-                    var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
-
                     var currentTick = _dateTimeProvider.CurrentTicks;
 
-                    _endOfTargetDuration = currentTick + timeoutSystemVal;
+                    if (currentTick >= _endOfTargetDuration.Value)
+                    {
+                        _endOfTargetDuration = null;
+                        _currentCodeFrame.CurrentPosition++;
+                        _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                        return;
+                    }
 
+                    return;
+                }
+
+                if (!_waitedThreadExecutorsList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
+                {
+                    if ((_waitedThreadExecutorsList != null && _waitedThreadExecutorsList.Any(p => p.RunningStatus == ThreadTaskStatus.Running)) ||
+                        (_waitedProcessInfoList != null && _waitedProcessInfoList.Any(p => p.Status == ProcessStatus.Running)))
+                    {
+                        return;
+                    }
+
+                    _waitedThreadExecutorsList = null;
+                    _currentCodeFrame.CurrentPosition++;
+                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
                     return;
                 }
             }
 
-            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue) ||
-                positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
-                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue))
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            }
+
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
+            {
+                _currentCodeFrame.ParametersCount = currentCommand.CountParams;
+
+                var positionedParametersCallResult = TakePositionedParameters(_currentCodeFrame.ParametersCount);
+
+#if DEBUG
+                //Info("7CA4EFEC-C7DA-4A93-82E7-D32FD5401421", $"positionedParametersCallResult = {positionedParametersCallResult}");
+#endif
+
+                var positionedParametersCallResultKindOfResult = positionedParametersCallResult.KindOfResult;
+
+#if DEBUG
+                //Info("DD2824DF-6335-45CF-8F3D-E3262592BCCA", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
+#endif
+
+                switch (positionedParametersCallResultKindOfResult)
                 {
-                    _waitedThreadExecutorsList = positionedParameters.Where(p => p.IsThreadExecutorValue).Select(p => p.AsThreadExecutorValue.ThreadExecutor).ToList();
+                    case KindOfCallResult.Value:
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
                 }
 
-                if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
+#if DEBUG
+                //Info("6BE582BB-367E-4DD4-AF95-D89F7DB1A44E", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+                //Info("DD2A666E-A176-4558-B70F-582737A6507B", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
+#endif
+
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            }
+
+            if(_currentCodeFrame.State == CodeFrameState.CommandExecution)
+            {
+                var positionedParameters = _currentCodeFrame.ResolvedPositionedParameterValues;
+
+                if (positionedParameters.Count == 1)
                 {
-                    _waitedProcessInfoList = positionedParameters.Where(p => p.IsProcessInfoValue).Select(p => p.AsProcessInfoValue.ProcessInfo).ToList();
+                    var firstParameter = positionedParameters[0];
+
+                    if (firstParameter.KindOfValue != KindOfValue.ThreadExecutorValue
+                        && firstParameter.KindOfValue != KindOfValue.ProcessInfoValue)
+                    {
+                        var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
+
+                        var currentTick = _dateTimeProvider.CurrentTicks;
+
+                        _endOfTargetDuration = currentTick + timeoutSystemVal;
+
+                        return;
+                    }
                 }
 
-                return;
+                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue) ||
+                    positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
+                {
+                    if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue))
+                    {
+                        _waitedThreadExecutorsList = positionedParameters.Where(p => p.IsThreadExecutorValue).Select(p => p.AsThreadExecutorValue.ThreadExecutor).ToList();
+                    }
+
+                    if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
+                    {
+                        _waitedProcessInfoList = positionedParameters.Where(p => p.IsProcessInfoValue).Select(p => p.AsProcessInfoValue.ProcessInfo).ToList();
+                    }
+
+                    return;
+                }
             }
 
             throw new NotImplementedException("E11ABE78-F83D-49A4-B968-BE9D19F3AA7B");
@@ -2626,13 +2675,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }            
 
             return result;
-        }
-
-        [Obsolete]
-        private List<Value> TakePositionedParametersOld(int count)
-        {
-            throw new NotImplementedException("131EAE27-B27C-4E7A-B178-E1B7D2D92786");
-            //return NTakePositionedParameters(count, true);
         }
 
         private void CallConstructor(KindOfFunctionParameters kindOfParameters, int parametersCount, IAnnotatedItem annotatedItem)

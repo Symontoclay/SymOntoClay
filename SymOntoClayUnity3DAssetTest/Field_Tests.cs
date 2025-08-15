@@ -416,7 +416,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         case 2:
                             Assert.AreEqual(true, message.StartsWith("{:"));
                             Assert.AreEqual(true, message.EndsWith(":}"));
-                            Assert.AreEqual(true, message.Contains(">: { male(#tom) }"));
+                            Assert.AreEqual(true, message.Contains(">: { `male`(#`Tom`) }"));
                             return true;
 
                         case 3:

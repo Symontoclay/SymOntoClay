@@ -91,7 +91,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 8:
-                            Assert.AreEqual("0", message);
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 9:
@@ -167,7 +167,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 8:
-                            Assert.AreEqual("0", message);
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 9:
@@ -370,7 +370,7 @@ app PeaceKeeper is [middle] exampleClass
                             return true;
 
                         case 8:
-                            Assert.AreEqual("0", message);
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 9:
@@ -459,7 +459,7 @@ app PeaceKeeper is [very middle] exampleClass
                             return true;
 
                         case 8:
-                            Assert.AreEqual("0", message);
+                            Assert.AreEqual("1", message);
                             return true;
 
                         case 9:

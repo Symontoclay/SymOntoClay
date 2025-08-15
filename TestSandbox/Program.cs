@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using DictionaryGenerator;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.CLI;
@@ -134,6 +135,7 @@ namespace TestSandbox
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
+            TstRunMinimalInstanceTests();//<----------------------------
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -175,7 +177,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1638,6 +1640,38 @@ primitive task SomePrimitiveTask4
             _logger.Info("F1323C4D-2BF6-4601-B330-58D1B9C28852", $"maxN = {maxN}");
 
             _logger.Info("E18A11E9-F938-49F4-8C02-A124EA88D690", "End");
+        }
+
+        private static void TstRunMinimalInstanceTests()
+        {
+            _logger.Info("6AF85CB2-B313-4004-834C-30A5A1878C79", "Begin");
+
+            var text = @"app PeaceKeeper is [0.5] exampleClass
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        set exampleClass is [0.5] human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        set exampleClass is not human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        set @@self is linux;
+        @@self is linux >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBased(text,
+                (n, message) =>
+                {
+                    _logger.Info("EDC0F88F-79BE-4BFF-B7B0-6195E17F663B", $"{n}:'{message}'");
+                }));
+
+            _logger.Info("2F173679-CAD0-4D46-B80A-1191E9B08DD7", "End");
         }
 
         private static void TstNameHelper()

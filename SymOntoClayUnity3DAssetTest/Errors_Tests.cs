@@ -820,7 +820,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         case 5:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
-                            Assert.AreEqual(true, message.Contains("see(i,#a)"));
+                            Assert.AreEqual(true, message.Contains("`see`(`I`,#`a`)"));
                             Assert.AreEqual(true, message.Contains(":}"));
                             return true;
 
@@ -1009,7 +1009,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         case 5:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
-                            Assert.AreEqual(true, message.Contains("see(i,#a)"));
+                            Assert.AreEqual(true, message.Contains("`see`(`I`,#`a`)"));
                             Assert.AreEqual(true, message.Contains(":}"));
                             return true;
 
@@ -1111,7 +1111,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         case 5:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
-                            Assert.AreEqual(true, message.Contains("see(i,#a)"));
+                            Assert.AreEqual(true, message.Contains("`see`(`I`,#`a`)"));
                             Assert.AreEqual(true, message.Contains(":}"));
                             return true;
 
@@ -1195,7 +1195,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         case 3:
                             Assert.AreEqual(true, message.Contains("ERROR"));
                             Assert.AreEqual(true, message.Contains("{:"));
-                            Assert.AreEqual(true, message.Contains("see(i,#a)"));
+                            Assert.AreEqual(true, message.Contains("`see`(`I`,#`a`)"));
                             Assert.AreEqual(true, message.Contains(":}"));
                             return true;
 

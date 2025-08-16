@@ -1,13 +1,7 @@
 ﻿app PeaceKeeper
 {
-    {: like(i, #@{: >: { cat($_) & possess(i, $_) } :}) :}
-
-    on Enter =>
+	on once 1
     {
-        'Begin' >> @>log;
-
-        select {: like(i, $x) :} >> @>log;
-
-        'End' >> @>log;
-    }
+	    'D' >> @>log;
+	}
 }

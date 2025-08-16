@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string OnceToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            throw new NotImplementedException("053F3F90-959D-4285-9C10-5C977AEF79A9");
+            return $"once {source.Value.ToHumanizedString(options)}";
         }
 
         private static string CallFunctionToString(TriggerConditionNode source, DebugHelperOptions options)

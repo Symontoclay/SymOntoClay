@@ -34,7 +34,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public ValueCallResult GetValue(IMonitorLogger logger)
         {
-            throw new NotImplementedException("2A89A5E7-4610-4C37-9A2E-3DB36E2BD551");
+#if DEBUG
+            //logger.Info("742E917E-2AB0-49D1-AD77-213F9CD4E0CC", $"MethodName = {MethodName}");
+#endif
+
+            return new ValueCallResult(MethodName);
         }
 
         /// <inheritdoc/>

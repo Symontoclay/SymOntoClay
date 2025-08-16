@@ -1,16 +1,11 @@
 ﻿app PeaceKeeper
 {
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-    }
-
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = a~();
-        on @task complete { 'on complete' >> @>log; };
-        wait 1;
+
+        @@host.`boo`();
+
         'End' >> @>log;
     }
 }

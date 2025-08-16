@@ -2548,7 +2548,6 @@ primitive task SomePrimitiveTask4
         {
             _logger.Info("BABAC27C-220E-4152-B16F-4D93C62631C3", "Begin");
 
-
             using var handler = new GeneralStartHandler();
             handler.Run();
 

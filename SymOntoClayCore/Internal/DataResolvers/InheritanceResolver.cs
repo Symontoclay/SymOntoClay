@@ -118,6 +118,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            //Info("D36C9F29-BC2D-4B7F-B1EA-16C96E9E2F98", $"subName = {subName}");
+#endif
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
@@ -196,6 +200,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public static WeightedInheritanceItem GetSelfWeightedInheritanceItem(IMonitorLogger logger, StrongIdentifierValue subName)
         {
+#if DEBUG
+            //logger.Info("60D823CD-F528-47AF-869B-523A9DE07E3A", $"subName = {subName}");
+#endif
+
             var item = new WeightedInheritanceItem();
             item.SuperName = subName;
             item.Rank = 1F;

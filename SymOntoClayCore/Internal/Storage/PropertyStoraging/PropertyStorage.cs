@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -191,6 +192,12 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<PropertyInstance>> GetPropertyDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
+#if DEBUG
+            //Info("B59DE2EF-5A91-42B1-BF59-DB0F210550E8", $"name = {name}");
+            //Info("F56093E3-E58B-46AC-9D45-89016D485C85", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
+            //Info("394F84FD-91B5-432D-B387-79FEF1F4C261", $"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
             lock (_lockObj)
             {
                 if (_realStorageContext.Disabled)

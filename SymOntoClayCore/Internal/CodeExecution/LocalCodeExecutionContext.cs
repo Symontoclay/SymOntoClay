@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             Parent = parent;
             Instance ??= parent?.Instance;
+            Holder ??= parent?.Holder;
         }
 
         /// <inheritdoc/>

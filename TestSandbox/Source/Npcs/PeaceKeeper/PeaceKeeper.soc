@@ -1,41 +1,10 @@
 ﻿app PeaceKeeper
 {
-    fun a(@param_1) =>
+    on Enter
     {
-        '`a` has been called!' >> @>log;
-        @param_1 >> @>log;
-
-        error {: see(I, #a) :};
-
-        'End of `a`' >> @>log;
-    }
-
-    on Enter =>
-    {
-        try
-        {
-            'Begin' >> @>log;
-            a(param_1: 1);
-            'End' >> @>log;        
-        }
-        catch
-        {
-            'catch' >> @>log;
-        }
-        catch(@e)
-        {
-            'catch(@e)' >> @>log;
-            @e >> @>log;
-        }
-        else
-        {
-            'else' >> @>log;
-        }
-        ensure
-        {
-            'ensure' >> @>log;
-        }
-
-        'End of `Enter`' >> @>log;
+        'Begin' >> @>log;
+        @a = #@(hold(I, this) & weapon);
+        @a >> @>log;
+        'End' >> @>log;
     }
 }

@@ -57,7 +57,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(barrel)", message);
+                            Assert.AreEqual("#@(`barrel`)", message);
                             return true;
 
                         case 3:
@@ -102,7 +102,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 2:
                             Assert.AreEqual(true, message.StartsWith("#@{:"));
-                            Assert.AreEqual(true, message.EndsWith(">: { barrel($_) } :}"));
+                            Assert.AreEqual(true, message.EndsWith(">: { `barrel`($`_`) } :}"));
                             return true;
 
                         case 3:
@@ -147,7 +147,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 2:
                             Assert.AreEqual(true, message.StartsWith("#@{:"));
-                            Assert.AreEqual(true, message.EndsWith(">: { barrel($_) } :}"));
+                            Assert.AreEqual(true, message.EndsWith(">: { `barrel`($`_`) } :}"));
                             return true;
 
                         case 3:
@@ -191,7 +191,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(hold(i,this) & weapon)", message);
+                            Assert.AreEqual("#@(`hold`(`I`,`this`) & `weapon`)", message);
                             return true;
 
                         case 3:
@@ -235,7 +235,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(hold(i,this) & (weapon & dog))", message);
+                            Assert.AreEqual("#@(`hold`(`I`,`this`) & (`weapon` & `dog`))", message);
                             return true;
 
                         case 3:
@@ -279,7 +279,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(hold(#a,this) & (weapon & dog))", message);
+                            Assert.AreEqual("#@(`hold`(#`a`,`this`) & (`weapon` & `dog`))", message);
                             return true;
 
                         case 3:
@@ -323,7 +323,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(color = black)", message);
+                            Assert.AreEqual("#@(`color` = `black`)", message);
                             return true;
 
                         case 3:
@@ -366,7 +366,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(color = black)", message);
+                            Assert.AreEqual("#@(`color` = `black`)", message);
                             return true;
 
                         case 3:
@@ -414,8 +414,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #@{:"));
-                            Assert.AreEqual(true, message.Contains(">: { cat($_) & possess(i,$_) } :}"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #@{:"));
+                            Assert.AreEqual(true, message.Contains(">: { `cat`($`_`) & `possess`(`I`,$`_`) } :}"));
                             return true;
 
                         case 3:
@@ -459,7 +459,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(barrel & random)", message);
+                            Assert.AreEqual("#@(`barrel` & `random`)", message);
                             return true;
 
                         case 3:
@@ -503,7 +503,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(barrel & nearest)", message);
+                            Assert.AreEqual("#@(`barrel` & `nearest`)", message);
                             return true;
 
                         case 3:

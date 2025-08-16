@@ -318,7 +318,7 @@ app PeaceKeeper
                             return true;
 
                         case 3:
-                            Assert.AreEqual("dog", message);
+                            Assert.AreEqual("`dog`", message);
                             return true;
 
                         case 4:
@@ -1452,7 +1452,7 @@ app PeaceKeeper
                             return true;
 
                         case 3:
-                            Assert.AreEqual("dog", message);
+                            Assert.AreEqual("`dog`", message);
                             return true;
 
                         case 4:
@@ -1516,7 +1516,7 @@ app PeaceKeeper
                             return true;
 
                         case 3:
-                            Assert.AreEqual("dog", message);
+                            Assert.AreEqual("`dog`", message);
                             return true;
 
                         case 4:
@@ -1705,7 +1705,7 @@ app PeaceKeeper
                             return true;
 
                         case 3:
-                            Assert.AreEqual("dog", message);
+                            Assert.AreEqual("`dog`", message);
                             return true;
 
                         case 4:
@@ -1769,7 +1769,7 @@ app PeaceKeeper
                             return true;
 
                         case 3:
-                            Assert.AreEqual("dog", message);
+                            Assert.AreEqual("`dog`", message);
                             return true;
 
                         case 4:

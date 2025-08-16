@@ -185,7 +185,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(true, message.Contains("#a"));
+                            Assert.AreEqual(true, message.Contains("#`a`"));
                             break;
 
                         default:
@@ -219,7 +219,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(true, message.Contains("#a"));
+                            Assert.AreEqual(true, message.Contains("#`a`"));
                             break;
 
                         default:

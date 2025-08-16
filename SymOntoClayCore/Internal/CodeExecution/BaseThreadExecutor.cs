@@ -742,38 +742,92 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
+        private const int _processAddLifeCycleEventParametersCount = 3;
+
         private void ProcessAddLifeCycleEvent()
         {
-            var valuesStack = _currentCodeFrame.ValuesStack;
+#if DEBUG
+            //Info("2EE3A7E8-B1B1-46E8-9EEE-C19852763F05", $"**** _currentCodeFrame.State = {_currentCodeFrame.State}");
+#endif
 
-            var handlerValue = valuesStack.Pop();
-
-            var kindOfLifeCycleEventValue = valuesStack.Pop();
-
-            var targetObjectValue = valuesStack.Pop();
-
-            var kindOfLifeCycleEventName = kindOfLifeCycleEventValue.AsStrongIdentifierValue.NormalizedNameValue;
-
-            var targetObject = targetObjectValue.AsProcessInfoValue;
-            var handler = handlerValue.AsCodeItem.AsFunction;
-
-            switch (kindOfLifeCycleEventName)
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
-                case "complete":
-                case "completed":
-                    targetObject.AddOnCompleteHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
-                    break;
-
-                case "weak cancel":
-                case "weak canceled":
-                    targetObject.AddOnWeakCanceledHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfLifeCycleEventName), kindOfLifeCycleEventName, null);
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
             }
 
-            _currentCodeFrame.CurrentPosition++;
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
+            {
+                var positionedParametersCallResult = TakePositionedParameters(_processAddLifeCycleEventParametersCount);
+
+#if DEBUG
+                //Info("AA70BA5A-C86F-4979-A741-798708AF33DB", $"positionedParametersCallResult = {positionedParametersCallResult}");
+#endif
+
+                var positionedParametersCallResultKindOfResult = positionedParametersCallResult.KindOfResult;
+
+#if DEBUG
+                //Info("C693D1C1-5B56-4AB7-B6A9-D41701A61009", $"positionedParametersCallResultKindOfResult = {positionedParametersCallResultKindOfResult}");
+#endif
+
+                switch (positionedParametersCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                }
+
+#if DEBUG
+                //Info("76242B04-2B13-4777-9413-BCAF97B3BA85", $"_currentCodeFrame.ResolvedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+                //Info("3B74E846-F8BB-4FC1-B305-80FC4A4DAB45", $"positionedParametersCallResult.Value = {positionedParametersCallResult.Value.WriteListToString()}");
+#endif
+
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            }
+
+            if(_currentCodeFrame.State == CodeFrameState.CommandExecution)
+            {
+                var targetObjectValue = _currentCodeFrame.ResolvedPositionedParameterValues[0];
+                var kindOfLifeCycleEventValue = _currentCodeFrame.ResolvedPositionedParameterValues[1];
+                var handlerValue = _currentCodeFrame.ResolvedPositionedParameterValues[2];
+
+#if DEBUG
+                //Info("78B9F9DD-AD95-4F6E-8059-D41967A90FF3", $"targetObjectValue = {targetObjectValue}");
+#endif
+
+                var kindOfLifeCycleEventName = kindOfLifeCycleEventValue.AsStrongIdentifierValue.NormalizedNameValue;
+
+                var targetObject = targetObjectValue.AsProcessInfoValue;
+                var handler = handlerValue.AsCodeItem.AsFunction;
+
+#if DEBUG
+                //Info("E4C8CCCD-9021-42D6-8EDC-F4E943AB6106", $"targetObject == null = {targetObject == null}");
+#endif
+
+                switch (kindOfLifeCycleEventName)
+                {
+                    case "complete":
+                    case "completed":
+                        targetObject.AddOnCompleteHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
+                        break;
+
+                    case "weak cancel":
+                    case "weak canceled":
+                        targetObject.AddOnWeakCanceledHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfLifeCycleEventName), kindOfLifeCycleEventName, null);
+                }
+
+                _currentCodeFrame.CurrentPosition++;
+
+                _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+            }
         }
 
         private void ProcessInstantiate(KindOfFunctionParameters kindOfParameters, int parametersCount)

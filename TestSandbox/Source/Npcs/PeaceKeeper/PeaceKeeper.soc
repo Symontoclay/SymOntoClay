@@ -1,17 +1,16 @@
-﻿class Cls1
+﻿app PeaceKeeper
 {
-protected:
-    {: can(bird, fly) :}
-    {: bird(#Alisa_12) :}
-}
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
 
-app PeaceKeeper is Cls1
-{
-private:
     on Enter =>
     {
         'Begin' >> @>log;
-        select {: $z(#Alisa_12, $x) :} >> @>log;
+        var @task = a~();
+        on @task complete { 'on complete' >> @>log; };
+        wait 1;
         'End' >> @>log;
     }
 }

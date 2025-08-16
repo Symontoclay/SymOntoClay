@@ -311,7 +311,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 KindOfCodeItemDescriptor = "fun"
             };
 
-            result.Label = $"fun {Name.NameValue}";
+            var sb = new StringBuilder("fun");
+
+            if(Name != null)
+            {
+                sb.Append($" {Name.NameValue}");
+            }
+
+            result.Label = sb.ToString();
 
             if (!Arguments.IsNullOrEmpty())
             {

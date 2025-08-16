@@ -116,14 +116,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             var sb = new StringBuilder();
-            sb.Append("(");
+            sb.Append('(');
 
             if(Expression != null)
             {
                 sb.Append(Expression.ToHumanizedString(options));
             }
 
-            sb.Append(")");
+            sb.Append('(');
 
             return sb.ToString();
         }

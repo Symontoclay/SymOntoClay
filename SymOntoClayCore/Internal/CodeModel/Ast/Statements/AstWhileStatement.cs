@@ -140,13 +140,30 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("4A5C7ACE-BC44-424E-A89C-846D60629287");
+            var sb = new StringBuilder();
+            sb.AppendLine(ToHumanizedLabel(options));
+            sb.AppendLine("{");
+            foreach(var statementItem in Statements)
+            {
+                sb.AppendLine(statementItem.ToHumanizedString(options));
+            }
+            sb.AppendLine("}");
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("17BEE511-B006-4AB3-B40E-1A7C702D1790");
+            var sb = new StringBuilder("while ");
+            sb.Append('(');
+            if(Condition != null)
+            {
+                sb.Append(Condition.ToHumanizedLabel(options));
+            }
+            
+            sb.Append(')');
+
+            return sb.ToString();
         }
     }
 }

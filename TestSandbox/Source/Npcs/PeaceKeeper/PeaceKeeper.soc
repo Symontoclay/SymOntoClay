@@ -1,27 +1,28 @@
 ﻿app PeaceKeeper
 {
-    fun a(@param_1)
-    {
-        '`a` (any) has been called!' >> @>log;
-        @param_1 >> @>log;
-    }
-
-    fun a(@param_1: string)
-    {
-        '`a` (string) has been called!' >> @>log;
-        @param_1 >> @>log;
-    }
-
-    fun a(@param_1: number)
+    fun a() => 
     {
         '`a` has been called!' >> @>log;
-        @param_1 >> @>log;
+
+        @a = 10;
+
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
+
+        'End `a`' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a(dog);
+
+        @a = a~();
+
+        wait @a;
+
         'End' >> @>log;
     }
 }

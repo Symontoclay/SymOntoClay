@@ -1,7 +1,19 @@
 ﻿app PeaceKeeper
 {
-	on once 1
+    set Idling as default state;
+
+    on Enter =>
     {
-	    'D' >> @>log;
-	}
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Enter' >> @>log;
+        'End Enter' >> @>log;
+    }
 }

@@ -82,13 +82,13 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var result = new List<IInstance>() { this };
 
-            lock(_stateLockObj)
-            {
-                if(_activeStatesDict.Any())
-                {
-                    throw new NotImplementedException("204ED027-5B42-4D5B-95AF-0181A256CE67");
-                }
-            }
+            //lock(_stateLockObj)
+            //{
+            //    if(_activeStatesDict.Any())
+            //    {
+            //        throw new NotImplementedException("204ED027-5B42-4D5B-95AF-0181A256CE67");
+            //    }
+            //}
 
             return result;
         }

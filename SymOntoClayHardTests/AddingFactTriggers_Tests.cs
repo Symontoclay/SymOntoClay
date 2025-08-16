@@ -333,7 +333,7 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual("m16", message);
+                        Assert.AreEqual("`M16`", message);
                         break;
 
                     case 3:

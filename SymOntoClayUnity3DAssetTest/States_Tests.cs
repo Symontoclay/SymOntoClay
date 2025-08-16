@@ -1209,7 +1209,7 @@ state Idling
 
                         case 3:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = #1234"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`1234`"));
                             break;
 
                         case 4:
@@ -1573,8 +1573,8 @@ state Idling
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             break;
 
                         case 3:

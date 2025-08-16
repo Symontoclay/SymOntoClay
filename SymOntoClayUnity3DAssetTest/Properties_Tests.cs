@@ -306,7 +306,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 2"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 2"));
                             return true;
 
                         case 4:
@@ -585,7 +585,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 3:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$x = 16"));
+                            Assert.AreEqual(true, message.Contains("$`x` = 16"));
                             return true;
 
                         case 4:

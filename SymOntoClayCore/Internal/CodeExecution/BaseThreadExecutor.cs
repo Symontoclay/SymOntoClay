@@ -3542,6 +3542,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             Logger.SystemExpr("010446DC-DBA6-43A8-B128-3B42625803C6", callMethodId, $"methodResolvingResult != null", methodResolvingResult != null);
+            //Info("F2FF88B8-E88F-4245-82BE-73AB72293AAA", $"methodResolvingResult = {methodResolvingResult}");
 #endif
 
             if (methodResolvingResult == null)

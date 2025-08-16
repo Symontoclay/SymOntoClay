@@ -360,126 +360,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> orderedList = null;
 
+#if DEBUG
+            //Info("FD0BA40F-8C3B-48D2-822B-5F1FE2A9A515", $"source = {source.WriteListToString()}");
+#endif
+
             if (paramsCount > 0)
             {
-                for (var i = 0; i < paramsCount; i++)
-                {
-                    switch (i)
-                    {
-                        case 0:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[0].Distance).ThenBy(p => p.ParametersRankMatrix[0].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[0].Distance).ThenBy(p => p.ParametersRankMatrix[0].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 1:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[1].Distance).ThenBy(p => p.ParametersRankMatrix[1].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[1].Distance).ThenBy(p => p.ParametersRankMatrix[1].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 2:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[2].Distance).ThenBy(p => p.ParametersRankMatrix[2].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[2].Distance).ThenBy(p => p.ParametersRankMatrix[2].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 3:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[3].Distance).ThenBy(p => p.ParametersRankMatrix[3].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[3].Distance).ThenBy(p => p.ParametersRankMatrix[3].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 4:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[4].Distance).ThenBy(p => p.ParametersRankMatrix[4].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[4].Distance).ThenBy(p => p.ParametersRankMatrix[4].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 5:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[5].Distance).ThenBy(p => p.ParametersRankMatrix[5].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[5].Distance).ThenBy(p => p.ParametersRankMatrix[5].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 6:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[6].Distance).ThenBy(p => p.ParametersRankMatrix[6].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[6].Distance).ThenBy(p => p.ParametersRankMatrix[6].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 7:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[7].Distance).ThenBy(p => p.ParametersRankMatrix[7].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[7].Distance).ThenBy(p => p.ParametersRankMatrix[7].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 8:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[8].Distance).ThenBy(p => p.ParametersRankMatrix[8].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[8].Distance).ThenBy(p => p.ParametersRankMatrix[8].NeedTypeConversion);
-                            }
-                            break;
-
-                        case 9:
-                            if (orderedList == null)
-                            {
-                                orderedList = source.OrderBy(p => p.ParametersRankMatrix[9].Distance).ThenBy(p => p.ParametersRankMatrix[9].NeedTypeConversion);
-                            }
-                            else
-                            {
-                                orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[9].Distance).ThenBy(p => p.ParametersRankMatrix[9].NeedTypeConversion);
-                            }
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(i), i, null);
-                    }
-                }
+                orderedList = SortByNeedTypeConversion(logger, source, paramsCount);
+                orderedList = SortByDistance(logger, orderedList, paramsCount);
             }
 
             if (orderedList == null)
@@ -493,7 +381,195 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             orderedList = orderedList.ThenBy(p => p.Distance).ThenByDescending(p => p.ResultItem.CodeItem.TypeOfAccess == TypeOfAccess.Local).ThenBy(p => p.StorageDistance);
 
+#if DEBUG
+            //Info("504BD101-4952-4455-925B-7E8E8FDD2138", $"orderedList = {orderedList.WriteListToString()}");
+#endif
+
             return orderedList.FirstOrDefault();
+        }
+
+        private IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> SortByNeedTypeConversion<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount)
+            where T : AnnotatedItem, IExecutable
+        {
+            IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> orderedList = null;
+
+            for (var i = 0; i < paramsCount; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[0].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[0].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 1:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[1].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[1].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 2:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[2].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[2].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 3:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[3].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[3].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 4:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[4].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[4].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 5:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[5].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[5].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 6:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[6].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[6].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 7:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[7].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[7].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 8:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[8].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[8].NeedTypeConversion);
+                        }
+                        break;
+
+                    case 9:
+                        if (orderedList == null)
+                        {
+                            orderedList = source.OrderBy(p => p.ParametersRankMatrix[9].NeedTypeConversion);
+                        }
+                        else
+                        {
+                            orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[9].NeedTypeConversion);
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(i), i, null);
+                }
+            }
+
+            return orderedList;
+        }
+
+        private IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> SortByDistance<T>(IMonitorLogger logger, IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount)
+            where T : AnnotatedItem, IExecutable
+        {
+            IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> orderedList = source;
+
+            for (var i = 0; i < paramsCount; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[0].Distance);
+                        break;
+
+                    case 1:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[1].Distance);
+                        break;
+
+                    case 2:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[2].Distance).ThenBy(p => p.ParametersRankMatrix[2].NeedTypeConversion);
+                        break;
+
+                    case 3:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[3].Distance).ThenBy(p => p.ParametersRankMatrix[3].NeedTypeConversion);
+                        break;
+
+                    case 4:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[4].Distance).ThenBy(p => p.ParametersRankMatrix[4].NeedTypeConversion);
+                        break;
+
+                    case 5:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[5].Distance).ThenBy(p => p.ParametersRankMatrix[5].NeedTypeConversion);
+                        break;
+
+                    case 6:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[6].Distance).ThenBy(p => p.ParametersRankMatrix[6].NeedTypeConversion);
+                        break;
+
+                    case 7:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[7].Distance).ThenBy(p => p.ParametersRankMatrix[7].NeedTypeConversion);
+                        break;
+
+                    case 8:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[8].Distance).ThenBy(p => p.ParametersRankMatrix[8].NeedTypeConversion);
+                        break;
+
+                    case 9:
+                        orderedList = orderedList.ThenBy(p => p.ParametersRankMatrix[9].Distance).ThenBy(p => p.ParametersRankMatrix[9].NeedTypeConversion);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(i), i, null);
+                }
+            }
+
+            return orderedList;
         }
 
         protected void CorrectParametersRankMatrixForSpecialCases<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)

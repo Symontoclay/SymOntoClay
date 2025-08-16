@@ -922,9 +922,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var namedParameters = _currentCodeFrame.ResolvedNamedParameterValues;
                 var positionedParameters = _currentCodeFrame.ResolvedPositionedParameterValues;
 
+#if DEBUG
+                //Info("E7D24382-B52B-40C1-8F43-EF7B372A144C", $"prototypeValue = {prototypeValue}");
+#endif
+
                 var instanceValue = CreateInstance(prototypeValue);
 
                 var newInstance = instanceValue.AsInstanceValue.InstanceInfo;
+
+#if DEBUG
+                //Info("3CD80D33-1A2D-4E50-9140-04872F8A459D", $"newInstance.CodeItem.Kind = {newInstance.CodeItem.Kind}");
+                //Info("D0DBBADB-C89B-4D10-B801-F442C1281712", $"newInstance.KindOfInstance = {newInstance.KindOfInstance}");
+#endif
 
                 var superClassesStoragesDict = _inheritanceResolver.GetSuperClassStoragesDict(Logger, newInstance.LocalCodeExecutionContext.Storage, newInstance);
 
@@ -1014,6 +1023,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private Value CreateInstance(Value prototypeValue)
         {
             var kindOfValue = prototypeValue.KindOfValue;
+
+#if DEBUG
+            //Info("D56DFAC1-788E-4A2B-84C9-28CF9F41B4D8", $"kindOfValue = {kindOfValue}");
+#endif
 
             switch (kindOfValue)
             {
@@ -1138,13 +1151,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentValueCallResult = TakeAndResolveCurrentValue(KindOfValueConversion.All);
 
 #if DEBUG
-                Info("E4C239A7-017E-4260-9326-AC0721172209", $"currentValueCallResult = {currentValueCallResult}");
+                //Info("E4C239A7-017E-4260-9326-AC0721172209", $"currentValueCallResult = {currentValueCallResult}");
 #endif
 
                 var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
 
 #if DEBUG
-                Info("E3F528B0-6F74-4A86-812E-241776E0CB6D", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
+                //Info("E3F528B0-6F74-4A86-812E-241776E0CB6D", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
 #endif
 
                 switch (currentValueCallResultKindOfResult)
@@ -1172,13 +1185,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (returnable != null)
                 {
 #if DEBUG
-                    Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
+                    //Info("F91FFEA3-4B41-4B34-95C2-363FCC199ECC", $"returnable.TypesList? = {returnable.TypesList?.WriteListToString()}");
 #endif
 
                     var conversionResult = _typeConverter.CheckAndTryConvert(Logger, _currentCodeFrame.ResolvedPositionedParameterValues.First(), returnable.TypesList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                    Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
+                    //Info("BB4EE87E-9C6D-4541-9836-F985B08E60D1", $"conversionResult = {conversionResult}");
 #endif
 
                     var kindOfResult = conversionResult.KindOfResult;

@@ -519,7 +519,27 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private Value NCreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContext, bool loadCodeItem)
         {
-            var targetCodeItem = CreateAndSaveInstanceCodeItem(logger, codeItem, NameHelper.CreateEntityName(logger));
+            var kindOfCodeItem = codeItem.Kind;
+
+#if DEBUG
+            //Info("3A518B82-D86B-4DFA-A3A8-896358B08B76", $"kindOfCodeItem = {kindOfCodeItem}");
+#endif
+            CodeItem targetCodeItem = null;
+
+            switch(kindOfCodeItem)
+            {
+                case KindOfCodeEntity.Function:
+                    targetCodeItem = codeItem; 
+                    break;
+
+                default:
+                    targetCodeItem = CreateAndSaveInstanceCodeItem(logger, codeItem, NameHelper.CreateEntityName(logger));
+                    break;
+            }
+
+#if DEBUG
+            //Info("91036CBE-685D-4388-9B0D-6D18F6FF79DC", $"targetCodeItem = {targetCodeItem}");
+#endif
 
             var instance = new ObjectInstance(targetCodeItem, _context, executionContext.Storage, executionContext);
 

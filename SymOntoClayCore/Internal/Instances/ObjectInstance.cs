@@ -62,6 +62,10 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
         {
+#if DEBUG
+            //Info("2A57B735-5FE4-44DD-8182-A1B14D139FA0", $"CodeItem.Kind = {CodeItem.Kind}");
+#endif
+
             if(_function != null)
             {
                 if(_methodsResolver.IsFit(logger, _function, kindOfParameters, namedParameters, positionedParameters, _localCodeExecutionContext))

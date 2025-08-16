@@ -1,19 +1,17 @@
-﻿app PeaceKeeper
+﻿class Cls1
 {
-    set Idling as default state;
-
-    on Enter =>
-    {
-        'Begin' >> @>log;        
-        'End' >> @>log;
-    }
+protected:
+    {: can(bird, fly) :}
+    {: bird(#Alisa_12) :}
 }
 
-state Idling
+app PeaceKeeper is Cls1
 {
-    on Enter
+private:
+    on Enter =>
     {
-        'Begin Enter' >> @>log;
-        'End Enter' >> @>log;
+        'Begin' >> @>log;
+        select {: $z(#Alisa_12, $x) :} >> @>log;
+        'End' >> @>log;
     }
 }

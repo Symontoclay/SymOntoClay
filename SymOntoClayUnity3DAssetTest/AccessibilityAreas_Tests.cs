@@ -64,7 +64,7 @@ private:
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
                             return true;
 
                         case 3:
@@ -372,8 +372,8 @@ private:
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return true;
 
                         case 3:
@@ -426,8 +426,8 @@ private:
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #peter"));
-                            Assert.AreEqual(true, message.Contains("$x = #tom"));
+                            Assert.AreEqual(true, message.Contains("$`y` = #`Peter`"));
+                            Assert.AreEqual(true, message.Contains("$`x` = #`Tom`"));
                             return true;
 
                         case 3:
@@ -530,7 +530,7 @@ private:
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$z = can(bird,fly)"));
+                            Assert.AreEqual(true, message.Contains("$`z` = `can`(`bird`,`fly`)"));
                             return true;
 
                         case 3:
@@ -582,7 +582,7 @@ private:
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$z = can(bird,fly)"));
+                            Assert.AreEqual(true, message.Contains("$`z` = `can`(`bird`,`fly`)"));
                             return true;
 
                         case 3:

@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 case KindOfValue.StrongIdentifierValue:
                     {
-                        var identifier = operand.AsStrongIdentifierValue.ForResolving;
+                        var identifier = operand.AsStrongIdentifierValue;
 
                         var kindOfName = identifier.KindOfName;
 
@@ -95,6 +95,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
                                 
                             case KindOfName.CommonConcept:
+                            case KindOfName.LinguisticVar:
+                            case KindOfName.Property:
                                 return _strongIdentifierExprValueResolver.GetValue(logger, identifier, kindOfValueConversion, localCodeExecutionContext.Instance, localCodeExecutionContext);
 
                             case KindOfName.Entity:

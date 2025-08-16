@@ -173,6 +173,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private ValueCallResult GetValueFromCommonConcept(IMonitorLogger logger, StrongIdentifierValue name, KindOfValueConversion kindOfValueConversion, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            //Info("7C80D59D-D7A0-4CD5-B53D-79E16DDDE0E1", $"name.KindOfName = {name.KindOfName}");
+#endif
+
             FuzzyLogicNonNumericValue targetFuzzyLogicItem = null;
 
             if (kindOfValueConversion.HasFlag(KindOfValueConversion.LinVar) 

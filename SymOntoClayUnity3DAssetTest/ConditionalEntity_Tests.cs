@@ -415,7 +415,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         case 2:
                             Assert.AreEqual(true, message.Contains("<yes>"));
                             Assert.AreEqual(true, message.Contains("$`x` = #@{:"));
-                            Assert.AreEqual(true, message.Contains(">: { `cat`($`_`) & `possess`(`I`,$`_`) } :}"));
+                            Assert.AreEqual(true, message.Contains(">: { `cat`($`_`) & `possess`(`i`,$`_`) } :}"));
                             return true;
 
                         case 3:

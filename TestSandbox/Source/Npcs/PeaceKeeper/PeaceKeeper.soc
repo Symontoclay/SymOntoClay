@@ -3,9 +3,9 @@
     on Enter =>
     {
         'Begin' >> @>log;
-
-        @@host.`boo`();
-
+        var @task = @@host.SomeVeryShortSilentFun~();
+        on @task complete { 'on complete' >> @>log; };
+        wait 1;
         'End' >> @>log;
     }
 }

@@ -143,6 +143,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
                 var endPointInfo = _endPointsResolver.GetEndpointInfo(logger, callMethodId, command, _endpointsRegistries, packedSynonymsResolver);
 
+#if DEBUG
+                Info("AF772964-9DD5-458F-8BFE-DCD5E26B378D", $"endPointInfo != null = {endPointInfo != null}");
+#endif
+
                 logger.SystemExpr("9C43C9A5-6D3A-420F-A97E-1399F66AA196", callMethodId, "endPointInfo != null", endPointInfo != null);
 
                 if (endPointInfo == null)

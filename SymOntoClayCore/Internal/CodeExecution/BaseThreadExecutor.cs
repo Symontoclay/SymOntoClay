@@ -3385,9 +3385,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
 #if DEBUG
-            //Log($"methodName = {methodName.ToHumanizedString()}");
+            Info("652E464D-54C0-4CA8-928B-65E4B47162B9", $"methodName = {methodName.ToHumanizedString()}");
 #endif
-            
+
             var command = new Command();
             command.Name = methodName;
 
@@ -3428,7 +3428,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Logger.SystemExpr("3D14A97D-41AB-4E21-82AF-2AC810BAE68F", callMethodId, "processCreatingResult.IsSuccessful", processCreatingResult.IsSuccessful);
 
 #if DEBUG
-            //Info("91939B48-DB56-416A-90BB-F13F4A613796", $"processCreatingResult = {processCreatingResult}");
+            Info("91939B48-DB56-416A-90BB-F13F4A613796", $"processCreatingResult = {processCreatingResult}");
 #endif
 
             if (processCreatingResult.IsSuccessful)

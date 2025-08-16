@@ -50,8 +50,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var endPointName = NameHelper.UnShieldString(command.Name.NameValue);
 
+#if DEBUG
+            Info("4AE25975-C786-4A77-9A2D-53BFC95D78F7", $"endPointName = {endPointName}");
+#endif
+
             var paramsCount = command.ParamsCount;
-            
+
+#if DEBUG
+            Info("74EC3E96-9D2E-4500-BCFF-201611B8576A", $"paramsCount = {paramsCount}");
+#endif
+
             var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(endPointName)).Select(p => p.NameValue).ToList();
 
             logger.SystemExpr("69BD7A53-01CC-4105-A37D-BE674676622A", callMethodId, nameof(paramsCount), paramsCount);
@@ -59,6 +67,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
                 var targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(endPointName, paramsCount);
+
+#if DEBUG
+                Info("58426F70-7D09-4946-97A2-9F425BA57650", $"targetEndPointsList?.Count = {targetEndPointsList?.Count}");
+#endif
 
                 if (targetEndPointsList != null)
                 {

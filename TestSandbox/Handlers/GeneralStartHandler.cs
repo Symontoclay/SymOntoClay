@@ -75,10 +75,11 @@ namespace TestSandbox.Handlers
             _logger.Info("FF819764-4617-46ED-9326-EADFE6B1A62D", "Begin");
 
             //var platformListener = new TstPlatformHostListener();
-            var platformListener = new HostMethods_Tests_HostListener();
+            //var platformListener = new HostMethods_Tests_HostListener();
             //var platformListener = new FullGeneralized_Tests_HostListener();
             //var platformListener = new TstBattleRoyaleHostListener();
             //var platformListener = new TstPlatformHostListenerWithDefaultValues();
+            var platformListener = new VeryShortMehod_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;

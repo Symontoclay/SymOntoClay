@@ -83,7 +83,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 5:
-                            Assert.AreEqual("#a", message);
+                            Assert.AreEqual("#`a`", message);
                             return false;
 
                         default:

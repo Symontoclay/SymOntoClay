@@ -59,7 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var relation = _standardFactsBuilder.BuildPropertyVirtualRelationInstance(NameHelper.CreateName("someprop"), NameHelper.CreateName("#123"), new NumberValue(16));
 
-            Assert.AreEqual("someprop(#123,16)", relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("`someprop`(#`123`,16)", relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildImplicitPropertyQueryInstance(NameHelper.CreateName("someprop"), NameHelper.CreateName("#123"));
 
-            Assert.AreEqual("{: >: { someprop(#123,$_) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `someprop`(#`123`,$`_`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildDefaultInheritanceFactInstance("#123", "Cat");
 
-            Assert.AreEqual("{: >: { is(#123,cat,1) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `is`(#`123`,`Cat`,1) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildDefaultInheritanceFactInstance("Cat", "Animal");
 
-            Assert.AreEqual("{: >: { is(cat,animal,1) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `is`(`Cat`,`Animal`,1) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var fact = _standardFactsBuilder.BuildSayFactInstance("#123", initialFact);
 
-            Assert.AreEqual("{: >: { say(#123,{: >: { act(m16,shoot) } :}) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `say`(#`123`,{: >: { `act`(`M16`,`shoot`) } :}) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var fact = _standardFactsBuilder.BuildSoundFactInstance(15.588457107543945, 12, initialFact);
 
-            Assert.AreEqual("{: >: { $x = {: >: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { $`x` = {: >: { `act`(`M16`,`shoot`) } :} & `hear`(`i`,$`x`) & `distance`(`i`,$`x`,15.588457107543945) & `direction`($`x`,12) & `point`($`x`,#@[15.588457107543945, 12]) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildAliveFactInstance("#123");
 
-            Assert.AreEqual("{: >: { state(#123,alive) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `state`(#`123`,`alive`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -184,7 +184,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildDeadFactInstance("#123");
 
-            Assert.AreEqual("{: >: { state(#123,dead) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `state`(#`123`,`dead`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildStopFactInstance("#123");
 
-            Assert.AreEqual("{: >: { act(#123,stop) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `act`(#`123`,`stop`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildWalkFactInstance("#123");
 
-            Assert.AreEqual("{: >: { act(#123,walk) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `act`(#`123`,`walk`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildWalkSoundFactInstance();
 
-            Assert.AreEqual("{: >: { act(someone,walk) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `act`(`someone`,`walk`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -256,7 +256,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildRunFactInstance("#123");
 
-            Assert.AreEqual("{: >: { act(#123,run) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `act`(#`123`,`run`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -274,7 +274,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildRunSoundFactInstance();
 
-            Assert.AreEqual("{: >: { act(someone,run) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `act`(`someone`,`run`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -292,7 +292,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildHoldFactInstance("#123", "#456");
 
-            Assert.AreEqual("{: >: { hold(#123,#456) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `hold`(#`123`,#`456`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -310,7 +310,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildShootFactInstance("#123");
 
-            Assert.AreEqual("{: >: { act(#123,shoot) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `act`(#`123`,`shoot`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -328,7 +328,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildShootSoundFactInstance();
 
-            Assert.AreEqual("{: >: { act(someone,shoot) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `act`(`someone`,`shoot`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -346,7 +346,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildReadyForShootFactInstance("#123");
 
-            Assert.AreEqual("{: >: { ready(#123,shoot) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `ready`(#`123`,`shoot`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -364,7 +364,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildSeeFactInstance("#123");
 
-            Assert.AreEqual("{: >: { see(i,#123) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `see`(`I`,#`123`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -382,7 +382,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildFocusFactInstance("#123");
 
-            Assert.AreEqual("{: >: { focus(i,#123) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `focus`(`I`,#`123`) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -400,7 +400,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12);
 
-            Assert.AreEqual("{: >: { distance(i,#123,12) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `distance`(`I`,#`123`,12) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -418,7 +418,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12.6);
 
-            Assert.AreEqual("{: >: { distance(i,#123,12.6) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { `distance`(`I`,#`123`,12.6) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
     }
 }

@@ -1,7 +1,11 @@
-﻿namespace SymOntoClay.BaseTestLib
+﻿using NLog;
+
+namespace SymOntoClay.BaseTestLib
 {
     public class BehaviorTestEngineInstanceWithTimeoutBasedOnlyLogHandlerCase1 : BaseBehaviorTestEngineInstance
     {
+        private static readonly Logger _globalLogger = LogManager.GetCurrentClassLogger();
+
         public BehaviorTestEngineInstanceWithTimeoutBasedOnlyLogHandlerCase1(string fileContent,
             object platformListener,
             Action<int, string> logHandler,
@@ -14,7 +18,10 @@
             List<string> categories)
             : base(fileContent, rootDir, useStandardLibrary, enableNLP, enableCategories, categories)
         {
-
+#if DEBUG
+            _globalLogger.Info($"fileContent = {fileContent}");
+            _globalLogger.Info($"htnIterationsMaxCount = {htnIterationsMaxCount}");
+#endif
 
             _platformListener = platformListener;
             _logHandler = logHandler;
@@ -39,6 +46,9 @@
                     _logHandler(n, message);
                 },
                 errorMsg => {
+#if DEBUG
+                    _globalLogger.Info($"errorMsg = {errorMsg}");
+#endif
                     result = false;
                 },
                 _platformListener,

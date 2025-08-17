@@ -252,7 +252,7 @@ namespace SymOntoClay.BaseTestLib
             factorySettings.ThreadingSettings = ConfigureThreadingSettings();
 
 #if DEBUG
-            //_logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");
+            _logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");
 #endif
 
             if (htnPlanExecutionIterationsMaxCount.HasValue)
@@ -300,6 +300,10 @@ namespace SymOntoClay.BaseTestLib
             CreateWorld(logChannel, error, loggedTestHostListener != null);
 
             var npc = CreateNPC(_projectName, platformListener, htnPlanExecutionIterationsMaxCount);
+
+#if DEBUG
+            _logger.Info($"npc.Id = {npc.Id}");
+#endif
 
             StartWorld();
 

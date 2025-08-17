@@ -39,6 +39,10 @@ namespace SymOntoClay.BaseTestLib
 {
     public static class UnityTestEngineContextFactory
     {
+#if DEBUG
+        private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         public static string CreateRootDir()
         {
             var rootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), $"TstTempProjects_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
@@ -287,6 +291,10 @@ namespace SymOntoClay.BaseTestLib
         public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)
         {
             var settings = CreateWorldSettings(factorySettings);
+
+#if DEBUG
+            _logger.Info($"settings = {settings}");
+#endif
 
             return CreateWorld(settings);
         }

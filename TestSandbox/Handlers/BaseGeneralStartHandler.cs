@@ -31,6 +31,10 @@ namespace TestSandbox.Handlers
 {
     public abstract class BaseGeneralStartHandler: IDisposable
     {
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         protected BaseGeneralStartHandler()
             : this(new UnityTestEngineContextFactorySettings())
         {
@@ -38,6 +42,10 @@ namespace TestSandbox.Handlers
 
         protected BaseGeneralStartHandler(UnityTestEngineContextFactorySettings factorySettings)
         {
+#if DEBUG
+            _globalLogger.Info($"factorySettings = {factorySettings}");
+#endif
+
             _world = TstEngineContextHelper.CreateWorld(factorySettings);
         }
 

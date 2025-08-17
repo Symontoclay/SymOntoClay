@@ -48,7 +48,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var endPointsList = new List<IEndpointInfo>();
 
-            var endPointName = NameHelper.UnShieldString(command.Name.NameValue);
+            var endPointName = NameHelper.UnShieldString(command.Name.NameValue).ToLower();
 
 #if DEBUG
             Info("4AE25975-C786-4A77-9A2D-53BFC95D78F7", $"endPointName = {endPointName}");
@@ -60,12 +60,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             Info("74EC3E96-9D2E-4500-BCFF-201611B8576A", $"paramsCount = {paramsCount}");
 #endif
 
-            var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(endPointName)).Select(p => p.NameValue).ToList();
+            var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(endPointName)).Select(p => p.NameValue.ToLower()).ToList();
 
             logger.SystemExpr("69BD7A53-01CC-4105-A37D-BE674676622A", callMethodId, nameof(paramsCount), paramsCount);
 
+#if DEBUG
+            Info("57203E59-2511-429B-9F22-6A4164300B76", $"endpointsRegistries.Count = {endpointsRegistries.Count}");
+#endif
+
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
+#if DEBUG
+                Info("3ED94741-E2D2-4D4D-961B-29D2B3B67897", $"endpointsRegistry.GetType().FullName = {endpointsRegistry.GetType().FullName}");
+#endif
+
                 var targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(endPointName, paramsCount);
 
 #if DEBUG
@@ -93,6 +101,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             endPointsList = endPointsList.Where(p => p != null).Distinct().ToList();
 
+#if DEBUG
+            Info("749E7C2E-A164-4C6F-9926-6F04D0E9C9FC", $"endPointsList?.Count = {endPointsList?.Count}");
+#endif
+
             if (endPointsList == null)
             {
                 logger.EndHostMethodResolving("ECCFFB47-7D66-4739-93AC-D006CBAF0570", callMethodId);
@@ -100,7 +112,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 return null;
             }
 
-            if(endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall))
+#if DEBUG
+            Info("39A8E292-9722-4724-B4F1-AEC71F5B541E", $"endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall) = {endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall)}");
+#endif
+
+            if (endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall))
             {
                 var result = endPointsList.FirstOrDefault(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall);
 

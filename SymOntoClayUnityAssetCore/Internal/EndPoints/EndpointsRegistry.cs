@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -43,7 +44,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private readonly object _lockObj = new object();
         private readonly Dictionary<string, Dictionary<int, List<IEndpointInfo>>> _endPointsDict = new Dictionary<string, Dictionary<int, List<IEndpointInfo>>>();
-        private IEndpointInfo _generallCallEndPoint;
+        private IEndpointInfo _generalCallEndPoint;
 
         public void AddEndpointsRange(IList<IEndpointInfo> platformEndpointsList)
         {
@@ -60,13 +61,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
-                _generallCallEndPoint = endpointInfo;
+                _generalCallEndPoint = endpointInfo;
                 return;
             }
 
             var endPointName = endpointInfo.Name;
 
             var paramsCountList = GetParamsCountList(endpointInfo);
+
+#if DEBUG
+            Info("81F7F3DA-D8F8-4842-B86C-D6AA7A6F7289", $"endPointName = {endPointName}");
+            Info("6C820B35-758F-4435-8CD2-FC72EC7002C6", $"paramsCountList.Count = {paramsCountList.Count}");
+#endif
 
             lock (_lockObj)
             {
@@ -84,6 +90,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 foreach (var count in paramsCountList)
                 {
+#if DEBUG
+                    Info("6110A866-1B26-40E0-A777-5BD44421C89C", $"count = {count}");
+#endif
+
                     List<IEndpointInfo> targetList = null;
 
                     if (targetDict.ContainsKey(count))
@@ -111,8 +121,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var argumentsList = endpointInfo.Arguments;
 
 #if DEBUG
-            //Info("FA4480A1-55F6-46A8-ADC0-860786DEC851", $"endpointInfo.Name = {endpointInfo.Name}");
-            //Info("6ECA534D-4E3D-4F6A-BD6E-6E5DE360AC33", $"argumentsList = {argumentsList.WriteListToString()}");
+            Info("FA4480A1-55F6-46A8-ADC0-860786DEC851", $"endpointInfo.Name = {endpointInfo.Name}");
+            Info("6ECA534D-4E3D-4F6A-BD6E-6E5DE360AC33", $"argumentsList = {argumentsList.WriteListToString()}");
 #endif
 
             if (!argumentsList.Any())
@@ -141,11 +151,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public IList<IEndpointInfo> GetEndpointsInfoListDirectly(string endPointName, int paramsCount)
         {
+#if DEBUG
+            Info("C1DCB857-E717-4E3E-AB24-B47A880C7DC4", $"endPointName = {endPointName}");
+            Info("A21F77D3-BC62-4EDB-B711-BCC9FB673A31", $"paramsCount = {paramsCount}");
+#endif
+
             lock (_lockObj)
             {
                 if (_endPointsDict.ContainsKey(endPointName))
                 {
                     var targetDict = _endPointsDict[endPointName];
+
+#if DEBUG
+                    Info("68495F0D-90BB-4B06-843D-65E1DF8EFB55", $"targetDict?.Count = {targetDict?.Count}");
+#endif
 
                     if (targetDict.ContainsKey(paramsCount))
                     {
@@ -153,7 +172,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
                 }
 
-                return new List<IEndpointInfo> { _generallCallEndPoint };
+                return new List<IEndpointInfo> { _generalCallEndPoint };
             }
         }
     }

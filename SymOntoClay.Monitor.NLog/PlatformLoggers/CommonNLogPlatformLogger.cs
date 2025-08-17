@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using System;
 
 namespace SymOntoClay.Monitor.NLog.PlatformLoggers
 {
@@ -44,6 +45,8 @@ namespace SymOntoClay.Monitor.NLog.PlatformLoggers
         [MethodForLoggingSupport]
         public void WriteLnRawOutput(string message)
         {
+            //throw new NotImplementedException(message);
+
             _logger.Info(message);
         }
 

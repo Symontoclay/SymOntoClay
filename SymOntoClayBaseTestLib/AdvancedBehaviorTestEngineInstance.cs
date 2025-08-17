@@ -229,7 +229,7 @@ namespace SymOntoClay.BaseTestLib
         public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings advancedBehaviorTestEngineInstanceSettings, int? htnPlanExecutionIterationsMaxCount)
         {
 #if DEBUG
-            _logger.Info($"platformListener?.GetType()?.FullName = {platformListener?.GetType()?.FullName}");
+            //_logger.Info($"platformListener?.GetType()?.FullName = {platformListener?.GetType()?.FullName}");
 #endif
 
             var logicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
@@ -256,7 +256,7 @@ namespace SymOntoClay.BaseTestLib
             factorySettings.ThreadingSettings = ConfigureThreadingSettings();
 
 #if DEBUG
-            _logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");
+            //_logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");
 #endif
 
             if (htnPlanExecutionIterationsMaxCount.HasValue)
@@ -304,13 +304,13 @@ namespace SymOntoClay.BaseTestLib
             CreateWorld(logChannel, error, loggedTestHostListener != null);
 
 #if DEBUG
-            _logger.Info($"platformListener == null = {platformListener == null}");
+            //_logger.Info($"platformListener == null = {platformListener == null}");
 #endif
 
             var npc = CreateNPC(_projectName, platformListener, htnPlanExecutionIterationsMaxCount);
 
 #if DEBUG
-            _logger.Info($"npc.Id = {npc.Id}");
+            //_logger.Info($"npc.Id = {npc.Id}");
 #endif
 
             StartWorld();

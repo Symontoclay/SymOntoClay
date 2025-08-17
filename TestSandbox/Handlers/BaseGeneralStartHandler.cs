@@ -43,7 +43,7 @@ namespace TestSandbox.Handlers
         protected BaseGeneralStartHandler(UnityTestEngineContextFactorySettings factorySettings)
         {
 #if DEBUG
-            _globalLogger.Info($"factorySettings = {factorySettings}");
+            //_globalLogger.Info($"factorySettings = {factorySettings}");
 #endif
 
             _world = TstEngineContextHelper.CreateWorld(factorySettings);

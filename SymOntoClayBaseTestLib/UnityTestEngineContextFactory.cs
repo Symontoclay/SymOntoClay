@@ -229,13 +229,17 @@ namespace SymOntoClay.BaseTestLib
 
             settings.StandardFactsBuilder = new StandardFactsBuilder();
 
-            /*var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+#if DEBUG
+            //_logger.Info($"monitorMessagesDir = {monitorMessagesDir}");
+#endif
+
+            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 MessagesDir = monitorMessagesDir,
                 Enable = true
-            };*/
+            };
 
-            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+            /*var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 Enable = true,
                 MessagesDir = monitorMessagesDir,
@@ -296,7 +300,7 @@ namespace SymOntoClay.BaseTestLib
                     EnableError = true,
                     EnableFatal = true
                 }
-            };
+            };*/
 
             if (factorySettings.PlatformLogger == null)
             {
@@ -311,10 +315,11 @@ namespace SymOntoClay.BaseTestLib
             }
 
 #if DEBUG
-            monitorSettings.PlatformLoggers.Add(CommonNLogPlatformLogger.Instance);
+            //monitorSettings.PlatformLoggers.Add(CommonNLogPlatformLogger.Instance);
 #endif
 
             settings.Monitor = new TestMonitor(monitorSettings);
+            //settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
 
             settings.ThreadingSettings = factorySettings.ThreadingSettings;
 
@@ -355,13 +360,13 @@ namespace SymOntoClay.BaseTestLib
         public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)
         {
 #if DEBUG
-            _logger.Info($"factorySettings = {factorySettings}");
+            //_logger.Info($"factorySettings = {factorySettings}");
 #endif
 
             var settings = CreateWorldSettings(factorySettings);
 
 #if DEBUG
-            _logger.Info($"settings = {settings}");
+            //_logger.Info($"settings = {settings}");
 #endif
 
             return CreateWorld(settings);
@@ -393,7 +398,7 @@ namespace SymOntoClay.BaseTestLib
         public static HumanoidNPCSettings CreateHumanoidNPCSettings(UnityTestEngineContextFactorySettings factorySettings)/*string logicFile, object platformListener, Vector3 currentAbsolutePosition*/
         {
 #if DEBUG
-            _logger.Info($"factorySettings = {factorySettings}");
+            //_logger.Info($"factorySettings = {factorySettings}");
 #endif
 
             var npcSettings = new HumanoidNPCSettings();
@@ -406,7 +411,7 @@ namespace SymOntoClay.BaseTestLib
             }
 
 #if DEBUG
-            _logger.Info($"factorySettings?.HostListener?.GetType()?.FullName = {factorySettings?.HostListener?.GetType()?.FullName}");
+            //_logger.Info($"factorySettings?.HostListener?.GetType()?.FullName = {factorySettings?.HostListener?.GetType()?.FullName}");
 #endif
 
             if (factorySettings.HostListener == null)
@@ -448,7 +453,7 @@ namespace SymOntoClay.BaseTestLib
             var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
 #if DEBUG
-            _logger.Info($"npcSettings = {npcSettings}");
+            //_logger.Info($"npcSettings = {npcSettings}");
 #endif
 
             return CreateHumanoidNPC(world, npcSettings);
@@ -468,7 +473,7 @@ namespace SymOntoClay.BaseTestLib
             }
 
 #if DEBUG
-            _logger.Info($"loggedTestHostListener == null = {loggedTestHostListener == null}");
+            //_logger.Info($"loggedTestHostListener == null = {loggedTestHostListener == null}");
 #endif
 
             loggedTestHostListener?.SetLogger(npc.Logger);

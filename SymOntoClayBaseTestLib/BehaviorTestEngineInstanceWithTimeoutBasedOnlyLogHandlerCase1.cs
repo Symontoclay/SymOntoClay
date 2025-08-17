@@ -19,9 +19,9 @@ namespace SymOntoClay.BaseTestLib
             : base(fileContent, rootDir, useStandardLibrary, enableNLP, enableCategories, categories)
         {
 #if DEBUG
-            _globalLogger.Info($"fileContent = {fileContent}");
-            _globalLogger.Info($"htnIterationsMaxCount = {htnIterationsMaxCount}");
-            _globalLogger.Info($"platformListener == null = {platformListener == null}");
+            //_globalLogger.Info($"fileContent = {fileContent}");
+            //_globalLogger.Info($"htnIterationsMaxCount = {htnIterationsMaxCount}");
+            //_globalLogger.Info($"platformListener == null = {platformListener == null}");
 #endif
 
             _platformListener = platformListener;
@@ -48,7 +48,7 @@ namespace SymOntoClay.BaseTestLib
                 },
                 errorMsg => {
 #if DEBUG
-                    _globalLogger.Info($"errorMsg = {errorMsg}");
+                    //_globalLogger.Info($"errorMsg = {errorMsg}");
 #endif
                     result = false;
                 },

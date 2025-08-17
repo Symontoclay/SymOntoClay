@@ -39,8 +39,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             [EndpointParam("Direction", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)
         {
-            logger.Info("A2B71D45-A737-4373-86F1-2EC439E91767", $"GoToImpl_2");
-            logger.Info("64221C25-E5EB-4C10-85AF-C30AE8A365C2", point.ToString());
+            logger.Output("A2B71D45-A737-4373-86F1-2EC439E91767", $"GoToImpl_2");
+            logger.Output("64221C25-E5EB-4C10-85AF-C30AE8A365C2", point.ToString());
         }
     }
 }

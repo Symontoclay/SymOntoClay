@@ -1150,6 +1150,10 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"_monitorLoggerImpl?.GetType()?.FullName = {_monitorLoggerImpl?.GetType()?.FullName}");
+#endif
+
             _monitorLoggerImpl.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 

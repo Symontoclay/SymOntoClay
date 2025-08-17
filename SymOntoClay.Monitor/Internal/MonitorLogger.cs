@@ -3720,6 +3720,10 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
+#if DEBUG
+            //_globalLogger.Info($"_platformLoggers.Count = {_platformLoggers.Count}");
+#endif
+
             if (_platformLoggers.Any())
             {
                 foreach (var platformLogger in _platformLoggers)

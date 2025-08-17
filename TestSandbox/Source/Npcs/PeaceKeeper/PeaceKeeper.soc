@@ -1,7 +1,18 @@
-﻿app PeaceKeeper
+﻿app PeaceKeeper is [0.5] exampleClass
 {
     on Enter =>
-    {       
-        @@host.go(to: #123);
+    {
+        'Begin' >> @>log;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        set exampleClass is [0.5] human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        set exampleClass is not human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        set @@self is linux;
+        @@self is linux >> @>log;
+        'End' >> @>log;
     }
-}
+} 

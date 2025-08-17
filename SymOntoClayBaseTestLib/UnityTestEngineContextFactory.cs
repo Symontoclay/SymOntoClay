@@ -371,6 +371,10 @@ namespace SymOntoClay.BaseTestLib
         {
             var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
+#if DEBUG
+            _logger.Info($"npcSettings = {npcSettings}");
+#endif
+
             return CreateHumanoidNPC(world, npcSettings);
         }
 

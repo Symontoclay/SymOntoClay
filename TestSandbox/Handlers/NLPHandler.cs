@@ -65,7 +65,7 @@ namespace TestSandbox.Handlers
         private readonly IEngineContext _engineContext;
         private readonly INLPConverter _converter;
         private readonly IWordsDict _wordsDict;
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public void Run()
         {

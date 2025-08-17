@@ -87,7 +87,7 @@ namespace SymOntoClay.BaseTestLib
             _enableNLP = enableNLP;
             _useStandardLibrary = useStandardLibrary;
             _testDir = UnityTestEngineContextFactory.CreateTestDir(rootDir);
-
+            
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { CreateOnlyWorldspace = true, ProjectName = _projectName };
 
             var wSpaceFile = WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings,

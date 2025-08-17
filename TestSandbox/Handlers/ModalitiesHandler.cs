@@ -24,16 +24,9 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
@@ -48,7 +41,7 @@ namespace TestSandbox.Handlers
         }
 
         private readonly IEngineContext _engineContext;
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public void Run()
         {

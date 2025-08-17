@@ -20,25 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.DefaultCLIEnvironment;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using TestSandbox.CoreHostListener;
-using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.UnityAsset.Core;
+using System.IO;
+using TestSandbox.CoreHostListener;
 
 namespace TestSandbox.MonoBehaviorTesting
 {
     public class TstHumanoidNPC: TstMonoBehaviour
     {
-        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         private IHumanoidNPC _npc;
         private string _id;

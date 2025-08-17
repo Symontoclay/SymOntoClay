@@ -24,15 +24,8 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using TestSandbox.CoreHostListener;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {

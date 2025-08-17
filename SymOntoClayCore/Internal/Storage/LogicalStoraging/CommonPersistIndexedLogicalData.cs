@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
         public CommonPersistIndexedLogicalData()
-            : this(MonitorLoggerNLogImpementation.Instance)
+            : this(MonitorLoggerNLogImplementation.Instance)
         {
         }
 

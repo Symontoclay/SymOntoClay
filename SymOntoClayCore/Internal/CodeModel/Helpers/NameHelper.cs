@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class NameHelper
     {
-        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        private static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
 
         public static string GetNewEntityNameString()
         {

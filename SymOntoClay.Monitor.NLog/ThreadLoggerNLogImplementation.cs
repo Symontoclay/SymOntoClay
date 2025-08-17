@@ -28,9 +28,9 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    public class ThreadLoggerNLogImpementation: MonitorLoggerNLogImpementation, IThreadLogger
+    public class ThreadLoggerNLogImplementation: MonitorLoggerNLogImplementation, IThreadLogger
     {
-        public ThreadLoggerNLogImpementation(Logger logger)
+        public ThreadLoggerNLogImplementation(Logger logger)
             : base(logger)
         {
         }

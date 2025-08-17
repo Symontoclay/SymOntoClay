@@ -75,7 +75,7 @@ namespace TestSandbox
 {
     class Program
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -133,7 +133,7 @@ namespace TestSandbox
             //TstAdvancedTestRunner();//<=
             //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
-            //TstTestRunnerWithHostListener();//<=t
+            TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstRunMinimalInstanceTests();//<----------------------------
             //TstNameHelper();
@@ -177,7 +177,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1422,20 +1422,21 @@ action Go
             var text = @"app PeaceKeeper
 {
     on Enter =>
-    {
-        'Begin' >> @>log;
-        @@host.`rotate`~(30)[:on complete { 'on complete' >> @>log; } :];
-        'End' >> @>log;
+    {       
+        @@host.go(to: #123);
     }
 }";
 
             //var hostListener = new HostMethods_Tests_HostListener();
-            var hostListener = new FullGeneralized_Tests_HostListener();
+            //var hostListener = new FullGeneralized_Tests_HostListener();
+            var hostListener = new Exec_Tests_HostListener2();
 
-            BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
+            var result = BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
                     _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = '{message}'");
                 }, hostListener);
+
+            _logger.Info("C2F7E3A5-62D1-4A51-8077-60D354BE8B96", $"result = {result}");
 
             _logger.Info("8E6AB0DB-9DAD-47AE-83BB-89421B778775", "End");
         }

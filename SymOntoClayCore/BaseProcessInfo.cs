@@ -44,7 +44,7 @@ namespace SymOntoClay.Core
         IOnFinishProcessInfoHandler,
         IBaseProcessInfoSerializedEventsHandler
     {
-        protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        protected static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
         
         protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
         {

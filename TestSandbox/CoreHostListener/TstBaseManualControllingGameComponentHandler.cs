@@ -24,26 +24,21 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
 using SymOntoClay.DefaultCLIEnvironment;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
-using System.Text;
-using System.Threading;
-using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using TestSandbox.Helpers;
 
 namespace TestSandbox.CoreHostListener
 {
     public class TstBaseManualControllingGameComponentHandler
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public void Run()
         {

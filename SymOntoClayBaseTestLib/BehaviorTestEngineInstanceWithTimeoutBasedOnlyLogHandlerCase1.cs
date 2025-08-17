@@ -14,6 +14,8 @@
             List<string> categories)
             : base(fileContent, rootDir, useStandardLibrary, enableNLP, enableCategories, categories)
         {
+
+
             _platformListener = platformListener;
             _logHandler = logHandler;
             _timeoutToEnd = timeoutToEnd;

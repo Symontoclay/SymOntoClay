@@ -20,23 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using System;
-using System.Collections.Generic;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
-using SymOntoClay.Common.DebugHelpers;
+using TestSandbox.Helpers;
 
 namespace TestSandbox.Handlers
 {
     public class InheritanceItemsHandler
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public void Run()
         {

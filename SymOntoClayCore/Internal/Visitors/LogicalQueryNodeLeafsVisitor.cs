@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Visitors
     public class LogicalQueryNodeLeavesVisitor : BaseLoggedComponent, ILogicalVisitor
     {
         public LogicalQueryNodeLeavesVisitor()
-            : this(MonitorLoggerNLogImpementation.Instance)
+            : this(MonitorLoggerNLogImplementation.Instance)
         {
         }
 

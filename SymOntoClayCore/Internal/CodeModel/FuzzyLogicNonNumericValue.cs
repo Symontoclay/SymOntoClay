@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class FuzzyLogicNonNumericValue : AnnotatedItem
     {
-        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        private static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
 
         public StrongIdentifierValue Name { get; set; }
         public IFuzzyLogicMemberFunctionHandler Handler { get; set; }

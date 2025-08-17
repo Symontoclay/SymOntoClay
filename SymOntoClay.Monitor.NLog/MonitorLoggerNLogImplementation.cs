@@ -27,26 +27,23 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    public class MonitorLoggerNLogImpementation: Disposable, IMonitorLogger
+    public class MonitorLoggerNLogImplementation: Disposable, IMonitorLogger
     {
         /// <summary>
         /// Gets default instance of the class.
         /// </summary>
-        public static MonitorLoggerNLogImpementation Instance = new MonitorLoggerNLogImpementation();
+        public static MonitorLoggerNLogImplementation Instance = new MonitorLoggerNLogImplementation();
 
-        public MonitorLoggerNLogImpementation()
+        public MonitorLoggerNLogImplementation()
             : this(LogManager.GetCurrentClassLogger())
         {
         }
 
-        public MonitorLoggerNLogImpementation(Logger logger)
+        public MonitorLoggerNLogImplementation(Logger logger)
         {
             _logger = logger;
         }

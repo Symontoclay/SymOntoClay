@@ -26,6 +26,7 @@ using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Monitor.NLog.PlatformLoggers;
 using SymOntoClay.NLP;
 using SymOntoClay.ProjectFiles;
 using SymOntoClay.SoundBuses;
@@ -34,13 +35,12 @@ using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Helpers
 {
     public static class TstEngineContextHelper
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
@@ -208,7 +208,7 @@ namespace TestSandbox.Helpers
             {
                 if(factorySettings.UseDefaultPlatformLogger)
                 {
-                    monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance };
+                    monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogPlatformLogger.Instance };
                 }
             }
 

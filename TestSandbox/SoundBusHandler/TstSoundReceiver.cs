@@ -20,29 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.StandardFacts;
-using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.SoundBusHandler
 {
     public class TstSoundReceiver: BaseSoundReceiverComponent
     {
         public TstSoundReceiver(int instanceId, Vector3 position)
-            : base(new MonitorLoggerNLogImpementation(), instanceId, new StandardFactsBuilder())
+            : base(new MonitorLoggerNLogImplementation(), instanceId, new StandardFactsBuilder())
         {
             _instanceId = instanceId;
             _position = position;

@@ -32,11 +32,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
-using TestSandbox.PlatformImplementations;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Threading;
+using SymOntoClay.Monitor.NLog.PlatformLoggers;
 
 namespace TestSandbox.Handlers
 {
@@ -158,7 +158,7 @@ namespace TestSandbox.Handlers
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false,
-                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance },
+                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogPlatformLogger.Instance },
                 EnableFullCallInfo = true,
                 Features = new MonitorFeatures
                 {

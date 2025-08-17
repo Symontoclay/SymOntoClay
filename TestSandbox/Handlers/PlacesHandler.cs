@@ -21,19 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.BaseTestLib.HostListeners;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using TestSandbox.CoreHostListener;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {

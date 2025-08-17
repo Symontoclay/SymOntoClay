@@ -24,6 +24,8 @@ using SymOntoClay.BaseTestLib.Monitoring;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Monitor.NLog.PlatformLoggers;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.ProjectFiles;
@@ -239,6 +241,10 @@ namespace SymOntoClay.BaseTestLib
             {
                 monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
             }
+
+#if DEBUG
+            monitorSettings.PlatformLoggers.Add(CommonNLogPlatformLogger.Instance);
+#endif
 
             settings.Monitor = new TestMonitor(monitorSettings);
 

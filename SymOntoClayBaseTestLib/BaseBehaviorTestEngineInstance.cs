@@ -25,7 +25,7 @@ namespace SymOntoClay.BaseTestLib
                     Categories = categories
                 };
             }
-
+            
             _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir, enableNLP, useStandardLibrary, advancedBehaviorTestEngineInstanceSettings);
             _internalInstance.WriteFile(fileContent);
         }

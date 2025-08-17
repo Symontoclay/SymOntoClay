@@ -20,15 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.NLog;
 using SymOntoClay.UnityAsset.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.CoreHostListener
 {

@@ -41,7 +41,7 @@ namespace TestSandbox.Handlers
             _world = TstEngineContextHelper.CreateWorld(factorySettings);
         }
 
-        protected static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        protected static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         protected IWorld _world;
         protected IHumanoidNPC _npc;

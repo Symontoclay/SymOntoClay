@@ -20,8 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.UnityAsset.Core;
@@ -29,14 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.MonoBehaviorTesting
 {
     public class TstRayScaner : IVisionProvider
     {
-        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public TstRayScaner()
         {

@@ -22,19 +22,11 @@ SOFTWARE.*/
 
 using Newtonsoft.Json;
 using SymOntoClay.Core;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.NLog;
 using SymOntoClay.UnityAsset.Core;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Numerics;
-using System.Text;
 using System.Threading;
-using System.Xml.Linq;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.CoreHostListener
 {

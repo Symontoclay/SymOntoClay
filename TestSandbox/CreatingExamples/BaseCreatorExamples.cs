@@ -20,31 +20,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.BaseTestLib;
+using SymOntoClay.Core;
+using SymOntoClay.DefaultCLIEnvironment;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
+using SymOntoClay.ProjectFiles;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.World;
-using SymOntoClay.DefaultCLIEnvironment;
-using SymOntoClay.ProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using TestSandbox.PlatformImplementations;
-using SymOntoClay.BaseTestLib;
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.NLog;
-using SymOntoClay.Core;
-using SymOntoClay.Threading;
 
 namespace TestSandbox.CreatingExamples
 {
     public abstract class BaseCreatorExamples: IDisposable
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         protected BaseCreatorExamples()
             : this(new BaseCreatorExamplesOptions())

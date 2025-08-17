@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
 {
     public abstract class BaseFuzzyLogicMemberFunctionHandler: IFuzzyLogicMemberFunctionHandler
     {
-        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        private static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
 
         protected BaseFuzzyLogicMemberFunctionHandler(double a, double b)
             : this(KindOfDefuzzification.CoG, a, b)

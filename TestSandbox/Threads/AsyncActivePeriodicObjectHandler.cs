@@ -30,7 +30,7 @@ namespace TestSandbox.Threads
 {
     public class AsyncActivePeriodicObjectHandler
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public void Run()
         {

@@ -23,23 +23,18 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core.Internal.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
     public class StandardFactsBuilderGetTargetVarNameHandler
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public void Run()
         {

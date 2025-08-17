@@ -28,21 +28,18 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Parsing.Internal;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.LogicalDatabase
 {
     public class LogicalDatabaseHandler
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
         private readonly ComplexTestEngineContext _genericContext;
         private readonly IEngineContext _context;
 

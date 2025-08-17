@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public static class ConverterToNormalized
     {
-        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        private static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
 
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options)
         {

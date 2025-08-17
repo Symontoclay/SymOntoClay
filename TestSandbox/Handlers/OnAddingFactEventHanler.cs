@@ -23,21 +23,11 @@ SOFTWARE.*/
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
@@ -51,7 +41,7 @@ namespace TestSandbox.Handlers
             _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
         }
 
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
         private readonly IEngineContext _engineContext;
 
         //event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;

@@ -15,7 +15,7 @@
             var testInstance = builder.CreateMinimalInstance(fileContent, logHandler);
             return testInstance.Run();
         }
-
+        
         public static bool RunMinimalInstanceTimeoutBased(string fileContent, Action<string> logHandler)
         {
             var builder = new BehaviorTestEngineInstanceBuilder();

@@ -20,27 +20,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.Core;
 using SymOntoClay.DefaultCLIEnvironment;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Monitor.NLog.PlatformLoggers;
+using SymOntoClay.SoundBuses;
+using SymOntoClay.Threading;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using TestSandbox.CoreHostListener;
-using TestSandbox.PlatformImplementations;
-using SymOntoClay.SoundBuses;
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.NLog;
-using SymOntoClay.Core;
-using SymOntoClay.Threading;
 using System.Threading;
 
 namespace TestSandbox.MonoBehaviorTesting
 {
     public class TstWord: TstMonoBehaviour
     {
-        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         private IWorld _world;
 
@@ -89,7 +86,7 @@ namespace TestSandbox.MonoBehaviorTesting
             settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
                 MessagesDir = monitorMessagesDir,
-                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance, CommonNLogLogger.Instance },
+                PlatformLoggers = new List<IPlatformLogger>() { ConsolePlatformLogger.Instance, CommonNLogPlatformLogger.Instance },
                 Enable = true
             });
 

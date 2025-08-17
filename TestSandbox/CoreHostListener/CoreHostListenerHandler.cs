@@ -24,27 +24,20 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
-using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters;
 using SymOntoClay.DefaultCLIEnvironment;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Threading;
-using System.Threading.Tasks;
-using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
+using System.Collections.Generic;
+using System.Threading;
+using TestSandbox.Helpers;
 
 namespace TestSandbox.CoreHostListener
 {
     public class CoreHostListenerHandler
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
         public void Run()
         {

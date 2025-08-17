@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2024 Sergiy Tolkachov
 
@@ -20,76 +20,64 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.UnityAsset.Core;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TestSandbox.PlatformImplementations
+namespace SymOntoClay.Monitor.NLog.PlatformLoggers
 {
-    public class CommonNLogLogger : IPlatformLogger
+    public class ConsolePlatformLogger : IPlatformLogger
     {
-        private static readonly CommonNLogLogger __instance = new CommonNLogLogger();
-        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly ConsolePlatformLogger __instance = new ConsolePlatformLogger();
 
         /// <summary>
         /// Gets instance of the class.
         /// </summary>
-        public static CommonNLogLogger Instance => __instance;
+        public static ConsolePlatformLogger Instance => __instance;
 
-        private CommonNLogLogger()
+        private ConsolePlatformLogger()
         {
         }
 
         /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void WriteLnRawOutput(string message)
         {
-            _logger.Info(message);
+            Console.WriteLine(message);
         }
 
         /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void WriteLnRawTrace(string messagePointId, string message)
         {
-            _logger.Trace($"{messagePointId} {message}");
+            Console.WriteLine($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void WriteLnRawDebug(string messagePointId, string message)
         {
-            _logger.Debug($"{messagePointId} {message}");
+            Console.WriteLine($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void WriteLnRawInfo(string messagePointId, string message)
         {
-            _logger.Info($"{messagePointId} {message}");
+            Console.WriteLine($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void WriteLnRawWarn(string messagePointId, string message)
         {
-            _logger.Warn($"{messagePointId} {message}");
+            Console.WriteLine($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void WriteLnRawError(string messagePointId, string message)
         {
-            _logger.Error($"{messagePointId} {message}");
+            Console.WriteLine($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void WriteLnRawFatal(string messagePointId, string message)
         {
-            _logger.Fatal($"{messagePointId} {message}");
+            Console.WriteLine($"{messagePointId} {message}");
         }
     }
 }

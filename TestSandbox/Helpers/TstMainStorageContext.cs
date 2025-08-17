@@ -23,19 +23,15 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.NLog;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Helpers
 {
     public class TstMainStorageContext : MainStorageContext
     {
         public TstMainStorageContext()
-            : base(new MonitorNodeNLogImpementation())
+            : base(new MonitorNodeNLogImplementation())
         {
             var baseContextComponents = new List<IBaseContextComponent>();
 

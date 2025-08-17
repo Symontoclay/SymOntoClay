@@ -22,29 +22,26 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    public class MonitorNodeNLogImpementation: MonitorLoggerNLogImpementation, IMonitorNode
+    public class MonitorNodeNLogImplementation: MonitorLoggerNLogImplementation, IMonitorNode
     {
-        public MonitorNodeNLogImpementation()
+        public MonitorNodeNLogImplementation()
             : this(LogManager.GetCurrentClassLogger())
         {
         }
 
-        public MonitorNodeNLogImpementation(Logger logger)
+        public MonitorNodeNLogImplementation(Logger logger)
             : base(logger)
         {
             _logger = logger;
-            _threadLogger = new ThreadLoggerNLogImpementation(_logger);
+            _threadLogger = new ThreadLoggerNLogImplementation(_logger);
         }
 
         private readonly Logger _logger;
-        private readonly ThreadLoggerNLogImpementation _threadLogger;
+        private readonly ThreadLoggerNLogImplementation _threadLogger;
 
         /// <inheritdoc/>
         public bool Enable { get; set; }

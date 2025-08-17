@@ -21,15 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.NLog;
+using System;
 
 namespace TestSandbox.CoreHostListener
 {

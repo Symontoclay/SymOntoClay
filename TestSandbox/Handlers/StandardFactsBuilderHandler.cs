@@ -20,28 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.StandardFacts;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
@@ -63,7 +53,7 @@ namespace TestSandbox.Handlers
         }
 
         private readonly IEngineContext _engineContext;
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
         private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         public void Run()

@@ -24,13 +24,8 @@ using NLog;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Parsing.Internal;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.NLog;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TestSandbox.Helpers;
-using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Parsing
 {
@@ -81,7 +76,7 @@ namespace TestSandbox.Parsing
         {
             _logger.Info("Begin");
 
-            var logger = new MonitorLoggerNLogImpementation();
+            var logger = new MonitorLoggerNLogImplementation();
 
             var text = @"app Enemy
 {
@@ -133,7 +128,7 @@ namespace TestSandbox.Parsing
         {
             _logger.Info("Begin");
 
-            var logger = new MonitorLoggerNLogImpementation();
+            var logger = new MonitorLoggerNLogImplementation();
 
             var text = @"app Enemy
 {

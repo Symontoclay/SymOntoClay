@@ -445,7 +445,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryShortMehod_HostListener();
+            var hostListener = new VeryShortMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
@@ -485,7 +485,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryShortMehod_HostListener();
+            var hostListener = new VeryShortMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
@@ -525,7 +525,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryLongMehod_HostListener();
+            var hostListener = new VeryLongMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
@@ -565,7 +565,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryLongMehod_HostListener();
+            var hostListener = new VeryLongMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
@@ -604,7 +604,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryShortMehod_HostListener();
+            var hostListener = new VeryShortMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
@@ -643,7 +643,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryShortMehod_HostListener();
+            var hostListener = new VeryShortMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
@@ -682,7 +682,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryLongMehod_HostListener();
+            var hostListener = new VeryLongMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {
@@ -721,7 +721,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }";
 
-            var hostListener = new VeryLongMehod_HostListener();
+            var hostListener = new VeryLongMethod_HostListener();
 
             Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithPlatformListener(text,
                 (n, message) => {

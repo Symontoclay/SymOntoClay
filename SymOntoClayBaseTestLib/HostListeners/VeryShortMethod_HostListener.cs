@@ -31,7 +31,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.BaseTestLib.HostListeners
 {
-    public class VeryShortMehod_HostListener : BaseHostListener
+    public class VeryShortMethod_HostListener : BaseHostListener
     {
         [DebuggerHidden]
         [BipedEndpoint("SomeVeryShortSilentFun", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]

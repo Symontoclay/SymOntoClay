@@ -433,8 +433,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case4()
         {
-            throw new NotImplementedException("E6282523-A4CA-4609-B741-50C8382F1797");
-
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -473,8 +471,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case4_a()
         {
-            throw new NotImplementedException("8AF38B3D-419F-4CF0-86EF-3C15F811497E");
-
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -513,8 +509,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case5()
         {
-            throw new NotImplementedException("FC9509B1-E536-4E94-A444-D9EB21BE4762");
-
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -565,8 +559,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case5_a()
         {
-            throw new NotImplementedException("90D46784-4E4F-4E4C-A343-84E77B1EDF3D");
-
             var text = @"app PeaceKeeper
 {
     on Enter =>

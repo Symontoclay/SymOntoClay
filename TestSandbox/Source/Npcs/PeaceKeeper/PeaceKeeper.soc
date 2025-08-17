@@ -1,11 +1,7 @@
 ﻿app PeaceKeeper
 {
     on Enter =>
-    {
-        'Begin' >> @>log;
-        var @task = @@host.SomeVeryShortSilentFun~();
-        on @task complete { 'on complete' >> @>log; };
-        wait 1;
-        'End' >> @>log;
+    {       
+        @@host.go(to: #123);
     }
 }

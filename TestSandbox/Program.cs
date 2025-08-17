@@ -1423,7 +1423,9 @@ action Go
 {
     on Enter =>
     {       
+        'Begin' >> @>log;
         @@host.go(to: #123);
+        'End' >> @>log;
     }
 }";
 

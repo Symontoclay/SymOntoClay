@@ -228,6 +228,10 @@ namespace SymOntoClay.BaseTestLib
 
         public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings advancedBehaviorTestEngineInstanceSettings, int? htnPlanExecutionIterationsMaxCount)
         {
+#if DEBUG
+            _logger.Info($"platformListener?.GetType()?.FullName = {platformListener?.GetType()?.FullName}");
+#endif
+
             var logicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
@@ -298,6 +302,10 @@ namespace SymOntoClay.BaseTestLib
             }
 
             CreateWorld(logChannel, error, loggedTestHostListener != null);
+
+#if DEBUG
+            _logger.Info($"platformListener == null = {platformListener == null}");
+#endif
 
             var npc = CreateNPC(_projectName, platformListener, htnPlanExecutionIterationsMaxCount);
 

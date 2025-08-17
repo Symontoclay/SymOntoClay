@@ -21,6 +21,7 @@ namespace SymOntoClay.BaseTestLib
 #if DEBUG
             _globalLogger.Info($"fileContent = {fileContent}");
             _globalLogger.Info($"htnIterationsMaxCount = {htnIterationsMaxCount}");
+            _globalLogger.Info($"platformListener == null = {platformListener == null}");
 #endif
 
             _platformListener = platformListener;

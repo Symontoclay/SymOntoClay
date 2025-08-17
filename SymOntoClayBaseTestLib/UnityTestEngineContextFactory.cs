@@ -24,6 +24,7 @@ using SymOntoClay.BaseTestLib.Monitoring;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Monitor.NLog.PlatformLoggers;
 using SymOntoClay.NLP;
@@ -228,10 +229,73 @@ namespace SymOntoClay.BaseTestLib
 
             settings.StandardFactsBuilder = new StandardFactsBuilder();
 
-            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+            /*var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 MessagesDir = monitorMessagesDir,
                 Enable = true
+            };*/
+
+            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+            {
+                Enable = true,
+                MessagesDir = monitorMessagesDir,
+                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpAlways,
+                //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
+                EnableAddingRemovingFactLoggingInStorages = true,
+                EnableFullCallInfo = true,
+                CancellationToken = factorySettings.CancellationToken,
+                ThreadingSettings = factorySettings.ThreadingSettings.AsyncEvents,
+                Features = new MonitorFeatures
+                {
+                    EnableCallMethod = true,
+                    EnableParameter = true,
+                    EnableEndCallMethod = true,
+                    EnableMethodResolving = true,
+                    EnableEndMethodResolving = true,
+                    EnableActionResolving = true,
+                    EnableEndActionResolving = true,
+                    EnableHostMethodResolving = true,
+                    EnableEndHostMethodResolving = true,
+                    EnableHostMethodActivation = true,
+                    EnableEndHostMethodActivation = true,
+                    EnableHostMethodStarting = true,
+                    EnableEndHostMethodStarting = true,
+                    EnableHostMethodExecution = true,
+                    EnableEndHostMethodExecution = true,
+                    EnableSystemExpr = true,
+                    EnableCodeFrame = true,
+                    EnableLeaveThreadExecutor = true,
+                    EnableGoBackToPrevCodeFrame = true,
+                    EnableStartProcessInfo = true,
+                    EnableCancelProcessInfo = true,
+                    EnableWeakCancelProcessInfo = true,
+                    EnableCancelInstanceExecution = true,
+                    EnableSetExecutionCoordinatorStatus = true,
+                    EnableSetProcessInfoStatus = true,
+                    EnableWaitProcessInfo = true,
+                    EnableRunLifecycleTrigger = true,
+                    EnableDoTriggerSearch = true,
+                    EnableEndDoTriggerSearch = true,
+                    EnableSetConditionalTrigger = true,
+                    EnableResetConditionalTrigger = true,
+                    EnableRunSetExprOfConditionalTrigger = true,
+                    EnableEndRunSetExprOfConditionalTrigger = true,
+                    EnableRunResetExprOfConditionalTrigger = true,
+                    EnableEndRunResetExprOfConditionalTrigger = true,
+                    EnableActivateIdleAction = true,
+
+                    EnableHtn = true,
+
+                    EnableBuildPlan = true,
+
+                    EnableOutput = true,
+                    EnableTrace = true,
+                    EnableDebug = true,
+                    EnableInfo = true,
+                    EnableWarn = true,
+                    EnableError = true,
+                    EnableFatal = true
+                }
             };
 
             if (factorySettings.PlatformLogger == null)
@@ -290,6 +354,10 @@ namespace SymOntoClay.BaseTestLib
 
         public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)
         {
+#if DEBUG
+            _logger.Info($"factorySettings = {factorySettings}");
+#endif
+
             var settings = CreateWorldSettings(factorySettings);
 
 #if DEBUG
@@ -324,6 +392,10 @@ namespace SymOntoClay.BaseTestLib
 
         public static HumanoidNPCSettings CreateHumanoidNPCSettings(UnityTestEngineContextFactorySettings factorySettings)/*string logicFile, object platformListener, Vector3 currentAbsolutePosition*/
         {
+#if DEBUG
+            _logger.Info($"factorySettings = {factorySettings}");
+#endif
+
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = $"#{Guid.NewGuid():D}";
             npcSettings.InstanceId = GetInstanceId();
@@ -332,6 +404,10 @@ namespace SymOntoClay.BaseTestLib
             {
                 npcSettings.LogicFile = factorySettings.NPCAppFile;
             }
+
+#if DEBUG
+            _logger.Info($"factorySettings?.HostListener?.GetType()?.FullName = {factorySettings?.HostListener?.GetType()?.FullName}");
+#endif
 
             if (factorySettings.HostListener == null)
             {
@@ -390,6 +466,10 @@ namespace SymOntoClay.BaseTestLib
             {
                 loggedTestHostListener = platformListener as ILoggedTestHostListener;
             }
+
+#if DEBUG
+            _logger.Info($"loggedTestHostListener == null = {loggedTestHostListener == null}");
+#endif
 
             loggedTestHostListener?.SetLogger(npc.Logger);
 

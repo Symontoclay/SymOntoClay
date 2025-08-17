@@ -724,7 +724,7 @@ action Go
                             return true;
 
                         case 2:
-                            Assert.AreEqual("methodName = 'rotate'", message);
+                            Assert.AreEqual("methodName = '`rotate`'", message);
                             return true;
 
                         case 3:
@@ -953,7 +953,7 @@ action Go
                             return true;
 
                         case 4:
-                            Assert.AreEqual("methodName = 'rotate'", message);
+                            Assert.AreEqual("methodName = '`rotate`'", message);
                             return true;
 
                         case 5:

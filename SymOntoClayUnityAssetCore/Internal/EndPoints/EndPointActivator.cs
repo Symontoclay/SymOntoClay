@@ -58,8 +58,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             logger.HostMethodActivation("D5CAB261-7931-433C-971F-3054EFCF9AC7", callMethodId);
 
 #if DEBUG
-            logger.Info("3F6C3765-C55E-4B68-8B3A-CF9265E495A6", $"endpointInfo = {endpointInfo}");
-            logger.Info("5B55107F-4196-45C3-87E4-13C6C88A9DB8", $"command = {command}");
+            //logger.Info("3F6C3765-C55E-4B68-8B3A-CF9265E495A6", $"endpointInfo = {endpointInfo}");
+            //logger.Info("5B55107F-4196-45C3-87E4-13C6C88A9DB8", $"command = {command}");
 #endif
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -71,20 +71,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var mapParamsResult = MapParams(cancellationToken, logger, endpointInfo, command, context, localContext);
 
 #if DEBUG
-            logger.Info("E2184458-2DA5-4E34-A224-BEA16B24A5F2", $"mapParamsResult.Item2 = {mapParamsResult.Item2.WriteDict_3_ToString()}");
+            //logger.Info("E2184458-2DA5-4E34-A224-BEA16B24A5F2", $"mapParamsResult.Item2 = {mapParamsResult.Item2.WriteDict_3_ToString()}");
 #endif
 
             var paramsList = mapParamsResult.Item1;
 #if DEBUG
-            logger.Info("A9ECBDEC-3FF8-4A8C-9EEE-AA373F917BB4", $"paramsList?.Length = {paramsList?.Length}");
+            //logger.Info("A9ECBDEC-3FF8-4A8C-9EEE-AA373F917BB4", $"paramsList?.Length = {paramsList?.Length}");
 #endif
 
             ThreadTask task = null;
             var processInfo = new PlatformProcessInfo(cancellationTokenSource, context.GetCancellationToken(), context.AsyncEventsThreadPool, context.ActiveObjectContext, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
 
 #if DEBUG
-            logger.Info("F296338E-6DAC-4ED9-AA1E-D0A64DFC3285", $"processInfo != null = {processInfo != null}");
-            logger.Info("BF50C2DF-0D0F-4E01-BCF1-0CA49141CA93", $"endpointInfo.NeedMainThread = {endpointInfo.NeedMainThread}");
+            //logger.Info("F296338E-6DAC-4ED9-AA1E-D0A64DFC3285", $"processInfo != null = {processInfo != null}");
+            //logger.Info("BF50C2DF-0D0F-4E01-BCF1-0CA49141CA93", $"endpointInfo.NeedMainThread = {endpointInfo.NeedMainThread}");
 #endif
 
             if (endpointInfo.NeedMainThread)
@@ -99,7 +99,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             processInfo.SetTask(task);
 
 #if DEBUG
-            logger.Info("88DC782A-6B37-4AF2-A050-C0793E3BCF72", $"NEXT");
+            //logger.Info("88DC782A-6B37-4AF2-A050-C0793E3BCF72", $"NEXT");
 #endif
 
             logger.EndHostMethodActivation("3F85C6A1-3470-44E3-BCEE-A1954E723DDA", callMethodId);
@@ -164,9 +164,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var task = new ThreadTask(() =>
             {
 #if DEBUG
-                logger.Info("9C2487EB-BCCF-4CF2-8F06-EBE4EF8FAC93", $"Begin Run processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
-                logger.Info("26D88473-854F-4CCC-A4AB-604ACCA23A52", $"paramsList?.Length = {paramsList?.Length}");
-                logger.Info("FD4F489C-7DA0-44A2-B8BF-A92EC3984CF6", $"paramsList = {paramsList?.WritePODListToString()}");
+                //logger.Info("9C2487EB-BCCF-4CF2-8F06-EBE4EF8FAC93", $"Begin Run processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
+                //logger.Info("26D88473-854F-4CCC-A4AB-604ACCA23A52", $"paramsList?.Length = {paramsList?.Length}");
+                //logger.Info("FD4F489C-7DA0-44A2-B8BF-A92EC3984CF6", $"paramsList = {paramsList?.WritePODListToString()}");
 #endif
 
                 try
@@ -174,7 +174,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
 
 #if DEBUG
-                    logger.Info("F606E8C6-444B-4B89-8D1E-9DC34F5C1267", $"after Invoke processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
+                    //logger.Info("F606E8C6-444B-4B89-8D1E-9DC34F5C1267", $"after Invoke processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
 #endif
 
                     processInfo.SetStatus(logger, "37907BF0-B51E-4D54-A2C1-21C0F4938965", ProcessStatus.Completed);
@@ -423,7 +423,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private (object[], Dictionary<string, Value>) MapParamsByParametersByDict(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
 #if DEBUG
-            Info("3F464CB3-6258-4E07-B828-9D7EBEE96BAB", $"endpointInfo.KindOfEndpoint = {endpointInfo.KindOfEndpoint}");
+            //Info("3F464CB3-6258-4E07-B828-9D7EBEE96BAB", $"endpointInfo.KindOfEndpoint = {endpointInfo.KindOfEndpoint}");
 #endif
 
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
@@ -435,16 +435,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var argumentsDict = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
 
 #if DEBUG
-            Info("76AC3DC2-41E4-4EF4-8CE3-97521C78A797", $"commandParamsDict.Count = {commandParamsDict.Count}");
-            Info("B899E4D5-15B8-4F4A-86AE-032DBF9A163C", $"argumentsDict.Count = {argumentsDict.Count}");
-            foreach(var tmpCommandParamsDictItem in commandParamsDict)
-            {
-                Info("7BDB88D1-F2CD-4FC8-B3AB-32D26547E088", $"tmpCommandParamsDictItem.Key = {tmpCommandParamsDictItem.Key}");
-            }
-            foreach (var tmpArgumentsDictItem in argumentsDict)
-            {
-                Info("C776E8A4-9E0B-4970-96DC-62D6F3E585A5", $"tmpArgumentsDictItem.Key = {tmpArgumentsDictItem.Key}");
-            }
+            //Info("76AC3DC2-41E4-4EF4-8CE3-97521C78A797", $"commandParamsDict.Count = {commandParamsDict.Count}");
+            //Info("B899E4D5-15B8-4F4A-86AE-032DBF9A163C", $"argumentsDict.Count = {argumentsDict.Count}");
+            //foreach(var tmpCommandParamsDictItem in commandParamsDict)
+            //{
+            //    Info("7BDB88D1-F2CD-4FC8-B3AB-32D26547E088", $"tmpCommandParamsDictItem.Key = {tmpCommandParamsDictItem.Key}");
+            //}
+            //foreach (var tmpArgumentsDictItem in argumentsDict)
+            //{
+            //    Info("C776E8A4-9E0B-4970-96DC-62D6F3E585A5", $"tmpArgumentsDictItem.Key = {tmpArgumentsDictItem.Key}");
+            //}
 #endif
 
             var synonymsResolver = context.DataResolversFactory.GetSynonymsResolver();
@@ -464,7 +464,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 var argumentName = argumentItem.Key;
 
 #if DEBUG
-                Info("B823AE54-A9A9-47ED-A375-2AAD326BF506", $"argumentName = {argumentName}");
+                //Info("B823AE54-A9A9-47ED-A375-2AAD326BF506", $"argumentName = {argumentName}");
 #endif
 
                 var argumentInfo = argumentItem.Value;
@@ -474,7 +474,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 if (commandParamsDict.ContainsKey(argumentName))
                 {
 #if DEBUG
-                    Info("70825EC9-6B24-4008-97C4-250F4AD4F7BF", $"commandParamsDict.ContainsKey(argumentName)");
+                    //Info("70825EC9-6B24-4008-97C4-250F4AD4F7BF", $"commandParamsDict.ContainsKey(argumentName)");
 #endif
 
                     isBound = true;
@@ -502,7 +502,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
 
 #if DEBUG
-                Info("9C2B290C-F27E-4205-BCB5-B3307B8392B2", $"isBound = {isBound}");
+                //Info("9C2B290C-F27E-4205-BCB5-B3307B8392B2", $"isBound = {isBound}");
 #endif
 
                 if (isBound)
@@ -510,15 +510,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var targetCommandValue = commandParamsDict[argumentName];
 
 #if DEBUG
-                    logger.Info("E8CCFC39-9DBF-4EBA-AB0E-BAB7FA30F49D", $"targetCommandValue = {targetCommandValue}");
-                    logger.Info("77C21D0F-8269-46E9-9CBD-8C838AA0009C", $"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
-                    logger.Info("ED69A69F-BD34-445A-9DC3-1E5B9FFBCFBB", $"argumentInfo.ParameterInfo.ParameterType.FullName = {argumentInfo.ParameterInfo.ParameterType.FullName}");
+                    //logger.Info("E8CCFC39-9DBF-4EBA-AB0E-BAB7FA30F49D", $"targetCommandValue = {targetCommandValue}");
+                    //logger.Info("77C21D0F-8269-46E9-9CBD-8C838AA0009C", $"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
+                    //logger.Info("ED69A69F-BD34-445A-9DC3-1E5B9FFBCFBB", $"argumentInfo.ParameterInfo.ParameterType.FullName = {argumentInfo.ParameterInfo.ParameterType.FullName}");
 #endif
 
                     var targetValue = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
 
 #if DEBUG
-                    logger.Info("A308BCFB-3CE4-44DD-8D6A-D11B3281DA72", $"targetValue = {targetValue}");
+                    //logger.Info("A308BCFB-3CE4-44DD-8D6A-D11B3281DA72", $"targetValue = {targetValue}");
 #endif
 
                     resultList.Add(targetValue);
@@ -537,7 +537,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var targetValue = _platformTypesConvertorsRegistry.ConvertToValue(logger, argumentInfo.ParameterInfo.ParameterType, defaultValue, context, localContext);
 
 #if DEBUG
-                    logger.Info("4B521F80-DD63-4CA1-896C-E820C5B35F45", $"targetValue = {targetValue}");
+                    //logger.Info("4B521F80-DD63-4CA1-896C-E820C5B35F45", $"targetValue = {targetValue}");
 #endif
 
                     paramsInfoDict[argumentName] = targetValue;

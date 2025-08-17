@@ -51,13 +51,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var endPointName = NameHelper.UnShieldString(command.Name.NameValue).ToLower();
 
 #if DEBUG
-            Info("4AE25975-C786-4A77-9A2D-53BFC95D78F7", $"endPointName = {endPointName}");
+            //Info("4AE25975-C786-4A77-9A2D-53BFC95D78F7", $"endPointName = {endPointName}");
 #endif
 
             var paramsCount = command.ParamsCount;
 
 #if DEBUG
-            Info("74EC3E96-9D2E-4500-BCFF-201611B8576A", $"paramsCount = {paramsCount}");
+            //Info("74EC3E96-9D2E-4500-BCFF-201611B8576A", $"paramsCount = {paramsCount}");
 #endif
 
             var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(endPointName)).Select(p => p.NameValue.ToLower()).ToList();
@@ -65,19 +65,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             logger.SystemExpr("69BD7A53-01CC-4105-A37D-BE674676622A", callMethodId, nameof(paramsCount), paramsCount);
 
 #if DEBUG
-            Info("57203E59-2511-429B-9F22-6A4164300B76", $"endpointsRegistries.Count = {endpointsRegistries.Count}");
+            //Info("57203E59-2511-429B-9F22-6A4164300B76", $"endpointsRegistries.Count = {endpointsRegistries.Count}");
 #endif
 
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
 #if DEBUG
-                Info("3ED94741-E2D2-4D4D-961B-29D2B3B67897", $"endpointsRegistry.GetType().FullName = {endpointsRegistry.GetType().FullName}");
+                //Info("3ED94741-E2D2-4D4D-961B-29D2B3B67897", $"endpointsRegistry.GetType().FullName = {endpointsRegistry.GetType().FullName}");
 #endif
 
                 var targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(endPointName, paramsCount);
 
 #if DEBUG
-                Info("58426F70-7D09-4946-97A2-9F425BA57650", $"targetEndPointsList?.Count = {targetEndPointsList?.Count}");
+                //Info("58426F70-7D09-4946-97A2-9F425BA57650", $"targetEndPointsList?.Count = {targetEndPointsList?.Count}");
 #endif
 
                 if (targetEndPointsList != null)
@@ -102,7 +102,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             endPointsList = endPointsList.Where(p => p != null).Distinct().ToList();
 
 #if DEBUG
-            Info("749E7C2E-A164-4C6F-9926-6F04D0E9C9FC", $"endPointsList?.Count = {endPointsList?.Count}");
+            //Info("749E7C2E-A164-4C6F-9926-6F04D0E9C9FC", $"endPointsList?.Count = {endPointsList?.Count}");
 #endif
 
             if (endPointsList == null)
@@ -113,7 +113,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
 
 #if DEBUG
-            Info("39A8E292-9722-4724-B4F1-AEC71F5B541E", $"endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall) = {endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall)}");
+            //Info("39A8E292-9722-4724-B4F1-AEC71F5B541E", $"endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall) = {endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall)}");
 #endif
 
             if (endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall))
@@ -128,7 +128,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
 #if DEBUG
-            Info("30578E55-9BC7-4F83-8F58-D9EC895D2723", $"kindOfCommandParameters = {kindOfCommandParameters}");
+            //Info("30578E55-9BC7-4F83-8F58-D9EC895D2723", $"kindOfCommandParameters = {kindOfCommandParameters}");
 #endif
 
             switch (kindOfCommandParameters)
@@ -214,11 +214,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 var argumentsDict = endPointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
 
 #if DEBUG
-                Info("EC0AA984-ADD6-4694-9DDD-2170875B5260", $"argumentsDict.Count = {argumentsDict.Count}");
-                foreach(var tmpArgItem in argumentsDict)
-                {
-                    Info("C356D6B7-1703-45A1-B51D-1DF1A15D9D36", $"tmpArgItem.Key = {tmpArgItem.Key}");
-                }
+                //Info("EC0AA984-ADD6-4694-9DDD-2170875B5260", $"argumentsDict.Count = {argumentsDict.Count}");
+                //foreach(var tmpArgItem in argumentsDict)
+                //{
+                //    Info("C356D6B7-1703-45A1-B51D-1DF1A15D9D36", $"tmpArgItem.Key = {tmpArgItem.Key}");
+                //}
 #endif
 
                 var isFitEndpoint = true;
@@ -226,13 +226,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 foreach (var commandParamItem in commandParamsDict)
                 {
 #if DEBUG
-                    Info("BA39750A-5B9E-4394-8BE0-FF84FB65B1A5", $"commandParamItem.Key = {commandParamItem.Key}");
+                    //Info("BA39750A-5B9E-4394-8BE0-FF84FB65B1A5", $"commandParamItem.Key = {commandParamItem.Key}");
 #endif
 
                     var realParamName = PrepareParamName(commandParamItem.Key);
 
 #if DEBUG
-                    Info("6F545C5A-05C9-4DE4-9DFD-38B811E0816F", $"realParamName = {realParamName}");
+                    //Info("6F545C5A-05C9-4DE4-9DFD-38B811E0816F", $"realParamName = {realParamName}");
 #endif
 
                     if (!isFitEndpoint)
@@ -243,7 +243,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     if (!argumentsDict.ContainsKey(realParamName))
                     {
 #if DEBUG
-                        Info("80C4DEBE-D1F2-428B-BC58-15A6C7429B36", $"!argumentsDict.ContainsKey(realParamName)");
+                        //Info("80C4DEBE-D1F2-428B-BC58-15A6C7429B36", $"!argumentsDict.ContainsKey(realParamName)");
 #endif
 
                         var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(commandParamItem.Key)).Select(p => p.NameValue).ToList();
@@ -279,20 +279,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var targetCommandValue = commandParamItem.Value;
 
 #if DEBUG
-                    Info("07D4C7B0-546D-4E7E-8E0A-472AFBD1D87A", $"targetCommandValue = {targetCommandValue}");
+                    //Info("07D4C7B0-546D-4E7E-8E0A-472AFBD1D87A", $"targetCommandValue = {targetCommandValue}");
 #endif
 
                     var targetArgument = argumentsDict[realParamName];
 
 #if DEBUG
-                    Info("0E27BDD9-E655-428B-AA0C-A18AF1843003", $"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
-                    Info("FA3BE48C-C640-46D2-9868-912515AA0822", $"targetArgument.ParameterInfo.ParameterType.FullName = {targetArgument.ParameterInfo.ParameterType.FullName}");
+                    //Info("0E27BDD9-E655-428B-AA0C-A18AF1843003", $"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
+                    //Info("FA3BE48C-C640-46D2-9868-912515AA0822", $"targetArgument.ParameterInfo.ParameterType.FullName = {targetArgument.ParameterInfo.ParameterType.FullName}");
 #endif
 
                     if (!_platformTypesConvertorsRegistry.CanConvert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType))
                     {
 #if DEBUG
-                        Info("BE665CF5-FB58-4297-8199-A747EE88BA7D", $"!_platformTypesConvertorsRegistry.CanConvert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType)");
+                        //Info("BE665CF5-FB58-4297-8199-A747EE88BA7D", $"!_platformTypesConvertorsRegistry.CanConvert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType)");
 #endif
 
                         isFitEndpoint = false;

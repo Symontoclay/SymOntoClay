@@ -422,13 +422,30 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private (object[], Dictionary<string, Value>) MapParamsByParametersByDict(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
+#if DEBUG
+            Info("3F464CB3-6258-4E07-B828-9D7EBEE96BAB", $"endpointInfo.KindOfEndpoint = {endpointInfo.KindOfEndpoint}");
+#endif
+
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
                 return MapGenericCallParamsByParametersByDict(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
             }
 
-            var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
+            var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.Replace("`", string.Empty).ToLower(), p => p.Value);
             var argumentsDict = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
+
+#if DEBUG
+            Info("76AC3DC2-41E4-4EF4-8CE3-97521C78A797", $"commandParamsDict.Count = {commandParamsDict.Count}");
+            Info("B899E4D5-15B8-4F4A-86AE-032DBF9A163C", $"argumentsDict.Count = {argumentsDict.Count}");
+            foreach(var tmpCommandParamsDictItem in commandParamsDict)
+            {
+                Info("7BDB88D1-F2CD-4FC8-B3AB-32D26547E088", $"tmpCommandParamsDictItem.Key = {tmpCommandParamsDictItem.Key}");
+            }
+            foreach (var tmpArgumentsDictItem in argumentsDict)
+            {
+                Info("C776E8A4-9E0B-4970-96DC-62D6F3E585A5", $"tmpArgumentsDictItem.Key = {tmpArgumentsDictItem.Key}");
+            }
+#endif
 
             var synonymsResolver = context.DataResolversFactory.GetSynonymsResolver();
 
@@ -446,12 +463,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 var argumentName = argumentItem.Key;
 
+#if DEBUG
+                Info("B823AE54-A9A9-47ED-A375-2AAD326BF506", $"argumentName = {argumentName}");
+#endif
+
                 var argumentInfo = argumentItem.Value;
 
                 var isBound = false;
 
                 if (commandParamsDict.ContainsKey(argumentName))
                 {
+#if DEBUG
+                    Info("70825EC9-6B24-4008-97C4-250F4AD4F7BF", $"commandParamsDict.ContainsKey(argumentName)");
+#endif
+
                     isBound = true;
                 }
                 else
@@ -476,11 +501,25 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
                 }
 
+#if DEBUG
+                Info("9C2B290C-F27E-4205-BCB5-B3307B8392B2", $"isBound = {isBound}");
+#endif
+
                 if (isBound)
                 {
                     var targetCommandValue = commandParamsDict[argumentName];
 
+#if DEBUG
+                    logger.Info("E8CCFC39-9DBF-4EBA-AB0E-BAB7FA30F49D", $"targetCommandValue = {targetCommandValue}");
+                    logger.Info("77C21D0F-8269-46E9-9CBD-8C838AA0009C", $"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
+                    logger.Info("ED69A69F-BD34-445A-9DC3-1E5B9FFBCFBB", $"argumentInfo.ParameterInfo.ParameterType.FullName = {argumentInfo.ParameterInfo.ParameterType.FullName}");
+#endif
+
                     var targetValue = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
+
+#if DEBUG
+                    logger.Info("A308BCFB-3CE4-44DD-8D6A-D11B3281DA72", $"targetValue = {targetValue}");
+#endif
 
                     resultList.Add(targetValue);
 
@@ -498,7 +537,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var targetValue = _platformTypesConvertorsRegistry.ConvertToValue(logger, argumentInfo.ParameterInfo.ParameterType, defaultValue, context, localContext);
 
 #if DEBUG
-                    //logger.Info("4B521F80-DD63-4CA1-896C-E820C5B35F45", $"targetValue = {targetValue}");
+                    logger.Info("4B521F80-DD63-4CA1-896C-E820C5B35F45", $"targetValue = {targetValue}");
 #endif
 
                     paramsInfoDict[argumentName] = targetValue;

@@ -772,7 +772,7 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual("methodName = 'rotate'", message);
+                            Assert.AreEqual("methodName = '`rotate`'", message);
                             break;
 
                         case 3:
@@ -818,19 +818,19 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "on complete" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 5:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -864,19 +864,19 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "on complete" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 5:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = '`rotate`'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -1041,7 +1041,7 @@ action Go
                             return true;
 
                         case 4:
-                            Assert.AreEqual("methodName = 'rotate'", message);
+                            Assert.AreEqual("methodName = '`rotate`'", message);
                             return true;
 
                         case 5:

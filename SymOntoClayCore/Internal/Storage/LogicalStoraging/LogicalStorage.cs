@@ -56,6 +56,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _serializationAnchor = new SerializationAnchor();
 
             _dateTimeProvider = _mainStorageContext.DateTimeProvider;
+
+#if DEBUG
+            //Info("16C31D0E-A3FD-49EA-B723-7A75258CA75E", $"Kind = {Kind}");
+            //Info("1D7C71CE-31F9-4C61-B8B8-7122D64265A7", $"_dateTimeProvider == null = {_dateTimeProvider == null}");
+#endif
+
             _fuzzyLogicResolver = _mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
 
             var logger = _mainStorageContext.Logger;
@@ -251,7 +257,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             //Info("225D346C-31BC-4C82-87A2-370286D40844", $"ruleInstance = {ruleInstance}");
 #endif
 
-            if (!ruleInstance.TimeStamp.HasValue)
+            if (!ruleInstance.TimeStamp.HasValue && _dateTimeProvider != null)
             {
                 ruleInstance.TimeStamp = _dateTimeProvider.CurrentTicks;
             }

@@ -132,8 +132,9 @@ namespace TestSandbox
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
             //TstAdvancedTestRunnerWithListenedFact();
+            TstAdvancedTestRunnerWithListenedFact2();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
-            TstTestRunnerWithHostListener();//<=t
+            //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstRunMinimalInstanceTests();//<----------------------------
             //TstNameHelper();
@@ -1359,6 +1360,47 @@ action Go
             Thread.Sleep(1000);
 
             _logger.Info("C90E98B6-CFD1-4F25-91D3-C959BD472060", "End");
+        }
+
+        private static void TstAdvancedTestRunnerWithListenedFact2()
+        {
+            _logger.Info("AB65A3D3-0AAE-4DFB-83E8-CF1BFA70749A", "Begin");
+
+            using (var instance = new AdvancedBehaviorTestEngineInstance())
+            {
+                instance.CreateWorld((n, message) =>
+                {
+                    _logger.Info("867D4D4D-A8CD-40E3-930A-E08A1C5BB273", $"n = {n}; message = {message}");
+                }, true);
+
+                instance.WriteFile(@"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @@host.take(#@(gun));
+        'End' >> @>log;
+    }
+}");
+
+                var hostListener = new HostMethods_Tests_HostListener();
+
+                instance.CreateNPC(hostListener);
+
+                var thingProjName = "M4A1";
+
+                instance.WriteThingFile(thingProjName, @"app M4A1_app is gun
+{
+}");
+
+                var gun = instance.CreateThing(thingProjName);
+
+                instance.StartWorld();
+
+                Thread.Sleep(5000);
+            }
+
+            _logger.Info("EADB596E-E442-4F64-B158-E5FE73018D84", "End");
         }
 
         private static void TstTestRunnerBehaviorTestEngineInstance()

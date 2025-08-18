@@ -233,13 +233,13 @@ namespace SymOntoClay.BaseTestLib
             //_logger.Info($"monitorMessagesDir = {monitorMessagesDir}");
 #endif
 
-            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+            /*var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 MessagesDir = monitorMessagesDir,
                 Enable = true
-            };
+            };*/
 
-            /*var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 Enable = true,
                 MessagesDir = monitorMessagesDir,
@@ -300,7 +300,7 @@ namespace SymOntoClay.BaseTestLib
                     EnableError = true,
                     EnableFatal = true
                 }
-            };*/
+            };
 
             if (factorySettings.PlatformLogger == null)
             {
@@ -315,11 +315,11 @@ namespace SymOntoClay.BaseTestLib
             }
 
 #if DEBUG
-            //monitorSettings.PlatformLoggers.Add(CommonNLogPlatformLogger.Instance);
+            monitorSettings.PlatformLoggers.Add(CommonNLogPlatformLogger.Instance);
 #endif
 
-            settings.Monitor = new TestMonitor(monitorSettings);
-            //settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
+            //settings.Monitor = new TestMonitor(monitorSettings);
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
 
             settings.ThreadingSettings = factorySettings.ThreadingSettings;
 

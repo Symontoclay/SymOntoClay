@@ -56,7 +56,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 5:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 6:
@@ -136,7 +136,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 5:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 6:
@@ -216,7 +216,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 5:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 6:
@@ -296,7 +296,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 5:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 6:
@@ -384,7 +384,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 7:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 8:
@@ -440,7 +440,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         case 21:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 22:
@@ -574,7 +574,7 @@ action check
                             break;
 
                         case 7:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 8:
@@ -630,7 +630,7 @@ action check
                             break;
 
                         case 21:
-                            Assert.AreEqual("#wp1", message);
+                            Assert.AreEqual("#`WP1`", message);
                             break;
 
                         case 22:

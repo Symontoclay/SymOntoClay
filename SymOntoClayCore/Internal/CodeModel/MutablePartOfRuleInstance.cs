@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class MutablePartOfRuleInstance: IItemWithModalities, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class MutablePartOfRuleInstance: IItemWithModalities, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString
     {
         public RuleInstance Parent { get; set; }
 
@@ -64,7 +65,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             return result;
         }
-
+        
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -141,6 +142,45 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(SelfObligationModality), SelfObligationModality);
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            return ToHumanizedString(DebugHelperOptions.FromHumanizedOptions(options));
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel(options);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            return ToHumanizedLabel(DebugHelperOptions.FromHumanizedOptions(options));
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel(options);
+        }
+
+        private string NToHumanizedLabel(DebugHelperOptions options)
+        {
+            if(ObligationModality != null)
+            {
+                return $"o: {SelfObligationModality.ToHumanizedLabel(options)}";
+            }
+
+            if(SelfObligationModality != null)
+            {
+                return $"so: {SelfObligationModality.ToHumanizedLabel(options)}";
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -20,21 +20,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Monitor.Common.Models;
-using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
+using System;
+using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class AddFactOrRuleResult: IAddFactOrRuleResult
     {
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         /// <inheritdoc/>
         public KindOfAddFactOrRuleResult KindOfResult { get; set; }
 
@@ -149,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public string ToHumanizedString(DebugHelperOptions options)
         {
-            return NToHumanizedLabel();
+            return NToHumanizedLabel(options);
         }
 
         /// <inheritdoc/>
@@ -161,19 +163,30 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return NToHumanizedLabel();
+            return NToHumanizedLabel(options);
         }
 
-        private string NToHumanizedLabel()
+        private string NToHumanizedLabel(DebugHelperOptions options = null)
         {
-            if(MutablePart != null)
+            options ??= DebugHelperOptions.FromHumanizedOptions(HumanizedOptions.ShowAll);
+
+            var sb = new StringBuilder();
+            sb.Append(KindOfResult);
+
+            if (MutablePart != null)
             {
-                throw new NotImplementedException("79331DD2-0F7B-43E6-96BD-19A449EDF369");
+#if DEBUG
+                _globalLogger.Info($"KindOfResult = {KindOfResult}");
+                _globalLogger.Info($"MutablePart = {MutablePart}");
+                _globalLogger.Info($"MutablePart = {MutablePart.ToHumanizedString(options)}");
+#endif
+
+                sb.Append($": {MutablePart.ToHumanizedString(options)}");
             }
 
-            return $"{KindOfResult}";
+            return sb.ToString();
         }
-
+        
         /// <inheritdoc/>
         public string ToHumanizedString(IMonitorLogger logger)
         {

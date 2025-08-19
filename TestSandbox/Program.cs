@@ -132,7 +132,7 @@ namespace TestSandbox
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
             //TstAdvancedTestRunnerWithListenedFact();
-            TstAdvancedTestRunnerWithListenedFact2();
+            //TstAdvancedTestRunnerWithListenedFact2();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
@@ -178,7 +178,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

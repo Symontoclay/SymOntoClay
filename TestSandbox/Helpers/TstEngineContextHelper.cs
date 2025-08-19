@@ -268,7 +268,7 @@ namespace TestSandbox.Helpers
             var settings = CreateWorldSettings(factorySettings);
 
 #if DEBUG
-            _logger.Info("9A63D388-144D-433E-A3B6-96A7BD3A9EB7", $"settings = {settings}");
+            //_logger.Info("9A63D388-144D-433E-A3B6-96A7BD3A9EB7", $"settings = {settings}");
 #endif
 
             return UnityTestEngineContextFactory.CreateWorld(settings);
@@ -279,7 +279,7 @@ namespace TestSandbox.Helpers
             var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
 #if DEBUG
-            _logger.Info("5881B7D8-D150-4C42-9DA0-9F4781F4BBA5", $"npcSettings = {npcSettings}");
+            //_logger.Info("5881B7D8-D150-4C42-9DA0-9F4781F4BBA5", $"npcSettings = {npcSettings}");
 #endif
 
             return UnityTestEngineContextFactory.CreateHumanoidNPC(world, npcSettings);

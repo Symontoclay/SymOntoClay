@@ -110,7 +110,7 @@ namespace TestSandbox
             //TstConvertFactToImperativeCode();
             //TstFactToHtml();
             //TstStandardFactsBuilder();
-            //TstStandardFactsBuilderGetTargetVarNameHandler();
+            TstStandardFactsBuilderGetTargetVarNameHandler();
             //TstShieldString();
             //TstSampleSpeechSynthesis();
             //TstOnAddingFactEventHandler();
@@ -178,7 +178,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

@@ -21,10 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -40,9 +44,59 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("EADBE5DB-6FA7-4A47-B193-C44750676A37", "Begin");
 
-            Case11();
+            //Case1();
+            //Case2();
+            //Case3();
+            //Case4();
+            //Case5();
+            //Case6();
+            //Case7();
+            //Case8();
+            //Case9();
+            //Case10();
+            //Case11();
+            //Case12();
+            Case13();
 
             _logger.Info("B17E693C-0230-4F96-8025-D5252E037025", "End");
+        }
+
+        private void Case13()
+        {
+            var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$x1) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
+
+            _logger.Info("A68AEEF6-30B7-4F12-BC29-D111ED3E9D34", $"factStr = '{factStr}'");
+
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            factorySettings.UseDefaultAppFiles = false;
+            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
+            var fact = engineContext.Parser.ParseRuleInstance(factStr);
+
+            var baseVarName = "$`x`";
+            var varNamesList = RuleInstanceHelper.GetUniqueVarNamesWithPrefix(baseVarName, fact);
+
+            _logger.Info("79AB8679-0ECB-44C4-8E00-908041ACF912", $"varNamesList = {varNamesList.WritePODListToString()}");
+        }
+
+        private void Case12()
+        {
+            var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$y) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
+
+            _logger.Info("B2F43A3E-3D23-4EB6-814D-64BC92963283", $"factStr = '{factStr}'");
+
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            factorySettings.UseDefaultAppFiles = false;
+            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
+            var fact = engineContext.Parser.ParseRuleInstance(factStr);
+
+            var baseVarName = "$`x`";
+            var varNamesList = RuleInstanceHelper.GetUniqueVarNamesWithPrefix(baseVarName, fact);
+
+            _logger.Info("A3283719-3629-407B-9E43-75E0A68C6E46", $"varNamesList = {varNamesList.WritePODListToString()}");
         }
 
         private void Case11()
@@ -54,6 +108,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
+            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
@@ -78,6 +133,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
+            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
@@ -102,6 +158,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
+            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
@@ -335,6 +392,23 @@ namespace TestSandbox.Handlers
                 _logger.Info("CDADA05F-018D-44A7-9DBD-1B64E59140F3", $"gItem.Value = {gItem.Value}");
                 _logger.Info("86BD2C11-0D27-4A6E-A269-CB7B08F928C8", $"gItem.Index = {gItem.Index}");
             }
+        }
+
+        private ThreadingSettings ConfigureThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 5
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 5
+                }
+            };
         }
     }
 }

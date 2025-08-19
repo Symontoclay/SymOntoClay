@@ -208,7 +208,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$y) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            var baseVarName = "$x";
+            var baseVarName = "$`x`";
             var varNamesList = RuleInstanceHelper.GetUniqueVarNamesWithPrefix(baseVarName, fact);
             Assert.IsNotNull(varNamesList);
             Assert.AreEqual(1, varNamesList.Count);
@@ -222,9 +222,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$y) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            var baseVarName = "$x";
+            var baseVarName = "$`x`";
             var targetVarName = RuleInstanceHelper.GetNewUniqueVarNameWithPrefix(baseVarName, fact);
-            Assert.AreEqual("$x1", targetVarName);
+            Assert.AreEqual("$`x`", targetVarName);
         }
 
         [Test]
@@ -237,9 +237,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var varNamesList = RuleInstanceHelper.GetUniqueVarNames(fact);
             Assert.IsNotNull(varNamesList);
             Assert.AreEqual(3, varNamesList.Count);
-            Assert.AreEqual("$x", varNamesList[0]);
-            Assert.AreEqual("$x1", varNamesList[1]);
-            Assert.AreEqual("$y", varNamesList[2]);
+            Assert.AreEqual("$`x`", varNamesList[0]);
+            Assert.AreEqual("$`x1`", varNamesList[1]);
+            Assert.AreEqual("$`y`", varNamesList[2]);
         }
 
         [Test]
@@ -249,12 +249,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$x1) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            var baseVarName = "$x";
+            var baseVarName = "$`x`";
             var varNamesList = RuleInstanceHelper.GetUniqueVarNamesWithPrefix(baseVarName, fact);
             Assert.IsNotNull(varNamesList);
-            Assert.AreEqual(2, varNamesList.Count);
-            Assert.AreEqual("$x", varNamesList[0]);
-            Assert.AreEqual("$x1", varNamesList[1]);
+            Assert.AreEqual(1, varNamesList.Count);
+            Assert.AreEqual("$`x`", varNamesList[0]);
         }
 
         [Test]
@@ -264,9 +263,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$x1) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            var baseVarName = "$x";
+            var baseVarName = "$`x`";
             var targetVarName = RuleInstanceHelper.GetNewUniqueVarNameWithPrefix(baseVarName, fact);
-            Assert.AreEqual("$x2", targetVarName);
+            Assert.AreEqual("$`x`", targetVarName);
         }
     }
 }

@@ -26,17 +26,12 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
-using System;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class AddFactOrRuleResult: IAddFactOrRuleResult
     {
-#if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
-#endif
-
         /// <inheritdoc/>
         public KindOfAddFactOrRuleResult KindOfResult { get; set; }
 
@@ -175,12 +170,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if (MutablePart != null)
             {
-#if DEBUG
-                _globalLogger.Info($"KindOfResult = {KindOfResult}");
-                _globalLogger.Info($"MutablePart = {MutablePart}");
-                _globalLogger.Info($"MutablePart = {MutablePart.ToHumanizedString(options)}");
-#endif
-
                 sb.Append($": {MutablePart.ToHumanizedString(options)}");
             }
 

@@ -53,8 +53,8 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual(true, message.Contains(">: { $x = {:"));
-                        Assert.AreEqual(true, message.Contains(">: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}"));
+                        Assert.AreEqual(true, message.Contains(">: { $`x` = {:"));
+                        Assert.AreEqual(true, message.Contains(">: { `act`(`M16`,`shoot`) } :} & `hear`(`I`,$`x`) & `distance`(`I`,$`x`,15.588457107543945) & `direction`($`x`,12) & `point`($`x`,#@[15.588457107543945, 12]) } :}"));
                         break;
 
                     default:
@@ -143,12 +143,12 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual(true, message.Contains(">: { $x = {:"));
-                        Assert.AreEqual(true, message.Contains(">: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}"));
+                        Assert.AreEqual(true, message.Contains(">: { $`x` = {:"));
+                        Assert.AreEqual(true, message.Contains(">: { `act`(`M16`,`shoot`) } :} & `hear`(`I`,$`x`) & `distance`(`I`,$`x`,15.588457107543945) & `direction`($`x`,12) & `point`($`x`,#@[15.588457107543945, 12]) } :}"));
                         break;
 
                     case 3:
-                        Assert.AreEqual("m16", message);
+                        Assert.AreEqual("`M16`", message);
                         break;
 
                     case 4:
@@ -207,8 +207,8 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual(true, message.Contains(">: { $x = {:"));
-                        Assert.AreEqual(true, message.Contains(">: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) } :}"));
+                        Assert.AreEqual(true, message.Contains(">: { $`x` = {:"));
+                        Assert.AreEqual(true, message.Contains(">: { `act`(`M16`,`shoot`) } :} & `hear`(`I`,$`x`) & `distance`(`I`,$`x`,15.588457107543945) & `direction`($`x`,12) & `point`($`x`,#@[15.588457107543945, 12]) } :}"));
                         break;
 
                     default:

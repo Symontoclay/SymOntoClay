@@ -765,7 +765,7 @@ namespace TestSandbox
             handler.Run();
 
             _logger.Info("52A89F42-0117-4FC7-BD0C-ABC5EA23DC6B", "End");
-        }            
+        }     
 
         private static void TstShieldString()
         {

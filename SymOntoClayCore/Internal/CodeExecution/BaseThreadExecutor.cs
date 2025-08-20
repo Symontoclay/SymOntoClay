@@ -364,7 +364,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
 #if DEBUG
-                //Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -1413,6 +1413,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessExec()
         {
+#if DEBUG
+            Info("01C01980-B59A-4260-8137-2BD4B5A3042D", $"^^^^ _currentCodeFrame.State = {_currentCodeFrame.State}");
+#endif
+
+            throw new NotImplementedException("D1327717-511F-432E-83C7-883A15CC3EAE");
+
             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
             var kindOfCurrentValue = currentValue.KindOfValue;
@@ -2736,7 +2742,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 result.Add(valueStack.Pop());
             }
 
-            if(needRevers)
+            if(needRevers && count > 1)
             {
                 result.Reverse();
             }            

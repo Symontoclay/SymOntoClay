@@ -34,8 +34,12 @@
 
             var needRun = true;
 
+            var lastIterationTime = DateTime.Now;
+
             _internalInstance.CreateAndStartNPC(message => {
                     n++;
+                    lastIterationTime = DateTime.Now;
+
                     if (!_logHandler(n, message))
                     {
                         needRun = false;
@@ -51,6 +55,11 @@
 
             while (needRun)
             {
+                if (BehaviorTestEngineInstanceHelper.ShouldBeCancelledByTimeout(lastIterationTime))
+                {
+                    throw new TimeoutException("39E7944F-6969-430D-A114-2A2BCB2A90BF");
+                }
+
                 Thread.Sleep(100);
             }
 

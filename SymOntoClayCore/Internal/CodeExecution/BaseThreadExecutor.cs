@@ -1413,6 +1413,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessExec()
         {
+            throw new NotImplementedException("01C01980-B59A-4260-8137-2BD4B5A3042D");
+
             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
             var kindOfCurrentValue = currentValue.KindOfValue;

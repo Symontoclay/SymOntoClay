@@ -1413,6 +1413,47 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessExec()
         {
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
+            {
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            }
+
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
+            {
+                var currentValueCallResult = TakeAndResolveCurrentValue(KindOfValueConversion.All);
+
+#if DEBUG
+                Info("D49EA8E7-F4F3-4E36-9230-AC7254F0DB17", $"currentValueCallResult = {currentValueCallResult}");
+#endif
+
+                var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
+
+#if DEBUG
+                Info("6DAD4DBB-782B-4877-8467-D0CC926A78C9", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
+#endif
+
+                switch (currentValueCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        break;
+
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                }
+
+#if DEBUG
+                Info("AC8D6476-F2DA-49D6-A1AC-B29D9F11DBD4", $"_currentCodeFrame.ResolvedPositionedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+#endif
+            }
+
+            if (_currentCodeFrame.State == CodeFrameState.ResolvedParameters)
+            {
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            }
+
             throw new NotImplementedException("01C01980-B59A-4260-8137-2BD4B5A3042D");
 
             var currentValue = _currentCodeFrame.ValuesStack.Pop();

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using NLog.Fluent;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -44,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class RuleInstance: CodeItem, IStorage, ILogicalStorage//, IEquatable<RuleInstance>
     {
 #if DEBUG
-        //private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         /// <inheritdoc/>
@@ -411,7 +412,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToString(uint n)
         {
 #if DEBUG
-            //_staticLogger.Info($"||||||||||||||");
+            _staticLogger.Info($"||||||||||||||");
+            _staticLogger.Info($"this = {this.ToHumanizedString()}");
 #endif
 
             var spaces = DisplayHelper.Spaces(n);
@@ -423,22 +425,67 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfRuleInstance)} = {KindOfRuleInstance}");
 
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
+
+#if DEBUG
+            _staticLogger.Info(">-->-->94039C18-119A-42E5-92D4-9F30BE326857");
+#endif
+
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
+#if DEBUG
+            _staticLogger.Info(">-->-->DA5D0595-D5A2-4ED3-8DEB-71513612BDC4");
+#endif
+
             sb.PrintObjProp(n, nameof(ObligationModality), ObligationModality);
+
+#if DEBUG
+            _staticLogger.Info(">-->-->A1FFB9F0-6EBC-4FB5-A746-356AA211693C");
+#endif
+
             sb.PrintObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
+
+#if DEBUG
+            _staticLogger.Info(">-->-->DE22CB75-329B-4A25-A2C1-797A33201F04");
+#endif
 
             sb.AppendLine($"{spaces}{nameof(TimeStamp)} = {TimeStamp}");
 
             sb.PrintBriefObjListProp(n, nameof(LogicalStorages), LogicalStorages);
 
+#if DEBUG
+            _staticLogger.Info(">-->-->AF0AEF93-0444-46B8-B393-D99A08896D1B");
+#endif
+
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
+
+#if DEBUG
+            _staticLogger.Info(">-->-->C18BF63C-5A7E-40CB-857C-F959ECF8DF0B");
+#endif
+
             sb.PrintObjListProp(n, nameof(LeavesList), LeavesList);
 
+#if DEBUG
+            _staticLogger.Info(">-->-->E53BC74E-0057-46FA-BFC4-5931C15D71EE");
+#endif
+
             sb.PrintExisting(n, nameof(Original), Original);
+
+#if DEBUG
+            _staticLogger.Info(">-->-->4042D5EF-363B-46F2-82B6-A5D6A061577B");
+#endif
+
             sb.PrintExisting(n, nameof(Normalized), Normalized);
 
+#if DEBUG
+            _staticLogger.Info(">-->-->48C4C428-760F-44C4-94E1-234C358288FD");
+#endif
+
             sb.Append(base.PropertiesToString(n));
+
+#if DEBUG
+            _staticLogger.Info(">-->-->38C01818-53B5-4268-B1A5-66139EE6ACB4");
+#endif
+
             return sb.ToString();
         }
 

@@ -1423,6 +1423,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentValueCallResult = TakeAndResolveCurrentValue(KindOfValueConversion.All);
 
 #if DEBUG
+                Info("61B9F78F-9EF5-4E39-95E3-6997E8F0E2C1", $"currentValueCallResult?.Value[0].KindOfValue = {currentValueCallResult?.Value[0].KindOfValue}");
                 Info("D49EA8E7-F4F3-4E36-9230-AC7254F0DB17", $"currentValueCallResult = {currentValueCallResult}");
 #endif
 

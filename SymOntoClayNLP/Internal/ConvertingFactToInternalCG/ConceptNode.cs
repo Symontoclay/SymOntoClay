@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal.Helpers;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var result = new ResultOfNode();
             result.KindOfResult = KindOfResultOfNode.ProcessConcept;
             result.LogicalQueryNode = _concept;
-            result.CGNode = CreateOrGetExistingInternalConceptCGNode(PrepareName(_concept.Name.NameValue));
+            result.CGNode = CreateOrGetExistingInternalConceptCGNode(NlpStringHelper.PrepareString(_concept.Name));
 
             return result;
         }

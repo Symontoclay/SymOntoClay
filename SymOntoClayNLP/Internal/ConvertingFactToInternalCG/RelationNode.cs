@@ -28,6 +28,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.Dot;
+using SymOntoClay.NLP.Internal.Helpers;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             result.LogicalQueryNode = _relation;
             result.KindOfResult = KindOfResultOfNode.ProcessRelation;
 
-            var relationRelation = new InternalRelationCGNode() { Name = PrepareName(relationName.NameValue), Parent = _context.ConceptualGraph };
+            var relationRelation = new InternalRelationCGNode() { Name = NlpStringHelper.PrepareString(relationName), Parent = _context.ConceptualGraph };
 
             result.CGNode = relationRelation;
 
@@ -160,7 +161,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             result.LogicalQueryNode = _relation;
             result.KindOfResult = KindOfResultOfNode.ProcessRelation;
 
-            var relationRelation = new InternalRelationCGNode { Name = PrepareName(relationName.NameValue), Parent = _context.ConceptualGraph };
+            var relationRelation = new InternalRelationCGNode { Name = NlpStringHelper.PrepareString(relationName), Parent = _context.ConceptualGraph };
 
             result.CGNode = relationRelation;
 
@@ -204,7 +205,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             result.LogicalQueryNode = _relation;
             result.KindOfResult = KindOfResultOfNode.ProcessRelation;
 
-            var relationConcept = CreateOrGetExistingInternalConceptCGNode(PrepareName(relationName.NameValue));
+            var relationConcept = CreateOrGetExistingInternalConceptCGNode(NlpStringHelper.PrepareString(relationName));
 
             result.CGNode = relationConcept;
 

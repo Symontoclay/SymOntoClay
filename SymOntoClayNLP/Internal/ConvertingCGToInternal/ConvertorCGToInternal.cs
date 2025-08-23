@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.CG;
+using SymOntoClay.NLP.Internal.Helpers;
 using SymOntoClay.NLP.Internal.InternalCG;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
@@ -204,7 +205,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             _logger.Info("5169FD08-30A2-4877-BDCB-7AAA0797EB5C", $"source.Name = '{source.Name}'");
 #endif
 
-            result.Name = source.Name;
+            result.Name = NlpStringHelper.PrepareString(source.Name);
         }
 
         private void CreateChildren(ConceptualGraph source, InternalConceptualGraph result, ContextOfConvertingCGToInternal context)
@@ -216,18 +217,18 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             var notDirectlyClonedNodesList = GetNotDirectlyClonedNodesList(entitiesConditionsMarksRelationsList);
 
-            var clustersOfLinkedNodesDict = GetClastersOfLinkedNodes(notDirectlyClonedNodesList);
+            var clustersOfLinkedNodesDict = GetClustersOfLinkedNodes(notDirectlyClonedNodesList);
 
             foreach (var clustersOfLinkedNodesKVPItem in clustersOfLinkedNodesDict)
             {
                 CreateEntityCondition(result, clustersOfLinkedNodesKVPItem.Value, context);
             }
 
-            var nodesForDirectlyClonningList = childrenList.Where(p => !notDirectlyClonedNodesList.Contains(p)).ToList();
+            var nodesForDirectlyCloningList = childrenList.Where(p => !notDirectlyClonedNodesList.Contains(p)).ToList();
 
-            CreateChildrenByAllNodes(nodesForDirectlyClonningList, null, context);
+            CreateChildrenByAllNodes(nodesForDirectlyCloningList, null, context);
 
-            var conceptsSourceItemsList = nodesForDirectlyClonningList.Where(p => p.Kind == KindOfCGNode.Concept || p.Kind == KindOfCGNode.Graph).Select(p => (BaseConceptCGNode)p).ToList();
+            var conceptsSourceItemsList = nodesForDirectlyCloningList.Where(p => p.Kind == KindOfCGNode.Concept || p.Kind == KindOfCGNode.Graph).Select(p => (BaseConceptCGNode)p).ToList();
 
             var relationStorage = new RelationStorageOfSemanticAnalyzer();
 
@@ -336,7 +337,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             var entityCondition = new InternalConceptualGraph();
             entityCondition.Parent = parent;
             entityCondition.KindOfGraphOrConcept = KindOfInternalGraphOrConceptNode.EntityCondition;
-            var entityConditionName = NameHelper.CreateRuleOrFactName().NameValue;
+            var entityConditionName = NlpStringHelper.PrepareString(NameHelper.CreateRuleOrFactName());
 
 #if DEBUG
             _logger.Info("3FE5B3EF-2155-4FAE-B838-C749E6466C7C", $"entityConditionName = {entityConditionName}");
@@ -501,7 +502,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             return notDirectlyClonedNodesList;
         }
 
-        private Dictionary<int, List<BaseCGNode>> GetClastersOfLinkedNodes(List<BaseCGNode> source)
+        private Dictionary<int, List<BaseCGNode>> GetClustersOfLinkedNodes(List<BaseCGNode> source)
         {
             var result = new Dictionary<int, List<BaseCGNode>>();
 

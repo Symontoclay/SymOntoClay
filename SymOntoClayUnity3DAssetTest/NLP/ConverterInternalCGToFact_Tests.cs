@@ -97,7 +97,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             Assert.AreEqual(KindOfRuleInstance.Fact, ruleInstance.KindOfRuleInstance);
 
-            Assert.AreEqual(@"{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual(@"{: >: { `like`(`i`,#@{: >: { `possess`(`i`,$`_`) & `cat`($`_`) } :}) } :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             Assert.AreEqual(KindOfRuleInstance.Fact, ruleInstance.KindOfRuleInstance);
 
-            Assert.AreEqual(@"{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual(@"{: >: { `direction`($`X1`,#@{: >: { `color`($`_`,$`X1`) & `place`($`_`) & `green`($`X1`) } :}) & $`X1` = `go`(`someone`,`self`) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
     }
 }

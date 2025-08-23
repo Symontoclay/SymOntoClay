@@ -42,10 +42,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         protected readonly ContextOfConverterFactToInternalCG _context;
         protected readonly IMonitorLogger _logger;
 
-        protected string PrepareName(string name)
-        {
-            return name.Replace("`", string.Empty).Trim();
-        }
+
 
         protected InternalConceptCGNode CreateOrGetExistingInternalConceptCGNode(string name)
         {

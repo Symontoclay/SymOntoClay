@@ -37,6 +37,7 @@ using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
+using System;
 using System.IO;
 
 namespace TestSandbox.Handlers
@@ -72,16 +73,26 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("4D933D64-6489-47ED-8CAA-32AABCBC4B78", "Begin");
 
+            //Case8();
             //Case7();
-            Case6();
+            //Case6();
             //Case5();
             //Case4();
-            //Case3();
+            Case3();
             //Case2();
             //Case1();
             //Case0();
 
             _logger.Info("1C22A861-96A6-46FD-9187-65762CD44423", "End");
+        }
+
+        private void Case8()
+        {
+            var text = "I like my cat.";
+
+            var ruleInstancesList = _converter.Convert(_logger, text);
+
+            _logger.Info("EF5C16C0-1C05-45A3-9563-95146230801A", $"ruleInstancesList.Count = {ruleInstancesList.Count}");
         }
 
         private void Case7()

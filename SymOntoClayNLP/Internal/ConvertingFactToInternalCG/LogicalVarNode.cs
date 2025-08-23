@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.NLP.Internal.Helpers;
 using System;
 
 namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
@@ -37,7 +38,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         
         public ResultOfNode Run()
         {
-            var varName = PrepareName(_var.Name.NameValue);
+            var varName = NlpStringHelper.PrepareString(_var.Name);
 
 #if DEBUG
             _logger.Info("B9364C43-64A8-4801-8091-9990A27DA25B", $"varName = {varName}");
@@ -53,7 +54,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var result = new ResultOfNode();
             result.LogicalQueryNode = _var;
 
-            var concept = CreateOrGetExistingInternalConceptCGNode(PrepareName(conceptName));
+            var concept = CreateOrGetExistingInternalConceptCGNode(NlpStringHelper.PrepareString(conceptName));
 
             if (varName == "$_")
             {

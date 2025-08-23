@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class PrimaryRulePart: BaseRulePart
     {
-#if DEBUG
-        private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
         /// <inheritdoc/>
@@ -88,25 +84,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
-#if DEBUG
-            _staticLogger.Info($"||||||||||||||");
-            _staticLogger.Info($"this = {this.ToHumanizedString()}");
-#endif
-
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.PrintExisting(n, nameof(SecondaryParts), SecondaryParts);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->71B5D4C3-D4DF-4A0C-807D-A81938E157E2");
-#endif
-
             sb.Append(base.PropertiesToString(n));
-
-#if DEBUG
-            _staticLogger.Info(">-->-->5B6C2108-4049-475A-B09F-D9B746B76C6A");
-#endif
-
             return sb.ToString();
         }
 
@@ -124,25 +105,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToBriefString(uint n)
         {
-#if DEBUG
-            _staticLogger.Info($"~~~~~~~~~~~~~~~~~~~~~~~~~");
-            _staticLogger.Info($"this = {this.ToHumanizedString()}");
-#endif
-
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.PrintExisting(n, nameof(SecondaryParts), SecondaryParts);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->626497B2-4000-4363-925D-BB55E7F7BBF8");
-#endif
-
             sb.Append(base.PropertiesToBriefString(n));
-
-#if DEBUG
-            _staticLogger.Info(">-->-->CDD740EB-E836-4EA0-B833-5816546BE33B");
-#endif
-
             return sb.ToString();
         }
     }

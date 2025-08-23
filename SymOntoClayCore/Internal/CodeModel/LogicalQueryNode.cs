@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent, IEquatable<LogicalQueryNode>
     {
 #if DEBUG
-        private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _staticLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
@@ -1035,11 +1035,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
-#if DEBUG
-            _staticLogger.Info($"||||||||||||||");
-            _staticLogger.Info($"this = {this.ToHumanizedString()}");
-#endif
-
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -1047,67 +1042,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(Name), Name);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->94743DDF-E595-46CA-AB9F-6505A3555EC5");
-#endif
-
             sb.PrintObjProp(n, nameof(Left), Left);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->FD28862C-4101-428F-89B9-3BA701A11A8A");
-#endif
-
             sb.PrintObjProp(n, nameof(Right), Right);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->B90B6884-D28B-4EA4-AFF8-D3FC5B78A162");
-#endif
-
             sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->AE422100-9405-48A0-AF9C-565EE940B27A");
-#endif
-
             sb.PrintObjListProp(n, nameof(LinkedVars), LinkedVars);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->899499D2-A83D-45EB-B3C8-59D97E9FE048");
-#endif
-
             sb.PrintObjProp(n, nameof(Value), Value);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->7C274A45-B0C1-4941-9CB9-22DB5CE9ACB1");
-#endif
-
             sb.PrintObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->AA877BAE-9239-4910-9D6F-64AF9AE38631");
-#endif
-
             sb.PrintObjProp(n, nameof(Fact), Fact);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->2B7D9C91-F8AC-4E7D-8A24-DC029F6B9763");
-#endif
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
             sb.AppendLine($"{spaces}{nameof(IsNull)} = {IsNull}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");            
 
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->477E2CE3-4002-4CF8-86C4-8C9D0E00AB27");
-#endif
-
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->5439448F-7A70-4187-BA41-B6C84D69AE20");
-#endif
 
             sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
             sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
@@ -1115,28 +1064,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->DA3651D1-1142-498D-801F-D5CD5EE9AAEA");
-#endif
-
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->9D5932CE-793E-4FD0-867F-5BB0D3301FA9");
-#endif
-
             sb.PrintBriefObjProp(n, nameof(RulePart), RulePart);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->82D92D54-FC0D-470A-9C7B-476BC1D7023C");
-#endif
-
             sb.Append(base.PropertiesToString(n));
-
-#if DEBUG
-            _staticLogger.Info(">-->-->C932E358-60F1-4E82-A6DB-A49ACD432D48");
-#endif
-
             return sb.ToString();
         }
 
@@ -1182,11 +1113,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToBriefString(uint n)
         {
-#if DEBUG
-            _staticLogger.Info($"~~~~~~~~~~~~~~~~~~~~~~~~~");
-            _staticLogger.Info($"this = {this.ToHumanizedString()}");
-#endif
-
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -1194,81 +1120,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->A7A59B49-3F78-4AE3-8898-C27193EA05AD");
-#endif
-
             sb.PrintExisting(n, nameof(Left), Left);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->554FA1DE-1403-4742-BA04-95E70CDCA7CD");
-#endif
-
             sb.PrintExisting(n, nameof(Right), Right);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->FEC59D3B-A568-481C-BB32-3B673D99A54A");
-#endif
-
             sb.PrintExisting(n, nameof(ParamsList), ParamsList);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->772E7643-4D15-4D8B-990A-4C920A3884AF");
-#endif
-
             sb.PrintExisting(n, nameof(LinkedVars), LinkedVars);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->9ABD008A-0053-4324-A6C1-289A0B0CAF18");
-#endif
-
             sb.PrintBriefObjProp(n, nameof(Value), Value);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->C7ABEECD-9B0E-4FF0-A0CD-F09325D7C8C2");
-#endif
-
             sb.PrintBriefObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->58B24048-75C8-4D78-B914-1FE114CF2284");
-#endif
-
             sb.PrintBriefObjProp(n, nameof(Fact), Fact);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->E5DC38AA-DA9E-4B59-921A-E54D9782BEF3");
-#endif
-
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
-
-#if DEBUG
-            _staticLogger.Info(">-->-->7C435CAB-5354-49D5-AF4E-7D87D8A69821");
-#endif
-
             sb.AppendLine($"{spaces}{nameof(IsNull)} = {IsNull}");
-
-#if DEBUG
-            _staticLogger.Info(">-->-->DB7E24C8-5DF6-4D34-B008-336639FB28AE");
-#endif
-
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
-#if DEBUG
-            _staticLogger.Info(">-->-->AD3EF1E9-55E4-4FC8-86ED-122BF416F76C");
-#endif
-
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->21486363-9235-4163-86F0-301735FAECF0");
-#endif
-
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->43D1A244-115A-457F-B9D9-05E811BCE829");
-#endif
 
             sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
             sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
@@ -1276,28 +1142,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->3006586F-F219-46F1-88F4-999711D93C8E");
-#endif
-
             sb.PrintExisting(n, nameof(RuleInstance), RuleInstance);
-
-#if DEBUG
-            _staticLogger.Info(">-->-->B6C383BF-E43B-4D7A-B0CD-32FEB74BE379");
-#endif
-
             sb.PrintExisting(n, nameof(RulePart), RulePart);
 
-#if DEBUG
-            _staticLogger.Info(">-->-->7E5CE312-EC65-498F-8719-189EFAC7B260");
-#endif
-
             sb.Append(base.PropertiesToBriefString(n));
-
-#if DEBUG
-            _staticLogger.Info(">-->-->0795B107-E271-406E-B0AC-7800C5B6AE27");
-#endif
-
             return sb.ToString();
         }
 

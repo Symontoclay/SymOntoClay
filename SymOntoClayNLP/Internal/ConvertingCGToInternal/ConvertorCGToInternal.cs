@@ -202,7 +202,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         private void FillName(BaseCGNode source, BaseInternalCGNode result, ContextOfConvertingCGToInternal context)
         {
 #if DEBUG
-            _logger.Info("5169FD08-30A2-4877-BDCB-7AAA0797EB5C", $"source.Name = '{source.Name}'");
+            //_logger.Info("5169FD08-30A2-4877-BDCB-7AAA0797EB5C", $"source.Name = '{source.Name}'");
 #endif
 
             result.Name = NlpStringHelper.PrepareString(source.Name);
@@ -340,7 +340,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             var entityConditionName = NlpStringHelper.PrepareString(NameHelper.CreateRuleOrFactName());
 
 #if DEBUG
-            _logger.Info("3FE5B3EF-2155-4FAE-B838-C749E6466C7C", $"entityConditionName = {entityConditionName}");
+            //_logger.Info("3FE5B3EF-2155-4FAE-B838-C749E6466C7C", $"entityConditionName = {entityConditionName}");
 #endif
 
             entityCondition.Name = entityConditionName;
@@ -748,7 +748,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                             var modal = GrammaticalElementsHelper.GetAbilityModalityFromName(outputNodeOfTheRelation.Name);
 
 #if DEBUG
-                            _logger.Info("782BDC0B-F8EC-4A84-B00E-6CD8C20D3F4E", $"modal = {modal}");
+                            //_logger.Info("782BDC0B-F8EC-4A84-B00E-6CD8C20D3F4E", $"modal = {modal}");
 #endif
 
                             if (modal == AbilityModality.Undefined)

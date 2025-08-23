@@ -68,11 +68,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                 case KindOfCGNode.Graph:
 #if DEBUG
-                    _logger.Info("F2B37CD8-3013-44AF-8BE7-044097911ADC", $"_source.AsConceptualGraph.Children?.Count = {_source.AsConceptualGraph.Children?.Count}");
-                    foreach(var item in _source.AsConceptualGraph.Children)
-                    {
-                        _logger.Info("DDC19286-854F-4219-BFF3-08BAD93CFFA6", $"item = {item}");
-                    }
+                    //_logger.Info("F2B37CD8-3013-44AF-8BE7-044097911ADC", $"_source.AsConceptualGraph.Children?.Count = {_source.AsConceptualGraph.Children?.Count}");
+                    //foreach(var item in _source.AsConceptualGraph.Children)
+                    //{
+                    //    _logger.Info("DDC19286-854F-4219-BFF3-08BAD93CFFA6", $"item = {item}");
+                    //}
 #endif
 
                     if(_source.AsConceptualGraph.Children.Any(p => p.IsConceptNode && p.AsConceptNode.IsRootConceptOfEntitiCondition))

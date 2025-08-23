@@ -41,7 +41,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var varName = NlpStringHelper.PrepareString(_var.Name);
 
 #if DEBUG
-            _logger.Info("B9364C43-64A8-4801-8091-9990A27DA25B", $"varName = {varName}");
+            //_logger.Info("B9364C43-64A8-4801-8091-9990A27DA25B", $"varName = {varName}");
 #endif
 
             if (_context.VarConceptDict.ContainsKey(varName))

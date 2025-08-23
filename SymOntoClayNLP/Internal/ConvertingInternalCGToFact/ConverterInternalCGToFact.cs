@@ -258,7 +258,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             {
                 source.MaxVarCount++;
                 var n = source.MaxVarCount;
-                linkedVarName = $"$X{n}";
+                linkedVarName = $"$x{n}";
 
                 source.AddLinkRelationToVarName(outputNode.Name, linkedVarName);
             }
@@ -322,7 +322,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         {
                             n++;
 
-                            varName = $"$X{n}";
+                            varName = $"$x{n}";
                         }
 
                         conceptsNamesDict[conceptName] = varName;

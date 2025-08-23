@@ -21,23 +21,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
+using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.Monitoring;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
-using SymOntoClay.UnityAsset.Core.Tests.NLP.ATN;
-using SymOntoClay.BaseTestLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.BaseTestLib.Monitoring;
 
 namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 {
@@ -144,7 +137,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             Assert.AreEqual(KindOfRuleInstance.Fact, ruleInstance.KindOfRuleInstance);
 
-            Assert.AreEqual(@"{: >: { `direction`($`X1`,#@{: >: { `color`($`_`,$`X1`) & `place`($`_`) & `green`($`X1`) } :}) & $`X1` = `go`(`someone`,`self`) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual(@"{: >: { `direction`($`x1`,#@{: >: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}) & $`x1` = `go`(`someone`,`self`) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
     }
 }

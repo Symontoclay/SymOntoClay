@@ -364,7 +364,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
 #if DEBUG
-                Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                //Info("5D03A3F6-AF43-4D3A-8DED-A976A66603F2", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -1413,38 +1413,81 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessExec()
         {
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
+            {
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            }
+
+            if (CodeFrameStateHelper.ShouldCallTakeParameters(_currentCodeFrame.State))
+            {
+                var currentValueCallResult = TakeAndResolveCurrentValue(KindOfValueConversion.All);
+
 #if DEBUG
-            Info("01C01980-B59A-4260-8137-2BD4B5A3042D", $"^^^^ _currentCodeFrame.State = {_currentCodeFrame.State}");
+                //Info("61B9F78F-9EF5-4E39-95E3-6997E8F0E2C1", $"currentValueCallResult?.Value[0].KindOfValue = {currentValueCallResult?.Value[0].KindOfValue}");
+                //Info("D49EA8E7-F4F3-4E36-9230-AC7254F0DB17", $"currentValueCallResult = {currentValueCallResult}");
 #endif
 
-            throw new NotImplementedException("D1327717-511F-432E-83C7-883A15CC3EAE");
+                var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
 
-            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+#if DEBUG
+                //Info("6DAD4DBB-782B-4877-8467-D0CC926A78C9", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
+#endif
 
-            var kindOfCurrentValue = currentValue.KindOfValue;
+                switch (currentValueCallResultKindOfResult)
+                {
+                    case KindOfCallResult.Value:
+                        break;
 
-            switch (kindOfCurrentValue)
+                    case KindOfCallResult.ExecutingCodeInOtherCodeFrame:
+                        return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                }
+
+#if DEBUG
+                //Info("AC8D6476-F2DA-49D6-A1AC-B29D9F11DBD4", $"_currentCodeFrame.ResolvedPositionedParameterValues = {_currentCodeFrame.ResolvedPositionedParameterValues.WriteListToString()}");
+#endif
+            }
+
+            if (_currentCodeFrame.State == CodeFrameState.ResolvedParameters)
             {
-                case KindOfValue.CodeItem:
-                    var codeItem = currentValue.AsCodeItem;
-                    var codeItemKind = codeItem.Kind;
-                    switch (codeItemKind)
-                    {
-                        case KindOfCodeEntity.RuleOrFact:
-                            ExecRuleInstanceValue(currentValue.AsRuleInstance);
-                            break;
+                _currentCodeFrame.State = CodeFrameState.CommandExecution;
+            }
 
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(codeItemKind), codeItemKind, null);
-                    }
-                    break;
+            if(_currentCodeFrame.State == CodeFrameState.CommandExecution)
+            {
+                var currentCodeFrame = _currentCodeFrame;
 
-                case KindOfValue.RuleInstance:
-                    ExecRuleInstanceValue(currentValue.AsRuleInstance);
-                    break;
+                var currentValue = currentCodeFrame.ResolvedPositionedParameterValues[0];
 
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfCurrentValue), kindOfCurrentValue, null);
+                var kindOfCurrentValue = currentValue.KindOfValue;
+
+                switch (kindOfCurrentValue)
+                {
+                    case KindOfValue.CodeItem:
+                        var codeItem = currentValue.AsCodeItem;
+                        var codeItemKind = codeItem.Kind;
+                        switch (codeItemKind)
+                        {
+                            case KindOfCodeEntity.RuleOrFact:
+                                ExecRuleInstanceValue(currentValue.AsRuleInstance);
+                                currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(codeItemKind), codeItemKind, null);
+                        }
+                        break;
+
+                    case KindOfValue.RuleInstance:
+                        ExecRuleInstanceValue(currentValue.AsRuleInstance);
+                        currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfCurrentValue), kindOfCurrentValue, null);
+                }
             }
         }
 
@@ -2742,7 +2785,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 result.Add(valueStack.Pop());
             }
 
-            if(needRevers && count > 1)
+            if(needRevers)
             {
                 result.Reverse();
             }            
@@ -3665,7 +3708,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var compiledCode = _converterFactToImperativeCode.Convert(Logger, ruleInstance, _currentCodeFrame.LocalContext);
 
+#if DEBUG
+            //Info("DFA5C794-29DE-4598-BBDC-8C9DDB0D7636", $"compiledCode = {compiledCode}");
+#endif
+
             var codeFrame = _codeFrameService.ConvertCompiledFunctionBodyToCodeFrame(Logger, _currentInstance, compiledCode, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            //Info("CB9F36B5-17DA-4084-944B-4DA331382424", $"codeFrame = {codeFrame}");
+#endif
 
             ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }

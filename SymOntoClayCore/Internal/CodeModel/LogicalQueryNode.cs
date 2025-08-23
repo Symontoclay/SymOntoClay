@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using NLog.Fluent;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -1141,8 +1142,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
-            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
-            sb.PrintBriefObjProp(n, nameof(RulePart), RulePart);
+            sb.PrintExisting(n, nameof(RuleInstance), RuleInstance);
+            sb.PrintExisting(n, nameof(RulePart), RulePart);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

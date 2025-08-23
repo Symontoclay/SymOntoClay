@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using NLog.Fluent;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -410,10 +411,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
-#if DEBUG
-            //_staticLogger.Info($"||||||||||||||");
-#endif
-
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 

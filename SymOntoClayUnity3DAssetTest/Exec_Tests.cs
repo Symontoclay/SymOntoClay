@@ -35,6 +35,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	on Enter => {
 	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
 	}
@@ -48,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) => {
                     maxN = n;
 
@@ -60,7 +62,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                         case 2:
                             Assert.AreEqual(true, message.Contains("#@{:"));
-                            Assert.AreEqual(true, message.Contains(">: { color($_,$x1) & place($_) & green($x1) } :}"));
+                            Assert.AreEqual(true, message.Contains(">: { `color`($`_`,$`x1`) & `place`($`_`) & `green`($`x1`) } :}"));
                             return false;
 
                         default:
@@ -77,6 +79,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	on Enter => {
 	    exec {: >: { direction($x1, #@(place & color = green)) & $x1 = go(someone,self) } o: 1 :};
 	}
@@ -90,7 +94,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithImportStandardLibrary(text,
                 (n, message) => {
                     maxN = n;
 
@@ -101,7 +105,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return true;
 
                         case 2:
-                            Assert.AreEqual("#@(place & color = green)", message);
+                            Assert.AreEqual("#@(`place` & `color` = `green`)", message);
                             return false;
 
                         default:
@@ -118,6 +122,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	on Enter => {
 	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
 	}
@@ -127,7 +133,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var maxN = 0;
 
-            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListenerAndImportStandardLibrary(text,
                 (n, message) => {
                     maxN = n;
 
@@ -157,6 +163,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
 app PeaceKeeper
 {
+    import 'stdlib';
+
 	on Enter => {
 	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
 	}
@@ -167,7 +175,7 @@ app PeaceKeeper
 
             var maxN = 0;
 
-            Assert.AreEqual(true,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+            Assert.AreEqual(true,BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListenerAndImportStandardLibrary(text,
                 (n, message) => {
                     maxN = n;
 

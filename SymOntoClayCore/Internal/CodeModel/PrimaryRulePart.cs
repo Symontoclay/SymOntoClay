@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
+using NLog.Fluent;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Converters;
@@ -106,7 +108,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.PrintExisting(n, nameof(SecondaryParts), SecondaryParts);
-            
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

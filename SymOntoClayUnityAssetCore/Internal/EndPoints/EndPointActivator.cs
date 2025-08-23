@@ -437,7 +437,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #if DEBUG
             //Info("76AC3DC2-41E4-4EF4-8CE3-97521C78A797", $"commandParamsDict.Count = {commandParamsDict.Count}");
             //Info("B899E4D5-15B8-4F4A-86AE-032DBF9A163C", $"argumentsDict.Count = {argumentsDict.Count}");
-            //foreach(var tmpCommandParamsDictItem in commandParamsDict)
+            //foreach (var tmpCommandParamsDictItem in commandParamsDict)
             //{
             //    Info("7BDB88D1-F2CD-4FC8-B3AB-32D26547E088", $"tmpCommandParamsDictItem.Key = {tmpCommandParamsDictItem.Key}");
             //}
@@ -481,13 +481,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 else
                 {
-                    var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(argumentName), localContext).Select(p => p.NameValue).ToList();
+                    var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(argumentName), localContext).Select(p => p.NameValue.Replace("`", string.Empty).ToLower()).ToList();
 
                     if (!synonymsList.IsNullOrEmpty())
                     {
                         foreach (var synonym in synonymsList)
                         {
-                            if(isBound)
+#if DEBUG
+                            //Info("1CA67399-A49B-4AEA-BAE6-9AEBB4D04661", $"synonym = '{synonym}'");
+#endif
+
+                            if (isBound)
                             {
                                 continue;
                             }

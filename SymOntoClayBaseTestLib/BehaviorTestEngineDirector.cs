@@ -86,6 +86,18 @@
             return builder.Build();
         }
 
+        public static IBehaviorTestEngineInstance CreateMinimalInstanceWithPlatformListenerAndImportStandardLibrary(this IBehaviorTestEngineInstanceBuilder builder,
+            string fileContent, Func<int, string, bool> logHandler, object platformListener)
+        {
+            builder.DontUseTimeoutToEnd();
+            builder.SetUsingStandardLibrary(KindOfUsingStandardLibrary.Import);
+            builder.UsePlatformListener(platformListener);
+            builder.TestedCode(fileContent);
+            builder.LogHandler(logHandler);
+
+            return builder.Build();
+        }
+
         public static IBehaviorTestEngineInstance CreateMinimalInstanceWithOneHtnIteration(this IBehaviorTestEngineInstanceBuilder builder,
             string fileContent, Func<int, string, bool> logHandler)
         {

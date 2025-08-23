@@ -80,9 +80,17 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private List<AstStatement> ConvertFact(IMonitorLogger logger, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
+#if DEBUG
+            //Info("FDE1F45E-BF0D-4DE9-A83F-4390FD335244", $"fact = {fact?.ToHumanizedString()}");
+#endif
+
             var nodesList = GetSignificantNodesFromFact(logger, fact, localCodeExecutionContext);
 
-            if(!nodesList.Any())
+#if DEBUG
+            //Info("9BF13D07-6358-4EE3-A5DC-B8BE62C91437", $"nodesList.Count = {nodesList.Count}");
+#endif
+
+            if (!nodesList.Any())
             {
                 return new List<AstStatement>();
             }

@@ -137,6 +137,7 @@ namespace TestSandbox
             //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstRunMinimalInstanceTests();//<----------------------------
+            //TstRunMinimalInstanceWithPlatformListenerAndImportStandardLibraryTests();
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -1717,6 +1718,30 @@ primitive task SomePrimitiveTask4
                 }));
 
             _logger.Info("2F173679-CAD0-4D46-B80A-1191E9B08DD7", "End");
+        }
+
+        private static void TstRunMinimalInstanceWithPlatformListenerAndImportStandardLibraryTests()
+        {
+            _logger.Info("EA96464E-D2F8-4E10-97C3-FC2F2ADFFA1C", "Begin");
+
+            var text = @"app PeaceKeeper
+{
+    import 'stdlib';
+
+	on Enter => {
+	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
+	}
+}";
+
+            var hostListener = new Exec_Tests_HostListener1();
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListenerAndImportStandardLibrary(text,
+                (n, message) => {
+                    _logger.Info("6CAFF6B9-BA4B-4179-93A1-12B9991E9B99", $"{n}:'{message}'");
+                    return false;
+                }, hostListener));
+
+            _logger.Info("DA5C133B-1A68-45E6-A5BF-DF98C6490FE5", "End");
         }
 
         private static void TstNameHelper()

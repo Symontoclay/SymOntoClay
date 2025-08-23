@@ -94,7 +94,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             result.LogicalQueryNode = _relation;
             result.KindOfResult = KindOfResultOfNode.ProcessRelation;
 
-            var relationRelation = new InternalRelationCGNode() { Name = relationName.NameValue.Replace("`", string.Empty), Parent = _context.ConceptualGraph };
+            var relationRelation = new InternalRelationCGNode() { Name = PrepareName(relationName.NameValue), Parent = _context.ConceptualGraph };
 
             result.CGNode = relationRelation;
 
@@ -160,7 +160,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             result.LogicalQueryNode = _relation;
             result.KindOfResult = KindOfResultOfNode.ProcessRelation;
 
-            var relationRelation = new InternalRelationCGNode { Name = relationName.NameValue, Parent = _context.ConceptualGraph };
+            var relationRelation = new InternalRelationCGNode { Name = PrepareName(relationName.NameValue), Parent = _context.ConceptualGraph };
 
             result.CGNode = relationRelation;
 

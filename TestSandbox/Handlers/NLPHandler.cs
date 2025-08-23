@@ -72,8 +72,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("4D933D64-6489-47ED-8CAA-32AABCBC4B78", "Begin");
 
-            Case7();
-            //Case6();
+            //Case7();
+            Case6();
             //Case5();
             //Case4();
             //Case3();

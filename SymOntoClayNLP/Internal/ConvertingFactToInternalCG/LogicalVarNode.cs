@@ -20,13 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.NLP.Internal.InternalCG;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
@@ -39,10 +34,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         }
 
         private readonly LogicalQueryNode _var;
-
+        
         public ResultOfNode Run()
         {
-            var varName = _var.Name.NameValue;
+            var varName = PrepareName(_var.Name.NameValue);
+
+#if DEBUG
+            _logger.Info("B9364C43-64A8-4801-8091-9990A27DA25B", $"varName = {varName}");
+#endif
 
             if (_context.VarConceptDict.ContainsKey(varName))
             {
@@ -54,7 +53,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var result = new ResultOfNode();
             result.LogicalQueryNode = _var;
 
-            var concept = CreateOrGetExistingInternalConceptCGNode(conceptName);
+            var concept = CreateOrGetExistingInternalConceptCGNode(PrepareName(conceptName));
 
             if (varName == "$_")
             {

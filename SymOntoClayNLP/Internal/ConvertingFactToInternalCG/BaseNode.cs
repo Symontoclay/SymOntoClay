@@ -42,8 +42,17 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         protected readonly ContextOfConverterFactToInternalCG _context;
         protected readonly IMonitorLogger _logger;
 
+        protected string PrepareName(string name)
+        {
+            return name.Replace("`", string.Empty).Trim();
+        }
+
         protected InternalConceptCGNode CreateOrGetExistingInternalConceptCGNode(string name)
         {
+#if DEBUG
+            _logger.Info("406823EC-A65A-4CC5-9CC1-570514274B79", $"name = {name}");
+#endif
+
             var result = _context.ConceptualGraph.Children.SingleOrDefault(p => p.Kind == KindOfCGNode.Concept && p.Name == name);
 
             if (result != null)

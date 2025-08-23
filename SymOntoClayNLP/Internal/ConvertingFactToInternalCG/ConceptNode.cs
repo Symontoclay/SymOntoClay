@@ -37,7 +37,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         {
             _concept = concept;
         }
-
+        
         private readonly LogicalQueryNode _concept;
 
         public ResultOfNode Run()
@@ -45,7 +45,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var result = new ResultOfNode();
             result.KindOfResult = KindOfResultOfNode.ProcessConcept;
             result.LogicalQueryNode = _concept;
-            result.CGNode = CreateOrGetExistingInternalConceptCGNode(_concept.Name.NameValue);
+            result.CGNode = CreateOrGetExistingInternalConceptCGNode(PrepareName(_concept.Name.NameValue));
 
             return result;
         }

@@ -200,6 +200,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
         private void FillName(BaseCGNode source, BaseInternalCGNode result, ContextOfConvertingCGToInternal context)
         {
+#if DEBUG
+            _logger.Info("5169FD08-30A2-4877-BDCB-7AAA0797EB5C", $"source.Name = '{source.Name}'");
+#endif
+
             result.Name = source.Name;
         }
 
@@ -333,6 +337,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             entityCondition.Parent = parent;
             entityCondition.KindOfGraphOrConcept = KindOfInternalGraphOrConceptNode.EntityCondition;
             var entityConditionName = NameHelper.CreateRuleOrFactName().NameValue;
+
+#if DEBUG
+            _logger.Info("3FE5B3EF-2155-4FAE-B838-C749E6466C7C", $"entityConditionName = {entityConditionName}");
+#endif
+
             entityCondition.Name = entityConditionName;
 
             var entityConditionsDict = context.EntityConditionsDict;

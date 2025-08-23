@@ -51,8 +51,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
         [Parallelizable]
         public void Case1()
         {
-            throw new NotImplementedException("8483B85B-AE67-4452-85D1-2E743E258749");
-
             var text = "I like my cat.";
 
             var parser = new ATNParser(_logger, _wordsDict);
@@ -84,8 +82,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
         [Parallelizable]
         public void Case2()
         {
-            throw new NotImplementedException("7610B70A-4386-417B-90A7-0345AA52AC0B");
-
             var text = "Go to green place!";
 
             var parser = new ATNParser(_logger, _wordsDict);

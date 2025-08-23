@@ -40,6 +40,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             _context = context;
             _logger = context.Logger;
             _source = source;
+
+#if DEBUG
+            _logger.Info("401F2819-D993-43C5-9D62-EA987F357668", $"_source = {_source}");
+#endif
         }
 
         public SentenceNode()

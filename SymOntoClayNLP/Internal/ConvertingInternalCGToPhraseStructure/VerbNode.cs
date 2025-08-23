@@ -160,7 +160,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
         private (VerbPhrase, VerbPhrase) GetTargetPresentSimpleVerbForm(string verb)
         {
-            if(_subject != null)
+            if (_subject != null)
             {
                 var subjectWordFrame = _subject.RootWordFrame;
 

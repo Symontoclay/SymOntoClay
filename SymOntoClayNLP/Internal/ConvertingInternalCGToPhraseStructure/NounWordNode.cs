@@ -37,7 +37,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         {
             _logger = logger;
             _wordsDict = wordsDict;
-            _word = word;
+            _word = word/*.Replace("`", string.Empty).Trim()*/;
             _roleOfNoun = roleOfNoun;
             _mood = mood;
         }
@@ -50,11 +50,23 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
         public Word GetWord()
         {
+#if DEBUG
+            _logger.Info("06CE6419-E709-4055-BD8E-8B40F3400DC6", $"_roleOfNoun = {_roleOfNoun}");
+#endif
+
             switch (_roleOfNoun)
             {
                 case RoleOfNoun.Subject:
                     {
+#if DEBUG
+                        _logger.Info("662ADA38-0558-4988-B431-6FDD7C414D05", $"_word = '{_word}'");
+#endif
+
                         var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
+
+#if DEBUG
+                        _logger.Info("527BC61B-8A94-4FD8-97DF-BD996F9F9343", $"wordFramesList?.Count = {wordFramesList?.Count}");
+#endif
 
                         var pronounsList = wordFramesList.Where(p => p.IsPronoun).Select(p => p.AsPronoun).Where(p => p.Case == CaseOfPersonalPronoun.Subject).ToList();
 

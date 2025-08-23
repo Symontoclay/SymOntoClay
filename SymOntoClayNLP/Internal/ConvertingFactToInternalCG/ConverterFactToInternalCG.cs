@@ -51,7 +51,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             context.ConceptualGraph = outerConceptualGraph;
             context.Logger = _logger;
             context.NLPContext = nlpContext;
-
+            
             var factNode = new RuleInstanceNode(fact, context);
             var factNodeResult = factNode.Run(logger);
 

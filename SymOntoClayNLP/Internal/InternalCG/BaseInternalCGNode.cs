@@ -33,7 +33,25 @@ namespace SymOntoClay.NLP.Internal.InternalCG
     public abstract class BaseInternalCGNode : ICGNode
     {
         public abstract KindOfCGNode Kind { get; }
-        public string Name { get; set; }
+        public string Name 
+        { 
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+
+                if(_name.Contains("`"))
+                {
+                    throw new NotImplementedException($"15CDDA87-7B94-43CD-9633-510DE5C745C7: {_name}");
+                }
+            }
+        }
+
+        private string _name;
         public bool IsNegation { get; set; }
         public KindOfSpecialRelation KindOfSpecialRelation { get; set; }
         public virtual bool IsConceptualGraph => false;

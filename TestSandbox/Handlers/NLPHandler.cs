@@ -34,6 +34,7 @@ using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
+using SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using System.IO;
@@ -71,7 +72,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("4D933D64-6489-47ED-8CAA-32AABCBC4B78", "Begin");
 
-            Case6();
+            Case7();
+            //Case6();
             //Case5();
             //Case4();
             //Case3();
@@ -82,6 +84,29 @@ namespace TestSandbox.Handlers
             _logger.Info("1C22A861-96A6-46FD-9187-65762CD44423", "End");
         }
 
+        private void Case7()
+        {
+            var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
+
+            var nlpContext = _engineContext.GetNLPConverterContext();
+
+            var ruleInstance = Parse(factStr);
+
+            _logger.Info("6AC0D0D3-84F9-460C-AFD8-3B427387FB90", $"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
+
+            _logger.Info("98D4A05F-D52F-422D-A06F-DA84AC576425", $"internalCG = {internalCG}");
+
+            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+
+            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+
+            _logger.Info("3FC0D1C6-10D7-460D-92DB-24D6FFF74EE6", $"sentenceItem = {sentenceItem}");
+        }
+
         private void Case6()
         {
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
@@ -90,9 +115,13 @@ namespace TestSandbox.Handlers
 
             var ruleInstance = Parse(factStr);
 
+            _logger.Info("CE3D80A0-87A6-4FFC-A9B2-E59F989B8EF6", $"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
             var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
+
+            _logger.Info("772EB022-67A3-47BF-8C15-6CB532897F74", $"internalCG = {internalCG}");
         }
 
         private void Case5()

@@ -51,7 +51,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             context.Logger = _logger;
             context.WordsDict = _wordsDict;
             context.NLPContext = nlpContext;
-
+            
             context.KindOfQuestion = source.KindOfQuestion;
             context.Tense = source.Tense;
             context.Aspect = source.Aspect;

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -23,7 +24,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.RuleInstanceReference;
 
+        /// <inheritdoc/>
+        public override bool IsRuleInstanceReference => true;
+
+        /// <inheritdoc/>
+        public override RuleInstanceReference AsRuleInstanceReference => this;
+
         public RuleInstance CurrentRuleInstance { get; private set; }
+
+        /// <inheritdoc/>
+        public override IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName)
+        {
+#if DEBUG
+            logger.Info("7E8BD5EE-C5C9-4306-8AB0-0DC14AE622EA", $"memberName = {memberName}");
+#endif
+
+            throw new NotImplementedException("95EC3694-7C8D-49D2-A8C5-BA16729E576A");
+        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()

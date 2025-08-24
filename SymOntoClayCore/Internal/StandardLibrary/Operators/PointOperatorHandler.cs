@@ -50,35 +50,47 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 var member = leftOperand.GetMember(logger, rightOperand.AsStrongIdentifierValue.ForResolving);
 
 #if DEBUG
-                //Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
+                Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
 #endif
 
                 var value = new MemberValue(member);
                 return new ValueCallResult(value);
             }
             
-            if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
+            if (leftOperand.IsRuleInstanceReference && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.CommonConcept)
             {
-                throw new NotImplementedException("836F9722-259F-4528-8543-9D8F12C2C6ED");
+                var member = leftOperand.GetMember(logger, rightOperand.AsStrongIdentifierValue.ForResolving);
 
-                if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.CommonConcept)
-                {
-                    var ruleInstance = leftOperand.AsRuleInstance;
+#if DEBUG
+                Info("E8D46E7A-CC32-48C0-9ED2-F1BBA48BA1B1", $"member = {member}");
+#endif
 
-                    /*if (ruleInstance == localCodeExecutionContext.AddedRuleInstance)
-                    {
-                        var mutablePartValue = new MutablePartOfRuleInstanceValue(localCodeExecutionContext.MutablePart);
-
-                        var result = new PointRefValue(mutablePartValue, rightOperand);
-                        result.CheckDirty();
-                        return new ValueCallResult(result);
-                    }*/
-
-                    throw new NotImplementedException("6E572A1D-F103-473A-B433-6ABBD6802375");
-                }
-
-                throw new NotImplementedException("C379A65F-6FB0-4AF7-976A-EF645FF56444");
+                var value = new MemberValue(member);
+                return new ValueCallResult(value);
             }
+
+            //if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
+            //{
+            //    throw new NotImplementedException("836F9722-259F-4528-8543-9D8F12C2C6ED");
+
+            //    if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.CommonConcept)
+            //    {
+            //        var ruleInstance = leftOperand.AsRuleInstance;
+
+            //        /*if (ruleInstance == localCodeExecutionContext.AddedRuleInstance)
+            //        {
+            //            var mutablePartValue = new MutablePartOfRuleInstanceValue(localCodeExecutionContext.MutablePart);
+
+            //            var result = new PointRefValue(mutablePartValue, rightOperand);
+            //            result.CheckDirty();
+            //            return new ValueCallResult(result);
+            //        }*/
+
+            //        throw new NotImplementedException("6E572A1D-F103-473A-B433-6ABBD6802375");
+            //    }
+
+            //    throw new NotImplementedException("C379A65F-6FB0-4AF7-976A-EF645FF56444");
+            //}
 
             throw new NotImplementedException("2A2E0115-89CA-466B-B1A9-506E594EFB1A");
         }

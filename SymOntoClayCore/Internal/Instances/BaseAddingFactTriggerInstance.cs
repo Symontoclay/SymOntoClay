@@ -150,6 +150,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             task.Wait();
 
+            throw new NotImplementedException("3517CF57-186A-476E-9B98-D48962DEFF59");
+
             var result = new AddFactOrRuleResult() { KindOfResult = localCodeExecutionContext.KindOfAddFactResult };
 
             if (result.KindOfResult == KindOfAddFactOrRuleResult.Accept)
@@ -166,41 +168,61 @@ namespace SymOntoClay.Core.Internal.Instances
         private void AddOrReplaceTargetRuleInstanceInFactBindingVariable(List<List<VarInstance>> varsList, RuleInstance ruleInstance, RuleInstanceReference ruleInstanceReference, IVarStorage targetVarStorage, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Info("EE50A5E4-0734-44C9-B8AB-AD80408A0043", $"_hasFactBindingVariable = {_hasFactBindingVariable}");
-            Info("3DDD3844-3B2F-4134-9791-99FE0CBA7F7B", $"_factBindingVariable = {_factBindingVariable}");
+            //Info("EE50A5E4-0734-44C9-B8AB-AD80408A0043", $"_hasFactBindingVariable = {_hasFactBindingVariable}");
+            //Info("3DDD3844-3B2F-4134-9791-99FE0CBA7F7B", $"_factBindingVariable = {_factBindingVariable}");
 #endif
+
+            VarInstance factBindingVariable = null;
 
             if (_hasFactBindingVariable)
             {
                 ruleInstance.CheckDirty();
 
-                if (varsList.Any())
-                {
-                    throw new NotImplementedException("805D0445-1D9E-4CE6-9637-D94E93DDBF63");
-                }
+                factBindingVariable = GetFactBindingVariable(varsList);
 
-                targetVarStorage.SetValue(Logger, _factBindingVariable, ruleInstanceReference, localCodeExecutionContext);
+#if DEBUG
+                //Info("97C40515-8492-42A6-B785-9D29D74F8BCA", $"factBindingVariable = {factBindingVariable}");
+#endif
+
+                if(factBindingVariable == null)
+                {
+                    targetVarStorage.SetValue(Logger, _factBindingVariable, ruleInstanceReference, localCodeExecutionContext);
+                }                
             }
 
             if (varsList.Any())
             {
+                factBindingVariable ??= GetFactBindingVariable(varsList);
+
                 var targetVarsList = varsList.First();
 
                 foreach (var varItem in targetVarsList)
                 {
 #if DEBUG
-                    Info("5AACC87F-659C-4CF7-BCEA-728E46C9064C", $"varItem = {varItem}");
-                    Info("80ACB394-AC09-4D40-BE77-7EF5ED33585F", $"varItem.Value = {varItem.Value}");
+                    //Info("5AACC87F-659C-4CF7-BCEA-728E46C9064C", $"varItem = {varItem}");
+                    //Info("80ACB394-AC09-4D40-BE77-7EF5ED33585F", $"varItem.Value = {varItem.Value}");
 #endif
+
+                    if(varItem == factBindingVariable)
+                    {
+                        varItem.SetValue(Logger, ruleInstanceReference);
+                    }
 
                     targetVarStorage.Append(Logger, varItem);
                 }
             }
         }
 
-        private VarInstance GetFactBindingVariable()
+        private VarInstance GetFactBindingVariable(List<List<VarInstance>> varsList)
         {
+            if (varsList.Any())
+            {
+                var targetVarsList = varsList.First();
 
+                return targetVarsList.FirstOrDefault(p => p.Name == _factBindingVariable);
+            }
+
+            return null;
         }
 
         /// <inheritdoc/>

@@ -6299,6 +6299,15 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceReference.KindOfValue">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceReference.IsRuleInstanceReference">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceReference.AsRuleInstanceReference">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceReference.GetMember(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceReference.GetSystemValue">
             <inheritdoc/>
         </member>

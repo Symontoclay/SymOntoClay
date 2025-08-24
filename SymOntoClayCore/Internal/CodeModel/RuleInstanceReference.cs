@@ -39,7 +39,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
             logger.Info("7E8BD5EE-C5C9-4306-8AB0-0DC14AE622EA", $"memberName = {memberName}");
 #endif
 
-            throw new NotImplementedException("95EC3694-7C8D-49D2-A8C5-BA16729E576A");
+            var normalizedMemberName = memberName.NormalizedNameValue;
+
+            switch(normalizedMemberName)
+            {
+                case "o":
+                    return new ObligationModalityMember(this);
+
+                case "so":
+                    return new SelfObligationModalityMember(this);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(normalizedMemberName), normalizedMemberName, null);
+            }
         }
 
         /// <inheritdoc/>

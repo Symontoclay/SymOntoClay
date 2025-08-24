@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SymOntoClay.Core.Internal.Instances
+﻿namespace SymOntoClay.Core.Internal.Instances
 {
     public enum KindOfMember
     {
         Method,
         Field,
         Property,
-        HostMethod
+        HostMethod,
+        ObligationModality,
+        SelfObligationModality
     }
 }

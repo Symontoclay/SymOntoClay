@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 ruleInstance.CheckDirty();
 
-                targetVarStorage.SetValue(Logger, _factBindingVariable, ruleInstance, localCodeExecutionContext);
+                targetVarStorage.SetValue(Logger, _factBindingVariable, new RuleInstanceReference(ruleInstance), localCodeExecutionContext);
             }
 
             if (varsList.Any())

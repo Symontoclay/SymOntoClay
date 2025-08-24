@@ -1,10 +1,10 @@
-﻿synonym to for direction;
-
-app PeaceKeeper
+﻿app PeaceKeeper
 {
-    import 'stdlib';
+    {: gun(M16) :}
 
-	on Enter => {
-	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
+    on add fact {: hear(I, $x) & gun($x) :} ($_ >> @x)
+	{
+	    'on add fact ($_ >> @x)' >> @>log;
+		@x.so = 1;
 	}
 }

@@ -299,7 +299,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             throw new NotImplementedException("AE189C64-304A-4894-B646-7D9D27F49DB4");
         }
-
+        
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {

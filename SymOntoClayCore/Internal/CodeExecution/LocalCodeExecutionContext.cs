@@ -23,11 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -79,7 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public MutablePartOfRuleInstance MutablePart { get; set; }
 
         /// <inheritdoc/>
-        public RuleInstance AddedRuleInstance { get; set; }
+        public RuleInstanceReference AddedRuleInstance { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

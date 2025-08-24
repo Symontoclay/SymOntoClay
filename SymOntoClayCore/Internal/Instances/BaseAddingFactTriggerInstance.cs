@@ -122,12 +122,14 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Holder = _parent.Name;
             localCodeExecutionContext.Instance = _parent;
 
+            var ruleInstanceReference = new RuleInstanceReference(ruleInstance);
+
             var mutablePart = new MutablePartOfRuleInstance();
             mutablePart.Parent = ruleInstance;
 
             localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.AddingFact;
             localCodeExecutionContext.MutablePart = mutablePart;
-            localCodeExecutionContext.AddedRuleInstance = ruleInstance;
+            localCodeExecutionContext.AddedRuleInstance = ruleInstanceReference;
 
             var storagesList = _baseResolver.GetStoragesList(Logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -135,22 +137,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var targetVarStorage = targetStorage.Storage.VarStorage;
 
-            if (_hasFactBindingVariable)
-            {
-                ruleInstance.CheckDirty();
-
-                targetVarStorage.SetValue(Logger, _factBindingVariable, new RuleInstanceReference(ruleInstance), localCodeExecutionContext);
-            }
-
-            if (varsList.Any())
-            {
-                var targetVarsList = varsList.First();
-
-                foreach (var varItem in targetVarsList)
-                {
-                    targetVarStorage.Append(Logger, varItem);
-                }
-            }
+            AddOrReplaceTargetRuleInstanceInFactBindingVariable(varsList, ruleInstance, ruleInstanceReference, targetVarStorage, localCodeExecutionContext);
 
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.SetCompiledFunctionBody;
@@ -174,6 +161,46 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             return result;
+        }
+
+        private void AddOrReplaceTargetRuleInstanceInFactBindingVariable(List<List<VarInstance>> varsList, RuleInstance ruleInstance, RuleInstanceReference ruleInstanceReference, IVarStorage targetVarStorage, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            Info("EE50A5E4-0734-44C9-B8AB-AD80408A0043", $"_hasFactBindingVariable = {_hasFactBindingVariable}");
+            Info("3DDD3844-3B2F-4134-9791-99FE0CBA7F7B", $"_factBindingVariable = {_factBindingVariable}");
+#endif
+
+            if (_hasFactBindingVariable)
+            {
+                ruleInstance.CheckDirty();
+
+                if (varsList.Any())
+                {
+                    throw new NotImplementedException("805D0445-1D9E-4CE6-9637-D94E93DDBF63");
+                }
+
+                targetVarStorage.SetValue(Logger, _factBindingVariable, ruleInstanceReference, localCodeExecutionContext);
+            }
+
+            if (varsList.Any())
+            {
+                var targetVarsList = varsList.First();
+
+                foreach (var varItem in targetVarsList)
+                {
+#if DEBUG
+                    Info("5AACC87F-659C-4CF7-BCEA-728E46C9064C", $"varItem = {varItem}");
+                    Info("80ACB394-AC09-4D40-BE77-7EF5ED33585F", $"varItem.Value = {varItem.Value}");
+#endif
+
+                    targetVarStorage.Append(Logger, varItem);
+                }
+            }
+        }
+
+        private VarInstance GetFactBindingVariable()
+        {
+
         }
 
         /// <inheritdoc/>

@@ -23,11 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core
 {
@@ -48,7 +44,7 @@ namespace SymOntoClay.Core
         KindOfLocalCodeExecutionContext Kind { get; }
         KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
         MutablePartOfRuleInstance MutablePart { get; }
-        RuleInstance AddedRuleInstance { get; }
+        RuleInstanceReference AddedRuleInstance { get; }
 
         void DbgPrintContextChain(IMonitorLogger logger, string messagePointId);
     }

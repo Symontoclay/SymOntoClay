@@ -56,21 +56,23 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 var value = new MemberValue(member);
                 return new ValueCallResult(value);
             }
-
+            
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
             {
+                throw new NotImplementedException("836F9722-259F-4528-8543-9D8F12C2C6ED");
+
                 if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.CommonConcept)
                 {
                     var ruleInstance = leftOperand.AsRuleInstance;
 
-                    if (ruleInstance == localCodeExecutionContext.AddedRuleInstance)
+                    /*if (ruleInstance == localCodeExecutionContext.AddedRuleInstance)
                     {
                         var mutablePartValue = new MutablePartOfRuleInstanceValue(localCodeExecutionContext.MutablePart);
 
                         var result = new PointRefValue(mutablePartValue, rightOperand);
                         result.CheckDirty();
                         return new ValueCallResult(result);
-                    }
+                    }*/
 
                     throw new NotImplementedException("6E572A1D-F103-473A-B433-6ABBD6802375");
                 }

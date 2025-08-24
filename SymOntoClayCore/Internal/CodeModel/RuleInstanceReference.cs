@@ -1,8 +1,11 @@
-﻿using SymOntoClay.Core.DebugHelpers;
+﻿using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -69,6 +72,42 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.AppendAnnotations(this, context);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(CurrentRuleInstance), CurrentRuleInstance);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintShortObjProp(n, nameof(CurrentRuleInstance), CurrentRuleInstance);
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintBriefObjProp(n, nameof(CurrentRuleInstance), CurrentRuleInstance);
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

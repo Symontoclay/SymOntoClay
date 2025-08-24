@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Htn
         public MutablePartOfRuleInstance MutablePart => Parent.MutablePart;
 
         /// <inheritdoc/>
-        public RuleInstance AddedRuleInstance => Parent.AddedRuleInstance;
+        public RuleInstanceReference AddedRuleInstance => Parent.AddedRuleInstance;
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public BuildPlanIterationLocalCodeExecutionContext Clone()

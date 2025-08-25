@@ -357,6 +357,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.AppendCodeItem(this, context);
 
+            result.Name = NameHelper.CreateRuleOrFactName();
+
             return result;
         }
 

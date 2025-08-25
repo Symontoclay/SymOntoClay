@@ -5,7 +5,6 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
-using System;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel

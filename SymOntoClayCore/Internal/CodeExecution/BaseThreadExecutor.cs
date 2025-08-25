@@ -3326,19 +3326,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var namedParameters = _currentCodeFrame.ResolvedNamedParameterValues;
                 var positionedParameters = _currentCodeFrame.ResolvedPositionedParameterValues;
 
-                if (caller.IsPointRefValue)
-                {
-                    var currentCodeFrame = _currentCodeFrame;
-
-                    CallPointRefValue(callMethodId, caller.AsPointRefValue, _currentCodeFrame.KindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
-
-                    Logger.EndCallMethod("A96D8714-A701-4367-844C-51B0F2AD95F5", callMethodId);
-
-                    currentCodeFrame.State = CodeFrameState.EndCommandExecution;
-
-                    return;
-                }
-
                 if (caller.IsHostMethodValue)
                 {
                     var currentCodeFrame = _currentCodeFrame;
@@ -3401,34 +3388,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 syncOption:syncOption,
                 forParameterValueResolving: false);
         }
-         
-        private void CallPointRefValue(string callMethodId, PointRefValue caller,
-            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            IAnnotatedItem annotatedItem, SyncOption syncOption)
-        {
-            throw new NotImplementedException("7A74E818-3F41-44F7-A16A-BE4AA4AD5075");
-
-            /*var callerLeftOperand = caller.LeftOperand;
-            var callerRightOperand = caller.RightOperand;
-
-            if (callerLeftOperand.IsHostValue)
-            {
-                CallHost(callMethodId, callerRightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
-                return;
-            }
-
-            if(callerLeftOperand.IsStrongIdentifierValue)
-            {
-                throw new NotImplementedException("1739B790-BBAE-40DB-88A5-93A64D965F59");
-            }
-
-            var methodName = callerRightOperand.AsStrongIdentifierValue;
-
-            var method = callerLeftOperand.GetMethod(Logger, methodName, kindOfParameters, namedParameters, positionedParameters);
-
-            CallExecutable(callMethodId, null, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, false);*/
-        }
-
+        
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             IAnnotatedItem annotatedItem, SyncOption syncOption)

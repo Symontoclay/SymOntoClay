@@ -265,11 +265,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-            if (caller.IsPointRefValue)
-            {
-                return CallPointRefValue(logger, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, isSync);
-            }
-
             if (caller.IsStrongIdentifierValue)
             {
                 return CallStrongIdentifierValue(logger, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
@@ -296,18 +291,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             return result;
-        }
-
-        private Value CallPointRefValue(IMonitorLogger logger, PointRefValue caller,
-            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            bool isSync)
-        {
-            if (caller.LeftOperand.IsHostValue)
-            {
-                throw new NotImplementedException("5A03B278-5E13-4CA6-BF94-9CB35917A610");
-            }
-
-            throw new NotImplementedException("5A03B278-5E13-4CA6-BF94-9CB35917A610");
         }
 
         private Value CallStrongIdentifierValue(IMonitorLogger logger, StrongIdentifierValue methodName,

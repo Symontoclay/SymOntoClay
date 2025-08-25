@@ -47,8 +47,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
 #if DEBUG
             //Info("7313472E-E3BC-4724-9083-629F1017E0E5", $"leftOperand = {leftOperand}");
-            //Info("51F20A26-2F61-4129-BB92-DB538A43A7C2", $"callMode = {callMode}");
             //Info("AA897067-F227-481B-9AA5-072BA7723338", $"rightOperand = {rightOperand}");
+            //Info("51F20A26-2F61-4129-BB92-DB538A43A7C2", $"callMode = {callMode}");
             //Info("07025614-7A0A-43AD-BB25-DB5133590B53", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 

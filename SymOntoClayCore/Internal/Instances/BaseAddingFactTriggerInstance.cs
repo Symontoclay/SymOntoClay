@@ -122,6 +122,10 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Holder = _parent.Name;
             localCodeExecutionContext.Instance = _parent;
 
+#if DEBUG
+            Info("B39B210C-1018-4E4C-BC76-857EFEECA25D", $"ruleInstance = {ruleInstance.ToHumanizedString()}");
+#endif
+
             var ruleInstanceReference = new RuleInstanceReference(ruleInstance);
 
             var mutablePart = new MutablePartOfRuleInstance();
@@ -149,6 +153,10 @@ namespace SymOntoClay.Core.Internal.Instances
             var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
 
             task.Wait();
+
+#if DEBUG
+            Info("08965690-19E4-4139-8C27-859B4243E22C", $"ruleInstanceReference = {ruleInstanceReference.ToHumanizedString()}");
+#endif
 
             throw new NotImplementedException("3517CF57-186A-476E-9B98-D48962DEFF59");
 

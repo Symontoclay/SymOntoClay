@@ -32,11 +32,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public RuleInstance CurrentRuleInstance { get; private set; }
 
+        private bool _isCloned;
+        private object _isClonedLockObj = new object();
+
+        public void TryCloneCurrentRuleInstance()
+        {
+            lock(_isClonedLockObj)
+            {
+                if(_isCloned)
+                {
+                    return;
+                }
+
+                _isCloned = true;
+
+                CurrentRuleInstance = CurrentRuleInstance?.Clone();
+            }
+        }
+
         /// <inheritdoc/>
         public override IMember GetMember(IMonitorLogger logger, StrongIdentifierValue memberName)
         {
 #if DEBUG
-            logger.Info("7E8BD5EE-C5C9-4306-8AB0-0DC14AE622EA", $"memberName = {memberName}");
+            //logger.Info("7E8BD5EE-C5C9-4306-8AB0-0DC14AE622EA", $"memberName = {memberName}");
 #endif
 
             var normalizedMemberName = memberName.NormalizedNameValue;
@@ -97,6 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.CurrentRuleInstance = CurrentRuleInstance?.Clone(context);
+            result._isCloned = _isCloned;
 
             result.AppendAnnotations(this, context);
 
@@ -110,6 +129,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(CurrentRuleInstance), CurrentRuleInstance);
+            sb.AppendLine($"{spaces}{nameof(_isCloned)} = {_isCloned}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -122,6 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(CurrentRuleInstance), CurrentRuleInstance);
+            sb.AppendLine($"{spaces}{nameof(_isCloned)} = {_isCloned}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -134,6 +155,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(CurrentRuleInstance), CurrentRuleInstance);
+            sb.AppendLine($"{spaces}{nameof(_isCloned)} = {_isCloned}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

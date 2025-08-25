@@ -36,11 +36,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class PointRefValue : Value
     {
-        public PointRefValue(Value leftOperand, Value rightOperand)
+        /*public PointRefValue(Value leftOperand, Value rightOperand)
         {
             LeftOperand = leftOperand;
             RightOperand = rightOperand;
-        }
+        }*/
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.PointRefValue;
@@ -104,7 +104,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> context)
         {
-            if (context.ContainsKey(this))
+            throw new NotImplementedException();
+
+            /*if (context.ContainsKey(this))
             {
                 return (Value)context[this];
             }
@@ -114,7 +116,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.AppendAnnotations(this, context);
 
-            return result;
+            return result;*/
         }
 
         /// <inheritdoc/>

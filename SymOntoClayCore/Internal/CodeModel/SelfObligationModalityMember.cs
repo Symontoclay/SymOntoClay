@@ -31,7 +31,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public ValueCallResult SetValue(IMonitorLogger logger, Value value)
         {
-            throw new NotImplementedException("4889A00B-89EF-425C-88F7-EFDB2D791203");
+            _ruleInstanceReference.TryCloneCurrentRuleInstance();
+
+            _ruleInstanceReference.CurrentRuleInstance.SelfObligationModality = value;
+
+            return new ValueCallResult(value);
         }
 
         /// <inheritdoc/>

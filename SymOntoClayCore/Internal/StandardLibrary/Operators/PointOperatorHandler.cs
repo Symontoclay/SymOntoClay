@@ -39,10 +39,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            Info("099033EE-C837-4106-B08B-136AE6CA7497", $"leftOperand = {leftOperand}");
-            Info("2ACF6A1F-431D-43FB-984D-D62298CF4B44", $"rightOperand = {rightOperand}");
-            Info("8C57ECA2-FE45-4263-9003-6AB0765C7862", $"callMode = {callMode}");
-            Info("D049609C-EC5D-4A88-A208-E3693797C380", $"kindOfValueConversion = {kindOfValueConversion}");
+            //Info("099033EE-C837-4106-B08B-136AE6CA7497", $"leftOperand = {leftOperand}");
+            //Info("2ACF6A1F-431D-43FB-984D-D62298CF4B44", $"rightOperand = {rightOperand}");
+            //Info("8C57ECA2-FE45-4263-9003-6AB0765C7862", $"callMode = {callMode}");
+            //Info("D049609C-EC5D-4A88-A208-E3693797C380", $"kindOfValueConversion = {kindOfValueConversion}");
 #endif
 
             if ((leftOperand.IsHostValue || leftOperand.IsThreadExecutorValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue)
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 var member = leftOperand.GetMember(logger, rightOperand.AsStrongIdentifierValue.ForResolving);
 
 #if DEBUG
-                Info("E8D46E7A-CC32-48C0-9ED2-F1BBA48BA1B1", $"member = {member}");
+                //Info("E8D46E7A-CC32-48C0-9ED2-F1BBA48BA1B1", $"member = {member}");
 #endif
 
                 var value = new MemberValue(member);

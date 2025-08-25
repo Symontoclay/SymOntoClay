@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.CLI.Helpers.CommandLineParsing;
@@ -48,7 +49,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             Run(args, defaultConfiguration);
         }
-
+        
         public void Run(string[] args, LogFileCreatorInheritableOptions defaultConfiguration)
         {
 #if DEBUG
@@ -66,7 +67,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var logFileBuilderOptions = parseArgsResult.Options;
 
 #if DEBUG
-            //_logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+            _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
 #endif
 
             if (logFileBuilderOptions.IsHelp)
@@ -96,7 +97,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var options = LoadOptions(defaultConfiguration, logFileBuilderOptions.ConfigurationFileName);
 
 #if DEBUG
-            //_logger.Info($"options = {options}");
+            _logger.Info($"options = {options}");
 #endif
 
             if (logFileBuilderOptions.Input != null)
@@ -145,7 +146,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
 #if DEBUG
-            //_logger.Info($"options (2) = {options}");
+            _logger.Info($"options (2) = {options}");
 #endif
 
             LogFileCreator.Run(options, _logger);

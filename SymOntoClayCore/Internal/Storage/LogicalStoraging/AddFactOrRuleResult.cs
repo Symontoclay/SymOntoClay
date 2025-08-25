@@ -36,10 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         public KindOfAddFactOrRuleResult KindOfResult { get; set; }
 
         /// <inheritdoc/>
-        public MutablePartOfRuleInstance MutablePart { get; set; }
-
-        /// <inheritdoc/>
-        IItemWithModalities IAddFactOrRuleResult.MutablePart => MutablePart;
+        public RuleInstance ChangedRuleInstance { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -60,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
-            sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
+            sb.PrintObjProp(n, nameof(ChangedRuleInstance), ChangedRuleInstance);
 
             return sb.ToString();
         }
@@ -84,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
-            sb.PrintShortObjProp(n, nameof(MutablePart), MutablePart);
+            sb.PrintShortObjProp(n, nameof(ChangedRuleInstance), ChangedRuleInstance);
 
             return sb.ToString();
         }
@@ -108,7 +105,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
-            sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);
+            sb.PrintBriefObjProp(n, nameof(ChangedRuleInstance), ChangedRuleInstance);
 
             return sb.ToString();
         }
@@ -132,7 +129,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
-            sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);
+            sb.PrintBriefObjProp(n, nameof(ChangedRuleInstance), ChangedRuleInstance);
 
             return sb.ToString();
         }
@@ -168,9 +165,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             var sb = new StringBuilder();
             sb.Append(KindOfResult);
 
-            if (MutablePart != null)
+            if (ChangedRuleInstance != null)
             {
-                sb.Append($": {MutablePart.ToHumanizedString(options)}");
+                sb.Append($": {ChangedRuleInstance.ToHumanizedString(options)}");
             }
 
             return sb.ToString();

@@ -35,6 +35,6 @@ namespace SymOntoClay.Core
     public interface IAddFactOrRuleResult: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
         KindOfAddFactOrRuleResult KindOfResult { get; }
-        IItemWithModalities MutablePart { get; }
+        RuleInstance ChangedRuleInstance { get; }
     }
 }

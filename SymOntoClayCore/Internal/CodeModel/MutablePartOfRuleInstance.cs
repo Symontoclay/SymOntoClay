@@ -30,7 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    [Obsolete]
+    [Obsolete("", true)]
     public class MutablePartOfRuleInstance: IItemWithModalities, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString
     {
         public RuleInstance Parent { get; set; }

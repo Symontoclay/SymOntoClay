@@ -34,7 +34,6 @@ namespace SymOntoClay.Core.DebugHelpers
         public HumanizedOptions HumanizedOptions { get; set; } = HumanizedOptions.ShowAll;
         public bool IsHtml { get; set; }
         public List<IObjectToString> ItemsForSelection { get; set; }
-        public MutablePartOfRuleInstance MutablePartOfRuleInstance { get; set; }
         public bool EnableMark { get; set; } = true;
         public bool EnableParamsIfEmpty { get; set; } = true;
         public bool ShowPrefixesForConceptLikeIdentifier { get; set; } = true;
@@ -47,7 +46,6 @@ namespace SymOntoClay.Core.DebugHelpers
             result.HumanizedOptions = HumanizedOptions;
             result.IsHtml = IsHtml;
             result.ItemsForSelection = ItemsForSelection?.ToList();
-            result.MutablePartOfRuleInstance = MutablePartOfRuleInstance;
             result.EnableMark = EnableMark;
             result.EnableParamsIfEmpty = EnableParamsIfEmpty;
             result.ShowPrefixesForConceptLikeIdentifier = ShowPrefixesForConceptLikeIdentifier;
@@ -76,7 +74,6 @@ namespace SymOntoClay.Core.DebugHelpers
             sb.AppendLine($"{spaces}{nameof(HumanizedOptions)} = {HumanizedOptions}");
             sb.AppendLine($"{spaces}{nameof(IsHtml)} = {IsHtml}");
             sb.PrintObjListProp(n, nameof(ItemsForSelection), ItemsForSelection);
-            sb.PrintObjProp(n, nameof(MutablePartOfRuleInstance), MutablePartOfRuleInstance);
             sb.AppendLine($"{spaces}{nameof(EnableMark)} = {EnableMark}");
             sb.AppendLine($"{spaces}{nameof(EnableParamsIfEmpty)} = {EnableParamsIfEmpty}");
             sb.AppendLine($"{spaces}{nameof(ShowPrefixesForConceptLikeIdentifier)} = {ShowPrefixesForConceptLikeIdentifier}");

@@ -72,9 +72,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
 
         /// <inheritdoc/>
-        public MutablePartOfRuleInstance MutablePart { get; set; }
-
-        /// <inheritdoc/>
         public RuleInstanceReference AddedRuleInstance { get; set; }
 
         /// <inheritdoc/>
@@ -106,7 +103,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
-            sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
             sb.PrintObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
             
             return sb.ToString();
@@ -140,7 +136,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
-            sb.PrintShortObjProp(n, nameof(MutablePart), MutablePart);
             sb.PrintShortObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();
@@ -174,7 +169,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
-            sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);
             sb.PrintBriefObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();

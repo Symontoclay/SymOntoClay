@@ -43,7 +43,6 @@ namespace SymOntoClay.Core
 
         KindOfLocalCodeExecutionContext Kind { get; }
         KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
-        MutablePartOfRuleInstance MutablePart { get; }
         RuleInstanceReference AddedRuleInstance { get; }
 
         void DbgPrintContextChain(IMonitorLogger logger, string messagePointId);

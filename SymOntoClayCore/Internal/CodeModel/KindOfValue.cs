@@ -44,7 +44,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         HostMethodValue,
         RuleInstance,
         RuleInstanceReference,
-        MutablePartOfRuleInstance,
         LogicalSearchResultValue,
         LogicalQueryOperationValue,
         FuzzyLogicNonNumericSequenceValue,

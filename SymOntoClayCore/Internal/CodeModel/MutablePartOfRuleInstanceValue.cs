@@ -34,6 +34,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
+    [Obsolete("", true)]
     public class MutablePartOfRuleInstanceValue : Value
     {
         public MutablePartOfRuleInstanceValue(MutablePartOfRuleInstance mutablePartOfRuleInstance)
@@ -42,13 +43,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override KindOfValue KindOfValue => KindOfValue.MutablePartOfRuleInstance;
-
-        /// <inheritdoc/>
-        public override bool IsMutablePartOfRuleInstanceValue => true;
-
-        /// <inheritdoc/>
-        public override MutablePartOfRuleInstanceValue AsMutablePartOfRuleInstanceValue => this;
+        public override KindOfValue KindOfValue => throw new NotImplementedException();
 
         public MutablePartOfRuleInstance MutablePartOfRuleInstance { get; private set; }
 
@@ -121,7 +116,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public MutablePartOfRuleInstanceValue Clone(Dictionary<object, object> context)
         {
-            if (context.ContainsKey(this))
+            throw new NotImplementedException();
+            /*if (context.ContainsKey(this))
             {
                 return (MutablePartOfRuleInstanceValue)context[this];
             }
@@ -129,7 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new MutablePartOfRuleInstanceValue(MutablePartOfRuleInstance.Clone(context));
             context[this] = result;
 
-            return result;
+            return result;*/
         }
 
         /// <inheritdoc/>
@@ -172,15 +168,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            return $"{spaces}{DebugHelperForRuleInstance.ToString(MutablePartOfRuleInstance.Parent, MutablePartOfRuleInstance)}";
+            return $"{spaces}{DebugHelperForRuleInstance.ToString(MutablePartOfRuleInstance.Parent)}";
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             var opt = options.Clone();
-            opt.MutablePartOfRuleInstance = MutablePartOfRuleInstance;
-
+            
             return DebugHelperForRuleInstance.ToString(MutablePartOfRuleInstance.Parent, opt);
         }
 

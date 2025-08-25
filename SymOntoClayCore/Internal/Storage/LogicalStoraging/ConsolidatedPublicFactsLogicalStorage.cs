@@ -51,7 +51,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)
             {
-                _mutablePartsDict = new Dictionary<RuleInstance, IItemWithModalities>();
                 _rejectedFacts = new HashSet<RuleInstance>();
                 _processedOnAddingFacts = new HashSet<RuleInstance>();
 
@@ -72,7 +71,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private readonly IMainStorageContext _mainStorageContext;
         private readonly ConsolidatedPublicFactsStorage _parent;
         private readonly List<ILogicalStorage> _logicalStorages = new List<ILogicalStorage>();
-        private Dictionary<RuleInstance, IItemWithModalities> _mutablePartsDict;
         private HashSet<RuleInstance> _rejectedFacts;
         private HashSet<RuleInstance> _processedOnAddingFacts;
         private readonly object _onAddingFactLockObj = new object();
@@ -224,11 +222,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         return;
 
                     case KindOfAddFactOrRuleResult.Accept:
-                        if (approvingRez.MutablePart == null)
-                        {
-                            break;
-                        }
-                        _mutablePartsDict[ruleInstance] = approvingRez.MutablePart;
                         break;
 
                     default:
@@ -498,7 +491,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 intermediateResultExplainNode.RelationsList = result;
                             }
 
-                            return logicalSearchStorageContext.Filter(logger, result, _mutablePartsDict);
+                            return logicalSearchStorageContext.Filter(logger, result);
                         }
 
                     default:
@@ -643,7 +636,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 intermediateResultExplainNode.BaseRulePartList = initialResult;
                             }
 
-                            initialResult = logicalSearchStorageContext.Filter(logger, initialResult, _mutablePartsDict).ToList();
+                            initialResult = logicalSearchStorageContext.Filter(logger, initialResult).ToList();
                         }
                         break;
 
@@ -868,7 +861,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     if(_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)
                     {
-                        _mutablePartsDict.Clear();
                         _rejectedFacts.Clear();
                         _processedOnAddingFacts.Clear();
                     }

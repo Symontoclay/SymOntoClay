@@ -128,11 +128,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var ruleInstanceReference = new RuleInstanceReference(ruleInstance);
 
-            var mutablePart = new MutablePartOfRuleInstance();
-            mutablePart.Parent = ruleInstance;
-
             localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.AddingFact;
-            localCodeExecutionContext.MutablePart = mutablePart;
             localCodeExecutionContext.AddedRuleInstance = ruleInstanceReference;
 
             var storagesList = _baseResolver.GetStoragesList(Logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
@@ -156,18 +152,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             Info("08965690-19E4-4139-8C27-859B4243E22C", $"ruleInstanceReference = {ruleInstanceReference.ToHumanizedString()}");
+            Info("B6506D49-FD89-4468-9359-0630AC950104", $"localCodeExecutionContext.KindOfAddFactResult = {localCodeExecutionContext.KindOfAddFactResult}");
 #endif
-
-            throw new NotImplementedException("3517CF57-186A-476E-9B98-D48962DEFF59");
 
             var result = new AddFactOrRuleResult() { KindOfResult = localCodeExecutionContext.KindOfAddFactResult };
 
             if (result.KindOfResult == KindOfAddFactOrRuleResult.Accept)
             {
-                if (mutablePart.ObligationModality != null || mutablePart.SelfObligationModality != null)
-                {
-                    result.MutablePart = mutablePart;
-                }
+                result.ChangedRuleInstance = ruleInstanceReference.CurrentRuleInstance;
             }
 
             return result;

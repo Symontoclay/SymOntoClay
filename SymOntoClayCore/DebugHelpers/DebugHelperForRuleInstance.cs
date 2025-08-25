@@ -37,25 +37,14 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(RuleInstance source)
         {
-            return ToString(source, null, HumanizedOptions.ShowAll);
-        }
-
-        public static string ToString(RuleInstance source, HumanizedOptions options)
-        {
-            return ToString(source, null, options);
+            return ToString(source, HumanizedOptions.ShowAll);
         }
         
-        public static string ToString(RuleInstance source, MutablePartOfRuleInstance mutablePartOfRuleInstance)
-        {
-            return ToString(source, mutablePartOfRuleInstance, HumanizedOptions.ShowAll);
-        }
-
-        public static string ToString(RuleInstance source, MutablePartOfRuleInstance mutablePartOfRuleInstance, HumanizedOptions options)
+        public static string ToString(RuleInstance source, HumanizedOptions options)
         {
             var opt = new DebugHelperOptions()
             {
-                HumanizedOptions = options,
-                MutablePartOfRuleInstance = mutablePartOfRuleInstance
+                HumanizedOptions = options
             };
 
             return ToString(source, opt);
@@ -116,25 +105,11 @@ namespace SymOntoClay.Core.DebugHelpers
                 }
             }
 
-            var mutablePartOfRuleInstance = options.MutablePartOfRuleInstance;
-
             if (source.ObligationModality != null && source.ObligationModality.KindOfValue != KindOfValue.NullValue)
             {
                 sb.Append(" o: ");
 
                 sb.Append(ModalityValueToString(source.ObligationModality, options));
-            }
-            else
-            {
-                if (mutablePartOfRuleInstance != null)
-                {
-                    if(mutablePartOfRuleInstance.ObligationModality != null && mutablePartOfRuleInstance.ObligationModality.KindOfValue != KindOfValue.NullValue)
-                    {
-                        sb.Append(" o: ");
-
-                        sb.Append(ModalityValueToString(mutablePartOfRuleInstance.ObligationModality, options));
-                    }
-                }
             }
 
             if (source.SelfObligationModality != null && source.SelfObligationModality.KindOfValue != KindOfValue.NullValue)
@@ -142,18 +117,6 @@ namespace SymOntoClay.Core.DebugHelpers
                 sb.Append(" so: ");
 
                 sb.Append(ModalityValueToString(source.SelfObligationModality, options));
-            }
-            else
-            {
-                if (mutablePartOfRuleInstance != null)
-                {
-                    if (mutablePartOfRuleInstance.SelfObligationModality != null && mutablePartOfRuleInstance.SelfObligationModality.KindOfValue != KindOfValue.NullValue)
-                    {
-                        sb.Append(" so: ");
-
-                        sb.Append(ModalityValueToString(mutablePartOfRuleInstance.SelfObligationModality, options));
-                    }
-                }
             }
 
             if (isHtml)

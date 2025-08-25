@@ -30,8 +30,7 @@ namespace SymOntoClay.Core.Internal
 {
     public interface ILogicalSearchStorageContext
     {
-        IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControll) where T : ILogicalSearchItem;
-        IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, IDictionary<RuleInstance, IItemWithModalities> additionalModalities) where T : ILogicalSearchItem;
-        IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControll, IDictionary<RuleInstance, IItemWithModalities> additionalModalities) where T : ILogicalSearchItem;
+        IList<T> Filter<T>(IMonitorLogger logger, IList<T> source) where T : ILogicalSearchItem;
+        IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControl) where T : ILogicalSearchItem;
     }
 }

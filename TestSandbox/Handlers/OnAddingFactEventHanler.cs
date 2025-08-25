@@ -82,7 +82,7 @@ namespace TestSandbox.Handlers
             return new AddFactOrRuleResult()
             {
                 KindOfResult = KindOfAddFactOrRuleResult.Accept,
-                MutablePart = new MutablePartOfRuleInstance() { ObligationModality = LogicalValue.TrueValue }
+                ChangedRuleInstance = ruleInstance
             };
         }
 
@@ -93,7 +93,7 @@ namespace TestSandbox.Handlers
             return new AddFactOrRuleResult()
             {
                 KindOfResult = KindOfAddFactOrRuleResult.Accept,
-                MutablePart = new MutablePartOfRuleInstance() { ObligationModality = LogicalValue.FalseValue }
+                ChangedRuleInstance = ruleInstance
             };
         }
 

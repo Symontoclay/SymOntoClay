@@ -55,21 +55,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly LogicalValueModalityResolver _logicalValueModalityResolver;
 
         /// <inheritdoc/>
-        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControll) 
+        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source) 
             where T : ILogicalSearchItem
         {
-            return Filter(logger, source, enableModalitiesControll, null);
+            return Filter(logger, source, true);
         }
 
         /// <inheritdoc/>
-        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, IDictionary<RuleInstance, IItemWithModalities> additionalModalities) 
-            where T : ILogicalSearchItem
-        {
-            return Filter(logger, source, true, additionalModalities);
-        }
-
-        /// <inheritdoc/>
-        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControll, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
+        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControl)
             where T : ILogicalSearchItem
         {
             if (source.IsNullOrEmpty())
@@ -79,30 +72,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             source = _logicalValueModalityResolver.FilterByTypeOfAccess(logger, source, _localCodeExecutionContext, true);
 
-            if (enableModalitiesControll)
+            if (enableModalitiesControl)
             {
                 if (_hasObligationModality)
                 {
-                    if(additionalModalities == null)
-                    {
-                        source = source.Where(p => _logicalValueModalityResolver.IsFit(logger, p.ObligationModality, _obligationModality, _localCodeExecutionContext)).ToList();
-                    }
-                    else
-                    {
-                        source = source.Where(p => IsFit(logger, p, p.ObligationModality, _obligationModality, _localCodeExecutionContext, KindOfCheckedModality.ObligationModality, additionalModalities)).ToList();
-                    }                    
+                    source = source.Where(p => _logicalValueModalityResolver.IsFit(logger, p.ObligationModality, _obligationModality, _localCodeExecutionContext)).ToList();                  
                 }
 
                 if (_hasSelfObligationModality)
                 {
-                    if (additionalModalities == null)
-                    {
-                        source = source.Where(p => _logicalValueModalityResolver.IsFit(logger, p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext)).ToList();
-                    }
-                    else
-                    {
-                        source = source.Where(p => IsFit(logger, p, p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext, KindOfCheckedModality.SelfObligationModality, additionalModalities)).ToList();
-                    }                    
+                    source = source.Where(p => _logicalValueModalityResolver.IsFit(logger, p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext)).ToList();
                 }
             }
 
@@ -113,41 +92,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             ObligationModality,
             SelfObligationModality
-        }
-
-        private bool IsFit(IMonitorLogger logger, ILogicalSearchItem item, Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext, KindOfCheckedModality kindOfCheckedModality, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
-        {
-            var originalRuleInstance = item.RuleInstance.Original;
-
-            if (additionalModalities.ContainsKey(originalRuleInstance))
-            {
-                var additionalPart = additionalModalities[originalRuleInstance];
-
-                Value additionalModalityValue = null;
-
-                switch (kindOfCheckedModality)
-                {
-                    case KindOfCheckedModality.ObligationModality:
-                        additionalModalityValue = additionalPart.ObligationModality;
-                        break;
-
-                    case KindOfCheckedModality.SelfObligationModality:
-                        additionalModalityValue = additionalPart.SelfObligationModality;
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfCheckedModality), kindOfCheckedModality, null);
-                }
-
-                if(additionalModalityValue == null)
-                {
-                    return _logicalValueModalityResolver.IsFit(logger, modalityValue, queryModalityValue, _localCodeExecutionContext);
-                }
-
-                return _logicalValueModalityResolver.IsFit(logger, additionalModalityValue, queryModalityValue, _localCodeExecutionContext);
-            }
-
-            return _logicalValueModalityResolver.IsFit(logger, modalityValue, queryModalityValue, _localCodeExecutionContext);
         }
     }
 }

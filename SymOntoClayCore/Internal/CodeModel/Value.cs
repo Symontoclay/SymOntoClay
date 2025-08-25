@@ -81,9 +81,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsRuleInstanceReference => false;
         public virtual RuleInstanceReference AsRuleInstanceReference => null;
 
-        public virtual bool IsMutablePartOfRuleInstanceValue => false;
-        public virtual MutablePartOfRuleInstanceValue AsMutablePartOfRuleInstanceValue => null;
-
         public virtual bool IsLogicalSearchResultValue => false;
         public virtual LogicalSearchResultValue AsLogicalSearchResultValue => null;
 

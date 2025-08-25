@@ -57,9 +57,6 @@ namespace SymOntoClay.Core.Internal.Htn
         public KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
 
         /// <inheritdoc/>
-        public MutablePartOfRuleInstance MutablePart => Parent.MutablePart;
-
-        /// <inheritdoc/>
         public RuleInstanceReference AddedRuleInstance => Parent.AddedRuleInstance;
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
@@ -116,7 +113,6 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
-            sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
             sb.PrintObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();
@@ -150,7 +146,6 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
-            sb.PrintShortObjProp(n, nameof(MutablePart), MutablePart);
             sb.PrintShortObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();
@@ -184,7 +179,6 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.{nameof(OwnerStorage.TargetClassName)} = {OwnerStorage?.TargetClassName?.ToHumanizedLabel()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
-            sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);
             sb.PrintBriefObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();

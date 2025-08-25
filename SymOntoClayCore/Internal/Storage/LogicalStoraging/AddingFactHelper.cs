@@ -20,18 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.Core.EventsInterfaces;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
@@ -41,8 +37,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
 
-            var rawObligationsModalitiesList = new List<Value>();
-            var rawSelfObligationsModalitiesList = new List<Value>();
+            var changedRuleInstancesList = new List<RuleInstance>();
 
             foreach (var item in onAddingFactHandlers)
             {
@@ -64,12 +59,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     resultsOfCallList.Add(resultOfCall);
 
-                    var mutablePart = resultOfCall.MutablePart;
+                    var changedRuleInstance = resultOfCall.ChangedRuleInstance;
 
-                    if (mutablePart != null)
+                    if (changedRuleInstance != null)
                     {
-                        rawObligationsModalitiesList.Add(mutablePart.ObligationModality);
-                        rawSelfObligationsModalitiesList.Add(mutablePart.SelfObligationModality);
+                        changedRuleInstancesList.Add(changedRuleInstance);
                     }
                 }
                 catch(Exception e)
@@ -88,21 +82,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 return resultsOfCallList.Single();
             }
 
-            if (resultsOfCallList.All(p => p.MutablePart == null))
-            {
-                return resultsOfCallList.First();
-            }
-
             var result = new AddFactOrRuleResult()
             {
                 KindOfResult = KindOfAddFactOrRuleResult.Accept
             };
 
-            var resultMutablePart = new MutablePartOfRuleInstance() { Parent = ruleInstance };
-            result.MutablePart = resultMutablePart;
-
-            resultMutablePart.ObligationModality = MathValueHelper.Max(rawObligationsModalitiesList.Select(p => fuzzyLogicResolver.Resolve(logger, p, localCodeExecutionContext)));
-            resultMutablePart.SelfObligationModality = MathValueHelper.Max(rawSelfObligationsModalitiesList.Select(p => fuzzyLogicResolver.Resolve(logger, p, localCodeExecutionContext)));
+            result.ChangedRuleInstance = changedRuleInstancesList.Any() ? changedRuleInstancesList.First() : ruleInstance;
 
             return result;
         }

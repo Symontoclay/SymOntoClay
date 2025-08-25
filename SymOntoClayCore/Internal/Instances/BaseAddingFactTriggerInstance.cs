@@ -123,7 +123,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Instance = _parent;
 
 #if DEBUG
-            Info("B39B210C-1018-4E4C-BC76-857EFEECA25D", $"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            //Info("B39B210C-1018-4E4C-BC76-857EFEECA25D", $"ruleInstance = {ruleInstance.ToHumanizedString()}");
 #endif
 
             var ruleInstanceReference = new RuleInstanceReference(ruleInstance);
@@ -151,8 +151,8 @@ namespace SymOntoClay.Core.Internal.Instances
             task.Wait();
 
 #if DEBUG
-            Info("08965690-19E4-4139-8C27-859B4243E22C", $"ruleInstanceReference = {ruleInstanceReference.ToHumanizedString()}");
-            Info("B6506D49-FD89-4468-9359-0630AC950104", $"localCodeExecutionContext.KindOfAddFactResult = {localCodeExecutionContext.KindOfAddFactResult}");
+            //Info("08965690-19E4-4139-8C27-859B4243E22C", $"ruleInstanceReference = {ruleInstanceReference.ToHumanizedString()}");
+            //Info("B6506D49-FD89-4468-9359-0630AC950104", $"localCodeExecutionContext.KindOfAddFactResult = {localCodeExecutionContext.KindOfAddFactResult}");
 #endif
 
             var result = new AddFactOrRuleResult() { KindOfResult = localCodeExecutionContext.KindOfAddFactResult };

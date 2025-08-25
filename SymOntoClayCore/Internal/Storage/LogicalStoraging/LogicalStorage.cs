@@ -204,7 +204,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private bool NAppend(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
-            Info("B8355FCB-99E5-4020-8962-CA92E038FF8E", $"ruleInstance = {ruleInstance?.ToHumanizedString()}");
+            //Info("B8355FCB-99E5-4020-8962-CA92E038FF8E", $"ruleInstance = {ruleInstance?.ToHumanizedString()}");
 #endif
 
             ruleInstance = ProcessOnAddingFactHandlers(logger, ruleInstance, isPrimary);
@@ -217,7 +217,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             ruleInstance.CheckDirty();
 
 #if DEBUG
-            Info("D912C45C-3C03-4E3D-A99A-30E6FAEE5C4C", $"ruleInstance (after) = {ruleInstance?.ToHumanizedString()}");
+            //Info("D912C45C-3C03-4E3D-A99A-30E6FAEE5C4C", $"ruleInstance (after) = {ruleInstance?.ToHumanizedString()}");
 #endif
 
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)

@@ -23,9 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {

@@ -7,4 +7,11 @@
 	    'on add fact ($_ >> @x)' >> @>log;
 		@x.so = 1;
 	}
+
+	on {: hear(I, $x) & gun($x) & distance(I, $x, $y) so: 1 :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M16!!!!' >> @>log;
+    }
 }

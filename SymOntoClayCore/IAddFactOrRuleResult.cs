@@ -22,13 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core
 {

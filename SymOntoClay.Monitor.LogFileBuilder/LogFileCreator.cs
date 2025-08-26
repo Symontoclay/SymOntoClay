@@ -39,7 +39,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static void Run(LogFileCreatorOptions options, ILogger logger)
         {
 #if DEBUG
-            //_logger.Info($"options = {options}");
+            _logger.Info($"options = {options}");
 #endif
 
             options = options.Clone();

@@ -47,7 +47,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             PrepareOptions(options, logger);
 
 #if DEBUG
-            //_logger.Info($"options (after) = {options}");
+            _logger.Info($"options (after) = {options}");
 #endif
 
             var toHtml = options.ToHtml ?? false;
@@ -62,7 +62,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var showStages = (!(options.Silent ?? false)) && (logger != null);
 
 #if DEBUG
-            //_logger.Info($"showStages = {showStages}");
+            _logger.Info($"showStages = {showStages}");
 #endif
 
             if(showStages)
@@ -90,7 +90,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             };
 
 #if DEBUG
-            //_logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
+            _logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
 #endif
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
@@ -161,7 +161,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     }
 
 #if DEBUG
-                    //_logger.Info($"rowSb = {rowSb}");
+                    _logger.Info($"rowSb = {rowSb}");
 #endif
 
                     sw.WriteLine(logFileCreatorContext.DecorateItem(message.GlobalMessageNumber, rowSb.ToString()));

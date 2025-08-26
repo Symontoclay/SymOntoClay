@@ -35,7 +35,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public class FileStreamsStorage: IDisposable
     {
 #if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public FileStreamsStorage(FileStreamsStorageOptions options)
@@ -124,6 +124,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 {
                     var fileName = Path.Combine(_options.OutputDirectory, NGetFileName(nodeId, threadId));
+
+#if DEBUG
+                    //_logger.Info($"fileName = {fileName}");
+#endif
+
                     fileNamesDict[threadId] = fileName;
                     var stream = CreateStream(fileName);
                     stream.AutoFlush = true;

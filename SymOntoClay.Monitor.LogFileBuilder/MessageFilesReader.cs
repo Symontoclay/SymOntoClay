@@ -26,8 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
@@ -37,24 +35,66 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public static List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> GetFileNames(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages)
+        private const int _nodeLevel = 2;
+        private const int _threadLevel = 3;
+
+        public static List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> GetFileNames(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
 #endif
 
             var fileNamesList = new List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)>();
 
-            FillUpFileNames(ref fileNamesList, targetDirectoryName, targetKindOfMessages);
+            FillUpFileNames(ref fileNamesList, targetDirectoryName, targetKindOfMessages, 1, targetNodes, targetThreads);
 
             return fileNamesList;
         }
 
-        private static void FillUpFileNames(ref List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages)
+        private static void FillUpFileNames(ref List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            _globalLogger.Info($"levelNum = {levelNum}");
 #endif
+
+            switch(levelNum)
+            {
+                case _nodeLevel:
+                    if(targetNodes != null)
+                    {
+                        var directoryInfo = new DirectoryInfo(targetDirectoryName);
+
+#if DEBUG
+                        _globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
+#endif
+
+                        if(!targetNodes.Contains(directoryInfo.Name))
+                        {
+                            return;
+                        }
+                    }
+                    break;
+
+                case _threadLevel:
+                    if(targetThreads != null)
+                    {
+                        var directoryInfo = new DirectoryInfo(targetDirectoryName);
+
+#if DEBUG
+                        _globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
+#endif
+
+                        if(!targetThreads.Contains(directoryInfo.Name))
+                        {
+                            return;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
 
             var filesList = Directory.GetFiles(targetDirectoryName).Where(p => p.EndsWith(FileCacheItemInfo.FileExt)).Select(p => (FileCacheItemInfo.GetFileInfo(p), p));
 
@@ -67,9 +107,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             var subDirectories = Directory.GetDirectories(targetDirectoryName);
 
+            var nextLevelNum = levelNum + 1;
+
             foreach (var subDirectory in subDirectories)
             {
-                FillUpFileNames(ref result, subDirectory, targetKindOfMessages);
+                FillUpFileNames(ref result, subDirectory, targetKindOfMessages, nextLevelNum, targetNodes, targetThreads);
             }
         }
     }

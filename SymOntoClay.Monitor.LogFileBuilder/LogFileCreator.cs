@@ -70,7 +70,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 logger.Info("Fetching file names");
             }
 
-            var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages).OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
+            var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages, options.TargetNodes, options.TargetThreads).OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
 
             var fileNamesListCount = fileNamesList.Count;
 
@@ -131,14 +131,20 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     //_logger.Info($"message = {message}");
 #endif
 
-                    if (!options.TargetNodes?.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)) ?? false)
+                    if (options.TargetNodes != null)
                     {
-                        continue;
+                        if(!options.TargetNodes.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            continue;
+                        }                        
                     }
 
-                    if (!options.TargetThreads?.Any(p => p.Equals(message.ThreadId, StringComparison.OrdinalIgnoreCase)) ?? false)
+                    if (options.TargetThreads != null)
                     {
-                        continue;
+                        if(!options.TargetThreads.Any(p => p.Equals(message.ThreadId, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            continue;
+                        }
                     }
 
                     var sw = fileStreamsStorage.GetStreamWriter(message.NodeId, message.ThreadId);

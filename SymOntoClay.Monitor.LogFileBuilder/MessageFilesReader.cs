@@ -54,8 +54,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private static void FillUpFileNames(ref List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
-            _globalLogger.Info($"levelNum = {levelNum}");
+            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            //_globalLogger.Info($"levelNum = {levelNum}");
 #endif
 
             switch(levelNum)
@@ -66,7 +66,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         var directoryInfo = new DirectoryInfo(targetDirectoryName);
 
 #if DEBUG
-                        _globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
+                        //_globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
 #endif
 
                         if(!targetNodes.Contains(directoryInfo.Name))
@@ -82,7 +82,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         var directoryInfo = new DirectoryInfo(targetDirectoryName);
 
 #if DEBUG
-                        _globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
+                        //_globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
 #endif
 
                         if(!targetThreads.Contains(directoryInfo.Name))

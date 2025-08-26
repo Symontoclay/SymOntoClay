@@ -97,9 +97,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             //using var sw = new StreamWriter(options.OutputFileName);
 
+            var hasFiltering = options.TargetNodes != null || options.TargetThreads != null;
+
+#if DEBUG
+            _logger.Info($"hasFiltering = {hasFiltering}");
+#endif
+
             var rowOptionsList = options.Layout;
 
             var n = 0;
+            var writtenN = 0;
 
             string text = null;
             BaseMessage message = null;
@@ -167,8 +174,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     }
 
 #if DEBUG
-                    _logger.Info($"rowSb = {rowSb}");
+                    //_logger.Info($"rowSb = {rowSb}");
 #endif
+
+                    writtenN++;
 
                     sw.WriteLine(logFileCreatorContext.DecorateItem(message.GlobalMessageNumber, rowSb.ToString()));
                 }
@@ -182,7 +191,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (showStages)
             {
-                logger.Info($"All fetched {fileNamesListCount} file names processed");
+                logger.Info($"All fetched {fileNamesListCount} file names processed.");
+
+                if(hasFiltering)
+                {
+                    if(writtenN == 0)
+                    {
+                        logger.Info("No file names are displayed.");
+                    }
+                    else
+                    {
+                        logger.Info($"{writtenN} file names are displayed.");
+                    }
+                }
             }
         }
 

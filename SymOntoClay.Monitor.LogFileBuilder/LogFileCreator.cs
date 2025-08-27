@@ -44,7 +44,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             options = options.Clone();
 
-            PrepareOptions(options, logger);
+            LogFileCreatorOptionsHelper.PrepareOptions(options, logger);
 
 #if DEBUG
             _logger.Info($"options (after) = {options}");
@@ -204,28 +204,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         logger.Info($"{writtenN} file names are displayed.");
                     }
                 }
-            }
-        }
-
-        public static void PrepareOptions(LogFileCreatorOptions options, ILogger logger)
-        {
-#if DEBUG
-            //_logger.Info($"options = {options}");
-#endif
-
-            if (!string.IsNullOrWhiteSpace(options.SourceDirectoryName))
-            {
-                options.SourceDirectoryName = EVPath.Normalize(options.SourceDirectoryName);
-            }
-
-            if (!string.IsNullOrWhiteSpace(options.OutputDirectory))
-            {
-                options.OutputDirectory = EVPath.Normalize(options.OutputDirectory);
-            }
-
-            if (!string.IsNullOrWhiteSpace(options.DotAppPath))
-            {
-                options.DotAppPath = EVPath.Normalize(options.DotAppPath);
             }
         }
     }

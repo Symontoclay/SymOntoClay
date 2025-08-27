@@ -149,7 +149,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"options (2) = {options}");
 #endif
 
-            LogFileCreator.Run(options, _logger);
+            //LogFileCreator.Run(options, _logger);
+            StatLogFileCreator.Run(options, _logger);
         }
 
         private (LogFileBuilderOptions Options, bool HasErrors) ParseArgs(string[] args)

@@ -37,6 +37,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 {
     public class LogFileCreatorOptions : IObjectToString
     {
+        public LogFileBuilderMode? Mode { get; set; } = LogFileBuilderMode.None;
         public string SourceDirectoryName { get; set; }
         public IEnumerable<string> TargetNodes { get; set; }
         public IEnumerable<string> TargetThreads { get; set; }
@@ -67,6 +68,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             var result = new LogFileCreatorOptions();
+            result.Mode = Mode;
             result.SourceDirectoryName = SourceDirectoryName;
             result.TargetNodes = TargetNodes?.ToList();
             result.TargetThreads = TargetThreads?.ToList();
@@ -86,7 +88,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         public void Write(LogFileCreatorOptions source)
         {
-            if(source.SourceDirectoryName != null)
+            if (source.Mode != null)
+            {
+                Mode = source.Mode;
+            }
+
+            if (source.SourceDirectoryName != null)
             {
                 SourceDirectoryName = source.SourceDirectoryName;
             }
@@ -174,6 +181,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Mode)} = {Mode}");
             sb.AppendLine($"{spaces}{nameof(SourceDirectoryName)} = {SourceDirectoryName}");
             sb.PrintPODList(n, nameof(TargetNodes), TargetNodes);
             sb.PrintPODList(n, nameof(TargetThreads), TargetThreads);
@@ -194,7 +202,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static LogFileCreatorOptions DefaultOptions => new LogFileCreatorOptions()
         {
             FileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
-             {
+            {
                 new NodeIdFileNameTemplateOptionItem(),
                 new TextFileNameTemplateOptionItem()
                 {

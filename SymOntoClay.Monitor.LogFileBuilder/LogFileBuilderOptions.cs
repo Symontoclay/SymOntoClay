@@ -33,6 +33,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 {
     public class LogFileBuilderOptions : IObjectToString
     {
+        public LogFileBuilderMode? Mode { get; set; }
         public bool IsHelp { get; set; }
         public string Input { get; set; }
         public string Output { get; set; }
@@ -63,6 +64,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Mode)} = {Mode}");
             sb.AppendLine($"{spaces}{nameof(IsHelp)} = {IsHelp}");
             sb.AppendLine($"{spaces}{nameof(Input)} = {Input}");
             sb.AppendLine($"{spaces}{nameof(Output)} = {Output}");

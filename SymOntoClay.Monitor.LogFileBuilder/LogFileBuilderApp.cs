@@ -97,8 +97,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var options = LoadOptions(defaultConfiguration, logFileBuilderOptions.ConfigurationFileName);
 
 #if DEBUG
-            _logger.Info($"options = {options}");
+            _logger.Info($"options = {options}");            
 #endif
+
+            if (logFileBuilderOptions.Mode != null)
+            {
+                options.Mode = logFileBuilderOptions.Mode;
+            }
 
             if (logFileBuilderOptions.Input != null)
             {
@@ -146,11 +151,26 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
 #if DEBUG
+            options.Mode = LogFileBuilderMode.Stat;
             _logger.Info($"options (2) = {options}");
 #endif
 
-            //LogFileCreator.Run(options, _logger);
-            StatLogFileCreator.Run(options, _logger);
+            var mode = options.Mode;
+
+            switch(mode)
+            {
+                case LogFileBuilderMode.LogFile:
+                    LogFileCreator.Run(options, _logger);
+                    break;
+
+                case LogFileBuilderMode.Stat:
+                case LogFileBuilderMode.StatAndFiles:
+                    StatLogFileCreator.Run(options, _logger);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+            }
         }
 
         private (LogFileBuilderOptions Options, bool HasErrors) ParseArgs(string[] args)

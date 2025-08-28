@@ -14,7 +14,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static void Run(LogFileCreatorOptions options, ILogger logger)
         {
 #if DEBUG
-            //_logger.Info($"options = {options}");
+            _logger.Info($"options = {options}");
 #endif
 
             options = options.Clone();
@@ -22,8 +22,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             LogFileCreatorOptionsHelper.PrepareOptions(options, logger);
 
 #if DEBUG
-            //_logger.Info($"options (after) = {options}");
+            _logger.Info($"options (after) = {options}");
 #endif
+
+            if(options.ToHtml ?? false)
+            {
+                throw new NotImplementedException();
+            }
 
             var now = DateTime.Now;
 

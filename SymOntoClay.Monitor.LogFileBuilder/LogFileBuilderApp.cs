@@ -151,7 +151,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
 #if DEBUG
-            options.Mode = LogFileBuilderMode.Stat;
+            options.Mode = LogFileBuilderMode.StatAndFiles;
             _logger.Info($"options (2) = {options}");
 #endif
 

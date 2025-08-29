@@ -95,8 +95,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
 
-            //using var sw = new StreamWriter(options.OutputFileName);
-
             var hasFiltering = options.TargetNodes != null || options.TargetThreads != null;
 
 #if DEBUG

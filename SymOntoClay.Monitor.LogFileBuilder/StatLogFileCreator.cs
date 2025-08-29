@@ -25,18 +25,40 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"options (after) = {options}");
 #endif
 
-            if(options.ToHtml ?? false)
+            var toHtml = options.ToHtml ?? false;
+
+            var logFileCreatorContext = new LogFileCreatorContext(
+                dotAppPath: options.DotAppPath,
+                outputDirectory: options.OutputDirectory,
+                toHtml: toHtml,
+                isAbsUrl: options.IsAbsUrl ?? false,
+                fileNameTemplate: options.FileNameTemplate);
+
+            var fileStreamsStorageOptions = new FileStreamsStorageOptions()
             {
-                throw new NotImplementedException();
-            }
+                OutputDirectory = options.OutputDirectory,
+                FileNameTemplate = options.FileNameTemplate,
+                SeparateOutputByNodes = options.SeparateOutputByNodes ?? false,
+                SeparateOutputByThreads = options.SeparateOutputByThreads ?? false,
+                ToHtml = toHtml,
+                LogFileCreatorContext = logFileCreatorContext
+            };
+
+#if DEBUG
+            _logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
+#endif
+
+            using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
+
+            var outputSw = fileStreamsStorage.GetStreamWriter("Stat", string.Empty);
 
             var now = DateTime.Now;
 
-            var outputFileName = Path.Combine(options.OutputDirectory, $"Stat_{now.ToString(LogFileBuilderConstants.LongDateTimeFormat).Replace(':', '_').Trim()}.txt");
+            //var outputFileName = Path.Combine(options.OutputDirectory, $"Stat_{now.ToString(LogFileBuilderConstants.LongDateTimeFormat).Replace(':', '_').Trim()}.txt");
 
-            var outputSw = new StreamWriter(outputFileName);
-            outputSw.AutoFlush = true;
-            outputSw.WriteLine("Statistic:");
+            //var outputSw = new StreamWriter(outputFileName);
+            //outputSw.AutoFlush = true;
+            outputSw.WriteLine(logFileCreatorContext.DecorateItem("Statistic:"));
             outputSw.WriteLine(now.ToString(LogFileBuilderConstants.LongDateTimeFormat));
             outputSw.WriteLine($"Source: '{options.SourceDirectoryName}'");            
             outputSw.WriteLine();

@@ -123,6 +123,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return content;
         }
 
+        public string DecorateItem(string content)
+        {
+            if (_toHtml)
+            {
+                return $"<p>{content}</p>";
+            }
+
+            return content;
+        }
+
         /// <inheritdoc/>
         public (string AbsoluteName, string RelativeName) ConvertDotStrToImg(string dotStr, string targetFileName)
         {

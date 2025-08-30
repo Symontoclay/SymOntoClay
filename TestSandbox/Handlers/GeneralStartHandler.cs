@@ -131,7 +131,7 @@ namespace TestSandbox.Handlers
                 Mode = LogFileBuilderMode.StatAndFiles
             });
 
-            //_globalLogger.Info($"options = {options}");
+            _globalLogger.Info($"options = {options}");
 
             LogFileCreator.Run(options, _globalLogger);
 

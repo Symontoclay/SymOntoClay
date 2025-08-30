@@ -54,14 +54,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             var now = DateTime.Now;
 
-            //var outputFileName = Path.Combine(options.OutputDirectory, $"Stat_{now.ToString(LogFileBuilderConstants.LongDateTimeFormat).Replace(':', '_').Trim()}.txt");
-
-            //var outputSw = new StreamWriter(outputFileName);
-            //outputSw.AutoFlush = true;
-            outputSw.WriteLine(logFileCreatorContext.DecorateItem("Statistic:"));
-            outputSw.WriteLine(now.ToString(LogFileBuilderConstants.LongDateTimeFormat));
-            outputSw.WriteLine($"Source: '{options.SourceDirectoryName}'");            
-            outputSw.WriteLine();
+            outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine("Statistic:"));
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine(now.ToString(LogFileBuilderConstants.LongDateTimeFormat)));
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Source: '{options.SourceDirectoryName}'"));            
+            outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
             var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, null, null, null);
 
@@ -75,9 +72,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_logger.Info($"fileNamesDictByNodes.Count = {fileNamesDictByNodes.Count}");
 #endif
 
-            outputSw.WriteLine($"Messages: {fileNamesList.Count}");
-            outputSw.WriteLine($"Nodes: {fileNamesDictByNodes.Count}");
-            outputSw.WriteLine();
+            outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {fileNamesList.Count}"));
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Nodes: {fileNamesDictByNodes.Count}"));
+            outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
             foreach (var fileNamesByNodesKvpItem in fileNamesDictByNodes.OrderByDescending(p => p.Value.Count))
             {
@@ -87,10 +85,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 //_logger.Info($"fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal) = {fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}");
 #endif
 
-                outputSw.WriteLine($"Node Id: {fileNamesByNodesKvpItem.Key}");
-                outputSw.WriteLine($"Messages: {fileNamesByNodesKvpItem.Value.Count}");
-                outputSw.WriteLine($"Errors: {fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}");
-                outputSw.WriteLine();
+                outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Node Id: {fileNamesByNodesKvpItem.Key}"));
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {fileNamesByNodesKvpItem.Value.Count}"));
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
+                outputSw.WriteLine(logFileCreatorContext.EndParagraph());
             }
         }
     }

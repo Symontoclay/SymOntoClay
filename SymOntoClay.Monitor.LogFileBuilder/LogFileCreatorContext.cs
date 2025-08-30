@@ -110,27 +110,57 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         }
 
         /// <inheritdoc/>
-        public string DecorateItem(ulong globalMessageNumber, string content)
+        public string DecorateItemAsParagraph(ulong globalMessageNumber, string content)
         {
             if(_toHtml)
             {
                 return $"""
                 <a name="id_{globalMessageNumber}"/>
-                <p>{content}</p>
+                <p>{PrepareHtmlContent(content)}</p>
                 """;
             }
 
             return content;
         }
 
-        public string DecorateItem(string content)
+        public string DecorateItemAsParagraph(string content)
         {
             if (_toHtml)
             {
-                return $"<p>{content}</p>";
+                return $"<p>{PrepareHtmlContent(content)}</p>";
             }
 
             return content;
+        }
+
+        public string BeginParagraph()
+        {
+            if (_toHtml)
+            {
+                return "<p>";
+            }
+
+            return string.Empty;
+        }
+
+        public string EndParagraph()
+        {
+            if (_toHtml)
+            {
+                return "</p>";
+            }
+
+            return string.Empty;
+        }
+
+        public string DecorateAsPreTextLine(string content)
+        {
+            if (_toHtml)
+            {
+                return $"{PrepareHtmlContent(content)}<br/>";
+            }
+
+            return string.Empty;
         }
 
         /// <inheritdoc/>
@@ -244,25 +274,25 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 //_gbcLogger.Info($"pos = {pos}");
 #endif
 
-                var openBraketPoint = content.IndexOf("(", pos);
+                var openBracketPoint = content.IndexOf("(", pos);
 
 #if DEBUG
-                //_gbcLogger.Info($"openBraketPoint = {openBraketPoint}");
+                //_gbcLogger.Info($"openBracketPoint = {openBracketPoint}");
 #endif
 
-                var closeBraketPoint = content.IndexOf(")", pos);
+                var closeBracketPoint = content.IndexOf(")", pos);
 
 #if DEBUG
-                //_gbcLogger.Info($"closeBraketPoint = {closeBraketPoint}");
+                //_gbcLogger.Info($"closeBracketPoint = {closeBracketPoint}");
 #endif
 
-                var expr = content.Substring(pos, closeBraketPoint - pos + 1);
+                var expr = content.Substring(pos, closeBracketPoint - pos + 1);
 
 #if DEBUG
                 //_gbcLogger.Info($"expr = `{expr}`");
 #endif
 
-                var messageGlobalNumberStr = content.Substring(openBraketPoint + 1, closeBraketPoint - openBraketPoint - 1);
+                var messageGlobalNumberStr = content.Substring(openBracketPoint + 1, closeBracketPoint - openBracketPoint - 1);
 
 #if DEBUG
                 //_gbcLogger.Info($"messageGlobalNumberStr = `{messageGlobalNumberStr}`");
@@ -298,10 +328,20 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (_toHtml)
             {
-                return content.Replace("\n", "<br/>").Replace(" ", "&nbsp;");
+                return PrepareHtmlContent(content);
             }
             
             return content;
+        }
+
+        private string PrepareHtmlContent(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return content;
+            }
+
+            return content.Replace("\n", "<br/>").Replace(" ", "&nbsp;");
         }
     }
 }

@@ -177,7 +177,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                     writtenN++;
 
-                    sw.WriteLine(logFileCreatorContext.DecorateItem(message.GlobalMessageNumber, rowSb.ToString()));
+                    sw.WriteLine(logFileCreatorContext.DecorateItemAsParagraph(message.GlobalMessageNumber, rowSb.ToString()));
                 }
                 catch (Exception e)
                 {

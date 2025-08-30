@@ -34,8 +34,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         string DecorateFileHeader();
         string DecorateFileFooter();
         string DecorateItemAsParagraph(ulong globalMessageNumber, string content);
+        string DecorateItemAsParagraph(string content);
+        string BeginParagraph();
+        string EndParagraph();
+        string DecorateAsText(string content);
+        string DecorateAsPreTextLine(string content);
+        string DecorateAsPreTextLine();
+        string LineSeparator();
         (string AbsoluteName, string RelativeName) ConvertDotStrToImg(string dotStr, string targetFileName);
         string CreateImgLink(string imgFileName, string relativeFileName);
+        string CreateLink(string absoluteFileName, string relativeFileName, string title);
         string ResolveMessagesRefs(string content);
         string NormalizeText(string content);
     }

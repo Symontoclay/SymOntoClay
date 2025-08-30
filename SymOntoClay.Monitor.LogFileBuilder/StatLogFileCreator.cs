@@ -152,7 +152,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {itemFileNamesList.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
                 outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
-                //break;//tmp
+#if DEBUG
+                break;//tmp
+#endif
             }
         }
     }

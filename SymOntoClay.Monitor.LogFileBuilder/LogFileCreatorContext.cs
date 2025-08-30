@@ -124,6 +124,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return content;
         }
 
+        /// <inheritdoc/>
         public string DecorateItemAsParagraph(string content)
         {
             if (_toHtml)
@@ -134,6 +135,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return content;
         }
 
+        /// <inheritdoc/>
         public string BeginParagraph()
         {
             if (_toHtml)
@@ -144,6 +146,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return string.Empty;
         }
 
+        /// <inheritdoc/>
         public string EndParagraph()
         {
             if (_toHtml)
@@ -154,6 +157,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return string.Empty;
         }
 
+        /// <inheritdoc/>
         public string DecorateAsText(string content)
         {
             if (_toHtml)
@@ -164,6 +168,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return string.Empty;
         }
 
+        /// <inheritdoc/>
         public string DecorateAsPreTextLine(string content)
         {
             if (_toHtml)
@@ -174,6 +179,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return string.Empty;
         }
 
+        /// <inheritdoc/>
         public string DecorateAsPreTextLine()
         {
             if (_toHtml)
@@ -184,6 +190,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return string.Empty;
         }
 
+        /// <inheritdoc/>
         public string LineSeparator()
         {
             if (_toHtml)
@@ -287,6 +294,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return imgFileName;
         }
 
+        /// <inheritdoc/>
         public string CreateLink(string absoluteFileName, string relativeFileName, string title)
         {
 #if DEBUG

@@ -41,7 +41,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> GetFileNames(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
 #endif
 
             var fileNamesList = new List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)>();

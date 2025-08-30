@@ -126,7 +126,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     var fileName = Path.Combine(_options.OutputDirectory, NGetFileName(nodeId, threadId));
 
 #if DEBUG
-                    _logger.Info($"fileName = {fileName}");
+                    //_logger.Info($"fileName = {fileName}");
 #endif
 
                     fileNamesDict[threadId] = fileName;
@@ -146,7 +146,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     var fileName = NGetFileName(nodeId, string.Empty);
 
 #if DEBUG
-                    _logger.Info($"fileName = {fileName}");
+                    //_logger.Info($"fileName = {fileName}");
 #endif
 
                     var stream = CreateStream(Path.Combine(_options.OutputDirectory, fileName));
@@ -162,7 +162,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     var fileName = NGetFileName(nodeId, threadId);
 
 #if DEBUG
-                    _logger.Info($"fileName = {fileName}");
+                    //_logger.Info($"fileName = {fileName}");
 #endif
 
                     var stream = CreateStream(Path.Combine(_options.OutputDirectory, fileName));
@@ -179,8 +179,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string NGetFileName(string nodeId, string threadId)
         {
 #if DEBUG
-            _logger.Info($"nodeId = {nodeId}");
-            _logger.Info($"threadId = {threadId}");
+            //_logger.Info($"nodeId = {nodeId}");
+            //_logger.Info($"threadId = {threadId}");
 #endif
 
             var sb = new StringBuilder();
@@ -197,7 +197,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 var fileNameExtension = new FileInfo(result).Extension;
 
 #if DEBUG
-                _logger.Info($"fileNameExtension = {fileNameExtension}");
+                //_logger.Info($"fileNameExtension = {fileNameExtension}");
 #endif
 
                 result = result.Replace(fileNameExtension, ".html");

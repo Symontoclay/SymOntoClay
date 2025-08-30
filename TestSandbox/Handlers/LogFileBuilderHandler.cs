@@ -51,8 +51,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
+            Case15();
             //Case14();
-            Case13();
+            //Case13();
             //Case12();
             //Case11();
             //Case10();
@@ -68,6 +69,11 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case15()
+        {
+            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2025_08_25_18_03_55\ --o d:\Repos\SymOntoClay\TestSandbox\bin\Debug\net8.0\MessagesLogsOutputDir\ --mode StatAndFiles");
         }
 
         private void Case14()

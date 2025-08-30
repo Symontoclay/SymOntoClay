@@ -48,7 +48,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             LogFileCreatorOptionsHelper.PrepareOptions(options, logger);
 
 #if DEBUG
-            _logger.Info($"options (after) = {options}");
+            //_logger.Info($"options (after) = {options}");
 #endif
 
             var toHtml = options.ToHtml ?? false;
@@ -73,7 +73,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             };
 
 #if DEBUG
-            _logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
+            //_logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
 #endif
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
@@ -88,11 +88,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var showStages = (!(options.Silent ?? false)) && (logger != null);
 
 #if DEBUG
-            _logger.Info($"showStages = {showStages}");
+            //_logger.Info($"showStages = {showStages}");
 #endif
 
             if (showStages)
             {
+                logger.Info("It may take about few minutes.");
                 logger.Info("Fetching file names");
             }
 
@@ -106,7 +107,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var hasFiltering = options.TargetNodes != null || options.TargetThreads != null;
 
 #if DEBUG
-            _logger.Info($"hasFiltering = {hasFiltering}");
+            //_logger.Info($"hasFiltering = {hasFiltering}");
 #endif
 
             var rowOptionsList = options.Layout;
@@ -205,13 +206,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 if (hasFiltering)
                 {
-                    if (writtenN == 0)
+                    switch(writtenN)
                     {
-                        logger.Info("No file names are displayed.");
-                    }
-                    else
-                    {
-                        logger.Info($"{writtenN} file names are displayed.");
+                        case 0:
+                            logger.Info("No file names are displayed.");
+                            break;
+
+                        case 1:
+                            logger.Info("1 file name is displayed.");
+                            break;
+
+                        default:
+                            logger.Info($"{writtenN} file names are displayed.");
+                            break;
                     }
                 }
             }

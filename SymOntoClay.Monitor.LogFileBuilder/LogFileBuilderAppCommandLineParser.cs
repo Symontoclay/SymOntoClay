@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.CLI.Helpers.CommandLineParsing;
 using SymOntoClay.CLI.Helpers.CommandLineParsing.Options;
+using SymOntoClay.CLI.Helpers.CommandLineParsing.Options.TypeCheckers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -141,6 +142,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                                     {
                                         "--html"
                                     }
+                                },
+                                new CommandLineArgument
+                                {
+                                    Name = "--mode",
+                                    Kind = KindOfCommandLineArgument.SingleValue,
+                                    TypeChecker = new EnumChecker<LogFileBuilderMode>()
                                 }
                             }
                         }

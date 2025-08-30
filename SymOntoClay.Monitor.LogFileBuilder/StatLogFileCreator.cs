@@ -15,7 +15,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static void Run(LogFileCreatorOptions options, ILogger logger)
         {
 #if DEBUG
-            _logger.Info($"options = {options}");
+            //_logger.Info($"options = {options}");
 #endif
 
             options = options.Clone();
@@ -23,7 +23,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             LogFileCreatorOptionsHelper.PrepareOptions(options, logger);
 
 #if DEBUG
-            _logger.Info($"options (after) = {options}");
+            //_logger.Info($"options (after) = {options}");
 #endif
 
             var toHtml = options.ToHtml ?? false;
@@ -46,8 +46,35 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             };
 
 #if DEBUG
-            _logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
+            //_logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
 #endif
+
+            var showStages = (!(options.Silent ?? false)) && (logger != null);
+
+#if DEBUG
+            //_logger.Info($"showStages = {showStages}");
+#endif
+
+            var mode = options.Mode;
+
+            if (showStages)
+            {
+                switch(mode)
+                {
+                    case LogFileBuilderMode.Stat:
+                        logger.Info("It may take about a minute.");
+                        break;
+
+                    case LogFileBuilderMode.StatAndFiles:
+                        logger.Info("It may take from few minutes or about 15 minutes.");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                }
+
+                logger.Info("Fetching file names");
+            }
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
 
@@ -67,6 +94,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_logger.Info($"fileNamesList.Count = {fileNamesList.Count}");
 #endif
 
+            if (showStages)
+            {
+                logger.Info($"Fetched {fileNamesList.Count} file names");
+            }
+
             var fileNamesDictByNodes = fileNamesList.GroupBy(p => p.Item1.NodeId).ToDictionary(p => p.Key, p => p.ToList());
 
 #if DEBUG
@@ -79,8 +111,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
             outputSw.WriteLine(logFileCreatorContext.LineSeparator());
-
-            var mode = options.Mode;
 
             foreach (var fileNamesByNodesKvpItem in fileNamesDictByNodes.OrderByDescending(p => p.Value.Count))
             {
@@ -107,7 +137,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                             itemOptions.TargetNodes = new List<string> { nodeId };
 
 #if DEBUG
-                            _logger.Info($"itemOptions = {itemOptions}");
+                            //_logger.Info($"itemOptions = {itemOptions}");
 #endif
 
                             LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemFileNamesList);
@@ -121,7 +151,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                _logger.Info($"itemLogFileName = {itemLogFileName}");
+                //_logger.Info($"itemLogFileName = {itemLogFileName}");
 #endif
 
                 outputSw.WriteLine(logFileCreatorContext.BeginParagraph());

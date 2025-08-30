@@ -68,6 +68,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
 #if DEBUG
             _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+            _logger.Info($"logFileBuilderOptions = {logFileBuilderOptions}");
 #endif
 
             if (logFileBuilderOptions.IsHelp)
@@ -151,7 +152,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
 #if DEBUG
-            options.Mode = LogFileBuilderMode.StatAndFiles;
+            //options.Mode = LogFileBuilderMode.StatAndFiles;
             _logger.Info($"options (2) = {options}");
 #endif
 
@@ -175,6 +176,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private (LogFileBuilderOptions Options, bool HasErrors) ParseArgs(string[] args)
         {
+#if DEBUG
+            _logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
+#endif
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
             var result = parser.Parse(args);
@@ -192,7 +197,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var parsedArgs = result.Params;
 
 #if DEBUG
-            //_logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
+            _logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
 #endif
 
             var logFileBuilderOptions = new LogFileBuilderOptions()
@@ -207,7 +212,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 SplitByThreads = (parsedArgs.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : null),
                 ConfigurationFileName = (parsedArgs.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string)),
                 ToHtml = (parsedArgs.TryGetValue("--html", out var toHtml) ? (bool)toHtml : null),
-                IsAbsUrl = (parsedArgs.TryGetValue("--abs-url", out var isAbsUrl) ? (bool)isAbsUrl : null)
+                IsAbsUrl = (parsedArgs.TryGetValue("--abs-url", out var isAbsUrl) ? (bool)isAbsUrl : null),
+                Mode = (parsedArgs.TryGetValue("--mode", out var mode) ? (LogFileBuilderMode)mode : LogFileBuilderMode.LogFile)
             };
 
             return (logFileBuilderOptions, false);

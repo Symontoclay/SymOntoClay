@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -85,10 +86,23 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 //_logger.Info($"fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal) = {fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}");
 #endif
 
+                var nodeId = fileNamesByNodesKvpItem.Key;
+                var itemFileNamesList = fileNamesByNodesKvpItem.Value;
+
+                var itemOptions = options.Clone();
+                itemOptions.Mode = LogFileBuilderMode.LogFile;
+                itemOptions.TargetNodes = new List<string> { nodeId };
+
+#if DEBUG
+                _logger.Info($"itemOptions = {itemOptions}");
+#endif
+
+                LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemFileNamesList);
+
                 outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
-                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Node Id: {fileNamesByNodesKvpItem.Key}"));
-                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {fileNamesByNodesKvpItem.Value.Count}"));
-                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Node Id: {nodeId}"));
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {itemFileNamesList.Count}"));
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {itemFileNamesList.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
                 outputSw.WriteLine(logFileCreatorContext.EndParagraph());
             }
         }

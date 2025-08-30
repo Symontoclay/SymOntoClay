@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Common;
 using SymOntoClay.Monitor.Common.Data;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -59,25 +60,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 isAbsUrl: options.IsAbsUrl ?? false,
                 fileNameTemplate: options.FileNameTemplate);
 
-            var showStages = (!(options.Silent ?? false)) && (logger != null);
-
-#if DEBUG
-            _logger.Info($"showStages = {showStages}");
-#endif
-
-            if(showStages)
-            {
-                logger.Info("Fetching file names");
-            }
-
-            var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages, options.TargetNodes, options.TargetThreads).OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
-
-            var fileNamesListCount = fileNamesList.Count;
-
-            if (showStages)
-            {
-                logger.Info($"Fetched {fileNamesListCount} file names");
-            }
+            var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages, options.TargetNodes, options.TargetThreads);
 
             var fileStreamsStorageOptions = new FileStreamsStorageOptions()
             {
@@ -95,6 +78,31 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
 
+            RunWithPreparedOptions(options, logger, fileStreamsStorage, logFileCreatorContext, fileNamesList);
+        }
+
+        public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, LogFileCreatorContext logFileCreatorContext, List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> fileNamesList)
+        {
+            fileNamesList = fileNamesList.OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
+
+            var showStages = (!(options.Silent ?? false)) && (logger != null);
+
+#if DEBUG
+            _logger.Info($"showStages = {showStages}");
+#endif
+
+            if (showStages)
+            {
+                logger.Info("Fetching file names");
+            }
+
+            var fileNamesListCount = fileNamesList.Count;
+
+            if (showStages)
+            {
+                logger.Info($"Fetched {fileNamesListCount} file names");
+            }
+
             var hasFiltering = options.TargetNodes != null || options.TargetThreads != null;
 
 #if DEBUG
@@ -111,7 +119,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             foreach (var fileName in fileNamesList)
             {
-                if(showStages)
+                if (showStages)
                 {
                     n++;
                     logger.Info($"{n} from {fileNamesListCount}");
@@ -138,15 +146,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                     if (options.TargetNodes != null)
                     {
-                        if(!options.TargetNodes.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)))
+                        if (!options.TargetNodes.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)))
                         {
                             continue;
-                        }                        
+                        }
                     }
 
                     if (options.TargetThreads != null)
                     {
-                        if(!options.TargetThreads.Any(p => p.Equals(message.ThreadId, StringComparison.OrdinalIgnoreCase)))
+                        if (!options.TargetThreads.Any(p => p.Equals(message.ThreadId, StringComparison.OrdinalIgnoreCase)))
                         {
                             continue;
                         }
@@ -191,9 +199,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 logger.Info($"All fetched {fileNamesListCount} file names processed.");
 
-                if(hasFiltering)
+                if (hasFiltering)
                 {
-                    if(writtenN == 0)
+                    if (writtenN == 0)
                     {
                         logger.Info("No file names are displayed.");
                     }

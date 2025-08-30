@@ -22,16 +22,12 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {

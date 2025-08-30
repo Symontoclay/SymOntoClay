@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
-using SymOntoClay.Common;
 using SymOntoClay.Monitor.Common.Data;
 using System;
 using System.Collections.Generic;
@@ -196,7 +195,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                break;//tmp
+                //break;//tmp
 #endif
             }
 

@@ -1,7 +1,6 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
@@ -66,7 +65,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         break;
 
                     case LogFileBuilderMode.StatAndFiles:
-                        logger.Info("It may take from few minutes or about 15 minutes.");
+                        logger.Info("It may take from few minutes to about 15 minutes.");
                         break;
 
                     default:
@@ -183,7 +182,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
 #if DEBUG
-                break;//tmp
+                //break;//tmp
 #endif
             }
         }

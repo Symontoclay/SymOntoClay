@@ -23,8 +23,6 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CLI.Helpers;
-using SymOntoClay.CLI.Helpers.CommandLineParsing;
-using SymOntoClay.CLI.Helpers.CommandLineParsing.Options;
 using SymOntoClay.Common;
 using System;
 using System.Collections.Generic;
@@ -67,8 +65,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var logFileBuilderOptions = parseArgsResult.Options;
 
 #if DEBUG
-            _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
-            _logger.Info($"logFileBuilderOptions = {logFileBuilderOptions}");
+            //_logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+            //_logger.Info($"logFileBuilderOptions = {logFileBuilderOptions}");
 #endif
 
             if (logFileBuilderOptions.IsHelp)
@@ -98,7 +96,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var options = LoadOptions(defaultConfiguration, logFileBuilderOptions.ConfigurationFileName);
 
 #if DEBUG
-            _logger.Info($"options = {options}");            
+            //_logger.Info($"options = {options}");            
 #endif
 
             if (logFileBuilderOptions.Mode != null)
@@ -153,7 +151,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
 #if DEBUG
             //options.Mode = LogFileBuilderMode.StatAndFiles;
-            _logger.Info($"options (2) = {options}");
+            //_logger.Info($"options (2) = {options}");
 #endif
 
             var mode = options.Mode;
@@ -177,7 +175,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private (LogFileBuilderOptions Options, bool HasErrors) ParseArgs(string[] args)
         {
 #if DEBUG
-            _logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
+            //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 
             var parser = new LogFileBuilderAppCommandLineParser(true);
@@ -197,7 +195,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var parsedArgs = result.Params;
 
 #if DEBUG
-            _logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
+            //_logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
 #endif
 
             var logFileBuilderOptions = new LogFileBuilderOptions()

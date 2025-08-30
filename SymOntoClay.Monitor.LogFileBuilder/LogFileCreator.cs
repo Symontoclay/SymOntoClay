@@ -195,7 +195,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                break;//tmp
+                //break;//tmp
 #endif
             }
 

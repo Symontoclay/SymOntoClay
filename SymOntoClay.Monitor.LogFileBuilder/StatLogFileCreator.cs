@@ -132,9 +132,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         break;
 
                     case LogFileBuilderMode.StatAndFiles:
-                        outputSw.Write(logFileCreatorContext.DecorateAsText("Node Id: "));
-                        outputSw.Write(logFileCreatorContext.CreateLink(itemLogFileName.AbsoluteName, itemLogFileName.RelativeName, nodeId));
-                        outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine());
+                        if(string.IsNullOrWhiteSpace(itemLogFileName.AbsoluteName))
+                        {
+                            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Node Id: {nodeId}"));
+                        }
+                        else
+                        {
+                            outputSw.Write(logFileCreatorContext.DecorateAsText("Node Id: "));
+                            outputSw.Write(logFileCreatorContext.CreateLink(itemLogFileName.AbsoluteName, itemLogFileName.RelativeName, nodeId));
+                            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine());
+                        }
                         break;
 
                     default:
@@ -145,7 +152,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {itemFileNamesList.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
                 outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
-                break;//tmp
+                //break;//tmp
             }
         }
     }

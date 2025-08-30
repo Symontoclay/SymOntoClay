@@ -210,6 +210,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
             var fileName = GetFileName(nodeId, threadId);
 
+            if(string.IsNullOrWhiteSpace(fileName))
+            {
+                return (string.Empty, string.Empty);
+            }
+
             return (Path.Combine(_options.OutputDirectory, fileName), fileName);
         }
 
@@ -242,14 +247,29 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (!_options.SeparateOutputByThreads)
             {
-                return _fileNamesDict[nodeId][string.Empty];
+                if(_fileNamesDict.ContainsKey(nodeId))
+                {
+                    return _fileNamesDict[nodeId][string.Empty];
+                }
+
+                return string.Empty;
             }
 
 #if DEBUG
             //_logger.Info($"_fileNamesDict = {JsonConvert.SerializeObject(_fileNamesDict, Formatting.Indented)}");
 #endif
 
-            return _fileNamesDict[nodeId][threadId];
+            if(_fileNamesDict.ContainsKey(nodeId))
+            {
+                var dict = _fileNamesDict[nodeId];
+
+                if(dict.ContainsKey(threadId))
+                {
+                    return dict[threadId];
+                }                
+            }
+
+            return string.Empty;
         }
 
         /// <inheritdoc/>

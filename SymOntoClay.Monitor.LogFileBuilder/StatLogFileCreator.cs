@@ -78,6 +78,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Nodes: {fileNamesDictByNodes.Count}"));
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
+            outputSw.WriteLine(logFileCreatorContext.LineSeparator());
+
+            var mode = options.Mode;
+
             foreach (var fileNamesByNodesKvpItem in fileNamesDictByNodes.OrderByDescending(p => p.Value.Count))
             {
 #if DEBUG
@@ -89,21 +93,59 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 var nodeId = fileNamesByNodesKvpItem.Key;
                 var itemFileNamesList = fileNamesByNodesKvpItem.Value;
 
-                var itemOptions = options.Clone();
-                itemOptions.Mode = LogFileBuilderMode.LogFile;
-                itemOptions.TargetNodes = new List<string> { nodeId };
+                (string AbsoluteName, string RelativeName) itemLogFileName = (string.Empty, string.Empty);
+
+                switch(mode)
+                {
+                    case LogFileBuilderMode.Stat:
+                        break;
+
+                    case LogFileBuilderMode.StatAndFiles:
+                        {
+                            var itemOptions = options.Clone();
+                            itemOptions.Mode = LogFileBuilderMode.LogFile;
+                            itemOptions.TargetNodes = new List<string> { nodeId };
 
 #if DEBUG
-                _logger.Info($"itemOptions = {itemOptions}");
+                            _logger.Info($"itemOptions = {itemOptions}");
 #endif
 
-                LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemFileNamesList);
+                            LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemFileNamesList);
+
+                            itemLogFileName = fileStreamsStorage.GetFileComplexName(nodeId, string.Empty);
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                }
+
+#if DEBUG
+                _logger.Info($"itemLogFileName = {itemLogFileName}");
+#endif
 
                 outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
-                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Node Id: {nodeId}"));
+                switch(mode)
+                {
+                    case LogFileBuilderMode.Stat:
+                        outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Node Id: {nodeId}"));
+                        break;
+
+                    case LogFileBuilderMode.StatAndFiles:
+                        outputSw.Write(logFileCreatorContext.DecorateAsText("Node Id: "));
+                        outputSw.Write(logFileCreatorContext.CreateLink(itemLogFileName.AbsoluteName, itemLogFileName.RelativeName, nodeId));
+                        outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine());
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                }
+                
                 outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {itemFileNamesList.Count}"));
                 outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {itemFileNamesList.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
                 outputSw.WriteLine(logFileCreatorContext.EndParagraph());
+
+                break;//tmp
             }
         }
     }

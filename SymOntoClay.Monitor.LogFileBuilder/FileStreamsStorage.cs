@@ -126,7 +126,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     var fileName = Path.Combine(_options.OutputDirectory, NGetFileName(nodeId, threadId));
 
 #if DEBUG
-                    //_logger.Info($"fileName = {fileName}");
+                    _logger.Info($"fileName = {fileName}");
 #endif
 
                     fileNamesDict[threadId] = fileName;
@@ -145,6 +145,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 {
                     var fileName = NGetFileName(nodeId, string.Empty);
 
+#if DEBUG
+                    _logger.Info($"fileName = {fileName}");
+#endif
+
                     var stream = CreateStream(Path.Combine(_options.OutputDirectory, fileName));
                     stream.AutoFlush = true;
                     dict[string.Empty] = stream;
@@ -156,6 +160,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 {
                     var fileName = NGetFileName(nodeId, threadId);
+
+#if DEBUG
+                    _logger.Info($"fileName = {fileName}");
+#endif
 
                     var stream = CreateStream(Path.Combine(_options.OutputDirectory, fileName));
                     stream.AutoFlush = true;
@@ -170,6 +178,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private string NGetFileName(string nodeId, string threadId)
         {
+#if DEBUG
+            _logger.Info($"nodeId = {nodeId}");
+            _logger.Info($"threadId = {threadId}");
+#endif
+
             var sb = new StringBuilder();
 
             foreach (var item in _options.FileNameTemplate)
@@ -177,7 +190,27 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append(item.GetText(nodeId, threadId));
             }
 
-            return sb.ToString().Replace(':', '_').Trim();
+            var result = sb.ToString().Replace(':', '_').Trim();
+
+            if(_options.ToHtml)
+            {
+                var fileNameExtension = new FileInfo(result).Extension;
+
+#if DEBUG
+                _logger.Info($"fileNameExtension = {fileNameExtension}");
+#endif
+
+                result = result.Replace(fileNameExtension, ".html");
+            }
+
+            return result;
+        }
+
+        public (string AbsoluteName, string RelativeName) GetFileComplexName(string nodeId, string threadId)
+        {
+            var fileName = GetFileName(nodeId, threadId);
+
+            return (Path.Combine(_options.OutputDirectory, fileName), fileName);
         }
 
         public string GetFileName(string nodeId, string threadId)

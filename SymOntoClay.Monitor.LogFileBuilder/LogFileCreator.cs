@@ -193,6 +193,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     _logger.Info($"message = {message}");
                     _logger.Info($"e = {e}");
                 }
+
+#if DEBUG
+                break;//tmp
+#endif
             }
 
             if (showStages)

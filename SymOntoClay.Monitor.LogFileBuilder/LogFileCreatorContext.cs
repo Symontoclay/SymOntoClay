@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -153,6 +154,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return string.Empty;
         }
 
+        public string DecorateAsText(string content)
+        {
+            if (_toHtml)
+            {
+                return $"{PrepareHtmlContent(content)}";
+            }
+
+            return string.Empty;
+        }
+
         public string DecorateAsPreTextLine(string content)
         {
             if (_toHtml)
@@ -161,6 +172,26 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             return string.Empty;
+        }
+
+        public string DecorateAsPreTextLine()
+        {
+            if (_toHtml)
+            {
+                return "<br/>";
+            }
+
+            return string.Empty;
+        }
+
+        public string LineSeparator()
+        {
+            if (_toHtml)
+            {
+                return "<hr>";
+            }
+
+            return "------------------------------------------------------------------------------------------------------";
         }
 
         /// <inheritdoc/>
@@ -248,10 +279,35 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (_toHtml)
             {
-                return $"<a href=\"{(_isAbsUrl ? imgFileName : relativeFileName)}\">{imgFileName}</a>";
+                var url = PrepareUrl(_isAbsUrl ? imgFileName : relativeFileName);
+
+                return $"<a href=\"{url}\">{imgFileName}</a>";
             }
 
             return imgFileName;
+        }
+
+        public string CreateLink(string absoluteFileName, string relativeFileName, string title)
+        {
+#if DEBUG
+            //_gbcLogger.Info($"absoluteFileName = {absoluteFileName}");
+            //_gbcLogger.Info($"relativeFileName = {relativeFileName}");
+            //_gbcLogger.Info($"title = {title}");
+#endif
+
+            if (_toHtml)
+            {
+                var url = PrepareUrl(_isAbsUrl ? absoluteFileName : relativeFileName);
+
+                return $"<a href=\"{url}\">{title}</a>";
+            }
+
+            return absoluteFileName;
+        }
+
+        private string PrepareUrl(string url)
+        {
+            return url.Replace("#", "%23");
         }
 
         /// <inheritdoc/>

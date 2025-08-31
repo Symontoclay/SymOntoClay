@@ -57,8 +57,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
                 standaloneStorageSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.ThreadingSettings;
                 standaloneStorageSettings.CancellationToken = worldContext.GetCancellationToken();
-
-                HostStorage = new StandaloneStorage(standaloneStorageSettings);              
+                
+                HostStorage = new StandaloneStorage(standaloneStorageSettings);
             }
             catch (Exception e)
             {

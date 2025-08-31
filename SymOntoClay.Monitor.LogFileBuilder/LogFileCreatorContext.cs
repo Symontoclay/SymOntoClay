@@ -405,7 +405,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 return content;
             }
 
-            return content.Replace("\n", "<br/>").Replace(" ", "&nbsp;");
+            return content.Replace("\n", "<br/>");
         }
     }
 }

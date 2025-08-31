@@ -154,9 +154,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_logger.Info($"options (2) = {options}");
 #endif
 
+            Run(options);
+        }
+
+        public static void Run(LogFileCreatorOptions options)
+        {
             var mode = options.Mode;
 
-            switch(mode)
+            switch (mode)
             {
                 case LogFileBuilderMode.LogFile:
                     LogFileCreator.Run(options, _logger);

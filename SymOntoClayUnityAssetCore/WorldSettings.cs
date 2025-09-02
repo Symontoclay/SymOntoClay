@@ -77,9 +77,13 @@ namespace SymOntoClay.UnityAsset.Core
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-        public ThreadingSettings ThreadingSettings { get; set; }
-
-        public HtnExecutionSettings HtnExecutionSettings { get; set; }
+        public ThreadingSettings WorldThreadingSettings { get; set; }
+        public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
+        public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlaceDefaultThreadingSettings { get; set; }
+        
+        public HtnExecutionSettings HtnExecutionDefaultSettings { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -111,9 +115,13 @@ namespace SymOntoClay.UnityAsset.Core
 
             sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
 
-            sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
+            sb.PrintObjProp(n, nameof(WorldThreadingSettings), WorldThreadingSettings);
+            sb.PrintObjProp(n, nameof(HumanoidNpcDefaultThreadingSettings), HumanoidNpcDefaultThreadingSettings);
+            sb.PrintObjProp(n, nameof(PlayerDefaultThreadingSettings), PlayerDefaultThreadingSettings);
+            sb.PrintObjProp(n, nameof(GameObjectDefaultThreadingSettings), GameObjectDefaultThreadingSettings);
+            sb.PrintObjProp(n, nameof(PlaceDefaultThreadingSettings), PlaceDefaultThreadingSettings);
 
-            sb.PrintObjProp(n, nameof(HtnExecutionSettings), HtnExecutionSettings);
+            sb.PrintObjProp(n, nameof(HtnExecutionDefaultSettings), HtnExecutionDefaultSettings);
 
             return sb.ToString();
         }

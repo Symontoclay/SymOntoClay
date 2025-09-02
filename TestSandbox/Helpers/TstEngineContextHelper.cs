@@ -216,7 +216,7 @@ namespace TestSandbox.Helpers
 
             settings.ThreadingSettings = factorySettings.ThreadingSettings;
 
-            settings.HtnExecutionSettings = factorySettings.HtnExecutionSettings;
+            settings.HtnExecutionDefaultSettings = factorySettings.HtnExecutionSettings;
 
             return settings;
         }

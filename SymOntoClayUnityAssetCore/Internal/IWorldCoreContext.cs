@@ -42,7 +42,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
-        ThreadingSettings ThreadingSettings { get; }
+        ThreadingSettings WorldThreadingSettings { get; }
+        ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; }
+        ThreadingSettings PlayerDefaultThreadingSettings { get; }
+        ThreadingSettings GameObjectDefaultThreadingSettings { get; }
+        ThreadingSettings PlaceDefaultThreadingSettings { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
         CancellationToken GetCancellationToken();
     }

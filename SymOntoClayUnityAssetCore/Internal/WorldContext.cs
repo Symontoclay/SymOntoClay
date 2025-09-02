@@ -73,9 +73,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _cancellationTokenSource = new CancellationTokenSource();
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationToken ?? CancellationToken.None);
 
-            ThreadingSettings = settings.ThreadingSettings;
+            WorldThreadingSettings = settings.WorldThreadingSettings;
+            HumanoidNpcDefaultThreadingSettings = settings.HumanoidNpcDefaultThreadingSettings;
+            PlayerDefaultThreadingSettings = settings.PlayerDefaultThreadingSettings;
+            GameObjectDefaultThreadingSettings = settings.GameObjectDefaultThreadingSettings;
+            PlaceDefaultThreadingSettings = settings.PlaceDefaultThreadingSettings;
 
-            var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
+            var threadingSettings = settings.WorldThreadingSettings?.AsyncEvents;
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
@@ -85,7 +89,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             SoundBus = settings.SoundBus;
             StandardFactsBuilder = settings.StandardFactsBuilder;
 
-            HtnExecutionSettings = settings.HtnExecutionSettings;
+            HtnExecutionSettings = settings.HtnExecutionDefaultSettings;
         }
 
         private void CreateMonitoring(WorldSettings settings)
@@ -181,7 +185,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public IInvokerInMainThread InvokerInMainThread { get; private set; }
 
         /// <inheritdoc/>
-        public ThreadingSettings ThreadingSettings { get; private set; }
+        public ThreadingSettings WorldThreadingSettings { get; private set; }
+
+        /// <inheritdoc/>
+        public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; private set; }
+
+        /// <inheritdoc/>
+        public ThreadingSettings PlayerDefaultThreadingSettings { get; private set; }
+
+        /// <inheritdoc/>
+        public ThreadingSettings GameObjectDefaultThreadingSettings { get; private set; }
+
+        /// <inheritdoc/>
+        public ThreadingSettings PlaceDefaultThreadingSettings { get; private set; }
 
         /// <inheritdoc/>
         public HtnExecutionSettings HtnExecutionSettings { get; private set; }

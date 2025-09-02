@@ -46,7 +46,7 @@ namespace SymOntoClay.UnityAsset.Core
 
         /// <summary>
         /// Adds platform type convertor manually.
-        /// You should add platform type convertor manually using Unity3d, bacause automatic loading convertors provoces exception on Unity3d.
+        /// You should add platform type convertor manually using Unity3d, because automatic loading convertors provokes exception on Unity3d.
         /// </summary>
         /// <param name="convertor">An instance of platform type convertor.</param>
         void AddConvertor(IPlatformTypesConverter convertor);

@@ -20,28 +20,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
     public abstract class BaseManualControllingGameComponent: BaseGameComponent, IHostListener
     {
-        protected BaseManualControllingGameComponent(BaseManualControllingGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
-            : base(settings, worldContext)
+        protected BaseManualControllingGameComponent(BaseManualControllingGameComponentSettings settings, IWorldCoreGameComponentContext worldContext, KindOfWorldItem kindOfWorldItem)
+            : base(settings, worldContext, kindOfWorldItem)
         {
             BaseManualControllingGameComponentSettingsValidator.Validate(settings);
 

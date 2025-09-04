@@ -33,8 +33,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
     public abstract class BaseStoredGameComponent: BaseGameComponent
     {
-        protected BaseStoredGameComponent(BaseStoredGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
-            : base(settings, worldContext)
+        protected BaseStoredGameComponent(BaseStoredGameComponentSettings settings, IWorldCoreGameComponentContext worldContext, KindOfWorldItem kindOfWorldItem)
+            : base(settings, worldContext, kindOfWorldItem)
         {
             try
             {
@@ -55,7 +55,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.Categories = settings.Categories;
                 standaloneStorageSettings.EnableCategories = settings.EnableCategories;
 
-                standaloneStorageSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.ThreadingSettings;
+                standaloneStorageSettings.ThreadingSettings = kindOfWorldItem switch
+                {
+                    KindOfWorldItem.Player => worldContext.PlayerDefaultThreadingSettings,
+                    KindOfWorldItem.GameObject => worldContext.GameObjectDefaultThreadingSettings,
+                    KindOfWorldItem.Place => worldContext.PlaceDefaultThreadingSettings,
+                    _ => throw new ArgumentOutOfRangeException(nameof(kindOfWorldItem), kindOfWorldItem, null)
+                };
+
                 standaloneStorageSettings.CancellationToken = worldContext.GetCancellationToken();
                 
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);

@@ -26,6 +26,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
+using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -44,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly int _instanceId;
 
-        protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
+        protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext, KindOfWorldItem kindOfWorldItem)
         {
             _instanceId = settings.InstanceId;
             _id = settings.Id;
@@ -58,7 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, worldContext.GetCancellationToken());
 
             var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
-            var worldThreadingSettings = worldContext.ThreadingSettings;
+            var worldThreadingSettings = worldContext.GetDefaultThreadingSettings(kindOfWorldItem);
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount),
                 threadingSettings?.MaxThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount),

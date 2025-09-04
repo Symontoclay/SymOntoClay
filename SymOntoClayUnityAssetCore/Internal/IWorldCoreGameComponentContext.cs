@@ -26,6 +26,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
+using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
@@ -63,6 +64,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ThreadingSettings PlayerDefaultThreadingSettings { get; }
         ThreadingSettings GameObjectDefaultThreadingSettings { get; }
         ThreadingSettings PlaceDefaultThreadingSettings { get; }
+        ThreadingSettings GetDefaultThreadingSettings(KindOfWorldItem kindOfWorldItem);
         ICustomThreadPool AsyncEventsThreadPool { get; }
         CancellationToken GetCancellationToken();
 

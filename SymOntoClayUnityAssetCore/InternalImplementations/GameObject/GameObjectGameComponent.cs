@@ -31,7 +31,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
     public class GameObjectGameComponent: BaseStoredGameComponent
     {
         public GameObjectGameComponent(GameObjectSettings settings, IWorldCoreGameComponentContext worldContext)
-            : base(settings, worldContext)
+            : base(settings, worldContext, KindOfWorldItem.GameObject)
         {
             _allowPublicPosition = settings.AllowPublicPosition;
             _useStaticPosition = settings.UseStaticPosition;

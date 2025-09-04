@@ -1336,7 +1336,22 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.InvokerInMainThread">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.ThreadingSettings">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.WorldThreadingSettings">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.HumanoidNpcDefaultThreadingSettings">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.PlayerDefaultThreadingSettings">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.GameObjectDefaultThreadingSettings">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.PlaceDefaultThreadingSettings">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.GetDefaultThreadingSettings(SymOntoClay.UnityAsset.Core.InternalImplementations.KindOfWorldItem)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.HtnExecutionSettings">
@@ -1672,7 +1687,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.IWorld.AddConvertor(SymOntoClay.UnityAsset.Core.IPlatformTypesConverter)">
             <summary>
             Adds platform type convertor manually.
-            You should add platform type convertor manually using Unity3d, bacause automatic loading convertors provoces exception on Unity3d.
+            You should add platform type convertor manually using Unity3d, because automatic loading convertors provokes exception on Unity3d.
             </summary>
             <param name="convertor">An instance of platform type convertor.</param>
         </member>

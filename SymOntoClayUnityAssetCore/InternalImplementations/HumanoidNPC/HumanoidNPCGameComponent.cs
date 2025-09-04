@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
     public class HumanoidNPCGameComponent: BaseManualControllingGameComponent
     {
         public HumanoidNPCGameComponent(HumanoidNPCSettings settings, IWorldCoreGameComponentContext worldContext)
-            : base(settings, worldContext)
+            : base(settings, worldContext, KindOfWorldItem.HumanoidNPC)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.EnableCategories = settings.EnableCategories;
 
                 coreEngineSettings.CancellationToken = worldContext.GetCancellationToken();
-                coreEngineSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.ThreadingSettings;
+                coreEngineSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.HumanoidNpcDefaultThreadingSettings;
 
                 coreEngineSettings.HtnExecutionSettings = settings?.HtnExecutionSettings ?? worldContext.HtnExecutionSettings;
 

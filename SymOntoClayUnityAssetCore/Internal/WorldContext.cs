@@ -36,6 +36,7 @@ using SymOntoClay.UnityAsset.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal.Threads;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
+using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -198,6 +199,28 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public ThreadingSettings PlaceDefaultThreadingSettings { get; private set; }
+
+        /// <inheritdoc/>
+        public ThreadingSettings GetDefaultThreadingSettings(KindOfWorldItem kindOfWorldItem)
+        {
+            switch(kindOfWorldItem)
+            {
+                case KindOfWorldItem.Player:
+                    return PlayerDefaultThreadingSettings;
+
+                case KindOfWorldItem.GameObject:
+                    return GameObjectDefaultThreadingSettings;
+
+                case KindOfWorldItem.Place:
+                    return PlaceDefaultThreadingSettings;
+
+                case KindOfWorldItem.HumanoidNPC:
+                    return HumanoidNpcDefaultThreadingSettings;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfWorldItem), kindOfWorldItem, null);
+            }
+        }
 
         /// <inheritdoc/>
         public HtnExecutionSettings HtnExecutionSettings { get; private set; }

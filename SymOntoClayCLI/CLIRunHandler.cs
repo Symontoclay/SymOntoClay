@@ -94,7 +94,7 @@ namespace SymOntoClay.CLI
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
                 CancellationToken = _cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
+                ThreadingSettings = ConfigureSoundBusThreadingSettings()
             });
 
             if(command.UseNLP)
@@ -125,7 +125,14 @@ namespace SymOntoClay.CLI
                 Enable = true
             });
 
-            settings.ThreadingSettings = ConfigureThreadingSettings();
+            settings.WorldThreadingSettings = ConfigureWorldThreadingSettings();
+
+            var humanoidNpcThreadingSettings = ConfigureHumanoidNpcThreadingSettings();
+
+            settings.HumanoidNpcDefaultThreadingSettings = humanoidNpcThreadingSettings;
+            settings.PlayerDefaultThreadingSettings = ConfigurePlayerDefaultThreadingSettings();
+            settings.GameObjectDefaultThreadingSettings = ConfigureGameObjectDefaultThreadingSettings();
+            settings.PlaceDefaultThreadingSettings = ConfigurePlaceDefaultThreadingSettings();
 
             instance.SetSettings(settings);
 
@@ -137,7 +144,7 @@ namespace SymOntoClay.CLI
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
+            npcSettings.ThreadingSettings = humanoidNpcThreadingSettings;
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -196,7 +203,24 @@ namespace SymOntoClay.CLI
 
         private IMonitorLogger _npcLogger;
 
-        private ThreadingSettings ConfigureThreadingSettings()
+        private ThreadingSettings ConfigureWorldThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 10,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 10,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private ThreadingSettings ConfigureHumanoidNpcThreadingSettings()
         {
             return new ThreadingSettings
             {
@@ -210,6 +234,75 @@ namespace SymOntoClay.CLI
                     MaxThreadsCount = 100,
                     MinThreadsCount = 50
                 }
+            };
+        }
+
+        private ThreadingSettings ConfigurePlayerDefaultThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private ThreadingSettings ConfigureGameObjectDefaultThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private ThreadingSettings ConfigurePlaceDefaultThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private CustomThreadPoolSettings ConfigureSoundBusThreadingSettings()
+        {
+            return new CustomThreadPoolSettings
+            {
+                MaxThreadsCount = 100,
+                MinThreadsCount = 1
+            };
+        }
+
+        private CustomThreadPoolSettings ConfigureMonitorThreadingSettings()
+        {
+            return new CustomThreadPoolSettings
+            {
+                MaxThreadsCount = 100,
+                MinThreadsCount = 10
             };
         }
 

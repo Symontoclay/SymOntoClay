@@ -65,7 +65,8 @@ namespace SymOntoClay.BaseTestLib
         public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
         public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
         public ThreadingSettings PlaceDefaultThreadingSettings { get; set; }
-        public CustomThreadPoolSettings SoundBusDefaultThreadingSettings { get; set; }
+        public CustomThreadPoolSettings SoundBusThreadingSettings { get; set; }
+        public CustomThreadPoolSettings MonitorThreadingSettings { get; set; }
 
         public HtnExecutionSettings HtnExecutionSettings { get; set; }
 
@@ -118,7 +119,8 @@ namespace SymOntoClay.BaseTestLib
             sb.PrintObjProp(n, nameof(PlayerDefaultThreadingSettings), PlayerDefaultThreadingSettings);
             sb.PrintObjProp(n, nameof(GameObjectDefaultThreadingSettings), GameObjectDefaultThreadingSettings);
             sb.PrintObjProp(n, nameof(PlaceDefaultThreadingSettings), PlaceDefaultThreadingSettings);
-            sb.PrintObjProp(n, nameof(SoundBusDefaultThreadingSettings), SoundBusDefaultThreadingSettings);
+            sb.PrintObjProp(n, nameof(SoundBusThreadingSettings), SoundBusThreadingSettings);
+            sb.PrintObjProp(n, nameof(MonitorThreadingSettings), MonitorThreadingSettings);
 
             sb.PrintObjProp(n, nameof(HtnExecutionSettings), HtnExecutionSettings);
 

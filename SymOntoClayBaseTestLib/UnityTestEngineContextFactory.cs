@@ -200,7 +200,7 @@ namespace SymOntoClay.BaseTestLib
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                ThreadingSettings = factorySettings?.SoundBusDefaultThreadingSettings
+                ThreadingSettings = factorySettings?.SoundBusThreadingSettings
             });
 
             if (!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
@@ -248,7 +248,7 @@ namespace SymOntoClay.BaseTestLib
                 EnableAddingRemovingFactLoggingInStorages = true,
                 EnableFullCallInfo = true,
                 CancellationToken = factorySettings.CancellationToken,
-                ThreadingSettings = factorySettings.ThreadingSettings.AsyncEvents,
+                ThreadingSettings = factorySettings.MonitorThreadingSettings,
                 Features = new MonitorFeatures
                 {
                     EnableCallMethod = true,

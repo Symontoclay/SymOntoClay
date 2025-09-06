@@ -171,7 +171,8 @@ namespace SymOntoClay.BaseTestLib
             factorySettings.PlayerDefaultThreadingSettings = ConfigurePlayerDefaultThreadingSettings();
             factorySettings.GameObjectDefaultThreadingSettings = ConfigureGameObjectDefaultThreadingSettings();
             factorySettings.PlaceDefaultThreadingSettings = ConfigurePlaceDefaultThreadingSettings();
-            factorySettings.SoundBusDefaultThreadingSettings = ConfigureSoundBusDefaultThreadingSettings();
+            factorySettings.SoundBusThreadingSettings = ConfigureSoundBusThreadingSettings();
+            factorySettings.MonitorThreadingSettings = ConfigureMonitorThreadingSettings();
         }
 
         private ThreadingSettings ConfigureWorldThreadingSettings()
@@ -259,12 +260,21 @@ namespace SymOntoClay.BaseTestLib
             };
         }
 
-        private CustomThreadPoolSettings ConfigureSoundBusDefaultThreadingSettings()
+        private CustomThreadPoolSettings ConfigureSoundBusThreadingSettings()
         {
             return new CustomThreadPoolSettings
             {
                 MaxThreadsCount = 100,
                 MinThreadsCount = 1
+            };
+        }
+
+        private CustomThreadPoolSettings ConfigureMonitorThreadingSettings()
+        {
+            return new CustomThreadPoolSettings
+            {
+                MaxThreadsCount = 100,
+                MinThreadsCount = 10
             };
         }
 

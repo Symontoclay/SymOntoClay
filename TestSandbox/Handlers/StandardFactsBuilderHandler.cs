@@ -42,11 +42,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
-            factorySettings.ThreadingSettings = new ThreadingSettings()
-            {
-                CodeExecution = new CustomThreadPoolSettings(),
-                AsyncEvents = new CustomThreadPoolSettings()
-            };
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
             _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             _standardFactsBuilder = new StandardFactsBuilder();

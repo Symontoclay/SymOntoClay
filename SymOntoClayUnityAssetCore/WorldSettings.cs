@@ -76,7 +76,7 @@ namespace SymOntoClay.UnityAsset.Core
         public bool EnableAutoloadingConvertors { get; set; }
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
-
+        
         public ThreadingSettings WorldThreadingSettings { get; set; }
         public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
         public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
@@ -80,40 +81,24 @@ namespace TestSandbox.MonoBehaviorTesting
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
                 CancellationToken = _cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
+                ThreadingSettings = ThreadingSettingsHepler.ConfigureSoundBusThreadingSettings()
             });
 
             settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
                 MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { ConsolePlatformLogger.Instance, CommonNLogPlatformLogger.Instance },
-                Enable = true
+                Enable = true,
+                ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
-            settings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(settings);
 
             _logger.Info("B41FD963-D229-4BDF-A3A9-CBF339B120A5", $"settings = {settings}");
 
             _world.SetSettings(settings);
 
             _logger.Info("175D394F-43AD-4B26-BCED-E97F79D3D846", "End");
-        }
-
-        private ThreadingSettings ConfigureThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 50
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 50
-                }
-            };
         }
 
         public override void Start()

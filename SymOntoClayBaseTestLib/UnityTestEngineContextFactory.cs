@@ -321,11 +321,7 @@ namespace SymOntoClay.BaseTestLib
             settings.Monitor = new TestMonitor(monitorSettings);
             //settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
 
-            settings.WorldThreadingSettings = factorySettings.WorldThreadingSettings;
-            settings.HumanoidNpcDefaultThreadingSettings = factorySettings.HumanoidNpcDefaultThreadingSettings;
-            settings.PlayerDefaultThreadingSettings = factorySettings.PlayerDefaultThreadingSettings;
-            settings.GameObjectDefaultThreadingSettings = factorySettings.GameObjectDefaultThreadingSettings;
-            settings.PlaceDefaultThreadingSettings = factorySettings.PlaceDefaultThreadingSettings;
+            ThreadingSettingsHepler.ConfigureThreadingSettings(settings, factorySettings);
 
             return settings;
         }

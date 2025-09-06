@@ -1172,10 +1172,10 @@ app PeaceKeeper is [very middle] exampleClass
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
+                ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
-            settings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(settings);
 
             _logger.Info("E17F812C-9900-4B6B-9210-A5CE8742C9DA", $"settings = {settings}");
 
@@ -1188,7 +1188,7 @@ app PeaceKeeper is [very middle] exampleClass
             npcSettings.LogicFile = Path.Combine(wSpaceDir, $"Npcs/{projectName}/{projectName}.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
-            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
+            npcSettings.ThreadingSettings = ThreadingSettingsHepler.ConfigureHumanoidNpcDefaultThreadingSettings();
 
             _logger.Info("A471A33B-0564-49CC-AD27-2BADFB527C09", $"npcSettings = {npcSettings}");
 
@@ -1203,23 +1203,6 @@ app PeaceKeeper is [very middle] exampleClass
             Directory.Delete(testDir, true);
 
             _logger.Info("47C7E720-4227-4738-8D52-E3270106EF66", "End");
-        }
-
-        private static ThreadingSettings ConfigureThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 50
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 50
-                }
-            };
         }
 
         private static void TstAdvancedTestRunnerForMultipleInstances()
@@ -2030,7 +2013,8 @@ primitive task SomePrimitiveTask4
 
             var settings = new WorldSettings();
             settings.CancellationToken = cancellationTokenSource.Token;
-            settings.ThreadingSettings = ConfigureThreadingSettings();
+
+            ThreadingSettingsHepler.ConfigureThreadingSettings(settings);
 
             settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir };
 
@@ -2047,7 +2031,7 @@ primitive task SomePrimitiveTask4
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
+                ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
             _logger.Info("ECB2A35D-05A6-48C4-9C9E-27D54D70C501", $"settings = {settings}");
@@ -2061,7 +2045,7 @@ primitive task SomePrimitiveTask4
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
-            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
+            npcSettings.ThreadingSettings = ThreadingSettingsHepler.ConfigureHumanoidNpcDefaultThreadingSettings();
 
             _logger.Info("7B5072FD-FC34-4F73-98CD-08D9E8815AF0", $"npcSettings = {npcSettings}");
 

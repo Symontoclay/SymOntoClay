@@ -20,29 +20,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
-using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.DefaultCLIEnvironment;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
-using System.Text;
-using System.Threading;
-using SymOntoClay.SoundBuses;
-using System.Threading.Tasks;
-using System.Configuration;
-using SymOntoClay.CoreHelper;
 using Newtonsoft.Json;
-using System.Diagnostics;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System.Linq;
-using SymOntoClay.ProjectFiles;
-using SymOntoClay.NLP;
-using SymOntoClay.Monitor.Common;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.Core;
+using SymOntoClay.DefaultCLIEnvironment;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.NLP;
+using SymOntoClay.ProjectFiles;
+using SymOntoClay.SoundBuses;
 using SymOntoClay.Threading;
+using SymOntoClay.UnityAsset.Core;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
 
 namespace SymOntoClay.CLI
 {

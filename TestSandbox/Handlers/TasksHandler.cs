@@ -1,11 +1,7 @@
-﻿using SymOntoClay.ActiveObject.Threads;
-using SymOntoClay.BaseTestLib;
+﻿using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
-using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.Htn;
 using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Threading;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -19,28 +15,24 @@ namespace TestSandbox.Handlers
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public HtnHandler()
-            : base(new UnityTestEngineContextFactorySettings()
+        private static UnityTestEngineContextFactorySettings CreateUnityTestEngineContextFactorySettings()
+        {
+            var factorySettings = new UnityTestEngineContextFactorySettings
             {
                 UseDefaultNLPSettings = true,
-                ThreadingSettings = new ThreadingSettings
-                {
-                    AsyncEvents = new CustomThreadPoolSettings
-                    {
-                        MaxThreadsCount = 100,
-                        MinThreadsCount = 50
-                    },
-                    CodeExecution = new CustomThreadPoolSettings
-                    {
-                        MaxThreadsCount = 100,
-                        MinThreadsCount = 50
-                    }
-                },
                 HtnExecutionSettings = new HtnExecutionSettings
                 {
                     PlanExecutionIterationsMaxCount = 1
                 }
-            })
+            };
+
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
+
+            return factorySettings;
+        }
+
+        public HtnHandler()
+            : base(CreateUnityTestEngineContextFactorySettings())
         {
         }
 

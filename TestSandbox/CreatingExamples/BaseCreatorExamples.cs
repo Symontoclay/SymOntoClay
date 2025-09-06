@@ -205,10 +205,10 @@ namespace TestSandbox.CreatingExamples
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
+                ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
-            settings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(settings);
 
             instance.SetSettings(settings);
 
@@ -219,7 +219,7 @@ namespace TestSandbox.CreatingExamples
             npcSettings.LogicFile = Path.Combine(wSpaceDir, $"Npcs/{_projectName}/{_projectName}.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
-            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
+            npcSettings.ThreadingSettings = ThreadingSettingsHepler.ConfigureHumanoidNpcDefaultThreadingSettings();
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -239,23 +239,6 @@ namespace TestSandbox.CreatingExamples
             Directory.Delete(fullDestDirName, true);
 
             cancellationTokenSource.Cancel();
-        }
-
-        private ThreadingSettings ConfigureThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 50
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 50
-                }
-            };
         }
 
         protected string CreateName(string prefix, int n)

@@ -37,24 +37,20 @@ namespace TestSandbox.Handlers
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public GeneralStartHandler()
-            : base(new UnityTestEngineContextFactorySettings()
+        private static UnityTestEngineContextFactorySettings CreateUnityTestEngineContextFactorySettings()
+        {
+            var factorySettings = new UnityTestEngineContextFactorySettings
             {
-                UseDefaultNLPSettings = true,
-                ThreadingSettings = new ThreadingSettings
-                {
-                    AsyncEvents = new CustomThreadPoolSettings
-                    {
-                        MaxThreadsCount = 100,
-                        MinThreadsCount = 50
-                    },
-                    CodeExecution = new CustomThreadPoolSettings
-                    {
-                        MaxThreadsCount = 100,
-                        MinThreadsCount = 50
-                    }
-                }
-            })
+                UseDefaultNLPSettings = true
+            };
+
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
+
+            return factorySettings;
+        }
+
+        public GeneralStartHandler()
+            : base(CreateUnityTestEngineContextFactorySettings())
         {
         }
 

@@ -35,7 +35,7 @@ namespace TestSandbox.CoreHostListener
     public class TstBaseManualControllingGameComponent: BaseManualControllingGameComponent
     {
         public TstBaseManualControllingGameComponent(BaseManualControllingGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
-            : base(settings, worldContext)
+            : base(settings, worldContext, KindOfWorldItem.HumanoidNPC)
         {
         }
 

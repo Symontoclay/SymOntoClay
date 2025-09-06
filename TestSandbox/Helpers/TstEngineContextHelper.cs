@@ -106,7 +106,7 @@ namespace TestSandbox.Helpers
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
                 CancellationToken = factorySettings.CancellationToken,
-                ThreadingSettings = factorySettings.ThreadingSettings.AsyncEvents
+                ThreadingSettings = factorySettings.SoundBusThreadingSettings
             });
 
             if(!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
@@ -146,7 +146,7 @@ namespace TestSandbox.Helpers
                 EnableAddingRemovingFactLoggingInStorages = true,
                 EnableFullCallInfo = true,
                 CancellationToken = factorySettings.CancellationToken,
-                ThreadingSettings = factorySettings.ThreadingSettings.AsyncEvents,
+                ThreadingSettings = factorySettings.MonitorThreadingSettings,
                 Features = new MonitorFeatures
                 {
                     EnableCallMethod = true,
@@ -214,7 +214,7 @@ namespace TestSandbox.Helpers
 
             settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
 
-            settings.ThreadingSettings = factorySettings.ThreadingSettings;
+            ThreadingSettingsHepler.ConfigureThreadingSettings(settings, factorySettings);
 
             settings.HtnExecutionDefaultSettings = factorySettings.HtnExecutionSettings;
 
@@ -256,7 +256,7 @@ namespace TestSandbox.Helpers
             npcSettings.Categories = factorySettings.Categories;
             npcSettings.EnableCategories = factorySettings.EnableCategories;
 
-            npcSettings.ThreadingSettings = factorySettings.ThreadingSettings;
+            npcSettings.ThreadingSettings = factorySettings.HumanoidNpcDefaultThreadingSettings;
 
             npcSettings.HtnExecutionSettings = factorySettings.HtnExecutionSettings;
 

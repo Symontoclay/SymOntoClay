@@ -21,14 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
-using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
-using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -70,7 +67,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
-            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
@@ -89,7 +86,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
-            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
@@ -108,7 +105,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
-            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
@@ -133,7 +130,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
-            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
@@ -158,7 +155,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
-            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
@@ -392,23 +389,6 @@ namespace TestSandbox.Handlers
                 _logger.Info("CDADA05F-018D-44A7-9DBD-1B64E59140F3", $"gItem.Value = {gItem.Value}");
                 _logger.Info("86BD2C11-0D27-4A6E-A269-CB7B08F928C8", $"gItem.Index = {gItem.Index}");
             }
-        }
-
-        private ThreadingSettings ConfigureThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 5
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 5
-                }
-            };
         }
     }
 }

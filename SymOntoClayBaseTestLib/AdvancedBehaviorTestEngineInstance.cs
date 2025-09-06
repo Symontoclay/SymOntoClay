@@ -159,123 +159,9 @@ namespace SymOntoClay.BaseTestLib
             factorySettings.BaseDir = _testDir;
             factorySettings.WorldFile = hostFile;
             factorySettings.PlatformLogger = callBackLogger;
-            ConfigureThreadingSettings(factorySettings);
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
 
             _world = UnityTestEngineContextFactory.CreateWorld(factorySettings);
-        }
-
-        private void ConfigureThreadingSettings(UnityTestEngineContextFactorySettings factorySettings)
-        {
-            factorySettings.WorldThreadingSettings = ConfigureWorldThreadingSettings();
-            factorySettings.HumanoidNpcDefaultThreadingSettings = ConfigureHumanoidNpcDefaultThreadingSettings();
-            factorySettings.PlayerDefaultThreadingSettings = ConfigurePlayerDefaultThreadingSettings();
-            factorySettings.GameObjectDefaultThreadingSettings = ConfigureGameObjectDefaultThreadingSettings();
-            factorySettings.PlaceDefaultThreadingSettings = ConfigurePlaceDefaultThreadingSettings();
-            factorySettings.SoundBusThreadingSettings = ConfigureSoundBusThreadingSettings();
-            factorySettings.MonitorThreadingSettings = ConfigureMonitorThreadingSettings();
-        }
-
-        private ThreadingSettings ConfigureWorldThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 10,
-                    MinThreadsCount = 1
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 10,
-                    MinThreadsCount = 1
-                }
-            };
-        }
-
-        private ThreadingSettings ConfigureHumanoidNpcDefaultThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 5
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 100,
-                    MinThreadsCount = 5
-                }
-            };
-        }
-
-        private ThreadingSettings ConfigurePlayerDefaultThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 5,
-                    MinThreadsCount = 1
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 5,
-                    MinThreadsCount = 1
-                }
-            };
-        }
-
-        private ThreadingSettings ConfigureGameObjectDefaultThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 5,
-                    MinThreadsCount = 1
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 5,
-                    MinThreadsCount = 1
-                }
-            };
-        }
-
-        private ThreadingSettings ConfigurePlaceDefaultThreadingSettings()
-        {
-            return new ThreadingSettings
-            {
-                AsyncEvents = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 5,
-                    MinThreadsCount = 1
-                },
-                CodeExecution = new CustomThreadPoolSettings
-                {
-                    MaxThreadsCount = 5,
-                    MinThreadsCount = 1
-                }
-            };
-        }
-
-        private CustomThreadPoolSettings ConfigureSoundBusThreadingSettings()
-        {
-            return new CustomThreadPoolSettings
-            {
-                MaxThreadsCount = 100,
-                MinThreadsCount = 1
-            };
-        }
-
-        private CustomThreadPoolSettings ConfigureMonitorThreadingSettings()
-        {
-            return new CustomThreadPoolSettings
-            {
-                MaxThreadsCount = 100,
-                MinThreadsCount = 10
-            };
         }
 
         public void StartWorld()
@@ -350,7 +236,7 @@ namespace SymOntoClay.BaseTestLib
                 factorySettings.EnableCategories = advancedBehaviorTestEngineInstanceSettings.EnableCategories;
             }
 
-            ConfigureThreadingSettings(factorySettings);
+            ThreadingSettingsHepler.ConfigureThreadingSettings(factorySettings);
 
 #if DEBUG
             //_logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");

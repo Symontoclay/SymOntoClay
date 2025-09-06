@@ -58,7 +58,13 @@ namespace SymOntoClay.BaseTestLib
         public bool EnableCategories { get; set; }
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
-        public ThreadingSettings ThreadingSettings { get; set; }
+
+        public ThreadingSettings WorldThreadingSettings { get; set; }
+        public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
+        public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlaceDefaultThreadingSettings { get; set; }
+
         public HtnExecutionSettings HtnExecutionSettings { get; set; }
 
         /// <inheritdoc/>
@@ -104,7 +110,12 @@ namespace SymOntoClay.BaseTestLib
             sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
 
             sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
-            sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
+
+            sb.PrintObjProp(n, nameof(WorldThreadingSettings), WorldThreadingSettings);
+            sb.PrintObjProp(n, nameof(HumanoidNpcDefaultThreadingSettings), HumanoidNpcDefaultThreadingSettings);
+            sb.PrintObjProp(n, nameof(PlayerDefaultThreadingSettings), PlayerDefaultThreadingSettings);
+            sb.PrintObjProp(n, nameof(GameObjectDefaultThreadingSettings), GameObjectDefaultThreadingSettings);
+            sb.PrintObjProp(n, nameof(PlaceDefaultThreadingSettings), PlaceDefaultThreadingSettings);
 
             sb.PrintObjProp(n, nameof(HtnExecutionSettings), HtnExecutionSettings);
 

@@ -159,13 +159,21 @@ namespace SymOntoClay.BaseTestLib
             factorySettings.BaseDir = _testDir;
             factorySettings.WorldFile = hostFile;
             factorySettings.PlatformLogger = callBackLogger;
-            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            ConfigureThreadingSettings(factorySettings);
 
             _world = UnityTestEngineContextFactory.CreateWorld(factorySettings);
         }
 
-        private ThreadingSettings ConfigureThreadingSettings()
+        private void ConfigureThreadingSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
+            /*
+                    public ThreadingSettings WorldThreadingSettings { get; set; }
+        public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
+        public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlaceDefaultThreadingSettings { get; set; } 
+            */
+
             return new ThreadingSettings
             {
                 AsyncEvents = new CustomThreadPoolSettings

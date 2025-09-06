@@ -323,6 +323,14 @@ namespace SymOntoClay.BaseTestLib
 
             settings.ThreadingSettings = factorySettings.ThreadingSettings;
 
+            /*
+            public ThreadingSettings WorldThreadingSettings { get; set; }
+        public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
+        public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
+        public ThreadingSettings PlaceDefaultThreadingSettings { get; set; } 
+            */
+
             return settings;
         }
 

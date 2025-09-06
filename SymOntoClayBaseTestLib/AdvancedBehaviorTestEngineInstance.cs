@@ -166,14 +166,33 @@ namespace SymOntoClay.BaseTestLib
 
         private void ConfigureThreadingSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
-            /*
-                    public ThreadingSettings WorldThreadingSettings { get; set; }
-        public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
-        public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
-        public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
-        public ThreadingSettings PlaceDefaultThreadingSettings { get; set; } 
-            */
+            factorySettings.WorldThreadingSettings = ConfigureWorldThreadingSettings();
+            factorySettings.HumanoidNpcDefaultThreadingSettings = ConfigureHumanoidNpcDefaultThreadingSettings();
+            factorySettings.PlayerDefaultThreadingSettings = ConfigurePlayerDefaultThreadingSettings();
+            factorySettings.GameObjectDefaultThreadingSettings = ConfigureGameObjectDefaultThreadingSettings();
+            factorySettings.PlaceDefaultThreadingSettings = ConfigurePlaceDefaultThreadingSettings();
+            factorySettings.SoundBusDefaultThreadingSettings = ConfigureSoundBusDefaultThreadingSettings();
+        }
 
+        private ThreadingSettings ConfigureWorldThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 10,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 10,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private ThreadingSettings ConfigureHumanoidNpcDefaultThreadingSettings()
+        {
             return new ThreadingSettings
             {
                 AsyncEvents = new CustomThreadPoolSettings
@@ -186,6 +205,66 @@ namespace SymOntoClay.BaseTestLib
                     MaxThreadsCount = 100,
                     MinThreadsCount = 5
                 }
+            };
+        }
+
+        private ThreadingSettings ConfigurePlayerDefaultThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private ThreadingSettings ConfigureGameObjectDefaultThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private ThreadingSettings ConfigurePlaceDefaultThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                }
+            };
+        }
+
+        private CustomThreadPoolSettings ConfigureSoundBusDefaultThreadingSettings()
+        {
+            return new CustomThreadPoolSettings
+            {
+                MaxThreadsCount = 100,
+                MinThreadsCount = 1
             };
         }
 
@@ -261,7 +340,7 @@ namespace SymOntoClay.BaseTestLib
                 factorySettings.EnableCategories = advancedBehaviorTestEngineInstanceSettings.EnableCategories;
             }
 
-            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
+            ConfigureThreadingSettings(factorySettings);
 
 #if DEBUG
             //_logger.Info($"htnPlanExecutionIterationsMaxCount = {htnPlanExecutionIterationsMaxCount}");

@@ -200,7 +200,7 @@ namespace SymOntoClay.BaseTestLib
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                ThreadingSettings = factorySettings?.ThreadingSettings?.AsyncEvents
+                ThreadingSettings = factorySettings?.SoundBusDefaultThreadingSettings
             });
 
             if (!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
@@ -321,15 +321,11 @@ namespace SymOntoClay.BaseTestLib
             settings.Monitor = new TestMonitor(monitorSettings);
             //settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
 
-            settings.ThreadingSettings = factorySettings.ThreadingSettings;
-
-            /*
-            public ThreadingSettings WorldThreadingSettings { get; set; }
-        public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
-        public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
-        public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
-        public ThreadingSettings PlaceDefaultThreadingSettings { get; set; } 
-            */
+            settings.WorldThreadingSettings = factorySettings.WorldThreadingSettings;
+            settings.HumanoidNpcDefaultThreadingSettings = factorySettings.HumanoidNpcDefaultThreadingSettings;
+            settings.PlayerDefaultThreadingSettings = factorySettings.PlayerDefaultThreadingSettings;
+            settings.GameObjectDefaultThreadingSettings = factorySettings.GameObjectDefaultThreadingSettings;
+            settings.PlaceDefaultThreadingSettings = factorySettings.PlaceDefaultThreadingSettings;
 
             return settings;
         }
@@ -449,7 +445,7 @@ namespace SymOntoClay.BaseTestLib
             npcSettings.Categories = factorySettings.Categories;
             npcSettings.EnableCategories = factorySettings.EnableCategories;
 
-            npcSettings.ThreadingSettings = factorySettings.ThreadingSettings;
+            npcSettings.ThreadingSettings = factorySettings.HumanoidNpcDefaultThreadingSettings;
 
             npcSettings.HtnExecutionSettings = factorySettings.HtnExecutionSettings;
 

@@ -31,11 +31,9 @@ using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -439,6 +437,62 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableLogicalSearchExplain
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableLogicalSearchExplain;
+            }
+        }
+
+        bool IMonitorFeatures.EnableAddFactOrRuleTriggerResult 
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableAddFactOrRuleTriggerResult;
+            }
+        }
+
+        bool IMonitorFeatures.EnableAddFactToLogicalStorage 
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableAddFactToLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnableRemoveFactFromLogicalStorage 
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableRemoveFactFromLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnableRefreshLifeTimeInLogicalStorage 
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableRefreshLifeTimeInLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnablePutFactForRemovingFromLogicalStorage 
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnablePutFactForRemovingFromLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnableThreadTask 
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableThreadTask;
+            }
+        }
+
         bool IMonitorFeatures.EnableHtn
         {
             get
@@ -451,7 +505,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableBuildPlan;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableHtn && _features.EnableBuildPlan;
             }
         }
 
@@ -580,6 +634,13 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature)} = {monitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableActivateIdleAction)} = {monitorFeatures.EnableActivateIdleAction}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLogicalSearchExplain)} = {monitorFeatures.EnableLogicalSearchExplain}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableAddFactOrRuleTriggerResult)} = {monitorFeatures.EnableAddFactOrRuleTriggerResult}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableAddFactToLogicalStorage)} = {monitorFeatures.EnableAddFactToLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRemoveFactFromLogicalStorage)} = {monitorFeatures.EnableRemoveFactFromLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRefreshLifeTimeInLogicalStorage)} = {monitorFeatures.EnableRefreshLifeTimeInLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePutFactForRemovingFromLogicalStorage)} = {monitorFeatures.EnablePutFactForRemovingFromLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableThreadTask)} = {monitorFeatures.EnableThreadTask}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableHtn)} = {monitorFeatures.EnableHtn}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBuildPlan)} = {monitorFeatures.EnableBuildPlan}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");

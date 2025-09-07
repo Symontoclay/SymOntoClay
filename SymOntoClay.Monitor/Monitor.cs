@@ -20,24 +20,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.Internal.FileCache;
-using SymOntoClay.Monitor.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using SymOntoClay.Monitor.Common.Data;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System.Reflection;
-using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using System.Threading;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Internal;
+using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Threading;
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Monitor
 {
@@ -118,53 +115,7 @@ namespace SymOntoClay.Monitor
             {
                 _features = new MonitorFeatures
                 {
-                    EnableCallMethod = true,
-                    EnableParameter = true,
-                    EnableEndCallMethod = true,
-                    EnableMethodResolving = true,
-                    EnableEndMethodResolving = true,
-                    EnableActionResolving = true,
-                    EnableEndActionResolving = true,
-                    EnableHostMethodResolving = true,
-                    EnableEndHostMethodResolving = true,
-                    EnableHostMethodActivation = true,
-                    EnableEndHostMethodActivation = true,
-                    EnableHostMethodStarting = true,
-                    EnableEndHostMethodStarting = true,
-                    EnableHostMethodExecution = true,
-                    EnableEndHostMethodExecution = true,
-                    EnableSystemExpr = true,
-                    EnableCodeFrame = true,
-                    EnableLeaveThreadExecutor = true,
-                    EnableGoBackToPrevCodeFrame = true,
-                    EnableStartProcessInfo = true,
-                    EnableCancelProcessInfo = true,
-                    EnableWeakCancelProcessInfo = true,
-                    EnableCancelInstanceExecution = true,
-                    EnableSetExecutionCoordinatorStatus = true,
-                    EnableSetProcessInfoStatus = true,
-                    EnableWaitProcessInfo = true,
-                    EnableRunLifecycleTrigger = true,
-                    EnableDoTriggerSearch = true,
-                    EnableEndDoTriggerSearch = true,
-                    EnableSetConditionalTrigger = true,
-                    EnableResetConditionalTrigger = true,
-                    EnableRunSetExprOfConditionalTrigger = true,
-                    EnableEndRunSetExprOfConditionalTrigger = true,
-                    EnableRunResetExprOfConditionalTrigger = true,
-                    EnableEndRunResetExprOfConditionalTrigger = true,
-                    EnableActivateIdleAction = true,
 
-                    EnableHtn = true,
-                    EnableBuildPlan = true,
-
-                    EnableOutput = true,
-                    EnableTrace = true,
-                    EnableDebug = true,
-                    EnableInfo = true,
-                    EnableWarn = true,
-                    EnableError = true,
-                    EnableFatal = true
                 };
 
                 _baseMonitorSettings.Features = _features;
@@ -523,6 +474,62 @@ namespace SymOntoClay.Monitor
             }
         }
 
+        bool IMonitorFeatures.EnableLogicalSearchExplain
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableLogicalSearchExplain;
+            }
+        }
+
+        bool IMonitorFeatures.EnableAddFactOrRuleTriggerResult
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableAddFactOrRuleTriggerResult;
+            }
+        }
+
+        bool IMonitorFeatures.EnableAddFactToLogicalStorage
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableAddFactToLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnableRemoveFactFromLogicalStorage
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRemoveFactFromLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnableRefreshLifeTimeInLogicalStorage
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRefreshLifeTimeInLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnablePutFactForRemovingFromLogicalStorage
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnablePutFactForRemovingFromLogicalStorage;
+            }
+        }
+
+        bool IMonitorFeatures.EnableThreadTask
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableThreadTask;
+            }
+        }
+
         bool IMonitorFeatures.EnableHtn 
         { 
             get
@@ -535,7 +542,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableBuildPlan;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHtn && _features.EnableBuildPlan;
             }
         }
 
@@ -658,6 +665,13 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature)} = {monitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableActivateIdleAction)} = {monitorFeatures.EnableActivateIdleAction}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLogicalSearchExplain)} = {monitorFeatures.EnableLogicalSearchExplain}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableAddFactOrRuleTriggerResult)} = {monitorFeatures.EnableAddFactOrRuleTriggerResult}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableAddFactToLogicalStorage)} = {monitorFeatures.EnableAddFactToLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRemoveFactFromLogicalStorage)} = {monitorFeatures.EnableRemoveFactFromLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRefreshLifeTimeInLogicalStorage)} = {monitorFeatures.EnableRefreshLifeTimeInLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePutFactForRemovingFromLogicalStorage)} = {monitorFeatures.EnablePutFactForRemovingFromLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableThreadTask)} = {monitorFeatures.EnableThreadTask}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableHtn)} = {monitorFeatures.EnableHtn}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBuildPlan)} = {monitorFeatures.EnableBuildPlan}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");

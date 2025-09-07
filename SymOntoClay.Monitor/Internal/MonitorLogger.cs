@@ -2769,6 +2769,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
+            if (!_features.EnableLogicalSearchExplain)
+            {
+                return 0u;
+            }
+
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
@@ -2842,6 +2847,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
+            if (!_features.EnableAddFactOrRuleTriggerResult)
+            {
+                return;
+            }
+
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
@@ -2906,6 +2916,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
+            if (!_features.EnableAddFactToLogicalStorage)
+            {
+                return;
+            }
+
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
@@ -2968,6 +2983,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableRemoveFactFromLogicalStorage)
+            {
+                return;
+            }
 
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
@@ -3033,6 +3053,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
+            if (!_features.EnableRefreshLifeTimeInLogicalStorage)
+            {
+                return;
+            }
+
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
@@ -3096,6 +3121,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnablePutFactForRemovingFromLogicalStorage)
+            {
+                return;
+            }
 
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
@@ -3179,7 +3209,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.EnableHtn)
+            if (!_features.EnableThreadTask)
             {
                 return 0u;
             }
@@ -3254,7 +3284,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.EnableHtn)
+            if (!_features.EnableThreadTask)
             {
                 return;
             }

@@ -21,10 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Monitor.Common
 {
@@ -67,6 +63,13 @@ namespace SymOntoClay.Monitor.Common
         bool EnableEndRunResetExprOfConditionalTrigger { get; }
         bool IsEnabledAnyConditionalTriggerFeature { get; }
         bool EnableActivateIdleAction { get; }
+        bool EnableLogicalSearchExplain { get; }
+        bool EnableAddFactOrRuleTriggerResult { get; }
+        bool EnableAddFactToLogicalStorage { get; }
+        bool EnableRemoveFactFromLogicalStorage { get; }
+        bool EnableRefreshLifeTimeInLogicalStorage { get; }
+        bool EnablePutFactForRemovingFromLogicalStorage { get; }
+        bool EnableThreadTask { get; }
         bool EnableHtn { get; }
         bool EnableBuildPlan { get; }
         bool EnableOutput { get; }

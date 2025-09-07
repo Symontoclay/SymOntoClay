@@ -22,11 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.Internal;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Monitor

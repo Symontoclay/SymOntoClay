@@ -22,15 +22,10 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SymOntoClay.Monitor.Internal
+namespace SymOntoClay.Monitor
 {
     public class MonitorFeatures : IMonitorFeatures, IObjectToString
     {
@@ -148,6 +143,27 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableActivateIdleAction { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableLogicalSearchExplain { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableAddFactOrRuleTriggerResult { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableAddFactToLogicalStorage { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableRemoveFactFromLogicalStorage { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableRefreshLifeTimeInLogicalStorage { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnablePutFactForRemovingFromLogicalStorage { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableThreadTask { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableHtn { get; set; }
 
         /// <inheritdoc/>
@@ -214,6 +230,13 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableRunResetExprOfConditionalTrigger = EnableRunResetExprOfConditionalTrigger;
             result.EnableEndRunResetExprOfConditionalTrigger = EnableEndRunResetExprOfConditionalTrigger;
             result.EnableActivateIdleAction = EnableActivateIdleAction;
+            result.EnableLogicalSearchExplain = EnableLogicalSearchExplain;
+            result.EnableAddFactOrRuleTriggerResult = EnableAddFactOrRuleTriggerResult;
+            result.EnableAddFactToLogicalStorage = EnableAddFactToLogicalStorage;
+            result.EnableRemoveFactFromLogicalStorage = EnableRemoveFactFromLogicalStorage;
+            result.EnableRefreshLifeTimeInLogicalStorage = EnableRefreshLifeTimeInLogicalStorage;
+            result.EnablePutFactForRemovingFromLogicalStorage = EnablePutFactForRemovingFromLogicalStorage;
+            result.EnableThreadTask = EnableThreadTask;
             result.EnableHtn = EnableHtn;
             result.EnableBuildPlan = EnableBuildPlan;
             result.EnableOutput = EnableOutput;
@@ -281,6 +304,13 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableEndRunResetExprOfConditionalTrigger)} = {EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IsEnabledAnyConditionalTriggerFeature)} = {IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(EnableActivateIdleAction)} = {EnableActivateIdleAction}");
+            sb.AppendLine($"{spaces}{nameof(EnableLogicalSearchExplain)} = {EnableLogicalSearchExplain}");
+            sb.AppendLine($"{spaces}{nameof(EnableAddFactOrRuleTriggerResult)} = {EnableAddFactOrRuleTriggerResult}");
+            sb.AppendLine($"{spaces}{nameof(EnableAddFactToLogicalStorage)} = {EnableAddFactToLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(EnableRemoveFactFromLogicalStorage)} = {EnableRemoveFactFromLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(EnableRefreshLifeTimeInLogicalStorage)} = {EnableRefreshLifeTimeInLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(EnablePutFactForRemovingFromLogicalStorage)} = {EnablePutFactForRemovingFromLogicalStorage}");
+            sb.AppendLine($"{spaces}{nameof(EnableThreadTask)} = {EnableThreadTask}");
             sb.AppendLine($"{spaces}{nameof(EnableHtn)} = {EnableHtn}");
             sb.AppendLine($"{spaces}{nameof(EnableBuildPlan)} = {EnableBuildPlan}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");

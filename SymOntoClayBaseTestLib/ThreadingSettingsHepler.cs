@@ -28,11 +28,11 @@ namespace SymOntoClay.BaseTestLib
 
         public static void ConfigureThreadingSettings(WorldSettings settings)
         {
-            settings.WorldThreadingSettings = ThreadingSettingsHepler.ConfigureWorldThreadingSettings();
-            settings.HumanoidNpcDefaultThreadingSettings = ThreadingSettingsHepler.ConfigureHumanoidNpcDefaultThreadingSettings();
-            settings.PlayerDefaultThreadingSettings = ThreadingSettingsHepler.ConfigurePlayerDefaultThreadingSettings();
-            settings.GameObjectDefaultThreadingSettings = ThreadingSettingsHepler.ConfigureGameObjectDefaultThreadingSettings();
-            settings.PlaceDefaultThreadingSettings = ThreadingSettingsHepler.ConfigurePlaceDefaultThreadingSettings();
+            settings.WorldThreadingSettings = ConfigureWorldThreadingSettings();
+            settings.HumanoidNpcDefaultThreadingSettings = ConfigureHumanoidNpcDefaultThreadingSettings();
+            settings.PlayerDefaultThreadingSettings = ConfigurePlayerDefaultThreadingSettings();
+            settings.GameObjectDefaultThreadingSettings = ConfigureGameObjectDefaultThreadingSettings();
+            settings.PlaceDefaultThreadingSettings = ConfigurePlaceDefaultThreadingSettings();
         }
 
         public static ThreadingSettings ConfigureWorldThreadingSettings()

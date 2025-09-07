@@ -38,7 +38,7 @@ namespace SymOntoClay.Monitor
         public Action<string> ErrorHandler { get; set; }
         /// <summary>
         /// Gets or sets list of platform specific loggers.
-        /// It alows us to add, for example, console logger for Unity3D.
+        /// It allows us to add, for example, console logger for Unity3D.
         /// </summary>
         public IList<IPlatformLogger> PlatformLoggers { get; set; }
         public IDictionary<string, BaseMonitorSettings> NodesSettings { get; set; }

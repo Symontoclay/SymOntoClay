@@ -35,7 +35,7 @@ namespace SymOntoClay.Monitor
     {
         /// <summary>
         /// Gets or sets value of enable logging.
-        /// It alows enable or disable logging or remote connection for whole components synchronously.
+        /// It allows enable or disable logging or remote connection for whole components synchronously.
         /// </summary>
         public bool Enable { get; set; }
         public bool EnableRemoteConnection { get; set; }

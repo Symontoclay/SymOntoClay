@@ -138,7 +138,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         public bool EnableEndRunResetExprOfConditionalTrigger { get; set; }
-
+        
         /// <inheritdoc/>
         public bool IsEnabledAnyConditionalTriggerFeature => EnableDoTriggerSearch || EnableEndDoTriggerSearch || EnableSetConditionalTrigger
             || EnableResetConditionalTrigger || EnableRunSetExprOfConditionalTrigger || EnableEndRunSetExprOfConditionalTrigger ||

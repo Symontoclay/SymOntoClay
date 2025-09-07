@@ -20,8 +20,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Monitor.Common.Data;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using SymOntoClay.Core;
 using SymOntoClay.Monitor;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Helpers;
+using SymOntoClay.Monitor.Internal;
+using SymOntoClay.Monitor.LogFileBuilder;
+using SymOntoClay.Monitor.NLog.PlatformLoggers;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Formats.Asn1;
@@ -30,13 +38,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SymOntoClay.Core;
-using SymOntoClay.Monitor.Common;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using SymOntoClay.Monitor.Internal;
-using SymOntoClay.Monitor.LogFileBuilder;
-using SymOntoClay.Threading;
-using SymOntoClay.Monitor.NLog.PlatformLoggers;
 
 namespace TestSandbox.Handlers
 {
@@ -148,6 +149,10 @@ namespace TestSandbox.Handlers
         {
             using var cancellationTokenSource = new CancellationTokenSource();
 
+            var monitorFeatures = new MonitorFeatures();
+
+            MonitorFeaturesHelper.SetAllFeaturesEnabled(monitorFeatures);
+
             var monitor = new SymOntoClay.Monitor.Monitor(new MonitorSettings
             {
                 CancellationToken = cancellationTokenSource.Token,
@@ -160,18 +165,7 @@ namespace TestSandbox.Handlers
                 EnableAddingRemovingFactLoggingInStorages = false,
                 PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogPlatformLogger.Instance },
                 EnableFullCallInfo = true,
-                Features = new MonitorFeatures
-                {
-                    EnableCallMethod = true,
-                    EnableParameter = true,
-                    EnableOutput = true,
-                    EnableTrace = true,
-                    EnableDebug = true,
-                    EnableInfo = true,
-                    EnableWarn = true,
-                    EnableError = true,
-                    EnableFatal = true
-                }//,
+                Features = monitorFeatures//,
                 //NodesSettings = new Dictionary<string, BaseMonitorSettings>()
                 //{
                 //    {"soldier 1", new BaseMonitorSettings
@@ -202,9 +196,9 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"monitor.SessionDirectoryName = {monitor.SessionDirectoryName}");
             _globalLogger.Info($"monitor.SessionDirectoryFullName = {monitor.SessionDirectoryFullName}");
 
-            var nonitorNode = monitor.CreateMotitorNode("9FF4FC16-06AF-4121-BD2F-F333F1BCCE95", "soldier 1");
+            var monitorNode = monitor.CreateMotitorNode("9FF4FC16-06AF-4121-BD2F-F333F1BCCE95", "soldier 1");
 
-            var threadLogger = nonitorNode.CreateThreadLogger("687E7D1B-4E52-470B-9D6F-D4CC9C08A5FD", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
+            var threadLogger = monitorNode.CreateThreadLogger("687E7D1B-4E52-470B-9D6F-D4CC9C08A5FD", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
 
             threadLogger.Info("d14bd986-d932-4f62-b4e3-a6a38f7fb1c0", "Some message");
 

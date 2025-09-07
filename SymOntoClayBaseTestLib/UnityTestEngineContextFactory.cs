@@ -239,7 +239,12 @@ namespace SymOntoClay.BaseTestLib
                 Enable = true
             };
 
-            /*var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+            /*
+            var monitorFeatures = new MonitorFeatures();
+
+            MonitorFeaturesHelper.SetAllFeaturesEnabled(monitorFeatures);
+
+            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 Enable = true,
                 MessagesDir = monitorMessagesDir,
@@ -249,57 +254,7 @@ namespace SymOntoClay.BaseTestLib
                 EnableFullCallInfo = true,
                 CancellationToken = factorySettings.CancellationToken,
                 ThreadingSettings = factorySettings.MonitorThreadingSettings,
-                Features = new MonitorFeatures
-                {
-                    EnableCallMethod = true,
-                    EnableParameter = true,
-                    EnableEndCallMethod = true,
-                    EnableMethodResolving = true,
-                    EnableEndMethodResolving = true,
-                    EnableActionResolving = true,
-                    EnableEndActionResolving = true,
-                    EnableHostMethodResolving = true,
-                    EnableEndHostMethodResolving = true,
-                    EnableHostMethodActivation = true,
-                    EnableEndHostMethodActivation = true,
-                    EnableHostMethodStarting = true,
-                    EnableEndHostMethodStarting = true,
-                    EnableHostMethodExecution = true,
-                    EnableEndHostMethodExecution = true,
-                    EnableSystemExpr = true,
-                    EnableCodeFrame = true,
-                    EnableLeaveThreadExecutor = true,
-                    EnableGoBackToPrevCodeFrame = true,
-                    EnableStartProcessInfo = true,
-                    EnableCancelProcessInfo = true,
-                    EnableWeakCancelProcessInfo = true,
-                    EnableCancelInstanceExecution = true,
-                    EnableSetExecutionCoordinatorStatus = true,
-                    EnableSetProcessInfoStatus = true,
-                    EnableWaitProcessInfo = true,
-                    EnableRunLifecycleTrigger = true,
-                    EnableDoTriggerSearch = true,
-                    EnableEndDoTriggerSearch = true,
-                    EnableSetConditionalTrigger = true,
-                    EnableResetConditionalTrigger = true,
-                    EnableRunSetExprOfConditionalTrigger = true,
-                    EnableEndRunSetExprOfConditionalTrigger = true,
-                    EnableRunResetExprOfConditionalTrigger = true,
-                    EnableEndRunResetExprOfConditionalTrigger = true,
-                    EnableActivateIdleAction = true,
-
-                    EnableHtn = true,
-
-                    EnableBuildPlan = true,
-
-                    EnableOutput = true,
-                    EnableTrace = true,
-                    EnableDebug = true,
-                    EnableInfo = true,
-                    EnableWarn = true,
-                    EnableError = true,
-                    EnableFatal = true
-                }
+                Features = monitorFeatures
             };*/
 
             if (factorySettings.PlatformLogger == null)

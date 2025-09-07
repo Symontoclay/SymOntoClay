@@ -27,6 +27,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Helpers;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Threading;
@@ -113,61 +114,9 @@ namespace SymOntoClay.Monitor
 
             if (_features == null)
             {
-                _features = new MonitorFeatures
-                {
-                    EnableCallMethod = true,
-                    EnableParameter = true,
-                    EnableEndCallMethod = true,
-                    EnableMethodResolving = true,
-                    EnableEndMethodResolving = true,
-                    EnableActionResolving = true,
-                    EnableEndActionResolving = true,
-                    EnableHostMethodResolving = true,
-                    EnableEndHostMethodResolving = true,
-                    EnableHostMethodActivation = true,
-                    EnableEndHostMethodActivation = true,
-                    EnableHostMethodStarting = true,
-                    EnableEndHostMethodStarting = true,
-                    EnableHostMethodExecution = true,
-                    EnableEndHostMethodExecution = true,
-                    EnableSystemExpr = true,
-                    EnableCodeFrame = true,
-                    EnableLeaveThreadExecutor = true,
-                    EnableGoBackToPrevCodeFrame = true,
-                    EnableStartProcessInfo = true,
-                    EnableCancelProcessInfo = true,
-                    EnableWeakCancelProcessInfo = true,
-                    EnableCancelInstanceExecution = true,
-                    EnableSetExecutionCoordinatorStatus = true,
-                    EnableSetProcessInfoStatus = true,
-                    EnableWaitProcessInfo = true,
-                    EnableRunLifecycleTrigger = true,
-                    EnableDoTriggerSearch = true,
-                    EnableEndDoTriggerSearch = true,
-                    EnableSetConditionalTrigger = true,
-                    EnableResetConditionalTrigger = true,
-                    EnableRunSetExprOfConditionalTrigger = true,
-                    EnableEndRunSetExprOfConditionalTrigger = true,
-                    EnableRunResetExprOfConditionalTrigger = true,
-                    EnableEndRunResetExprOfConditionalTrigger = true,
-                    EnableActivateIdleAction = true,
-                    EnableLogicalSearchExplain = true,
-                    EnableAddFactOrRuleTriggerResult = true,
-                    EnableAddFactToLogicalStorage = true,
-                    EnableRemoveFactFromLogicalStorage = true,
-                    EnableRefreshLifeTimeInLogicalStorage = true,
-                    EnablePutFactForRemovingFromLogicalStorage = true,
-                    EnableThreadTask = true,
-                    EnableHtn = true,
-                    EnableBuildPlan = true,
-                    EnableOutput = true,
-                    EnableTrace = true,
-                    EnableDebug = true,
-                    EnableInfo = true,
-                    EnableWarn = true,
-                    EnableError = true,
-                    EnableFatal = true
-                };
+                _features = new MonitorFeatures();
+
+                MonitorFeaturesHelper.SetAllFeaturesEnabled(_features);
 
                 _baseMonitorSettings.Features = _features;
             }

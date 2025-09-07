@@ -23,7 +23,9 @@ SOFTWARE.*/
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.DefaultCLIEnvironment;
+using SymOntoClay.Monitor;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Helpers;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Monitor.NLog.PlatformLoggers;
@@ -137,6 +139,10 @@ namespace TestSandbox.Helpers
 
             settings.StandardFactsBuilder = new StandardFactsBuilder();
 
+            var monitorFeatures = new MonitorFeatures();
+
+            MonitorFeaturesHelper.SetAllFeaturesEnabled(monitorFeatures);
+
             var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 Enable = true,
@@ -147,57 +153,7 @@ namespace TestSandbox.Helpers
                 EnableFullCallInfo = true,
                 CancellationToken = factorySettings.CancellationToken,
                 ThreadingSettings = factorySettings.MonitorThreadingSettings,
-                Features = new MonitorFeatures
-                {
-                    EnableCallMethod = true,
-                    EnableParameter = true,
-                    EnableEndCallMethod = true,
-                    EnableMethodResolving = true,
-                    EnableEndMethodResolving = true,
-                    EnableActionResolving = true,
-                    EnableEndActionResolving = true,
-                    EnableHostMethodResolving = true,
-                    EnableEndHostMethodResolving = true,
-                    EnableHostMethodActivation = true,
-                    EnableEndHostMethodActivation = true,
-                    EnableHostMethodStarting = true,
-                    EnableEndHostMethodStarting = true,
-                    EnableHostMethodExecution = true,
-                    EnableEndHostMethodExecution = true,
-                    EnableSystemExpr = true,
-                    EnableCodeFrame = true,
-                    EnableLeaveThreadExecutor = true,
-                    EnableGoBackToPrevCodeFrame = true,
-                    EnableStartProcessInfo = true,
-                    EnableCancelProcessInfo = true,
-                    EnableWeakCancelProcessInfo = true,
-                    EnableCancelInstanceExecution = true,
-                    EnableSetExecutionCoordinatorStatus = true,
-                    EnableSetProcessInfoStatus = true,
-                    EnableWaitProcessInfo = true,
-                    EnableRunLifecycleTrigger = true,
-                    EnableDoTriggerSearch = true,
-                    EnableEndDoTriggerSearch = true,
-                    EnableSetConditionalTrigger = true,
-                    EnableResetConditionalTrigger = true,
-                    EnableRunSetExprOfConditionalTrigger = true,
-                    EnableEndRunSetExprOfConditionalTrigger = true,
-                    EnableRunResetExprOfConditionalTrigger = true,
-                    EnableEndRunResetExprOfConditionalTrigger = true,
-                    EnableActivateIdleAction = true,
-
-                    EnableHtn = true,
-
-                    EnableBuildPlan = true,
-
-                    EnableOutput = true,
-                    EnableTrace = true,
-                    EnableDebug = true,
-                    EnableInfo = true,
-                    EnableWarn = true,
-                    EnableError = true,
-                    EnableFatal = true
-                }
+                Features = monitorFeatures
             };
 
             if(factorySettings.PlatformLogger != null)

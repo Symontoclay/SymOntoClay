@@ -6,4 +6,10 @@
         @@host.`stop shoot`();
         'End' >> @>log;
     }
+
+    fun `stop shoot`()
+    {
+    	'Begin stop shoot' >> @>log;
+		'End stop shoot' >> @>log;
+    }
 }

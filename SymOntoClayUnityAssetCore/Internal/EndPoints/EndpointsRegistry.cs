@@ -70,8 +70,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var paramsCountList = GetParamsCountList(endpointInfo);
 
 #if DEBUG
-            //Info("81F7F3DA-D8F8-4842-B86C-D6AA7A6F7289", $"endPointName = {endPointName}");
-            //Info("6C820B35-758F-4435-8CD2-FC72EC7002C6", $"paramsCountList.Count = {paramsCountList.Count}");
+            Info("81F7F3DA-D8F8-4842-B86C-D6AA7A6F7289", $"endPointName = {endPointName}");
+            Info("6C820B35-758F-4435-8CD2-FC72EC7002C6", $"paramsCountList.Count = {paramsCountList.Count}");
 #endif
 
             lock (_lockObj)
@@ -91,7 +91,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 foreach (var count in paramsCountList)
                 {
 #if DEBUG
-                    //Info("6110A866-1B26-40E0-A777-5BD44421C89C", $"count = {count}");
+                    Info("6110A866-1B26-40E0-A777-5BD44421C89C", $"count = {count}");
 #endif
 
                     List<IEndpointInfo> targetList = null;

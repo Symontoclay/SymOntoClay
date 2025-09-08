@@ -28,6 +28,7 @@ using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using TestSandbox.CoreHostListener;
 
 namespace TestSandbox.Handlers
 {
@@ -61,10 +62,10 @@ namespace TestSandbox.Handlers
             //var platformListener = new TstPlatformHostListener();
             //var platformListener = new HostMethods_Tests_HostListener();
             //var platformListener = new FullGeneralized_Tests_HostListener();
-            //var platformListener = new TstBattleRoyaleHostListener();
+            var platformListener = new TstBattleRoyaleHostListener();
             //var platformListener = new TstPlatformHostListenerWithDefaultValues();
             //var platformListener = new VeryShortMethod_HostListener();
-            var platformListener = new Exec_Tests_HostListener2();
+            //var platformListener = new Exec_Tests_HostListener2();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;

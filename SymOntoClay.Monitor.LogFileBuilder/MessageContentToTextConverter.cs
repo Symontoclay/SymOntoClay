@@ -44,7 +44,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private readonly IMessageContentToTextConverterOptions _options;
 
-        public string GetText(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
+        public (string Content, bool CanContainHtmlTags) GetText(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -55,7 +55,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             switch (kindOfMessage)
             {
                 case KindOfMessage.CreateMotitorNode:
-                    return GetCreateMotitorNode(message as CreateMotitorNodeMessage);
+                    return GetCreateMonitorNode(message as CreateMotitorNodeMessage);
 
                 case KindOfMessage.CreateThreadLogger:
                     return GetCreateThreadLogger(message as CreateThreadLoggerMessage);
@@ -224,25 +224,25 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
         }
 
-        private string GetCreateMotitorNode(CreateMotitorNodeMessage message)
+        private (string Content, bool CanContainHtmlTags) GetCreateMonitorNode(CreateMotitorNodeMessage message)
         {
-            return $"MotitorNode '{message.NodeId}' has been created";
+            return ($"MonitorNode '{message.NodeId}' has been created", false);
         }
 
-        private string GetCreateThreadLogger(CreateThreadLoggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetCreateThreadLogger(CreateThreadLoggerMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            var sb = new StringBuilder($"MotitorNode '{message.NodeId}' has created ThreadLogger '{message.ThreadId}'");
+            var sb = new StringBuilder($"MonitorNode '{message.NodeId}' has created ThreadLogger '{message.ThreadId}'");
 
             if (!string.IsNullOrWhiteSpace(message.ParentThreadId))
             {
                 sb.Append($" with ParentThreadId '{message.ParentThreadId}'");
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
         private string GetMonitoredHumanizedMethodArgument(MonitoredHumanizedMethodArgument argument)
@@ -403,7 +403,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return altLabel;
         }
 
-        private string GetCallMethod(CallMethodMessage message)
+        private (string Content, bool CanContainHtmlTags) GetCallMethod(CallMethodMessage message)
         {
             var labelsStrList = new List<string>();
 
@@ -426,10 +426,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             labelsStrList.Add(GetMonitoredHumanizedLabel(message.MethodLabel, message.AltMethodName));
 
-            return $"<{message.CallMethodId}> [{(message.IsSync ? "sync" : "async")}] {string.Join(" -> ", labelsStrList)}";
+            return ($"<{message.CallMethodId}> [{(message.IsSync ? "sync" : "async")}] {string.Join(" -> ", labelsStrList)}", false);
         }
 
-        private string GetParameter(ParameterMessage message)
+        private (string Content, bool CanContainHtmlTags) GetParameter(ParameterMessage message)
         {
             var tmpResult = $"Parameter of <{message.CallMethodId}>: '{GetMonitoredHumanizedLabel(message.Label, message.AltLabel)}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
@@ -437,75 +437,75 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"tmpResult = {tmpResult}");
 #endif
 
-            return tmpResult;
+            return (tmpResult, false);
         }
 
-        private string GetEndCallMethod(EndCallMethodMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndCallMethod(EndCallMethodMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetMethodResolving(MethodResolvingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetMethodResolving(MethodResolvingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetEndMethodResolving(EndMethodResolvingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndMethodResolving(EndMethodResolvingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetActionResolving(ActionResolvingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetActionResolving(ActionResolvingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetEndActionResolving(EndActionResolvingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndActionResolving(EndActionResolvingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetHostMethodResolving(HostMethodResolvingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetHostMethodResolving(HostMethodResolvingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetEndHostMethodResolving(EndHostMethodResolvingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndHostMethodResolving(EndHostMethodResolvingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetHostMethodActivation(HostMethodActivationMessage message)
+        private (string Content, bool CanContainHtmlTags) GetHostMethodActivation(HostMethodActivationMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetEndHostMethodActivation(EndHostMethodActivationMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndHostMethodActivation(EndHostMethodActivationMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetHostMethodStarting(HostMethodStartingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetHostMethodStarting(HostMethodStartingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetEndHostMethodStarting(EndHostMethodStartingMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndHostMethodStarting(EndHostMethodStartingMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetHostMethodExecution(HostMethodExecutionMessage message)
+        private (string Content, bool CanContainHtmlTags) GetHostMethodExecution(HostMethodExecutionMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetEndHostMethodExecution(EndHostMethodExecutionMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndHostMethodExecution(EndHostMethodExecutionMessage message)
         {
-            return $"<{message.CallMethodId}>";
+            return ($"<{message.CallMethodId}>", false);
         }
 
-        private string GetSystemExpr(SystemExprMessage message)
+        private (string Content, bool CanContainHtmlTags) GetSystemExpr(SystemExprMessage message)
         {
             var tmpResult = $"Expression of <{message.CallMethodId}>: '{GetMonitoredHumanizedLabel(message.Label, message.AltLabel)}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
@@ -513,26 +513,26 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"tmpResult = {tmpResult}");
 #endif
 
-            return tmpResult;
+            return (tmpResult, false);
         }
 
-        private string GetCodeFrame(CodeFrameMessage message)
+        private (string Content, bool CanContainHtmlTags) GetCodeFrame(CodeFrameMessage message)
         {
 #if DEBUG
             _globalLogger.Info($"tmpResult = {message.HumanizedStr}");
 #endif
 
-            return $"\n{message.HumanizedStr}\n";
+            return ($"\n{message.HumanizedStr}\n", false);
         }
 
-        private string GetLeaveThreadExecutor(LeaveThreadExecutorMessage message)
+        private (string Content, bool CanContainHtmlTags) GetLeaveThreadExecutor(LeaveThreadExecutorMessage message)
         {
-            return string.Empty;
+            return (string.Empty, false);
         }
 
-        public string GetGoBackToPrevCodeFrame(GoBackToPrevCodeFrameMessage message)
+        public (string Content, bool CanContainHtmlTags) GetGoBackToPrevCodeFrame(GoBackToPrevCodeFrameMessage message)
         {
-            return message.TargetActionExecutionStatusStr;
+            return (message.TargetActionExecutionStatusStr, false);
         }
 
         private string GetChangers(List<Changer> changers)
@@ -554,16 +554,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return GetMonitoredHumanizedLabel(processInfo);
         }
 
-        private string GetStartProcessInfo(StartProcessInfoMessage message)
+        private (string Content, bool CanContainHtmlTags) GetStartProcessInfo(StartProcessInfoMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"ProcessInfo [{GetProcessInfo(message.ProcessInfo, message.ProcessInfoId)}] has been started";
+            return ($"ProcessInfo [{GetProcessInfo(message.ProcessInfo, message.ProcessInfoId)}] has been started", false);
         }
 
-        public string GetCancelProcessInfo(CancelProcessInfoMessage message)
+        public (string Content, bool CanContainHtmlTags) GetCancelProcessInfo(CancelProcessInfoMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -581,10 +581,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" when CallMethodId = {message.CallMethodId}");
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        public string GetWeakCancelProcessInfo(WeakCancelProcessInfoMessage message)
+        public (string Content, bool CanContainHtmlTags) GetWeakCancelProcessInfo(WeakCancelProcessInfoMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -602,10 +602,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" when CallMethodId = {message.CallMethodId}");
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        public string GetCancelInstanceExecution(CancelInstanceExecutionMessage message)
+        public (string Content, bool CanContainHtmlTags) GetCancelInstanceExecution(CancelInstanceExecutionMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -623,10 +623,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" when CallMethodId = {message.CallMethodId}");
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        public string GetSetExecutionCoordinatorStatus(SetExecutionCoordinatorStatusMessage message)
+        public (string Content, bool CanContainHtmlTags) GetSetExecutionCoordinatorStatus(SetExecutionCoordinatorStatusMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -651,10 +651,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" when CallMethodId = {message.CallMethodId}");
             }
              
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        public string GetSetProcessInfoStatus(SetProcessInfoStatusMessage message)
+        public (string Content, bool CanContainHtmlTags) GetSetProcessInfoStatus(SetProcessInfoStatusMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -679,10 +679,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" when CallMethodId = {message.CallMethodId}");
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        private string GetWaitProcessInfo(WaitProcessInfoMessage message)
+        private (string Content, bool CanContainHtmlTags) GetWaitProcessInfo(WaitProcessInfoMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -702,10 +702,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.AppendLine(GetMonitoredHumanizedLabel(item));
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        private string GetRunLifecycleTrigger(RunLifecycleTriggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetRunLifecycleTrigger(RunLifecycleTriggerMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -723,10 +723,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" Holder: {message.Holder}");
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        private string GetDoTriggerSearch(DoTriggerSearchMessage message)
+        private (string Content, bool CanContainHtmlTags) GetDoTriggerSearch(DoTriggerSearchMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -744,39 +744,39 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" Holder: {message.Holder}");
             }
 
-            return sb.ToString();
+            return (sb.ToString(), false);
         }
 
-        private string GetEndDoTriggerSearch(EndDoTriggerSearchMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndDoTriggerSearch(EndDoTriggerSearchMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"<{message.DoTriggerSearchId}>";
+            return ($"<{message.DoTriggerSearchId}>", false);
         }
 
-        private string GetSetConditionalTrigger(SetConditionalTriggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetSetConditionalTrigger(SetConditionalTriggerMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"<{message.DoTriggerSearchId}>";
+            return ($"<{message.DoTriggerSearchId}>", false);
         }
 
-        private string GetResetConditionalTrigger(ResetConditionalTriggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetResetConditionalTrigger(ResetConditionalTriggerMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"<{message.DoTriggerSearchId}>";
+            return ($"<{message.DoTriggerSearchId}>", false);
         }
 
-        private string GetRunSetExprOfConditionalTrigger(RunSetExprOfConditionalTriggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetRunSetExprOfConditionalTrigger(RunSetExprOfConditionalTriggerMessage message)
         {
-            return GetBaseRunExprOfConditionalTriggerMessage(message);
+            return (GetBaseRunExprOfConditionalTriggerMessage(message), false);
         }
 
         private string GetBaseRunExprOfConditionalTriggerMessage(BaseRunExprOfConditionalTriggerMessage message)
@@ -788,9 +788,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return $"{message.ExprLabel.Label} <{message.DoTriggerSearchId}>";
         }
 
-        private string GetEndRunSetExprOfConditionalTrigger(EndRunSetExprOfConditionalTriggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndRunSetExprOfConditionalTrigger(EndRunSetExprOfConditionalTriggerMessage message)
         {
-            return GetBaseEndRunExprOfConditionalTriggerMessage(message);
+            return (GetBaseEndRunExprOfConditionalTriggerMessage(message), false);
         }
 
         private string GetBaseEndRunExprOfConditionalTriggerMessage(BaseEndRunExprOfConditionalTriggerMessage message)
@@ -833,71 +833,71 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return sb.ToString();
         }
 
-        private string GetRunResetExprOfConditionalTrigger(RunResetExprOfConditionalTriggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetRunResetExprOfConditionalTrigger(RunResetExprOfConditionalTriggerMessage message)
         {
-            return GetBaseRunExprOfConditionalTriggerMessage(message);
+            return (GetBaseRunExprOfConditionalTriggerMessage(message), false);
         }
 
-        private string GetEndRunResetExprOfConditionalTrigger(EndRunResetExprOfConditionalTriggerMessage message)
+        private (string Content, bool CanContainHtmlTags) GetEndRunResetExprOfConditionalTrigger(EndRunResetExprOfConditionalTriggerMessage message)
         {
-            return GetBaseEndRunExprOfConditionalTriggerMessage(message);
+            return (GetBaseEndRunExprOfConditionalTriggerMessage(message), false);
         }
 
-        private string GetActivateIdleAction(ActivateIdleActionMessage message)
-        {
-#if DEBUG
-            //_globalLogger.Info($"message = {message}");
-#endif
-
-            return GetMonitoredHumanizedLabel(message.ActivatedAction);
-        }
-
-        private string GetAddFactOrRuleTriggerResult(AddFactOrRuleTriggerResultMessage message)
+        private (string Content, bool CanContainHtmlTags) GetActivateIdleAction(ActivateIdleActionMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)} Result: {GetMonitoredHumanizedLabel(message.Result)}";
+            return (GetMonitoredHumanizedLabel(message.ActivatedAction), false);
         }
 
-        private string GetAddFactToLogicalStorage(AddFactToLogicalStorageMessage message)
+        private (string Content, bool CanContainHtmlTags) GetAddFactOrRuleTriggerResult(AddFactOrRuleTriggerResultMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}";
+            return ($"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)} Result: {GetMonitoredHumanizedLabel(message.Result)}", false);
         }
 
-        private string GetRemoveFactFromLogicalStorage(RemoveFactFromLogicalStorageMessage message)
+        private (string Content, bool CanContainHtmlTags) GetAddFactToLogicalStorage(AddFactToLogicalStorageMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}";
+            return ($"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}", false);
         }
 
-        private string GetRefreshLifeTimeInLogicalStorage(RefreshLifeTimeInLogicalStorageMessage message)
+        private (string Content, bool CanContainHtmlTags) GetRemoveFactFromLogicalStorage(RemoveFactFromLogicalStorageMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)} NewLifetime: {message.NewLifetime}";
+            return ($"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}", false);
         }
 
-        private string GetPutFactForRemovingFromLogicalStorage(PutFactForRemovingFromLogicalStorageMessage message)
+        private (string Content, bool CanContainHtmlTags) GetRefreshLifeTimeInLogicalStorage(RefreshLifeTimeInLogicalStorageMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}";
+            return ($"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)} NewLifetime: {message.NewLifetime}", false);
         }
 
-        private string GetStartTask(StartTaskMessage message)
+        private (string Content, bool CanContainHtmlTags) GetPutFactForRemovingFromLogicalStorage(PutFactForRemovingFromLogicalStorageMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return ($"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}", false);
+        }
+
+        private (string Content, bool CanContainHtmlTags) GetStartTask(StartTaskMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -905,48 +905,48 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             _threadTasksTime[message.TaskId] = message.DateTimeStamp;
 
-            return $"{message.TaskId} ({message.TasksCount} tasks)";
+            return ($"{message.TaskId} ({message.TasksCount} tasks)", false);
         }
 
         private Dictionary<ulong, DateTime> _threadTasksTime = new Dictionary<ulong, DateTime>();
 
-        private string GetStopTask(StopTaskMessage message)
+        private (string Content, bool CanContainHtmlTags) GetStopTask(StopTaskMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"{message.TaskId} {(_threadTasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)} ({message.TasksCount} tasks)";
+            return ($"{message.TaskId} {(_threadTasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)} ({message.TasksCount} tasks)", false);
         }
 
-        private string GetStartBuildPlan(StartBuildPlanMessage message)
+        private (string Content, bool CanContainHtmlTags) GetStartBuildPlan(StartBuildPlanMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return string.Empty;
+            return (string.Empty, false);
         }
 
-        private string GetStopBuildPlan(StopBuildPlanMessage message)
+        private (string Content, bool CanContainHtmlTags) GetStopBuildPlan(StopBuildPlanMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return string.Empty;
+            return (string.Empty, false);
         }
 
-        private string GetOutput(OutputMessage message)
+        private (string Content, bool CanContainHtmlTags) GetOutput(OutputMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return message.Message;
+            return (message.Message, false);
         }
 
-        private string GetLogicalSearchExplain(LogicalSearchExplainMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
+        private (string Content, bool CanContainHtmlTags) GetLogicalSearchExplain(LogicalSearchExplainMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
 #if DEBUG
             //_globalLogger.Info($"targetFileName = {targetFileName}");
@@ -966,61 +966,61 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
-            return $"{GetMonitoredHumanizedLabel(message.Query)}: {logFileCreatorContext.CreateImgLink(fileName.AbsoluteName, fileName.RelativeName)}";
+            return ($"{GetMonitoredHumanizedLabel(message.Query)}: {logFileCreatorContext.CreateImgLink(fileName.AbsoluteName, fileName.RelativeName)}", true);
         }
 
-        private string GetTrace(TraceMessage message, ILogFileCreatorContext logFileCreatorContext)
+        private (string Content, bool CanContainHtmlTags) GetTrace(TraceMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
+            return (logFileCreatorContext.ResolveMessagesRefs(message.Message), true);
         }
 
-        private string GetDebug(DebugMessage message, ILogFileCreatorContext logFileCreatorContext)
+        private (string Content, bool CanContainHtmlTags) GetDebug(DebugMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
+            return (logFileCreatorContext.ResolveMessagesRefs(message.Message), true);
         }
 
-        private string GetInfoMessage(InfoMessage message, ILogFileCreatorContext logFileCreatorContext)
+        private (string Content, bool CanContainHtmlTags) GetInfoMessage(InfoMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
+            return (logFileCreatorContext.ResolveMessagesRefs(message.Message), true);
         }
 
-        private string GetWarn(WarnMessage message, ILogFileCreatorContext logFileCreatorContext)
+        private (string Content, bool CanContainHtmlTags) GetWarn(WarnMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
+            return (logFileCreatorContext.ResolveMessagesRefs(message.Message), true);
         }
 
-        private string GetError(ErrorMessage message, ILogFileCreatorContext logFileCreatorContext)
+        private (string Content, bool CanContainHtmlTags) GetError(ErrorMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
+            return (logFileCreatorContext.ResolveMessagesRefs(message.Message), true);
         }
 
-        private string GetFatal(FatalMessage message, ILogFileCreatorContext logFileCreatorContext)
+        private (string Content, bool CanContainHtmlTags) GetFatal(FatalMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
+            return (logFileCreatorContext.ResolveMessagesRefs(message.Message), true);
         }
     }
 }

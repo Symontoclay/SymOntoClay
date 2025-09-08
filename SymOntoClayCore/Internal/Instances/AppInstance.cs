@@ -43,10 +43,10 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(codeItem, context, parentStorage, null, context.StorageFactories.AppInstanceStorageFactory, null)
         {
 #if DEBUG
-            //Info("B89B059D-E73F-4422-AAD9-DE0BE2868FE1", $"codeItem.GetType().Name = {codeItem.GetType().Name}");
-            //Info("C268AA31-5EFB-43CA-BD95-AE26695F6A93", $"Name = {Name}");
-            //Info("B78A4EEE-5CE6-41D9-89E0-FB6155C1E7EC", $"Name = {Name.ToHumanizedString()}");
-            //Info("4A68DB0B-8C7A-4D7F-BFC6-248CB2F93FF0", $"Name = {Name.ToDbgString()}");
+            Info("B89B059D-E73F-4422-AAD9-DE0BE2868FE1", $"codeItem.GetType().Name = {codeItem.GetType().Name}");
+            Info("C268AA31-5EFB-43CA-BD95-AE26695F6A93", $"Name = {Name}");
+            Info("B78A4EEE-5CE6-41D9-89E0-FB6155C1E7EC", $"Name = {Name.ToHumanizedString()}");
+            Info("4A68DB0B-8C7A-4D7F-BFC6-248CB2F93FF0", $"Name = {Name.ToDbgString()}");
 #endif
 
             _activeObjectContext = context.ActiveObjectContext;
@@ -55,6 +55,10 @@ namespace SymOntoClay.Core.Internal.Instances
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
 
             var logger = _context.Logger;
+
+#if DEBUG
+            Info("D89E10DD-C381-4E0E-8C4E-05679DCB3DE0", $"NameHelper.CreateName(\"i\", logger) = {NameHelper.CreateName("i", logger)}");
+#endif
 
             context.Storage.GlobalStorage.SynonymsStorage.Append(logger, new Synonym()
             {

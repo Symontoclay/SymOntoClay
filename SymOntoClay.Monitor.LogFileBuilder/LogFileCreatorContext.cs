@@ -288,7 +288,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 var url = PrepareUrl(_isAbsUrl ? imgFileName : relativeFileName);
 
-                return $"<a href=\"{url}\">{imgFileName}</a>";
+                return $"<a href=\"{url}\" target=\"_blank\">{imgFileName}</a>";
             }
 
             return imgFileName;
@@ -307,7 +307,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 var url = PrepareUrl(_isAbsUrl ? absoluteFileName : relativeFileName);
 
-                return $"<a href=\"{url}\">{title}</a>";
+                return $"<a href=\"{url}\" target=\"_blank\">{title}</a>";
             }
 
             return absoluteFileName;

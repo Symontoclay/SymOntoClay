@@ -73,7 +73,7 @@ namespace TestSandbox.Handlers
 
         private void Case15()
         {
-            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2025_09_08_19_25_48\ --o d:\Repos\SymOntoClay\TestSandbox\bin\Debug\net8.0\MessagesLogsOutputDir\ --mode StatAndFiles");
+            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2025_09_08_19_25_48\ --o d:\Repos\SymOntoClay\TestSandbox\bin\Debug\net8.0\MessagesLogsOutputDir\ --mode StatAndFiles --html --abs-url");
         }
 
         private void Case14()

@@ -177,7 +177,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     foreach (var rowOption in rowOptionsList)
                     {
 #if DEBUG
-                        //_logger.Info($"rowOption = {rowOption.GetType().FullName}");
+                        _logger.Info($"rowOption = {rowOption.GetType().FullName}");
 #endif
 
                         rowSb.Append(rowOption.GetText(message, logFileCreatorContext, targetFileName));

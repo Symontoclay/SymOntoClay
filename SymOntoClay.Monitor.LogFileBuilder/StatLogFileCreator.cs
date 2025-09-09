@@ -150,7 +150,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                _logger.Info($"itemLogFileName = {itemLogFileName}");
+                //_logger.Info($"itemLogFileName = {itemLogFileName}");
 #endif
 
                 outputSw.WriteLine(logFileCreatorContext.BeginParagraph());

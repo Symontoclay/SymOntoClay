@@ -36,7 +36,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public class LogFileCreatorContext: ILogFileCreatorContext
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public LogFileCreatorContext(string dotAppPath, string outputDirectory, bool toHtml, bool isAbsUrl, IEnumerable<BaseFileNameTemplateOptionItem> fileNameTemplate) 
@@ -115,10 +115,44 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
             if(_toHtml)
             {
-                return $"""
-                <a name="id_{globalMessageNumber}"/>
-                <p>{PrepareHtmlContent(content)}</p>
-                """;
+#if DEBUG
+                //_gbcLogger.Info($"content = {content}");
+#endif
+
+                var lines = content.Split("<br/>");
+
+#if DEBUG
+                //_gbcLogger.Info($"lines.Length = {lines.Length}");
+#endif
+
+                var canContainHtmlTags = content.Contains("LOGICALSEARCHEXPLAIN");
+
+                if (lines.Length == 1)
+                {
+                    return $"""
+                    <a name="id_{globalMessageNumber}"/>
+                    <p>{PrepareHtmlContent(content, canContainHtmlTags)}</p>
+                    """;
+                }
+
+                var firstLine = lines[0];
+
+#if DEBUG
+                //_gbcLogger.Info($"firstLine = {firstLine}");
+#endif
+
+                var sb = new StringBuilder();
+                sb.AppendLine($"<details name=\"name_{Guid.NewGuid().ToString("D")}\">");
+                sb.AppendLine($"<summary>{PrepareHtmlContent(firstLine, canContainHtmlTags)}</summary>");
+                sb.AppendLine("<div><p>");
+                for(var i = 1; i < lines.Length; i++)
+                {
+                    sb.AppendLine($"{PrepareHtmlContent(lines[i], canContainHtmlTags)}<br/>");
+                }
+                sb.AppendLine("</p></div>");
+                sb.AppendLine("</details>");
+
+                return sb.ToString();
             }
 
             return content;
@@ -414,7 +448,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (_toHtml)
             {
-                return PrepareHtmlContent(content);
+                return PrepareHtmlContent(content, canContainHtmlTags);
             }
 
             return content;
@@ -431,6 +465,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 return content;
             }
+
+#if DEBUG
+            //_gbcLogger.Info($"content = {content}");
+            //_gbcLogger.Info($"canContainHtmlTags = {canContainHtmlTags}");
+#endif
 
             content = content.Replace("\n", "<br/>");
 

@@ -289,13 +289,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         _visibleObjectsFocusFactsIdRegistry[visibleItemInstanceId] = _coreEngine.InsertPerceptedFact(Logger, focusFact);
                     }
 
-                    var distanceFactStr = $"distance(I, {visibleItemIdForFacts}, {newVisibleItem.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
+                    var distanceFact = _standardFactsBuilder.BuildDistanceFactInstance(visibleItemIdForFacts, newVisibleItem.MinDistance);
 
 #if DEBUG
-                    Info("C41A8ACD-5ED8-4DAD-8309-DB85FF481F65", $"distanceFactStr = {distanceFactStr}");
+                    Info("C41A8ACD-5ED8-4DAD-8309-DB85FF481F65", $"distanceFact = {distanceFact.ToHumanizedString()}");
 #endif
 
-                    _visibleObjectsDistanceFactsIdRegistry[visibleItemInstanceId] = _coreEngine.InsertPerceptedFact(Logger, distanceFactStr);
+                    _visibleObjectsDistanceFactsIdRegistry[visibleItemInstanceId] = _coreEngine.InsertPerceptedFact(Logger, distanceFact);
                 }
             }
 

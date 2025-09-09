@@ -20,16 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.BaseTestLib.HostListeners
 {
@@ -80,6 +74,39 @@ namespace SymOntoClay.BaseTestLib.HostListeners
                 _isFirstCall = false;
             }
             logger.Output("D5FDA8BE-1EE5-41E5-BE0F-B8779EE2039A", $"GoToImpl End");
+        }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Aim to", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void AimToImpl(CancellationToken cancellationToken, IMonitorLogger logger, IEntity entity)
+        {
+            logger.Output("4A60CBD0-DC25-45FD-BE54-119B92BB5F0A", "AimToImpl Begin");
+            logger.Output("1B25477F-376A-4FAB-8F36-C28572F87152", $"entity.InstanceId = {entity.InstanceId}");
+            logger.Output("09F58E7E-FAD3-42DA-9688-6266531CBB0D", $"entity.Id = {entity.Id}");
+            logger.Output("C0DAB51C-A78D-45FB-B7B3-CA1DDCD79A8E", $"entity.Position = {entity.Position}");
+        }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Ready For Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void ReadyForShootImpl(CancellationToken cancellationToken, IMonitorLogger logger)
+        {
+            logger.Output("2EC1F86B-9091-4FD3-A6A3-D976C2120983", "ReadyForShootImpl Begin");
+        }
+
+        [DebuggerHidden]
+        [FriendsEndpoints("Aim to")]
+        [BipedEndpoint("Start Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void StartShootImpl(CancellationToken cancellationToken, IMonitorLogger logger)
+        {
+            logger.Output("422BD188-A10D-4008-958F-B05D42187134", "StartShootImpl Begin");
+        }
+
+        [DebuggerHidden]
+        [FriendsEndpoints("Aim to")]
+        [BipedEndpoint("Stop Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void StopShootImpl(CancellationToken cancellationToken, IMonitorLogger logger)
+        {
+            logger.Output("DDCF0AFA-2A68-4C5A-AB5A-E6AA23DBBFEE", "StopShootImpl Begin");
         }
     }
 }

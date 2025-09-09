@@ -712,5 +712,55 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual(6, maxN);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case7()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        @@host.`stop shoot`();
+        'End' >> @>log;
+    }
+
+    fun `stop shoot`()
+    {
+    	'Begin stop shoot' >> @>log;
+		'End stop shoot' >> @>log;
+    }
+}";
+
+            var hostListener = new BattleRoyaleHostListener();
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstanceWithPlatformListener(text,
+                (n, message) => {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("StopShootImpl Begin", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener));
+
+            Assert.AreEqual(3, maxN);
+        }
     }
 }

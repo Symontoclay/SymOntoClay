@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 var member = leftOperand.GetMember(logger, rightOperand.AsStrongIdentifierValue.ForResolving);
 
 #if DEBUG
-                Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
+                //Info("A1A2448C-C179-4408-97DD-CFC68FF34CB2", $"member = {member}");
 #endif
 
                 var value = new MemberValue(member);

@@ -2375,6 +2375,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
 
+        /// <summary>
+        /// Takes some amount of positioned parameters from stack of current CodeFrame.
+        /// Converts to values if needs.
+        /// Ready made parameters returns as the result.
+        /// Also It continues to be in the field ResolvedParameterValues of current CodeFrame.
+        /// It needs for correct serializations.
+        /// Please set the state CodeFrameState.BeginningCommandExecution to the current CodeFrame for starting working.
+        /// Please expect the state CodeFrameState.ResolvedParameters in the current CodeFrame after finishing working. 
+        /// </summary>
+        /// <param name="count">Target amount of parameters.</param>
+        /// <returns>Returns ValueListCallResult, which describes which action should be done.</returns>
         private ValueListCallResult TakePositionedParameters(int count)
         {
             return TakePositionedParameters(
@@ -2385,6 +2396,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
 
+        /// <summary>
+        /// Takes some amount of positioned parameters from stack of current CodeFrame.
+        /// Converts to values if needs.
+        /// Ready made parameters returns as the result.
+        /// Also It continues to be in the field ResolvedParameterValues of current CodeFrame.
+        /// It needs for correct serializations.
+        /// Please set the state CodeFrameState.BeginningCommandExecution to the current CodeFrame for starting working.
+        /// Please expect the state CodeFrameState.ResolvedParameters in the current CodeFrame after finishing working.
+        /// </summary>
+        /// <param name="count">Target amount of parameters.</param>
+        /// <param name="needRevers">Needs revers of not.</param>
+        /// <param name="loadingMatrix">Settings which parameter needs conversion and which need not.</param>
+        /// <returns>Returns ValueListCallResult, which describes which action should be done.</returns>
         private ValueListCallResult TakePositionedParameters(int count,
             bool needRevers,
             KindOfValueConversion[] loadingMatrix)
@@ -2398,7 +2422,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <summary>
-        /// Takes some amount of parameters from stack of current CodeFrame.
+        /// Takes some amount of positioned parameters from stack of current CodeFrame.
         /// Converts to values if needs.
         /// Ready made parameters returns as the result.
         /// Also It continues to be in the field ResolvedParameterValues of current CodeFrame.
@@ -2583,8 +2607,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException("7ED884E5-4A5B-40DE-921D-FD93212D08EB");
         }
 
-
-
+        /// <summary>
+        /// Takes some amount of named parameters from stack of current CodeFrame.
+        /// Converts to values if needs.
+        /// Ready made parameters returns as the result.
+        /// Also It continues to be in the field ResolvedParameterValues of current CodeFrame.
+        /// It needs for correct serializations.
+        /// Please set the state CodeFrameState.BeginningCommandExecution to the current CodeFrame for starting working.
+        /// Please expect the state CodeFrameState.ResolvedParameters in the current CodeFrame after finishing working. 
+        /// </summary>
+        /// <param name="count">Target amount of parameters.</param>
+        /// <returns>Returns ValueListCallResult, which describes which action should be done.</returns>
         private NamedParametersCallResult TakeNamedParameters(int count)
         {
             return TakeNamedParameters(count: count,
@@ -2594,6 +2627,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
 
+        /// <summary>
+        /// Takes some amount of named parameters from stack of current CodeFrame.
+        /// Converts to values if needs.
+        /// Ready made parameters returns as the result.
+        /// Also It continues to be in the field ResolvedParameterValues of current CodeFrame.
+        /// It needs for correct serializations.
+        /// Please set the state CodeFrameState.BeginningCommandExecution to the current CodeFrame for starting working.
+        /// Please expect the state CodeFrameState.ResolvedParameters in the current CodeFrame after finishing working.
+        /// </summary>
+        /// <param name="count">Target amount of parameters.</param>
+        /// <param name="needRevers">Needs revers of not.</param>
+        /// <param name="loadingMatrix">Settings which parameter needs conversion and which need not.</param>
+        /// <param name="codeFrameStateDuringResolvingValueInCodeFrame">Which CodeFrameState should be set after the end of the resolving.</param>
+        /// <param name="codeFrameStateAfterEnd">Which CodeFrameState should be set after the end of the resolving.</param>
+        /// <returns>Returns ValueListCallResult, which describes which action should be done.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="NotImplementedException"></exception>
         private NamedParametersCallResult TakeNamedParameters(int count,
             bool needRevers,
             KindOfValueConversion[] loadingMatrix,

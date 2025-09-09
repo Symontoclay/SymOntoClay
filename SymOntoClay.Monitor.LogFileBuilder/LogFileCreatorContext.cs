@@ -202,6 +202,17 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         }
 
         /// <inheritdoc/>
+        public string DecorateGlobalNumber(string content)
+        {
+            if (_toHtml)
+            {
+                return $"<b>{content}</b>";
+            }
+
+            return content;
+        }
+
+        /// <inheritdoc/>
         public (string AbsoluteName, string RelativeName) ConvertDotStrToImg(string dotStr, string targetFileName)
         {
 #if DEBUG

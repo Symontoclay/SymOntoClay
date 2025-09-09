@@ -21,11 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Monitor.Common.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
 {
@@ -34,7 +29,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         /// <inheritdoc/>
         protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
-            return $"{message.GlobalMessageNumber.ToString()}: ";
+            return $"{logFileCreatorContext.DecorateGlobalNumber(message.GlobalMessageNumber.ToString())}: ";
         }
     }
 }

@@ -46,7 +46,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         public bool EnableDefaultValueOfMethodSignatureArguments { get; set; }
 
         /// <inheritdoc/>
-        public bool EnablePassedVauesOfMethodLabel { get; set; }
+        public bool EnablePassedValuesOfMethodLabel { get; set; }
 
         /// <inheritdoc/>
         public bool EnableChainOfProcessInfo { get; set; }
@@ -74,7 +74,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
             sb.AppendLine($"{spaces}{nameof(EnableMethodSignatureArguments)} = {EnableMethodSignatureArguments}");
             sb.AppendLine($"{spaces}{nameof(EnableTypesListOfMethodSignatureArguments)} = {EnableTypesListOfMethodSignatureArguments}");
             sb.AppendLine($"{spaces}{nameof(EnableDefaultValueOfMethodSignatureArguments)} = {EnableDefaultValueOfMethodSignatureArguments}");
-            sb.AppendLine($"{spaces}{nameof(EnablePassedVauesOfMethodLabel)} = {EnablePassedVauesOfMethodLabel}");
+            sb.AppendLine($"{spaces}{nameof(EnablePassedValuesOfMethodLabel)} = {EnablePassedValuesOfMethodLabel}");
             sb.AppendLine($"{spaces}{nameof(EnableChainOfProcessInfo)} = {EnableChainOfProcessInfo}");
 
             sb.Append(base.PropertiesToString(n));

@@ -369,7 +369,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
             }
 
-            if(_options.EnablePassedVauesOfMethodLabel)
+            if(_options.EnablePassedValuesOfMethodLabel)
             {
                 var values = label.Values;
 

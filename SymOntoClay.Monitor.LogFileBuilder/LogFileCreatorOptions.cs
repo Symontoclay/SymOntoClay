@@ -247,7 +247,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     EnableMethodSignatureArguments = true,
                     EnableTypesListOfMethodSignatureArguments = true,
                     EnableDefaultValueOfMethodSignatureArguments = true,
-                    EnablePassedVauesOfMethodLabel = true,
+                    EnablePassedValuesOfMethodLabel = true,
                     EnableChainOfProcessInfo = true
                 }
             }

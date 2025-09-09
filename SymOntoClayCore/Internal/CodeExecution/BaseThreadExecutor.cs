@@ -2355,20 +2355,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private ValueListCallResult TakeAndResolveCurrentValueAsCaller(KindOfValueConversion kindOfValueConversion)
         {
-            return TakePositionedParameters(
+            return NTakePositionedValues(
                 count: 1,
                 needRevers: false,
                 loadingMatrix: [kindOfValueConversion],
+                valueResolvingMode: ValueResolvingMode.Caller,
                 codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingCallerInCodeFrame,
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedCaller);
         }
 
         private ValueListCallResult TakeAndResolveCurrentValue(KindOfValueConversion kindOfValueConversion)
         {
-            return TakePositionedParameters(
+            return NTakePositionedValues(
                 count: 1,
                 needRevers: false,
                 loadingMatrix: [kindOfValueConversion],
+                valueResolvingMode: ValueResolvingMode.Usual,
                 codeFrameStateDuringResolvingValueInCodeFrame: CodeFrameState.ResolvingParameterInCodeFrame,
                 codeFrameStateAfterEnd: CodeFrameState.ResolvedParameters);
         }
@@ -2419,6 +2421,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame,
             CodeFrameState? codeFrameStateAfterEnd)
         {
+            return NTakePositionedValues(
+                count: count,
+                needRevers: needRevers,
+                loadingMatrix: loadingMatrix,
+                valueResolvingMode: ValueResolvingMode.Parameter,
+                codeFrameStateDuringResolvingValueInCodeFrame : codeFrameStateDuringResolvingValueInCodeFrame,
+                codeFrameStateAfterEnd : codeFrameStateAfterEnd);
+        }
+
+        private ValueListCallResult NTakePositionedValues(
+            int count,
+            bool needRevers,
+            KindOfValueConversion[] loadingMatrix,
+            ValueResolvingMode valueResolvingMode,
+            CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame,
+            CodeFrameState? codeFrameStateAfterEnd)
+        {
 #if DEBUG
             //Info("14B2B20F-631C-4713-AC8E-CD6B99C7A1AA", $"%%%% _currentCodeFrame.TakingValuesState = {_currentCodeFrame.TakingValuesState}");
 #endif
@@ -2434,16 +2453,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if(_currentCodeFrame.TakingValuesState == TakingValuesState.TakingValues)
             {
 #if DEBUG
-                //Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
-                //Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
-                //Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
+                Info("16B68B6C-93AA-41F5-98FD-9B63853A776B", $"count = {count}");
+                Info("756E22C7-A85C-49A3-A26E-8C1E0A730AB7", $"needRevers = {needRevers}");
+                Info("FA9B4438-7B64-4411-A89B-00B7A5FDA691", $"loadingMatrix = {loadingMatrix?.WritePODListToString()}");
+                Info("F87392A3-F38F-4803-860E-2F804163F83F", $"valueResolvingMode = {valueResolvingMode}");
                 //Info("FB1698B6-CB5F-41C6-9B9C-600F1E0C085A", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
                 //Info("B8F8501A-727B-4028-A13D-DEFF2075EC6B", $"codeFrameStateAfterEnd = {codeFrameStateAfterEnd}");
 #endif
 
                 BeginningClearResolvingParameter();
 
-                var rawParamsList = NTakePositionedParameters(count, needRevers);
+                var rawParamsList = NTakePositionedValuesFromStack(count, needRevers);
 
 #if DEBUG
                 Info("6D0A80B5-D63B-4F20-B70E-069C53B1DE40", $"rawParamsList = {rawParamsList.WriteListToString()}");
@@ -2520,7 +2540,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         continue;
                     }
 
-                    var conversionCallResult = TryResolveFromVarOrExpr(rawParam, loadingMatrixValue, codeFrameStateDuringResolvingValueInCodeFrame);
+                    var conversionCallResult = TryResolveFromVarOrExpr(rawParam, loadingMatrixValue, valueResolvingMode, codeFrameStateDuringResolvingValueInCodeFrame);
 
 #if DEBUG
                     Info("0F7C843C-7B48-4404-8CB2-72C5AB235DF3", $"conversionCallResult = {conversionCallResult}");
@@ -2563,6 +2583,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException("7ED884E5-4A5B-40DE-921D-FD93212D08EB");
         }
 
+
+
         private NamedParametersCallResult TakeNamedParameters(int count)
         {
             return TakeNamedParameters(count: count,
@@ -2600,7 +2622,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Info("A21683E9-F475-408C-8107-A70FBF95BEFB", $"codeFrameStateAfterEnd = {codeFrameStateAfterEnd}");
 #endif
 
-                var rawParamsList = NTakePositionedParameters(count * 2, true);
+                var rawParamsList = NTakePositionedValuesFromStack(count * 2, true);
 
 #if DEBUG
                 //Info("88EF202A-1611-403F-8EAB-0338EE3D81C3", $"rawParamsList = {rawParamsList.WriteListToString()}");
@@ -2679,7 +2701,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         continue;
                     }
 
-                    var conversionCallResult = TryResolveFromVarOrExpr(value, loadingMatrixValue, codeFrameStateDuringResolvingValueInCodeFrame);
+                    var conversionCallResult = TryResolveFromVarOrExpr(value, loadingMatrixValue, ValueResolvingMode.Parameter, codeFrameStateDuringResolvingValueInCodeFrame);
 
                     var conversionCallResultKindOfResult = conversionCallResult.KindOfResult;
 
@@ -2736,15 +2758,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private static ValueCallResult _executingCodeInOtherCodeFrameCallResult = new ValueCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
 
-        private ValueCallResult TryResolveFromVarOrExpr(Value operand, KindOfValueConversion kindOfValueConversion, CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame)
+        private ValueCallResult TryResolveFromVarOrExpr(Value operand, KindOfValueConversion kindOfValueConversion, ValueResolvingMode valueResolvingMode, CodeFrameState? codeFrameStateDuringResolvingValueInCodeFrame)
         {
 #if DEBUG
             //Info("A58897AB-CC50-48C6-8CC9-6FC7949D7E16", $"operand = {operand}");
             //Info("9B35028D-80AC-4666-A21D-8307CE803586", $"codeFrameStateDuringResolvingValueInCodeFrame = {codeFrameStateDuringResolvingValueInCodeFrame}");
             Info("5B02CDB3-6DB0-464B-AC97-DE92499E2A9C", $"kindOfValueConversion = {kindOfValueConversion}");
+            Info("A9FE8AC0-B995-47FC-9891-5A1110F9E0A9", $"valueResolvingMode = {valueResolvingMode}");
 #endif
 
-            var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, kindOfValueConversion, _currentCodeFrame.LocalContext);
+            var callResult = _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, kindOfValueConversion, valueResolvingMode, _currentCodeFrame.LocalContext);
 
 #if DEBUG
             Info("6C51558E-F0C3-40AB-9CAD-DE253758EB89", $"callResult = {callResult}");
@@ -2778,7 +2801,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<Value> NTakePositionedParameters(int count, bool needRevers)
+        private List<Value> NTakePositionedValuesFromStack(int count, bool needRevers)
         {
             var result = new List<Value>();
 

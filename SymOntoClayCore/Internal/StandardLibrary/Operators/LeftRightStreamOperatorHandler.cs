@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Info("D349C868-0F5D-467E-98AB-697E1DA8478F", $"leftOperandKindOfValue = {leftOperandKindOfValue}");
 #endif
 
-            var leftOperandCallResult = _valueResolvingHelper.TryResolveFromVarOrExpr(logger, leftOperand, kindOfValueConversion, localCodeExecutionContext);
+            var leftOperandCallResult = _valueResolvingHelper.TryResolveFromVarOrExpr(logger, leftOperand, kindOfValueConversion, ValueResolvingMode.Usual, localCodeExecutionContext);
 
 #if DEBUG
             //Info("5AF75343-8D96-48AA-B2F1-EA5A77D8BA7C", $"leftOperandCallResult = {leftOperandCallResult}");

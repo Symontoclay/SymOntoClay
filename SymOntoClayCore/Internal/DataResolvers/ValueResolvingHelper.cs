@@ -50,17 +50,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private VarsResolver _varsResolver;
         private StrongIdentifierExprValueResolver _strongIdentifierExprValueResolver;
 
-        public ValueCallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, KindOfValueConversion kindOfValueConversion, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, KindOfValueConversion kindOfValueConversion, ValueResolvingMode valueResolvingMode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            //Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
-            //Info("FABDB406-3D13-4A57-961E-DF6B8745409F", $"kindOfValueConversion = {kindOfValueConversion}");
+            Info("2833B222-F7A1-4588-A63A-612D54D1AB28", $"operand = {operand}");
+            Info("FABDB406-3D13-4A57-961E-DF6B8745409F", $"kindOfValueConversion = {kindOfValueConversion}");
+            Info("3E7BD299-8F4F-4059-A8B4-69511DD5B0D7", $"valueResolvingMode = {valueResolvingMode}");
 #endif
 
             var kindOfValue = operand.KindOfValue;
 
 #if DEBUG
-            //Info("387ABF8B-71F9-44F3-B4D5-504FCDB930EF", $"kindOfValue = {kindOfValue}");
+            Info("387ABF8B-71F9-44F3-B4D5-504FCDB930EF", $"kindOfValue = {kindOfValue}");
 #endif
 
             switch(kindOfValue)
@@ -98,7 +99,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             case KindOfName.LinguisticVar:
                             case KindOfName.Property:
                                 return _strongIdentifierExprValueResolver.GetValue(logger, identifier, kindOfValueConversion, localCodeExecutionContext.Instance, localCodeExecutionContext);
-
+                                
                             case KindOfName.Entity:
                                 return new ValueCallResult(operand);
 
@@ -109,15 +110,39 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 case KindOfValue.MemberValue:
                     {
-                        var memberValue = operand.AsMemberValue;
+                        switch(valueResolvingMode)
+                        {
+                            case ValueResolvingMode.Usual:
+                            case ValueResolvingMode.Parameter:
+                                {
+                                    var memberValue = operand.AsMemberValue;
 
-                        var kindOfMember = memberValue.KindOfMember;
+                                    return memberValue.GetValue(logger);
+                                }
+
+                            case ValueResolvingMode.Caller:
+                                {
+                                    var memberValue = operand.AsMemberValue;
+
+                                    var kindOfMember = memberValue.KindOfMember;
 
 #if DEBUG
-                        //Info("48A11334-C950-4AA7-81B1-E8EDC44A2A5B", $"kindOfMember = {kindOfMember}");
+                                    Info("48A11334-C950-4AA7-81B1-E8EDC44A2A5B", $"kindOfMember = {kindOfMember}");
 #endif
 
-                        return memberValue.GetValue(logger);
+                                    switch(kindOfMember)
+                                    {
+                                        case Instances.KindOfMember.HostMethod:
+                                            return new ValueCallResult(operand);
+
+                                        default:
+                                            return memberValue.GetValue(logger);
+                                    }
+                                }
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(valueResolvingMode), valueResolvingMode, null);
+                        }
                     }
 
                 default:

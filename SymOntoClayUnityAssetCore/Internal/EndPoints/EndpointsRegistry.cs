@@ -20,18 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
-using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {

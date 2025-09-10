@@ -71,6 +71,17 @@ namespace SymOntoClay.Monitor.NLog
         }
 
         /// <inheritdoc/>
+        public void AddEndpoint(string messagePointId,
+            string endpointName,
+            IReadOnlyList<int> paramsCountList,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("DEC5D181-DDD8-4466-B0C8-158A2859BBCD");
+        }
+
+        /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSync,

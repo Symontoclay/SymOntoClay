@@ -121,7 +121,15 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            d
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"endpointName = {endpointName}");
+            _globalLogger.Info($"paramsCountList.Count = {paramsCountList.Count}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

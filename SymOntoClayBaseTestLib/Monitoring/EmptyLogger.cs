@@ -67,6 +67,16 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
+        public void AddEndpoint(string messagePointId,
+            string endpointName,
+            IReadOnlyList<int> paramsCountList,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSync,
             [CallerMemberName] string memberName = "",

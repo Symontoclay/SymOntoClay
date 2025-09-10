@@ -121,6 +121,14 @@ namespace SymOntoClay.Monitor.Internal
 
         bool IMonitorLoggerContext.EnableRemoteConnection => _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection;
 
+        bool IMonitorFeatures.EnableAddEndpoint
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableAddEndpoint;
+            }
+        }
+
         bool IMonitorFeatures.EnableCallMethod
         {   
             get
@@ -573,6 +581,7 @@ namespace SymOntoClay.Monitor.Internal
 
             var monitorFeatures = (IMonitorFeatures)this;
 
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableAddEndpoint)} = {monitorFeatures.EnableAddEndpoint}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCallMethod)} = {monitorFeatures.EnableCallMethod}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableParameter)} = {monitorFeatures.EnableParameter}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndCallMethod)} = {monitorFeatures.EnableEndCallMethod}");

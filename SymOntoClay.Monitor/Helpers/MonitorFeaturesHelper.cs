@@ -4,6 +4,7 @@
     {
         public static void SetAllFeaturesEnabled(MonitorFeatures monitorFeatures)
         {
+            monitorFeatures.EnableAddEndpoint = true;
             monitorFeatures.EnableCallMethod = true;
             monitorFeatures.EnableParameter = true;
             monitorFeatures.EnableEndCallMethod = true;
@@ -60,6 +61,7 @@
 
         public static void SetAllFeaturesDisabled(MonitorFeatures monitorFeatures)
         {
+            monitorFeatures.EnableAddEndpoint = false;
             monitorFeatures.EnableCallMethod = false;
             monitorFeatures.EnableParameter = false;
             monitorFeatures.EnableEndCallMethod = false;

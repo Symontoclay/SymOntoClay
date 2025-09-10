@@ -30,6 +30,9 @@ namespace SymOntoClay.Monitor
     public class MonitorFeatures : IMonitorFeatures, IObjectToString
     {
         /// <inheritdoc/>
+        public bool EnableAddEndpoint { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableCallMethod { get; set; }
 
         /// <inheritdoc/>
@@ -194,6 +197,7 @@ namespace SymOntoClay.Monitor
         public MonitorFeatures Clone()
         {
             var result = new MonitorFeatures();
+            result.EnableAddEndpoint = EnableAddEndpoint;
             result.EnableCallMethod = EnableCallMethod;
             result.EnableParameter = EnableParameter;
             result.EnableEndCallMethod = EnableEndCallMethod;
@@ -267,6 +271,7 @@ namespace SymOntoClay.Monitor
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(EnableAddEndpoint)} = {EnableAddEndpoint}");
             sb.AppendLine($"{spaces}{nameof(EnableCallMethod)} = {EnableCallMethod}");
             sb.AppendLine($"{spaces}{nameof(EnableParameter)} = {EnableParameter}");
             sb.AppendLine($"{spaces}{nameof(EnableEndCallMethod)} = {EnableEndCallMethod}");

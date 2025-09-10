@@ -48,6 +48,13 @@ namespace SymOntoClay.Monitor.Common
 
         string CreateThreadId();
 
+        void AddEndpoint(string messagePointId,
+            string endpointName,
+            IReadOnlyList<int> paramsCountList,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSync,
             [CallerMemberName] string memberName = "",

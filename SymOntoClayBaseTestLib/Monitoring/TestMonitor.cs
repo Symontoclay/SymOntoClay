@@ -52,7 +52,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         public string SessionDirectoryFullName => string.Empty;
 
         /// <inheritdoc/>
-        public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public IMonitorNode CreateMonitorNode(string messagePointId, string nodeId, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
             return new TestMonitorNode(_monitorSettings, nodeId);
         }

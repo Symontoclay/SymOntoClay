@@ -61,6 +61,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var paramsCountList = GetParamsCountList(endpointInfo);
 
+            Logger.AddEndpoint("7C8511A8-3FDE-421A-BAFE-F96FF00F1A28", endPointName, paramsCountList);
+
 #if DEBUG
             Info("81F7F3DA-D8F8-4842-B86C-D6AA7A6F7289", $"endPointName = {endPointName}");
             Info("6C820B35-758F-4435-8CD2-FC72EC7002C6", $"paramsCountList.Count = {paramsCountList.Count}");

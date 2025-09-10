@@ -705,7 +705,7 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
+        public IMonitorNode CreateMonitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -794,6 +794,18 @@ namespace SymOntoClay.Monitor
             }
 
             return nodeSettings;
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void AddEndpoint(string messagePointId,
+            string endpointName,
+            IReadOnlyList<int> paramsCountList,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.AddEndpoint(messagePointId, endpointName, paramsCountList, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

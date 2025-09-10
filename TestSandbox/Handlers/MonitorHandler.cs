@@ -101,7 +101,7 @@ namespace TestSandbox.Handlers
 
             var npcId = "#020ED339-6313-459A-900D-92F809CEBDC5";
             //---------------
-            var monitorNode = monitor.CreateMotitorNode("133776E5-AAAA-4896-AB6E-02C2902A5911", npcId);
+            var monitorNode = monitor.CreateMonitorNode("133776E5-AAAA-4896-AB6E-02C2902A5911", npcId);
 
             var threadLogger = monitorNode.CreateThreadLogger("8507C879-EE50-4E83-B72B-FDE9662D92BC", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
 
@@ -196,7 +196,7 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"monitor.SessionDirectoryName = {monitor.SessionDirectoryName}");
             _globalLogger.Info($"monitor.SessionDirectoryFullName = {monitor.SessionDirectoryFullName}");
 
-            var monitorNode = monitor.CreateMotitorNode("9FF4FC16-06AF-4121-BD2F-F333F1BCCE95", "soldier 1");
+            var monitorNode = monitor.CreateMonitorNode("9FF4FC16-06AF-4121-BD2F-F333F1BCCE95", "soldier 1");
 
             var threadLogger = monitorNode.CreateThreadLogger("687E7D1B-4E52-470B-9D6F-D4CC9C08A5FD", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
 

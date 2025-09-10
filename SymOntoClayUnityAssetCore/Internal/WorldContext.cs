@@ -96,7 +96,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private void CreateMonitoring(WorldSettings settings)
         {
             Monitor = settings.Monitor;            
-            MonitorNode = Monitor.CreateMotitorNode("6B299F25-9FD9-46BE-A833-9C52B279444F", "world");
+            MonitorNode = Monitor.CreateMonitorNode("6B299F25-9FD9-46BE-A833-9C52B279444F", "world");
             Logger = MonitorNode;
         }
 

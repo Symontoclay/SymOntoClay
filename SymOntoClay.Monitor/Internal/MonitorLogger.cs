@@ -114,6 +114,18 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public void AddEndpoint(string messagePointId,
+            string endpointName,
+            IReadOnlyList<int> paramsCountList,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            d
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSync,
             [CallerMemberName] string memberName = "",

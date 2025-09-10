@@ -33,7 +33,7 @@ namespace SymOntoClay.Monitor.Common
         string SessionDirectoryName { get; }
         string SessionDirectoryFullName { get; }
 
-        IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
+        IMonitorNode CreateMonitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

@@ -409,7 +409,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private (string Content, bool CanContainHtmlTags) GetAddEndpoint(AddEndpointMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return ($"'{message.EndpointName}'; Params count: [{string.Join(", ", message.ParamsCountList)}]", false);

@@ -122,11 +122,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"endpointName = {endpointName}");
-            _globalLogger.Info($"paramsCountList.Count = {paramsCountList.Count}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"endpointName = {endpointName}");
+            //_globalLogger.Info($"paramsCountList.Count = {paramsCountList.Count}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableAddEndpoint)
@@ -137,13 +137,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -175,7 +175,7 @@ namespace SymOntoClay.Monitor.Internal
             };
 
 #if DEBUG
-            _globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
             ProcessMessage(messageInfo);

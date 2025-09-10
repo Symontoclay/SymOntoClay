@@ -33,6 +33,7 @@ namespace SymOntoClay.Monitor.Common.Data
         Unknown,
         CreateMotitorNode,
         CreateThreadLogger,
+        AddEndpoint,
         CallMethod,
         Parameter,
         EndCallMethod,

@@ -26,6 +26,7 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitorFeatures : IObjectToString
     {
+        bool EnableAddEndpoint { get; }
         bool EnableCallMethod { get; }
         bool EnableParameter { get; }
         bool EnableEndCallMethod { get; }

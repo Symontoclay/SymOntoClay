@@ -129,7 +129,56 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            throw new NotImplementedException();
+            if (!_features.EnableAddEndpoint)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new AddEndpointMessage
+            {
+                EndpointName = endpointName,
+                ParamsCountList = paramsCountList,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>

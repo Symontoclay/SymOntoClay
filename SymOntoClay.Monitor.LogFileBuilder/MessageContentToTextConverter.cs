@@ -60,6 +60,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.CreateThreadLogger:
                     return GetCreateThreadLogger(message as CreateThreadLoggerMessage);
 
+                case KindOfMessage.AddEndpoint:
+                    return GetAddEndpoint(message as AddEndpointMessage);
+
                 case KindOfMessage.CallMethod:
                     return GetCallMethod(message as CallMethodMessage);
 
@@ -401,6 +404,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             return altLabel;
+        }
+
+        private (string Content, bool CanContainHtmlTags) GetAddEndpoint(AddEndpointMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return ($"'{message.EndpointName}'; Params count: [{string.Join(", ", message.ParamsCountList)}]", false);
         }
 
         private (string Content, bool CanContainHtmlTags) GetCallMethod(CallMethodMessage message)

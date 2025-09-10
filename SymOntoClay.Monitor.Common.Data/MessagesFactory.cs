@@ -50,6 +50,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.CreateThreadLogger:
                     return JsonConvert.DeserializeObject<CreateThreadLoggerMessage>(content);
 
+                case KindOfMessage.AddEndpoint:
+                    return JsonConvert.DeserializeObject<AddEndpointMessage>(content);
+
                 case KindOfMessage.CallMethod:
                     return JsonConvert.DeserializeObject<CallMethodMessage>(content);
 

@@ -751,7 +751,7 @@ namespace SymOntoClay.Monitor
 
             var now = DateTime.Now;
 
-            var messageInfo = new CreateMotitorNodeMessage
+            var messageInfo = new CreateMonitorNodeMessage
             {
                 DateTimeStamp = now,
                 NodeId = nodeId,

@@ -28,9 +28,9 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class CreateMotitorNodeMessage : BaseMessage
+    public class CreateMonitorNodeMessage : BaseMessage
     {
         /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.CreateMotitorNode;
+        public override KindOfMessage KindOfMessage => KindOfMessage.CreateMonitorNode;
     }
 }

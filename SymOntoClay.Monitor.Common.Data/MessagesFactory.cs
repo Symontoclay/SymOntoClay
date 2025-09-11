@@ -44,8 +44,8 @@ namespace SymOntoClay.Monitor.Common.Data
 
             switch (kindOfMessage)
             {
-                case KindOfMessage.CreateMotitorNode:
-                    return JsonConvert.DeserializeObject<CreateMotitorNodeMessage>(content);
+                case KindOfMessage.CreateMonitorNode:
+                    return JsonConvert.DeserializeObject<CreateMonitorNodeMessage>(content);
 
                 case KindOfMessage.CreateThreadLogger:
                     return JsonConvert.DeserializeObject<CreateThreadLoggerMessage>(content);

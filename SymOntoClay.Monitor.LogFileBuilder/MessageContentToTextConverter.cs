@@ -54,8 +54,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             switch (kindOfMessage)
             {
-                case KindOfMessage.CreateMotitorNode:
-                    return GetCreateMonitorNode(message as CreateMotitorNodeMessage);
+                case KindOfMessage.CreateMonitorNode:
+                    return GetCreateMonitorNode(message as CreateMonitorNodeMessage);
 
                 case KindOfMessage.CreateThreadLogger:
                     return GetCreateThreadLogger(message as CreateThreadLoggerMessage);
@@ -227,7 +227,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
         }
 
-        private (string Content, bool CanContainHtmlTags) GetCreateMonitorNode(CreateMotitorNodeMessage message)
+        private (string Content, bool CanContainHtmlTags) GetCreateMonitorNode(CreateMonitorNodeMessage message)
         {
             return ($"MonitorNode '{message.NodeId}' has been created", false);
         }

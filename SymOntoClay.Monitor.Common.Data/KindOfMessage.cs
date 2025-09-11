@@ -31,7 +31,7 @@ namespace SymOntoClay.Monitor.Common.Data
     public enum KindOfMessage
     {
         Unknown,
-        CreateMotitorNode,
+        CreateMonitorNode,
         CreateThreadLogger,
         AddEndpoint,
         CallMethod,

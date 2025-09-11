@@ -513,13 +513,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetHostMethodResolving(HostMethodResolvingMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");
@@ -528,13 +528,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetEndHostMethodResolving(EndHostMethodResolvingMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");
@@ -543,13 +543,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetHostMethodActivation(HostMethodActivationMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");
@@ -558,13 +558,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetEndHostMethodActivation(EndHostMethodActivationMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");
@@ -573,13 +573,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetHostMethodStarting(HostMethodStartingMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");
@@ -588,13 +588,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetEndHostMethodStarting(EndHostMethodStartingMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");
@@ -603,13 +603,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetHostMethodExecution(HostMethodExecutionMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");
@@ -618,13 +618,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetEndHostMethodExecution(EndHostMethodExecutionMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var callMethodId = message.CallMethodId;
 
 #if DEBUG
-            _globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
+            //_globalLogger.Info($"GetMethodLabel(callMethodId) = {GetMethodLabel(callMethodId)}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{callMethodId} ({GetMethodLabel(callMethodId)})>");

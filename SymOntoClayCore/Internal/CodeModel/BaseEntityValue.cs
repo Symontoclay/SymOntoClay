@@ -28,10 +28,8 @@ using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Numerics;
 using System.Text;
-using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {

@@ -320,6 +320,58 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
+        string BeginVisionFrame(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void BecomeInvisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void BecomeVisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void ChangedAddFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void ChangedRemoveFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void ChangedDistance(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void EndVisionFrame(string messagePointId,
+            string visionFrameId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
         //from channel
         void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",

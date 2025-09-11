@@ -71,6 +71,8 @@ namespace SymOntoClay.Core
         void AddOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler);
         void RemoveOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler);
 
+        string FactsAndRulesToDbgString();
+
 #if DEBUG
         void DbgPrintFactsAndRules(IMonitorLogger logger);
 #endif

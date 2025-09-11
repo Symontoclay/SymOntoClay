@@ -125,13 +125,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 //_gbcLogger.Info($"lines.Length = {lines.Length}");
 #endif
 
-                var canContainHtmlTags = content.Contains("LOGICALSEARCHEXPLAIN");
-
                 if (lines.Length == 1)
                 {
                     return $"""
                     <a name="id_{globalMessageNumber}"/>
-                    <p>{PrepareHtmlContent(content, canContainHtmlTags)}</p>
+                    <p>{PrepareHtmlContent(content)}</p>
                     """;
                 }
 
@@ -143,11 +141,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 var sb = new StringBuilder();
                 sb.AppendLine($"<details name=\"name_{Guid.NewGuid().ToString("D")}\">");
-                sb.AppendLine($"<summary>{PrepareHtmlContent(firstLine, canContainHtmlTags)}</summary>");
+                sb.AppendLine($"<summary>{PrepareHtmlContent(firstLine)}</summary>");
                 sb.AppendLine("<div><p>");
                 for(var i = 1; i < lines.Length; i++)
                 {
-                    sb.AppendLine($"{PrepareHtmlContent(lines[i], canContainHtmlTags)}<br/>");
+                    sb.AppendLine($"{PrepareHtmlContent(lines[i])}<br/>");
                 }
                 sb.AppendLine("</p></div>");
                 sb.AppendLine("</details>");
@@ -430,11 +428,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         /// <inheritdoc/>
         public string NormalizeText(string content)
         {
-            return NormalizeText(content, false);
-        }
-
-        public string NormalizeText(string content, bool canContainHtmlTags)
-        {
             if (string.IsNullOrEmpty(content))
             {
                 return content;
@@ -442,18 +435,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (_toHtml)
             {
-                return PrepareHtmlContent(content, canContainHtmlTags);
+                return PrepareHtmlContent(content);
             }
 
             return content;
         }
 
         private string PrepareHtmlContent(string content)
-        {
-            return PrepareHtmlContent(content, false);
-        }
-
-        private string PrepareHtmlContent(string content, bool canContainHtmlTags)
         {
             if (string.IsNullOrEmpty(content))
             {
@@ -466,11 +454,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             content = content.Replace("\n", "<br/>");
-
-            if (!canContainHtmlTags)
-            {
-                //content = content.Replace(" ", "&nbsp;");
-            }
 
             return content;
         }

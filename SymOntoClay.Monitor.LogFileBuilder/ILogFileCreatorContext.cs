@@ -47,7 +47,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         string CreateLink(string absoluteFileName, string relativeFileName, string title);
         string ResolveMessagesRefs(string content);
         string NormalizeText(string content);
-        string NormalizeText(string content, bool canContainHtmlTags);
         string NormalizeAsHtml(string content);
     }
 }

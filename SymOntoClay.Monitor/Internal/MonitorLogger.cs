@@ -391,7 +391,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, object parameterValue,
+        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier parameterIdentifier, object parameterValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -399,7 +399,7 @@ namespace SymOntoClay.Monitor.Internal
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
-            //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            //_globalLogger.Info($"parameterIdentifier = {parameterIdentifier.ToLabel()}");
             //_globalLogger.Info($"parameterValue = {parameterValue}");
             //_globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
             //_globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
@@ -415,12 +415,12 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), string.Empty, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, parameterIdentifier.ToLabel(this), string.Empty, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, IMonitoredObject parameterValue,
+        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier parameterIdentifier, IMonitoredObject parameterValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -428,7 +428,7 @@ namespace SymOntoClay.Monitor.Internal
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
-            //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            //_globalLogger.Info($"parameterIdentifier = {parameterIdentifier.ToLabel()}");
             //_globalLogger.Info($"parameterValue = {parameterValue}");
             //_globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
             //_globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
@@ -444,7 +444,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), string.Empty, parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, parameterIdentifier.ToLabel(this), string.Empty, parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
         }
 
         private string ToBase64String(string value)

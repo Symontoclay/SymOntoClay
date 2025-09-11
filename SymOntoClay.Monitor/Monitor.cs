@@ -873,22 +873,19 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, object parameterValue,
+        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier parameterIdentifier, object parameterValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _monitorLoggerImpl.Parameter(messagePointId, callMethodId, methodIdentifier, parameterValue, memberName, sourceFilePath, sourceLineNumber);
+            _monitorLoggerImpl.Parameter(messagePointId, callMethodId, parameterIdentifier, parameterValue, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, IMonitoredObject parameterValue,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
+        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier parameterIdentifier, IMonitoredObject parameterValue, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _monitorLoggerImpl.Parameter(messagePointId, callMethodId, methodIdentifier, parameterValue, memberName, sourceFilePath, sourceLineNumber);
+            _monitorLoggerImpl.Parameter(messagePointId, callMethodId, parameterIdentifier, parameterValue, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

@@ -52,13 +52,13 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+        string CallMethod(string messagePointId, IMonitoredMethodIdentifier parameterIdentifier,
             bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+        string CallMethod(string messagePointId, IMonitoredMethodIdentifier parameterIdentifier,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
             bool isSync,
             [CallerMemberName] string memberName = "",
@@ -81,12 +81,12 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, object parameterValue,
+        void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier parameterIdentifier, object parameterValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, IMonitoredObject parameterValue,
+        void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier parameterIdentifier, IMonitoredObject parameterValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

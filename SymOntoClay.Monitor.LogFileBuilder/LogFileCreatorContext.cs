@@ -433,12 +433,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return NormalizeText(content, false);
         }
 
-        /// <inheritdoc/>
-        public string NormalizeText((string Content, bool CanContainHtmlTags) text)
-        {
-            return NormalizeText(text.Content, text.CanContainHtmlTags);
-        }
-
         public string NormalizeText(string content, bool canContainHtmlTags)
         {
             if (string.IsNullOrEmpty(content))
@@ -475,7 +469,23 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (!canContainHtmlTags)
             {
-                content = content.Replace(" ", "&nbsp;");
+                //content = content.Replace(" ", "&nbsp;");
+            }
+
+            return content;
+        }
+
+        /// <inheritdoc/>
+        public string NormalizeAsHtml(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return content;
+            }
+
+            if (_toHtml)
+            {
+                return content.Replace(" ", "&nbsp;").Replace("<", "&lt;").Replace(">", "&gt;");
             }
 
             return content;

@@ -184,7 +184,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     }
 
 #if DEBUG
-                    //_logger.Info($"rowSb = {rowSb}");
+                    _logger.Info($"rowSb = {rowSb}");
 #endif
 
                     writtenN++;

@@ -119,7 +119,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 //_gbcLogger.Info($"content = {content}");
 #endif
 
-                var lines = content.Split("<br/>");
+                var lines = content.Split("<br/>", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
 #if DEBUG
                 //_gbcLogger.Info($"lines.Length = {lines.Length}");

@@ -1,15 +1,10 @@
 ﻿app PeaceKeeper
 {
-    on Enter =>
+    on Enter
     {
         'Begin' >> @>log;
-        @@host.`stop shoot`();
+        @a = #@(barrel);
+        @a >> @>log;
         'End' >> @>log;
-    }
-
-    fun `stop shoot`()
-    {
-    	'Begin stop shoot' >> @>log;
-		'End stop shoot' >> @>log;
     }
 }

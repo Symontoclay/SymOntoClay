@@ -375,6 +375,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 sb.Append(")");
             }
 
+#if DEBUG
+            //Info("A0F6AE86-2AAD-4798-9D7D-17BB35573D32", $"options.HumanizedOptions = {options.HumanizedOptions}");
+            //Info("F8F9C260-B500-452D-B01A-204FB18E26C1", $"_idForFacts = {_idForFacts}");
+#endif
+
+            if(options.HumanizedOptions != HumanizedOptions.ShowOnlyMainContent)
+            {
+                sb.Append(" <");
+                sb.Append(_idForFacts);
+                sb.Append(">");
+            }
+
             return sb.ToString();
         }
 

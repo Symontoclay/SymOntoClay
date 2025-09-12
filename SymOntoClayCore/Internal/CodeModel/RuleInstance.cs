@@ -673,9 +673,30 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
         }
 
+        /// <inheritdoc/>
+        public string FactsAndRulesToDbgString()
+        {
+            IStorage storage = this;
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"({GetHashCode()}) Begin {storage.Kind}");
+
+            var spaces = DisplayHelper.Spaces(DisplayHelper.IndentationStep);
+            sb.Append(spaces);
+            sb.AppendLine(DebugHelperForRuleInstance.ToString(this));
+
+            sb.AppendLine($"({GetHashCode()}) End {storage.Kind}");
+
+            return string.Empty;
+        }
+
 #if DEBUG
         /// <inheritdoc/>
-        void IStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException("3E406EDD-78EE-430D-BFC3-98F53DF9AF05");
+        void IStorage.DbgPrintFactsAndRules(IMonitorLogger logger)
+        {
+            logger.Info("3E406EDD-78EE-430D-BFC3-98F53DF9AF05", FactsAndRulesToDbgString());
+        }
 #endif
 #endregion
 

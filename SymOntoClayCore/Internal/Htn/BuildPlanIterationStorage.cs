@@ -254,6 +254,12 @@ namespace SymOntoClay.Core.Internal.Htn
         {
         }
 
+        /// <inheritdoc/>
+        public string FactsAndRulesToDbgString()
+        {
+            return string.Empty;
+        }
+
 #if DEBUG
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules(IMonitorLogger logger)

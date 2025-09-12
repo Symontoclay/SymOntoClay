@@ -505,6 +505,80 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
+        public string BeginVisionFrame(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
+        public void BecomeInvisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void BecomeVisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void ChangedAddFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void ChangedRemoveFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void ChangedDistance(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void EndVisionFrame(string messagePointId,
+            string visionFrameId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

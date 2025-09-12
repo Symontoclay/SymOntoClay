@@ -983,6 +983,26 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
+        public string FactsAndRulesToDbgString()
+        {
+            var sb = new StringBuilder();
+
+            List<ILogicalStorage> logicalStorages = null;
+
+            lock (_lockObj)
+            {
+                logicalStorages = logicalStorages.ToList();
+            }
+
+            foreach (var storage in logicalStorages)
+            {
+                sb.AppendLine(storage.FactsAndRulesToDbgString());
+            }
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
         public void DbgPrintFactsAndRules(IMonitorLogger logger)
         {
             List<ILogicalStorage> logicalStorages = null;

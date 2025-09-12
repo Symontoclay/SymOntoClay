@@ -503,6 +503,12 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.Dispose();
         }
 
+        /// <inheritdoc/>
+        public string FactsAndRulesToDbgString()
+        {
+            return LogicalStorage.FactsAndRulesToDbgString();
+        }
+
 #if DEBUG
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules(IMonitorLogger logger)

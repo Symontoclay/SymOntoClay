@@ -1310,6 +1310,93 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public string BeginVisionFrame(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return _monitorLoggerImpl.BeginVisionFrame(messagePointId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void BecomeInvisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.BecomeInvisible(messagePointId, visionFrameId, objectId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void BecomeVisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.BecomeVisible(messagePointId, visionFrameId, objectId, distance, publicInformationHumanizedStr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ChangedAddFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.ChangedAddFocus(messagePointId, visionFrameId, objectId, publicInformationHumanizedStr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ChangedRemoveFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.ChangedRemoveFocus(messagePointId, visionFrameId, objectId, publicInformationHumanizedStr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ChangedDistance(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.ChangedDistance(messagePointId, visionFrameId, objectId, distance, publicInformationHumanizedStr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndVisionFrame(string messagePointId,
+            string visionFrameId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.EndVisionFrame(messagePointId, visionFrameId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

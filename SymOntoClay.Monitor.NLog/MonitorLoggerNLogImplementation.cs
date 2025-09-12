@@ -610,6 +610,93 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public string BeginVisionFrame(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("5873FBDB-DD86-4A1C-BE8B-1242231873B5");
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void BecomeInvisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("DD826AF3-5808-4747-8561-6AA85EA40963");
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void BecomeVisible(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("4C0D1984-2827-4F7C-8714-13307CC814EE");
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ChangedAddFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("CD581105-0B94-4978-AE40-9DB236CE6255");
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ChangedRemoveFocus(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("9E7D1696-B6CD-4864-B0C0-016EB2A8CAF2");
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ChangedDistance(string messagePointId,
+            string visionFrameId,
+            string objectId,
+            float distance,
+            string publicInformationHumanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("1C842741-F3FE-4D48-B9C5-06F73AF4806B");
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndVisionFrame(string messagePointId,
+            string visionFrameId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException("99FD9522-5647-44A0-9E19-A08E260D0AB3");
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

@@ -219,6 +219,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
+        public string FactsAndRulesToDbgString()
+        {
+            return string.Empty;
+        }
+
+        /// <inheritdoc/>
         public void DbgPrintFactsAndRules(IMonitorLogger logger)
         {
         }

@@ -6207,6 +6207,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CodeItemsStoragesList">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.FactsAndRulesToDbgString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
@@ -8201,6 +8204,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.GetStorages(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.FactsAndRulesToDbgString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
@@ -11121,6 +11127,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.GetStorages(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.FactsAndRulesToDbgString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
@@ -11472,6 +11481,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.FactsAndRulesToDbgString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
@@ -11580,6 +11592,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage.FactsAndRulesToDbgString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
@@ -11677,6 +11692,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.FactsAndRulesToDbgString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
@@ -11887,6 +11905,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.FactsAndRulesToDbgString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">

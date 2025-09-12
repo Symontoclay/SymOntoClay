@@ -3575,7 +3575,54 @@ namespace SymOntoClay.Monitor.Internal
                 return GetVisionFrameId();
             }
 
-            throw new NotImplementedException();
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var visionFrameId = GetVisionFrameId();
+
+            var messageInfo = new BeginVisionFrameMessage
+            {
+                VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+
+            return visionFrameId;
         }
 
         /// <inheritdoc/>
@@ -3601,7 +3648,51 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new BecomeInvisibleMessage
+            {
+                ObjectId = objectId,
+                VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3631,7 +3722,53 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new BecomeVisibleMessage
+            {
+                Distance = distance,
+                PublicInformationHumanizedStr = publicInformationHumanizedStr,
+                ObjectId = objectId,
+                VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3659,7 +3796,52 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new ChangedAddFocusMessage
+            {
+                PublicInformationHumanizedStr = publicInformationHumanizedStr,
+                ObjectId = objectId,
+                VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3687,7 +3869,52 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new ChangedRemoveFocusMessage
+            {
+                PublicInformationHumanizedStr = publicInformationHumanizedStr,
+                ObjectId = objectId,
+                VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3717,7 +3944,53 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new ChangedDistanceMessage
+            {
+                Distance = distance,
+                PublicInformationHumanizedStr = publicInformationHumanizedStr,
+                ObjectId = objectId,
+                VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3741,7 +4014,50 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new EndVisionFrameMessage
+            {
+                VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>

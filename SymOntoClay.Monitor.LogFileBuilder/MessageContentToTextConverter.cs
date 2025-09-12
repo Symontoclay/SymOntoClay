@@ -1088,7 +1088,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetBeginVisionFrame(BeginVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{message.VisionFrameId}>");
@@ -1097,7 +1097,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetBecomeInvisible(BecomeInvisibleMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{message.VisionFrameId}> : {message.ObjectId}");
@@ -1106,7 +1106,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetBecomeVisible(BecomeVisibleMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder();
@@ -1128,7 +1128,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetChangedAddFocus(ChangedAddFocusMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder();
@@ -1149,7 +1149,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetChangedRemoveFocus(ChangedRemoveFocusMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder();
@@ -1170,7 +1170,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetChangedDistance(ChangedDistanceMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder();
@@ -1192,7 +1192,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetEndVisionFrame(EndVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return logFileCreatorContext.NormalizeAsHtml($"<{message.VisionFrameId}>");

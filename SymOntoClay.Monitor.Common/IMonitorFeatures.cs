@@ -73,6 +73,13 @@ namespace SymOntoClay.Monitor.Common
         bool EnableThreadTask { get; }
         bool EnableHtn { get; }
         bool EnableBuildPlan { get; }
+        bool EnableVisionFrame { get; }
+        bool EnableCatchPublicFactsInVisionFrame { get; }
+        bool EnableBecomeInvisible { get; }
+        bool EnableBecomeVisible { get; }
+        bool EnableChangedAddFocus { get; }
+        bool EnableChangedRemoveFocus { get; }
+        bool EnableChangedDistance { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

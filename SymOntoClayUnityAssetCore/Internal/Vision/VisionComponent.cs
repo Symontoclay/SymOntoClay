@@ -113,7 +113,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
             var logger = Logger;
 
-            var visionFrameId = logger.BeginVisionFrame("92F97000-4EE5-4B30-A10A-F4E1561E2AB1");
+            var monitorFeatures = logger.MonitorFeatures;
+
+            var enableVisionFrame = monitorFeatures.EnableVisionFrame;
+            var enableCatchPublicFactsInVisionFrame = monitorFeatures.EnableCatchPublicFactsInVisionFrame;
+
+            var visionFrameId = string.Empty;
+
+            if(enableVisionFrame)
+            {
+                visionFrameId = logger.BeginVisionFrame("92F97000-4EE5-4B30-A10A-F4E1561E2AB1");
+            }           
 
             var currentTimeStamp = _dateTimeProvider.CurrentTicks;
 
@@ -210,9 +220,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         continue;
                     }
 
-                    var visibleItemIdForFacts = _visibleObjectsIdForFactsRegistry[removedInstancesId];
+                    if (enableVisionFrame)
+                    {
+                        var visibleItemIdForFacts = _visibleObjectsIdForFactsRegistry[removedInstancesId];
 
-                    logger.BecomeInvisible("19ABCDA5-1963-4561-B799-9A539DC8DD31", visionFrameId, visibleItemIdForFacts);
+                        logger.BecomeInvisible("19ABCDA5-1963-4561-B799-9A539DC8DD31", visionFrameId, visibleItemIdForFacts);
+                    }
 
                     _visibleObjectsRegistry.Remove(removedInstancesId);
 
@@ -271,7 +284,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     _visibleObjectsIdForFactsRegistry[visibleItemInstanceId] = visibleItemIdForFacts;
 
-                    logger.BecomeVisible("6D568475-0257-4E48-B20B-3B6A870B7CC0", visionFrameId, visibleItemIdForFacts, newVisibleItem.MinDistance, storage.FactsAndRulesToDbgString());
+                    if (enableVisionFrame)
+                    {
+                        var publicInformationHumanizedStr = string.Empty;
+
+                        if (enableCatchPublicFactsInVisionFrame)
+                        {
+                            publicInformationHumanizedStr = storage.FactsAndRulesToDbgString();
+                        }
+
+                        logger.BecomeVisible("6D568475-0257-4E48-B20B-3B6A870B7CC0", visionFrameId, visibleItemIdForFacts, newVisibleItem.MinDistance, publicInformationHumanizedStr);
+                    }                    
 
 #if DEBUG
                     Info("2AEAE968-5454-4DA6-A7C1-4D45FF825E94", $"visibleItemIdForFacts = {visibleItemIdForFacts}");
@@ -317,9 +340,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     var visibleItemIdForFacts = _visibleObjectsIdForFactsRegistry[visibleItemInstanceId];
 
-                    var storage = _visibleObjectsStoragesRegistry[visibleItemInstanceId];
+                    if (enableVisionFrame)
+                    {
+                        var publicInformationHumanizedStr = string.Empty;
 
-                    logger.ChangedAddFocus("72BC99BF-390C-4530-94DB-A8ED670AEB07", visionFrameId, visibleItemIdForFacts, storage.FactsAndRulesToDbgString());
+                        if (enableCatchPublicFactsInVisionFrame)
+                        {
+                            var storage = _visibleObjectsStoragesRegistry[visibleItemInstanceId];
+
+                            publicInformationHumanizedStr = storage.FactsAndRulesToDbgString();
+                        }
+
+                        logger.ChangedAddFocus("72BC99BF-390C-4530-94DB-A8ED670AEB07", visionFrameId, visibleItemIdForFacts, publicInformationHumanizedStr);
+                    }
 
                     var focusFact = _standardFactsBuilder.BuildFocusFactInstance(visibleItemIdForFacts);
                     focusFact.TimeStamp = currentTimeStamp;
@@ -334,10 +367,21 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                 {
                     var visibleItemInstanceId = changedRemoveFocusVisibleItem.InstanceId;
 
-                    var visibleItemIdForFacts = _visibleObjectsIdForFactsRegistry[visibleItemInstanceId];
-                    var storage = _visibleObjectsStoragesRegistry[visibleItemInstanceId];
+                    if (enableVisionFrame)
+                    {
+                        var visibleItemIdForFacts = _visibleObjectsIdForFactsRegistry[visibleItemInstanceId];
 
-                    logger.ChangedRemoveFocus("1BC4A7E8-DE29-4703-B71D-4410F9A02005", visionFrameId, visibleItemIdForFacts, storage.FactsAndRulesToDbgString());
+                        var publicInformationHumanizedStr = string.Empty;
+
+                        if (enableCatchPublicFactsInVisionFrame)
+                        {
+                            var storage = _visibleObjectsStoragesRegistry[visibleItemInstanceId];
+
+                            publicInformationHumanizedStr = storage.FactsAndRulesToDbgString();
+                        }
+
+                        logger.ChangedRemoveFocus("1BC4A7E8-DE29-4703-B71D-4410F9A02005", visionFrameId, visibleItemIdForFacts, publicInformationHumanizedStr);
+                    }
 
                     var factId = _visibleObjectsFocusFactsIdRegistry[visibleItemInstanceId];
                     _visibleObjectsFocusFactsIdRegistry.Remove(visibleItemInstanceId);
@@ -355,9 +399,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     _coreEngine.RemovePerceptedFact(Logger, _visibleObjectsDistanceFactsIdRegistry[visibleItemInstanceId]);
 
                     var visibleItemIdForFacts = _worldContext.GetIdForFactsByInstanceId(visibleItemInstanceId);
-                    var storage = _visibleObjectsStoragesRegistry[visibleItemInstanceId];
 
-                    logger.ChangedDistance("B067A0D8-5A5B-4437-A842-D3B54CAE8561", visionFrameId, visibleItemIdForFacts, item.MinDistance, storage.FactsAndRulesToDbgString());
+                    if (enableVisionFrame)
+                    {
+                        var publicInformationHumanizedStr = string.Empty;
+
+                        if (enableCatchPublicFactsInVisionFrame)
+                        {
+                            var storage = _visibleObjectsStoragesRegistry[visibleItemInstanceId];
+
+                            publicInformationHumanizedStr = storage.FactsAndRulesToDbgString();
+                        }
+
+                        logger.ChangedDistance("B067A0D8-5A5B-4437-A842-D3B54CAE8561", visionFrameId, visibleItemIdForFacts, item.MinDistance, publicInformationHumanizedStr);
+                    }
 
                     var distanceFact = _standardFactsBuilder.BuildDistanceFactInstance(visibleItemIdForFacts, item.MinDistance);
                     distanceFact.TimeStamp = currentTimeStamp;
@@ -366,7 +421,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                 }
             }
 
-            logger.EndVisionFrame("352DD132-D7ED-4264-929D-D0222E15543D", visionFrameId);
+            if (enableVisionFrame)
+            {
+                logger.EndVisionFrame("352DD132-D7ED-4264-929D-D0222E15543D", visionFrameId);
+            }            
 
             return true;
         }

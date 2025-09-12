@@ -201,6 +201,27 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.StopBuildPlan:
                     return GetStopBuildPlan(message as StopBuildPlanMessage, logFileCreatorContext);
 
+                case KindOfMessage.BeginVisionFrame:
+                    return GetBeginVisionFrame(message as BeginVisionFrameMessage, logFileCreatorContext);
+
+                case KindOfMessage.BecomeInvisible:
+                    return GetBecomeInvisible(message as BecomeInvisibleMessage, logFileCreatorContext);
+
+                case KindOfMessage.BecomeVisible:
+                    return GetBecomeVisible(message as BecomeVisibleMessage, logFileCreatorContext);
+
+                case KindOfMessage.ChangedAddFocus:
+                    return GetChangedAddFocus(message as ChangedAddFocusMessage, logFileCreatorContext);
+
+                case KindOfMessage.ChangedRemoveFocus:
+                    return GetChangedRemoveFocus(message as ChangedRemoveFocusMessage, logFileCreatorContext);
+
+                case KindOfMessage.ChangedDistance:
+                    return GetChangedDistance(message as ChangedDistanceMessage, logFileCreatorContext);
+
+                case KindOfMessage.EndVisionFrame:
+                    return GetEndVisionFrame(message as EndVisionFrameMessage, logFileCreatorContext);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage, logFileCreatorContext);
 
@@ -1062,6 +1083,119 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             return string.Empty;
+        }
+
+        private string GetBeginVisionFrame(BeginVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return logFileCreatorContext.NormalizeAsHtml($"<{message.VisionFrameId}>");
+        }
+
+        private string GetBecomeInvisible(BecomeInvisibleMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return logFileCreatorContext.NormalizeAsHtml($"<{message.VisionFrameId}> : {message.ObjectId}");
+        }
+
+        private string GetBecomeVisible(BecomeVisibleMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"<{message.VisionFrameId}> : {message.ObjectId}");
+            sb.AppendLine($"Distance: {message.Distance}");
+
+            var publicInformationHumanizedStr = message.PublicInformationHumanizedStr;
+
+            if(!string.IsNullOrWhiteSpace(publicInformationHumanizedStr))
+            {
+                sb.AppendLine("Begin Public facts");
+                sb.AppendLine(publicInformationHumanizedStr);
+                sb.AppendLine("End Public facts");
+            }
+
+            return logFileCreatorContext.NormalizeAsHtml(sb.ToString());
+        }
+
+        private string GetChangedAddFocus(ChangedAddFocusMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"<{message.VisionFrameId}> : {message.ObjectId}");
+
+            var publicInformationHumanizedStr = message.PublicInformationHumanizedStr;
+
+            if (!string.IsNullOrWhiteSpace(publicInformationHumanizedStr))
+            {
+                sb.AppendLine("Begin Public facts");
+                sb.AppendLine(publicInformationHumanizedStr);
+                sb.AppendLine("End Public facts");
+            }
+
+            return logFileCreatorContext.NormalizeAsHtml(sb.ToString());
+        }
+
+        private string GetChangedRemoveFocus(ChangedRemoveFocusMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"<{message.VisionFrameId}> : {message.ObjectId}");
+
+            var publicInformationHumanizedStr = message.PublicInformationHumanizedStr;
+
+            if (!string.IsNullOrWhiteSpace(publicInformationHumanizedStr))
+            {
+                sb.AppendLine("Begin Public facts");
+                sb.AppendLine(publicInformationHumanizedStr);
+                sb.AppendLine("End Public facts");
+            }
+
+            return logFileCreatorContext.NormalizeAsHtml(sb.ToString());
+        }
+
+        private string GetChangedDistance(ChangedDistanceMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"<{message.VisionFrameId}> : {message.ObjectId}");
+            sb.AppendLine($"Distance: {message.Distance}");
+
+            var publicInformationHumanizedStr = message.PublicInformationHumanizedStr;
+
+            if (!string.IsNullOrWhiteSpace(publicInformationHumanizedStr))
+            {
+                sb.AppendLine("Begin Public facts");
+                sb.AppendLine(publicInformationHumanizedStr);
+                sb.AppendLine("End Public facts");
+            }
+
+            return logFileCreatorContext.NormalizeAsHtml(sb.ToString());
+        }
+
+        private string GetEndVisionFrame(EndVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return logFileCreatorContext.NormalizeAsHtml($"<{message.VisionFrameId}>");
         }
 
         private string GetOutput(OutputMessage message, ILogFileCreatorContext logFileCreatorContext)

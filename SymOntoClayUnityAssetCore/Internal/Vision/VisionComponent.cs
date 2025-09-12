@@ -130,8 +130,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             var visibleItemsList = _visionProvider.GetCurrentVisibleItems();
 
 #if DEBUG
-            Info("B80531CD-1049-4780-9D76-C794FB7EA29C", $"visibleItemsList.Count = {visibleItemsList.Count}");
-            Info("96741E62-DF10-4353-8051-23688BD76B70", $"_visibleObjectsIdForFactsRegistry.Count = {_visibleObjectsIdForFactsRegistry.Count}");
+            //Info("B80531CD-1049-4780-9D76-C794FB7EA29C", $"visibleItemsList.Count = {visibleItemsList.Count}");
+            //Info("96741E62-DF10-4353-8051-23688BD76B70", $"_visibleObjectsIdForFactsRegistry.Count = {_visibleObjectsIdForFactsRegistry.Count}");
 #endif
 
             var availableInstanceIdList = _worldContext.AvailableInstanceIdList.Where(p => p != _selfInstanceId).ToList();
@@ -294,18 +294,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         }
 
                         logger.BecomeVisible("6D568475-0257-4E48-B20B-3B6A870B7CC0", visionFrameId, visibleItemIdForFacts, newVisibleItem.MinDistance, publicInformationHumanizedStr);
-                    }                    
+                    }
 
 #if DEBUG
-                    Info("2AEAE968-5454-4DA6-A7C1-4D45FF825E94", $"visibleItemIdForFacts = {visibleItemIdForFacts}");
-                    storage.DbgPrintFactsAndRules(Logger);
+                    //Info("2AEAE968-5454-4DA6-A7C1-4D45FF825E94", $"visibleItemIdForFacts = {visibleItemIdForFacts}");
+                    //storage.DbgPrintFactsAndRules(Logger);
 #endif
 
                     var seeFact = _standardFactsBuilder.BuildSeeFactInstance(visibleItemIdForFacts);
                     seeFact.TimeStamp = currentTimeStamp;
 
 #if DEBUG
-                    Info("B1284244-F00E-44AA-93F0-335F4B0D7BD3", $"seeFact = {seeFact.ToHumanizedString()}");
+                    //Info("B1284244-F00E-44AA-93F0-335F4B0D7BD3", $"seeFact = {seeFact.ToHumanizedString()}");
 #endif
 
                     _visibleObjectsSeeFactsIdRegistry[visibleItemInstanceId] = _coreEngine.InsertPerceptedFact(Logger, seeFact);
@@ -316,7 +316,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         focusFact.TimeStamp = currentTimeStamp;
 
 #if DEBUG
-                        Info("7791F7AE-F1CA-4C31-8396-F231DBE8A924", $"focusFact = {focusFact.ToHumanizedString()}");
+                        //Info("7791F7AE-F1CA-4C31-8396-F231DBE8A924", $"focusFact = {focusFact.ToHumanizedString()}");
 #endif
 
                         _visibleObjectsFocusFactsIdRegistry[visibleItemInstanceId] = _coreEngine.InsertPerceptedFact(Logger, focusFact);
@@ -325,7 +325,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     var distanceFact = _standardFactsBuilder.BuildDistanceFactInstance(visibleItemIdForFacts, newVisibleItem.MinDistance);
 
 #if DEBUG
-                    Info("C41A8ACD-5ED8-4DAD-8309-DB85FF481F65", $"distanceFact = {distanceFact.ToHumanizedString()}");
+                    //Info("C41A8ACD-5ED8-4DAD-8309-DB85FF481F65", $"distanceFact = {distanceFact.ToHumanizedString()}");
 #endif
 
                     _visibleObjectsDistanceFactsIdRegistry[visibleItemInstanceId] = _coreEngine.InsertPerceptedFact(Logger, distanceFact);

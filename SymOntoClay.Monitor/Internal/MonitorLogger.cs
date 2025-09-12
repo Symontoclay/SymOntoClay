@@ -3573,6 +3573,16 @@ namespace SymOntoClay.Monitor.Internal
             throw new NotImplementedException();
         }
 
+        /*
+bool EnableVisionFrame { get; }
+bool EnableCatchPublicFactsInVisionFrame { get; }
+bool EnableBecomeInvisible { get; }
+bool EnableBecomeVisible { get; }
+bool EnableChangedAddFocus { get; }
+bool EnableChangedRemoveFocus { get; }
+bool EnableChangedDistance { get; }         
+*/
+
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public void BecomeVisible(string messagePointId,

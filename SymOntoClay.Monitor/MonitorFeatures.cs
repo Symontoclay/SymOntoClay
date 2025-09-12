@@ -173,6 +173,27 @@ namespace SymOntoClay.Monitor
         public bool EnableBuildPlan { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableVisionFrame { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableCatchPublicFactsInVisionFrame { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableBecomeInvisible { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableBecomeVisible { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableChangedAddFocus { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableChangedRemoveFocus { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableChangedDistance { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -243,6 +264,13 @@ namespace SymOntoClay.Monitor
             result.EnableThreadTask = EnableThreadTask;
             result.EnableHtn = EnableHtn;
             result.EnableBuildPlan = EnableBuildPlan;
+            result.EnableVisionFrame = EnableVisionFrame;
+            result.EnableCatchPublicFactsInVisionFrame = EnableCatchPublicFactsInVisionFrame;
+            result.EnableBecomeInvisible = EnableBecomeInvisible;
+            result.EnableBecomeVisible = EnableBecomeVisible;
+            result.EnableChangedAddFocus = EnableChangedAddFocus;
+            result.EnableChangedRemoveFocus = EnableChangedRemoveFocus;
+            result.EnableChangedDistance = EnableChangedDistance;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -318,6 +346,13 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(EnableThreadTask)} = {EnableThreadTask}");
             sb.AppendLine($"{spaces}{nameof(EnableHtn)} = {EnableHtn}");
             sb.AppendLine($"{spaces}{nameof(EnableBuildPlan)} = {EnableBuildPlan}");
+            sb.AppendLine($"{spaces}{nameof(EnableVisionFrame)} = {EnableVisionFrame}");
+            sb.AppendLine($"{spaces}{nameof(EnableCatchPublicFactsInVisionFrame)} = {EnableCatchPublicFactsInVisionFrame}");
+            sb.AppendLine($"{spaces}{nameof(EnableBecomeInvisible)} = {EnableBecomeInvisible}");
+            sb.AppendLine($"{spaces}{nameof(EnableBecomeVisible)} = {EnableBecomeVisible}");
+            sb.AppendLine($"{spaces}{nameof(EnableChangedAddFocus)} = {EnableChangedAddFocus}");
+            sb.AppendLine($"{spaces}{nameof(EnableChangedRemoveFocus)} = {EnableChangedRemoveFocus}");
+            sb.AppendLine($"{spaces}{nameof(EnableChangedDistance)} = {EnableChangedDistance}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

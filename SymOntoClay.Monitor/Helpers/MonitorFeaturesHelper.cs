@@ -50,6 +50,13 @@
             monitorFeatures.EnableThreadTask = true;
             monitorFeatures.EnableHtn = true;
             monitorFeatures.EnableBuildPlan = true;
+            monitorFeatures.EnableVisionFrame = true;
+            monitorFeatures.EnableCatchPublicFactsInVisionFrame = true;
+            monitorFeatures.EnableBecomeInvisible = true;
+            monitorFeatures.EnableBecomeVisible = true;
+            monitorFeatures.EnableChangedAddFocus = true;
+            monitorFeatures.EnableChangedRemoveFocus = true;
+            monitorFeatures.EnableChangedDistance = true;
             monitorFeatures.EnableOutput = true;
             monitorFeatures.EnableTrace = true;
             monitorFeatures.EnableDebug = true;
@@ -107,6 +114,13 @@
             monitorFeatures.EnableThreadTask = false;
             monitorFeatures.EnableHtn = false;
             monitorFeatures.EnableBuildPlan = false;
+            monitorFeatures.EnableVisionFrame = false;
+            monitorFeatures.EnableCatchPublicFactsInVisionFrame = false;
+            monitorFeatures.EnableBecomeInvisible = false;
+            monitorFeatures.EnableBecomeVisible = false;
+            monitorFeatures.EnableChangedAddFocus = false;
+            monitorFeatures.EnableChangedRemoveFocus = false;
+            monitorFeatures.EnableChangedDistance = false;
             monitorFeatures.EnableOutput = false;
             monitorFeatures.EnableTrace = false;
             monitorFeatures.EnableDebug = false;

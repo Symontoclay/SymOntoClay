@@ -499,6 +499,62 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableVisionFrame
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableVisionFrame;
+            }
+        }
+
+        bool IMonitorFeatures.EnableCatchPublicFactsInVisionFrame
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableVisionFrame && _features.EnableCatchPublicFactsInVisionFrame;
+            }
+        }
+
+        bool IMonitorFeatures.EnableBecomeInvisible
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableVisionFrame && _features.EnableBecomeInvisible;
+            }
+        }
+
+        bool IMonitorFeatures.EnableBecomeVisible
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableVisionFrame && _features.EnableBecomeVisible;
+            }
+        }
+
+        bool IMonitorFeatures.EnableChangedAddFocus
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableVisionFrame && _features.EnableChangedAddFocus;
+            }
+        }
+
+        bool IMonitorFeatures.EnableChangedRemoveFocus
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableVisionFrame && _features.EnableChangedRemoveFocus;
+            }
+        }
+
+        bool IMonitorFeatures.EnableChangedDistance
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableVisionFrame && _features.EnableChangedDistance;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -628,6 +684,13 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableThreadTask)} = {monitorFeatures.EnableThreadTask}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableHtn)} = {monitorFeatures.EnableHtn}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBuildPlan)} = {monitorFeatures.EnableBuildPlan}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableVisionFrame)} = {monitorFeatures.EnableVisionFrame}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCatchPublicFactsInVisionFrame)} = {monitorFeatures.EnableCatchPublicFactsInVisionFrame}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBecomeInvisible)} = {monitorFeatures.EnableBecomeInvisible}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBecomeVisible)} = {monitorFeatures.EnableBecomeVisible}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableChangedAddFocus)} = {monitorFeatures.EnableChangedAddFocus}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableChangedRemoveFocus)} = {monitorFeatures.EnableChangedRemoveFocus}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableChangedDistance)} = {monitorFeatures.EnableChangedDistance}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");

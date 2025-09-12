@@ -191,6 +191,27 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.StopBuildPlan:
                     return JsonConvert.DeserializeObject<StopBuildPlanMessage>(content);
 
+                case KindOfMessage.BeginVisionFrame:
+                    return JsonConvert.DeserializeObject<BeginVisionFrameMessage>(content);
+
+                case KindOfMessage.BecomeInvisible:
+                    return JsonConvert.DeserializeObject<BecomeInvisibleMessage>(content);
+
+                case KindOfMessage.BecomeVisible:
+                    return JsonConvert.DeserializeObject<BecomeVisibleMessage>(content);
+
+                case KindOfMessage.ChangedAddFocus:
+                    return JsonConvert.DeserializeObject<ChangedAddFocusMessage>(content);
+
+                case KindOfMessage.ChangedRemoveFocus:
+                    return JsonConvert.DeserializeObject<ChangedRemoveFocusMessage>(content);
+
+                case KindOfMessage.ChangedDistance:
+                    return JsonConvert.DeserializeObject<ChangedDistanceMessage>(content);
+
+                case KindOfMessage.EndVisionFrame:
+                    return JsonConvert.DeserializeObject<EndVisionFrameMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

@@ -3551,6 +3551,11 @@ namespace SymOntoClay.Monitor.Internal
             } 
         }
 
+        private static string GetVisionFrameId()
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string BeginVisionFrame(string messagePointId,
@@ -3558,6 +3563,18 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableVisionFrame)
+            {
+                return GetVisionFrameId();
+            }
+
             throw new NotImplementedException();
         }
 
@@ -3570,18 +3587,22 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"visionFrameId = {visionFrameId}");
+            //_globalLogger.Info($"objectId = {objectId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableBecomeInvisible)
+            {
+                return;
+            }
+
             throw new NotImplementedException();
         }
-
-        /*
-bool EnableVisionFrame { get; }
-bool EnableCatchPublicFactsInVisionFrame { get; }
-bool EnableBecomeInvisible { get; }
-bool EnableBecomeVisible { get; }
-bool EnableChangedAddFocus { get; }
-bool EnableChangedRemoveFocus { get; }
-bool EnableChangedDistance { get; }         
-*/
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
@@ -3594,6 +3615,22 @@ bool EnableChangedDistance { get; }
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"visionFrameId = {visionFrameId}");
+            //_globalLogger.Info($"objectId = {objectId}");
+            //_globalLogger.Info($"distance = {distance}");
+            //_globalLogger.Info($"publicInformationHumanizedStr = {publicInformationHumanizedStr}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableBecomeVisible)
+            {
+                return;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -3607,6 +3644,21 @@ bool EnableChangedDistance { get; }
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"visionFrameId = {visionFrameId}");
+            //_globalLogger.Info($"objectId = {objectId}");
+            //_globalLogger.Info($"publicInformationHumanizedStr = {publicInformationHumanizedStr}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableChangedAddFocus)
+            {
+                return;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -3620,6 +3672,21 @@ bool EnableChangedDistance { get; }
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"visionFrameId = {visionFrameId}");
+            //_globalLogger.Info($"objectId = {objectId}");
+            //_globalLogger.Info($"publicInformationHumanizedStr = {publicInformationHumanizedStr}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableChangedRemoveFocus)
+            {
+                return;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -3634,6 +3701,22 @@ bool EnableChangedDistance { get; }
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"visionFrameId = {visionFrameId}");
+            //_globalLogger.Info($"objectId = {objectId}");
+            //_globalLogger.Info($"distance = {distance}");
+            //_globalLogger.Info($"publicInformationHumanizedStr = {publicInformationHumanizedStr}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableChangedDistance)
+            {
+                return;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -3645,6 +3728,19 @@ bool EnableChangedDistance { get; }
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"visionFrameId = {visionFrameId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableVisionFrame)
+            {
+                return;
+            }
+
             throw new NotImplementedException();
         }
 

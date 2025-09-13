@@ -242,6 +242,11 @@ namespace TestSandbox.Handlers
                 {
                     MaxThreadsCount = 100,
                     MinThreadsCount = 50
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 5
                 }
             };
         }

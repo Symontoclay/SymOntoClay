@@ -33,6 +33,7 @@ namespace SymOntoClay.Core
     {
         public CustomThreadPoolSettings CodeExecution { get; set; }
         public CustomThreadPoolSettings AsyncEvents { get; set; }
+        public CustomThreadPoolSettings GarbageCollection { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -53,6 +54,7 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
             sb.PrintObjProp(n, nameof(CodeExecution), CodeExecution);
             sb.PrintObjProp(n, nameof(AsyncEvents), AsyncEvents);
+            sb.PrintObjProp(n, nameof(GarbageCollection), GarbageCollection);
             return sb.ToString();
         }
     }

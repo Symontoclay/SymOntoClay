@@ -209,6 +209,11 @@ namespace SymOntoClay.CLI
                 {
                     MaxThreadsCount = 10,
                     MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 1
                 }
             };
         }
@@ -226,6 +231,11 @@ namespace SymOntoClay.CLI
                 {
                     MaxThreadsCount = 100,
                     MinThreadsCount = 50
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 5
                 }
             };
         }
@@ -242,6 +252,11 @@ namespace SymOntoClay.CLI
                 CodeExecution = new CustomThreadPoolSettings
                 {
                     MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
                     MinThreadsCount = 1
                 }
             };
@@ -260,6 +275,11 @@ namespace SymOntoClay.CLI
                 {
                     MaxThreadsCount = 5,
                     MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 1
                 }
             };
         }
@@ -276,6 +296,11 @@ namespace SymOntoClay.CLI
                 CodeExecution = new CustomThreadPoolSettings
                 {
                     MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
                     MinThreadsCount = 1
                 }
             };

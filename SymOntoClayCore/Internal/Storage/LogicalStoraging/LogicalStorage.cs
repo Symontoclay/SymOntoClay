@@ -142,7 +142,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void InitGCByTimeOut()
         {
-            _activeObject = new AsyncActivePeriodicObject(_mainStorageContext.ActiveObjectContext, _mainStorageContext.AsyncEventsThreadPool, Logger);
+            _activeObject = new AsyncActivePeriodicObject(_mainStorageContext.ActiveObjectContext, _mainStorageContext.GarbageCollectionThreadPool, Logger);
             _activeObject.PeriodicMethod = GCByTimeOutCommandLoop;
             _activeObject.Start();
         }

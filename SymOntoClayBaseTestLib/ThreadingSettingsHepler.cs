@@ -48,6 +48,11 @@ namespace SymOntoClay.BaseTestLib
                 {
                     MaxThreadsCount = 10,
                     MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 1
                 }
             };
         }
@@ -62,6 +67,11 @@ namespace SymOntoClay.BaseTestLib
                     MinThreadsCount = 5
                 },
                 CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 5
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
                 {
                     MaxThreadsCount = 100,
                     MinThreadsCount = 5
@@ -82,6 +92,11 @@ namespace SymOntoClay.BaseTestLib
                 {
                     MaxThreadsCount = 5,
                     MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 1
                 }
             };
         }
@@ -99,6 +114,11 @@ namespace SymOntoClay.BaseTestLib
                 {
                     MaxThreadsCount = 5,
                     MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 1
                 }
             };
         }
@@ -115,6 +135,11 @@ namespace SymOntoClay.BaseTestLib
                 CodeExecution = new CustomThreadPoolSettings
                 {
                     MaxThreadsCount = 5,
+                    MinThreadsCount = 1
+                },
+                GarbageCollection = new CustomThreadPoolSettings()
+                {
+                    MaxThreadsCount = 100,
                     MinThreadsCount = 1
                 }
             };

@@ -210,10 +210,16 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.CancellationTokenSource = new CancellationTokenSource();
             context.LinkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationTokenSource.Token, settings.CancellationToken);
 
-            var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
+            var asyncEventsThreadingSettings = settings.ThreadingSettings?.AsyncEvents;
 
-            context.AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+            context.AsyncEventsThreadPool = new CustomThreadPool(asyncEventsThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                asyncEventsThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                context.LinkedCancellationTokenSource.Token);
+
+            var garbageCollectionThreadingSettings = settings.ThreadingSettings?.GarbageCollection;
+
+            context.GarbageCollectionThreadPool = new CustomThreadPool(garbageCollectionThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                garbageCollectionThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 context.LinkedCancellationTokenSource.Token);
         }
 

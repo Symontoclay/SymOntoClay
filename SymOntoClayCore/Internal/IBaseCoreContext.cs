@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal
         IStandardCoreFactsBuilder StandardFactsBuilder { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
+        ICustomThreadPool GarbageCollectionThreadPool { get; }
         CancellationToken GetCancellationToken();
     }
 }

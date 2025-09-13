@@ -55,6 +55,10 @@ namespace SymOntoClay.Core.Internal
 
         /// <inheritdoc/>
         public ICustomThreadPool AsyncEventsThreadPool { get; set; }
+
+        /// <inheritdoc/>
+        public ICustomThreadPool GarbageCollectionThreadPool { get; set; }
+
         public CancellationTokenSource CancellationTokenSource { get; set; }
         public CancellationTokenSource LinkedCancellationTokenSource { get; set; }
 
@@ -70,6 +74,7 @@ namespace SymOntoClay.Core.Internal
             CancellationTokenSource.Dispose();
 
             AsyncEventsThreadPool.Dispose();
+            GarbageCollectionThreadPool.Dispose();
 
             base.OnDisposed();
         }

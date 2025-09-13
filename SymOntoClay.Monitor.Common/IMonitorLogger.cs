@@ -366,6 +366,8 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
+        void 
+
         void EndVisionFrame(string messagePointId,
             string visionFrameId,
             [CallerMemberName] string memberName = "",

@@ -80,6 +80,7 @@ namespace SymOntoClay.Monitor.Common
         bool EnableChangedAddFocus { get; }
         bool EnableChangedRemoveFocus { get; }
         bool EnableChangedDistance { get; }
+        bool EnableDumpVisionFrame { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

@@ -194,6 +194,9 @@ namespace SymOntoClay.Monitor
         public bool EnableChangedDistance { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableDumpVisionFrame { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -271,6 +274,7 @@ namespace SymOntoClay.Monitor
             result.EnableChangedAddFocus = EnableChangedAddFocus;
             result.EnableChangedRemoveFocus = EnableChangedRemoveFocus;
             result.EnableChangedDistance = EnableChangedDistance;
+            result.EnableDumpVisionFrame = EnableDumpVisionFrame;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -353,6 +357,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(EnableChangedAddFocus)} = {EnableChangedAddFocus}");
             sb.AppendLine($"{spaces}{nameof(EnableChangedRemoveFocus)} = {EnableChangedRemoveFocus}");
             sb.AppendLine($"{spaces}{nameof(EnableChangedDistance)} = {EnableChangedDistance}");
+            sb.AppendLine($"{spaces}{nameof(EnableDumpVisionFrame)} = {EnableDumpVisionFrame}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

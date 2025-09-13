@@ -610,6 +610,14 @@ namespace SymOntoClay.Monitor
             }
         }
 
+        bool IMonitorFeatures.EnableDumpVisionFrame
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableVisionFrame && _features.EnableDumpVisionFrame;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -746,6 +754,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableChangedAddFocus)} = {monitorFeatures.EnableChangedAddFocus}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableChangedRemoveFocus)} = {monitorFeatures.EnableChangedRemoveFocus}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableChangedDistance)} = {monitorFeatures.EnableChangedDistance}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDumpVisionFrame)} = {monitorFeatures.EnableDumpVisionFrame}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");

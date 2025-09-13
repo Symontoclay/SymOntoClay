@@ -57,6 +57,7 @@
             monitorFeatures.EnableChangedAddFocus = true;
             monitorFeatures.EnableChangedRemoveFocus = true;
             monitorFeatures.EnableChangedDistance = true;
+            monitorFeatures.EnableDumpVisionFrame = true;
             monitorFeatures.EnableOutput = true;
             monitorFeatures.EnableTrace = true;
             monitorFeatures.EnableDebug = true;
@@ -121,6 +122,7 @@
             monitorFeatures.EnableChangedAddFocus = false;
             monitorFeatures.EnableChangedRemoveFocus = false;
             monitorFeatures.EnableChangedDistance = false;
+            monitorFeatures.EnableDumpVisionFrame = false;
             monitorFeatures.EnableOutput = false;
             monitorFeatures.EnableTrace = false;
             monitorFeatures.EnableDebug = false;

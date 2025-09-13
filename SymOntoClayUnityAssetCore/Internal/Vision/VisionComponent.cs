@@ -424,7 +424,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             if (enableVisionFrame)
             {
                 logger.EndVisionFrame("352DD132-D7ED-4264-929D-D0222E15543D", visionFrameId);
-            }            
+            }
 
             return true;
         }

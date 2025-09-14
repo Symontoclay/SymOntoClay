@@ -1198,7 +1198,33 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException();
+            var visibleItems = message.VisibleItems;
+
+            if (visibleItems.IsNullOrEmpty())
+            {
+                return logFileCreatorContext.NormalizeAsHtml($"<{message.VisionFrameId}>: Nothing is seen");
+            }
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"<{message.VisionFrameId}>:");
+
+            foreach (var visibleItem in visibleItems)
+            {
+                sb.AppendLine($"Begin: {visibleItem.ObjectId}");
+
+                var publicInformationHumanizedStr = visibleItem.PublicInformationHumanizedStr;
+
+                if (!string.IsNullOrWhiteSpace(publicInformationHumanizedStr))
+                {
+                    sb.AppendLine("Begin Public facts");
+                    sb.AppendLine(publicInformationHumanizedStr);
+                    sb.AppendLine("End Public facts");
+                }
+                sb.AppendLine("End");
+            }
+
+            return logFileCreatorContext.NormalizeAsHtml(sb.ToString());
         }
 
         private string GetEndVisionFrame(EndVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)

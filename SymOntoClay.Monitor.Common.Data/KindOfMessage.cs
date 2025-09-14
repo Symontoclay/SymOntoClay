@@ -80,6 +80,7 @@ namespace SymOntoClay.Monitor.Common.Data
         ChangedAddFocus,
         ChangedRemoveFocus,
         ChangedDistance,
+        DumpVisionFrame,
         EndVisionFrame,
         Output,
         Trace,

@@ -219,6 +219,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.ChangedDistance:
                     return GetChangedDistance(message as ChangedDistanceMessage, logFileCreatorContext);
 
+                case KindOfMessage.DumpVisionFrame:
+                    return GetDumpVisionFrame(message as DumpVisionFrameMessage, logFileCreatorContext);
+
                 case KindOfMessage.EndVisionFrame:
                     return GetEndVisionFrame(message as EndVisionFrameMessage, logFileCreatorContext);
 
@@ -1187,6 +1190,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             return logFileCreatorContext.NormalizeAsHtml(sb.ToString());
+        }
+
+        private string GetDumpVisionFrame(DumpVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         private string GetEndVisionFrame(EndVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)

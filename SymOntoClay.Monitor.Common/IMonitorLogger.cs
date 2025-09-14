@@ -366,10 +366,15 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        void 
+        void DumpVisionFrame(string messagePointId,
+            string visionFrameId,
+            List<MonitoredVisibleItem> visibleItems,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
 
         void EndVisionFrame(string messagePointId,
-            string visionFrameId,
+            string visionFrameId,            
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

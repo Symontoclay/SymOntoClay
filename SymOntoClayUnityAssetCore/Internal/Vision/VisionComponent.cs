@@ -24,6 +24,7 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System.Collections.Generic;
 using System.Globalization;
@@ -398,7 +399,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     _coreEngine.RemovePerceptedFact(Logger, _visibleObjectsDistanceFactsIdRegistry[visibleItemInstanceId]);
 
-                    var visibleItemIdForFacts = _worldContext.GetIdForFactsByInstanceId(visibleItemInstanceId);
+                    var visibleItemIdForFacts = _visibleObjectsIdForFactsRegistry[visibleItemInstanceId];
 
                     if (enableVisionFrame)
                     {
@@ -425,7 +426,27 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             {
                 if(monitorFeatures.EnableDumpVisionFrame)
                 {
+                    var visibleItems = new List<MonitoredVisibleItem>();
 
+                    foreach(var item in _visibleObjectsIdForFactsRegistry)
+                    {
+                        var visibleItemInstanceId = item.Key;
+                        var visibleItemIdForFacts = item.Value;
+
+                        var visibleItem = new MonitoredVisibleItem();
+                        visibleItem.ObjectId = visibleItemIdForFacts;
+
+                        if (enableCatchPublicFactsInVisionFrame)
+                        {
+                            var storage = _visibleObjectsStoragesRegistry[visibleItemInstanceId];
+
+                            visibleItem.PublicInformationHumanizedStr = storage.FactsAndRulesToDbgString();
+                        }
+
+                        visibleItems.Add(visibleItem);
+                    }
+
+                    logger.DumpVisionFrame("D1479DED-E5E0-4C11-9426-3C51984FEB37", visionFrameId, visibleItems);
                 }
 
                 logger.EndVisionFrame("352DD132-D7ED-4264-929D-D0222E15543D", visionFrameId);

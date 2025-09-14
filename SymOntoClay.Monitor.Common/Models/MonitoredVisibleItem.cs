@@ -8,7 +8,6 @@ namespace SymOntoClay.Monitor.Common.Models
     public class MonitoredVisibleItem : IObjectToString
     {
         public string ObjectId { get; set; }
-        public float Distance { get; set; }
         public string PublicInformationHumanizedStr { get; set; }
 
         /// <inheritdoc/>
@@ -30,7 +29,6 @@ namespace SymOntoClay.Monitor.Common.Models
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(ObjectId)} = {ObjectId}");
-            sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
             sb.AppendLine($"{spaces}{nameof(PublicInformationHumanizedStr)} = {PublicInformationHumanizedStr}");
 
             return sb.ToString();

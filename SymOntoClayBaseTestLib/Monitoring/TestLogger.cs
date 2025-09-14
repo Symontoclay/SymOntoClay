@@ -570,6 +570,16 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
+        public void DumpVisionFrame(string messagePointId,
+            string visionFrameId,
+            List<MonitoredVisibleItem> visibleItems,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public void EndVisionFrame(string messagePointId,
             string visionFrameId,
             [CallerMemberName] string memberName = "",

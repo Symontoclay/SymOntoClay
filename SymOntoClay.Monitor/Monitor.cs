@@ -1492,6 +1492,18 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public void DumpVisionFrame(string messagePointId,
+            string visionFrameId,
+            List<MonitoredVisibleItem> visibleItems,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.DumpVisionFrame(messagePointId, visionFrameId, visibleItems, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void EndVisionFrame(string messagePointId,
             string visionFrameId,
             [CallerMemberName] string memberName = "",

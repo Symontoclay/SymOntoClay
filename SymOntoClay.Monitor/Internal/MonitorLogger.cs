@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -3974,6 +3975,76 @@ namespace SymOntoClay.Monitor.Internal
                 PublicInformationHumanizedStr = publicInformationHumanizedStr,
                 ObjectId = objectId,
                 VisionFrameId = visionFrameId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void DumpVisionFrame(string messagePointId,
+            string visionFrameId,
+            List<MonitoredVisibleItem> visibleItems,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"visionFrameId = {visionFrameId}");
+            //_globalLogger.Info($"visibleItems = {visibleItems.WriteListToString()}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableDumpVisionFrame)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new DumpVisionFrameMessage
+            {
+                VisionFrameId = visionFrameId,
+                VisibleItems = visibleItems,
                 DateTimeStamp = now,
                 NodeId = _nodeId,
                 ThreadId = _threadId,

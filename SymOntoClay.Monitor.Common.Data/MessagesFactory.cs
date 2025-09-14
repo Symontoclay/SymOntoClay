@@ -209,6 +209,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.ChangedDistance:
                     return JsonConvert.DeserializeObject<ChangedDistanceMessage>(content);
 
+                case KindOfMessage.DumpVisionFrame:
+                    return JsonConvert.DeserializeObject<DumpVisionFrameMessage>(content);
+
                 case KindOfMessage.EndVisionFrame:
                     return JsonConvert.DeserializeObject<EndVisionFrameMessage>(content);
 

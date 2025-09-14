@@ -1195,7 +1195,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetDumpVisionFrame(DumpVisionFrameMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var visibleItems = message.VisibleItems;

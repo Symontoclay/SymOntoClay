@@ -1,7 +1,11 @@
 ﻿using NLog;
+using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Monitor.Common.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
@@ -179,6 +183,55 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 
                 outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {itemFileNamesList.Count}"));
                 outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {itemFileNamesList.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
+
+                var dumpVisionFramesFileNames = itemFileNamesList.Where(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.DumpVisionFrame).ToList();
+
+                var visibleObjectIds = new List<string>();
+
+                foreach(var fileName in dumpVisionFramesFileNames)
+                {
+                    string text = null;
+                    DumpVisionFrameMessage message = null;
+
+                    try
+                    {
+                        text = File.ReadAllText(fileName.Item2);
+
+#if DEBUG
+                        //_logger.Info($"text = {text}");
+                        //_logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
+#endif
+
+                        message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage) as DumpVisionFrameMessage;
+
+#if DEBUG
+                        //_logger.Info($"message = {message}");
+#endif
+
+                        foreach(var visibleItem in message.VisibleItems)
+                        {
+                            visibleObjectIds.Add(visibleItem.ObjectId);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Info($"text = '{text}'");
+                        _logger.Info($"message = {message}");
+                        _logger.Info($"e = {e}");
+                    }
+                }
+
+                visibleObjectIds = visibleObjectIds.Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Visible items: {visibleObjectIds.Count}"));
+
+                var spaces = DisplayHelper.Spaces(DisplayHelper.IndentationStep);
+
+                foreach (var visibleObjectId in visibleObjectIds)
+                {
+                    outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine(logFileCreatorContext.NormalizeAsHtml($"{spaces}{visibleObjectId}")));
+                }
+                
                 outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
 #if DEBUG

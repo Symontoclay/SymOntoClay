@@ -28,6 +28,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP;
 using SymOntoClay.ProjectFiles;
 using SymOntoClay.SoundBuses;
+using SymOntoClay.StandardFacts;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
 using System;
@@ -83,6 +84,8 @@ namespace SymOntoClay.CLI
             settings.HostFile = targetFiles.WorldFile;
 
             settings.InvokerInMainThread = invokingInMainThread;
+
+            settings.StandardFactsBuilder = new StandardFactsBuilder();
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {

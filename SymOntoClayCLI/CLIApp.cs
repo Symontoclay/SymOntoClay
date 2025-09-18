@@ -20,14 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
-using NLog;
 using SymOntoClay.CLI.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.CLI
@@ -59,9 +55,9 @@ namespace SymOntoClay.CLI
                 PrintHeader();
             }
 
-            var kindOfComand = command.Kind;
+            var kindOfCommand = command.Kind;
 
-            switch(kindOfComand)
+            switch(kindOfCommand)
             {
                 case KindOfCLICommand.Help:
                     PrintHelp();
@@ -125,7 +121,7 @@ namespace SymOntoClay.CLI
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfComand), kindOfComand, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfCommand), kindOfCommand, null);
             }
         }
 

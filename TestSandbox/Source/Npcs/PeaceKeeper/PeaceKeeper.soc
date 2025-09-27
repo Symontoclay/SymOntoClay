@@ -1,15 +1,90 @@
 ﻿app PeaceKeeper
 {
-    on Enter =>
+    fun SomeOperator()
     {
-        'Begin' >> @>log;
-        @@host.`stop shoot`();
-        'End' >> @>log;
+       'Run SomeOperator' >> @>log;
+       wait 1;
     }
 
-    fun `stop shoot`()
+    fun SomeOperator2()
     {
-    	'Begin stop shoot' >> @>log;
-		'End stop shoot' >> @>log;
+       'Run SomeOperator2' >> @>log;
+       wait 1;
     }
+
+    fun SomeOperator3()
+    {
+       'Run SomeOperator3' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator4()
+    {
+       'Run SomeOperator4' >> @>log;
+       wait 1;
+    }
+}
+
+root task SomeRootTask
+{
+   case
+   {
+       SomeStrategicTask;
+   }
+}
+
+strategic task SomeStrategicTask
+{
+   case
+   {
+       SomeTacticalTask;
+       SomeStrategicTask;
+   }
+}
+
+tactical task SomeTacticalTask
+{
+   case
+   {
+       SomeCompoundTask;
+       SomeCompoundTask2;
+   }
+}
+
+compound task SomeCompoundTask
+{
+   case
+   {
+       SomePrimitiveTask;
+       SomePrimitiveTask2;
+   }
+}
+
+compound task SomeCompoundTask2
+{
+   case
+   {
+       SomePrimitiveTask3;
+       SomePrimitiveTask4;
+   }
+}
+
+primitive task SomePrimitiveTask
+{
+    operator SomeOperator();
+}
+
+primitive task SomePrimitiveTask2
+{
+    operator SomeOperator2();
+}
+
+primitive task SomePrimitiveTask3
+{
+    operator SomeOperator3();
+}
+
+primitive task SomePrimitiveTask4
+{
+    operator SomeOperator4();
 }

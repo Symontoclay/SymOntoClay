@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Cases = source.Cases?.Select(p => p.Clone(context))?.ToList();
             Backgrounds = source.Backgrounds.Select(p => p.Clone(context))?.ToList();
 
-            AppendCodeItem(source, context);
+            AppendBaseHtnTask(source, context);
         }
         
         /// <inheritdoc/>

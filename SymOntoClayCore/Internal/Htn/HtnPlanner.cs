@@ -425,19 +425,14 @@ namespace SymOntoClay.Core.Internal.Htn
 
                 var currentProcessedTask = tasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask;
 
+                if (!CheckCondition(currentProcessedTask.Precondition, buildPlanIterationContext))
+                {
+                    buildPlanIterationContext.MarkAsFailed();
+                    return;
+                }
+
                 if (currentProcessedTask.IsBasePrimitiveHtnTask)
                 {
-                    if(currentProcessedTask.IsPrimitiveTask)
-                    {
-                        var currentProcessedPrimitiveTask = currentProcessedTask.AsPrimitiveTask;
-
-                        if(!CheckCondition(currentProcessedPrimitiveTask.Precondition, buildPlanIterationContext))
-                        {
-                            buildPlanIterationContext.MarkAsFailed();
-                            return;
-                        }
-                    }
-
                     buildPlanIterationContext.ProcessedIndex++;
                     continue;
                 }

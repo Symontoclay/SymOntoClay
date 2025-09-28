@@ -2786,6 +2786,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseHtnTask.AsBaseHtnTask">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseHtnTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseHtnTask.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -5620,9 +5623,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTask.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">

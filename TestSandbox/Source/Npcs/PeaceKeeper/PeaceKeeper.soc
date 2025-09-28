@@ -1,5 +1,7 @@
 ﻿app PeaceKeeper
 {
+    root task `SomeCompoundTask`;
+
     fun SomeOperator()
     {
        'Run SomeOperator' >> @>log;
@@ -18,54 +20,27 @@
        wait 1;
     }
 
-    fun SomeOperator4()
-    {
-       'Run SomeOperator4' >> @>log;
-       wait 1;
-    }
-}
-
-root task SomeRootTask
-{
-   case
-   {
-       SomeStrategicTask;
-   }
-}
-
-strategic task SomeStrategicTask
-{
-   case
-   {
-       SomeTacticalTask;
-       SomeStrategicTask;
-   }
-}
-
-tactical task SomeTacticalTask
-{
-   case
-   {
-       SomeCompoundTask;
-       SomeCompoundTask2;
-   }
+    prop SomeAutoProp: number = 16;
+    prop OtherAutoProp: number = 42;
 }
 
 compound task SomeCompoundTask
 {
-   case
+   preconditions OtherAutoProp is 42;  
+
+   case SomeAutoProp is 16
    {
        SomePrimitiveTask;
+   }
+
+   case SomeAutoProp > 16
+   {
        SomePrimitiveTask2;
    }
-}
 
-compound task SomeCompoundTask2
-{
-   case
+   case 
    {
        SomePrimitiveTask3;
-       SomePrimitiveTask4;
    }
 }
 
@@ -82,9 +57,4 @@ primitive task SomePrimitiveTask2
 primitive task SomePrimitiveTask3
 {
     operator SomeOperator3();
-}
-
-primitive task SomePrimitiveTask4
-{
-    operator SomeOperator4();
 }

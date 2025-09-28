@@ -89,8 +89,8 @@ namespace TestSandbox.Handlers
 
             _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
-            //Thread.Sleep(10000);
-            Thread.Sleep(100000);
+            Thread.Sleep(10000);
+            //Thread.Sleep(100000);
 
             _logger.Info("E90B79FF-F642-4FC1-94A6-EE3F9BBD6DD0", "|||||||||||||");
 
@@ -106,8 +106,8 @@ namespace TestSandbox.Handlers
             _npc.Logger.Output("DEEBC565-B66B-48F5-9DF6-4716C2E1623E", "|-|-|-|-|-|-|-|-|-|-|-|-|");
             _logger.Info("ED0C4551-A685-4CC0-ADB8-ACAA419FA244", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 
-            //Thread.Sleep(5000);
-            Thread.Sleep(50000);
+            Thread.Sleep(5000);
+            //Thread.Sleep(50000);
 
             _world.Dispose();
 

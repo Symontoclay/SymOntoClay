@@ -19,6 +19,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             foreach (var item in plan.Items)
             {
+#if DEBUG
+                Info(, $"item = {item}");
+#endif
+
                 var executedTask = item.ExecutedTask;
 
 #if DEBUG

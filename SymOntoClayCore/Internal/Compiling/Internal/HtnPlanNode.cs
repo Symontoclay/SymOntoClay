@@ -22,13 +22,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 var executedTask = item.ExecutedTask;
 
 #if DEBUG
-                //Info("EE346998-409A-40AE-B91E-0557290EEC43", $"executedTask = {executedTask.ToHumanizedLabel()}");
+                Info("EE346998-409A-40AE-B91E-0557290EEC43", $"executedTask = {executedTask.ToHumanizedLabel()}");
 #endif
 
                 var kindOfPrimitiveTask = executedTask.KindOfPrimitiveTask;
 
 #if DEBUG
-                //Info("B5B76ECE-D653-4D41-B0C7-22D59DDCE2CC", $"kindOfPrimitiveTask = {kindOfPrimitiveTask}");
+                Info("B5B76ECE-D653-4D41-B0C7-22D59DDCE2CC", $"kindOfPrimitiveTask = {kindOfPrimitiveTask}");
 #endif
                 
                 switch (kindOfPrimitiveTask)
@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             var intermediateCommandsList = executedTask.AsPrimitiveTask.Operator.IntermediateCommandsList;
 
 #if DEBUG
-                            //DbgPrintCommands(intermediateCommandsList);
+                            //DbgPrintCommands("74C0C437-9332-454A-9FDE-B4F23B09AE1C", intermediateCommandsList);
 #endif
 
                             foreach (var intermediateCommand in intermediateCommandsList)
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 }
 
 #if DEBUG
-                //DbgPrintCommands();
+                DbgPrintCommands("D9DA1696-6D70-4D83-82C0-48AC1B879454");
 #endif
             }
 

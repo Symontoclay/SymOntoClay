@@ -476,7 +476,6 @@ namespace SymOntoClay.Core.Internal.Htn
             }
         }
 
-
         private void ProcessBaseCompoundTask(BuiltPlanItem builtPlanItem, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG

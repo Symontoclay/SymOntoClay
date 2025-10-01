@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            Info("100904DC-698C-45AA-A704-B268A9712F01", $"_currToken = {_currToken}");
+            //Info("100904DC-698C-45AA-A704-B268A9712F01", $"_currToken = {_currToken}");
 #endif
 
             switch (_currToken.TokenKind)
@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Info("44381852-131C-4F29-B506-F254DE8B95E1", $"parser.Result = {parser.Result}");
+                                //Info("44381852-131C-4F29-B506-F254DE8B95E1", $"parser.Result = {parser.Result}");
 #endif
 
                                 Result.Precondition = parser.Result;

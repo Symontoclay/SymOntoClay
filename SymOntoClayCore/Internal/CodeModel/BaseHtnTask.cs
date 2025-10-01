@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -18,10 +19,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public abstract KindOfTask KindOfTask { get; }
 
         public LogicalExecutableExpression Precondition { get; set; }
+        public AstExpression PreconditionExpression { get; set; }
 
         protected void AppendBaseHtnTask(BaseHtnTask source, Dictionary<object, object> context)
         {
             Precondition = source.Precondition?.Clone(context);
+            PreconditionExpression = source.PreconditionExpression?.CloneAstExpression(context);
 
             AppendCodeItem(source, context);
         }
@@ -44,6 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
             sb.PrintObjProp(n, nameof(Precondition), Precondition);
+            sb.PrintObjProp(n, nameof(PreconditionExpression), PreconditionExpression);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -57,6 +61,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
             sb.PrintShortObjProp(n, nameof(Precondition), Precondition);
+            sb.PrintShortObjProp(n, nameof(PreconditionExpression), PreconditionExpression);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -70,6 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(KindOfTask)} = {KindOfTask}");
             sb.PrintBriefObjProp(n, nameof(Precondition), Precondition);
+            sb.PrintBriefObjProp(n, nameof(PreconditionExpression), PreconditionExpression);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

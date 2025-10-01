@@ -147,6 +147,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
                                         Result.Precondition = parser.Result;
+                                        Result.PreconditionExpression = parser.OriginalExpression;
                                     }
                                     break;
 

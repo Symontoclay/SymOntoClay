@@ -103,6 +103,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var compiledFunctionBody = _context.Compiler.CompileLambda(conditionExpr);
 
                         Result.Condition = new LogicalExecutableExpression(conditionExpr, compiledFunctionBody);
+                        Result.ConditionExpression = conditionExpr;
 
                         _state = State.GotCondition;
                     }

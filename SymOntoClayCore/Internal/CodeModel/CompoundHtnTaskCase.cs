@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Common.CollectionsHelpers;
+﻿using NLog.Conditions;
+using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
@@ -25,7 +26,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override CompoundHtnTaskCase AsCompoundTaskHtnCase => this;
         
         public LogicalExecutableExpression Condition { get; set; }
-        
+        public AstExpression ConditionExpression { get; set; }
+
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {
@@ -51,6 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
             
             result.Condition = Condition?.Clone(context);
+            result.ConditionExpression = ConditionExpression?.CloneAstExpression(context);
 
             FillUpCompoundHtnTaskItemsSection(result, context);
 
@@ -74,6 +77,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Condition), Condition);
+            sb.PrintObjProp(n, nameof(ConditionExpression), ConditionExpression);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -86,6 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Condition), Condition);
+            sb.PrintShortObjProp(n, nameof(ConditionExpression), ConditionExpression);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -98,6 +103,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.PrintBriefObjProp(n, nameof(ConditionExpression), ConditionExpression);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

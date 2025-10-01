@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             var compoundTask = executedTask.AsBeginCompoundHtnTask.CompoundTask;
 
-                            if(compoundTask.Precondition != null)
+                            if(compoundTask.PreconditionExpression != null)
                             {
                                 throw new NotImplementedException("13721482-43BF-42D3-968E-E5707BD3B8A4");
                             }

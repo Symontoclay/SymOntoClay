@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -16,8 +17,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : base(context)
         {
         }
-
+        
         public LogicalExecutableExpression Result { get; private set; }
+        public AstExpression OriginalExpression { get; private set; }
 
         private State _state = State.Init;
 
@@ -62,7 +64,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
 #if DEBUG
                         //Info("CF50DF8B-E604-43FB-BB80-E21937EABBAE", $"conditionExpr = {conditionExpr}");
+                        Info("9076EAFE-F030-46FC-B828-BEB56DE339B0", $"conditionExpr = {conditionExpr.ToHumanizedString()}");
 #endif
+
+                        OriginalExpression = conditionExpr;
 
                         var compiledFunctionBody = _context.Compiler.CompileLambda(conditionExpr);
 

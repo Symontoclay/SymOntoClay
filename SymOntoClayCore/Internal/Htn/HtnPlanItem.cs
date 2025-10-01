@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.Htn
     public class HtnPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
         public BasePrimitiveHtnTask ExecutedTask { get; set; }
+        public CompoundHtnTaskCase TaskCase { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -32,6 +33,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.PrintObjProp(n, nameof(TaskCase), TaskCase);
 
             return sb.ToString();
         }
@@ -55,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.PrintShortObjProp(n, nameof(TaskCase), TaskCase);
 
             return sb.ToString();
         }
@@ -78,6 +81,7 @@ namespace SymOntoClay.Core.Internal.Htn
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.PrintBriefObjProp(n, nameof(TaskCase), TaskCase);
 
             return sb.ToString();
         }

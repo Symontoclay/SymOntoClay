@@ -36,6 +36,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class AnnotatedItem : ItemWithLongHashCodes, IWeightedInheritanceResultItemParameter, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, ISymOntoClayDisposable
     {
+        public Guid InternalSystemId { get; private set; } = Guid.NewGuid();
+
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>
@@ -203,7 +205,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void AppendAnnotations(AnnotatedItem source, Dictionary<object, object> context)
         {
-            if(source.WhereSection == null)
+            InternalSystemId = source.InternalSystemId;
+
+            if (source.WhereSection == null)
             {
                 WhereSection = null;
             }
@@ -327,6 +331,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(InternalSystemId)} = {InternalSystemId}");
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
@@ -363,6 +368,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(InternalSystemId)} = {InternalSystemId}");
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
@@ -399,6 +405,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(InternalSystemId)} = {InternalSystemId}");
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 

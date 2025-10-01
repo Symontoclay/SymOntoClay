@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,9 @@ namespace SymOntoClay.Core.Internal.Htn
         public List<StrongIdentifierValue> AllRootTasks { get; set; } = new List<StrongIdentifierValue>();
 
         public BuildPlanIterationLocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
+
+        public Dictionary<Guid, Guid> TaskCaseDict { get; set; } = new Dictionary<Guid, Guid>();
+        public List<CompoundHtnTaskCase> UsedCases { get; set; } = new List<CompoundHtnTaskCase>();
 
         public bool IsNormal => _isNormal;
 
@@ -56,6 +60,8 @@ namespace SymOntoClay.Core.Internal.Htn
             result.RootTask = RootTask;
             result.AllRootTasks = AllRootTasks.ToList();
             result.TasksWithBackground = TasksWithBackground.ToList();
+            result.TaskCaseDict = TaskCaseDict.ToDictionary(p => p.Key, p => p.Value);
+            result.UsedCases = UsedCases.ToList();
 
             return result;
         }
@@ -87,6 +93,8 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintObjProp(n, nameof(RootTask), RootTask);
             sb.PrintObjListProp(n, nameof(AllRootTasks), AllRootTasks);
             sb.PrintObjListProp(n, nameof(TasksWithBackground), TasksWithBackground);
+            sb.PrintPODDictProp(n, nameof(TaskCaseDict), TaskCaseDict); 
+            sb.PrintObjListProp(n, nameof(UsedCases), UsedCases);
 
             return sb.ToString();
         }
@@ -118,6 +126,8 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintShortObjProp(n, nameof(RootTask), RootTask);
             sb.PrintShortObjListProp(n, nameof(AllRootTasks), AllRootTasks);
             sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
+            sb.PrintPODDictProp(n, nameof(TaskCaseDict), TaskCaseDict);
+            sb.PrintShortObjListProp(n, nameof(UsedCases), UsedCases);
 
             return sb.ToString();
         }
@@ -143,12 +153,14 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}{nameof(IsNormal)} = {IsNormal}");
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintBriefObjListProp(n, nameof(TasksToProcess), TasksToProcess);
-            sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
+            sb.PrintBriefObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
             sb.PrintExisting(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
-            sb.PrintObjListProp(n, nameof(PreviousRootTasks), PreviousRootTasks);
+            sb.PrintBriefObjListProp(n, nameof(PreviousRootTasks), PreviousRootTasks);
             sb.PrintBriefObjProp(n, nameof(RootTask), RootTask);
-            sb.PrintObjListProp(n, nameof(AllRootTasks), AllRootTasks);
+            sb.PrintBriefObjListProp(n, nameof(AllRootTasks), AllRootTasks);
             sb.PrintExisting(n, nameof(TasksWithBackground), TasksWithBackground);
+            sb.PrintPODDictProp(n, nameof(TaskCaseDict), TaskCaseDict);
+            sb.PrintBriefObjListProp(n, nameof(UsedCases), UsedCases);
 
             return sb.ToString();
         }
@@ -193,6 +205,7 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.AppendLine($"{spaces}Root task: {RootTask.ToHumanizedString()}");
             sb.AppendLine($"{spaces}All Root tasks: [{string.Join(", ", AllRootTasks.Select(p => p.ToSystemString()))}]");
             sb.AppendLine($"{spaces}Tasks with background: [{string.Join(", ", TasksWithBackground.Select(p => p.ToHumanizedString()))}]");
+            //sb.PrintPODDictProp(n, nameof(TaskCaseDict), TaskCaseDict);
 
             return sb.ToString();
         }

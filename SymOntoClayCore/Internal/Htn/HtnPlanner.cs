@@ -124,7 +124,19 @@ namespace SymOntoClay.Core.Internal.Htn
         private HtnPlan ConvertCompletedIterationToTasksPlan(BuildPlanIterationContext completedIteration)
         {
 #if DEBUG
-            //Info("0ACC770A-B3CD-4182-8E86-4D7CF4F660D5", $"completedIteration = {completedIteration}");
+            Info("0ACC770A-B3CD-4182-8E86-4D7CF4F660D5", $"completedIteration = {completedIteration}");
+#endif
+
+            var taskCaseDict = completedIteration.TaskCaseDict;
+
+#if DEBUG
+            Info("42169CC3-D500-4955-9B4C-E67371A44577", $"taskCaseDict = {taskCaseDict.WritePODListToString()}");
+#endif
+
+            var usedCasesDict = completedIteration.UsedCases.GroupBy(p => p.InternalSystemId).ToDictionary(p => p.Key, p => p.First());
+
+#if DEBUG
+            Info("C5503581-89CA-4827-8A94-8F2F0BEB65C0", $"usedCasesDict = {usedCasesDict.WriteDict_2_ToString()}");
 #endif
 
             var result = new HtnPlan();
@@ -135,23 +147,52 @@ namespace SymOntoClay.Core.Internal.Htn
             foreach (var builtItem in completedIteration.TasksToProcess)
             {
 #if DEBUG
-                //Info("EA3F4844-5C18-4F00-8C30-8BDB6BAD6DF2", $"builtItem = {builtItem.ToDbgString()}");
+                Info("EA3F4844-5C18-4F00-8C30-8BDB6BAD6DF2", $"builtItem = {builtItem.ToDbgString()}");
+#endif
+
+                var processedTask = builtItem.ProcessedTask;
+
+#if DEBUG
+                Info("4518E165-3313-4C01-A136-402D0B36C52D", $"processedTask.KindOfTask = {processedTask.KindOfTask}");
 #endif
 
                 var planItem = new HtnPlanItem()
                 {
-                    ExecutedTask = builtItem.ProcessedTask.AsBasePrimitiveHtnTask
+                    ExecutedTask = processedTask.AsBasePrimitiveHtnTask
                 };
 
+                if(processedTask.KindOfTask == KindOfTask.BeginCompound)
+                {
 #if DEBUG
-                //Info("225B84C4-C4A7-4F58-ADE4-0E1932083051", $"planItem = {planItem}");
+                    Info("4DF720C0-1DE5-4933-A6B3-14FDF19CDA26", $"processedTask.InternalSystemId = {processedTask.InternalSystemId}");
+#endif
+
+                    if (taskCaseDict.TryGetValue(processedTask.InternalSystemId, out var usedCaseId))
+                    {
+#if DEBUG
+                        Info("7C7BDCB6-D91C-46D2-A505-74660F88A115", $"usedCaseId = {usedCaseId}");
+#endif
+
+                        if(usedCasesDict.TryGetValue(usedCaseId, out var taskCase))
+                        {
+#if DEBUG
+                            Info("AAD7C70C-4D2C-4B6F-BB04-94F7FA90EFE3", $"taskCase = {taskCase}");
+#endif
+
+                            planItem.TaskCase = taskCase;
+                        }
+                    }
+                }
+
+#if DEBUG
+                Info("225B84C4-C4A7-4F58-ADE4-0E1932083051", $"planItem = {planItem}");
 #endif
 
                 builtItems.Add(planItem);
             }
 
 #if DEBUG
-            //Info("B08C997D-DB54-482F-A5F7-90C408031B74", $"result = {result}");
+            Info("B08C997D-DB54-482F-A5F7-90C408031B74", $"result = {result}");
 #endif
 
             return result;
@@ -565,7 +606,7 @@ namespace SymOntoClay.Core.Internal.Htn
                     hasApprovedConditionalCase = true;
                 }
 
-                ProcessTaskCase(taskCase, processedTask, processedTask.KindOfTask, tasksPlannerGlobalContext, buildPlanIterationContext);
+                ProcessTaskCase(taskCase, processedTask, processedTask.KindOfTask, beginCompoundTask, tasksPlannerGlobalContext, buildPlanIterationContext);
             }
 
             //throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
@@ -592,10 +633,13 @@ namespace SymOntoClay.Core.Internal.Htn
             return LogicalValue.TrueValue.Equals(value);
         }
 
-        private void ProcessTaskCase(CompoundHtnTaskCase taskCase, BaseCompoundHtnTask processedTask, KindOfTask requestingKindOfTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        private void ProcessTaskCase(CompoundHtnTaskCase taskCase, BaseCompoundHtnTask processedTask, KindOfTask requestingKindOfTask, BeginCompoundHtnTask beginCompoundHtnTask, HtnPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
-            //Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
+            Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
+            Info("B3C89902-3E72-45A1-A44E-5B9913A40D12", $"processedTask = {processedTask}");
+            Info("3212C8D0-2BCA-4DC5-8F62-FF8FEF5F7806", $"taskCase = {taskCase}");
+            Info("00CC56AD-3166-4087-A892-D8D5BA137BD3", $"beginCompoundHtnTask = {beginCompoundHtnTask}");
 #endif
 
             var caseItems = taskCase.Items;
@@ -639,6 +683,9 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("BB7CE2CE-D819-4035-8B8D-F32FF8A105FA", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext}");
             //Info("ABD7A72A-2562-46EA-A42A-74CB6136D89D", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
+
+            clonedBuildPlanIterationContext.TaskCaseDict[beginCompoundHtnTask.InternalSystemId] = taskCase.InternalSystemId;
+            clonedBuildPlanIterationContext.UsedCases.Add(taskCase);
 
             var tasksList = ConvertHtnCaseItemsToHtnTasks(items, requestingKindOfTask);
 

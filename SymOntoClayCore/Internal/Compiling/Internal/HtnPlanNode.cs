@@ -20,7 +20,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             foreach (var item in plan.Items)
             {
 #if DEBUG
-                Info(, $"item = {item}");
+                Info("F6C74D37-1435-4671-AEB7-5FA074768947", $"item = {item}");
 #endif
 
                 var executedTask = item.ExecutedTask;
@@ -39,10 +39,20 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 {
                     case KindOfPrimitiveTask.BeginCompound:
                         {
+                            var compoundTask = executedTask.AsBeginCompoundHtnTask.CompoundTask;
+
+                            if(compoundTask.Precondition != null)
+                            {
+                                throw new NotImplementedException("13721482-43BF-42D3-968E-E5707BD3B8A4");
+                            }
+
+                            if(item.TaskCase != null)
+                            {
+                                throw new NotImplementedException("213CFBB1-26A6-4076-A6E5-1EECF9E88362");
+                            }
+
                             var command = new IntermediateScriptCommand();
                             command.OperationCode = OperationCode.BeginCompoundHtnTask;
-
-                            var compoundTask = executedTask.AsBeginCompoundHtnTask.CompoundTask;
 
                             command.CompoundTask = compoundTask;
 

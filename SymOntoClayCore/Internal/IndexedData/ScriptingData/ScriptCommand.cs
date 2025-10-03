@@ -220,6 +220,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveHtnTask:
                 case OperationCode.EndPrimitiveHtnTask:
+                case OperationCode.CheckHtnTaskCondition:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:

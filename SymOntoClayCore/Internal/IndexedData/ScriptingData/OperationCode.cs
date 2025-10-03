@@ -109,6 +109,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         BeginCompoundHtnTask,
         EndCompoundHtnTask,
         BeginPrimitiveHtnTask,
-        EndPrimitiveHtnTask
+        EndPrimitiveHtnTask,
+        CheckHtnTaskCondition
     }
 }

@@ -156,6 +156,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveHtnTask:
                 case OperationCode.EndPrimitiveHtnTask:
+                case OperationCode.CheckHtnTaskCondition:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

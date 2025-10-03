@@ -43,13 +43,25 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                             if(compoundTask.PreconditionExpression != null)
                             {
+#if DEBUG
+                                DbgPrintCommands("20359737-C0C2-4FA4-B5A0-33176A4E72FB");
+#endif
+
                                 throw new NotImplementedException("13721482-43BF-42D3-968E-E5707BD3B8A4");
                             }
 
                             if(item.TaskCase != null)
                             {
+#if DEBUG
+                                DbgPrintCommands("5013AF10-7F21-4FF8-9194-702D361B435C");
+#endif
+
                                 throw new NotImplementedException("213CFBB1-26A6-4076-A6E5-1EECF9E88362");
                             }
+
+#if DEBUG
+                            DbgPrintCommands("D01C8253-BFE2-415D-9610-D58C989C6BDE");
+#endif
 
                             var command = new IntermediateScriptCommand();
                             command.OperationCode = OperationCode.BeginCompoundHtnTask;

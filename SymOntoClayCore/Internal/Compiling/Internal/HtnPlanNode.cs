@@ -20,19 +20,19 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             foreach (var item in plan.Items)
             {
 #if DEBUG
-                Info("F6C74D37-1435-4671-AEB7-5FA074768947", $"item = {item}");
+                //Info("F6C74D37-1435-4671-AEB7-5FA074768947", $"item = {item}");
 #endif
 
                 var executedTask = item.ExecutedTask;
 
 #if DEBUG
-                Info("EE346998-409A-40AE-B91E-0557290EEC43", $"executedTask = {executedTask.ToHumanizedLabel()}");
+                //Info("EE346998-409A-40AE-B91E-0557290EEC43", $"executedTask = {executedTask.ToHumanizedLabel()}");
 #endif
 
                 var kindOfPrimitiveTask = executedTask.KindOfPrimitiveTask;
 
 #if DEBUG
-                Info("B5B76ECE-D653-4D41-B0C7-22D59DDCE2CC", $"kindOfPrimitiveTask = {kindOfPrimitiveTask}");
+                //Info("B5B76ECE-D653-4D41-B0C7-22D59DDCE2CC", $"kindOfPrimitiveTask = {kindOfPrimitiveTask}");
 #endif
                 
                 switch (kindOfPrimitiveTask)
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                 AddCommand(checkingCommand);
 
 #if DEBUG
-                                DbgPrintCommands("20359737-C0C2-4FA4-B5A0-33176A4E72FB");
+                                //DbgPrintCommands("20359737-C0C2-4FA4-B5A0-33176A4E72FB");
 #endif
                             }
 
@@ -77,12 +77,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                 AddCommand(checkingCommand);
 
 #if DEBUG
-                                DbgPrintCommands("5013AF10-7F21-4FF8-9194-702D361B435C");
+                                //DbgPrintCommands("5013AF10-7F21-4FF8-9194-702D361B435C");
 #endif
                             }
 
 #if DEBUG
-                            DbgPrintCommands("D01C8253-BFE2-415D-9610-D58C989C6BDE");
+                            //DbgPrintCommands("D01C8253-BFE2-415D-9610-D58C989C6BDE");
 #endif
 
                             var command = new IntermediateScriptCommand();
@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 }
 
 #if DEBUG
-                DbgPrintCommands("D9DA1696-6D70-4D83-82C0-48AC1B879454");
+                //DbgPrintCommands("D9DA1696-6D70-4D83-82C0-48AC1B879454");
 #endif
             }
 

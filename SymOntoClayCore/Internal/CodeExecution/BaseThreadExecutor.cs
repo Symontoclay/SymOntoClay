@@ -748,7 +748,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool CheckHtnTaskCondition()
         {
 #if DEBUG
-            Info("991F751C-387B-4DBB-9CBB-5F44568E7F55", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("991F751C-387B-4DBB-9CBB-5F44568E7F55", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
             if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
@@ -761,13 +761,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentValueCallResult = TakeAndResolveCurrentValue(KindOfValueConversion.All);
 
 #if DEBUG
-                Info("73C9BA3A-EF76-4BE9-A597-2194C84AA6CB", $"currentValueCallResult = {currentValueCallResult}");
+                //Info("73C9BA3A-EF76-4BE9-A597-2194C84AA6CB", $"currentValueCallResult = {currentValueCallResult}");
 #endif
 
                 var currentValueCallResultKindOfResult = currentValueCallResult.KindOfResult;
 
 #if DEBUG
-                Info("2836AFC0-60A9-4D86-8946-D3070CB89D72", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
+                //Info("2836AFC0-60A9-4D86-8946-D3070CB89D72", $"currentValueCallResultKindOfResult = {currentValueCallResultKindOfResult}");
 #endif
 
                 switch (currentValueCallResultKindOfResult)
@@ -793,8 +793,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var checkedValue = GetLogicalValueFromCurrentStackValue(_currentCodeFrame.ResolvedPositionedParameterValues.First());
 
 #if DEBUG
-                checkedValue = 0;//tmp
-                Info("85A15DC1-2CDC-4FB1-AD8E-B31EFF79136B", $"checkedValue = {checkedValue}");
+                //checkedValue = 0;//tmp
+                //Info("85A15DC1-2CDC-4FB1-AD8E-B31EFF79136B", $"checkedValue = {checkedValue}");
 #endif
 
                 if(checkedValue > 0)
@@ -812,7 +812,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 while(_currentCodeFrame != null)
                 {
 #if DEBUG
-                    Info("F76CA4B8-0881-4CA3-8FA1-960F4A0628E0", "_currentCodeFrame != null");
+                    //Info("F76CA4B8-0881-4CA3-8FA1-960F4A0628E0", "_currentCodeFrame != null");
 #endif
 
                     _currentCodeFrame.ProcessInfo.SetStatus(Logger, "483D4545-2C5E-4342-B5EF-FE41EF266423", ProcessStatus.Canceled);

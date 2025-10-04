@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
 #if DEBUG
                         //Info("CF50DF8B-E604-43FB-BB80-E21937EABBAE", $"conditionExpr = {conditionExpr}");
-                        Info("9076EAFE-F030-46FC-B828-BEB56DE339B0", $"conditionExpr = {conditionExpr.ToHumanizedString()}");
+                        //Info("9076EAFE-F030-46FC-B828-BEB56DE339B0", $"conditionExpr = {conditionExpr.ToHumanizedString()}");
 #endif
 
                         OriginalExpression = conditionExpr;

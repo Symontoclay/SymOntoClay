@@ -790,11 +790,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (_currentCodeFrame.State == CodeFrameState.CommandExecution)
             {
-                var checkedValue = _currentCodeFrame.ResolvedPositionedParameterValues.First();
+                var checkedValue = GetLogicalValueFromCurrentStackValue(_currentCodeFrame.ResolvedPositionedParameterValues.First());
 
 #if DEBUG
                 Info("85A15DC1-2CDC-4FB1-AD8E-B31EFF79136B", $"checkedValue = {checkedValue}");
 #endif
+
+                if(checkedValue > 0)
+                {
+                    _currentCodeFrame.CurrentPosition++;
+                    _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+                    return true;
+                }
 
                 throw new NotImplementedException("3F2F787F-14FA-48E2-9131-305F88B05B8C");
             }

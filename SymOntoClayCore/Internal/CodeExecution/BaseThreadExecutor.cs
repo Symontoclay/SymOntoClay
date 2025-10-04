@@ -804,12 +804,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return true;
                 }
 
-                throw new NotImplementedException("3F2F787F-14FA-48E2-9131-305F88B05B8C");
+                _currentCodeFrame.State = CodeFrameState.CommandPostExecution;
             }
 
-            if (_currentCodeFrame.State == CodeFrameState.EndCommandExecution)
+            if (_currentCodeFrame.State == CodeFrameState.CommandPostExecution)
             {
-                throw new NotImplementedException("93620A56-DF79-4F0C-AAB8-C7CC08B59AA7");
+                while(_currentCodeFrame != null)
+                {
+#if DEBUG
+                    Info("F76CA4B8-0881-4CA3-8FA1-960F4A0628E0", "_currentCodeFrame != null");
+#endif
+
+                    _currentCodeFrame.ProcessInfo.SetStatus(Logger, "483D4545-2C5E-4342-B5EF-FE41EF266423", ProcessStatus.Canceled);
+                    GoBackToPrevCodeFrame("3B7D4B91-966E-4437-AA40-28E34FAA48AA", ActionExecutionStatus.Canceled);
+                }
+
+                return false;
             }
 
             throw new NotImplementedException("388049AB-ADE2-4DC3-9CE3-681D809A189B");

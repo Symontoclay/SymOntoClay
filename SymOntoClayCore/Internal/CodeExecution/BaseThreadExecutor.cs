@@ -793,6 +793,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var checkedValue = GetLogicalValueFromCurrentStackValue(_currentCodeFrame.ResolvedPositionedParameterValues.First());
 
 #if DEBUG
+                checkedValue = 0;//tmp
                 Info("85A15DC1-2CDC-4FB1-AD8E-B31EFF79136B", $"checkedValue = {checkedValue}");
 #endif
 

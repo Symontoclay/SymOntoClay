@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected BaseExecutableExpression()
         {
         }
-
+        
         protected BaseExecutableExpression(AstExpression expression, CompiledFunctionBody compiledFunctionBody)
         {
             Expression = expression;
@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         IList<StrongIdentifierValue> IReturnable.TypesList => TypesList;
-
+        
         public AstExpression Expression { get; private set; }
 
         /// <inheritdoc/>

@@ -124,5 +124,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Before,
         After,
         Background,
+        Effects
     }
 }

@@ -1704,6 +1704,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Background;
                             break;
                         }
+
+                        if (string.Equals(content, "effects", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Effects;
+                            break;
+                        }
                     }
                     break;
 

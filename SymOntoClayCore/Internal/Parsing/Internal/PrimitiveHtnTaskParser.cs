@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -41,8 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Info("9AF1E157-908F-424F-8923-DF7D92660000", $"_state = {_state}");
-            //Info("6E3464D7-0CAB-4149-A196-267E7D6CA8F0", $"_currToken = {_currToken}");
+            Info("9AF1E157-908F-424F-8923-DF7D92660000", $"_state = {_state}");
+            Info("6E3464D7-0CAB-4149-A196-267E7D6CA8F0", $"_currToken = {_currToken}");
             //Info(, $"Result = {Result}");
 #endif
 
@@ -150,6 +151,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         Result.PreconditionExpression = parser.OriginalExpression;
                                     }
                                     break;
+
+                                case KeyWordTokenKind.Effects:
+                                    {
+                                        var parser = new FunctionBodyParser(_context);
+                                        parser.Run();
+
+                                        var statementsList = parser.Result;
+
+#if DEBUG
+                                        Info("CBD76017-6B9C-4825-B615-C6E07002FEF2", $"statementsList = {statementsList.WriteListToToHumanizedString()}");
+#endif
+
+                                        throw new NotImplementedException("22D3CD05-9BDA-4713-BBD4-38BF4D56B915");
+                                    }
 
                                 default:
                                     throw new UnexpectedTokenException(Text, _currToken);

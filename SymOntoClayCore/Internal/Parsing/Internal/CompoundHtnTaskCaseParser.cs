@@ -22,7 +22,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         public CompoundHtnTaskCase Result { get; private set; }
 
         private State _state = State.Init;
-
+        
         /// <inheritdoc/>
         protected override void OnEnter()
         {

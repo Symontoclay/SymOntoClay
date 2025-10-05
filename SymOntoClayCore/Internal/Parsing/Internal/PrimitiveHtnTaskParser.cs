@@ -163,6 +163,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         Info("CBD76017-6B9C-4825-B615-C6E07002FEF2", $"statementsList = {statementsList.WriteListToToHumanizedString()}");
 #endif
 
+                                        var compiledFunctionBody = _context.Compiler.Compile(statementsList);
+
+                                        Result.Effects = new ExecutableCodeBlock(statementsList, compiledFunctionBody);
+
                                         throw new NotImplementedException("22D3CD05-9BDA-4713-BBD4-38BF4D56B915");
                                     }
 

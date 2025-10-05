@@ -279,6 +279,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsBaseExecutableExpression => false;
         public virtual BaseExecutableExpression AsBaseExecutableExpression => null;
 
+        public virtual bool IsExecutableCodeBlock => false;
+        public virtual ExecutableCodeBlock AsExecutableCodeBlock => null;
+
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.CodeItem;
 

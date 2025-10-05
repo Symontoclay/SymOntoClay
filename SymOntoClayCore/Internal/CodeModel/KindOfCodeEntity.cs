@@ -63,6 +63,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         EndCompoundTask,
         NopPrimitiveTask,
         JumpPrimitiveTask,
-        ExecutableExpression
+        ExecutableExpression,
+        ExecutableCodeBlock
     }
 }

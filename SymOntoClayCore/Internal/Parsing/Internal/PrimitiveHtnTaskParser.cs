@@ -166,9 +166,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         var compiledFunctionBody = _context.Compiler.Compile(statementsList);
 
                                         Result.Effects = new ExecutableCodeBlock(statementsList, compiledFunctionBody);
-
-                                        throw new NotImplementedException("22D3CD05-9BDA-4713-BBD4-38BF4D56B915");
                                     }
+                                    break;
 
                                 default:
                                     throw new UnexpectedTokenException(Text, _currToken);

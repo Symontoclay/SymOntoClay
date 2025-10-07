@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
             _propertyStorage = new BuildPlanIterationPropertyStorage(this, logger);
         }
-
+        
         private void CreateEmptyStorages(IMonitorLogger logger)
         {
             _logicalStorage = new EmptyLogicalStorage(this, logger);

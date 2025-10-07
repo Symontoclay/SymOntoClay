@@ -474,6 +474,17 @@ namespace SymOntoClay.Core.Internal.Htn
 
                 if (currentProcessedTask.IsBasePrimitiveHtnTask)
                 {
+#if DEBUG
+                    Info("63AA345E-CC10-4427-95C2-EED5656FAD22", $"currentProcessedTask = {currentProcessedTask}");
+#endif
+
+                    if(currentProcessedTask.IsPrimitiveTask)
+                    {
+                        var primitiveHtnTask = currentProcessedTask.AsPrimitiveTask;
+
+                        ProcessEffects(primitiveHtnTask, buildPlanIterationContext);
+                    }
+
                     buildPlanIterationContext.ProcessedIndex++;
                     continue;
                 }
@@ -610,6 +621,20 @@ namespace SymOntoClay.Core.Internal.Htn
             }
 
             //throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
+        }
+
+        private void ProcessEffects(PrimitiveHtnTask primitiveHtnTask, BuildPlanIterationContext buildPlanIterationContext)
+        {
+            var effects = primitiveHtnTask.Effects;
+
+            if(effects == null)
+            {
+                return;
+            }
+
+            _context.CodeExecutor.CallExecutableSync(Logger, effects, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
+
+            throw new NotImplementedException("D1327717-511F-432E-83C7-883A15CC3EAE");//tmp
         }
 
         private bool CheckTaskCase(CompoundHtnTaskCase taskCase, BuildPlanIterationContext buildPlanIterationContext)

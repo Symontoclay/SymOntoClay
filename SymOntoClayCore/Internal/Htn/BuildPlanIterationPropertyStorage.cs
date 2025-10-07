@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Htn
         }
 
         private static List<WeightedInheritanceResultItem<PropertyInstance>> _getPropertyDirectlyEmptyList = new List<WeightedInheritanceResultItem<PropertyInstance>>();
-
+        
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<PropertyInstance>> GetPropertyDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {

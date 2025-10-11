@@ -632,7 +632,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 return;
             }
 
-            _context.CodeExecutor.CallExecutableSync(Logger, effects, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
+            _context.CodeExecutor.CallExecutableSync(Logger, effects, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.HtnPlanner);
 
             throw new NotImplementedException("D1327717-511F-432E-83C7-883A15CC3EAE");//tmp
         }
@@ -649,7 +649,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 return true;
             }
 
-            var value = _context.CodeExecutor.CallExecutableSync(Logger, condition, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.Default);
+            var value = _context.CodeExecutor.CallExecutableSync(Logger, condition, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.HtnPlanner);
 
 #if DEBUG
             //Info("00BD9C17-3ACC-4E69-BA9A-FCD2DC2B8175", $"value = {value}");

@@ -50,9 +50,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
-            //Info("BAEC7F05-B0F0-42C2-BFEB-43B5AC51B208", $"propertyName = {propertyName}");
-            //Info("54CD61AD-5D26-4C26-9751-AE243769B0A4", $"value = {value}");
-            //Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
+            Info("BAEC7F05-B0F0-42C2-BFEB-43B5AC51B208", $"propertyName = {propertyName}");
+            Info("54CD61AD-5D26-4C26-9751-AE243769B0A4", $"value = {value}");
+            Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
 #endif
 
             var property = Resolve(logger, propertyName, localCodeExecutionContext, options);

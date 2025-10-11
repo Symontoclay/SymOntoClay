@@ -3,6 +3,7 @@
     public enum CallMode
     {
         Default,
-        PreConstructor
+        PreConstructor,
+        HtnPlanner
     }
 }

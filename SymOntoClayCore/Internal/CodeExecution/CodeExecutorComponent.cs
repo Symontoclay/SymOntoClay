@@ -174,6 +174,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Value CallExecutable(IMonitorLogger logger, IInstance instance, IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
+#if DEBUG
+            Info("19C3DE6D-6258-4039-A53E-881850962AB1", $"callMode = {callMode}");
+#endif
+
             if (executable == null)
             {
                 throw new ArgumentNullException(nameof(executable));

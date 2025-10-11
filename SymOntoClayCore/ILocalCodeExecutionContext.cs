@@ -34,6 +34,8 @@ namespace SymOntoClay.Core
 
         bool IsIsolated { get; }
 
+        bool IsReal { get; }
+
         StrongIdentifierValue Holder { get;}
         IStorage Storage { get;}
         IInstance Instance { get; }
@@ -44,6 +46,8 @@ namespace SymOntoClay.Core
         KindOfLocalCodeExecutionContext Kind { get; }
         KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
         RuleInstanceReference AddedRuleInstance { get; }
+
+        ILocalCodeExecutionContext GetFirstNonRealItemFromChain();
 
         void DbgPrintContextChain(IMonitorLogger logger, string messagePointId);
     }

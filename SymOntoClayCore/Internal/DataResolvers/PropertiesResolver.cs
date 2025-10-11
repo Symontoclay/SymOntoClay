@@ -93,6 +93,31 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
                         }
                     }
+                case CallMode.HtnPlanner:
+                    if(property == null)
+                    {
+                        property = CreateAndSaveHtnPlannerProperty(logger, propertyName, localCodeExecutionContext);
+                        return property.SetValue(logger, value);
+                    }
+                    else
+                    {
+                        if(property.IsReal)
+                        {
+                            property = CreateAndSaveHtnPlannerProperty(logger, propertyName, localCodeExecutionContext);
+                            return property.SetValue(logger, value);
+                        }
+
+                        var kindOfProperty = property.KindOfProperty;
+
+                        switch (kindOfProperty)
+                        {
+                            case KindOfProperty.Auto:
+                                return property.SetValue(logger, value);
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+                        }
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);
@@ -117,9 +142,51 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 KindOfProperty = KindOfProperty.Auto
             };
 
-            var propertyInstance = new PropertyInstance(property, globalInstance, globalInstance.EngineContext);
+            var propertyInstance = new PropertyInstance(property, globalInstance, true, globalInstance.EngineContext);
 
             globalPropertyStorage.Append(Logger, propertyInstance);
+
+            return propertyInstance;
+        }
+
+        private PropertyInstance CreateAndSaveHtnPlannerProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            Info("95A2CC46-C7D1-43FB-8EC7-D156EB53392A", $"propertyName = {propertyName}");
+            Info("36E75738-8B9F-4B0A-B123-76209B0C23A2", $"localCodeExecutionContext.GetType().Name = {localCodeExecutionContext.GetType().Name}");
+            localCodeExecutionContext.DbgPrintContextChain(logger, "F8FBE6EB-75C1-4D22-A30E-080B5A76D759");
+#endif
+
+            var nonRealLocalCodeExecutionContext = localCodeExecutionContext.GetFirstNonRealItemFromChain();
+
+#if DEBUG
+            Info("3C1AF218-7A67-419B-88FC-D59254EA3691", $"nonRealLocalCodeExecutionContext = {nonRealLocalCodeExecutionContext}");
+#endif
+
+            if(nonRealLocalCodeExecutionContext == null)
+            {
+                throw new NullReferenceException($"642A0B5A-5491-4408-AE1F-D41FB350AAC3: {nameof(nonRealLocalCodeExecutionContext)}");
+            }
+
+            var globalInstance = _context.InstancesStorage.MainEntity;
+            var propertyStorage = nonRealLocalCodeExecutionContext.Storage.PropertyStorage;
+
+#if DEBUG
+            Info("F6F7DD0B-5531-4A90-97D2-0C8EBA102D7B", $"propertyStorage.GetType().Name = {propertyStorage.GetType().Name}");
+#endif
+
+            var property = new Property()
+            {
+                TypeOfAccess = TypeOfAccess.Public,
+                Name = propertyName,
+                TypesList = new List<StrongIdentifierValue>() { _context.CommonNamesStorage.AnyTypeName },
+                Holder = globalInstance.Name,
+                KindOfProperty = KindOfProperty.Auto
+            };
+
+            var propertyInstance = new PropertyInstance(property, globalInstance, true, globalInstance.EngineContext);
+
+            propertyStorage.Append(Logger, propertyInstance);
 
             return propertyInstance;
         }
@@ -215,16 +282,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
             Info("4B199295-FC1B-4EF2-A3EE-97841F44B2EE", $"callMode = {callMode}");
-            if(callMode == CallMode.HtnPlanner)
-            {
-                throw new NotImplementedException("927AF713-DDB4-4A8E-8223-C910DC8EC86E");
-            }
 #endif
 
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.Property);
 
 #if DEBUG
-            //Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
+            Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
 #endif
 
             var optionsForInheritanceResolver = options.Clone();
@@ -272,7 +335,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return OrderAndDistinctByInheritance(logger, filteredList, options).FirstOrDefault()?.ResultItem;
+            filteredList = OrderAndDistinctByInheritance(logger, filteredList, options);
+
+            if (callMode == CallMode.HtnPlanner)
+            {
+                filteredList = filteredList.OrderBy(p => p.ResultItem.IsReal).ToList();
+            }
+
+            return filteredList.FirstOrDefault()?.ResultItem;
         }
 
         public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)

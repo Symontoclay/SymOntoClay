@@ -3,8 +3,8 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Htn
@@ -32,6 +32,9 @@ namespace SymOntoClay.Core.Internal.Htn
 
         /// <inheritdoc/>
         public bool IsIsolated => Parent.IsIsolated;
+
+        /// <inheritdoc/>
+        public bool IsReal => false;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => Parent.Holder;
@@ -85,6 +88,12 @@ namespace SymOntoClay.Core.Internal.Htn
         }
 
         /// <inheritdoc/>
+        public ILocalCodeExecutionContext GetFirstNonRealItemFromChain()
+        {
+            return this;
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -105,6 +114,7 @@ namespace SymOntoClay.Core.Internal.Htn
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
             sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
+            sb.AppendLine($"{spaces}{nameof(IsReal)} = {IsReal}");
             sb.PrintObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)}.{nameof(Storage.Kind)} = {Storage?.Kind}");
             sb.AppendLine($"{spaces}{nameof(Instance)}.{nameof(Instance.Name)} = {Instance?.Name?.ToHumanizedLabel()}");
@@ -138,6 +148,8 @@ namespace SymOntoClay.Core.Internal.Htn
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
+            sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
+            sb.AppendLine($"{spaces}{nameof(IsReal)} = {IsReal}");
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)}.{nameof(Storage.Kind)} = {Storage?.Kind}");
             sb.AppendLine($"{spaces}{nameof(Instance)}.{nameof(Instance.Name)} = {Instance?.Name?.ToHumanizedLabel()}");
@@ -171,6 +183,8 @@ namespace SymOntoClay.Core.Internal.Htn
 
             sb.PrintExisting(n, nameof(Parent), Parent);
             sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
+            sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
+            sb.AppendLine($"{spaces}{nameof(IsReal)} = {IsReal}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)}.{nameof(Storage.Kind)} = {Storage?.Kind}");
             sb.PrintBriefObjProp(n, nameof(Owner), Owner);

@@ -18,12 +18,13 @@ namespace SymOntoClay.Core.Internal.Instances
     public class PropertyInstance : BaseComponent, IFilteredCodeItem,
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
-        public PropertyInstance(Property codeItem, IInstance instance, IEngineContext context)
+        public PropertyInstance(Property codeItem, IInstance instance, bool isReal, IEngineContext context)
             : base(context.Logger)
         {
+            IsReal = isReal;
             Name = codeItem.Name;
             Holder = codeItem.Holder;
-
+            
 #if DEBUG
             //Info("32E2E46B-EC84-416D-A78B-74DB54EA509F", $"Holder = {Holder}");
 #endif
@@ -76,6 +77,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private ITypeConverter _typeConverter;
 
         public KindOfProperty KindOfProperty => CodeItem.KindOfProperty;
+        public bool IsReal { get; set; }
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public Property CodeItem { get; private set; }
@@ -274,9 +276,9 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfProperty)} = {KindOfProperty}");
+            sb.AppendLine($"{spaces}{nameof(IsReal)} = {IsReal}");
             sb.PrintObjProp(n, nameof(Name), Name);
-            sb.PrintObjProp(n, nameof(Holder), Holder);
-            //sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
+            sb.PrintObjProp(n, nameof(Holder), Holder);            
 
             return sb.ToString();
         }
@@ -305,6 +307,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfProperty)} = {KindOfProperty}");
+            sb.AppendLine($"{spaces}{nameof(IsReal)} = {IsReal}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             //sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
@@ -336,6 +339,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfProperty)} = {KindOfProperty}");
+            sb.AppendLine($"{spaces}{nameof(IsReal)} = {IsReal}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             //sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");

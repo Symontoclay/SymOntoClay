@@ -1843,7 +1843,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("E1AB6C23-EB91-44B8-BC9C-BFF3EF8B45FF", $"_currentCodeFrame.Instance.Name = {_currentCodeFrame.Instance.Name}");
 #endif
 
-            var propertyInstance = new PropertyInstance(property, _currentCodeFrame.Instance, _context);
+            var propertyInstance = new PropertyInstance(property, _currentCodeFrame.Instance, true, _context);
 
             _currentPropertyStorage.Append(Logger, propertyInstance);
 
@@ -2183,6 +2183,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         searchOptions.QueryExpression = ruleInstance;
                         searchOptions.LocalCodeExecutionContext = _currentCodeFrame.LocalContext;
                         searchOptions.ResolvingNotResultsStrategy = ResolvingNotResultsStrategy.Ignore;
+                        searchOptions.CallMode = _currentCodeFrame.CallMode;
 
                         var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);
 
@@ -2249,6 +2250,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var searchOptions = new LogicalSearchOptions();
             searchOptions.TargetStorage = ruleInstance;
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
+            searchOptions.CallMode = _currentCodeFrame.CallMode;
 
             foreach (var sehItem in _currentCodeFrame.CurrentSEHGroup.Items)
             {

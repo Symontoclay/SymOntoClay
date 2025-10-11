@@ -789,6 +789,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.IsIsolated">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.IsReal">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Holder">
             <inheritdoc/>
         </member>
@@ -811,6 +814,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.AddedRuleInstance">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.GetFirstNonRealItemFromChain">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.ToString">
@@ -8102,6 +8108,9 @@
         <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.IsIsolated">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.IsReal">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.Holder">
             <inheritdoc/>
         </member>
@@ -8135,6 +8144,9 @@
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.GetFirstNonRealItemFromChain">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.ToString">
             <inheritdoc/>

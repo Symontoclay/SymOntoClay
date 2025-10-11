@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (kindOfValueConversion.HasFlag(KindOfValueConversion.Property) ||
                 kindOfValueConversion.HasFlag(KindOfValueConversion.All))
             {
-                property = _propertiesResolver.Resolve(logger, name.ForResolving, localCodeExecutionContext, options);
+                property = _propertiesResolver.Resolve(logger, name.ForResolving, localCodeExecutionContext, CallMode.Default, options);
             }
 
 #if DEBUG
@@ -194,7 +194,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(kindOfValueConversion.HasFlag(KindOfValueConversion.Property)
                 || kindOfValueConversion.HasFlag(KindOfValueConversion.All))
             {
-                property = _propertiesResolver.Resolve(logger, name, localCodeExecutionContext, options);
+                property = _propertiesResolver.Resolve(logger, name, localCodeExecutionContext, CallMode.Default, options);
             }
 
 #if DEBUG

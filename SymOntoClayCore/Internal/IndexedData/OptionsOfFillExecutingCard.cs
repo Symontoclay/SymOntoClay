@@ -41,6 +41,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public ILocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
         public IMainStorageContext MainStorageContext { get; set; }
         public ILogicalSearchStorageContext LogicalSearchStorageContext { get; set; }
+        public CallMode CallMode { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -65,6 +66,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
             sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
             return sb.ToString();
         }
@@ -92,6 +94,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
             sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
             return sb.ToString();
         }
@@ -119,6 +122,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
             sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
             return sb.ToString();
         }

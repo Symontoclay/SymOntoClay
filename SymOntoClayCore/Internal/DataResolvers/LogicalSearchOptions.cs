@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public RuleInstance QueryExpression { get; set; }
         public IStorage TargetStorage { get; set; }
         public ILocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
+        public CallMode CallMode { get; set; } = CallMode.Default;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -57,6 +58,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
             sb.PrintObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintObjProp(n, nameof(TargetStorage), TargetStorage);
@@ -79,6 +81,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
             sb.PrintShortObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintShortObjProp(n, nameof(TargetStorage), TargetStorage);
@@ -101,6 +104,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
             sb.PrintBriefObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintBriefObjProp(n, nameof(TargetStorage), TargetStorage);

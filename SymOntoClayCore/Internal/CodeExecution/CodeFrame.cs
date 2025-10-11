@@ -66,7 +66,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         public Stack<CodeFrameEvnPart> CodeFrameEvnPartsStack { get; set; } = new Stack<CodeFrameEvnPart>();
         public IInstance CompoundTaskInstance { get; set; }
-        public CallMode CallMode => Metadata?.Kind == KindOfCodeEntity.PreConstructor ? CallMode.PreConstructor : CallMode.Default;
+
+        private CallMode? _callMode;
+
+        public CallMode CallMode 
+        { 
+            get
+            {
+                if(_callMode.HasValue)
+                {
+                    return _callMode.Value;
+                }
+
+                return Metadata?.Kind == KindOfCodeEntity.PreConstructor ? CallMode.PreConstructor : CallMode.Default;
+            }
+
+            set
+            {
+                if(_callMode == value)
+                {
+                    return;
+                }
+
+                _callMode = value;
+            }
+        }
+
         public bool ForParameterValueResolving { get; set; }
         public TakingValuesState TakingValuesState { get; set; }
         public List<Value> ResolvingParameterValues { get; set; }

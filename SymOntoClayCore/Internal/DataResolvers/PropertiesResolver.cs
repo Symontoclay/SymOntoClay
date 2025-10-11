@@ -55,10 +55,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
 #endif
 
-            var property = Resolve(logger, propertyName, localCodeExecutionContext, options);
+            var property = Resolve(logger, propertyName, localCodeExecutionContext, callMode, options);
 
 #if DEBUG
-            //Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
+            Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
 #endif
 
             switch(callMode)
@@ -124,18 +124,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return propertyInstance;
         }
 
-        public ValueCallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ValueCallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
-            return GetPropertyValue(logger, propertyName, instance, localCodeExecutionContext, DefaultOptions);
+            return GetPropertyValue(logger, propertyName, instance, localCodeExecutionContext, callMode, DefaultOptions);
         }
 
-        public ValueCallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public ValueCallResult GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
             //Info("AF338CE5-9FF4-455A-91E2-98F429B1EA30", $"propertyName = {propertyName}");
 #endif
 
-            var property = Resolve(logger, propertyName, localCodeExecutionContext, options);
+            var property = Resolve(logger, propertyName, localCodeExecutionContext, callMode, options);
 
 #if DEBUG
             //Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
@@ -190,29 +190,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
-            return Resolve(logger, propertyName, localCodeExecutionContext, DefaultOptions);
+            return Resolve(logger, propertyName, localCodeExecutionContext, callMode, DefaultOptions);
         }
 
-        public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
-            //Info("163564B6-A6A5-424B-9974-DB506035843F", $"propertyName = {propertyName}");
+            Info("163564B6-A6A5-424B-9974-DB506035843F", $"propertyName = {propertyName}");
+            Info("0E85B012-8A78-4778-9E82-10B71B63B8E5", $"callMode = {callMode}");
             //localCodeExecutionContext.DbgPrintContextChain(logger, "DD93963A-03FD-417C-A8F9-CE904652F289");
 #endif
 
             var result = EnumerateLocalCodeExecutionContext<PropertyInstance>(logger, localCodeExecutionContext, (ctx) => {
-                return NResolve(logger, propertyName, ctx, options);
+                return NResolve(logger, propertyName, ctx, callMode, options);
             });
 
             return result;
         }
 
-        public PropertyInstance NResolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public PropertyInstance NResolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
-            //Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
+            Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
+            Info("4B199295-FC1B-4EF2-A3EE-97841F44B2EE", $"callMode = {callMode}");
+            if(callMode == CallMode.HtnPlanner)
+            {
+                throw new NotImplementedException("927AF713-DDB4-4A8E-8223-C910DC8EC86E");
+            }
 #endif
 
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.Property);
@@ -269,12 +275,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(logger, filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
-        public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
-            return GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, DefaultOptions);
+            return GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, callMode, DefaultOptions);
         }
 
-        public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
             //Info("8B0595DD-33EA-48EB-8AAC-428911BC6001", $"propertyName = {propertyName}");
@@ -315,19 +321,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return filteredList.Select(p => p.ResultItem).ToList();
         }
 
-        public List<LogicalQueryNode> GetReadOnlyPropertyAsVirtualRelationsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<LogicalQueryNode> GetReadOnlyPropertyAsVirtualRelationsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
-            return GetReadOnlyPropertyAsVirtualRelationsList(logger, propertyName, localCodeExecutionContext, DefaultOptions);
+            return GetReadOnlyPropertyAsVirtualRelationsList(logger, propertyName, localCodeExecutionContext, callMode, DefaultOptions);
         }
 
-        public List<LogicalQueryNode> GetReadOnlyPropertyAsVirtualRelationsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<LogicalQueryNode> GetReadOnlyPropertyAsVirtualRelationsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
             if(_codeExecutorComponent == null)
             {
                 return null;
             }
 
-            var readonlyPropertiesList = GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, options);
+            var readonlyPropertiesList = GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, callMode, options);
 
 #if DEBUG
             //Info("8803E3C2-E5A6-4C40-964E-B0F0A7D67BAA", $"readonlyPropertiesList?.Count = {readonlyPropertiesList?.Count}");

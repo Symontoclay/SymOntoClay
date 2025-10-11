@@ -216,6 +216,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(logger, instance, executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext);
 
+                newCodeFrame.CallMode = callMode;
+
                 _context.InstancesStorage.AppendProcessInfo(logger, newCodeFrame.ProcessInfo);
 
                 if (isSync)

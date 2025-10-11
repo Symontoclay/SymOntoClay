@@ -161,6 +161,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 optionsOfFillExecutingCard.MainStorageContext = _context;
                 optionsOfFillExecutingCard.LogicalSearchStorageContext = logicalSearchStorageContext;
                 optionsOfFillExecutingCard.ReplacingNotResultsStrategy = options.ReplacingNotResultsStrategy;
+                optionsOfFillExecutingCard.CallMode = options.CallMode;
 
                 LogicalSearchExplainNode resultExplainNode = null;
 
@@ -1799,7 +1800,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Info("F6CE2FED-83A1-40A2-9A30-4FA60310C73B", $"targetRelationName = {targetRelationName.ToHumanizedString()}");
 #endif
 
-            var targetPropertyAsVirtualRelationsList = _propertiesResolver.GetReadOnlyPropertyAsVirtualRelationsList(logger, targetRelationName, options.LocalCodeExecutionContext);
+            var targetPropertyAsVirtualRelationsList = _propertiesResolver.GetReadOnlyPropertyAsVirtualRelationsList(logger, targetRelationName, options.LocalCodeExecutionContext, options.CallMode);
 
 #if DEBUG
             //Info("A5BCA078-0F56-45CC-B44F-845A1D8D77E2", $"targetPropertyAsVirtualRelationsList.Count = {targetPropertyAsVirtualRelationsList.Count}");

@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
         private readonly object _lockObj = new object();
         private List<PropertyInstance> _allPropertiesList = new List<PropertyInstance>();
+        private Dictionary<StrongIdentifierValue, List<PropertyInstance>> _propertiesDict = new Dictionary<StrongIdentifierValue, List<PropertyInstance>>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, PropertyInstance propertyInstance)
@@ -46,7 +48,28 @@ namespace SymOntoClay.Core.Internal.Htn
 
             _allPropertiesList.Add(propertyInstance);
 
-            throw new NotImplementedException("D552B92B-998B-4FFB-AB79-0D3A725C3228");
+            propertyInstance.SetPropertyStorage(this);
+
+            var name = propertyInstance.Name;
+
+            if (_propertiesDict.ContainsKey(name))
+            {
+                var targetList = _propertiesDict[name];
+
+                var itemsForRemoving = StorageHelper.RemoveSameItems(logger, targetList, propertyInstance);
+
+                foreach (var itemForRemoving in itemsForRemoving)
+                {
+                    //itemForRemoving.RemoveOnChangedHandler(this);
+                    _allPropertiesList.Remove(itemForRemoving);
+                }
+
+                targetList.Add(propertyInstance);
+            }
+            else
+            {
+                _propertiesDict[name] = new List<PropertyInstance> { propertyInstance };
+            }
         }
 
         private static List<WeightedInheritanceResultItem<PropertyInstance>> _getPropertyDirectlyEmptyList = new List<WeightedInheritanceResultItem<PropertyInstance>>();
@@ -58,21 +81,33 @@ namespace SymOntoClay.Core.Internal.Htn
             //Info("54446AC9-2652-4C32-A3D8-AC856B1A74E0", $"name = {name}");
 #endif
 
-            //throw new NotImplementedException("262837C7-151F-44DF-BC7A-9B547CC4EAF5");
+            var result = new List<WeightedInheritanceResultItem<PropertyInstance>>();
 
-            return _getPropertyDirectlyEmptyList;//tmp
+            var firstWeightedInheritanceItem = weightedInheritanceItems.First();
+
+            if (_propertiesDict.ContainsKey(name))
+            {
+                var targetList = _propertiesDict[name];
+
+                foreach (var targetVal in targetList)
+                {
+                    result.Add(new WeightedInheritanceResultItem<PropertyInstance>(targetVal, firstWeightedInheritanceItem));
+                }
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
         public void AddOnChangedHandler(IOnChangedPropertyStorageHandler handler)
         {
-            //throw new NotImplementedException("5AADCE05-A0A2-4D43-8D43-00BC82CDB5B2");
+            throw new NotImplementedException("5AADCE05-A0A2-4D43-8D43-00BC82CDB5B2");
         }
 
         /// <inheritdoc/>
         public void RemoveOnChangedHandler(IOnChangedPropertyStorageHandler handler)
         {
-            //throw new NotImplementedException("BE964648-5934-4972-A603-9C5EB1B87F5F");
+            throw new NotImplementedException("BE964648-5934-4972-A603-9C5EB1B87F5F");
         }
 
         /// <inheritdoc/>

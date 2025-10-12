@@ -633,8 +633,6 @@ namespace SymOntoClay.Core.Internal.Htn
             }
 
             _context.CodeExecutor.CallExecutableSync(Logger, effects, null, buildPlanIterationContext.LocalCodeExecutionContext, CallMode.HtnPlanner);
-
-            throw new NotImplementedException("D1327717-511F-432E-83C7-883A15CC3EAE");//tmp
         }
 
         private bool CheckTaskCase(CompoundHtnTaskCase taskCase, BuildPlanIterationContext buildPlanIterationContext)

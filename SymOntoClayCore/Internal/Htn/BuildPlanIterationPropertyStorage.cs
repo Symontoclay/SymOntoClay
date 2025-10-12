@@ -5,6 +5,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
@@ -24,9 +25,27 @@ namespace SymOntoClay.Core.Internal.Htn
         /// <inheritdoc/>
         public IStorage Storage => _storage;
 
+        private readonly object _lockObj = new object();
+        private List<PropertyInstance> _allPropertiesList = new List<PropertyInstance>();
+
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, PropertyInstance propertyInstance)
         {
+            lock (_lockObj)
+            {
+                NAppend(logger, propertyInstance);
+            }
+        }
+
+        private void NAppend(IMonitorLogger logger, PropertyInstance propertyInstance)
+        {
+            if (_allPropertiesList.Contains(propertyInstance))
+            {
+                return;
+            }
+
+            _allPropertiesList.Add(propertyInstance);
+
             throw new NotImplementedException("D552B92B-998B-4FFB-AB79-0D3A725C3228");
         }
 
@@ -86,7 +105,22 @@ namespace SymOntoClay.Core.Internal.Htn
             var result = new BuildPlanIterationPropertyStorage(Storage, Logger);
             context[this] = result;
 
+            result._allPropertiesList = _allPropertiesList.Select(p => p.Clone(context)).ToList();
+
+            foreach(var item in result._allPropertiesList)
+            {
+                item.SetPropertyStorage(result);
+            }
+
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _allPropertiesList.Clear();
+
+            base.OnDisposed();
         }
     }
 }

@@ -8212,6 +8212,9 @@
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.Kind">
             <inheritdoc/>
         </member>
@@ -9657,6 +9660,16 @@
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.PropertyInstance.HasConditionalSections">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.OnDisposed">
             <inheritdoc/>

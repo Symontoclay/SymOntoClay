@@ -246,6 +246,19 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public bool HasConditionalSections => CodeItem.HasConditionalSections;
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
+        public PropertyInstance Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
+        public PropertyInstance Clone(Dictionary<object, object> context)
+        {
+            throw new NotImplementedException("09DE60D3-F38B-4F4B-AC30-1331C49113AB");
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

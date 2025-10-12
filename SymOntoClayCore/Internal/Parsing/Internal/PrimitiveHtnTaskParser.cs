@@ -42,8 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("9AF1E157-908F-424F-8923-DF7D92660000", $"_state = {_state}");
-            Info("6E3464D7-0CAB-4149-A196-267E7D6CA8F0", $"_currToken = {_currToken}");
+            //Info("9AF1E157-908F-424F-8923-DF7D92660000", $"_state = {_state}");
+            //Info("6E3464D7-0CAB-4149-A196-267E7D6CA8F0", $"_currToken = {_currToken}");
             //Info(, $"Result = {Result}");
 #endif
 
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         var statementsList = parser.Result;
 
 #if DEBUG
-                                        Info("CBD76017-6B9C-4825-B615-C6E07002FEF2", $"statementsList = {statementsList.WriteListToToHumanizedString()}");
+                                        //Info("CBD76017-6B9C-4825-B615-C6E07002FEF2", $"statementsList = {statementsList.WriteListToToHumanizedString()}");
 #endif
 
                                         var compiledFunctionBody = _context.Compiler.Compile(statementsList);

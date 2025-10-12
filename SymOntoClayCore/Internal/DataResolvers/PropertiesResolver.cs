@@ -50,15 +50,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public ValueCallResult SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
-            Info("BAEC7F05-B0F0-42C2-BFEB-43B5AC51B208", $"propertyName = {propertyName}");
-            Info("54CD61AD-5D26-4C26-9751-AE243769B0A4", $"value = {value}");
-            Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
+            //Info("BAEC7F05-B0F0-42C2-BFEB-43B5AC51B208", $"propertyName = {propertyName}");
+            //Info("54CD61AD-5D26-4C26-9751-AE243769B0A4", $"value = {value}");
+            //Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
 #endif
 
             var property = Resolve(logger, propertyName, localCodeExecutionContext, callMode, options);
 
 #if DEBUG
-            Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
+            //Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
 #endif
 
             switch(callMode)
@@ -152,15 +152,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private PropertyInstance CreateAndSaveHtnPlannerProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Info("95A2CC46-C7D1-43FB-8EC7-D156EB53392A", $"propertyName = {propertyName}");
-            Info("36E75738-8B9F-4B0A-B123-76209B0C23A2", $"localCodeExecutionContext.GetType().Name = {localCodeExecutionContext.GetType().Name}");
-            localCodeExecutionContext.DbgPrintContextChain(logger, "F8FBE6EB-75C1-4D22-A30E-080B5A76D759");
+            //Info("95A2CC46-C7D1-43FB-8EC7-D156EB53392A", $"propertyName = {propertyName}");
+            //Info("36E75738-8B9F-4B0A-B123-76209B0C23A2", $"localCodeExecutionContext.GetType().Name = {localCodeExecutionContext.GetType().Name}");
+            //localCodeExecutionContext.DbgPrintContextChain(logger, "F8FBE6EB-75C1-4D22-A30E-080B5A76D759");
 #endif
 
             var nonRealLocalCodeExecutionContext = localCodeExecutionContext.GetFirstNonRealItemFromChain();
 
 #if DEBUG
-            Info("3C1AF218-7A67-419B-88FC-D59254EA3691", $"nonRealLocalCodeExecutionContext = {nonRealLocalCodeExecutionContext}");
+            //Info("3C1AF218-7A67-419B-88FC-D59254EA3691", $"nonRealLocalCodeExecutionContext = {nonRealLocalCodeExecutionContext}");
 #endif
 
             if(nonRealLocalCodeExecutionContext == null)
@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var propertyStorage = nonRealLocalCodeExecutionContext.Storage.PropertyStorage;
 
 #if DEBUG
-            Info("F6F7DD0B-5531-4A90-97D2-0C8EBA102D7B", $"propertyStorage.GetType().Name = {propertyStorage.GetType().Name}");
+            //Info("F6F7DD0B-5531-4A90-97D2-0C8EBA102D7B", $"propertyStorage.GetType().Name = {propertyStorage.GetType().Name}");
 #endif
 
             var property = new Property()
@@ -265,8 +265,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
-            Info("163564B6-A6A5-424B-9974-DB506035843F", $"propertyName = {propertyName}");
-            Info("0E85B012-8A78-4778-9E82-10B71B63B8E5", $"callMode = {callMode}");
+            //Info("163564B6-A6A5-424B-9974-DB506035843F", $"propertyName = {propertyName}");
+            //Info("0E85B012-8A78-4778-9E82-10B71B63B8E5", $"callMode = {callMode}");
             //localCodeExecutionContext.DbgPrintContextChain(logger, "DD93963A-03FD-417C-A8F9-CE904652F289");
 #endif
 
@@ -280,14 +280,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public PropertyInstance NResolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode, ResolverOptions options)
         {
 #if DEBUG
-            Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
-            Info("4B199295-FC1B-4EF2-A3EE-97841F44B2EE", $"callMode = {callMode}");
+            //Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
+            //Info("4B199295-FC1B-4EF2-A3EE-97841F44B2EE", $"callMode = {callMode}");
 #endif
 
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.Property);
 
 #if DEBUG
-            Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
+            //Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
 #endif
 
             var optionsForInheritanceResolver = options.Clone();

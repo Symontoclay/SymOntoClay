@@ -475,7 +475,7 @@ namespace SymOntoClay.Core.Internal.Htn
                 if (currentProcessedTask.IsBasePrimitiveHtnTask)
                 {
 #if DEBUG
-                    Info("63AA345E-CC10-4427-95C2-EED5656FAD22", $"currentProcessedTask = {currentProcessedTask}");
+                    //Info("63AA345E-CC10-4427-95C2-EED5656FAD22", $"currentProcessedTask = {currentProcessedTask}");
 #endif
 
                     if(currentProcessedTask.IsPrimitiveTask)

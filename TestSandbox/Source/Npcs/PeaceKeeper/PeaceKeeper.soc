@@ -1,26 +1,12 @@
 ﻿app PeaceKeeper
 {
-    root task `SomeCompoundTask`;
-
-    fun SomeOperator()
+    on Enter =>
     {
-       'Run SomeOperator' >> @>log;
-       wait 1;
+        'Begin' >> @>log;
+        SomeAutoProp += 2;
+        SomeAutoProp >> @>log;
+        'End' >> @>log;
     }
 
     prop SomeAutoProp: number = 16;
-}
-
-compound task SomeCompoundTask
-{
-   case
-   {
-       SomePrimitiveTask;
-   }
-}
-
-primitive task SomePrimitiveTask
-{
-    effects { SomeAutoProp = 42; }
-    operator SomeOperator();
 }

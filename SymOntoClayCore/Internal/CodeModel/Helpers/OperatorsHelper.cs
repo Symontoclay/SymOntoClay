@@ -34,6 +34,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             switch(kind)
             {
                 case KindOfOperator.Assign:
+                case KindOfOperator.AddAssign:
+                case KindOfOperator.SubAssign:
+                case KindOfOperator.MulAssign:
+                case KindOfOperator.DivAssign:
                     return 17;
 
                 case KindOfOperator.LeftRightStream:
@@ -89,6 +93,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 case KindOfOperator.Assign:
                     return "=";
+
+                case KindOfOperator.AddAssign:
+                    return "+=";
+
+                case KindOfOperator.SubAssign:
+                    return "-=";
+
+                case KindOfOperator.MulAssign:
+                    return "*=";
+
+                case KindOfOperator.DivAssign:
+                    return "/=";
 
                 case KindOfOperator.LeftRightStream:
                     return ">>";

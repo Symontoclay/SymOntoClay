@@ -10538,9 +10538,44 @@
             Default value. Represents nothing.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Plus">
+            <summary>
+            Represents symbol `+`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Minus">
+            <summary>
+            Represents symbol `-`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Multiplication">
             <summary>
             Represents symbol `*`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Division">
+            <summary>
+            Represents symbol `/`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.PlusAssign">
+            <summary>
+            Represents symbol `+=`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.MinusAssign">
+            <summary>
+            Represents symbol `-=`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.MultiplicationAssign">
+            <summary>
+            Represents symbol `*=`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.DivisionAssign">
+            <summary>
+            Represents symbol `/=`.
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.AsyncMarker">

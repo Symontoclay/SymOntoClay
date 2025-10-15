@@ -34,6 +34,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstExpression expression)
         {
+#if DEBUG
+            Info("3FA75AA9-3C64-4EAC-9D88-5469058554E8", $"expression = {expression.ToHumanizedString()}");
+#endif
+
             var kind = expression.Kind;
 
             switch(kind)

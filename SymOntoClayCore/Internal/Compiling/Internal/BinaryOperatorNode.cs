@@ -35,10 +35,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         
         public void Run(BinaryOperatorAstExpression expression)
         {
+#if DEBUG
+            Info("C8E3E012-9FCA-4D38-9BF0-C6F0BBD52B5E", $"expression = {expression.ToHumanizedString()}");
+#endif
+
             var kindOfOperator = expression.KindOfOperator;
 
 #if DEBUG
-            //Info("A626E223-CC31-4EA1-8985-878123435CB4", $"kindOfOperator = {kindOfOperator}");
+            Info("A626E223-CC31-4EA1-8985-878123435CB4", $"kindOfOperator = {kindOfOperator}");
 #endif
 
             switch(kindOfOperator)
@@ -46,6 +50,18 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case KindOfOperator.Assign:
                     RunAssignBinaryOperator(expression);
                     break;
+
+                case KindOfOperator.AddAssign:
+                    throw new NotImplementedException("39B121B7-7860-436C-9C45-CDAA5CBB77C8");
+
+                case KindOfOperator.SubAssign:
+                    throw new NotImplementedException("55DD7119-1E3F-4679-B22E-91D16ACD75BF");
+
+                case KindOfOperator.MulAssign:
+                    throw new NotImplementedException("A1262DE6-88CF-4F73-8C58-A03441D8A59A");
+
+                case KindOfOperator.DivAssign:
+                    throw new NotImplementedException("FE8EF3E5-9551-44C8-9309-5FB9C2F18C7C");
 
                 default:
                     RunUsualBinaryOperator(expression);

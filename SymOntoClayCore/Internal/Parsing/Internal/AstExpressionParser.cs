@@ -136,6 +136,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessAssign();
                     break;
 
+                case TokenKind.PlusAssign:
+                    ProcessPlusAssign();
+                    break;
+
+                case TokenKind.MinusAssign:
+                    ProcessMinusAssign();
+                    break;
+
+                case TokenKind.MultiplicationAssign:
+                    ProcessMultiplicationAssign();
+                    break;
+
+                case TokenKind.DivisionAssign:
+                    ProcessDivisionAssign();
+                    break;
+
                 case TokenKind.Point:
                     ProcessPoint();
                     break;
@@ -602,6 +618,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessAssign()
         {
             ProcessUsualBinaryOperator(KindOfOperator.Assign);
+        }
+
+        private void ProcessPlusAssign()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.AddAssign);
+        }
+
+        private void ProcessMinusAssign()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.SubAssign);
+        }
+
+        private void ProcessMultiplicationAssign()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.MulAssign);
+        }
+
+        private void ProcessDivisionAssign()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.DivAssign);
         }
 
         private void ProcessLeftRightStream()

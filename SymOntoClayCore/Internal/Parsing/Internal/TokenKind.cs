@@ -45,16 +45,45 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Entity,
         Point,
         Comma,
+
+        /// <summary>
+        /// Represents symbol `+`.
+        /// </summary>
         Plus,
+
+        /// <summary>
+        /// Represents symbol `-`.
+        /// </summary>
         Minus,
+
         /// <summary>
         /// Represents symbol `*`.
         /// </summary>
         Multiplication,
+
+        /// <summary>
+        /// Represents symbol `/`.
+        /// </summary>
         Division,
+
+        /// <summary>
+        /// Represents symbol `+=`.
+        /// </summary>
         PlusAssign,
+
+        /// <summary>
+        /// Represents symbol `-=`.
+        /// </summary>
         MinusAssign,
+
+        /// <summary>
+        /// Represents symbol `*=`.
+        /// </summary>
         MultiplicationAssign,
+
+        /// <summary>
+        /// Represents symbol `/=`.
+        /// </summary>
         DivisionAssign,
         QuestionMark,
 

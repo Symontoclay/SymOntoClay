@@ -52,6 +52,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// </summary>
         Multiplication,
         Division,
+        PlusAssign,
+        MinusAssign,
+        MultiplicationAssign,
+        DivisionAssign,
         QuestionMark,
 
         /// <summary>

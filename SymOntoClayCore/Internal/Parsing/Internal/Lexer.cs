@@ -259,6 +259,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     switch(nextChar)
                                     {
+                                        case '=':
+                                            _currentPos++;
+                                            if (buffer == null)
+                                            {
+                                                buffer = new StringBuilder();
+                                            }
+                                            buffer.Append(nextChar);
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.PlusAssign);
+
                                         case '∞':
                                             _currentPos++;
                                             if (buffer == null)
@@ -304,6 +314,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.NegativeInfinity);
 
+                                        case '=':
+                                            _currentPos++;
+                                            if (buffer == null)
+                                            {
+                                                buffer = new StringBuilder();
+                                            }
+                                            buffer.Append(nextChar);
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.MinusAssign);
+
                                         default:
                                             if(char.IsDigit(nextChar))
                                             {
@@ -318,7 +338,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 break;
 
                             case '*':
-                                return CreateToken(TokenKind.Multiplication);
+                                {
+                                    if (_items.Count == 0)
+                                    {
+                                        return CreateToken(TokenKind.Division);
+                                    }
+
+                                    var nextChar = _items.Peek();
+
+                                    switch(nextChar)
+                                    {
+                                        case '=':
+                                            _currentPos++;
+                                            if (buffer == null)
+                                            {
+                                                buffer = new StringBuilder();
+                                            }
+                                            buffer.Append(nextChar);
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.MultiplicationAssign);
+
+                                        default:
+                                            return CreateToken(TokenKind.Multiplication);
+                                    }
+                                }
 
                             case '/':
                                 {
@@ -354,6 +397,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             _stateBeforeComment = _state;
                                             _state = State.InMultiLineComment;
                                             break;
+
+                                        case '=':
+                                            _currentPos++;
+                                            if (buffer == null)
+                                            {
+                                                buffer = new StringBuilder();
+                                            }
+                                            buffer.Append(nextChar);
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.DivisionAssign);
 
                                         default:
                                             return CreateToken(TokenKind.Division);

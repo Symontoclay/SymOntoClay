@@ -36,13 +36,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(BinaryOperatorAstExpression expression)
         {
 #if DEBUG
-            Info("C8E3E012-9FCA-4D38-9BF0-C6F0BBD52B5E", $"expression = {expression.ToHumanizedString()}");
+            //Info("C8E3E012-9FCA-4D38-9BF0-C6F0BBD52B5E", $"expression = {expression.ToHumanizedString()}");
 #endif
 
             var kindOfOperator = expression.KindOfOperator;
 
 #if DEBUG
-            Info("A626E223-CC31-4EA1-8985-878123435CB4", $"kindOfOperator = {kindOfOperator}");
+            //Info("A626E223-CC31-4EA1-8985-878123435CB4", $"kindOfOperator = {kindOfOperator}");
 #endif
 
             switch(kindOfOperator)
@@ -67,9 +67,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         private void RunAssignBinaryOperator(BinaryOperatorAstExpression expression)
         {
 #if DEBUG
-            Info("2149E99F-774D-4147-AA61-025554A1A323", $"expression = {expression.ToHumanizedString()}");
-            Info("B6B181EE-2A94-4EEF-804E-21F8B348130E", $"expression.Left = {expression.Left.ToHumanizedString()}");
-            Info("FDA0A7CE-8F75-4AC3-9365-FFFC417C2D2C", $"expression.Right = {expression.Right.ToHumanizedString()}");
+            //Info("2149E99F-774D-4147-AA61-025554A1A323", $"expression = {expression.ToHumanizedString()}");
+            //Info("B6B181EE-2A94-4EEF-804E-21F8B348130E", $"expression.Left = {expression.Left.ToHumanizedString()}");
+            //Info("FDA0A7CE-8F75-4AC3-9365-FFFC417C2D2C", $"expression.Right = {expression.Right.ToHumanizedString()}");
             //Info("F5226D11-914F-4B58-8249-EFB8F6FA362C", $"expression.Right.Kind = {expression.Right.Kind}");
             //Info("25DEC754-44BF-49DF-B1AA-496AD2B76595", $"expression.Right = {expression.Right}");
 #endif
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             RunLeftAssignNode(expression.Left);
 
 #if DEBUG
-            DbgPrintCommands("B8A256A6-55F4-40F8-86FA-491EB97B0392");
+            //DbgPrintCommands("B8A256A6-55F4-40F8-86FA-491EB97B0392");
 #endif
         }
 
@@ -90,10 +90,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             var kindOfOperator = expression.KindOfOperator;
 
 #if DEBUG
-            Info("9807FD7B-6C9A-492B-8F79-2D079CB747C0", $"expression = {expression.ToHumanizedString()}");
-            Info("7A3F4704-DE34-4536-BD21-40740F6755C1", $"kindOfOperator = {kindOfOperator}");
-            Info("5D6CD10C-9C53-41F6-A9D0-D0EFD38C8368", $"expression.Left = {expression.Left.ToHumanizedString()}");
-            Info("8487A0CD-3FA5-4277-A7C0-591F507E348B", $"expression.Right = {expression.Right.ToHumanizedString()}");
+            //Info("9807FD7B-6C9A-492B-8F79-2D079CB747C0", $"expression = {expression.ToHumanizedString()}");
+            //Info("7A3F4704-DE34-4536-BD21-40740F6755C1", $"kindOfOperator = {kindOfOperator}");
+            //Info("5D6CD10C-9C53-41F6-A9D0-D0EFD38C8368", $"expression.Left = {expression.Left.ToHumanizedString()}");
+            //Info("8487A0CD-3FA5-4277-A7C0-591F507E348B", $"expression.Right = {expression.Right.ToHumanizedString()}");
 #endif
 
             {
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             }
 
 #if DEBUG
-            DbgPrintCommands("531F5AF9-3D8B-40CA-A125-F0B1FAF049A7");
+            //DbgPrintCommands("531F5AF9-3D8B-40CA-A125-F0B1FAF049A7");
 #endif
 
             //throw new NotImplementedException("39B121B7-7860-436C-9C45-CDAA5CBB77C8");
@@ -278,9 +278,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)
         {
 #if DEBUG
-            Info("5621E83E-0373-4300-B17E-A9E478AF19D4", $"expression = {expression.ToHumanizedString()}");
-            Info("5BE4BA3B-3D41-4EA5-9C45-E1CF9FF074D7", $"expression.Left = {expression.Left.ToHumanizedString()}");
-            Info("6CA7B65C-FD16-4136-8741-3163577C89E4", $"expression.Right = {expression.Right.ToHumanizedString()}");
+            //Info("5621E83E-0373-4300-B17E-A9E478AF19D4", $"expression = {expression.ToHumanizedString()}");
+            //Info("5BE4BA3B-3D41-4EA5-9C45-E1CF9FF074D7", $"expression.Left = {expression.Left.ToHumanizedString()}");
+            //Info("6CA7B65C-FD16-4136-8741-3163577C89E4", $"expression.Right = {expression.Right.ToHumanizedString()}");
 #endif
 
             var leftNode = new ExpressionNode(_context);
@@ -299,7 +299,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(command);
 
 #if DEBUG
-            DbgPrintCommands("46A58625-8684-4714-AC06-F5F6D344903C");
+            //DbgPrintCommands("46A58625-8684-4714-AC06-F5F6D344903C");
 #endif
         }
     }

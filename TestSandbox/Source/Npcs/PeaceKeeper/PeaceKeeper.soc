@@ -8,6 +8,12 @@
        wait 1;
     }
 
+    fun SomeOperator2()
+    {
+       'Run SomeOperator2' >> @>log;
+       wait 1;
+    }
+
     prop SomeAutoProp: number = 16;
 }
 
@@ -16,11 +22,18 @@ compound task SomeCompoundTask
    case
    {
        SomePrimitiveTask;
+       SomePrimitiveTask2;
    }
 }
 
 primitive task SomePrimitiveTask
 {
-    effects { SomeAutoProp += 42; }
+    effects { SomeAutoProp += 2; }
     operator SomeOperator();
+}
+
+primitive task SomePrimitiveTask2
+{
+    preconditions SomeAutoProp is 18;
+    operator SomeOperator2();
 }

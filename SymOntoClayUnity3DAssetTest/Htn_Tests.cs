@@ -2110,5 +2110,84 @@ primitive task SomePrimitiveTask
 
             Assert.AreEqual(2, maxN);
         }
+
+        [Test]
+#if PARALLELIZABLE_TESTS
+        [Parallelizable]
+#endif
+        public void PrimitiveHtnTaskEffects_Case3()
+        {
+            var text = @"app PeaceKeeper
+{
+    root task `SomeCompoundTask`;
+
+    fun SomeOperator()
+    {
+       'Run SomeOperator' >> @>log;
+       wait 1;
+    }
+
+    fun SomeOperator2()
+    {
+       'Run SomeOperator2' >> @>log;
+       wait 1;
+    }
+
+    prop SomeAutoProp: number = 16;
+}
+
+compound task SomeCompoundTask
+{
+   case
+   {
+       SomePrimitiveTask;
+       SomePrimitiveTask2;
+   }
+}
+
+primitive task SomePrimitiveTask
+{
+    effects { SomeAutoProp += 2; }
+    operator SomeOperator();
+}
+
+primitive task SomePrimitiveTask2
+{
+    preconditions SomeAutoProp is 18;
+    operator SomeOperator2();
+}";
+
+            var maxN = 0;
+
+            Assert.AreEqual(true, BehaviorTestEngineRunner.RunMinimalInstance(text,
+                (n, message) =>
+                {
+                    maxN = n;
+
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Run SomeOperator", message);
+                            return true;
+
+                        case 2:
+                            Assert.AreEqual("Run SomeOperator2", message);
+                            return true;
+
+                        case 3:
+                            Assert.AreEqual("Run SomeOperator", message);
+                            return true;
+
+                        case 4:
+                            Assert.AreEqual("Run SomeOperator2", message);
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
+
+            Assert.AreEqual(4, maxN);
+        }
     }
 }

@@ -3,7 +3,7 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        SomeAutoProp += 2;
+        SomeAutoProp /= 2;
         SomeAutoProp >> @>log;
         'End' >> @>log;
     }

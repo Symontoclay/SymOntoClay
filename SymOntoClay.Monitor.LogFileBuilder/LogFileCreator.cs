@@ -42,6 +42,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"options = {options}");
 #endif
 
+            if(!File.Exists(options.SourceDirectoryName))
+            {
+                throw new DirectoryNotFoundException($"Could not find a part of the path '{options.SourceDirectoryName}'.");
+            }
+
             options = options.Clone();
 
             LogFileCreatorOptionsHelper.PrepareOptions(options, logger);

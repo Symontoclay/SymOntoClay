@@ -6,41 +6,41 @@
 [![](https://img.shields.io/badge/api-reference-blue.svg)](https://symontoclay.github.io/docs/engine_api/index.html)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Symontoclay/SymOntoClay)
 
- SymOntoClay is a Domain-specific scripting language for creating game artificial intelligence (game AI). 
+ **SymOntoClay** is a domain-specific scripting language and AI engine for defining game character behavior. It combines imperative constructs with logic programming, HTN planning, fuzzy logic, and event-driven triggers, offering a maximally declarative and human-readable syntax. 
 
- The main idea of the language to combine imperative dynamically typed C-like language with non-mainstream approaches: 
+ It adheres to high standards of **expressiveness**, drawing inspiration from both programming language theory and AI research. The design principles ensure the following benefits: 
 
-*   logic programming
+*   **Declarativity**: behavior is described at a high level, reducing boilerplate and making scripts more readable.
 
-*   fuzzy logic
+*   **Readability**: syntax that remains clear and approachable.
 
-*   multiple fuzzy inheritance
+*   **Expressiveness**: complex reasoning, planning, and reactive mechanisms can be captured concisely.
 
-*   and other interesting approaches.
+ SymOntoClay integrates with Unity as open-source components. It provides support for Hierarchical Task Networks (HTN) and knowledge-based reasoning, enabling developers to create NPCs with predictable, consistent, and intelligent behavior. 
 
- Also SymOntoClay is a game AI engine which executes SymOntoClay language scripts in game. It is implemented as open source components for Unity. 
+ SymOntoClay is completely free, released under the MIT License. I only ask for your recognition, nothing else. If you find it useful and would like to support the project, I would be very grateful. Your support inspires me and helps me dedicate more time to developing SymOntoClay. 
 
-> :warning: **Purely experimental and very unstable project developed by only one person.** Please read the [page](https://symontoclay.github.io/you-need-to-know.html) before starting
+> :warning: **This is a purely experimental and unstable personal project, created by a single developer. Not intended for production use.** Please read the [Disclaimers](https://symontoclay.github.io/general-disclaimer.html) carefully before use!
 
 ## Goals
 
 ### 
-Short term goal
+Short-term Goal
 
- The current goal of the project is experimenting on using different symbolic artificial intelligence approaches in game development. First of all It's logic programming, fuzzy logic, fuzzy inheritance and natural language processing (NLP). 
-
- I think symbolic logic will help to do indie-game developing better. There are many interesting things in symbolic artificial intelligence approaches. And It is very interesting for me to use and see them in gaming. 
+ We are exploring various approaches to symbolic artificial intelligence and examining how they can enhance game development. Our objective is to discover new ways to make the process of creating games more creative, flexible, and inspiring. 
 
 ### 
-Long term goal
+Long-term Goal
 
- I hope that SymOntoClay will become a powerful and useful tool for game development in the future. I will be very glad If It helps to increase amount of cool games, happy users and game developers. 
-
- I will continue development so that this future comes faster. 
+ We aim for **SymOntoClay** to become a powerful and user-friendly tool for game developers. It should support the creation of original game worlds, bring enjoyment to players, and foster a developer community. We believe that symbolic AI can enrich gameplay and design, and we will continue developing the project to bring this future closer. 
 
 ## Key features
 
 *   **Simple, clear and clean code**
+
+*   **NPC isolation**
+
+*   **HTN (Hierarchical Task Networks)**
 
 *   **Fuzzy logic**
 
@@ -50,39 +50,38 @@ Long term goal
 
 *   **Multiple fuzzy inheritance**
 
-*   **NPC isolation**
-
  Learn key features in details [here](https://symontoclay.github.io/docs/key-features.html). 
 
 ## Domain-specific language (DSL)
 
- SymOntoClay engine has own Domain-specific scripting language (DSL). 
+ SymOntoClay employs its own domain-specific scripting language (DSL). This is an imperative, dynamically typed language with syntax resembling C, but extended with non-standard approaches: 
 
- It is a imperative scripting dynamically typed C-like language which combines with non-mainstream approaches: 
+*   Logic programming
 
-*   logic programming
+*   Fuzzy logic
 
-*   fuzzy logic
+*   Multiple fuzzy inheritance
 
-*   multiple fuzzy inheritance
+*   Other experimental concepts
 
-*   and other interesting approaches.
+ I have the freedom to experiment with syntax, which allows me to integrate unconventional features in a manner that is both elegant and convenient for game development. 
 
- I'm completely free in my experiments with syntax. 
-
- My main criterion in SymOntoClay syntax solutions is the most elegant inclusion of interesting features in the syntax and the convenience of using them in game development. 
-
- Custom domain-specific language allows to combine features in more convenient way for using. It could be difficult or even impossible to add non-mainstream approaches into existing programming language. 
+ The primary principle in designing the DSL is the combination of expressiveness and practicality. A proprietary language makes it possible to unify unique mechanisms in ways that would be difficult or even impossible to achieve in existing programming languages. 
 
 ## Project status
 
- I've making SymOntoClay alone in my free time since 2016. So It's not fast. 
+ I’ve been developing SymOntoClay alone in my free time since 2014, so progress is gradual. 
 
- I've made two prototypes: first implementation of domain-specific language and integration with Unity3D. I've posted the second prototype's demo-video into an Indie game developers group on Facebook. You can see this demo <i class="fab fa-facebook" title="Facebook">*[here](https://www.facebook.com/groups/IndieGameDevs/permalink/10155707420791573/). </i>
+ So far, I’ve built two prototypes: 
 
- I'm focusing on key features (the interesting features from AI). Other features is being added only for support working or demonstrating the key features. So there can be absent necessary for practical using but non key features on the DSL or engine. Also stability and performance are not in focus - I don't have time for these sides while key features have not been implemented. 
+*   The first was an initial implementation of the domain-specific language (DSL) and its integration with Unity.
 
- I'm going to continue my experiments. And I hope this project will become useful for many indie game developers in the future. 
+*   The second prototype included a demo video, which I shared in an indie game developers group on Facebook. 
+		You can watch that demo [here](https://www.facebook.com/groups/IndieGameDevs/permalink/10155707420791573/).
+
+ My current focus is on implementing the core AI-driven features—the ones that make the project truly unique. Supporting features are added only when necessary to demonstrate or enable these key capabilities. This means that some non-essential elements of the DSL or engine may be missing, and aspects like stability or performance are not yet prioritized. 
+
+ I plan to continue experimenting and refining the system. My hope is that SymOntoClay will eventually become a valuable tool for many indie game developers. 
 
 ## Requirements
 
@@ -116,10 +115,6 @@ You can build and install the project from source code.
 
 ## Contributing
 
- SymOntoClay is still under development. I will be glad if someone else is interested in it. Contributions are always welcome! 
-
- Any help testing the software, reporting or fixing bugs, reviewing pull requests and recent changes, writing tests, or helping with outstanding issues is very welcome. Implementing new features, or improving/refactoring the codebase, is of course also welcome, but to avoid wasted effort, especially for larger changes, I encourage discussing these on the [issue tracker](https://github.com/Symontoclay/SymOntoClay/issues) or [Discussion](https://github.com/Symontoclay/SymOntoClay/discussions) first. 
-
- Please follow the [Developers Guide](https://symontoclay.github.io/dev/contributing.html) if you want to help 
+ SymOntoClay is still under development, and contributions are welcome! Whether it's testing, reporting bugs, or improving the codebase — your help matters. See the [Developers Guide](https://symontoclay.github.io/dev/contributing.html) for details. 
 
  Feel free contact to me about the project. I will be glad to receive feedback.

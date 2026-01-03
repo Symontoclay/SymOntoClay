@@ -90,13 +90,13 @@ Long-term Goal
 
  SymOntoClay CLI requires: 
 
-*   NET 7.0
+*   NET 9.0
 
  SymOntoClay's components for Unity require: 
 
 *   Unity 2022.2.8f1
 
-*   NET 7.0
+*   NET 9.0
 
 ## Installation
 You can build and install the project from source code.

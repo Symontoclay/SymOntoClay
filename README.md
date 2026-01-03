@@ -5,6 +5,8 @@
 [![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
 [![](https://img.shields.io/badge/api-reference-blue.svg)](https://symontoclay.github.io/docs/engine_api/index.html)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Symontoclay/SymOntoClay)
+[![YouTube](https://img.shields.io/badge/YouTube-Subscribe-red?logo=youtube)](https://www.youtube.com/@symontoclay)
+[![Discord](https://img.shields.io/badge/Discord-Join-blue?logo=discord)](https://discord.gg/UkC5r3ZDTN)
 
  **SymOntoClay** is a domain-specific scripting language and AI engine for defining game character behavior. It combines imperative constructs with logic programming, HTN planning, fuzzy logic, and event-driven triggers, offering a maximally declarative and human-readable syntax. 
 

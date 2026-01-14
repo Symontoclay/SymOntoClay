@@ -1,5 +1,4 @@
 ﻿using MessagePack;
-using NLog.Fluent;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Monitor.Common.Data;

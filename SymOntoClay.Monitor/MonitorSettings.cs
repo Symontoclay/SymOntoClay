@@ -33,6 +33,7 @@ namespace SymOntoClay.Monitor
     public class MonitorSettings : BaseMonitorSettings
     {
         public string MessagesDir { get; set; }
+        public KindOfSerialization KindOfSerialization { get; set; } = KindOfSerialization.MessagePack;
         public IRemoteMonitor RemoteMonitor { get; set; }
         public Action<string> OutputHandler { get; set; }
         public Action<string> ErrorHandler { get; set; }
@@ -54,6 +55,7 @@ namespace SymOntoClay.Monitor
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(MessagesDir)} = {MessagesDir}");
+            sb.AppendLine($"{spaces}{nameof(KindOfSerialization)} = {KindOfSerialization}");
             sb.PrintExisting(n, nameof(RemoteMonitor), RemoteMonitor);
             sb.PrintExisting(n, nameof(OutputHandler), OutputHandler);
             sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);

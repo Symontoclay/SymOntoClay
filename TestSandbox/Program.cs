@@ -64,6 +64,7 @@ using TestSandbox.DateTimes;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
 using TestSandbox.LogicalDatabase;
+using TestSandbox.MessagePacking;
 using TestSandbox.MonoBehaviorTesting;
 using TestSandbox.Navigations;
 using TestSandbox.Parsing;
@@ -89,6 +90,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstMessagePack();
             //TstKindOfValueConversion();
             //TstPrintUnknownObjPropOptString();
             //TstSorting();
@@ -96,7 +98,7 @@ namespace TestSandbox
             //TstThreadTask();
             //TstThreadPoolCount();
             //TstLogFileBuilderParameterValueConverterToString();
-            TstLogFileBuilder();//log <<----
+            //TstLogFileBuilder();//log <<----
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDominantItems();
@@ -183,6 +185,16 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstMessagePack()
+        {
+            _globalLogger.Info("Begin");
+
+            var handler = new MessagePackHandler();
+            handler.Run();
+
+            _globalLogger.Info("End");
         }
 
         private static void TstKindOfValueConversion()

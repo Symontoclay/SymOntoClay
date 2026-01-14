@@ -1,19 +1,30 @@
-﻿using SymOntoClay.Common;
+﻿using MessagePack;
+using NLog.Fluent;
+using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Monitor.Common.Data;
 using System;
 using System.Text;
-using System.Threading;
 
 namespace TestSandbox.MessagePacking
 {
+    [MessagePackObject]
+    [Union(0, typeof(TstLogMessage))]
     public abstract class TstBaseLogMessage : IObjectToString
     {
         public abstract KindOfMessage KindOfMessage { get; }
+
+        [Key(0)]
         public DateTime Timestamp { get; set; }
+
+        [Key(1)]
         public string Level { get; set; }
+
+        [Key(2)]
         public string Message { get; set; }
-        public string? Exception { get; set; }
+
+        [Key(3)]
+        public string Exception { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -39,16 +50,10 @@ namespace TestSandbox.MessagePacking
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfMessage)} = {KindOfMessage}");
-            sb.AppendLine($"{spaces}{nameof(DateTimeStamp)} = {DateTimeStamp}");
-            sb.AppendLine($"{spaces}{nameof(NodeId)} = {NodeId}");
-            sb.AppendLine($"{spaces}{nameof(ThreadId)} = {ThreadId}");
-            sb.AppendLine($"{spaces}{nameof(GlobalMessageNumber)} = {GlobalMessageNumber}");
-            sb.AppendLine($"{spaces}{nameof(ClassFullName)} = {ClassFullName}");
-            sb.AppendLine($"{spaces}{nameof(MessageNumber)} = {MessageNumber}");
-            sb.AppendLine($"{spaces}{nameof(MessagePointId)} = {MessagePointId}");
-            sb.AppendLine($"{spaces}{nameof(MemberName)} = {MemberName}");
-            sb.AppendLine($"{spaces}{nameof(SourceFilePath)} = {SourceFilePath}");
-            sb.AppendLine($"{spaces}{nameof(SourceLineNumber)} = {SourceLineNumber}");
+            sb.AppendLine($"{spaces}{nameof(Timestamp)} = {Timestamp}");
+            sb.AppendLine($"{spaces}{nameof(Level)} = {Level}");
+            sb.AppendLine($"{spaces}{nameof(Message)} = {Message}");
+            sb.AppendLine($"{spaces}{nameof(Exception)} = {Exception}");
 
             return sb.ToString();
         }

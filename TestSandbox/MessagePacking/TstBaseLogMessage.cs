@@ -9,7 +9,7 @@ namespace TestSandbox.MessagePacking
 {
     [MessagePackObject]
     [Union(0, typeof(TstLogMessage))]
-    public abstract class TstBaseLogMessage : IObjectToString
+    public abstract partial class TstBaseLogMessage : IObjectToString
     {
         public abstract KindOfMessage KindOfMessage { get; }
 

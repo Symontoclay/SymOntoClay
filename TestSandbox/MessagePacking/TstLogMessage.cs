@@ -6,7 +6,7 @@ using System.Text;
 namespace TestSandbox.MessagePacking
 {
     [MessagePackObject]
-    public class TstLogMessage: TstBaseLogMessage
+    public partial class TstLogMessage : TstBaseLogMessage
     {
         /// <inheritdoc/>
         [Key(4)]

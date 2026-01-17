@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.SerializationGenerator
 {
@@ -78,7 +79,19 @@ namespace SymOntoClay.SerializationGenerator
                         {
                             var prop = props[i];
                             var keyIndex = baseCount + i;
-                            sb.AppendLine($"{classContentDeclSpaces}[Key({keyIndex})] public partial {prop.Type} {prop.Identifier};");
+                            var propName = prop.Identifier.Text;
+
+#if DEBUG
+                            FileLogger.WriteLn($"propName = '{propName}'");
+                            FileLogger.WriteLn($"char.ToLowerInvariant(propName[0]) = '{char.ToLowerInvariant(propName[0])}'");
+#endif
+
+                            var camelName = $"_{char.ToLowerInvariant(propName[0])}{propName.Substring(1)}";
+#if DEBUG
+                            FileLogger.WriteLn($"camelName = '{camelName}'");
+#endif
+                            sb.AppendLine($"{classContentDeclSpaces}private {prop.Type} {camelName};");
+                            sb.AppendLine($"{classContentDeclSpaces}[Key({keyIndex})] public partial {prop.Type} {prop.Identifier} {{ get => {camelName}; set => {camelName} = value; }}");
                         }
 
                         sb.AppendLine($"{classDeclSpaces}}}");

@@ -18,6 +18,12 @@ namespace TestSandbox.MessagePacking
         {
             _logger.Info("Begin");
 
+            var props = typeof(TstLogMessage).GetProperties();
+            foreach (var p in props)
+            {
+                _logger.Info($"{p.Name} - HasKeyAttr: {p.GetCustomAttributes(typeof(MessagePack.KeyAttribute), false).Any()}");
+            }
+
             var logMessage = new TstLogMessage();
             logMessage.Timestamp = DateTime.Now;
             logMessage.Message = "Hi!";

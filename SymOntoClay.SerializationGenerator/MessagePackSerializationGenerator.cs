@@ -81,18 +81,10 @@ namespace SymOntoClay.SerializationGenerator
                             var prop = props[i];
                             var keyIndex = baseCount + i;
                             var propName = prop.Identifier.Text;
-
-#if DEBUG
-                            FileLogger.WriteLn($"propName = '{propName}'");
-                            FileLogger.WriteLn($"char.ToLowerInvariant(propName[0]) = '{char.ToLowerInvariant(propName[0])}'");
-#endif
-
                             var shadowFieldName = $"_{char.ToLowerInvariant(propName[0])}{propName.Substring(1)}";
-#if DEBUG
-                            FileLogger.WriteLn($"shadowFieldName = '{shadowFieldName}'");
-#endif
+
                             sb.AppendLine($"{classContentDeclSpaces}private {prop.Type} {shadowFieldName};");
-                            sb.AppendLine($"{classContentDeclSpaces}[Key({keyIndex})] public partial {prop.Type} {prop.Identifier} {{ get => {shadowFieldName}; set => {shadowFieldName} = value; }}");
+                            sb.AppendLine($"{classContentDeclSpaces}[Key({keyIndex})] public partial {prop.Type} {propName} {{ get => {shadowFieldName}; set => {shadowFieldName} = value; }}");
                         }
 
                         sb.AppendLine($"{classDeclSpaces}}}");

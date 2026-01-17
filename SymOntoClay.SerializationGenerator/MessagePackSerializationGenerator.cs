@@ -63,10 +63,11 @@ namespace SymOntoClay.SerializationGenerator
 
                         var ns = GetNamespace(cls);
 
-                        var props = cls.Members.OfType<PropertyDeclarationSyntax>()
-                            .Where(p => !p.Modifiers.Any(SyntaxKind.AbstractKeyword))
-                            .Where(p => !p.Modifiers.Any(SyntaxKind.StaticKeyword))
-                            .Where(p => p.AccessorList?.Accessors.Any(a => a.Kind() == SyntaxKind.SetAccessorDeclaration) ?? false)
+                        var propsBeforeFiltering = cls.Members
+                                .OfType<PropertyDeclarationSyntax>()
+                                .Select(p => semanticModel.GetDeclaredSymbol(p) as IPropertySymbol);
+
+                        var props = FilterProperties(propsBeforeFiltering)
                              .ToList();
 
                         var baseCount = CountBaseProperties(symbol);
@@ -80,7 +81,7 @@ namespace SymOntoClay.SerializationGenerator
                         {
                             var prop = props[i];
                             var keyIndex = baseCount + i;
-                            var propName = prop.Identifier.Text;
+                            var propName = prop.Name;
                             var shadowFieldName = $"_{char.ToLowerInvariant(propName[0])}{propName.Substring(1)}";
 
                             sb.AppendLine($"{classContentDeclSpaces}private {prop.Type} {shadowFieldName};");
@@ -112,6 +113,16 @@ namespace SymOntoClay.SerializationGenerator
             return ns?.Name.ToString() ?? "";
         }
 
+        private IEnumerable<IPropertySymbol> FilterProperties(IEnumerable<IPropertySymbol> source)
+        {
+            return source.Where(p =>
+                            !p.IsAbstract &&
+                            !p.IsStatic &&
+                            p.SetMethod != null &&
+                            (p.SetMethod.DeclaredAccessibility == Accessibility.Public || p.SetMethod.IsInitOnly)
+                        );
+        }
+
         private int CountBaseProperties(INamedTypeSymbol symbol)
         {
             var count = 0;
@@ -124,15 +135,10 @@ namespace SymOntoClay.SerializationGenerator
 
                 if (hasAttr)
                 {
-                    count += baseType.GetMembers()
-                        .OfType<IPropertySymbol>()
-                        .Where(p =>
-                            !p.IsAbstract &&                
-                            !p.IsStatic &&                  
-                            p.SetMethod != null &&        
-                            p.SetMethod.DeclaredAccessibility == Accessibility.Public
-                        )
-                        .Count();
+                    var properties = FilterProperties(baseType.GetMembers()
+                        .OfType<IPropertySymbol>());
+
+                    count += properties.Count();
                 }
 
                 baseType = baseType.BaseType;

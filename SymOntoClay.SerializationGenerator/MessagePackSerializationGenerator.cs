@@ -25,6 +25,8 @@ namespace SymOntoClay.SerializationGenerator
 
                 var compilation = context.Compilation;
 
+                var allTypes = GetAllTypes(compilation.GlobalNamespace).ToList();
+
                 foreach (var tree in compilation.SyntaxTrees)
                 {
 #if DEBUG
@@ -91,7 +93,43 @@ namespace SymOntoClay.SerializationGenerator
                         sb.AppendLine($"{classDeclSpaces}}}");
                         sb.AppendLine("}");
 
-                        context.AddSource($"{cls.Identifier.Text}_Keys.g.cs", sb.ToString());
+                        context.AddSource($"{cls.Identifier.Text}_MessagePackObject_Keys.g.cs", sb.ToString());
+
+                        if (symbol.IsAbstract)
+                        {
+                            var derivedTypes = allTypes
+                                .Where(t => t.BaseType?.Equals(symbol, SymbolEqualityComparer.Default) == true)
+                                .ToList();
+
+#if DEBUG
+                            FileLogger.WriteLn($"derivedTypes.Count = {derivedTypes.Count}");
+#endif
+
+                            if (derivedTypes.Any())
+                            {
+                                var unionSb = new StringBuilder();
+
+                                foreach (var u in root.Usings)
+                                {
+                                    unionSb.AppendLine($"using {u.Name.ToString()};");
+                                }
+
+                                unionSb.AppendLine($"namespace {ns}");
+                                unionSb.AppendLine("{");
+                                var index = 0;
+                                foreach (var d in derivedTypes)
+                                {
+                                    unionSb.AppendLine($"{classDeclSpaces}[Union({index}, typeof({d.Name}))]");
+                                    index++;
+                                }
+                                unionSb.AppendLine($"{classDeclSpaces}public abstract partial class {cls.Identifier.Text}");
+                                unionSb.AppendLine($"{classDeclSpaces}{{");
+                                unionSb.AppendLine($"{classDeclSpaces}}}");
+                                unionSb.AppendLine("}");
+
+                                context.AddSource($"{cls.Identifier.Text}_MessagePackObject_Union.g.cs", unionSb.ToString());
+                            }
+                        }
                     }
                 }
             }
@@ -111,6 +149,22 @@ namespace SymOntoClay.SerializationGenerator
                         .OfType<BaseNamespaceDeclarationSyntax>()
                         .FirstOrDefault();
             return ns?.Name.ToString() ?? "";
+        }
+
+        private static IEnumerable<INamedTypeSymbol> GetAllTypes(INamespaceSymbol ns)
+        {
+            foreach (var type in ns.GetTypeMembers())
+            {
+                yield return type;
+            }
+
+            foreach (var nestedNs in ns.GetNamespaceMembers())
+            {
+                foreach (var type in GetAllTypes(nestedNs))
+                {
+                    yield return type;
+                }
+            }
         }
 
         private IEnumerable<IPropertySymbol> FilterProperties(IEnumerable<IPropertySymbol> source)

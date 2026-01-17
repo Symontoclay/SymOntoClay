@@ -13,17 +13,13 @@ namespace TestSandbox.MessagePacking
     {
         public abstract KindOfMessage KindOfMessage { get; }
 
-        [Key(0)]
-        public DateTime Timestamp { get; set; }
+        public partial DateTime Timestamp { get; set; }
 
-        [Key(1)]
-        public string Level { get; set; }
+        public partial string Level { get; set; }
 
-        [Key(2)]
-        public string Message { get; set; }
+        public partial string Message { get; set; }
 
-        [Key(3)]
-        public string Exception { get; set; }
+        public partial string Exception { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

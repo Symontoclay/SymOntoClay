@@ -62,12 +62,24 @@ namespace SymOntoClay.SerializationGenerator
 
                         var ns = GetNamespace(cls);
 
-                        var props = cls.Members.OfType<PropertyDeclarationSyntax>().ToList();
+                        var props = cls.Members.OfType<PropertyDeclarationSyntax>()
+                            .Where(p => !p.Modifiers.Any(SyntaxKind.AbstractKeyword))
+                            .Where(p => p.AccessorList?.Accessors.Any(a => a.Kind() == SyntaxKind.SetAccessorDeclaration) ?? false)
+                             .ToList();
+
+                        var baseCount = CountBaseProperties(symbol);
 
                         sb.AppendLine($"namespace {ns}");
                         sb.AppendLine("{");
                         sb.AppendLine($"{classDeclSpaces}public partial class {cls.Identifier.Text}");
                         sb.AppendLine($"{classDeclSpaces}{{");
+
+                        for (var i = 0; i < props.Count; i++)
+                        {
+                            var prop = props[i];
+                            var keyIndex = baseCount + i;
+                            sb.AppendLine($"{classContentDeclSpaces}[Key({keyIndex})] public partial {prop.Type} {prop.Identifier};");
+                        }
 
                         sb.AppendLine($"{classDeclSpaces}}}");
                         sb.AppendLine("}");
@@ -92,6 +104,29 @@ namespace SymOntoClay.SerializationGenerator
                         .OfType<BaseNamespaceDeclarationSyntax>()
                         .FirstOrDefault();
             return ns?.Name.ToString() ?? "";
+        }
+
+        private int CountBaseProperties(INamedTypeSymbol symbol)
+        {
+            var count = 0;
+            var baseType = symbol.BaseType;
+
+            while (baseType != null && baseType.Name != "Object")
+            {
+                var hasAttr = baseType.GetAttributes()
+                    .Any(a => a.AttributeClass?.Name == "MessagePackObjectAttribute");
+
+                if (hasAttr)
+                {
+                    count += baseType.GetMembers()
+                        .OfType<IPropertySymbol>()
+                        .Count();
+                }
+
+                baseType = baseType.BaseType;
+            }
+
+            return count;
         }
     }
 }

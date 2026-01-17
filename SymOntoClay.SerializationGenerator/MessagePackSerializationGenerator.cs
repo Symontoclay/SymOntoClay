@@ -65,6 +65,7 @@ namespace SymOntoClay.SerializationGenerator
 
                         var props = cls.Members.OfType<PropertyDeclarationSyntax>()
                             .Where(p => !p.Modifiers.Any(SyntaxKind.AbstractKeyword))
+                            .Where(p => !p.Modifiers.Any(SyntaxKind.StaticKeyword))
                             .Where(p => p.AccessorList?.Accessors.Any(a => a.Kind() == SyntaxKind.SetAccessorDeclaration) ?? false)
                              .ToList();
 
@@ -86,12 +87,12 @@ namespace SymOntoClay.SerializationGenerator
                             FileLogger.WriteLn($"char.ToLowerInvariant(propName[0]) = '{char.ToLowerInvariant(propName[0])}'");
 #endif
 
-                            var camelName = $"_{char.ToLowerInvariant(propName[0])}{propName.Substring(1)}";
+                            var shadowFieldName = $"_{char.ToLowerInvariant(propName[0])}{propName.Substring(1)}";
 #if DEBUG
-                            FileLogger.WriteLn($"camelName = '{camelName}'");
+                            FileLogger.WriteLn($"shadowFieldName = '{shadowFieldName}'");
 #endif
-                            sb.AppendLine($"{classContentDeclSpaces}private {prop.Type} {camelName};");
-                            sb.AppendLine($"{classContentDeclSpaces}[Key({keyIndex})] public partial {prop.Type} {prop.Identifier} {{ get => {camelName}; set => {camelName} = value; }}");
+                            sb.AppendLine($"{classContentDeclSpaces}private {prop.Type} {shadowFieldName};");
+                            sb.AppendLine($"{classContentDeclSpaces}[Key({keyIndex})] public partial {prop.Type} {prop.Identifier} {{ get => {shadowFieldName}; set => {shadowFieldName} = value; }}");
                         }
 
                         sb.AppendLine($"{classDeclSpaces}}}");
@@ -133,6 +134,12 @@ namespace SymOntoClay.SerializationGenerator
                 {
                     count += baseType.GetMembers()
                         .OfType<IPropertySymbol>()
+                        .Where(p =>
+                            !p.IsAbstract &&                
+                            !p.IsStatic &&                  
+                            p.SetMethod != null &&        
+                            p.SetMethod.DeclaredAccessibility == Accessibility.Public
+                        )
                         .Count();
                 }
 

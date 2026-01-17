@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TestSandbox.MessagePacking
 {
@@ -20,6 +21,48 @@ namespace TestSandbox.MessagePacking
         {
             _logger.Info("Begin");
 
+            Case2();
+            //Case1();
+
+            //_logger.Info($" = {}");
+
+            _logger.Info("End");
+        }
+
+        private void Case2()
+        {
+            var logMessage = new TstLogMessage();
+            logMessage.Timestamp = DateTime.Now;
+            logMessage.Message = "Hi!";
+            logMessage.SomeField = "DDD";
+            logMessage.Level = "16";
+            logMessage.Exception = "1235H";
+
+            _logger.Info($"logMessage = {logMessage}");
+
+            var mpAdapter = new MessagePackSerializerAdapter();
+            var jsonAdapter = new JsonSerializerAdapter();
+            var bsonAdapter = new BsonSerializerAdapter();
+
+            byte[] mpData = mpAdapter.Serialize(logMessage);
+
+            File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName()), mpData);
+
+            var restored = MessagePackSerializer.Deserialize<TstLogMessage>(mpData);
+
+            _logger.Info($"restored = {restored}");
+
+            var jsonData = jsonAdapter.Serialize(logMessage);
+
+            File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName()), jsonData);
+
+            var bsonData = bsonAdapter.Serialize(logMessage);
+
+            File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName()), bsonData);
+        }
+
+        private void Case1()
+        {
             var logMessage = new TstLogMessage();
             logMessage.Timestamp = DateTime.Now;
             logMessage.Message = "Hi!";
@@ -38,10 +81,6 @@ namespace TestSandbox.MessagePacking
             var restored = MessagePackSerializer.Deserialize<TstLogMessage>(data);
 
             _logger.Info($"restored = {restored}");
-
-            //_logger.Info($" = {}");
-
-            _logger.Info("End");
         }
     }
 }

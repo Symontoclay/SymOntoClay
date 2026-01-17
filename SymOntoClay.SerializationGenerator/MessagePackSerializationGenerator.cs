@@ -14,6 +14,14 @@ namespace SymOntoClay.SerializationGenerator
         {
             try
             {
+                var identationStep = 4;
+                var baseIdentation = 0;
+                var classDeclIdentation = baseIdentation + identationStep;
+                var classContentDeclIdentation = classDeclIdentation + identationStep;
+
+                var classDeclSpaces = GeneratorsHelper.Spaces(classDeclIdentation);
+                var classContentDeclSpaces = GeneratorsHelper.Spaces(classContentDeclIdentation);
+
                 var compilation = context.Compilation;
 
                 foreach (var tree in compilation.SyntaxTrees)
@@ -58,10 +66,10 @@ namespace SymOntoClay.SerializationGenerator
 
                         sb.AppendLine($"namespace {ns}");
                         sb.AppendLine("{");
-                        sb.AppendLine($"public partial class {cls.Identifier.Text}");
-                        sb.AppendLine("{");
+                        sb.AppendLine($"{classDeclSpaces}public partial class {cls.Identifier.Text}");
+                        sb.AppendLine($"{classDeclSpaces}{{");
 
-                        sb.AppendLine("}");
+                        sb.AppendLine($"{classDeclSpaces}}}");
                         sb.AppendLine("}");
 
                         context.AddSource($"{cls.Identifier.Text}_Keys.g.cs", sb.ToString());

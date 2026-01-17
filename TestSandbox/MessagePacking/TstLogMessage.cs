@@ -9,10 +9,11 @@ namespace TestSandbox.MessagePacking
     public class TstLogMessage: TstBaseLogMessage
     {
         /// <inheritdoc/>
-        [Key(4)]
+        //[Key(4)]
         public override KindOfMessage KindOfMessage => KindOfMessage.ActionResolving;
 
-        [Key(5)]
+        //[Key(5)]
+        [Key(4)]
         public string SomeField { get; set; }
 
         /// <inheritdoc/>

@@ -1,4 +1,6 @@
 ﻿using MessagePack;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using Newtonsoft.Json;
 using NLog;
 using NLog.Fluent;
 using System;
@@ -28,6 +30,10 @@ namespace TestSandbox.MessagePacking
             byte[] data = MessagePackSerializer.Serialize(logMessage);
 
             File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName()), data);
+
+            var text = JsonConvert.SerializeObject(logMessage);
+
+            _logger.Info($"text = {text}");
 
             var restored = MessagePackSerializer.Deserialize<TstLogMessage>(data);
 

@@ -65,6 +65,9 @@ namespace SymOntoClay.Monitor.Internal
             {
                 var data = _serializerAdapter.Serialize(message);
 
+#if DEBUG
+                //_globalLogger.Info($"text = {text}");
+#endif
 
                 var text = JsonConvert.SerializeObject(message);
 

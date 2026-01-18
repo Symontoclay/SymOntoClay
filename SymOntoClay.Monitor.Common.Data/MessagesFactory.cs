@@ -43,9 +43,12 @@ namespace SymOntoClay.Monitor.Common.Data
             _globalLogger.Info($"kindOfSerialization = {kindOfSerialization}");
 #endif
 
+            _kindOfSerialization = kindOfSerialization;
+
             _serializerAdapter = SerializerAdapterFactory.Create(kindOfSerialization);
         }
 
+        private readonly KindOfSerialization _kindOfSerialization;
         private readonly ISerializerAdapter _serializerAdapter;
 
         public BaseMessage ReadMessage(byte[] data, KindOfMessage kindOfMessage)
@@ -54,6 +57,11 @@ namespace SymOntoClay.Monitor.Common.Data
             //_globalLogger.Info($"content = {content}");
             //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
 #endif
+
+            if(_kindOfSerialization == KindOfSerialization.MessagePack)
+            {
+                return _serializerAdapter.Deserialize<BaseMessage>(data);
+            }
 
             switch (kindOfMessage)
             {

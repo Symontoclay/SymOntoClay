@@ -1,15 +1,9 @@
 ﻿using MessagePack;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Newtonsoft.Json;
 using NLog;
-using NLog.Fluent;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TestSandbox.MessagePacking
 {
@@ -21,12 +15,45 @@ namespace TestSandbox.MessagePacking
         {
             _logger.Info("Begin");
 
-            Case2();
+            Case3();
+            //Case2();
             //Case1();
 
             //_logger.Info($" = {}");
 
             _logger.Info("End");
+        }
+
+        private void Case3()
+        {
+            var logMessage = new TstLogMessage();
+            logMessage.Timestamp = DateTime.Now;
+            logMessage.Message = "Hi!";
+            logMessage.SomeField = "DDD";
+            logMessage.Level = "16";
+            logMessage.Exception = "1235H";
+
+            _logger.Info($"logMessage = {logMessage}");
+
+            var mpAdapter = SerializerAdapterFactory.Create(KindOfSerialization.MessagePack);
+            var jsonAdapter = SerializerAdapterFactory.Create(KindOfSerialization.Json);
+            var bsonAdapter = SerializerAdapterFactory.Create(KindOfSerialization.Bson);
+
+            byte[] mpData = mpAdapter.Serialize(logMessage);
+
+            File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName()), mpData);
+
+            var restored = MessagePackSerializer.Deserialize<TstLogMessage>(mpData);
+
+            _logger.Info($"restored = {restored}");
+
+            var jsonData = jsonAdapter.Serialize(logMessage);
+
+            File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName()), jsonData);
+
+            var bsonData = bsonAdapter.Serialize(logMessage);
+
+            File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName()), bsonData);
         }
 
         private void Case2()

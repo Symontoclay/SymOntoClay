@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
-using SymOntoClay.CoreHelper;
 using System.IO;
 
-namespace TestSandbox.MessagePacking
+namespace SymOntoClay.CoreHelper.SerializerAdapters
 {
-    public class BsonSerializerAdapter: ISerializerAdapter
+    public class BsonSerializerAdapter : ISerializerAdapter
     {
         /// <inheritdoc/>
         public byte[] Serialize<T>(T obj)

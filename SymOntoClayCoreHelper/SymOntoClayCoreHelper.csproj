@@ -11,11 +11,14 @@
     <Copyright>Copyright (c) 2020 - 2026 Sergiy Tolkachov aka metatypeman</Copyright>
     <AssemblyName>SymOntoClay.CoreHelper</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClay.CoreHelper.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MessagePack" Version="3.1.4" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
     <PackageReference Include="SymOntoClay.Common" Version="0.5.5.12" />
   </ItemGroup>

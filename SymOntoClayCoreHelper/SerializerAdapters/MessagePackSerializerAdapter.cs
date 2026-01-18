@@ -1,9 +1,8 @@
 ﻿using MessagePack;
-using SymOntoClay.CoreHelper;
 
-namespace TestSandbox.MessagePacking
+namespace SymOntoClay.CoreHelper.SerializerAdapters
 {
-    public class MessagePackSerializerAdapter: ISerializerAdapter
+    public class MessagePackSerializerAdapter : ISerializerAdapter
     {
         /// <inheritdoc/>
         public byte[] Serialize<T>(T obj)
@@ -18,3 +17,10 @@ namespace TestSandbox.MessagePacking
         }
     }
 }
+
+/*
+var options = MessagePackSerializerOptions.Standard
+    .WithResolver(MessagePack.Resolvers.ContractlessStandardResolver.Instance);
+
+byte[] dump = MessagePackSerializer.Serialize(complexObject, options);
+ */

@@ -13,5 +13,23 @@
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.BsonSerializerAdapter.Serialize``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.BsonSerializerAdapter.Deserialize``1(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.JsonSerializerAdapter.Serialize``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.JsonSerializerAdapter.Deserialize``1(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.MessagePackSerializerAdapter.Serialize``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.MessagePackSerializerAdapter.Deserialize``1(System.Byte[])">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

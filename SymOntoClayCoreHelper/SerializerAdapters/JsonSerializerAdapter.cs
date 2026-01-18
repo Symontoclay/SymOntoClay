@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
-using SymOntoClay.CoreHelper;
 using System.Text;
 
-namespace TestSandbox.MessagePacking
+namespace SymOntoClay.CoreHelper.SerializerAdapters
 {
-    public class JsonSerializerAdapter: ISerializerAdapter
+    public class JsonSerializerAdapter : ISerializerAdapter
     {
         private readonly JsonSerializerSettings _settings;
 

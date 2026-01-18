@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Internal.FileCache;
 using System;
@@ -34,16 +36,23 @@ namespace SymOntoClay.Monitor.Internal
     public class MessageProcessor
     {
 #if DEBUG
-        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly IRemoteMonitor _remoteMonitor;
         private readonly bool _hasRemoteMonitor;
+        private readonly ISerializerAdapter _serializerAdapter;
 
-        public MessageProcessor(IRemoteMonitor remoteMonitor)
+        public MessageProcessor(IRemoteMonitor remoteMonitor, KindOfSerialization kindOfSerialization)
         {
             _remoteMonitor = remoteMonitor;
             _hasRemoteMonitor = remoteMonitor != null;
+
+#if DEBUG
+            _globalLogger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
+            _serializerAdapter = SerializerAdapterFactory.Create(kindOfSerialization);
         }
 
         public void ProcessMessage(BaseMessage message, IFileCache fileCache, bool enableRemoteConnection)
@@ -52,6 +61,9 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"message = {message}");
             //_globalLogger.Info($"enableRemoteConnection = {enableRemoteConnection}");
 #endif
+
+            var data = _serializerAdapter.Serialize(message);
+
 
             var text = JsonConvert.SerializeObject(message);
 

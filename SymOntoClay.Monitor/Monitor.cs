@@ -140,7 +140,7 @@ namespace SymOntoClay.Monitor
             _fileCache = new MonitorFileCache(monitorSettings.MessagesDir, _sessionName);
             _monitorContext.FileCache = _fileCache;
 
-            _messageProcessor = new MessageProcessor(_remoteMonitor);
+            _messageProcessor = new MessageProcessor(_remoteMonitor, monitorSettings.KindOfSerialization);
 
             _monitorContext.MessageProcessor = _messageProcessor;
 

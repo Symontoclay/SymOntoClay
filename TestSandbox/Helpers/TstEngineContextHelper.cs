@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor;
 using SymOntoClay.Monitor.Common;
@@ -146,6 +147,7 @@ namespace TestSandbox.Helpers
             var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 Enable = true,
+                KindOfSerialization = KindOfSerialization.Json,
                 MessagesDir = monitorMessagesDir,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpAlways,
                 //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),

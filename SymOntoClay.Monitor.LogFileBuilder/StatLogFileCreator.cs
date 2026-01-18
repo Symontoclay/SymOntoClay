@@ -40,10 +40,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static void Run(LogFileCreatorOptions options, ILogger logger)
         {
 #if DEBUG
-            //_logger.Info($"options = {options}");
+            _logger.Info($"options = {options}");
 #endif
 
-            if (!File.Exists(options.SourceDirectoryName))
+            if (!Directory.Exists(options.SourceDirectoryName))
             {
                 throw new DirectoryNotFoundException($"Could not find a part of the path '{options.SourceDirectoryName}'.");
             }

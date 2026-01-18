@@ -146,13 +146,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
 #if DEBUG
                     //_logger.Info($"text = {text}");
-                    //_logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
+                    _logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
 #endif
 
                     message = messagesFactory.ReadMessage(data, fileName.Item1.KindOfMessage);
 
 #if DEBUG
-                    //_logger.Info($"message = {message}");
+                    _logger.Info($"message = {message}");
 #endif
 
                     if (options.TargetNodes != null)

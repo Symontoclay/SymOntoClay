@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using System;
@@ -27,18 +28,43 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
+    [MessagePackObject]
+    [Union(0, typeof(CreateMonitorNodeMessage))]
+    [Union(1, typeof(CreateThreadLoggerMessage))]
+    [Union(2, typeof(AddEndpointMessage))]
+    //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {
         public abstract KindOfMessage KindOfMessage { get; }
+
+        [Key(0)]
         public DateTime DateTimeStamp { get; set; }
+
+        [Key(1)]
         public string NodeId { get; set; }
+
+        [Key(2)]
         public string ThreadId { get; set; }
+
+        [Key(3)]
         public ulong GlobalMessageNumber { get; set; }
+
+        [Key(4)]
         public ulong MessageNumber { get; set; }
+
+        [Key(5)]
         public string MessagePointId { get; set; }
+
+        [Key(6)]
         public string ClassFullName { get; set; }
+
+        [Key(7)]
         public string MemberName { get; set; }
+
+        [Key(8)]
         public string SourceFilePath { get; set; }
+
+        [Key(9)]
         public int SourceLineNumber { get; set; }
 
         /// <inheritdoc/>

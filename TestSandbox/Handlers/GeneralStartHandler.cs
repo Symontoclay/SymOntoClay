@@ -125,7 +125,7 @@ namespace TestSandbox.Handlers
             options.Write(new LogFileCreatorOptions()
             {
                 SourceDirectoryName = sourceDirectoryName,
-                SerializationMode = KindOfSerialization.Bson,//tmp
+                SerializationMode = KindOfSerialization.MessagePack,//tmp
                 OutputDirectory = logsOutputDirectory,
                 DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe",
                 ToHtml = true,

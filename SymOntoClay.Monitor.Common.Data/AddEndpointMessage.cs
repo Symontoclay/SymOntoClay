@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,17 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
+    [MessagePackObject]
     public class AddEndpointMessage : BaseMessage
     {
         /// <inheritdoc/>
         public override KindOfMessage KindOfMessage => KindOfMessage.AddEndpoint;
 
+        [Key(10)]
         public string EndpointName { get; set; }
-        public IReadOnlyList<int> ParamsCountList { get; set; }
+
+        [Key(11)]
+        public List<int> ParamsCountList { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

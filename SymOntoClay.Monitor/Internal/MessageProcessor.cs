@@ -61,41 +61,49 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"message = {message}");
             //_globalLogger.Info($"enableRemoteConnection = {enableRemoteConnection}");
 #endif
-
-            var data = _serializerAdapter.Serialize(message);
-
-
-            var text = JsonConvert.SerializeObject(message);
-
-#if DEBUG
-            //_globalLogger.Info($"text = {text}");
-#endif
-
-            var fileName = FileCacheItemInfo.GetFileName(message.NodeId, message.ThreadId, message.MessageNumber, message.GlobalMessageNumber, message.KindOfMessage);
-
-#if DEBUG
-            //_globalLogger.Info($"fileName = {fileName}");
-#endif
-
-            fileCache.WriteFile(fileName, data);
-
-            if (_hasRemoteMonitor && enableRemoteConnection)
+            try
             {
-                var envelope = new Envelope()
-                {
-                    KindOfMessage = message.KindOfMessage,
-                    NodeId = message.NodeId,
-                    ThreadId = message.ThreadId,
-                    GlobalMessageNumber = message.GlobalMessageNumber,
-                    MessageNumber = message.MessageNumber,
-                    Text = text
-                };
+                var data = _serializerAdapter.Serialize(message);
+
+
+                var text = JsonConvert.SerializeObject(message);
 
 #if DEBUG
-                //_globalLogger.Info($"envelope = {envelope}");
+                //_globalLogger.Info($"text = {text}");
 #endif
 
-                _remoteMonitor.WriteMessage(envelope);
+                var fileName = FileCacheItemInfo.GetFileName(message.NodeId, message.ThreadId, message.MessageNumber, message.GlobalMessageNumber, message.KindOfMessage);
+
+#if DEBUG
+                //_globalLogger.Info($"fileName = {fileName}");
+#endif
+
+                fileCache.WriteFile(fileName, data);
+
+                if (_hasRemoteMonitor && enableRemoteConnection)
+                {
+                    var envelope = new Envelope()
+                    {
+                        KindOfMessage = message.KindOfMessage,
+                        NodeId = message.NodeId,
+                        ThreadId = message.ThreadId,
+                        GlobalMessageNumber = message.GlobalMessageNumber,
+                        MessageNumber = message.MessageNumber,
+                        Text = text
+                    };
+
+#if DEBUG
+                    //_globalLogger.Info($"envelope = {envelope}");
+#endif
+
+                    _remoteMonitor.WriteMessage(envelope);
+                }
+            }
+            catch (Exception e) 
+            {
+#if DEBUG
+                _globalLogger.Error($"e = {e}");
+#endif
             }
         }
     }

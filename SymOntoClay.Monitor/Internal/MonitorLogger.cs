@@ -162,7 +162,7 @@ namespace SymOntoClay.Monitor.Internal
             var messageInfo = new AddEndpointMessage
             {
                 EndpointName = endpointName,
-                ParamsCountList = paramsCountList,
+                ParamsCountList = paramsCountList.ToList(),
                 DateTimeStamp = now,
                 NodeId = _nodeId,
                 ThreadId = _threadId,

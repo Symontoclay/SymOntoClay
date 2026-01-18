@@ -58,16 +58,16 @@ namespace SymOntoClay.Monitor.Common.Data
             switch (kindOfMessage)
             {
                 case KindOfMessage.CreateMonitorNode:
-                    return _serializerAdapter.Deserialize<CreateMonitorNodeMessage>(data);
+                    return _serializerAdapter.Deserialize<CreateMonitorNodeMessage>(data);//Y
 
                 case KindOfMessage.CreateThreadLogger:
-                    return _serializerAdapter.Deserialize<CreateThreadLoggerMessage>(data);
+                    return _serializerAdapter.Deserialize<CreateThreadLoggerMessage>(data);//Y
 
                 case KindOfMessage.AddEndpoint:
-                    return _serializerAdapter.Deserialize<AddEndpointMessage>(data);
+                    return _serializerAdapter.Deserialize<AddEndpointMessage>(data);//Y
 
                 case KindOfMessage.CallMethod:
-                    return _serializerAdapter.Deserialize<CallMethodMessage>(data);
+                    return _serializerAdapter.Deserialize<CallMethodMessage>(data);//<=
 
                 case KindOfMessage.Parameter:
                     return _serializerAdapter.Deserialize<ParameterMessage>(data);

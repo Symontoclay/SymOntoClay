@@ -147,7 +147,7 @@ namespace TestSandbox.Helpers
             var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 Enable = true,
-                KindOfSerialization = KindOfSerialization.Bson,//tmp
+                KindOfSerialization = KindOfSerialization.MessagePack,//tmp
                 MessagesDir = monitorMessagesDir,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpAlways,
                 //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),

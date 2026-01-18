@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Threading;
 using System.Collections.Generic;
@@ -124,6 +125,7 @@ namespace TestSandbox.Handlers
             options.Write(new LogFileCreatorOptions()
             {
                 SourceDirectoryName = sourceDirectoryName,
+                SerializationMode = KindOfSerialization.Bson,//tmp
                 OutputDirectory = logsOutputDirectory,
                 DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe",
                 ToHtml = true,

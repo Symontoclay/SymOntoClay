@@ -114,12 +114,18 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_logger.Info($"hasFiltering = {hasFiltering}");
 #endif
 
+#if DEBUG
+            _logger.Info($"options.SerializationMode = {options.SerializationMode}");
+#endif
+
+            var messagesFactory = new MessagesFactory(options.SerializationMode.Value);
+
             var rowOptionsList = options.Layout;
 
             var n = 0;
             var writtenN = 0;
 
-            string text = null;
+            byte[] data = null;
             BaseMessage message = null;
 
             foreach (var fileName in fileNamesList)
@@ -136,14 +142,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 try
                 {
-                    text = File.ReadAllText(fileName.Item2);
+                    data = File.ReadAllBytes(fileName.Item2);
 
 #if DEBUG
                     //_logger.Info($"text = {text}");
                     //_logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
 #endif
 
-                    message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage);
+                    message = messagesFactory.ReadMessage(data, fileName.Item1.KindOfMessage);
 
 #if DEBUG
                     //_logger.Info($"message = {message}");
@@ -198,7 +204,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
                 catch (Exception e)
                 {
-                    _logger.Info($"text = '{text}'");
+                    _logger.Info($"text = '{data}'");
                     _logger.Info($"message = {message}");
                     _logger.Info($"e = {e}");
                 }

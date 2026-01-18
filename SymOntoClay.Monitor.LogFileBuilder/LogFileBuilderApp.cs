@@ -104,6 +104,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 options.Mode = logFileBuilderOptions.Mode;
             }
 
+            throw new NotImplementedException();
+
             if (logFileBuilderOptions.Input != null)
             {
                 options.SourceDirectoryName = logFileBuilderOptions.Input;

@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,13 +31,24 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public static class MessagesFactory
+    public class MessagesFactory
     {
 #if DEBUG
-        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public static BaseMessage ReadMessage(string content, KindOfMessage kindOfMessage)
+        public MessagesFactory(KindOfSerialization kindOfSerialization)
+        {
+#if DEBUG
+            _globalLogger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
+            _serializerAdapter = SerializerAdapterFactory.Create(kindOfSerialization);
+        }
+
+        private readonly ISerializerAdapter _serializerAdapter;
+
+        public BaseMessage ReadMessage(byte[] data, KindOfMessage kindOfMessage)
         {
 #if DEBUG
             //_globalLogger.Info($"content = {content}");
@@ -45,196 +58,196 @@ namespace SymOntoClay.Monitor.Common.Data
             switch (kindOfMessage)
             {
                 case KindOfMessage.CreateMonitorNode:
-                    return JsonConvert.DeserializeObject<CreateMonitorNodeMessage>(content);
+                    return _serializerAdapter.Deserialize<CreateMonitorNodeMessage>(data);
 
                 case KindOfMessage.CreateThreadLogger:
-                    return JsonConvert.DeserializeObject<CreateThreadLoggerMessage>(content);
+                    return _serializerAdapter.Deserialize<CreateThreadLoggerMessage>(data);
 
                 case KindOfMessage.AddEndpoint:
-                    return JsonConvert.DeserializeObject<AddEndpointMessage>(content);
+                    return _serializerAdapter.Deserialize<AddEndpointMessage>(data);
 
                 case KindOfMessage.CallMethod:
-                    return JsonConvert.DeserializeObject<CallMethodMessage>(content);
+                    return _serializerAdapter.Deserialize<CallMethodMessage>(data);
 
                 case KindOfMessage.Parameter:
-                    return JsonConvert.DeserializeObject<ParameterMessage>(content);
+                    return _serializerAdapter.Deserialize<ParameterMessage>(data);
 
                 case KindOfMessage.EndCallMethod:
-                    return JsonConvert.DeserializeObject<EndCallMethodMessage>(content);
+                    return _serializerAdapter.Deserialize<EndCallMethodMessage>(data);
 
                 case KindOfMessage.MethodResolving:
-                    return JsonConvert.DeserializeObject<MethodResolvingMessage>(content);
+                    return _serializerAdapter.Deserialize<MethodResolvingMessage>(data);
 
                 case KindOfMessage.EndMethodResolving:
-                    return JsonConvert.DeserializeObject<EndMethodResolvingMessage>(content);
+                    return _serializerAdapter.Deserialize<EndMethodResolvingMessage>(data);
 
                 case KindOfMessage.ActionResolving:
-                    return JsonConvert.DeserializeObject<ActionResolvingMessage>(content);
+                    return _serializerAdapter.Deserialize<ActionResolvingMessage>(data);
 
                 case KindOfMessage.EndActionResolving:
-                    return JsonConvert.DeserializeObject<EndActionResolvingMessage>(content);
+                    return _serializerAdapter.Deserialize<EndActionResolvingMessage>(data);
 
                 case KindOfMessage.HostMethodResolving:
-                    return JsonConvert.DeserializeObject<HostMethodResolvingMessage>(content);
+                    return _serializerAdapter.Deserialize<HostMethodResolvingMessage>(data);
 
                 case KindOfMessage.EndHostMethodResolving:
-                    return JsonConvert.DeserializeObject<EndHostMethodResolvingMessage>(content);
+                    return _serializerAdapter.Deserialize<EndHostMethodResolvingMessage>(data);
 
                 case KindOfMessage.HostMethodActivation:
-                    return JsonConvert.DeserializeObject<HostMethodActivationMessage>(content);
+                    return _serializerAdapter.Deserialize<HostMethodActivationMessage>(data);
 
                 case KindOfMessage.EndHostMethodActivation:
-                    return JsonConvert.DeserializeObject<EndHostMethodActivationMessage>(content);
+                    return _serializerAdapter.Deserialize<EndHostMethodActivationMessage>(data);
 
                 case KindOfMessage.HostMethodStarting:
-                    return JsonConvert.DeserializeObject<HostMethodStartingMessage>(content);
+                    return _serializerAdapter.Deserialize<HostMethodStartingMessage>(data);
 
                 case KindOfMessage.EndHostMethodStarting:
-                    return JsonConvert.DeserializeObject<EndHostMethodStartingMessage>(content);
+                    return _serializerAdapter.Deserialize<EndHostMethodStartingMessage>(data);
 
                 case KindOfMessage.HostMethodExecution:
-                    return JsonConvert.DeserializeObject<HostMethodExecutionMessage>(content);
+                    return _serializerAdapter.Deserialize<HostMethodExecutionMessage>(data);
 
                 case KindOfMessage.EndHostMethodExecution:
-                    return JsonConvert.DeserializeObject<EndHostMethodExecutionMessage>(content);
+                    return _serializerAdapter.Deserialize<EndHostMethodExecutionMessage>(data);
 
                 case KindOfMessage.SystemExpr:
-                    return JsonConvert.DeserializeObject<SystemExprMessage>(content);
+                    return _serializerAdapter.Deserialize<SystemExprMessage>(data);
 
                 case KindOfMessage.CodeFrame:
-                    return JsonConvert.DeserializeObject<CodeFrameMessage>(content);
+                    return _serializerAdapter.Deserialize<CodeFrameMessage>(data);
 
                 case KindOfMessage.LeaveThreadExecutor:
-                    return JsonConvert.DeserializeObject<LeaveThreadExecutorMessage>(content);
+                    return _serializerAdapter.Deserialize<LeaveThreadExecutorMessage>(data);
 
                 case KindOfMessage.GoBackToPrevCodeFrame:
-                    return JsonConvert.DeserializeObject<GoBackToPrevCodeFrameMessage>(content);
+                    return _serializerAdapter.Deserialize<GoBackToPrevCodeFrameMessage>(data);
 
                 case KindOfMessage.StartProcessInfo:
-                    return JsonConvert.DeserializeObject<StartProcessInfoMessage>(content);
+                    return _serializerAdapter.Deserialize<StartProcessInfoMessage>(data);
 
                 case KindOfMessage.CancelProcessInfo:
-                    return JsonConvert.DeserializeObject<CancelProcessInfoMessage>(content);
+                    return _serializerAdapter.Deserialize<CancelProcessInfoMessage>(data);
 
                 case KindOfMessage.WeakCancelProcessInfo:
-                    return JsonConvert.DeserializeObject<WeakCancelProcessInfoMessage>(content);
+                    return _serializerAdapter.Deserialize<WeakCancelProcessInfoMessage>(data);
 
                 case KindOfMessage.CancelInstanceExecution:
-                    return JsonConvert.DeserializeObject<CancelInstanceExecutionMessage>(content);
+                    return _serializerAdapter.Deserialize<CancelInstanceExecutionMessage>(data);
 
                 case KindOfMessage.SetExecutionCoordinatorStatus:
-                    return JsonConvert.DeserializeObject<SetExecutionCoordinatorStatusMessage>(content);
+                    return _serializerAdapter.Deserialize<SetExecutionCoordinatorStatusMessage>(data);
 
                 case KindOfMessage.SetProcessInfoStatus:
-                    return JsonConvert.DeserializeObject<SetProcessInfoStatusMessage>(content);
+                    return _serializerAdapter.Deserialize<SetProcessInfoStatusMessage>(data);
 
                 case KindOfMessage.WaitProcessInfo:
-                    return JsonConvert.DeserializeObject<WaitProcessInfoMessage>(content);
+                    return _serializerAdapter.Deserialize<WaitProcessInfoMessage>(data);
 
                 case KindOfMessage.RunLifecycleTrigger:
-                    return JsonConvert.DeserializeObject<RunLifecycleTriggerMessage>(content);
+                    return _serializerAdapter.Deserialize<RunLifecycleTriggerMessage>(data);
 
                 case KindOfMessage.DoTriggerSearch:
-                    return JsonConvert.DeserializeObject<DoTriggerSearchMessage>(content);
+                    return _serializerAdapter.Deserialize<DoTriggerSearchMessage>(data);
 
                 case KindOfMessage.EndDoTriggerSearch:
-                    return JsonConvert.DeserializeObject<EndDoTriggerSearchMessage>(content);
+                    return _serializerAdapter.Deserialize<EndDoTriggerSearchMessage>(data);
 
                 case KindOfMessage.SetConditionalTrigger:
-                    return JsonConvert.DeserializeObject<SetConditionalTriggerMessage>(content);
+                    return _serializerAdapter.Deserialize<SetConditionalTriggerMessage>(data);
 
                 case KindOfMessage.ResetConditionalTrigger:
-                    return JsonConvert.DeserializeObject<ResetConditionalTriggerMessage>(content);
+                    return _serializerAdapter.Deserialize<ResetConditionalTriggerMessage>(data);
 
                 case KindOfMessage.RunSetExprOfConditionalTrigger:
-                    return JsonConvert.DeserializeObject<RunSetExprOfConditionalTriggerMessage>(content);
+                    return _serializerAdapter.Deserialize<RunSetExprOfConditionalTriggerMessage>(data);
 
                 case KindOfMessage.EndRunSetExprOfConditionalTrigger:
-                    return JsonConvert.DeserializeObject<EndRunSetExprOfConditionalTriggerMessage>(content);
+                    return _serializerAdapter.Deserialize<EndRunSetExprOfConditionalTriggerMessage>(data);
 
                 case KindOfMessage.RunResetExprOfConditionalTrigger:
-                    return JsonConvert.DeserializeObject<RunResetExprOfConditionalTriggerMessage>(content);
+                    return _serializerAdapter.Deserialize<RunResetExprOfConditionalTriggerMessage>(data);
 
                 case KindOfMessage.EndRunResetExprOfConditionalTrigger:
-                    return JsonConvert.DeserializeObject<EndRunResetExprOfConditionalTriggerMessage>(content);
+                    return _serializerAdapter.Deserialize<EndRunResetExprOfConditionalTriggerMessage>(data);
 
                 case KindOfMessage.ActivateIdleAction:
-                    return JsonConvert.DeserializeObject<ActivateIdleActionMessage>(content);
+                    return _serializerAdapter.Deserialize<ActivateIdleActionMessage>(data);
 
                 case KindOfMessage.LogicalSearchExplain:
-                    return JsonConvert.DeserializeObject<LogicalSearchExplainMessage>(content);
+                    return _serializerAdapter.Deserialize<LogicalSearchExplainMessage>(data);
 
                 case KindOfMessage.AddFactOrRuleTriggerResult:
-                    return JsonConvert.DeserializeObject<AddFactOrRuleTriggerResultMessage>(content);
+                    return _serializerAdapter.Deserialize<AddFactOrRuleTriggerResultMessage>(data);
 
                 case KindOfMessage.AddFactToLogicalStorage:
-                    return JsonConvert.DeserializeObject<AddFactToLogicalStorageMessage>(content);
+                    return _serializerAdapter.Deserialize<AddFactToLogicalStorageMessage>(data);
 
                 case KindOfMessage.RemoveFactFromLogicalStorage:
-                    return JsonConvert.DeserializeObject<RemoveFactFromLogicalStorageMessage>(content);
+                    return _serializerAdapter.Deserialize<RemoveFactFromLogicalStorageMessage>(data);
 
                 case KindOfMessage.RefreshLifeTimeInLogicalStorage:
-                    return JsonConvert.DeserializeObject<RefreshLifeTimeInLogicalStorageMessage>(content);
+                    return _serializerAdapter.Deserialize<RefreshLifeTimeInLogicalStorageMessage>(data);
 
                 case KindOfMessage.PutFactForRemovingFromLogicalStorage:
-                    return JsonConvert.DeserializeObject<PutFactForRemovingFromLogicalStorageMessage>(content);
+                    return _serializerAdapter.Deserialize<PutFactForRemovingFromLogicalStorageMessage>(data);
 
                 case KindOfMessage.StartThreadTask:
-                    return JsonConvert.DeserializeObject<StartTaskMessage>(content);
+                    return _serializerAdapter.Deserialize<StartTaskMessage>(data);
 
                 case KindOfMessage.StopThreadTask:
-                    return JsonConvert.DeserializeObject<StopTaskMessage>(content);
+                    return _serializerAdapter.Deserialize<StopTaskMessage>(data);
 
                 case KindOfMessage.StartBuildPlan:
-                    return JsonConvert.DeserializeObject<StartBuildPlanMessage>(content);
+                    return _serializerAdapter.Deserialize<StartBuildPlanMessage>(data);
 
                 case KindOfMessage.StopBuildPlan:
-                    return JsonConvert.DeserializeObject<StopBuildPlanMessage>(content);
+                    return _serializerAdapter.Deserialize<StopBuildPlanMessage>(data);
 
                 case KindOfMessage.BeginVisionFrame:
-                    return JsonConvert.DeserializeObject<BeginVisionFrameMessage>(content);
+                    return _serializerAdapter.Deserialize<BeginVisionFrameMessage>(data);
 
                 case KindOfMessage.BecomeInvisible:
-                    return JsonConvert.DeserializeObject<BecomeInvisibleMessage>(content);
+                    return _serializerAdapter.Deserialize<BecomeInvisibleMessage>(data);
 
                 case KindOfMessage.BecomeVisible:
-                    return JsonConvert.DeserializeObject<BecomeVisibleMessage>(content);
+                    return _serializerAdapter.Deserialize<BecomeVisibleMessage>(data);
 
                 case KindOfMessage.ChangedAddFocus:
-                    return JsonConvert.DeserializeObject<ChangedAddFocusMessage>(content);
+                    return _serializerAdapter.Deserialize<ChangedAddFocusMessage>(data);
 
                 case KindOfMessage.ChangedRemoveFocus:
-                    return JsonConvert.DeserializeObject<ChangedRemoveFocusMessage>(content);
+                    return _serializerAdapter.Deserialize<ChangedRemoveFocusMessage>(data);
 
                 case KindOfMessage.ChangedDistance:
-                    return JsonConvert.DeserializeObject<ChangedDistanceMessage>(content);
+                    return _serializerAdapter.Deserialize<ChangedDistanceMessage>(data);
 
                 case KindOfMessage.DumpVisionFrame:
-                    return JsonConvert.DeserializeObject<DumpVisionFrameMessage>(content);
+                    return _serializerAdapter.Deserialize<DumpVisionFrameMessage>(data);
 
                 case KindOfMessage.EndVisionFrame:
-                    return JsonConvert.DeserializeObject<EndVisionFrameMessage>(content);
+                    return _serializerAdapter.Deserialize<EndVisionFrameMessage>(data);
 
                 case KindOfMessage.Output:
-                    return JsonConvert.DeserializeObject<OutputMessage>(content);
+                    return _serializerAdapter.Deserialize<OutputMessage>(data);
 
                 case KindOfMessage.Trace:
-                    return JsonConvert.DeserializeObject<TraceMessage>(content);
+                    return _serializerAdapter.Deserialize<TraceMessage>(data);
 
                 case KindOfMessage.Debug:
-                    return JsonConvert.DeserializeObject<DebugMessage>(content);
+                    return _serializerAdapter.Deserialize<DebugMessage>(data);
 
                 case KindOfMessage.Info:
-                    return JsonConvert.DeserializeObject<InfoMessage>(content);
+                    return _serializerAdapter.Deserialize<InfoMessage>(data);
 
                 case KindOfMessage.Warn:
-                    return JsonConvert.DeserializeObject<WarnMessage>(content);
+                    return _serializerAdapter.Deserialize<WarnMessage>(data);
 
                 case KindOfMessage.Error:
-                    return JsonConvert.DeserializeObject<ErrorMessage>(content);
+                    return _serializerAdapter.Deserialize<ErrorMessage>(data);
 
                 case KindOfMessage.Fatal:
-                    return JsonConvert.DeserializeObject<FatalMessage>(content);
+                    return _serializerAdapter.Deserialize<FatalMessage>(data);
                     
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);

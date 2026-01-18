@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
@@ -35,6 +36,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     {
         public LogFileBuilderMode? Mode { get; set; } = LogFileBuilderMode.None;
         public string SourceDirectoryName { get; set; }
+        public KindOfSerialization? SerializationMode { get; set; } = KindOfSerialization.MessagePack;
         public IEnumerable<string> TargetNodes { get; set; }
         public IEnumerable<string> TargetThreads { get; set; }
         public string OutputDirectory { get; set; }
@@ -66,6 +68,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var result = new LogFileCreatorOptions();
             result.Mode = Mode;
             result.SourceDirectoryName = SourceDirectoryName;
+            result.SerializationMode = SerializationMode;
             result.TargetNodes = TargetNodes?.ToList();
             result.TargetThreads = TargetThreads?.ToList();
             result.OutputDirectory = OutputDirectory;
@@ -92,6 +95,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             if (source.SourceDirectoryName != null)
             {
                 SourceDirectoryName = source.SourceDirectoryName;
+            }
+
+            if (source.SerializationMode != null)
+            {
+                SerializationMode = source.SerializationMode;
             }
 
             if (source.TargetNodes != null)
@@ -179,6 +187,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Mode)} = {Mode}");
             sb.AppendLine($"{spaces}{nameof(SourceDirectoryName)} = {SourceDirectoryName}");
+            sb.AppendLine($"{spaces}{nameof(SerializationMode)} = {SerializationMode}");
             sb.PrintPODList(n, nameof(TargetNodes), TargetNodes);
             sb.PrintPODList(n, nameof(TargetThreads), TargetThreads);
             sb.AppendLine($"{spaces}{nameof(OutputDirectory)} = {OutputDirectory}");

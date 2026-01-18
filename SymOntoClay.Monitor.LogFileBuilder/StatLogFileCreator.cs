@@ -53,7 +53,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             LogFileCreatorOptionsHelper.PrepareOptions(options, logger);
 
 #if DEBUG
-            //_logger.Info($"options (after) = {options}");
+            _logger.Info($"options (after) = {options}");
 #endif
 
             var toHtml = options.ToHtml ?? false;
@@ -162,12 +162,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                     case LogFileBuilderMode.StatAndFiles:
                         {
+#if DEBUG
+                            _logger.Info($"options = {options}");
+#endif
+
                             var itemOptions = options.Clone();
-                            itemOptions.Mode = LogFileBuilderMode.LogFile;
+                            itemOptions.Mode = LogFileBuilderMode.LogFile; 
                             itemOptions.TargetNodes = new List<string> { nodeId };
 
 #if DEBUG
-                            //_logger.Info($"itemOptions = {itemOptions}");
+                            _logger.Info($"itemOptions = {itemOptions}");
 #endif
 
                             LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemFileNamesList);
@@ -215,21 +219,27 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 var visibleObjectIds = new List<string>();
 
-                foreach(var fileName in dumpVisionFramesFileNames)
+#if DEBUG
+                _logger.Info($"options.SerializationMode = {options.SerializationMode}");
+#endif
+
+                var messagesFactory = new MessagesFactory(options.SerializationMode.Value);
+
+                foreach (var fileName in dumpVisionFramesFileNames)
                 {
-                    string text = null;
+                    byte[] data = null;
                     DumpVisionFrameMessage message = null;
 
                     try
                     {
-                        text = File.ReadAllText(fileName.Item2);
+                        data = File.ReadAllBytes(fileName.Item2);
 
 #if DEBUG
                         //_logger.Info($"text = {text}");
                         //_logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
 #endif
 
-                        message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage) as DumpVisionFrameMessage;
+                        message = messagesFactory.ReadMessage(data, fileName.Item1.KindOfMessage) as DumpVisionFrameMessage;
 
 #if DEBUG
                         //_logger.Info($"message = {message}");
@@ -242,7 +252,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     }
                     catch (Exception e)
                     {
-                        _logger.Info($"text = '{text}'");
+                        //_logger.Info($"text = '{text}'");
                         _logger.Info($"message = {message}");
                         _logger.Info($"e = {e}");
                     }

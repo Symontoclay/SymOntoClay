@@ -77,7 +77,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
-            fileCache.WriteFile(fileName, text);
+            fileCache.WriteFile(fileName, data);
 
             if (_hasRemoteMonitor && enableRemoteConnection)
             {

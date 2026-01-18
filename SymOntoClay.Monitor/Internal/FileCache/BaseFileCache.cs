@@ -53,7 +53,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         public string RelativeDirectoryName => _relativeDirectory;
 
         /// <inheritdoc/>
-        public void WriteFile(string fileName, string messageText)
+        public void WriteFile(string fileName, byte[] data)
         {
 #if DEBUG
             //_globalLogger.Info($"messageText = {messageText}");
@@ -66,7 +66,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             //_globalLogger.Info($"fullFileName = {fullFileName}");
 #endif
 
-            File.WriteAllText(fullFileName, messageText);
+            File.WriteAllBytes(fullFileName, data);
         }
     }
 }

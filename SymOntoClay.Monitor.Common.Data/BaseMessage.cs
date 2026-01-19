@@ -32,6 +32,9 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(0, typeof(CreateMonitorNodeMessage))]
     [Union(1, typeof(CreateThreadLoggerMessage))]
     [Union(2, typeof(AddEndpointMessage))]
+    [Union(3, typeof(CallMethodMessage))]
+    [Union(4, typeof(BaseValueMessage))]
+    [Union(5, typeof(BaseMethodMessage))]
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {

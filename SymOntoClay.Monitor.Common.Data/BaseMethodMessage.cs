@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -28,8 +29,18 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
+    [MessagePackObject]
+    [Union(0, typeof(EndCallMethodMessage))]
+    [Union(1, typeof(MethodResolvingMessage))]
+    [Union(2, typeof(EndMethodResolvingMessage))]
+    [Union(4, typeof(EndActionResolvingMessage))]
+    [Union(5, typeof(ActionResolvingMessage))]
+    [Union(6, typeof(HostMethodResolvingMessage))]
+    [Union(7, typeof(EndHostMethodResolvingMessage))]
+    //[Union(, typeof())]
     public abstract class BaseMethodMessage : BaseMessage
     {
+        [Key(10)]
         public string CallMethodId { get; set; }
 
         /// <inheritdoc/>

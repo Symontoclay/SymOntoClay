@@ -75,34 +75,34 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<AddEndpointMessage>(data);//Y
 
                 case KindOfMessage.CallMethod:
-                    return _serializerAdapter.Deserialize<CallMethodMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<CallMethodMessage>(data);//Y
 
                 case KindOfMessage.Parameter:
-                    return _serializerAdapter.Deserialize<ParameterMessage>(data);
+                    return _serializerAdapter.Deserialize<ParameterMessage>(data);//Y
 
                 case KindOfMessage.EndCallMethod:
-                    return _serializerAdapter.Deserialize<EndCallMethodMessage>(data);
+                    return _serializerAdapter.Deserialize<EndCallMethodMessage>(data);//Y
 
                 case KindOfMessage.MethodResolving:
-                    return _serializerAdapter.Deserialize<MethodResolvingMessage>(data);
+                    return _serializerAdapter.Deserialize<MethodResolvingMessage>(data);//Y
 
                 case KindOfMessage.EndMethodResolving:
-                    return _serializerAdapter.Deserialize<EndMethodResolvingMessage>(data);
+                    return _serializerAdapter.Deserialize<EndMethodResolvingMessage>(data);//Y
 
                 case KindOfMessage.ActionResolving:
-                    return _serializerAdapter.Deserialize<ActionResolvingMessage>(data);
+                    return _serializerAdapter.Deserialize<ActionResolvingMessage>(data);//Y
 
                 case KindOfMessage.EndActionResolving:
-                    return _serializerAdapter.Deserialize<EndActionResolvingMessage>(data);
+                    return _serializerAdapter.Deserialize<EndActionResolvingMessage>(data);//Y
 
                 case KindOfMessage.HostMethodResolving:
-                    return _serializerAdapter.Deserialize<HostMethodResolvingMessage>(data);
+                    return _serializerAdapter.Deserialize<HostMethodResolvingMessage>(data);//Y
 
                 case KindOfMessage.EndHostMethodResolving:
-                    return _serializerAdapter.Deserialize<EndHostMethodResolvingMessage>(data);
+                    return _serializerAdapter.Deserialize<EndHostMethodResolvingMessage>(data);//Y
 
                 case KindOfMessage.HostMethodActivation:
-                    return _serializerAdapter.Deserialize<HostMethodActivationMessage>(data);
+                    return _serializerAdapter.Deserialize<HostMethodActivationMessage>(data);//<=
 
                 case KindOfMessage.EndHostMethodActivation:
                     return _serializerAdapter.Deserialize<EndHostMethodActivationMessage>(data);

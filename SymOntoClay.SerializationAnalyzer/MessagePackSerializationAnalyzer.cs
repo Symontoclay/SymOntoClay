@@ -61,7 +61,7 @@ namespace SymOntoClay.SerializationAnalyzer
 
                         var serializedProps = allFilteredProps.Select(p => p.Item1)
                             .Where(c => c.AttributeLists
-                            .Any(a => a.ToString().Contains("KeyAttribute")))
+                            .Any(a => a.Attributes.Any(p => p.Name.ToString() == "Key")))
                             .ToList();
 
                         for (var i = 0; i < serializedProps.Count; i++)

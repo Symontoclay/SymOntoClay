@@ -2,6 +2,8 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.SerializationAnalyzer
@@ -9,6 +11,16 @@ namespace SymOntoClay.SerializationAnalyzer
     [Generator]
     public class MessagePackSerializationAnalyzer : ISourceGenerator
     {
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+            id: "MP001",                          // unique diagnostic identifier
+            title: "MessagePack Key Attribute",   // short title
+            messageFormat: "Property '{0}' is not annotated with [Key] or [IgnoreMember]", // message format
+            category: "MessagePack",              // category (any string)
+            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
+            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            description: "All properties in [MessagePackObject] must be annotated with [Key] or [IgnoreMember]."
+        );
+
         public void Initialize(GeneratorInitializationContext context) { }
 
         public void Execute(GeneratorExecutionContext context)
@@ -43,21 +55,7 @@ namespace SymOntoClay.SerializationAnalyzer
                         var allFilteredProps = FilterAllTargetProperties(propsBeforeFiltering)
                             .ToList();
 
-                        for (var i = 0; i < allFilteredProps.Count; i++)
-                        {
-                            var allProp = allFilteredProps[i];
-
-#if DEBUG
-                            FileLogger.WriteLn($"allProp.Name = {allProp.Item1.Identifier.Text}");
-#endif
-
-                            foreach(var a in allProp.Item1.AttributeLists)
-                            {
-#if DEBUG
-                                FileLogger.WriteLn($"a = {a}");
-#endif
-                            }
-                        }
+                        var markedPropsNames = new List<string>();
 
                         var ignoredProps = allFilteredProps.Select(p => p.Item1)
                             .Where(c => c.AttributeLists
@@ -71,6 +69,8 @@ namespace SymOntoClay.SerializationAnalyzer
 #if DEBUG
                             FileLogger.WriteLn($"ignoredProp.Identifier.Text = {ignoredProp.Identifier.Text}");
 #endif
+
+                            markedPropsNames.Add(ignoredProp.Identifier.Text);
                         }
 
                         var serializedProps = allFilteredProps.Select(p => p.Item1)
@@ -85,6 +85,39 @@ namespace SymOntoClay.SerializationAnalyzer
 #if DEBUG
                             FileLogger.WriteLn($"serializedProp.Identifier.Text = {serializedProp.Identifier.Text}");
 #endif
+
+                            markedPropsNames.Add(serializedProp.Identifier.Text);
+                        }
+
+                        for (var i = 0; i < allFilteredProps.Count; i++)
+                        {
+                            var allProp = allFilteredProps[i];
+
+#if DEBUG
+                            FileLogger.WriteLn($"allProp.Name = {allProp.Item1.Identifier.Text}");
+#endif
+
+                            var propName = allProp.Item1.Identifier.Text;
+
+                            if (!markedPropsNames.Contains(propName))
+                            {
+#if DEBUG
+                                FileLogger.WriteLn("Spkipped!!!!!");
+#endif
+
+                                var diagnostic = Diagnostic.Create(Rule, allProp.Item1.GetLocation(),
+                                           $"Property '{propName}' is not annotated with the Key/IgnoreMember attribute");
+                                context.ReportDiagnostic(diagnostic);
+                            }
+
+                            foreach (var a in allProp.Item1.AttributeLists)
+                            {
+#if DEBUG
+                                FileLogger.WriteLn($"a = {a}");
+#endif
+                            }
+
+
                         }
                     }
                 }

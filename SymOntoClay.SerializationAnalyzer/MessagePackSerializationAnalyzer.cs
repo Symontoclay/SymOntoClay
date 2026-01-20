@@ -59,6 +59,20 @@ namespace SymOntoClay.SerializationAnalyzer
                             }
                         }
 
+                        var ignoredProps = allFilteredProps.Select(p => p.Item1)
+                            .Where(c => c.AttributeLists
+                            .Any(a => a.Attributes.Any(p => p.Name.ToString() == "IgnoreMember")))
+                            .ToList();
+
+                        for (var i = 0; i < ignoredProps.Count; i++)
+                        {
+                            var ignoredProp = ignoredProps[i];
+
+#if DEBUG
+                            FileLogger.WriteLn($"ignoredProp.Identifier.Text = {ignoredProp.Identifier.Text}");
+#endif
+                        }
+
                         var serializedProps = allFilteredProps.Select(p => p.Item1)
                             .Where(c => c.AttributeLists
                             .Any(a => a.Attributes.Any(p => p.Name.ToString() == "Key")))

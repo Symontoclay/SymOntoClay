@@ -16,10 +16,11 @@ namespace TestSandbox.MessagePacking
         [Key(0)]
         public DateTime Timestamp { get; set; }
 
-        [Key(1)]
+        //[Key(1)]
         public string Level { get; set; }
 
-        [Key(2)]
+        //[Key(2)]
+        [IgnoreMember]
         public string Message { get; set; }
 
         [Key(3)]

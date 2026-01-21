@@ -42,6 +42,26 @@ namespace SymOntoClay.SerializationAnalyzer
             description: "All properties in [MessagePackObject] must have one argument in the annotation [Key]."
         );
 
+        private static readonly DiagnosticDescriptor KeyNotIntArgumentAnnotationRule = new DiagnosticDescriptor(
+            id: "MP004",                          // unique diagnostic identifier
+            title: "MessagePack Key Attribute",   // short title
+            messageFormat: "Property '{0}' has non int argument in the annotation [Key]", // message format
+            category: "MessagePack",              // category (any string)
+            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
+            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            description: "All properties in [MessagePackObject] must have int argument in the annotation [Key]."
+        );
+
+        private static readonly DiagnosticDescriptor KeyNotSequentialArgumentAnnotationRule = new DiagnosticDescriptor(
+            id: "MP005",                          // unique diagnostic identifier
+            title: "MessagePack Key Attribute",   // short title
+            messageFormat: "Property '{0}' violates the required consecutive ordering of [Key] attributes.", // message format
+            category: "MessagePack",              // category (any string)
+            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
+            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            description: "Key indices must be sequential without gaps."
+        );
+
         public void Initialize(GeneratorInitializationContext context) { }
 
         public void Execute(GeneratorExecutionContext context)
@@ -162,14 +182,15 @@ namespace SymOntoClay.SerializationAnalyzer
                                 continue;
                             }
 
-                            //<===
                             var attributeArg = keyAttribute.ArgumentList.Arguments.Single();
 
                             if(!int.TryParse(attributeArg.ToString(), out var keyIndex))
                             {
-                                //TODO: check whether the key argument is int
+                                var diagnostic = Diagnostic.Create(KeyNotIntArgumentAnnotationRule, serializedProp.GetLocation(),
+                                    $"Property '{propName}' has non int argument in the annotation [Key]");
+                                context.ReportDiagnostic(diagnostic);
 
-                                throw new NotImplementedException();
+                                continue;
                             }
 
 #if DEBUG
@@ -178,9 +199,11 @@ namespace SymOntoClay.SerializationAnalyzer
 
                             if(keyIndex != previousKeyIndex + 1)
                             {
-                                //TODO: check this
+                                var diagnostic = Diagnostic.Create(KeyNotSequentialArgumentAnnotationRule, serializedProp.GetLocation(),
+                                    $"Property '{propName}' violates the required consecutive ordering of [Key] attributes.");
+                                context.ReportDiagnostic(diagnostic);
 
-                                throw new NotImplementedException();
+                                continue;
                             }
 
                             previousKeyIndex = keyIndex;

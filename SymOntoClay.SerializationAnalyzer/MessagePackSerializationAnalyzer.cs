@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace SymOntoClay.SerializationAnalyzer
     [Generator]
     public class MessagePackSerializationAnalyzer : ISourceGenerator
     {
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor MissedAnnotationRule = new DiagnosticDescriptor(
             id: "MP001",                          // unique diagnostic identifier
             title: "MessagePack Key Attribute",   // short title
             messageFormat: "Property '{0}' is not annotated with [Key] or [IgnoreMember]", // message format
@@ -19,6 +20,16 @@ namespace SymOntoClay.SerializationAnalyzer
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
             description: "All properties in [MessagePackObject] must be annotated with [Key] or [IgnoreMember]."
+        );
+
+        private static readonly DiagnosticDescriptor WrongKeyAnnotationRule = new DiagnosticDescriptor(
+            id: "MP002",                          // unique diagnostic identifier
+            title: "MessagePack Key Attribute",   // short title
+            messageFormat: "Property '{0}' doesn't has identifier in [Key]", // message format
+            category: "MessagePack",              // category (any string)
+            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
+            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            description: "All properties in [MessagePackObject] with [Key] must have an identifier in the Key."
         );
 
         public void Initialize(GeneratorInitializationContext context) { }
@@ -73,6 +84,8 @@ namespace SymOntoClay.SerializationAnalyzer
                             markedPropsNames.Add(ignoredProp.Identifier.Text);
                         }
 
+                        var previousKeyIndex = -1;//tmp
+
                         var serializedProps = allFilteredProps.Select(p => p.Item1)
                             .Where(c => c.AttributeLists
                             .Any(a => a.Attributes.Any(p => p.Name.ToString() == "Key")))
@@ -86,7 +99,63 @@ namespace SymOntoClay.SerializationAnalyzer
                             FileLogger.WriteLn($"serializedProp.Identifier.Text = {serializedProp.Identifier.Text}");
 #endif
 
-                            markedPropsNames.Add(serializedProp.Identifier.Text);
+                            var propName = serializedProp.Identifier.Text;
+
+                            markedPropsNames.Add(propName);
+
+                            var keyAttribute = serializedProp.AttributeLists.SelectMany(p => p.Attributes).Single(p => p.Name.ToString() == "Key");
+
+#if DEBUG
+                            FileLogger.WriteLn($"keyAttribute.ArgumentList.Arguments.Count = {keyAttribute.ArgumentList.Arguments.Count}");
+#endif
+
+                            var keyAttributeArgumentsCount = keyAttribute.ArgumentList.Arguments.Count;
+
+                            if (keyAttributeArgumentsCount == 0)
+                            {
+                                var diagnostic = Diagnostic.Create(WrongKeyAnnotationRule, serializedProp.GetLocation(),
+                                           $"Property '{propName}' doesn't has identifier in [Key]");
+                                context.ReportDiagnostic(diagnostic);
+
+                                continue;
+                            }
+
+                            if(keyAttributeArgumentsCount > 1)
+                            {
+                                //TODO: check multiple parameters
+
+                                throw new NotImplementedException();
+                            }
+
+                            //<===
+                            var attributeArg = keyAttribute.ArgumentList.Arguments.Single();
+
+                            if(!int.TryParse(attributeArg.ToString(), out var keyIndex))
+                            {
+                                //TODO: check whether the key argument is int
+
+                                throw new NotImplementedException();
+                            }
+
+#if DEBUG
+                            FileLogger.WriteLn($"keyIndex = {keyIndex}");
+#endif
+
+                            if(keyIndex != previousKeyIndex + 1)
+                            {
+                                //TODO: check this
+
+                                throw new NotImplementedException();
+                            }
+
+                            previousKeyIndex = keyIndex;
+
+                            foreach (var a in keyAttribute.ArgumentList.Arguments)
+                            {
+#if DEBUG
+                                FileLogger.WriteLn($"a = {a}");
+#endif
+                            }
                         }
 
                         for (var i = 0; i < allFilteredProps.Count; i++)
@@ -105,7 +174,7 @@ namespace SymOntoClay.SerializationAnalyzer
                                 FileLogger.WriteLn("Spkipped!!!!!");
 #endif
 
-                                var diagnostic = Diagnostic.Create(Rule, allProp.Item1.GetLocation(),
+                                var diagnostic = Diagnostic.Create(MissedAnnotationRule, allProp.Item1.GetLocation(),
                                            $"Property '{propName}' is not annotated with the Key/IgnoreMember attribute");
                                 context.ReportDiagnostic(diagnostic);
                             }
@@ -116,8 +185,6 @@ namespace SymOntoClay.SerializationAnalyzer
                                 FileLogger.WriteLn($"a = {a}");
 #endif
                             }
-
-
                         }
                     }
                 }

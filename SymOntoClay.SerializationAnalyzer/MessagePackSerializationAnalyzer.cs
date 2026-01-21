@@ -22,14 +22,24 @@ namespace SymOntoClay.SerializationAnalyzer
             description: "All properties in [MessagePackObject] must be annotated with [Key] or [IgnoreMember]."
         );
 
-        private static readonly DiagnosticDescriptor WrongKeyAnnotationRule = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor KeyNoArgumentsAnnotationRule = new DiagnosticDescriptor(
             id: "MP002",                          // unique diagnostic identifier
             title: "MessagePack Key Attribute",   // short title
-            messageFormat: "Property '{0}' doesn't has identifier in [Key]", // message format
+            messageFormat: "Property '{0}' has no arguments in the annotation [Key]", // message format
             category: "MessagePack",              // category (any string)
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
-            description: "All properties in [MessagePackObject] with [Key] must have an identifier in the Key."
+            description: "All properties in [MessagePackObject] must have one argument in the annotation [Key]."
+        );
+
+        private static readonly DiagnosticDescriptor KeyManyArgumentsAnnotationRule = new DiagnosticDescriptor(
+            id: "MP003",                          // unique diagnostic identifier
+            title: "MessagePack Key Attribute",   // short title
+            messageFormat: "Property '{0}' has many arguments in the annotation [Key]", // message format
+            category: "MessagePack",              // category (any string)
+            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
+            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            description: "All properties in [MessagePackObject] must have one argument in the annotation [Key]."
         );
 
         public void Initialize(GeneratorInitializationContext context) { }
@@ -113,8 +123,8 @@ namespace SymOntoClay.SerializationAnalyzer
 
                             if (keyAttributeArgumentsCount == 0)
                             {
-                                var diagnostic = Diagnostic.Create(WrongKeyAnnotationRule, serializedProp.GetLocation(),
-                                           $"Property '{propName}' doesn't has identifier in [Key]");
+                                var diagnostic = Diagnostic.Create(KeyNoArgumentsAnnotationRule, serializedProp.GetLocation(),
+                                           $"Property '{propName}' has no arguments in the annotation [Key]");
                                 context.ReportDiagnostic(diagnostic);
 
                                 continue;
@@ -122,9 +132,11 @@ namespace SymOntoClay.SerializationAnalyzer
 
                             if(keyAttributeArgumentsCount > 1)
                             {
-                                //TODO: check multiple parameters
+                                var diagnostic = Diagnostic.Create(KeyManyArgumentsAnnotationRule, serializedProp.GetLocation(),
+                                    $"Property '{propName}' has many arguments in the annotation [Key]");
+                                context.ReportDiagnostic(diagnostic);
 
-                                throw new NotImplementedException();
+                                continue;
                             }
 
                             //<===

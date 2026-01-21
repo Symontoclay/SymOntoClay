@@ -69,6 +69,29 @@ namespace SymOntoClay.SerializationAnalyzer
                         FileLogger.WriteLn($"cls.Identifier.Text = {cls.Identifier.Text}");
 #endif
 
+                        var symbol = semanticModel.GetDeclaredSymbol(cls) as INamedTypeSymbol;
+
+                        if (symbol == null)
+                        {
+                            continue;
+                        }
+
+                        if(!HasBaseClassMessagePackObjectAttribute(symbol))
+                        {
+                            //TODO: check this
+
+                            throw new NotImplementedException();
+                        }
+
+                        if (!IsRegistredInBaseClass(symbol, cls.Identifier.Text))
+                        {
+                            //TODO: check this
+
+                            throw new NotImplementedException();
+                        }
+
+                        //TODO: check order of union attributes
+
                         var propsBeforeFiltering = cls.Members
                             .OfType<PropertyDeclarationSyntax>()
                             .Select(p => (p, semanticModel.GetDeclaredSymbol(p) as IPropertySymbol));
@@ -94,7 +117,7 @@ namespace SymOntoClay.SerializationAnalyzer
                             markedPropsNames.Add(ignoredProp.Identifier.Text);
                         }
 
-                        var previousKeyIndex = -1;//tmp
+                        var previousKeyIndex = GetLastKeyIndexFromBaseClass(symbol);
 
                         var serializedProps = allFilteredProps.Select(p => p.Item1)
                             .Where(c => c.AttributeLists
@@ -219,6 +242,62 @@ namespace SymOntoClay.SerializationAnalyzer
                             p.Item2.SetMethod != null &&
                             (p.Item2.SetMethod.DeclaredAccessibility == Accessibility.Public || p.Item2.SetMethod.IsInitOnly)
                         );
+        }
+
+        private int GetLastKeyIndexFromBaseClass(INamedTypeSymbol symbol)
+        {
+            var baseType = symbol.BaseType;
+
+            if (baseType == null)
+            {
+                return -1;
+            }
+
+            if (baseType.Name == "Object")
+            {
+                return -1;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private bool HasBaseClassMessagePackObjectAttribute(INamedTypeSymbol symbol)
+        {
+            var baseType = symbol.BaseType;
+
+            if(baseType == null)
+            {
+                return true;
+            }
+            
+            if(baseType.Name == "Object")
+            {
+                return true;
+            }
+ 
+            return baseType.GetAttributes()
+                    .Any(a => a.AttributeClass?.Name == "MessagePackObjectAttribute");
+        }
+
+        private bool IsRegistredInBaseClass(INamedTypeSymbol symbol, string className)
+        {
+#if DEBUG
+            FileLogger.WriteLn($"className = {className}");
+#endif
+
+            var baseType = symbol.BaseType;
+
+            if (baseType == null)
+            {
+                return true;
+            }
+
+            if (baseType.Name == "Object")
+            {
+                return true;
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

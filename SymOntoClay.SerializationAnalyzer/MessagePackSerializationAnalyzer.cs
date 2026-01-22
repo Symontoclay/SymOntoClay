@@ -320,6 +320,16 @@ namespace SymOntoClay.SerializationAnalyzer
                 return true;
             }
 
+            var attributes = baseType.GetAttributes().Where(p => p.AttributeClass?.Name == "")
+
+            /*
+            bool hasTstLogMessage = unionAttrs.Any(attr =>
+                    attr.ConstructorArguments.Any(arg =>
+                        arg.Value is INamedTypeSymbol typeSymbol &&
+                        typeSymbol.Name == "TstLogMessage"));
+ 
+            */
+
             throw new NotImplementedException();
         }
     }

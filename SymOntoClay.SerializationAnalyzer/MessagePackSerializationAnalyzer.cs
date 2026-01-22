@@ -281,6 +281,18 @@ namespace SymOntoClay.SerializationAnalyzer
                 return -1;
             }
 
+            var propsBeforeFiltering = baseType.GetMembers().OfType<IPropertySymbol>().Select(p => ((PropertyDeclarationSyntax)null, p));
+
+            var properties = FilterAllTargetProperties(propsBeforeFiltering).Where(p => p.Item2.GetAttributes().Any(y => y.AttributeClass?.Name == "KeyAttribute"));
+
+#if DEBUG
+            FileLogger.WriteLn($"properties.Count() = {properties.Count()}");
+#endif
+
+            var keysAttributes = properties.SelectMany(p => p.Item2.GetAttributes()).Where(p => p.AttributeClass?.Name == "KeyAttribute");
+
+
+
             throw new NotImplementedException();
         }
 

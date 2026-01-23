@@ -271,16 +271,23 @@ namespace SymOntoClay.SerializationAnalyzer
         {
             var baseType = symbol.BaseType;
 
-            if (baseType == null)
+            while (baseType != null && baseType.Name != "Object")
             {
-                return -1;
+                var lastKeyIndex = ProcessGetLastKeyIndexFromBaseClass(baseType);
+
+                if(lastKeyIndex != -1)
+                {
+                    return lastKeyIndex;
+                }
+
+                baseType = baseType.BaseType;
             }
 
-            if (baseType.Name == "Object")
-            {
-                return -1;
-            }
+            return -1;
+        }
 
+        private int ProcessGetLastKeyIndexFromBaseClass(INamedTypeSymbol baseType)
+        {
             var propsBeforeFiltering = baseType.GetMembers().OfType<IPropertySymbol>().Select(p => ((PropertyDeclarationSyntax)null, p));
 
             var properties = FilterAllTargetProperties(propsBeforeFiltering).Where(p => p.Item2.GetAttributes().Any(y => y.AttributeClass?.Name == "KeyAttribute"));
@@ -291,7 +298,18 @@ namespace SymOntoClay.SerializationAnalyzer
 
             var keysAttributes = properties.SelectMany(p => p.Item2.GetAttributes()).Where(p => p.AttributeClass?.Name == "KeyAttribute");
 
+#if DEBUG
+            FileLogger.WriteLn($"keysAttributes.Count() = {keysAttributes.Count()}");
+#endif
 
+            var keyValues = keysAttributes.SelectMany(p => p.ConstructorArguments).Where(p => int.TryParse(p.Value.ToString(), out var intVal)).Select(p => int.Parse(p.Value.ToString()));
+
+            foreach (var a in keyValues)
+            {
+#if DEBUG
+                FileLogger.WriteLn($"a = {a}");
+#endif
+            }
 
             throw new NotImplementedException();
         }

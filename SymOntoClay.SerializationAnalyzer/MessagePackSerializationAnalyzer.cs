@@ -112,6 +112,8 @@ namespace SymOntoClay.SerializationAnalyzer
 
                         //TODO: check order of union attributes
 
+                        throw new NotImplementedException();
+
                         var propsBeforeFiltering = cls.Members
                             .OfType<PropertyDeclarationSyntax>()
                             .Select(p => (p, semanticModel.GetDeclaredSymbol(p) as IPropertySymbol));

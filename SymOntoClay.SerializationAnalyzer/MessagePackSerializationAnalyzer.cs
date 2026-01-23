@@ -302,16 +302,23 @@ namespace SymOntoClay.SerializationAnalyzer
             FileLogger.WriteLn($"keysAttributes.Count() = {keysAttributes.Count()}");
 #endif
 
-            var keyValues = keysAttributes.SelectMany(p => p.ConstructorArguments).Where(p => int.TryParse(p.Value.ToString(), out var intVal)).Select(p => int.Parse(p.Value.ToString()));
+            var keyValues = keysAttributes.SelectMany(p => p.ConstructorArguments).Where(p => int.TryParse(p.Value.ToString(), out var intVal)).Select(p => int.Parse(p.Value.ToString())).ToList();
 
-            foreach (var a in keyValues)
+            if(keyValues.Count == 0)
             {
-#if DEBUG
-                FileLogger.WriteLn($"a = {a}");
-#endif
+                return -1;
             }
 
-            throw new NotImplementedException();
+#if DEBUG
+            foreach (var a in keyValues)
+            {
+
+                FileLogger.WriteLn($"a = {a}");
+
+            }
+#endif
+
+            return keyValues.Max();
         }
 
         private bool HasBaseClassMessagePackObjectAttribute(INamedTypeSymbol symbol)

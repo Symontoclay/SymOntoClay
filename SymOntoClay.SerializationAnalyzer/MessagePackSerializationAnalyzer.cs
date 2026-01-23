@@ -267,8 +267,15 @@ namespace SymOntoClay.SerializationAnalyzer
                         );
         }
 
+        private Dictionary<INamedTypeSymbol, int> _getLastKeyIndexFromBaseClassCache = new Dictionary<INamedTypeSymbol, int>();
+
         private int GetLastKeyIndexFromBaseClass(INamedTypeSymbol symbol)
         {
+            if(_getLastKeyIndexFromBaseClassCache.TryGetValue(symbol, out int chachedIndex))
+            {
+                return chachedIndex;
+            }
+
             var baseType = symbol.BaseType;
 
             while (baseType != null && baseType.Name != "Object")
@@ -277,11 +284,15 @@ namespace SymOntoClay.SerializationAnalyzer
 
                 if(lastKeyIndex != -1)
                 {
+                    _getLastKeyIndexFromBaseClassCache[symbol] = lastKeyIndex;
+
                     return lastKeyIndex;
                 }
 
                 baseType = baseType.BaseType;
             }
+
+            _getLastKeyIndexFromBaseClassCache[symbol] = -1;
 
             return -1;
         }

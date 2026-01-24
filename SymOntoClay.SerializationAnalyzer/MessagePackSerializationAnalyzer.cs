@@ -10,51 +10,51 @@ namespace SymOntoClay.SerializationAnalyzer
 
         private static readonly DiagnosticDescriptor MissedAnnotationRule = new DiagnosticDescriptor(
             id: "MP001",
-            title: "MessagePack Key Attribute",   // short title
-            messageFormat: "Property '{0}' is not annotated with [Key] or [IgnoreMember]", // message format
-            category: DiagnosticDescriptorCategory,              // category (any string)
-            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
-            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            title: "MessagePack Key Attribute",
+            messageFormat: "Property '{0}' is not annotated with [Key] or [IgnoreMember]",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
             description: "All properties in [MessagePackObject] must be annotated with [Key] or [IgnoreMember]."
         );
 
         private static readonly DiagnosticDescriptor KeyNoArgumentsAnnotationRule = new DiagnosticDescriptor(
-            id: "MP002",                          // unique diagnostic identifier
-            title: "MessagePack Key Attribute",   // short title
-            messageFormat: "Property '{0}' has no arguments in the annotation [Key]", // message format
-            category: DiagnosticDescriptorCategory,              // category (any string)
-            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
-            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            id: "MP002",
+            title: "MessagePack Key Attribute",
+            messageFormat: "Property '{0}' has no arguments in the annotation [Key]",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
             description: "All properties in [MessagePackObject] must have one argument in the annotation [Key]."
         );
 
         private static readonly DiagnosticDescriptor KeyManyArgumentsAnnotationRule = new DiagnosticDescriptor(
-            id: "MP003",                          // unique diagnostic identifier
-            title: "MessagePack Key Attribute",   // short title
-            messageFormat: "Property '{0}' has many arguments in the annotation [Key]", // message format
-            category: DiagnosticDescriptorCategory,              // category (any string)
-            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
-            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            id: "MP003",
+            title: "MessagePack Key Attribute",
+            messageFormat: "Property '{0}' has many arguments in the annotation [Key]",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
             description: "All properties in [MessagePackObject] must have one argument in the annotation [Key]."
         );
 
         private static readonly DiagnosticDescriptor KeyNotIntArgumentAnnotationRule = new DiagnosticDescriptor(
-            id: "MP004",                          // unique diagnostic identifier
-            title: "MessagePack Key Attribute",   // short title
-            messageFormat: "Property '{0}' has non int argument in the annotation [Key]", // message format
-            category: DiagnosticDescriptorCategory,              // category (any string)
-            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
-            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            id: "MP004",
+            title: "MessagePack Key Attribute",
+            messageFormat: "Property '{0}' has non int argument in the annotation [Key]",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
             description: "All properties in [MessagePackObject] must have int argument in the annotation [Key]."
         );
 
         private static readonly DiagnosticDescriptor KeyNotSequentialArgumentAnnotationRule = new DiagnosticDescriptor(
-            id: "MP005",                          // unique diagnostic identifier
-            title: "Key Attribute is not sequential",   // short title
-            messageFormat: "Property '{0}' violates the required consecutive ordering of [Key] attributes.", // message format
-            category: DiagnosticDescriptorCategory,              // category (any string)
-            defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
-            isEnabledByDefault: true,             // whether the diagnostic is enabled by default
+            id: "MP005",
+            title: "Key Attribute is not sequential",
+            messageFormat: "Property '{0}' violates the required consecutive ordering of [Key] attributes.",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
             description: "Key indices must be sequential without gaps."
         );
 

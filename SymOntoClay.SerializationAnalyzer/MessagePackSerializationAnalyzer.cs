@@ -48,12 +48,22 @@ namespace SymOntoClay.SerializationAnalyzer
 
         private static readonly DiagnosticDescriptor KeyNotSequentialArgumentAnnotationRule = new DiagnosticDescriptor(
             id: "MP005",                          // unique diagnostic identifier
-            title: "MessagePack Key Attribute",   // short title
+            title: "Key Attribute is not sequential",   // short title
             messageFormat: "Property '{0}' violates the required consecutive ordering of [Key] attributes.", // message format
             category: "MessagePack",              // category (any string)
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
             description: "Key indices must be sequential without gaps."
+        );
+
+        private static readonly DiagnosticDescriptor BaseClassWithoutMessagePackObjectAttributeRule = new DiagnosticDescriptor(
+            id: "MP006",
+            title: "Base class missing [MessagePackObject]",
+            messageFormat: "Base class '{0}' must be annotated with [MessagePackObject] attribute",
+            category: "MessagePack",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "All base classes used in MessagePack serialization must be annotated with [MessagePackObject]."
         );
 
         public void Initialize(GeneratorInitializationContext context) { }
@@ -62,7 +72,13 @@ namespace SymOntoClay.SerializationAnalyzer
         {
             try
             {
+#if DEBUG
+                FileLogger.WriteLn($"----------------------Now = {DateTime.Now}");
+#endif
+
                 var compilation = context.Compilation;
+
+                var allTypes = GetAllTypes(compilation.GlobalNamespace).ToList();
 
                 foreach (var tree in compilation.SyntaxTrees)
                 {
@@ -92,16 +108,17 @@ namespace SymOntoClay.SerializationAnalyzer
 
                         if(!HasBaseClassMessagePackObjectAttribute(symbol))
                         {
-                            //TODO: check this
-
-                            throw new NotImplementedException();
+                            context.ReportDiagnostic(
+                            Diagnostic.Create(
+                                BaseClassWithoutMessagePackObjectAttributeRule,
+                                cls.GetLocation()));
                         }
 
                         if (!IsRegistredInBaseClass(symbol, cls.Identifier.Text))
                         {
                             //TODO: check this
 
-                            throw new NotImplementedException();
+                            //throw new NotImplementedException("5E92CEC0-06FD-4C0B-A3FA-E68C4562BFB4");
                         }
 
                         var unionAttributes = cls.AttributeLists
@@ -126,7 +143,7 @@ namespace SymOntoClay.SerializationAnalyzer
 
                                 if (attrArgs.Count != 2)
                                 {
-                                    throw new NotImplementedException();
+                                    throw new NotImplementedException("DBE1E31E-6642-4BE5-8042-0E384C2EC663");
                                 }
 
 #if DEBUG
@@ -143,7 +160,7 @@ namespace SymOntoClay.SerializationAnalyzer
 
                                 if(!int.TryParse(firstArg.ToString(), out var unionKeyIndex))
                                 {
-                                    throw new NotImplementedException();
+                                    throw new NotImplementedException("D6D6F8BD-E272-46ED-A413-193C3B8D956D");
                                 }
 
 #if DEBUG
@@ -152,10 +169,38 @@ namespace SymOntoClay.SerializationAnalyzer
 
                                 if(unionKeyIndex != previousUnionKeyIndex +1)
                                 {
-                                    throw new NotImplementedException();
+                                    throw new NotImplementedException("1114900E-E1B8-48D2-B235-62AB5EA07D86");
                                 }
 
                                 previousUnionKeyIndex = unionKeyIndex;
+                            }
+                        }
+
+                        var derivedTypes = allTypes
+                            .Where(t => t.BaseType?.Equals(symbol, SymbolEqualityComparer.Default) == true)
+                            .ToList();
+
+#if DEBUG
+                        FileLogger.WriteLn($"derivedTypes.Count = {derivedTypes.Count}");
+#endif
+
+                        if(derivedTypes.Count > 0)
+                        {
+                            //TODO: check derived Types without MessagePackObject attribute
+
+                            var derivedTypesWithoutAttr = derivedTypes.Where(p => !p.GetAttributes().Any(x => x.AttributeClass?.Name == "MessagePackObjectAttribute")).ToList();
+
+#if DEBUG
+                            FileLogger.WriteLn($"derivedTypesWithoutAttr.Count = {derivedTypesWithoutAttr.Count}");
+#endif
+
+                            foreach (var derivedType in derivedTypesWithoutAttr)
+                            {
+#if DEBUG
+                                FileLogger.WriteLn($"derivedType.Name = {derivedType.Name}");
+#endif
+
+                                throw new NotImplementedException("AF9770D9-616F-47AE-9AD4-F77423AEE546");
                             }
                         }
 
@@ -427,6 +472,22 @@ namespace SymOntoClay.SerializationAnalyzer
 #endif
 
             return hasClass;
+        }
+
+        private static IEnumerable<INamedTypeSymbol> GetAllTypes(INamespaceSymbol ns)
+        {
+            foreach (var type in ns.GetTypeMembers())
+            {
+                yield return type;
+            }
+
+            foreach (var nestedNs in ns.GetNamespaceMembers())
+            {
+                foreach (var type in GetAllTypes(nestedNs))
+                {
+                    yield return type;
+                }
+            }
         }
     }
 }

@@ -88,6 +88,25 @@ namespace SymOntoClay.SerializationAnalyzer
             description: "MessagePack's Union attribute requires exactly two arguments: an integer tag and a Type. Any other number of arguments is invalid and should be corrected."
         );
 
+        public static readonly DiagnosticDescriptor UnionAttributeIndexIsNotIntRule = new DiagnosticDescriptor(
+            id: "MP009",
+            title: "Union attribute index is not an int",
+            messageFormat: "Union attribute on '{0}' must use an integer index as the first argument, but found {1}",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "MessagePack's Union attribute requires the first argument to be an integer tag. Any other type is invalid and should be corrected."
+        );
+
+        public static readonly DiagnosticDescriptor UnionAttributeIndicesAreNotSequentialRule = new DiagnosticDescriptor(
+            id: "MP010",
+            title: "Union attribute indices are not sequential",
+            messageFormat: "Union attributes on '{0}' must have sequential integer indices starting from 0, but found a gap or mismatch",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "MessagePack's Union attribute requires indices to be sequential integers starting from 0. Any gaps or non-sequential ordering may cause serialization errors."
+        );
 
         public void Initialize(GeneratorInitializationContext context) { }
 
@@ -197,7 +216,14 @@ namespace SymOntoClay.SerializationAnalyzer
 
                                 if(!int.TryParse(firstArg.ToString(), out var unionKeyIndex))
                                 {
-                                    throw new NotImplementedException("D6D6F8BD-E272-46ED-A413-193C3B8D956D");
+                                    var diagnostic = Diagnostic.Create(
+                                        UnionAttributeIndexIsNotIntRule,
+                                        attr.GetLocation(),
+                                        cls.Identifier.Text,
+                                        firstArg.ToString());
+                                    context.ReportDiagnostic(diagnostic);
+
+                                    continue;
                                 }
 
 #if DEBUG
@@ -206,7 +232,11 @@ namespace SymOntoClay.SerializationAnalyzer
 
                                 if(unionKeyIndex != previousUnionKeyIndex +1)
                                 {
-                                    throw new NotImplementedException("1114900E-E1B8-48D2-B235-62AB5EA07D86");
+                                    var diagnostic = Diagnostic.Create(
+                                        UnionAttributeIndicesAreNotSequentialRule,
+                                        cls.GetLocation(),
+                                        cls.Identifier.Text);
+                                    context.ReportDiagnostic(diagnostic);
                                 }
 
                                 previousUnionKeyIndex = unionKeyIndex;

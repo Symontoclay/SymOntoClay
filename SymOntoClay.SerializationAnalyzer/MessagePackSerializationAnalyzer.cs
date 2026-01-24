@@ -108,6 +108,16 @@ namespace SymOntoClay.SerializationAnalyzer
             description: "MessagePack's Union attribute requires indices to be sequential integers starting from 0. Any gaps or non-sequential ordering may cause serialization errors."
         );
 
+        public static readonly DiagnosticDescriptor DerivedClassWithoutMessagePackObjectAttributeRule = new DiagnosticDescriptor(
+            id: "MP011",
+            title: "Derived class missing [MessagePackObject] attribute",
+            messageFormat: "Derived class '{0}' of base class '{1}' must be annotated with [MessagePackObject] attribute",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "When a base class is annotated with [MessagePackObject] and [Union], all derived classes participating in serialization must also be annotated with [MessagePackObject]."
+        );
+
         public void Initialize(GeneratorInitializationContext context) { }
 
         public void Execute(GeneratorExecutionContext context)
@@ -267,7 +277,13 @@ namespace SymOntoClay.SerializationAnalyzer
                                 FileLogger.WriteLn($"derivedType.Name = {derivedType.Name}");
 #endif
 
-                                throw new NotImplementedException("AF9770D9-616F-47AE-9AD4-F77423AEE546");
+                                var diagnostic = Diagnostic.Create(
+                                    DerivedClassWithoutMessagePackObjectAttributeRule,
+                                    derivedType.Locations.First(),
+                                    derivedType.Name,
+                                    cls.Identifier.Text);
+
+                                context.ReportDiagnostic(diagnostic);
                             }
                         }
 

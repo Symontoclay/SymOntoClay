@@ -124,20 +124,12 @@ namespace SymOntoClay.SerializationAnalyzer
         {
             try
             {
-#if DEBUG
-                FileLogger.WriteLn($"----------------------Now = {DateTime.Now}");
-#endif
-
                 var compilation = context.Compilation;
 
                 var allTypes = GetAllTypes(compilation.GlobalNamespace).ToList();
 
                 foreach (var tree in compilation.SyntaxTrees)
                 {
-#if DEBUG
-                    //FileLogger.WriteLn($"tree.FilePath = {tree.FilePath}");
-#endif
-
                     var semanticModel = compilation.GetSemanticModel(tree);
                     var classes = tree.GetRoot()
                         .DescendantNodes()
@@ -147,10 +139,6 @@ namespace SymOntoClay.SerializationAnalyzer
 
                     foreach (var cls in classes)
                     {
-#if DEBUG
-                        FileLogger.WriteLn($"cls.Identifier.Text = {cls.Identifier.Text}");
-#endif
-
                         var symbol = semanticModel.GetDeclaredSymbol(cls) as INamedTypeSymbol;
 
                         if (symbol == null)
@@ -185,14 +173,8 @@ namespace SymOntoClay.SerializationAnalyzer
                             .Where(p => p.Name.ToString() == "Union")
                             .ToList();
 
-#if DEBUG
-                        FileLogger.WriteLn($"unionAttributes.Count = {unionAttributes.Count}");
-#endif
-
                         if(unionAttributes.Count > 0)
                         {
-                            //TODO: check order of union attributes
-
                             var previousUnionKeyIndex = -1;
 
                             foreach (var attr in unionAttributes)
@@ -212,16 +194,6 @@ namespace SymOntoClay.SerializationAnalyzer
                                     continue;
                                 }
 
-#if DEBUG
-                                FileLogger.WriteLn($"attrArgs.Count = {attrArgs.Count}");
-
-                                foreach(var attrArg in attrArgs)
-                                {
-                                    FileLogger.WriteLn($"attrArg = {attrArg}");
-                                    //FileLogger.WriteLn($" = {}");
-                                }
-#endif
-
                                 var firstArg = attrArgs.First();
 
                                 if(!int.TryParse(firstArg.ToString(), out var unionKeyIndex))
@@ -235,10 +207,6 @@ namespace SymOntoClay.SerializationAnalyzer
 
                                     continue;
                                 }
-
-#if DEBUG
-                                FileLogger.WriteLn($"unionKeyIndex = {unionKeyIndex}");
-#endif
 
                                 if(unionKeyIndex != previousUnionKeyIndex +1)
                                 {
@@ -257,26 +225,12 @@ namespace SymOntoClay.SerializationAnalyzer
                             .Where(t => t.BaseType?.Equals(symbol, SymbolEqualityComparer.Default) == true)
                             .ToList();
 
-#if DEBUG
-                        FileLogger.WriteLn($"derivedTypes.Count = {derivedTypes.Count}");
-#endif
-
                         if(derivedTypes.Count > 0)
                         {
-                            //TODO: check derived Types without MessagePackObject attribute
-
                             var derivedTypesWithoutAttr = derivedTypes.Where(p => !p.GetAttributes().Any(x => x.AttributeClass?.Name == "MessagePackObjectAttribute")).ToList();
-
-#if DEBUG
-                            FileLogger.WriteLn($"derivedTypesWithoutAttr.Count = {derivedTypesWithoutAttr.Count}");
-#endif
 
                             foreach (var derivedType in derivedTypesWithoutAttr)
                             {
-#if DEBUG
-                                FileLogger.WriteLn($"derivedType.Name = {derivedType.Name}");
-#endif
-
                                 var diagnostic = Diagnostic.Create(
                                     DerivedClassWithoutMessagePackObjectAttributeRule,
                                     derivedType.Locations.First(),
@@ -305,10 +259,6 @@ namespace SymOntoClay.SerializationAnalyzer
                         {
                             var ignoredProp = ignoredProps[i];
 
-#if DEBUG
-                            FileLogger.WriteLn($"ignoredProp.Identifier.Text = {ignoredProp.Identifier.Text}");
-#endif
-
                             markedPropsNames.Add(ignoredProp.Identifier.Text);
                         }
 
@@ -323,19 +273,11 @@ namespace SymOntoClay.SerializationAnalyzer
                         {
                             var serializedProp = serializedProps[i];
 
-#if DEBUG
-                            FileLogger.WriteLn($"serializedProp.Identifier.Text = {serializedProp.Identifier.Text}");
-#endif
-
                             var propName = serializedProp.Identifier.Text;
 
                             markedPropsNames.Add(propName);
 
                             var keyAttribute = serializedProp.AttributeLists.SelectMany(p => p.Attributes).Single(p => p.Name.ToString() == "Key");
-
-#if DEBUG
-                            FileLogger.WriteLn($"keyAttribute.ArgumentList.Arguments.Count = {keyAttribute.ArgumentList.Arguments.Count}");
-#endif
 
                             var keyAttributeArgumentsCount = keyAttribute.ArgumentList.Arguments.Count;
 
@@ -368,10 +310,6 @@ namespace SymOntoClay.SerializationAnalyzer
                                 continue;
                             }
 
-#if DEBUG
-                            FileLogger.WriteLn($"keyIndex = {keyIndex}");
-#endif
-
                             if(keyIndex != previousKeyIndex + 1)
                             {
                                 var diagnostic = Diagnostic.Create(KeyNotSequentialArgumentAnnotationRule, serializedProp.GetLocation(),
@@ -382,31 +320,16 @@ namespace SymOntoClay.SerializationAnalyzer
                             }
 
                             previousKeyIndex = keyIndex;
-
-                            foreach (var a in keyAttribute.ArgumentList.Arguments)
-                            {
-#if DEBUG
-                                FileLogger.WriteLn($"a = {a}");
-#endif
-                            }
                         }
 
                         for (var i = 0; i < allFilteredProps.Count; i++)
                         {
                             var allProp = allFilteredProps[i];
 
-#if DEBUG
-                            FileLogger.WriteLn($"allProp.Name = {allProp.Item1.Identifier.Text}");
-#endif
-
                             var propName = allProp.Item1.Identifier.Text;
 
                             if (!markedPropsNames.Contains(propName))
                             {
-#if DEBUG
-                                FileLogger.WriteLn("Spkipped!!!!!");
-#endif
-
                                 var diagnostic = Diagnostic.Create(MissedAnnotationRule, allProp.Item1.GetLocation(),
                                            propName);
                                 context.ReportDiagnostic(diagnostic);
@@ -473,15 +396,7 @@ namespace SymOntoClay.SerializationAnalyzer
 
             var properties = FilterAllTargetProperties(propsBeforeFiltering).Where(p => p.Item2.GetAttributes().Any(y => y.AttributeClass?.Name == "KeyAttribute"));
 
-#if DEBUG
-            FileLogger.WriteLn($"properties.Count() = {properties.Count()}");
-#endif
-
             var keysAttributes = properties.SelectMany(p => p.Item2.GetAttributes()).Where(p => p.AttributeClass?.Name == "KeyAttribute");
-
-#if DEBUG
-            FileLogger.WriteLn($"keysAttributes.Count() = {keysAttributes.Count()}");
-#endif
 
             var keyValues = keysAttributes.SelectMany(p => p.ConstructorArguments).Where(p => int.TryParse(p.Value.ToString(), out var intVal)).Select(p => int.Parse(p.Value.ToString())).ToList();
 
@@ -489,15 +404,6 @@ namespace SymOntoClay.SerializationAnalyzer
             {
                 return -1;
             }
-
-#if DEBUG
-            foreach (var a in keyValues)
-            {
-
-                FileLogger.WriteLn($"a = {a}");
-
-            }
-#endif
 
             return keyValues.Max();
         }
@@ -522,10 +428,6 @@ namespace SymOntoClay.SerializationAnalyzer
 
         private bool IsRegistredInBaseClass(INamedTypeSymbol symbol, string className)
         {
-#if DEBUG
-            FileLogger.WriteLn($"className = {className}");
-#endif
-
             var baseType = symbol.BaseType;
 
             if (baseType == null)
@@ -544,10 +446,6 @@ namespace SymOntoClay.SerializationAnalyzer
                     attr.ConstructorArguments.Any(arg =>
                         arg.Value is INamedTypeSymbol typeSymbol &&
                         typeSymbol.Name == className));
-
-#if DEBUG
-            FileLogger.WriteLn($"hasClass = {hasClass}");
-#endif
 
             return hasClass;
         }

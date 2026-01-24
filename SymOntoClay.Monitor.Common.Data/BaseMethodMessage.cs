@@ -37,6 +37,12 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(4, typeof(ActionResolvingMessage))]
     [Union(5, typeof(HostMethodResolvingMessage))]
     [Union(6, typeof(EndHostMethodResolvingMessage))]
+    [Union(7, typeof(HostMethodActivationMessage))] 
+    [Union(8, typeof(EndHostMethodActivationMessage))] 
+    [Union(9, typeof(HostMethodStartingMessage))]
+    [Union(10, typeof(EndHostMethodStartingMessage))]
+    [Union(11, typeof(HostMethodExecutionMessage))]
+    [Union(12, typeof(EndHostMethodExecutionMessage))]
     //[Union(, typeof())]
     public abstract class BaseMethodMessage : BaseMessage
     {

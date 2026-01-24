@@ -102,25 +102,25 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<EndHostMethodResolvingMessage>(data);//Y
 
                 case KindOfMessage.HostMethodActivation:
-                    return _serializerAdapter.Deserialize<HostMethodActivationMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<HostMethodActivationMessage>(data);//Y
 
                 case KindOfMessage.EndHostMethodActivation:
-                    return _serializerAdapter.Deserialize<EndHostMethodActivationMessage>(data);
+                    return _serializerAdapter.Deserialize<EndHostMethodActivationMessage>(data);//Y
 
                 case KindOfMessage.HostMethodStarting:
-                    return _serializerAdapter.Deserialize<HostMethodStartingMessage>(data);
+                    return _serializerAdapter.Deserialize<HostMethodStartingMessage>(data);//Y
 
                 case KindOfMessage.EndHostMethodStarting:
-                    return _serializerAdapter.Deserialize<EndHostMethodStartingMessage>(data);
+                    return _serializerAdapter.Deserialize<EndHostMethodStartingMessage>(data);//Y
 
                 case KindOfMessage.HostMethodExecution:
-                    return _serializerAdapter.Deserialize<HostMethodExecutionMessage>(data);
+                    return _serializerAdapter.Deserialize<HostMethodExecutionMessage>(data);//Y
 
                 case KindOfMessage.EndHostMethodExecution:
-                    return _serializerAdapter.Deserialize<EndHostMethodExecutionMessage>(data);
+                    return _serializerAdapter.Deserialize<EndHostMethodExecutionMessage>(data);//Y
 
                 case KindOfMessage.SystemExpr:
-                    return _serializerAdapter.Deserialize<SystemExprMessage>(data);
+                    return _serializerAdapter.Deserialize<SystemExprMessage>(data);//<=
 
                 case KindOfMessage.CodeFrame:
                     return _serializerAdapter.Deserialize<CodeFrameMessage>(data);

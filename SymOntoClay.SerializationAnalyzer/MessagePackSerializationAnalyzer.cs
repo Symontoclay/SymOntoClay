@@ -6,11 +6,13 @@ namespace SymOntoClay.SerializationAnalyzer
     [Generator]
     public class MessagePackSerializationAnalyzer : ISourceGenerator
     {
+        private static readonly string DiagnosticDescriptorCategory = "MessagePack";
+
         private static readonly DiagnosticDescriptor MissedAnnotationRule = new DiagnosticDescriptor(
-            id: "MP001",                          // unique diagnostic identifier
+            id: "MP001",
             title: "MessagePack Key Attribute",   // short title
             messageFormat: "Property '{0}' is not annotated with [Key] or [IgnoreMember]", // message format
-            category: "MessagePack",              // category (any string)
+            category: DiagnosticDescriptorCategory,              // category (any string)
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
             description: "All properties in [MessagePackObject] must be annotated with [Key] or [IgnoreMember]."
@@ -20,7 +22,7 @@ namespace SymOntoClay.SerializationAnalyzer
             id: "MP002",                          // unique diagnostic identifier
             title: "MessagePack Key Attribute",   // short title
             messageFormat: "Property '{0}' has no arguments in the annotation [Key]", // message format
-            category: "MessagePack",              // category (any string)
+            category: DiagnosticDescriptorCategory,              // category (any string)
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
             description: "All properties in [MessagePackObject] must have one argument in the annotation [Key]."
@@ -30,7 +32,7 @@ namespace SymOntoClay.SerializationAnalyzer
             id: "MP003",                          // unique diagnostic identifier
             title: "MessagePack Key Attribute",   // short title
             messageFormat: "Property '{0}' has many arguments in the annotation [Key]", // message format
-            category: "MessagePack",              // category (any string)
+            category: DiagnosticDescriptorCategory,              // category (any string)
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
             description: "All properties in [MessagePackObject] must have one argument in the annotation [Key]."
@@ -40,7 +42,7 @@ namespace SymOntoClay.SerializationAnalyzer
             id: "MP004",                          // unique diagnostic identifier
             title: "MessagePack Key Attribute",   // short title
             messageFormat: "Property '{0}' has non int argument in the annotation [Key]", // message format
-            category: "MessagePack",              // category (any string)
+            category: DiagnosticDescriptorCategory,              // category (any string)
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
             description: "All properties in [MessagePackObject] must have int argument in the annotation [Key]."
@@ -50,7 +52,7 @@ namespace SymOntoClay.SerializationAnalyzer
             id: "MP005",                          // unique diagnostic identifier
             title: "Key Attribute is not sequential",   // short title
             messageFormat: "Property '{0}' violates the required consecutive ordering of [Key] attributes.", // message format
-            category: "MessagePack",              // category (any string)
+            category: DiagnosticDescriptorCategory,              // category (any string)
             defaultSeverity: DiagnosticSeverity.Error, // severity level (Error, Warning, Info, Hidden)
             isEnabledByDefault: true,             // whether the diagnostic is enabled by default
             description: "Key indices must be sequential without gaps."
@@ -60,11 +62,32 @@ namespace SymOntoClay.SerializationAnalyzer
             id: "MP006",
             title: "Base class missing [MessagePackObject]",
             messageFormat: "Base class '{0}' must be annotated with [MessagePackObject] attribute",
-            category: "MessagePack",
+            category: DiagnosticDescriptorCategory,
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
             description: "All base classes used in MessagePack serialization must be annotated with [MessagePackObject]."
         );
+
+        private static readonly DiagnosticDescriptor ClassIsNotRegisteredInUnionAttributeOfBaseClassRule = new DiagnosticDescriptor(
+            id: "MP007",
+            title: "Class is not registered in Union attribute of base class",
+            messageFormat: "Class '{0}' must be registered in Union attribute of its base class",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "All derived classes participating in Union serialization must be explicitly registered in the Union attribute of their base class."
+        );
+
+        public static readonly DiagnosticDescriptor UnionAttributeHasInvalidArgumentCountRule = new DiagnosticDescriptor(
+            id: "MP008",
+            title: "Union attribute has invalid number of arguments",
+            messageFormat: "Union attribute on '{0}' must have exactly 2 arguments (tag and type), but found {1}",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "MessagePack's Union attribute requires exactly two arguments: an integer tag and a Type. Any other number of arguments is invalid and should be corrected."
+        );
+
 
         public void Initialize(GeneratorInitializationContext context) { }
 
@@ -111,14 +134,21 @@ namespace SymOntoClay.SerializationAnalyzer
                             context.ReportDiagnostic(
                             Diagnostic.Create(
                                 BaseClassWithoutMessagePackObjectAttributeRule,
-                                cls.GetLocation()));
+                                cls.GetLocation(),
+                                cls.Identifier.Text));
+
+                            continue;
                         }
 
                         if (!IsRegistredInBaseClass(symbol, cls.Identifier.Text))
                         {
-                            //TODO: check this
+                            context.ReportDiagnostic(
+                            Diagnostic.Create(
+                                ClassIsNotRegisteredInUnionAttributeOfBaseClassRule,
+                                cls.GetLocation(),
+                                cls.Identifier.Text));
 
-                            //throw new NotImplementedException("5E92CEC0-06FD-4C0B-A3FA-E68C4562BFB4");
+                            continue;
                         }
 
                         var unionAttributes = cls.AttributeLists
@@ -143,7 +173,14 @@ namespace SymOntoClay.SerializationAnalyzer
 
                                 if (attrArgs.Count != 2)
                                 {
-                                    throw new NotImplementedException("DBE1E31E-6642-4BE5-8042-0E384C2EC663");
+                                    var diagnostic = Diagnostic.Create(
+                                        UnionAttributeHasInvalidArgumentCountRule,
+                                        attr.GetLocation(),
+                                        cls.Identifier.Text,
+                                        attrArgs.Count);
+                                    context.ReportDiagnostic(diagnostic);
+
+                                    continue;
                                 }
 
 #if DEBUG
@@ -259,7 +296,7 @@ namespace SymOntoClay.SerializationAnalyzer
                             if (keyAttributeArgumentsCount == 0)
                             {
                                 var diagnostic = Diagnostic.Create(KeyNoArgumentsAnnotationRule, serializedProp.GetLocation(),
-                                           $"Property '{propName}' has no arguments in the annotation [Key]");
+                                           propName);
                                 context.ReportDiagnostic(diagnostic);
 
                                 continue;
@@ -268,7 +305,7 @@ namespace SymOntoClay.SerializationAnalyzer
                             if(keyAttributeArgumentsCount > 1)
                             {
                                 var diagnostic = Diagnostic.Create(KeyManyArgumentsAnnotationRule, serializedProp.GetLocation(),
-                                    $"Property '{propName}' has many arguments in the annotation [Key]");
+                                    propName);
                                 context.ReportDiagnostic(diagnostic);
 
                                 continue;
@@ -279,7 +316,7 @@ namespace SymOntoClay.SerializationAnalyzer
                             if(!int.TryParse(attributeArg.ToString(), out var keyIndex))
                             {
                                 var diagnostic = Diagnostic.Create(KeyNotIntArgumentAnnotationRule, serializedProp.GetLocation(),
-                                    $"Property '{propName}' has non int argument in the annotation [Key]");
+                                    propName);
                                 context.ReportDiagnostic(diagnostic);
 
                                 continue;
@@ -292,7 +329,7 @@ namespace SymOntoClay.SerializationAnalyzer
                             if(keyIndex != previousKeyIndex + 1)
                             {
                                 var diagnostic = Diagnostic.Create(KeyNotSequentialArgumentAnnotationRule, serializedProp.GetLocation(),
-                                    $"Property '{propName}' violates the required consecutive ordering of [Key] attributes.");
+                                    propName);
                                 context.ReportDiagnostic(diagnostic);
 
                                 continue;
@@ -325,15 +362,10 @@ namespace SymOntoClay.SerializationAnalyzer
 #endif
 
                                 var diagnostic = Diagnostic.Create(MissedAnnotationRule, allProp.Item1.GetLocation(),
-                                           $"Property '{propName}' is not annotated with the Key/IgnoreMember attribute");
+                                           propName);
                                 context.ReportDiagnostic(diagnostic);
-                            }
 
-                            foreach (var a in allProp.Item1.AttributeLists)
-                            {
-#if DEBUG
-                                FileLogger.WriteLn($"a = {a}");
-#endif
+                                continue;
                             }
                         }
                     }

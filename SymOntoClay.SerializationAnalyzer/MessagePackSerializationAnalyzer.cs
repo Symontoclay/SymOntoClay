@@ -117,7 +117,46 @@ namespace SymOntoClay.SerializationAnalyzer
                         {
                             //TODO: check order of union attributes
 
-                            throw new NotImplementedException();
+                            var previousUnionKeyIndex = -1;
+
+                            foreach (var attr in unionAttributes)
+                            {
+                                var attrArgs = attr.ArgumentList.Arguments;
+
+
+                                if (attrArgs.Count != 2)
+                                {
+                                    throw new NotImplementedException();
+                                }
+
+#if DEBUG
+                                FileLogger.WriteLn($"attrArgs.Count = {attrArgs.Count}");
+
+                                foreach(var attrArg in attrArgs)
+                                {
+                                    FileLogger.WriteLn($"attrArg = {attrArg}");
+                                    //FileLogger.WriteLn($" = {}");
+                                }
+#endif
+
+                                var firstArg = attrArgs.First();
+
+                                if(!int.TryParse(firstArg.ToString(), out var unionKeyIndex))
+                                {
+                                    throw new NotImplementedException();
+                                }
+
+#if DEBUG
+                                FileLogger.WriteLn($"unionKeyIndex = {unionKeyIndex}");
+#endif
+
+                                if(unionKeyIndex != previousUnionKeyIndex +1)
+                                {
+                                    throw new NotImplementedException();
+                                }
+
+                                previousUnionKeyIndex = unionKeyIndex;
+                            }
                         }
 
                         var propsBeforeFiltering = cls.Members

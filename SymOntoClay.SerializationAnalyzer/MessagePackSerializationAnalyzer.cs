@@ -1,11 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.SerializationAnalyzer
 {
@@ -110,9 +104,21 @@ namespace SymOntoClay.SerializationAnalyzer
                             throw new NotImplementedException();
                         }
 
-                        //TODO: check order of union attributes
+                        var unionAttributes = cls.AttributeLists
+                            .SelectMany(p => p.Attributes)
+                            .Where(p => p.Name.ToString() == "Union")
+                            .ToList();
 
-                        throw new NotImplementedException();
+#if DEBUG
+                        FileLogger.WriteLn($"unionAttributes.Count = {unionAttributes.Count}");
+#endif
+
+                        if(unionAttributes.Count > 0)
+                        {
+                            //TODO: check order of union attributes
+
+                            throw new NotImplementedException();
+                        }
 
                         var propsBeforeFiltering = cls.Members
                             .OfType<PropertyDeclarationSyntax>()

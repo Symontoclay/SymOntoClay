@@ -46,6 +46,9 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(14, typeof(BaseConditionalTriggerMessage))]
     [Union(15, typeof(ActivateIdleActionMessage))]
     [Union(16, typeof(LogicalSearchExplainMessage))]
+    [Union(17, typeof(BaseFactLogicalStorageMessage))]
+    [Union(18, typeof(BaseTaskMessage))]
+    [Union(19, typeof(StartBuildPlanMessage))]
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {

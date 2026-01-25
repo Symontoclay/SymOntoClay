@@ -186,31 +186,31 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<LogicalSearchExplainMessage>(data);//Y
 
                 case KindOfMessage.AddFactOrRuleTriggerResult:
-                    return _serializerAdapter.Deserialize<AddFactOrRuleTriggerResultMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<AddFactOrRuleTriggerResultMessage>(data);//Y
 
                 case KindOfMessage.AddFactToLogicalStorage:
-                    return _serializerAdapter.Deserialize<AddFactToLogicalStorageMessage>(data);
+                    return _serializerAdapter.Deserialize<AddFactToLogicalStorageMessage>(data);//Y
 
                 case KindOfMessage.RemoveFactFromLogicalStorage:
-                    return _serializerAdapter.Deserialize<RemoveFactFromLogicalStorageMessage>(data);
+                    return _serializerAdapter.Deserialize<RemoveFactFromLogicalStorageMessage>(data);//Y
 
                 case KindOfMessage.RefreshLifeTimeInLogicalStorage:
-                    return _serializerAdapter.Deserialize<RefreshLifeTimeInLogicalStorageMessage>(data);
+                    return _serializerAdapter.Deserialize<RefreshLifeTimeInLogicalStorageMessage>(data);//Y
 
                 case KindOfMessage.PutFactForRemovingFromLogicalStorage:
-                    return _serializerAdapter.Deserialize<PutFactForRemovingFromLogicalStorageMessage>(data);
+                    return _serializerAdapter.Deserialize<PutFactForRemovingFromLogicalStorageMessage>(data);//Y
 
                 case KindOfMessage.StartThreadTask:
-                    return _serializerAdapter.Deserialize<StartTaskMessage>(data);
+                    return _serializerAdapter.Deserialize<StartTaskMessage>(data);//Y
 
                 case KindOfMessage.StopThreadTask:
-                    return _serializerAdapter.Deserialize<StopTaskMessage>(data);
+                    return _serializerAdapter.Deserialize<StopTaskMessage>(data);//Y
 
                 case KindOfMessage.StartBuildPlan:
-                    return _serializerAdapter.Deserialize<StartBuildPlanMessage>(data);
+                    return _serializerAdapter.Deserialize<StartBuildPlanMessage>(data);//Y
 
                 case KindOfMessage.StopBuildPlan:
-                    return _serializerAdapter.Deserialize<StopBuildPlanMessage>(data);
+                    return _serializerAdapter.Deserialize<StopBuildPlanMessage>(data);//<=
 
                 case KindOfMessage.BeginVisionFrame:
                     return _serializerAdapter.Deserialize<BeginVisionFrameMessage>(data);

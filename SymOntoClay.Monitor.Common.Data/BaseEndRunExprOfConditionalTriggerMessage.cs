@@ -20,20 +20,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using Newtonsoft.Json;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common.Models;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
+    [MessagePackObject]
+    [Union(0, typeof(EndRunSetExprOfConditionalTriggerMessage))]
+    [Union(1, typeof(EndRunResetExprOfConditionalTriggerMessage))]
+    //[Union(, typeof())]
     public abstract class BaseEndRunExprOfConditionalTriggerMessage: BaseRunExprOfConditionalTriggerMessage
     {
+        [Key(12)]
         public bool IsSuccess { get; set; }
+
+        [Key(13)]
         public bool IsPeriodic { get; set; }
+
+        [Key(14)]
         public List<List<MonitoredHumanizedLabel>> FetchedResults { get; set; }
 
         /// <inheritdoc/>

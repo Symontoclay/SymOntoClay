@@ -44,6 +44,8 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(12, typeof(WaitProcessInfoMessage))] 
     [Union(13, typeof(RunLifecycleTriggerMessage))]
     [Union(14, typeof(BaseConditionalTriggerMessage))]
+    [Union(15, typeof(ActivateIdleActionMessage))]
+    [Union(16, typeof(LogicalSearchExplainMessage))]
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {

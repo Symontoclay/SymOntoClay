@@ -171,22 +171,22 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<RunSetExprOfConditionalTriggerMessage>(data);//Y
 
                 case KindOfMessage.EndRunSetExprOfConditionalTrigger:
-                    return _serializerAdapter.Deserialize<EndRunSetExprOfConditionalTriggerMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<EndRunSetExprOfConditionalTriggerMessage>(data);//Y
 
                 case KindOfMessage.RunResetExprOfConditionalTrigger:
-                    return _serializerAdapter.Deserialize<RunResetExprOfConditionalTriggerMessage>(data);
+                    return _serializerAdapter.Deserialize<RunResetExprOfConditionalTriggerMessage>(data);//Y
 
                 case KindOfMessage.EndRunResetExprOfConditionalTrigger:
-                    return _serializerAdapter.Deserialize<EndRunResetExprOfConditionalTriggerMessage>(data);
+                    return _serializerAdapter.Deserialize<EndRunResetExprOfConditionalTriggerMessage>(data);//Y
 
                 case KindOfMessage.ActivateIdleAction:
-                    return _serializerAdapter.Deserialize<ActivateIdleActionMessage>(data);
+                    return _serializerAdapter.Deserialize<ActivateIdleActionMessage>(data);//Y
 
                 case KindOfMessage.LogicalSearchExplain:
-                    return _serializerAdapter.Deserialize<LogicalSearchExplainMessage>(data);
+                    return _serializerAdapter.Deserialize<LogicalSearchExplainMessage>(data);//Y
 
                 case KindOfMessage.AddFactOrRuleTriggerResult:
-                    return _serializerAdapter.Deserialize<AddFactOrRuleTriggerResultMessage>(data);
+                    return _serializerAdapter.Deserialize<AddFactOrRuleTriggerResultMessage>(data);//<=
 
                 case KindOfMessage.AddFactToLogicalStorage:
                     return _serializerAdapter.Deserialize<AddFactToLogicalStorageMessage>(data);

@@ -32,6 +32,9 @@ namespace SymOntoClay.Monitor.Common.Data
     [MessagePackObject]
     [Union(0, typeof(DoTriggerSearchMessage))]
     [Union(1, typeof(EndDoTriggerSearchMessage))]
+    [Union(2, typeof(SetConditionalTriggerMessage))]
+    [Union(3, typeof(ResetConditionalTriggerMessage))]
+    [Union(4, typeof(BaseRunExprOfConditionalTriggerMessage))]
     //[Union(, typeof())]
     public abstract class BaseConditionalTriggerMessage : BaseMessage
     {

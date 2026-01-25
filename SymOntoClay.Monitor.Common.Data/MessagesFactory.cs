@@ -162,16 +162,16 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<EndDoTriggerSearchMessage>(data);//Y
 
                 case KindOfMessage.SetConditionalTrigger:
-                    return _serializerAdapter.Deserialize<SetConditionalTriggerMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<SetConditionalTriggerMessage>(data);//Y
 
                 case KindOfMessage.ResetConditionalTrigger:
-                    return _serializerAdapter.Deserialize<ResetConditionalTriggerMessage>(data);
+                    return _serializerAdapter.Deserialize<ResetConditionalTriggerMessage>(data);//Y
 
                 case KindOfMessage.RunSetExprOfConditionalTrigger:
-                    return _serializerAdapter.Deserialize<RunSetExprOfConditionalTriggerMessage>(data);
+                    return _serializerAdapter.Deserialize<RunSetExprOfConditionalTriggerMessage>(data);//Y
 
                 case KindOfMessage.EndRunSetExprOfConditionalTrigger:
-                    return _serializerAdapter.Deserialize<EndRunSetExprOfConditionalTriggerMessage>(data);
+                    return _serializerAdapter.Deserialize<EndRunSetExprOfConditionalTriggerMessage>(data);//<=
 
                 case KindOfMessage.RunResetExprOfConditionalTrigger:
                     return _serializerAdapter.Deserialize<RunResetExprOfConditionalTriggerMessage>(data);

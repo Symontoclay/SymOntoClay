@@ -156,13 +156,13 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<RunLifecycleTriggerMessage>(data);//Y
 
                 case KindOfMessage.DoTriggerSearch:
-                    return _serializerAdapter.Deserialize<DoTriggerSearchMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<DoTriggerSearchMessage>(data);//Y
 
                 case KindOfMessage.EndDoTriggerSearch:
-                    return _serializerAdapter.Deserialize<EndDoTriggerSearchMessage>(data);
+                    return _serializerAdapter.Deserialize<EndDoTriggerSearchMessage>(data);//Y
 
                 case KindOfMessage.SetConditionalTrigger:
-                    return _serializerAdapter.Deserialize<SetConditionalTriggerMessage>(data);
+                    return _serializerAdapter.Deserialize<SetConditionalTriggerMessage>(data);//<=
 
                 case KindOfMessage.ResetConditionalTrigger:
                     return _serializerAdapter.Deserialize<ResetConditionalTriggerMessage>(data);

@@ -20,23 +20,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common.Models;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
+    [MessagePackObject]
     public class WaitProcessInfoMessage : BaseMessage
     {
         /// <inheritdoc/>
         public override KindOfMessage KindOfMessage => KindOfMessage.WaitProcessInfo;
 
+        [Key(10)]
         public string WaitingProcessInfoId { get; set; }
+
+        [Key(11)]
         public MonitoredHumanizedLabel WaitingProcessInfo { get; set; }
+
+        [Key(12)]
         public List<MonitoredHumanizedLabel> Processes { get; set; }
+
+        [Key(13)]
         public string CallMethodId { get; set; }
 
         /// <inheritdoc/>

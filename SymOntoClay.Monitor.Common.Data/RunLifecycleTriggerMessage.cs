@@ -20,24 +20,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common.Models;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
+    [MessagePackObject]
     public class RunLifecycleTriggerMessage : BaseMessage
     {
         /// <inheritdoc/>
         public override KindOfMessage KindOfMessage => KindOfMessage.RunLifecycleTrigger;
 
+        [Key(10)]
         public string InstanceId { get; set; }
+
+        [Key(11)]
         public string Holder { get; set; }
+
+        [Key(12)]
         public int Status { get; set; }
+
+        [Key(13)]
         public string StatusStr { get; set; }
+
+        [Key(14)]
         public MonitoredHumanizedLabel Label { get; set; }
 
         /// <inheritdoc/>

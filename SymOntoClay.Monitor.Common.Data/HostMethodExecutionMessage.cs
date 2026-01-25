@@ -21,9 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using MessagePack;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {

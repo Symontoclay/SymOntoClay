@@ -22,9 +22,6 @@ SOFTWARE.*/
 
 using MessagePack;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data

@@ -35,6 +35,15 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(3, typeof(CallMethodMessage))]
     [Union(4, typeof(BaseValueMessage))]
     [Union(5, typeof(BaseMethodMessage))]
+    [Union(6, typeof(CodeFrameMessage))]
+    [Union(7, typeof(LeaveThreadExecutorMessage))]
+    [Union(8, typeof(GoBackToPrevCodeFrameMessage))]
+    [Union(9, typeof(StartProcessInfoMessage))]
+    [Union(10, typeof(BaseCancelMessage))]
+    [Union(11, typeof(BaseSetStatusMessage))]
+    [Union(12, typeof(WaitProcessInfoMessage))] 
+    [Union(13, typeof(RunLifecycleTriggerMessage))]
+    [Union(14, typeof(BaseConditionalTriggerMessage))]
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {

@@ -120,43 +120,43 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<EndHostMethodExecutionMessage>(data);//Y
 
                 case KindOfMessage.SystemExpr:
-                    return _serializerAdapter.Deserialize<SystemExprMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<SystemExprMessage>(data);//Y
 
                 case KindOfMessage.CodeFrame:
-                    return _serializerAdapter.Deserialize<CodeFrameMessage>(data);
+                    return _serializerAdapter.Deserialize<CodeFrameMessage>(data);//Y
 
                 case KindOfMessage.LeaveThreadExecutor:
-                    return _serializerAdapter.Deserialize<LeaveThreadExecutorMessage>(data);
+                    return _serializerAdapter.Deserialize<LeaveThreadExecutorMessage>(data);//Y
 
                 case KindOfMessage.GoBackToPrevCodeFrame:
-                    return _serializerAdapter.Deserialize<GoBackToPrevCodeFrameMessage>(data);
+                    return _serializerAdapter.Deserialize<GoBackToPrevCodeFrameMessage>(data);//Y
 
                 case KindOfMessage.StartProcessInfo:
-                    return _serializerAdapter.Deserialize<StartProcessInfoMessage>(data);
+                    return _serializerAdapter.Deserialize<StartProcessInfoMessage>(data);//Y
 
                 case KindOfMessage.CancelProcessInfo:
-                    return _serializerAdapter.Deserialize<CancelProcessInfoMessage>(data);
+                    return _serializerAdapter.Deserialize<CancelProcessInfoMessage>(data);//Y
 
                 case KindOfMessage.WeakCancelProcessInfo:
-                    return _serializerAdapter.Deserialize<WeakCancelProcessInfoMessage>(data);
+                    return _serializerAdapter.Deserialize<WeakCancelProcessInfoMessage>(data);//Y
 
                 case KindOfMessage.CancelInstanceExecution:
-                    return _serializerAdapter.Deserialize<CancelInstanceExecutionMessage>(data);
+                    return _serializerAdapter.Deserialize<CancelInstanceExecutionMessage>(data);//Y
 
                 case KindOfMessage.SetExecutionCoordinatorStatus:
-                    return _serializerAdapter.Deserialize<SetExecutionCoordinatorStatusMessage>(data);
+                    return _serializerAdapter.Deserialize<SetExecutionCoordinatorStatusMessage>(data);//Y
 
                 case KindOfMessage.SetProcessInfoStatus:
-                    return _serializerAdapter.Deserialize<SetProcessInfoStatusMessage>(data);
+                    return _serializerAdapter.Deserialize<SetProcessInfoStatusMessage>(data);//Y
 
                 case KindOfMessage.WaitProcessInfo:
-                    return _serializerAdapter.Deserialize<WaitProcessInfoMessage>(data);
+                    return _serializerAdapter.Deserialize<WaitProcessInfoMessage>(data);//Y
 
                 case KindOfMessage.RunLifecycleTrigger:
-                    return _serializerAdapter.Deserialize<RunLifecycleTriggerMessage>(data);
+                    return _serializerAdapter.Deserialize<RunLifecycleTriggerMessage>(data);//Y
 
                 case KindOfMessage.DoTriggerSearch:
-                    return _serializerAdapter.Deserialize<DoTriggerSearchMessage>(data);
+                    return _serializerAdapter.Deserialize<DoTriggerSearchMessage>(data);//<=
 
                 case KindOfMessage.EndDoTriggerSearch:
                     return _serializerAdapter.Deserialize<EndDoTriggerSearchMessage>(data);

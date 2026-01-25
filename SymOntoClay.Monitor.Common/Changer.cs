@@ -20,12 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common
 {
+    [MessagePackObject]
     public class Changer: IObjectToString
     {
         public Changer(KindOfChanger kindOfChanger, string id)
@@ -34,7 +36,10 @@ namespace SymOntoClay.Monitor.Common
             Id = id;
         }
 
+        [Key(0)]
         public KindOfChanger KindOfChanger { get; }
+
+        [Key(1)]
         public string Id { get; }
 
         /// <inheritdoc/>

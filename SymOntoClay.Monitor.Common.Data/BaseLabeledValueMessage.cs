@@ -29,6 +29,7 @@ namespace SymOntoClay.Monitor.Common.Data
 {
     [MessagePackObject]
     [Union(0, typeof(ParameterMessage))]
+    [Union(1, typeof(SystemExprMessage))]
     public abstract class BaseLabeledValueMessage : BaseValueMessage
     {
         [Key(13)]

@@ -20,13 +20,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common.DebugHelpers;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
+    [MessagePackObject]
+    [Union(0, typeof(BecomeInvisibleMessage))]
+    [Union(1, typeof(BecomeVisibleMessage))] 
+    [Union(2, typeof(ChangedAddFocusMessage))]
+    [Union(3, typeof(ChangedRemoveFocusMessage))]
+    [Union(4, typeof(ChangedDistanceMessage))]
+    //[Union(, typeof())]
     public abstract class BaseVisionFrameEventMessage: BaseVisionFrameMessage
     {
+        [Key(11)]
         public string ObjectId { get; set; }
 
         /// <inheritdoc/>

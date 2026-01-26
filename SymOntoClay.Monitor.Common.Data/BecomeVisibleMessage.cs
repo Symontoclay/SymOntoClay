@@ -20,17 +20,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common.DebugHelpers;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class BecomeVisibleMessage: BecomeInvisibleMessage
+    [MessagePackObject]
+    public class BecomeVisibleMessage: BaseVisionFrameEventMessage
     {
         /// <inheritdoc/>
         public override KindOfMessage KindOfMessage => KindOfMessage.BecomeVisible;
 
+        [Key(12)]
         public float Distance { get; set; }
+
+        [Key(13)]
         public string PublicInformationHumanizedStr { get; set; }
 
         /// <inheritdoc/>

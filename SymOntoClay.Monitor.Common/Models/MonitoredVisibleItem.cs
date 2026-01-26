@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using MessagePack;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using System.ComponentModel;
@@ -27,9 +28,13 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Models
 {
+    [MessagePackObject]
     public class MonitoredVisibleItem : IObjectToString
     {
+        [Key(0)]
         public string ObjectId { get; set; }
+
+        [Key(1)]
         public string PublicInformationHumanizedStr { get; set; }
 
         /// <inheritdoc/>

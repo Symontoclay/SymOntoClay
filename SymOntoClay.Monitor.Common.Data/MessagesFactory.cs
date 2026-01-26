@@ -213,50 +213,50 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<StopBuildPlanMessage>(data);//Y
 
                 case KindOfMessage.BeginVisionFrame:
-                    return _serializerAdapter.Deserialize<BeginVisionFrameMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<BeginVisionFrameMessage>(data);//Y
 
                 case KindOfMessage.BecomeInvisible:
-                    return _serializerAdapter.Deserialize<BecomeInvisibleMessage>(data);
+                    return _serializerAdapter.Deserialize<BecomeInvisibleMessage>(data);//Y
 
                 case KindOfMessage.BecomeVisible:
-                    return _serializerAdapter.Deserialize<BecomeVisibleMessage>(data);
+                    return _serializerAdapter.Deserialize<BecomeVisibleMessage>(data);//Y
 
                 case KindOfMessage.ChangedAddFocus:
-                    return _serializerAdapter.Deserialize<ChangedAddFocusMessage>(data);
+                    return _serializerAdapter.Deserialize<ChangedAddFocusMessage>(data);//Y
 
                 case KindOfMessage.ChangedRemoveFocus:
-                    return _serializerAdapter.Deserialize<ChangedRemoveFocusMessage>(data);
+                    return _serializerAdapter.Deserialize<ChangedRemoveFocusMessage>(data);//Y
 
                 case KindOfMessage.ChangedDistance:
-                    return _serializerAdapter.Deserialize<ChangedDistanceMessage>(data);
+                    return _serializerAdapter.Deserialize<ChangedDistanceMessage>(data);//Y
 
                 case KindOfMessage.DumpVisionFrame:
-                    return _serializerAdapter.Deserialize<DumpVisionFrameMessage>(data);
+                    return _serializerAdapter.Deserialize<DumpVisionFrameMessage>(data);//Y
 
                 case KindOfMessage.EndVisionFrame:
-                    return _serializerAdapter.Deserialize<EndVisionFrameMessage>(data);
+                    return _serializerAdapter.Deserialize<EndVisionFrameMessage>(data);//Y
 
                 case KindOfMessage.Output:
-                    return _serializerAdapter.Deserialize<OutputMessage>(data);
+                    return _serializerAdapter.Deserialize<OutputMessage>(data);//Y
 
                 case KindOfMessage.Trace:
-                    return _serializerAdapter.Deserialize<TraceMessage>(data);
+                    return _serializerAdapter.Deserialize<TraceMessage>(data);//Y
 
                 case KindOfMessage.Debug:
-                    return _serializerAdapter.Deserialize<DebugMessage>(data);
+                    return _serializerAdapter.Deserialize<DebugMessage>(data);//Y
 
                 case KindOfMessage.Info:
-                    return _serializerAdapter.Deserialize<InfoMessage>(data);
+                    return _serializerAdapter.Deserialize<InfoMessage>(data);//Y
 
                 case KindOfMessage.Warn:
-                    return _serializerAdapter.Deserialize<WarnMessage>(data);
+                    return _serializerAdapter.Deserialize<WarnMessage>(data);//Y
 
                 case KindOfMessage.Error:
-                    return _serializerAdapter.Deserialize<ErrorMessage>(data);
+                    return _serializerAdapter.Deserialize<ErrorMessage>(data);//Y
 
                 case KindOfMessage.Fatal:
-                    return _serializerAdapter.Deserialize<FatalMessage>(data);
-                    
+                    return _serializerAdapter.Deserialize<FatalMessage>(data);//Y
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
             }

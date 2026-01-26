@@ -50,6 +50,14 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(18, typeof(BaseTaskMessage))]
     [Union(19, typeof(StartBuildPlanMessage))]
     [Union(20, typeof(StopBuildPlanMessage))]
+    [Union(21, typeof(BaseVisionFrameMessage))]
+    [Union(22, typeof(OutputMessage))]
+    [Union(23, typeof(TraceMessage))]
+    [Union(24, typeof(DebugMessage))]
+    [Union(25, typeof(InfoMessage))]
+    [Union(26, typeof(WarnMessage))]
+    [Union(27, typeof(ErrorMessage))]
+    [Union(28, typeof(FatalMessage))]
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {

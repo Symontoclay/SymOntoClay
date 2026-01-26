@@ -210,10 +210,10 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<StartBuildPlanMessage>(data);//Y
 
                 case KindOfMessage.StopBuildPlan:
-                    return _serializerAdapter.Deserialize<StopBuildPlanMessage>(data);//<=
+                    return _serializerAdapter.Deserialize<StopBuildPlanMessage>(data);//Y
 
                 case KindOfMessage.BeginVisionFrame:
-                    return _serializerAdapter.Deserialize<BeginVisionFrameMessage>(data);
+                    return _serializerAdapter.Deserialize<BeginVisionFrameMessage>(data);//<=
 
                 case KindOfMessage.BecomeInvisible:
                     return _serializerAdapter.Deserialize<BecomeInvisibleMessage>(data);

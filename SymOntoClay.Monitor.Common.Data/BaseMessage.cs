@@ -49,6 +49,7 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(17, typeof(BaseFactLogicalStorageMessage))]
     [Union(18, typeof(BaseTaskMessage))]
     [Union(19, typeof(StartBuildPlanMessage))]
+    [Union(20, typeof(StopBuildPlanMessage))]
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {

@@ -57,7 +57,8 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(25, typeof(InfoMessage))]
     [Union(26, typeof(WarnMessage))]
     [Union(27, typeof(ErrorMessage))]
-    [Union(28, typeof(FatalMessage))]
+    [Union(28, typeof(FatalMessage))] 
+    [Union(29, typeof(AddFactToLogicalStorageMessage))]//tmp
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString
     {

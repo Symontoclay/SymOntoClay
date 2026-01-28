@@ -58,16 +58,16 @@ namespace SymOntoClay.Monitor.Internal
         public void ProcessMessage(BaseMessage message, IFileCache fileCache, bool enableRemoteConnection)
         {
 #if DEBUG
-            //_globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"message = {message}");
             //_globalLogger.Info($"enableRemoteConnection = {enableRemoteConnection}");
 #endif
 
             var data = _serializerAdapter.Serialize(message);
 
 #if DEBUG
-            //_globalLogger.Info($"text = {text}");
+            _globalLogger.Info($"data.Length = {data.Length}");
 #endif
-
+            
             var text = JsonConvert.SerializeObject(message);
 
 #if DEBUG

@@ -157,6 +157,12 @@ namespace SymOntoClay.SerializationAnalyzer
                             continue;
                         }
 
+                        var tmpList = NonRegisteredInBaseClasses(symbol);
+
+#if DEBUG
+                        FileLogger.WriteLn($" = {}");
+#endif
+
                         if (!IsRegistredInBaseClass(symbol, cls.Identifier.Text))
                         {
                             context.ReportDiagnostic(
@@ -424,6 +430,11 @@ namespace SymOntoClay.SerializationAnalyzer
  
             return baseType.GetAttributes()
                     .Any(a => a.AttributeClass?.Name == "MessagePackObjectAttribute");
+        }
+
+        private List<INamedTypeSymbol> NonRegisteredInBaseClasses(INamedTypeSymbol symbol)
+        {
+            return new List<INamedTypeSymbol>();
         }
 
         private bool IsRegistredInBaseClass(INamedTypeSymbol symbol, string className)

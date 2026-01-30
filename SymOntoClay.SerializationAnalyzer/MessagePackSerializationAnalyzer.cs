@@ -71,7 +71,7 @@ namespace SymOntoClay.SerializationAnalyzer
         private static readonly DiagnosticDescriptor ClassIsNotRegisteredInUnionAttributeOfBaseClassRule = new DiagnosticDescriptor(
             id: "MP007",
             title: "Class is not registered in Union attribute of base class",
-            messageFormat: "Class '{0}' must be registered in Union attribute of its base class",
+            messageFormat: "Class '{0}' must be registered in Union attribute of its base class {1}",
             category: DiagnosticDescriptorCategory,
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
@@ -139,6 +139,10 @@ namespace SymOntoClay.SerializationAnalyzer
 
                     foreach (var cls in classes)
                     {
+#if DEBUG
+                        FileLogger.WriteLn($"cls.Identifier.Text = {cls.Identifier.Text}");
+#endif
+
                         var symbol = semanticModel.GetDeclaredSymbol(cls) as INamedTypeSymbol;
 
                         if (symbol == null)
@@ -157,19 +161,38 @@ namespace SymOntoClay.SerializationAnalyzer
                             continue;
                         }
 
-                        var tmpList = NonRegisteredInBaseClasses(symbol);
+                        var missedBaseClasses = NonRegisteredInBaseClasses(symbol);
 
 #if DEBUG
-                        FileLogger.WriteLn($" = {}");
+                        FileLogger.WriteLn($"missedBaseClasses.Count() = {missedBaseClasses.Count()}");
 #endif
+
+                        if(missedBaseClasses.Any())
+                        {
+                            foreach(var missedBaseClass in missedBaseClasses)
+                            {
+#if DEBUG
+                                FileLogger.WriteLn($"missedBaseClass.Name = {missedBaseClass.Name}");
+#endif
+
+                                context.ReportDiagnostic(
+                                Diagnostic.Create(
+                                    ClassIsNotRegisteredInUnionAttributeOfBaseClassRule,
+                                    cls.GetLocation(),
+                                    cls.Identifier.Text,
+                                    missedBaseClass.Name));
+
+                                continue;
+                            }
+                        }
 
                         if (!IsRegistredInBaseClass(symbol, cls.Identifier.Text))
                         {
-                            context.ReportDiagnostic(
-                            Diagnostic.Create(
-                                ClassIsNotRegisteredInUnionAttributeOfBaseClassRule,
-                                cls.GetLocation(),
-                                cls.Identifier.Text));
+                            //context.ReportDiagnostic(
+                            //Diagnostic.Create(
+                            //    ClassIsNotRegisteredInUnionAttributeOfBaseClassRule,
+                            //    cls.GetLocation(),
+                            //    cls.Identifier.Text));
 
                             continue;
                         }
@@ -432,9 +455,52 @@ namespace SymOntoClay.SerializationAnalyzer
                     .Any(a => a.AttributeClass?.Name == "MessagePackObjectAttribute");
         }
 
-        private List<INamedTypeSymbol> NonRegisteredInBaseClasses(INamedTypeSymbol symbol)
+        private IEnumerable<INamedTypeSymbol> NonRegisteredInBaseClasses(INamedTypeSymbol checkedType)
         {
-            return new List<INamedTypeSymbol>();
+            return NonRegisteredInBaseClasses(checkedType, checkedType.BaseType);
+        }
+
+        private IEnumerable<INamedTypeSymbol> NonRegisteredInBaseClasses(INamedTypeSymbol checkedType, INamedTypeSymbol baseType)
+        {
+#if DEBUG
+            FileLogger.WriteLn($"checkedType.Name = {checkedType.Name}");
+            FileLogger.WriteLn($"baseType?.Name = {baseType?.Name}");
+#endif
+
+            if (baseType == null)
+            {
+                yield break;
+            }
+
+            if (baseType.Name == "Object")
+            {
+                yield break;
+            }
+
+            var unionAttrs = baseType.GetAttributes().Where(p => p.AttributeClass?.Name == "UnionAttribute");
+
+            var hasClass = unionAttrs.Any(attr =>
+                    attr.ConstructorArguments.Any(arg =>
+                        arg.Value is INamedTypeSymbol typeSymbol &&
+                        typeSymbol.Name == checkedType.Name));
+
+            if(!hasClass)
+            {
+                yield return baseType;
+            }
+
+#if DEBUG
+            FileLogger.WriteLn($"hasClass = {hasClass}");
+#endif
+
+            foreach(var type in NonRegisteredInBaseClasses(checkedType, baseType.BaseType))
+            {
+                yield return type;
+            }
+
+            //throw new NotImplementedException("38B1C4CA-6E15-4E31-A780-6A715809E024");
+
+            //return new List<INamedTypeSymbol>();
         }
 
         private bool IsRegistredInBaseClass(INamedTypeSymbol symbol, string className)

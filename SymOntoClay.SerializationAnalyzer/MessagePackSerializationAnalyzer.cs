@@ -186,16 +186,16 @@ namespace SymOntoClay.SerializationAnalyzer
                             }
                         }
 
-                        if (!IsRegistredInBaseClass(symbol, cls.Identifier.Text))
-                        {
-                            //context.ReportDiagnostic(
-                            //Diagnostic.Create(
-                            //    ClassIsNotRegisteredInUnionAttributeOfBaseClassRule,
-                            //    cls.GetLocation(),
-                            //    cls.Identifier.Text));
+                        //if (!IsRegistredInBaseClass(symbol, cls.Identifier.Text))
+                        //{
+                        //    //context.ReportDiagnostic(
+                        //    //Diagnostic.Create(
+                        //    //    ClassIsNotRegisteredInUnionAttributeOfBaseClassRule,
+                        //    //    cls.GetLocation(),
+                        //    //    cls.Identifier.Text));
 
-                            continue;
-                        }
+                        //    continue;
+                        //}
 
                         var unionAttributes = cls.AttributeLists
                             .SelectMany(p => p.Attributes)

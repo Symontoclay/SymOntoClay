@@ -31,6 +31,12 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(1, typeof(BaseVisionFrameEventMessage))]
     [Union(2, typeof(DumpVisionFrameMessage))]
     [Union(3, typeof(EndVisionFrameMessage))]
+    [Union(4, typeof(BecomeInvisibleMessage))]
+    [Union(5, typeof(BecomeVisibleMessage))]
+    [Union(6, typeof(ChangedAddFocusMessage))]
+    [Union(7, typeof(ChangedDistanceMessage))]
+    [Union(8, typeof(ChangedRemoveFocusMessage))]
+    //[Union(9, typeof())]
     //[Union(, typeof())]
     public abstract class BaseVisionFrameMessage: BaseMessage
     {

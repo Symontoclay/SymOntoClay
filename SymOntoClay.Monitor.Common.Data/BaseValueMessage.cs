@@ -29,7 +29,7 @@ namespace SymOntoClay.Monitor.Common.Data
     [MessagePackObject]
     [Union(0, typeof(BaseLabeledValueMessage))]
     [Union(1, typeof(ParameterMessage))]
-    //[Union(2, typeof())]
+    [Union(2, typeof(SystemExprMessage))]
     //[Union(3, typeof())]
     //[Union(4, typeof())]
     //[Union(, typeof())]

@@ -204,6 +204,8 @@ namespace SymOntoClay.SerializationAnalyzer
 
                         if(unionAttributes.Count > 0)
                         {
+                            var unionTypesMap = new Dictionary<ITypeSymbol, int>(SymbolEqualityComparer.Default);
+
                             var previousUnionKeyIndex = -1;
 
                             foreach (var attr in unionAttributes)
@@ -237,7 +239,7 @@ namespace SymOntoClay.SerializationAnalyzer
                                     continue;
                                 }
 
-                                if(unionKeyIndex != previousUnionKeyIndex +1)
+                                if (unionKeyIndex != previousUnionKeyIndex + 1)
                                 {
                                     var diagnostic = Diagnostic.Create(
                                         UnionAttributeIndicesAreNotSequentialRule,
@@ -247,6 +249,27 @@ namespace SymOntoClay.SerializationAnalyzer
                                 }
 
                                 previousUnionKeyIndex = unionKeyIndex;
+
+                                var secondArugument = attrArgs[1];
+
+#if DEBUG
+                                FileLogger.WriteLn($"secondArugument.Expression.GetType().Name = {secondArugument.Expression.GetType().Name}");
+#endif
+
+                                if (secondArugument.Expression is TypeOfExpressionSyntax typeOfExpression)
+                                {
+                                    var secondArugumentSemanticModel = context.Compilation.GetSemanticModel(typeOfExpression.SyntaxTree);
+
+                                    TypeSyntax typeSyntax = typeOfExpression.Type;
+                                    ITypeSymbol typeSymbol = semanticModel.GetTypeInfo(typeSyntax).Type;
+
+                                    if (typeSymbol != null)
+                                    {
+#if DEBUG
+                                        FileLogger.WriteLn($"typeSymbol = {typeSymbol.ToDisplayString()}");
+#endif
+                                    }
+                                }
                             }
                         }
 

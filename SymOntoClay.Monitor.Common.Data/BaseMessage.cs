@@ -104,8 +104,8 @@ namespace SymOntoClay.Monitor.Common.Data
     [Union(72, typeof(SetProcessInfoStatusMessage))]
     [Union(73, typeof(StartTaskMessage))]
     [Union(74, typeof(StopTaskMessage))]
-    //[Union(75, typeof())]
-    //[Union(76, typeof())]
+    [Union(75, typeof(SystemExprMessage))]
+    [Union(76, typeof(WeakCancelProcessInfoMessage))]
     //[Union(77, typeof())]
     //[Union(, typeof())]
     public abstract class BaseMessage : IObjectToString

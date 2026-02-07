@@ -28,6 +28,11 @@ namespace SymOntoClay.Monitor.Common.Data
 {
     [MessagePackObject]
     [Union(0, typeof(BaseLabeledValueMessage))]
+    [Union(1, typeof(ParameterMessage))]
+    //[Union(2, typeof())]
+    //[Union(3, typeof())]
+    //[Union(4, typeof())]
+    //[Union(, typeof())]
     public abstract class BaseValueMessage : BaseMessage
     {
         [Key(10)]

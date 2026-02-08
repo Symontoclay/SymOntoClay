@@ -68,7 +68,7 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"data.Length = {data.Length}");
 #endif
             
-            var text = JsonConvert.SerializeObject(message);
+            //var text = JsonConvert.SerializeObject(message);
 
 #if DEBUG
             //_globalLogger.Info($"text = {text}");
@@ -91,7 +91,7 @@ namespace SymOntoClay.Monitor.Internal
                     ThreadId = message.ThreadId,
                     GlobalMessageNumber = message.GlobalMessageNumber,
                     MessageNumber = message.MessageNumber,
-                    Text = text
+                    Data = data
                 };
 
 #if DEBUG

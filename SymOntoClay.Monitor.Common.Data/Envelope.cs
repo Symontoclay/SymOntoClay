@@ -51,7 +51,7 @@ namespace SymOntoClay.Monitor.Common.Data
         public ulong MessageNumber { get; set; }
 
         [DataMember]
-        public string Text { get; set; }
+        public byte[] Data { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -75,7 +75,8 @@ namespace SymOntoClay.Monitor.Common.Data
             sb.AppendLine($"{spaces}{nameof(ThreadId)} = {ThreadId}");
             sb.AppendLine($"{spaces}{nameof(GlobalMessageNumber)} = {GlobalMessageNumber}");
             sb.AppendLine($"{spaces}{nameof(MessageNumber)} = {MessageNumber}");
-            sb.AppendLine($"{spaces}{nameof(Text)} = {Text}");
+            sb.AppendLine($"{spaces}{nameof(Data.Length)} = {Data.Length}");
+            sb.AppendLine($"{spaces}{nameof(Data)} = {BitConverter.ToString(Data)}");
             return sb.ToString();
         }
     }

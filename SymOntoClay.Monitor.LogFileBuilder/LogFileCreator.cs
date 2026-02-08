@@ -137,7 +137,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                logger.Info($"fileName.Item2 = {fileName.Item2}");
+                //logger.Info($"fileName.Item2 = {fileName.Item2}");
 #endif
 
                 try
@@ -145,8 +145,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     data = File.ReadAllBytes(fileName.Item2);
 
 #if DEBUG
-                    _logger.Info($"data = {BitConverter.ToString(data)}");
-                    _logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
+                    //_logger.Info($"data = {BitConverter.ToString(data)}");
+                    //_logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
 #endif
 
                     message = messagesFactory.ReadMessage(data, fileName.Item1.KindOfMessage);

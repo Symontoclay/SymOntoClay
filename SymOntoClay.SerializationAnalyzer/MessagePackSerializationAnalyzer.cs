@@ -150,7 +150,7 @@ namespace SymOntoClay.SerializationAnalyzer
                     foreach (var cls in classes)
                     {
 #if DEBUG
-                        FileLogger.WriteLn($"cls.Identifier.Text = {cls.Identifier.Text}");
+                        //FileLogger.WriteLn($"cls.Identifier.Text = {cls.Identifier.Text}");
 #endif
 
                         var symbol = semanticModel.GetDeclaredSymbol(cls) as INamedTypeSymbol;
@@ -174,7 +174,7 @@ namespace SymOntoClay.SerializationAnalyzer
                         var missedBaseClasses = NonRegisteredInBaseClasses(symbol);
 
 #if DEBUG
-                        FileLogger.WriteLn($"missedBaseClasses.Count() = {missedBaseClasses.Count()}");
+                        //FileLogger.WriteLn($"missedBaseClasses.Count() = {missedBaseClasses.Count()}");
 #endif
 
                         if(missedBaseClasses.Any())
@@ -182,7 +182,7 @@ namespace SymOntoClay.SerializationAnalyzer
                             foreach(var missedBaseClass in missedBaseClasses)
                             {
 #if DEBUG
-                                FileLogger.WriteLn($"missedBaseClass.Name = {missedBaseClass.Name}");
+                                //FileLogger.WriteLn($"missedBaseClass.Name = {missedBaseClass.Name}");
 #endif
 
                                 context.ReportDiagnostic(
@@ -263,7 +263,7 @@ namespace SymOntoClay.SerializationAnalyzer
                                 var secondArugument = attrArgs[1];
 
 #if DEBUG
-                                FileLogger.WriteLn($"secondArugument.Expression.GetType().Name = {secondArugument.Expression.GetType().Name}");
+                                //FileLogger.WriteLn($"secondArugument.Expression.GetType().Name = {secondArugument.Expression.GetType().Name}");
 #endif
 
                                 if (secondArugument.Expression is TypeOfExpressionSyntax typeOfExpression)
@@ -276,13 +276,13 @@ namespace SymOntoClay.SerializationAnalyzer
                                     if (typeSymbol != null)
                                     {
 #if DEBUG
-                                        FileLogger.WriteLn($"typeSymbol = {typeSymbol.ToDisplayString()}");
+                                        //FileLogger.WriteLn($"typeSymbol = {typeSymbol.ToDisplayString()}");
 #endif
 
                                         if(seenUnionTypesMap.ContainsKey(typeSymbol))
                                         {
 #if DEBUG
-                                            FileLogger.WriteLn($"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                                            //FileLogger.WriteLn($"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 #endif
 
                                             context.ReportDiagnostic(Diagnostic.Create(
@@ -513,8 +513,8 @@ namespace SymOntoClay.SerializationAnalyzer
         private IEnumerable<INamedTypeSymbol> NonRegisteredInBaseClasses(INamedTypeSymbol checkedType, INamedTypeSymbol baseType)
         {
 #if DEBUG
-            FileLogger.WriteLn($"checkedType.Name = {checkedType.Name}");
-            FileLogger.WriteLn($"baseType?.Name = {baseType?.Name}");
+            //FileLogger.WriteLn($"checkedType.Name = {checkedType.Name}");
+            //FileLogger.WriteLn($"baseType?.Name = {baseType?.Name}");
 #endif
 
             if (baseType == null)
@@ -540,7 +540,7 @@ namespace SymOntoClay.SerializationAnalyzer
             }
 
 #if DEBUG
-            FileLogger.WriteLn($"hasClass = {hasClass}");
+            //FileLogger.WriteLn($"hasClass = {hasClass}");
 #endif
 
             foreach(var type in NonRegisteredInBaseClasses(checkedType, baseType.BaseType))

@@ -108,8 +108,18 @@ namespace SymOntoClay.SerializationAnalyzer
             description: "MessagePack's Union attribute requires indices to be sequential integers starting from 0. Any gaps or non-sequential ordering may cause serialization errors."
         );
 
-        public static readonly DiagnosticDescriptor DerivedClassWithoutMessagePackObjectAttributeRule = new DiagnosticDescriptor(
+        private static readonly DiagnosticDescriptor DuplicateUnionTypeRule = new DiagnosticDescriptor(
             id: "MP011",
+            title: "Duplicate type in Union attribute",
+            messageFormat: "The type '{0}' is already registered in the Union",
+            category: DiagnosticDescriptorCategory,
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "Each subtype in a Union hierarchy must be registered only once with a unique index."
+        );
+
+        public static readonly DiagnosticDescriptor DerivedClassWithoutMessagePackObjectAttributeRule = new DiagnosticDescriptor(
+            id: "MP012",
             title: "Derived class missing [MessagePackObject] attribute",
             messageFormat: "Derived class '{0}' of base class '{1}' must be annotated with [MessagePackObject] attribute",
             category: DiagnosticDescriptorCategory,
@@ -204,7 +214,7 @@ namespace SymOntoClay.SerializationAnalyzer
 
                         if(unionAttributes.Count > 0)
                         {
-                            var unionTypesMap = new Dictionary<ITypeSymbol, int>(SymbolEqualityComparer.Default);
+                            var seenUnionTypesMap = new Dictionary<ISymbol, Location>(SymbolEqualityComparer.Default);
 
                             var previousUnionKeyIndex = -1;
 
@@ -268,6 +278,23 @@ namespace SymOntoClay.SerializationAnalyzer
 #if DEBUG
                                         FileLogger.WriteLn($"typeSymbol = {typeSymbol.ToDisplayString()}");
 #endif
+
+                                        if(seenUnionTypesMap.ContainsKey(typeSymbol))
+                                        {
+#if DEBUG
+                                            FileLogger.WriteLn($"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+#endif
+
+                                            context.ReportDiagnostic(Diagnostic.Create(
+                                                DuplicateUnionTypeRule,
+                                                typeOfExpression.GetLocation(),
+                                                typeSymbol.ToDisplayString()
+                                            ));
+                                        }
+                                        else
+                                        {
+                                            seenUnionTypesMap.Add(typeSymbol, typeOfExpression.GetLocation());
+                                        }
                                     }
                                 }
                             }

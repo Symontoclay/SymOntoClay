@@ -46,7 +46,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         }
 
         public static string FileExt = ".soc_msg";
-
+        
         public static string GetFileName(string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, KindOfMessage kindOfMessage)
         {
 #if DEBUG

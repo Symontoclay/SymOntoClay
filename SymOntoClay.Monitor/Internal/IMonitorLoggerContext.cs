@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,8 @@ namespace SymOntoClay.Monitor.Internal
         MessageProcessor MessageProcessor { get; }
         IMonitorFeatures Features { get; }
         IList<IPlatformLogger> PlatformLoggers { get; }
-        IFileCache FileCache { get; }
+        //IFileCache FileCache { get; }
+        IFileWriter FileWriter { get; }
         MessageNumberGenerator GlobalMessageNumberGenerator { get; }
         MessageNumberGenerator MessageNumberGenerator { get; }
         string NodeId { get; }

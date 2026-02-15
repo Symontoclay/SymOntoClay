@@ -27,6 +27,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,8 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MonitorContext _monitorContext;
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
-        private readonly ThreadLoggerFileCache _fileCache;
+        //private readonly ThreadLoggerFileCache _fileCache;
+        private readonly IMonitorNodeFileWriter _fileWriter;
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
 
         private readonly string _nodeId;
@@ -76,7 +78,8 @@ namespace SymOntoClay.Monitor.Internal
             _monitorNodeContext = monitorNodeContext;
             _baseMonitorSettings = monitorNodeContext.Settings;
             _features = monitorNodeContext.Features;
-            _fileCache = monitorNodeContext.FileCache.CreateThreadLoggerFileCache(threadId);
+            _fileWriter = monitorNodeContext.FileWriter;
+            //_fileCache = monitorNodeContext.FileCache.CreateThreadLoggerFileCache(threadId);
 
             var monitorContext = monitorNodeContext.MonitorContext;
 
@@ -95,7 +98,8 @@ namespace SymOntoClay.Monitor.Internal
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorNodeContext.MonitorContext.PlatformLoggers;
-        IFileCache IMonitorLoggerContext.FileCache => _fileCache;
+        //IFileCache IMonitorLoggerContext.FileCache => _fileCache;
+        IFileWriter IMonitorLoggerContext.FileWriter => _fileWriter;
         MessageNumberGenerator IMonitorLoggerContext.GlobalMessageNumberGenerator => _globalMessageNumberGenerator;
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
         string IMonitorLoggerContext.NodeId => _nodeId;

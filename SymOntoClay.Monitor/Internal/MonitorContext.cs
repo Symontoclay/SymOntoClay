@@ -25,6 +25,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,8 @@ namespace SymOntoClay.Monitor.Internal
     public class MonitorContext : IObjectToString
     {
         public MonitorFeatures Features { get; set; }
-        public MonitorFileCache FileCache { get; set; }
+        //public MonitorFileCache FileCache { get; set; }
+        public IMonitorFileWriter FileWriter { get; set; }
         public MessageProcessor MessageProcessor { get; set; }
         public MessageNumberGenerator GlobalMessageNumberGenerator { get; set; } = new MessageNumberGenerator();
         public Action<string> OutputHandler { get; set; }
@@ -73,7 +75,7 @@ namespace SymOntoClay.Monitor.Internal
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.PrintObjProp(n, nameof(Features), Features);
-            sb.PrintExisting(n, nameof(FileCache), FileCache);
+            sb.PrintExisting(n, nameof(FileWriter), FileWriter);
             sb.PrintExisting(n, nameof(MessageProcessor), MessageProcessor);
             sb.PrintExisting(n, nameof(OutputHandler), OutputHandler);
             sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);

@@ -28,6 +28,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
         private readonly MonitorNodeFileCache _fileCache;
+        private readonly IMonitorNodeFileWriter _fileWriter;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
@@ -97,8 +99,11 @@ namespace SymOntoClay.Monitor.Internal
 
             _monitorNodeContext.Features = _features;
 
-            _fileCache = monitorContext.FileCache.CreateMonitorNodeFileCache(nodeId);
-            _monitorNodeContext.FileCache = _fileCache;
+            _fileWriter = monitorContext.FileWriter.CreateMonitorNodeFileWriter(nodeId);
+            _monitorNodeContext.FileWriter = _fileWriter;
+
+            //_fileCache = monitorContext.FileCache.CreateMonitorNodeFileCache(nodeId);
+            //_monitorNodeContext.FileCache = _fileCache;
             _monitorNodeContext.NodeId = nodeId;
 
             _monitorNodeContext.OutputHandler = monitorContext.OutputHandler;

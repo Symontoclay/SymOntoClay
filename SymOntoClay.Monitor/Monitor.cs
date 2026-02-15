@@ -30,6 +30,7 @@ using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Helpers;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace SymOntoClay.Monitor
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
         private readonly MonitorFileCache _fileCache;
+        private readonly IMonitorFileWriter _fileWriter;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CancellationTokenSource _linkedCancellationTokenSource;
@@ -137,8 +139,11 @@ namespace SymOntoClay.Monitor
             var now = DateTime.Now;
             _sessionName = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
 
+            _fileWriter = FileWriterFactory.CreateMonitorFileWriter(monitorSettings.KindOfSerialization, monitorSettings.MessagesDir, _sessionName);
+            _monitorContext.FileWriter = _fileWriter;
+
             _fileCache = new MonitorFileCache(monitorSettings.MessagesDir, _sessionName);
-            _monitorContext.FileCache = _fileCache;
+            //_monitorContext.FileCache = _fileCache;
 
             _messageProcessor = new MessageProcessor(_remoteMonitor, monitorSettings.KindOfSerialization);
 

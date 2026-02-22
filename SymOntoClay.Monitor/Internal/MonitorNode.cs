@@ -48,7 +48,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MonitorNodeContext _monitorNodeContext;
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
-        private readonly MonitorNodeFileCache _fileCache;
+        //private readonly MonitorNodeFileCache _fileCache;
         private readonly IMonitorNodeFileWriter _fileWriter;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
@@ -121,7 +121,8 @@ namespace SymOntoClay.Monitor.Internal
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;
-        IFileCache IMonitorLoggerContext.FileCache => _fileCache;
+        IFileWriter IMonitorLoggerContext.FileWriter => _fileWriter;
+        //IFileCache IMonitorLoggerContext.FileCache => _fileCache;
         MessageNumberGenerator IMonitorLoggerContext.GlobalMessageNumberGenerator => _globalMessageNumberGenerator;
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
         string IMonitorLoggerContext.NodeId => _nodeId;
@@ -834,12 +835,12 @@ namespace SymOntoClay.Monitor.Internal
                     //_globalLogger.Info($"NEXT");
 #endif
 
-                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
+                    _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
                 }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
+                _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
             }
 
             return new ThreadLogger(threadId, _monitorNodeContext);

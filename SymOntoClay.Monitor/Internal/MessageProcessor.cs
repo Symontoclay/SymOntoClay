@@ -25,6 +25,7 @@ using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Monitor.Internal.FileWriter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace SymOntoClay.Monitor.Internal
             _serializerAdapter = SerializerAdapterFactory.Create(kindOfSerialization);
         }
 
-        public void ProcessMessage(BaseMessage message, IFileCache fileCache, bool enableRemoteConnection)
+        public void ProcessMessage(BaseMessage message, /*IFileCache fileCache*/IFileWriter fileWriter, bool enableRemoteConnection)
         {
 #if DEBUG
             _globalLogger.Info($"message = {message}");
@@ -80,7 +81,8 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
-            fileCache.WriteFile(fileName, data);
+            throw new NotImplementedException("52319A7D-3C15-4980-AF5F-5C89525B2EC7");
+            //fileCache.WriteFile(fileName, data);
 
             if (_hasRemoteMonitor && enableRemoteConnection)
             {

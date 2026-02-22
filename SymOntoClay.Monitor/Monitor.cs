@@ -50,7 +50,7 @@ namespace SymOntoClay.Monitor
         private readonly IRemoteMonitor _remoteMonitor;
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
-        private readonly MonitorFileCache _fileCache;
+        //private readonly MonitorFileCache _fileCache;
         private readonly IMonitorFileWriter _fileWriter;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -142,7 +142,7 @@ namespace SymOntoClay.Monitor
             _fileWriter = FileWriterFactory.CreateMonitorFileWriter(monitorSettings.KindOfSerialization, monitorSettings.MessagesDir, _sessionName);
             _monitorContext.FileWriter = _fileWriter;
 
-            _fileCache = new MonitorFileCache(monitorSettings.MessagesDir, _sessionName);
+            //_fileCache = new MonitorFileCache(monitorSettings.MessagesDir, _sessionName);
             //_monitorContext.FileCache = _fileCache;
 
             _messageProcessor = new MessageProcessor(_remoteMonitor, monitorSettings.KindOfSerialization);
@@ -158,14 +158,15 @@ namespace SymOntoClay.Monitor
         public string SessionDirectoryName => _sessionName;
 
         /// <inheritdoc/>
-        public string SessionDirectoryFullName => _fileCache.AbsoluteDirectoryName;
+        public string SessionDirectoryFullName => _fileWriter.AbsoluteDirectoryName;
 
         Action<string> IMonitorLoggerContext.OutputHandler => _monitorContext.OutputHandler;
         Action<string> IMonitorLoggerContext.ErrorHandler => _monitorContext.ErrorHandler;
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;
-        IFileCache IMonitorLoggerContext.FileCache => _fileCache;
+        IFileWriter IMonitorLoggerContext.FileWriter => _fileWriter;
+        //IFileCache IMonitorLoggerContext.FileCache => _fileCache;
         MessageNumberGenerator IMonitorLoggerContext.GlobalMessageNumberGenerator => _globalMessageNumberGenerator;
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
         string IMonitorLoggerContext.NodeId => string.Empty;
@@ -852,12 +853,12 @@ namespace SymOntoClay.Monitor
                     //_globalLogger.Info($"NEXT");
 #endif
 
-                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
+                    _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _baseMonitorSettings.EnableRemoteConnection);
                 }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
+                _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _baseMonitorSettings.EnableRemoteConnection);
             }
 
             var nodeSettings = GetMonitorNodeSettings(nodeId);

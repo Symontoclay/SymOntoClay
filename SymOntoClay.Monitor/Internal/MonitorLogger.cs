@@ -28,6 +28,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,8 @@ namespace SymOntoClay.Monitor.Internal
             _messageProcessor = context.MessageProcessor;
             _features = context.Features;
             _platformLoggers = context.PlatformLoggers;
-            _fileCache = context.FileCache;
+            //_fileCache = context.FileCache;
+            _fileWriter = context.FileWriter;
             _globalMessageNumberGenerator = context.GlobalMessageNumberGenerator;
             _messageNumberGenerator = context.MessageNumberGenerator;
             _nodeId = context.NodeId;
@@ -78,7 +80,8 @@ namespace SymOntoClay.Monitor.Internal
 
         private MessageProcessor _messageProcessor;
         private IMonitorFeatures _features;
-        private IFileCache _fileCache;
+        private readonly IFileWriter _fileWriter;
+        //private IFileCache _fileCache;
         private MessageNumberGenerator _globalMessageNumberGenerator;
         private IList<IPlatformLogger> _platformLoggers;
 
@@ -4688,12 +4691,12 @@ namespace SymOntoClay.Monitor.Internal
                     //_globalLogger.Info($"NEXT");
 #endif
 
-                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+                    _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _context.EnableRemoteConnection);
                 }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+                _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _context.EnableRemoteConnection);
             }
         }
 

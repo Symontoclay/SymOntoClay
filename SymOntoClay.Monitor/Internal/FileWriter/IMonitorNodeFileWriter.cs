@@ -6,5 +6,6 @@ namespace SymOntoClay.Monitor.Internal.FileWriter
 {
     public interface IMonitorNodeFileWriter: IFileWriter
     {
+        IThreadLoggerFileWriter CreateThreadLoggerFileWriter(string theadId);
     }
 }

@@ -48,7 +48,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
         //private readonly ThreadLoggerFileCache _fileCache;
-        private readonly IMonitorNodeFileWriter _fileWriter;
+        private readonly IThreadLoggerFileWriter _fileWriter;
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
 
         private readonly string _nodeId;
@@ -78,7 +78,7 @@ namespace SymOntoClay.Monitor.Internal
             _monitorNodeContext = monitorNodeContext;
             _baseMonitorSettings = monitorNodeContext.Settings;
             _features = monitorNodeContext.Features;
-            _fileWriter = monitorNodeContext.FileWriter;
+            _fileWriter = monitorNodeContext.FileWriter.CreateThreadLoggerFileWriter(threadId);
             //_fileCache = monitorNodeContext.FileCache.CreateThreadLoggerFileCache(threadId);
 
             var monitorContext = monitorNodeContext.MonitorContext;

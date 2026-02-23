@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Monitor.Internal.FileCache;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,8 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.General
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
+        private readonly MonitorFileCache _fileCache;
+
         public MonitorFileWriter(string messagesDir, string sessionName)
         {
 #if DEBUG
@@ -17,16 +20,16 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.General
             _globalLogger.Info($"sessionName = {sessionName}");
 #endif
 
-            throw new NotImplementedException("25B3E7BC-5C20-42EC-B2AD-88D1C8C0227C");
+            _fileCache = new MonitorFileCache(messagesDir, sessionName);
         }
 
         /// <inheritdoc/>
-        public string AbsoluteDirectoryName => throw new NotImplementedException("A50156D3-3795-4980-B9E8-A71424CDC9B6");
+        public string AbsoluteDirectoryName => _fileCache.AbsoluteDirectoryName;
 
         /// <inheritdoc/>
         public IMonitorNodeFileWriter CreateMonitorNodeFileWriter(string nodeId)
         {
-            throw new NotImplementedException("ADFAE250-9AA6-4219-BDBD-D2A5280F659F");
+            return new MonitorNodeFileWriter();
         }
     }
 }

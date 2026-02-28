@@ -75,13 +75,15 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"text = {text}");
 #endif
 
-            var fileName = FileCacheItemInfo.GetFileName(message.NodeId, message.ThreadId, message.MessageNumber, message.GlobalMessageNumber, message.KindOfMessage);
+            //var fileName = FileCacheItemInfo.GetFileName(message.NodeId, message.ThreadId, message.MessageNumber, message.GlobalMessageNumber, message.KindOfMessage);
 
 #if DEBUG
             //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
-            throw new NotImplementedException("52319A7D-3C15-4980-AF5F-5C89525B2EC7");
+            fileWriter.WriteData(message.NodeId, message.ThreadId, message.MessageNumber, message.GlobalMessageNumber, message.KindOfMessage, data);
+
+            //throw new NotImplementedException("52319A7D-3C15-4980-AF5F-5C89525B2EC7");
             //fileCache.WriteFile(fileName, data);
 
             if (_hasRemoteMonitor && enableRemoteConnection)

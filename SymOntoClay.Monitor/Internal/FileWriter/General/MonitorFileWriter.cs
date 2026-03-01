@@ -30,7 +30,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.General
         /// <inheritdoc/>
         public IMonitorNodeFileWriter CreateMonitorNodeFileWriter(string nodeId)
         {
-            return new MonitorNodeFileWriter();
+            return new MonitorNodeFileWriter(nodeId, _fileCache);
         }
 
         /// <inheritdoc/>

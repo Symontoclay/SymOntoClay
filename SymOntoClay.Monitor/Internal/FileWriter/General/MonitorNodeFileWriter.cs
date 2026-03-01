@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 
 namespace SymOntoClay.Monitor.Internal.FileWriter.General
@@ -9,10 +10,12 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.General
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public MonitorNodeFileWriter()
+        public MonitorNodeFileWriter(string nodeId, MonitorFileCache parentMonitorFileCache)
         {
-            throw new NotImplementedException("ADFAE250-9AA6-4219-BDBD-D2A5280F659F");
+            _fileCache = parentMonitorFileCache.CreateMonitorNodeFileCache(nodeId);
         }
+
+        private readonly MonitorNodeFileCache _fileCache;
 
         /// <inheritdoc/>
         public IThreadLoggerFileWriter CreateThreadLoggerFileWriter(string theadId)
@@ -32,7 +35,13 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.General
             _globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
-            throw new NotImplementedException("F3630A88-60A7-49D2-892A-FB499DD00F6D");
+            var fileName = FileCacheItemInfo.GetFileName(nodeId, threadId, messageNumber, globalMessageNumber, kindOfMessage);
+
+#if DEBUG
+            _globalLogger.Info($"fileName = {fileName}");
+#endif
+
+            _fileCache.WriteFile(fileName, data);
         }
     }
 }

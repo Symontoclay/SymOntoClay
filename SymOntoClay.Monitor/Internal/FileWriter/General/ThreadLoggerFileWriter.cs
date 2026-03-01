@@ -4,24 +4,18 @@ using System;
 
 namespace SymOntoClay.Monitor.Internal.FileWriter.General
 {
-    public class MonitorNodeFileWriter: IMonitorNodeFileWriter
+    public class ThreadLoggerFileWriter: IThreadLoggerFileWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public MonitorNodeFileWriter(string nodeId, MonitorFileCache parentMonitorFileCache)
+        public ThreadLoggerFileWriter(string theadId, MonitorNodeFileCache parentMonitorNodeFileCache)
         {
-            _fileCache = parentMonitorFileCache.CreateMonitorNodeFileCache(nodeId);
+            _fileCache = parentMonitorNodeFileCache.CreateThreadLoggerFileCache(theadId);
         }
 
-        private readonly MonitorNodeFileCache _fileCache;
-
-        /// <inheritdoc/>
-        public IThreadLoggerFileWriter CreateThreadLoggerFileWriter(string theadId)
-        {
-            return new ThreadLoggerFileWriter(theadId, _fileCache);
-        }
+        private readonly ThreadLoggerFileCache _fileCache;
 
         /// <inheritdoc/>
         public void WriteData(string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, KindOfMessage kindOfMessage, byte[] data)

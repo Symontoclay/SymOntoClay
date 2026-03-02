@@ -43,7 +43,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             //_globalLogger.Info($"sessionName = {sessionName}");
 #endif
         }
-
+        
         public MonitorNodeFileCache CreateMonitorNodeFileCache(string nodeId)
         {
             return new MonitorNodeFileCache(_absoluteDirectory, _relativeDirectory, nodeId);

@@ -1,10 +1,11 @@
-﻿using SymOntoClay.Monitor.Common.Data;
+﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 
 namespace SymOntoClay.Monitor.Internal.FileWriter.General
 {
-    public class MonitorNodeFileWriter: IMonitorNodeFileWriter
+    public class MonitorNodeFileWriter: Disposable, IMonitorNodeFileWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();

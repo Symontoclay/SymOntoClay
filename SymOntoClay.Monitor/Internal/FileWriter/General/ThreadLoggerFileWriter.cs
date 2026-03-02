@@ -1,10 +1,11 @@
-﻿using SymOntoClay.Monitor.Common.Data;
+﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 
 namespace SymOntoClay.Monitor.Internal.FileWriter.General
 {
-    public class ThreadLoggerFileWriter: IThreadLoggerFileWriter
+    public class ThreadLoggerFileWriter: Disposable, IThreadLoggerFileWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();

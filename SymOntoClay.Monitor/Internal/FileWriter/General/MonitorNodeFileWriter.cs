@@ -15,7 +15,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.General
         {
             _fileCache = parentMonitorFileCache.CreateMonitorNodeFileCache(nodeId);
         }
-
+        
         private readonly MonitorNodeFileCache _fileCache;
 
         /// <inheritdoc/>

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common.Disposing;
 using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Common.Formats;
 using System;
 using System.IO;
 
@@ -20,7 +21,11 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
 
             _absoluteDirectory = Path.Combine(messagesDir, sessionName);
 
-            if(!Directory.Exists(_absoluteDirectory))
+#if DEBUG
+            _globalLogger.Info($"_absoluteDirectory = {_absoluteDirectory}");
+#endif
+
+            if (!Directory.Exists(_absoluteDirectory))
             {
                 Directory.CreateDirectory(_absoluteDirectory);
             }
@@ -57,7 +62,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             _globalLogger.Info($"nodeId = {nodeId}");
 #endif
 
-            throw new NotImplementedException("8B394F50-646D-439E-8211-4E9048E7E439");
+            return new MonitorNodeFileWriter(nodeId, _absoluteDirectory);
         }
 
         /// <inheritdoc/>
@@ -83,26 +88,8 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
 #if DEBUG
             _globalLogger.Info($"_dataStream.Position (after) = {_dataStream.Position}");
 #endif
-
-            _indexWriter.Write(nodeId?.Length ?? 0);
-
-            if(nodeId != null)
-            {
-                _indexWriter.Write(nodeId);
-            }          
             
-            _indexWriter.Write(threadId?.Length ?? 0);
-
-            if(threadId != null)
-            {
-                _indexWriter.Write(threadId);
-            }
-            
-            _indexWriter.Write(messageNumber);
-            _indexWriter.Write(globalMessageNumber);
-            _indexWriter.Write((int)kindOfMessage);
-            _indexWriter.Write(startPosition);
-            _indexWriter.Write(data.Length);
+            MonitorIndexFileRowFormat.Write(writer: _indexWriter, nodeId: nodeId, threadId: threadId, messageNumber: messageNumber, globalMessageNumber: globalMessageNumber, kindOfMessage: (int)kindOfMessage, startPosition: startPosition, dataLength: data.Length);
 
             _dataStream.Flush();//tmp
             _indexStream.Flush();//tmp

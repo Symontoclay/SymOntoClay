@@ -31,7 +31,21 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
                 Directory.CreateDirectory(_absoluteDirectory);
             }
 
-            throw new NotImplementedException("35C7EFCA-A0C4-494B-8D00-55D2C49A3D65");
+            var dataFileName = Path.Combine(_absoluteDirectory, "Logs.dat");
+
+#if DEBUG
+            _globalLogger.Info($"dataFileName = {dataFileName}");
+#endif
+
+            var indexFileName = Path.Combine(_absoluteDirectory, "Logs.idx");
+
+#if DEBUG
+            _globalLogger.Info($"indexFileName = {indexFileName}");
+#endif
+
+            _dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+            _indexStream = new FileStream(indexFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+            _indexWriter = new BinaryWriter(_indexStream);
         }
 
         private readonly string _absoluteDirectory;
@@ -58,6 +72,16 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
 #endif
 
             throw new NotImplementedException("DE2DB7FF-4CE2-4F8B-839D-5DDB79908475");
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _indexWriter.Dispose();
+            _dataStream.Dispose();
+            _indexStream.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

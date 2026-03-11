@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common.Disposing;
 using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Common.Formats;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
 {
-    public class MonitorNodeFileWriter : Disposable, IMonitorNodeFileWriter
+    public class MonitorNodeFileWriter : Disposable, IMonitorNodeFileWriter, IThreadLoggerFileWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -56,7 +57,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         /// <inheritdoc/>
         public IThreadLoggerFileWriter CreateThreadLoggerFileWriter(string theadId)
         {
-            throw new NotImplementedException("1D1ADB3D-BDE5-427C-B412-05E3CFF56EFC");
+            return this;
         }
 
         /// <inheritdoc/>
@@ -71,7 +72,22 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             _globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
-            throw new NotImplementedException("DE2DB7FF-4CE2-4F8B-839D-5DDB79908475");
+            var startPosition = _dataStream.Position;
+
+#if DEBUG
+            _globalLogger.Info($"startPosition = {startPosition}");
+#endif
+
+            _dataStream.Write(data, 0, data.Length);
+
+#if DEBUG
+            _globalLogger.Info($"_dataStream.Position (after) = {_dataStream.Position}");
+#endif
+
+            MonitorIndexFileRowFormat.Write(writer: _indexWriter, nodeId: nodeId, threadId: threadId, messageNumber: messageNumber, globalMessageNumber: globalMessageNumber, kindOfMessage: (int)kindOfMessage, startPosition: startPosition, dataLength: data.Length);
+
+            _dataStream.Flush();//tmp
+            _indexStream.Flush();//tmp
         }
 
         /// <inheritdoc/>

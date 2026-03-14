@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.Common;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -96,7 +97,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var options = LoadOptions(defaultConfiguration, logFileBuilderOptions.ConfigurationFileName);
 
 #if DEBUG
-            //_logger.Info($"options = {options}");            
+            _logger.Info($"options = {options}");            
 #endif
 
             if (logFileBuilderOptions.Mode != null)
@@ -104,7 +105,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 options.Mode = logFileBuilderOptions.Mode;
             }
 
-            throw new NotImplementedException();
+            if (logFileBuilderOptions.SerializationMode != null)
+            {
+                options.SerializationMode = logFileBuilderOptions.SerializationMode;
+            }
 
             if (logFileBuilderOptions.Input != null)
             {
@@ -153,8 +157,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
 #if DEBUG
             //options.Mode = LogFileBuilderMode.StatAndFiles;
-            //_logger.Info($"options (2) = {options}");
+            _logger.Info($"options (2) = {options}");
 #endif
+
+            //throw new NotImplementedException("1BABA355-14B7-4B1A-9D3C-92F36191B34B");
 
             Run(options);
         }
@@ -218,7 +224,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 ConfigurationFileName = (parsedArgs.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string)),
                 ToHtml = (parsedArgs.TryGetValue("--html", out var toHtml) ? (bool)toHtml : null),
                 IsAbsUrl = (parsedArgs.TryGetValue("--abs-url", out var isAbsUrl) ? (bool)isAbsUrl : null),
-                Mode = (parsedArgs.TryGetValue("--mode", out var mode) ? (LogFileBuilderMode)mode : LogFileBuilderMode.LogFile)
+                Mode = (parsedArgs.TryGetValue("--mode", out var mode) ? (LogFileBuilderMode)mode : LogFileBuilderMode.LogFile),
+                SerializationMode = (parsedArgs.TryGetValue("--serialization-mode", out var serializationMode) ? (KindOfSerialization)serializationMode : KindOfSerialization.MessagePack),
             };
 
             return (logFileBuilderOptions, false);

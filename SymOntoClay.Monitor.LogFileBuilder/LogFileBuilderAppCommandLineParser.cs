@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.CLI.Helpers.CommandLineParsing;
 using SymOntoClay.CLI.Helpers.CommandLineParsing.Options;
 using SymOntoClay.CLI.Helpers.CommandLineParsing.Options.TypeCheckers;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
@@ -166,6 +167,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                                     Name = "--mode",
                                     Kind = KindOfCommandLineArgument.SingleValue,
                                     TypeChecker = new EnumChecker<LogFileBuilderMode>()
+                                },
+                                new CommandLineArgument
+                                {
+                                    Name = "--serialization-mode",
+                                    Kind = KindOfCommandLineArgument.SingleValue,
+                                    TypeChecker = new EnumChecker<KindOfSerialization>()
                                 }
                             }
                         }

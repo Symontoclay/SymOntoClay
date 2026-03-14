@@ -41,8 +41,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> GetFileNames(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
 #endif
+
+            throw new NotImplementedException("83058016-E54A-4CF3-98B0-5211C7064177");
 
             var fileNamesList = new List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)>();
 
@@ -50,7 +52,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             return fileNamesList;
         }
-
+        
         private static void FillUpFileNames(ref List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG

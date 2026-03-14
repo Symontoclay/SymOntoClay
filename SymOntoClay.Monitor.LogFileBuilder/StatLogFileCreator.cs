@@ -121,8 +121,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG
-            //_logger.Info($"fileNamesList.Count = {fileNamesList.Count}");
+            _logger.Info($"fileNamesList.Count = {fileNamesList.Count}");
 #endif
+
+            throw new NotImplementedException("8CDD0CCF-93A7-4EEB-8C1D-D3DEE104CF2C");
 
             if (showStages)
             {

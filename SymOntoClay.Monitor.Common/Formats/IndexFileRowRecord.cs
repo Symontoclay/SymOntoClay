@@ -1,4 +1,14 @@
-﻿namespace SymOntoClay.Monitor.Common.Formats
+﻿namespace System.Runtime.CompilerServices
+{
+    using System.ComponentModel;
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static class IsExternalInit
+    {
+    }
+}
+
+namespace SymOntoClay.Monitor.Common.Formats
 {
     public readonly record struct IndexFileRowRecord(
         string NodeId,

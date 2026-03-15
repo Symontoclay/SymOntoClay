@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.LogFileBuilder.FilleReader;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -103,7 +104,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
                 }
 
-                logger.Info("Fetching file names");
+                logger.Info("Fetching index items");
             }
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
@@ -118,6 +119,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Source: '{options.SourceDirectoryName}'"));            
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
+            var fileReader = FileReaderFactory.CreateMonitorFileReader(options.SerializationMode.Value);
+
+            var indexRowRecordsList = fileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
+
+#if DEBUG
+            _logger.Info($"indexRowRecordsList.Count = {indexRowRecordsList.Count}");
+#endif
+
             var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG
@@ -128,7 +137,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (showStages)
             {
-                logger.Info($"Fetched {fileNamesList.Count} file names");
+                logger.Info($"Fetched {fileNamesList.Count} index items");
             }
 
             var fileNamesDictByNodes = fileNamesList.GroupBy(p => p.Item1.NodeId).ToDictionary(p => p.Key, p => p.ToList());

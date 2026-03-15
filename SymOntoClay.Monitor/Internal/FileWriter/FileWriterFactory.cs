@@ -14,9 +14,10 @@ namespace SymOntoClay.Monitor.Internal.FileWriter
 
                 case KindOfSerialization.MessagePack:
                     return new SymOntoClay.Monitor.Internal.FileWriter.Binary.MonitorFileWriter(messagesDir, sessionName);
-            }
 
-            throw new NotImplementedException($"62A708F8-3DED-40DD-8D89-664328E49F80: {kindOfSerialization}");
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, "62A708F8-3DED-40DD-8D89-664328E49F80");
+            }
         }
     }
 }

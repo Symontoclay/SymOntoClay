@@ -30,4 +30,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FilleReader\General\" />
+  </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
     <Copyright>Copyright (c) 2020 - 2026 Sergiy Tolkachov aka metatypeman</Copyright>
     <AssemblyName>SymOntoClay.UnityAsset.Core.Tests</AssemblyName>
     <Nullable>disable</Nullable>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>

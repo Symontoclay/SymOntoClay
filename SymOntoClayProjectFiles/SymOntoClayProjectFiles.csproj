@@ -8,6 +8,7 @@
     <AssemblyName>SymOntoClay.ProjectFiles</AssemblyName>
     <RootNamespace>SymOntoClay.ProjectFiles</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClay.ProjectFiles.xml</DocumentationFile>

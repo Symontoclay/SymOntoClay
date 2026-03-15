@@ -10,6 +10,7 @@
     <AssemblyName>SymOntoClay.BaseTestLib</AssemblyName>
     <RootNamespace>SymOntoClay.BaseTestLib</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Libs\SymOntoClay.Libs.csproj" />

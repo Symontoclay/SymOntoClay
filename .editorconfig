@@ -1,6 +1,6 @@
 ﻿[*.cs]
 
-# CS8618: Поле, не допускающее значения NULL, должно содержать значение, отличное от NULL, при выходе из конструктора. Возможно, стоит объявить поле как допускающее значения NULL.
+# CS8618: A non-nullable field must contain a non-null value when exiting the constructor.
 dotnet_diagnostic.CS8618.severity = none
 
 # NUnit2005: Consider using Assert.That(actual, Is.EqualTo(expected)) instead of Assert.AreEqual(expected, actual)

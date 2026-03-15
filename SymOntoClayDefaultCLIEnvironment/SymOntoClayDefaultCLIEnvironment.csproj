@@ -8,6 +8,7 @@
     <AssemblyName>SymOntoClay.DefaultCLIEnvironment</AssemblyName>
     <RootNamespace>SymOntoClay.DefaultCLIEnvironment</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClayDefaultCLIEnvironment.xml</DocumentationFile>

@@ -30,7 +30,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 
             FillUpFileRowRecords(ref result, targetDirectoryName, targetKindOfMessages, 1, targetNodes, targetThreads);
 
-            throw new NotImplementedException("353BDAF9-AF2A-4C24-80CF-9DA637C46DCB");
+            return result;
         }
 
         private void FillUpFileRowRecords(ref List<IndexFileRowRecord> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
@@ -85,9 +85,18 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                 _globalLogger.Info($"recordsList.Count = {recordsList.Count}");
                 _globalLogger.Info($"recordsList = {recordsList.WritePODListToString()}");
 #endif
+
+                result.AddRange(recordsList);
             }
 
-            throw new NotImplementedException("2893FD89-655C-4749-B8EB-A4CFF2D083E0");
+            var subDirectories = Directory.GetDirectories(targetDirectoryName);
+
+            var nextLevelNum = levelNum + 1;
+
+            foreach (var subDirectory in subDirectories)
+            {
+                FillUpFileRowRecords(ref result, subDirectory, targetKindOfMessages, nextLevelNum, targetNodes, targetThreads);
+            }
         }
 
         private List<IndexFileRowRecord> ReadIndexFile(string indexFileName, string logFileName)
@@ -110,7 +119,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                 _globalLogger.Info($"idxRecord = {idxRecord}");
 #endif
 
-                records.Add(new IndexFileRowRecord(
+                var record = new IndexFileRowRecord(
                         NodeId: idxRecord.NodeId,
                         ThreadId: idxRecord.ThreadId,
                         MessageNumber: idxRecord.MessageNumber,
@@ -119,7 +128,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                         StartPosition: idxRecord.StartPosition,
                         DataLength: idxRecord.DataLength,
                         FileName: logFileName
-                    ));
+                    );
+
+#if DEBUG
+                _globalLogger.Info($"record = {record}");
+#endif
+
+                records.Add(record);
             }
 
             return records;

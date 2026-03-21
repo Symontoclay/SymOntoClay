@@ -10,7 +10,7 @@ namespace SymOntoClay.Monitor.Common.Formats
         private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        private static int _lengthForNull = 0;
+        private static int _lengthForNull = -1;
 
         public static void Write(BinaryWriter writer, string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, int kindOfMessage, long startPosition, int dataLength)
         {

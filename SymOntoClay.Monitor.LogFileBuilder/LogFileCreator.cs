@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.LogFileBuilder.FilleReader;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,12 +83,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
 
-            RunWithPreparedOptions(options, logger, fileStreamsStorage, logFileCreatorContext, fileNamesList);
+            //RunWithPreparedOptions(options, logger, fileStreamsStorage, logFileCreatorContext, fileNamesList);//tmp
         }
 
-        public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, LogFileCreatorContext logFileCreatorContext, List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> fileNamesList)
+        public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, LogFileCreatorContext logFileCreatorContext, List<IndexFileRowRecord> itemIndexRowRecordsList)
         {
-            fileNamesList = fileNamesList.OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
+            itemIndexRowRecordsList = itemIndexRowRecordsList.OrderBy(p => p.GlobalMessageNumber).ToList();
 
             var showStages = (!(options.Silent ?? false)) && (logger != null);
 
@@ -101,11 +102,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 logger.Info("Fetching file names");
             }
 
-            var fileNamesListCount = fileNamesList.Count;
+            var itemIndexRowRecordsListCount = itemIndexRowRecordsList.Count;
 
             if (showStages)
             {
-                logger.Info($"Fetched {fileNamesListCount} file names");
+                logger.Info($"Fetched {itemIndexRowRecordsListCount} file names");
             }
 
             var hasFiltering = options.TargetNodes != null || options.TargetThreads != null;
@@ -128,32 +129,35 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             byte[] data = null;
             BaseMessage message = null;
 
-            foreach (var fileName in fileNamesList)
+            foreach (var itemIndexRowRecord in itemIndexRowRecordsList)
             {
                 if (showStages)
                 {
                     n++;
-                    logger.Info($"{n} from {fileNamesListCount}");
+                    logger.Info($"{n} from {itemIndexRowRecordsListCount}");
                 }
 
 #if DEBUG
-                //logger.Info($"fileName.Item2 = {fileName.Item2}");
+               logger.Info($"itemIndexRowRecord.FileName = {itemIndexRowRecord.FileName}");
 #endif
 
                 try
                 {
-                    data = File.ReadAllBytes(fileName.Item2);
+                    data = File.ReadAllBytes(itemIndexRowRecord.FileName);
 
 #if DEBUG
+                    _logger.Info($"data.Length = {data.Length}");
                     //_logger.Info($"data = {BitConverter.ToString(data)}");
-                    //_logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
+                    _logger.Info($"itemIndexRowRecord.KindOfMessage = {itemIndexRowRecord.KindOfMessage}");
 #endif
 
-                    message = messagesFactory.ReadMessage(data, fileName.Item1.KindOfMessage);
+                    message = messagesFactory.ReadMessage(data, itemIndexRowRecord.KindOfMessage);
 
 #if DEBUG
                     _logger.Info($"message = {message}");
 #endif
+
+                    throw new NotImplementedException("0AF81867-2E69-41AF-B8C1-DA2A71486352");
 
                     if (options.TargetNodes != null)
                     {
@@ -216,7 +220,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (showStages)
             {
-                logger.Info($"All fetched {fileNamesListCount} file names processed.");
+                logger.Info($"All fetched {itemIndexRowRecordsListCount} file names processed.");
 
                 if (hasFiltering)
                 {

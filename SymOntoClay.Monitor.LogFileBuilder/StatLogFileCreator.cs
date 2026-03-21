@@ -127,42 +127,43 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"indexRowRecordsList.Count = {indexRowRecordsList.Count}");
 #endif
 
-            var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, null, null, null);
+            /*var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG
             _logger.Info($"fileNamesList.Count = {fileNamesList.Count}");
 #endif
 
             throw new NotImplementedException("8CDD0CCF-93A7-4EEB-8C1D-D3DEE104CF2C");
+            */
 
             if (showStages)
             {
-                logger.Info($"Fetched {fileNamesList.Count} index items");
+                logger.Info($"Fetched {indexRowRecordsList.Count} index items");
             }
 
-            var fileNamesDictByNodes = fileNamesList.GroupBy(p => p.Item1.NodeId).ToDictionary(p => p.Key, p => p.ToList());
+            var indexRowRecordsDictByNodes = indexRowRecordsList.GroupBy(p => p.NodeId).ToDictionary(p => p.Key, p => p.ToList());
 
 #if DEBUG
-            //_logger.Info($"fileNamesDictByNodes.Count = {fileNamesDictByNodes.Count}");
+            _logger.Info($"indexRowRecordsDictByNodes.Count = {indexRowRecordsDictByNodes.Count}");
 #endif
 
             outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
-            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {fileNamesList.Count}"));
-            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Nodes: {fileNamesDictByNodes.Count}"));
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {indexRowRecordsList.Count}"));
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Nodes: {indexRowRecordsDictByNodes.Count}"));
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
             outputSw.WriteLine(logFileCreatorContext.LineSeparator());
 
-            foreach (var fileNamesByNodesKvpItem in fileNamesDictByNodes.OrderByDescending(p => p.Value.Count))
+            foreach (var indexRowRecordsByNodesKvpItem in indexRowRecordsDictByNodes.OrderByDescending(p => p.Value.Count))
             {
 #if DEBUG
-                //_logger.Info($"fileNamesByNodesKvpItem.Key = {fileNamesByNodesKvpItem.Key}");
-                //_logger.Info($"fileNamesByNodesKvpItem.Value.Count = {fileNamesByNodesKvpItem.Value.Count}");
-                //_logger.Info($"fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal) = {fileNamesByNodesKvpItem.Value.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}");
+                _logger.Info($"indexRowRecordsByNodesKvpItem.Key = {indexRowRecordsByNodesKvpItem.Key}");
+                _logger.Info($"indexRowRecordsByNodesKvpItem.Value.Count = {indexRowRecordsByNodesKvpItem.Value.Count}");
+                _logger.Info($"indexRowRecordsByNodesKvpItem.Value.Count(p => p.KindOfMessage == Common.Data.KindOfMessage.Error || p.KindOfMessage == Common.Data.KindOfMessage.Fatal) = {indexRowRecordsByNodesKvpItem.Value.Count(p => p.KindOfMessage == Common.Data.KindOfMessage.Error || p.KindOfMessage == Common.Data.KindOfMessage.Fatal)}");
 #endif
 
-                var nodeId = fileNamesByNodesKvpItem.Key;
-                var itemFileNamesList = fileNamesByNodesKvpItem.Value;
+                var nodeId = indexRowRecordsByNodesKvpItem.Key;
+                var itemIndexRowRecordsList = indexRowRecordsByNodesKvpItem.Value;
 
                 (string AbsoluteName, string RelativeName) itemLogFileName = (string.Empty, string.Empty);
 
@@ -185,7 +186,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                             _logger.Info($"itemOptions = {itemOptions}");
 #endif
 
-                            LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemFileNamesList);
+                            LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemIndexRowRecordsList);
 
                             itemLogFileName = fileStreamsStorage.GetFileComplexName(nodeId, string.Empty);
                         }
@@ -196,7 +197,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                //_logger.Info($"itemLogFileName = {itemLogFileName}");
+                _logger.Info($"itemLogFileName = {itemLogFileName}");
 #endif
 
                 outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
@@ -223,10 +224,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
                 }
                 
-                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {itemFileNamesList.Count}"));
-                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {itemFileNamesList.Count(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.Error || p.Item1.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {itemIndexRowRecordsList.Count}"));
+                outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Errors: {itemIndexRowRecordsList.Count(p => p.KindOfMessage == Common.Data.KindOfMessage.Error || p.KindOfMessage == Common.Data.KindOfMessage.Fatal)}"));
 
-                var dumpVisionFramesFileNames = itemFileNamesList.Where(p => p.Item1.KindOfMessage == Common.Data.KindOfMessage.DumpVisionFrame).ToList();
+                var dumpVisionFramesFileNames = itemIndexRowRecordsList.Where(p => p.KindOfMessage == Common.Data.KindOfMessage.DumpVisionFrame).ToList();
 
                 var visibleObjectIds = new List<string>();
 
@@ -243,14 +244,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                     try
                     {
-                        data = File.ReadAllBytes(fileName.Item2);
+                        data = File.ReadAllBytes(fileName.FileName);
 
 #if DEBUG
                         //_logger.Info($"text = {text}");
                         //_logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
 #endif
 
-                        message = messagesFactory.ReadMessage(data, fileName.Item1.KindOfMessage) as DumpVisionFrameMessage;
+                        message = messagesFactory.ReadMessage(data, fileName.KindOfMessage) as DumpVisionFrameMessage;
 
 #if DEBUG
                         //_logger.Info($"message = {message}");

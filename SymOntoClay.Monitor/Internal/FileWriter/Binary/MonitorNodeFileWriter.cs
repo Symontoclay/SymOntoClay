@@ -64,24 +64,24 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         public void WriteData(string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, KindOfMessage kindOfMessage, byte[] data)
         {
 #if DEBUG
-            //_globalLogger.Info($"nodeId = {nodeId}");
-            //_globalLogger.Info($"threadId = {threadId}");
-            //_globalLogger.Info($"messageNumber = {messageNumber}");
-            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
-            //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
-            //_globalLogger.Info($"data.Length = {data.Length}");
+            _globalLogger.Info($"nodeId = {nodeId}");
+            _globalLogger.Info($"threadId = {threadId}");
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+            _globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
             var startPosition = _dataStream.Position;
 
 #if DEBUG
-            //_globalLogger.Info($"startPosition = {startPosition}");
+            _globalLogger.Info($"startPosition = {startPosition}");
 #endif
 
             _dataStream.Write(data, 0, data.Length);
 
 #if DEBUG
-            //_globalLogger.Info($"_dataStream.Position (after) = {_dataStream.Position}");
+            _globalLogger.Info($"_dataStream.Position (after) = {_dataStream.Position}");
 #endif
 
             MonitorIndexFileRowFormat.Write(writer: _indexWriter, nodeId: nodeId, threadId: threadId, messageNumber: messageNumber, globalMessageNumber: globalMessageNumber, kindOfMessage: (int)kindOfMessage, startPosition: startPosition, dataLength: data.Length);

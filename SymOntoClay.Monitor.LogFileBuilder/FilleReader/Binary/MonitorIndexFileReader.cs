@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 {
-    public class MonitorFileReader: IFileReader
+    public class MonitorIndexFileReader: IIndexFileReader
     {
 #if DEBUG
         private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
@@ -23,7 +23,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
         public List<IndexFileRowRecord> GetIndexFileRowRecords(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
 #endif
 
             var result = new List<IndexFileRowRecord>();
@@ -36,9 +36,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
         private void FillUpFileRowRecords(ref List<IndexFileRowRecord> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
-            _globalLogger.Info($"levelNum = {levelNum}");
-            _globalLogger.Info($"targetNodes?.Count() = {targetNodes?.Count()}");
+            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            //_globalLogger.Info($"levelNum = {levelNum}");
+            //_globalLogger.Info($"targetNodes?.Count() = {targetNodes?.Count()}");
 #endif
 
             switch (levelNum)
@@ -49,7 +49,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                         var directoryInfo = new DirectoryInfo(targetDirectoryName);
 
 #if DEBUG
-                        _globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
+                        //_globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
 #endif
 
                         if (!targetNodes.Contains(directoryInfo.Name))
@@ -66,8 +66,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
             var logFileName = Path.Combine(targetDirectoryName, "Logs.dat");
 
 #if DEBUG
-            _globalLogger.Info($"logFileName = {logFileName}");
-            _globalLogger.Info($"File.Exists(logFileName) = {File.Exists(logFileName)}");
+            //_globalLogger.Info($"logFileName = {logFileName}");
+            //_globalLogger.Info($"File.Exists(logFileName) = {File.Exists(logFileName)}");
 #endif
 
             var indexFileName = Path.Combine(targetDirectoryName, "Logs.idx");
@@ -82,8 +82,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                 var recordsList = ReadIndexFile(indexFileName, logFileName);
 
 #if DEBUG
-                _globalLogger.Info($"recordsList.Count = {recordsList.Count}");
-                _globalLogger.Info($"recordsList = {recordsList.WritePODListToString()}");
+                //_globalLogger.Info($"recordsList.Count = {recordsList.Count}");
+                //_globalLogger.Info($"recordsList = {recordsList.WritePODListToString()}");
 #endif
 
                 result.AddRange(recordsList);
@@ -102,8 +102,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
         private List<IndexFileRowRecord> ReadIndexFile(string indexFileName, string logFileName)
         {
 #if DEBUG
-            _globalLogger.Info($"indexFileName = {indexFileName}");
-            _globalLogger.Info($"logFileName = {logFileName}");
+            //_globalLogger.Info($"indexFileName = {indexFileName}");
+            //_globalLogger.Info($"logFileName = {logFileName}");
 #endif
 
             var records = new List<IndexFileRowRecord>();
@@ -116,7 +116,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                 var idxRecord = MonitorIndexFileRowFormat.Read(reader);
 
 #if DEBUG
-                _globalLogger.Info($"idxRecord = {idxRecord}");
+                //_globalLogger.Info($"idxRecord = {idxRecord}");
 #endif
 
                 var record = new IndexFileRowRecord(
@@ -131,7 +131,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                     );
 
 #if DEBUG
-                _globalLogger.Info($"record = {record}");
+                //_globalLogger.Info($"record = {record}");
 #endif
 
                 records.Add(record);

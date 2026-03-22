@@ -86,7 +86,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //RunWithPreparedOptions(options, logger, fileStreamsStorage, logFileCreatorContext, fileNamesList);//tmp
         }
 
-        public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, LogFileCreatorContext logFileCreatorContext, List<IndexFileRowRecord> itemIndexRowRecordsList)
+        public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, IDataFileReader dataFileReader, LogFileCreatorContext logFileCreatorContext, List<IndexFileRowRecord> itemIndexRowRecordsList)
         {
             itemIndexRowRecordsList = itemIndexRowRecordsList.OrderBy(p => p.GlobalMessageNumber).ToList();
 
@@ -143,11 +143,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 try
                 {
-                    data = File.ReadAllBytes(itemIndexRowRecord.FileName);
+                    data = dataFileReader.Read(itemIndexRowRecord.FileName, itemIndexRowRecord.StartPosition, itemIndexRowRecord.DataLength);
+                    
+
+                    //var old_data = File.ReadAllBytes(itemIndexRowRecord.FileName);
 
 #if DEBUG
                     _logger.Info($"data.Length = {data.Length}");
-                    //_logger.Info($"data = {BitConverter.ToString(data)}");
+                    _logger.Info($"data = {BitConverter.ToString(data)}");
                     _logger.Info($"itemIndexRowRecord.KindOfMessage = {itemIndexRowRecord.KindOfMessage}");
 #endif
 

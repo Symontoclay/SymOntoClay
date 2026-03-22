@@ -7,7 +7,7 @@ namespace SymOntoClay.Monitor.Common.Formats
     public static class MonitorIndexFileRowFormat
     {
 #if DEBUG
-        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private static int _lengthForNull = -1;
@@ -40,7 +40,7 @@ namespace SymOntoClay.Monitor.Common.Formats
             var nodeIdLength = reader.ReadInt32();
 
 #if DEBUG
-            _globalLogger.Info($"nodeIdLength = {nodeIdLength}");
+            //_globalLogger.Info($"nodeIdLength = {nodeIdLength}");
 #endif
 
             string nodeId = null;
@@ -51,13 +51,13 @@ namespace SymOntoClay.Monitor.Common.Formats
             }
 
 #if DEBUG
-            _globalLogger.Info($"nodeId = {nodeId}");
+            //_globalLogger.Info($"nodeId = {nodeId}");
 #endif
 
             var threadIdLength = reader.ReadInt32();
 
 #if DEBUG
-            _globalLogger.Info($"threadIdLength = {threadIdLength}");
+            //_globalLogger.Info($"threadIdLength = {threadIdLength}");
 #endif
 
             string threadId = null;
@@ -68,37 +68,37 @@ namespace SymOntoClay.Monitor.Common.Formats
             }
 
 #if DEBUG
-            _globalLogger.Info($"threadId = {threadId}");
+            //_globalLogger.Info($"threadId = {threadId}");
 #endif
 
             var messageNumber = reader.ReadUInt64();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = reader.ReadUInt64();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var kindOfMessage = reader.ReadInt32();
 
 #if DEBUG
-            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+            //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
 #endif
 
             var startPosition = reader.ReadInt64();
 
 #if DEBUG
-            _globalLogger.Info($"startPosition = {startPosition}");
+            //_globalLogger.Info($"startPosition = {startPosition}");
 #endif
 
             var dataLength = reader.ReadInt32();
 
 #if DEBUG
-            _globalLogger.Info($"dataLength = {dataLength}");
+            //_globalLogger.Info($"dataLength = {dataLength}");
 #endif
 
             return new IndexFileRowRecord(

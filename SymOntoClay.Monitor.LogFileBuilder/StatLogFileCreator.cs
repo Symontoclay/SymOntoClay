@@ -119,9 +119,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Source: '{options.SourceDirectoryName}'"));            
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
-            var fileReader = FileReaderFactory.CreateMonitorFileReader(options.SerializationMode.Value);
+            var indexFileReader = FileReaderFactory.CreateMonitorIndexFileReader(options.SerializationMode.Value);
+            var dataFileReader = FileReaderFactory.CreateMonitorDataFileReader(options.SerializationMode.Value);
 
-            var indexRowRecordsList = fileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
+            var indexRowRecordsList = indexFileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG
             _logger.Info($"indexRowRecordsList.Count = {indexRowRecordsList.Count}");
@@ -186,7 +187,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                             _logger.Info($"itemOptions = {itemOptions}");
 #endif
 
-                            LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileCreatorContext, itemIndexRowRecordsList);
+                            LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, dataFileReader, logFileCreatorContext, itemIndexRowRecordsList);
 
                             itemLogFileName = fileStreamsStorage.GetFileComplexName(nodeId, string.Empty);
                         }

@@ -152,6 +152,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     _logger.Info($"data.Length = {data.Length}");
                     _logger.Info($"data = {BitConverter.ToString(data)}");
                     _logger.Info($"itemIndexRowRecord.KindOfMessage = {itemIndexRowRecord.KindOfMessage}");
+                    message = null;
 #endif
 
                     message = messagesFactory.ReadMessage(data, itemIndexRowRecord.KindOfMessage);

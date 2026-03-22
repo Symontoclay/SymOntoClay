@@ -160,7 +160,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     _logger.Info($"message = {message}");
 #endif
 
-                    throw new NotImplementedException("0AF81867-2E69-41AF-B8C1-DA2A71486352");
+                    //throw new NotImplementedException("0AF81867-2E69-41AF-B8C1-DA2A71486352");
 
                     if (options.TargetNodes != null)
                     {

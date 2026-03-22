@@ -1,5 +1,7 @@
 ﻿using SymOntoClay.Common.Disposing;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 {
@@ -8,6 +10,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 #if DEBUG
         private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
+
+        private readonly Dictionary<string, FileStream> _fileStreamsDict = new Dictionary<string, FileStream>();
 
         /// <inheritdoc/>
         public byte[] Read(string fileName, long startPosition, int dataLength)
@@ -18,12 +22,34 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
             _globalLogger.Info($"dataLength = {dataLength}");
 #endif
 
-            throw new NotImplementedException("C75562BB-F57F-4CB3-A988-A12CA587F0D3");
+            var fs = GetFileStream(fileName);
+            fs.Position = startPosition;
+            var data = new byte[dataLength];
+            fs.Read(data, 0, data.Length);
+            
+            return data;
+        }
+
+        private FileStream GetFileStream(string fileName)
+        {
+            if(_fileStreamsDict.TryGetValue(fileName, out var fsValue))
+            {
+                return fsValue;
+            }
+            
+            var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            _fileStreamsDict[fileName] = fs;
+            return fs;
         }
 
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
+            foreach(var item in _fileStreamsDict)
+            {
+                item.Value.Dispose();
+            }
+
             base.OnDisposing();
         }
     }

@@ -7,24 +7,74 @@ namespace SymOntoClay.Monitor.Common.Formats
     public static class MonitorIndexFileRowFormat
     {
 #if DEBUG
-        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        private static int _lengthForNull = -1;
+        private const byte _startMarker = 0xAA;
+        private const byte _endMarker = 0x55;
 
-        public static void Write(BinaryWriter writer, string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, int kindOfMessage, long startPosition, int dataLength)
+        public static void WriteELog(BinaryWriter writer, string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, int kindOfMessage, byte[] data)
         {
-            writer.Write(nodeId?.Length ?? _lengthForNull);
+#if DEBUG
+            _globalLogger.Info($"nodeId = {nodeId}");
+            _globalLogger.Info($"threadId = {threadId}");
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+            _globalLogger.Info($"data.Length = {data.Length}");
+#endif
 
-            if (nodeId != null)
+            writer.Write(_startMarker);
+
+            if (nodeId == null)
             {
+                writer.Write(false);
+            }
+            else
+            {
+                writer.Write(true);
                 writer.Write(nodeId);
             }
 
-            writer.Write(threadId?.Length ?? _lengthForNull);
-
-            if (threadId != null)
+            if (threadId == null)
             {
+                writer.Write(false);
+            }
+            else
+            {
+                writer.Write(true);
+                writer.Write(threadId);
+            }
+
+            writer.Write(messageNumber);
+            writer.Write(globalMessageNumber);
+            writer.Write(kindOfMessage);
+            writer.Write(data.Length);
+            writer.Write(data);
+            writer.Write(_endMarker);
+
+            //throw new NotImplementedException("CA469AEB-4994-498A-9C7F-63CA6211668B");
+        }
+
+        public static void Write(BinaryWriter writer, string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, int kindOfMessage, long startPosition, int dataLength)
+        {
+            if (nodeId == null)
+            {
+                writer.Write(false);
+            }
+            else
+            {
+                writer.Write(true);
+                writer.Write(nodeId);
+            }
+
+            if (threadId == null)
+            {
+                writer.Write(false);
+            }
+            else
+            {
+                writer.Write(true);
                 writer.Write(threadId);
             }
 
@@ -37,15 +87,15 @@ namespace SymOntoClay.Monitor.Common.Formats
 
         public static IndexFileRowRecord Read(BinaryReader reader)
         {
-            var nodeIdLength = reader.ReadInt32();
+            var hasNodeId = reader.ReadBoolean();
 
 #if DEBUG
-            //_globalLogger.Info($"nodeIdLength = {nodeIdLength}");
+            //_globalLogger.Info($"hasNodeId = {hasNodeId}");
 #endif
 
             string nodeId = null;
 
-            if (nodeIdLength != _lengthForNull)
+            if (hasNodeId)
             {
                 nodeId = reader.ReadString();
             }
@@ -54,15 +104,15 @@ namespace SymOntoClay.Monitor.Common.Formats
             //_globalLogger.Info($"nodeId = {nodeId}");
 #endif
 
-            var threadIdLength = reader.ReadInt32();
+            var hasThreadId = reader.ReadBoolean();
 
 #if DEBUG
-            //_globalLogger.Info($"threadIdLength = {threadIdLength}");
+            //_globalLogger.Info($"hasThreadId = {hasThreadId}");
 #endif
 
             string threadId = null;
 
-            if(threadIdLength != _lengthForNull)
+            if(hasThreadId)
             {
                 threadId = reader.ReadString();
             }

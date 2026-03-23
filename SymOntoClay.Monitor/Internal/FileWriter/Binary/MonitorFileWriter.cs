@@ -42,15 +42,26 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             //_globalLogger.Info($"indexFileName = {indexFileName}");
 #endif
 
-            _dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
-            _indexStream = new FileStream(indexFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
-            _indexWriter = new BinaryWriter(_indexStream);
+            var elogFileName = Path.Combine(_absoluteDirectory, "eLogs.dat");
+
+#if DEBUG
+            _globalLogger.Info($"elogFileName = {elogFileName}");
+#endif
+
+            //_dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.WriteThrough);
+            //_indexStream = new FileStream(indexFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.WriteThrough);
+            //_indexWriter = new BinaryWriter(_indexStream);
+
+            _eStream = new FileStream(elogFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+            _eWriter = new BinaryWriter(_eStream);
         }
 
         private readonly string _absoluteDirectory;
         private readonly FileStream _dataStream;
         private readonly FileStream _indexStream;
         private readonly BinaryWriter _indexWriter;
+        private readonly FileStream _eStream;
+        private readonly BinaryWriter _eWriter;
 
         /// <inheritdoc/>
         public string AbsoluteDirectoryName => _absoluteDirectory;
@@ -77,6 +88,11 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             //_globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
+            MonitorIndexFileRowFormat.WriteELog(_eWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
+
+            _eStream.Flush();
+
+            /*
             var startPosition = _dataStream.Position;
 
 #if DEBUG
@@ -91,16 +107,19 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             
             MonitorIndexFileRowFormat.Write(writer: _indexWriter, nodeId: nodeId, threadId: threadId, messageNumber: messageNumber, globalMessageNumber: globalMessageNumber, kindOfMessage: (int)kindOfMessage, startPosition: startPosition, dataLength: data.Length);
 
-            _dataStream.Flush();//tmp
-            _indexStream.Flush();//tmp
+            _dataStream.Flush(true);//tmp
+            _indexStream.Flush(true);//tmp*/
         }
 
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-            _indexWriter.Dispose();
-            _dataStream.Dispose();
-            _indexStream.Dispose();
+            //_indexWriter.Dispose();
+            //_dataStream.Dispose();
+            //_indexStream.Dispose();
+
+            _eWriter.Dispose();
+            _eStream.Dispose();
 
             base.OnDisposing();
         }

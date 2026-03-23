@@ -18,7 +18,8 @@ namespace TestSandbox.MessagePacking
         {
             _logger.Info("Begin");
 
-            Case6();
+            Case7();
+            //Case6();
             //Case5();
             //Case4();
             //Case3();
@@ -28,6 +29,37 @@ namespace TestSandbox.MessagePacking
             //_logger.Info($" = {}");
 
             _logger.Info("End");
+        }
+
+        private void Case7()
+        {
+            var fileName = @"c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_21_10_09_59\#020ED339-6313-459A-900D-92F809CEBDC5\Logs.dat";
+
+            _logger.Info($"fileName = {fileName}");
+
+            using var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+
+            long startPosition = 19393;
+            int dataLength = 292;
+
+            fs.Position = startPosition;
+            var data = new byte[dataLength];
+            fs.Read(data, 0, data.Length);
+
+            _logger.Info($"data.Length = {data.Length}");
+            _logger.Info($"data = {BitConverter.ToString(data)}");
+
+            var kindOfMessage = KindOfMessage.LeaveThreadExecutor;
+
+            _logger.Info($"kindOfMessage = {kindOfMessage}");
+
+            var messagesFactory = new MessagesFactory(KindOfSerialization.MessagePack);
+
+            var message = messagesFactory.ReadMessage(data, kindOfMessage);
+
+#if DEBUG
+            _logger.Info($"message = {message}");
+#endif
         }
 
         private void Case6()

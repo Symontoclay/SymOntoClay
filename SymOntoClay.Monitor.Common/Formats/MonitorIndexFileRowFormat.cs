@@ -56,6 +56,17 @@ namespace SymOntoClay.Monitor.Common.Formats
             //throw new NotImplementedException("CA469AEB-4994-498A-9C7F-63CA6211668B");
         }
 
+        public static ELogRecord ReadELog(BinaryReader reader)
+        {
+            var startByte = reader.ReadByte();
+
+#if DEBUG
+            _globalLogger.Info($"startByte = {startByte.ToString("X2")}");
+#endif
+
+            throw new NotImplementedException("C3AA4929-3730-469A-A6BD-DE47F58C5DBB");
+        }
+
         public static void Write(BinaryWriter writer, string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, int kindOfMessage, long startPosition, int dataLength)
         {
             if (nodeId == null)

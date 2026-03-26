@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Common.Formats;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.IO;
@@ -18,7 +19,8 @@ namespace TestSandbox.MessagePacking
         {
             _logger.Info("Begin");
 
-            Case7();
+            Case8();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -29,6 +31,27 @@ namespace TestSandbox.MessagePacking
             //_logger.Info($" = {}");
 
             _logger.Info("End");
+        }
+
+        private void Case8()
+        {
+            var fileName = @"c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_23_20_54_28\#020ED339-6313-459A-900D-92F809CEBDC5\eLogs.dat";
+
+            _logger.Info($"fileName = {fileName}");
+
+            using var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            using var reader = new BinaryReader(fs);
+
+            _logger.Info($"fs.Length = {fs.Length}");
+
+            while (fs.Position < fs.Length)
+            {
+                _logger.Info($"fs.Position = {fs.Position}");
+
+                var record = MonitorIndexFileRowFormat.ReadELog(reader);
+
+                _logger.Info($"record = {record}");
+            }
         }
 
         private void Case7()

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SymOntoClay.Monitor.Common.Formats
+﻿namespace SymOntoClay.Monitor.Common.Formats
 {
     public readonly record struct ELogRecord
     (

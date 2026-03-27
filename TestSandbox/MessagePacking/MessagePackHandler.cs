@@ -8,6 +8,7 @@ using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.IO;
 using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TestSandbox.MessagePacking
 {
@@ -81,6 +82,8 @@ namespace TestSandbox.MessagePacking
 
         private void ReadeLogsFile(string fileName)
         {
+            var messagesFactory = new MessagesFactory(KindOfSerialization.MessagePack);
+
             _logger.Info($"fileName = {fileName}");
 
             using var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
@@ -95,6 +98,16 @@ namespace TestSandbox.MessagePacking
                 var record = MonitorIndexFileRowFormat.ReadELog(reader);
 
                 //_logger.Info($"record = {record}");
+
+                var kindOfMessage = (KindOfMessage)record.KindOfMessage;
+
+                _logger.Info($"kindOfMessage = {kindOfMessage}");
+
+                var message = messagesFactory.ReadMessage(record.Data, kindOfMessage);
+
+#if DEBUG
+                _logger.Info($"message = {message}");
+#endif
             }
 
             _logger.Info($"fs.Position = {fs.Position}");

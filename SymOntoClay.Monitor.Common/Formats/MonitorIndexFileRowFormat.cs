@@ -64,7 +64,85 @@ namespace SymOntoClay.Monitor.Common.Formats
             _globalLogger.Info($"startByte = {startByte.ToString("X2")}");
 #endif
 
-            throw new NotImplementedException("C3AA4929-3730-469A-A6BD-DE47F58C5DBB");
+            var hasNodeId = reader.ReadBoolean();
+
+#if DEBUG
+            _globalLogger.Info($"hasNodeId = {hasNodeId}");
+#endif
+
+            string nodeId = null;
+
+            if (hasNodeId)
+            {
+                nodeId = reader.ReadString();
+
+#if DEBUG
+                _globalLogger.Info($"nodeId = {nodeId}");
+#endif
+            }
+
+            var hasThreadId = reader.ReadBoolean();
+
+#if DEBUG
+            _globalLogger.Info($"hasThreadId = {hasThreadId}");
+#endif
+
+            string threadId = null;
+
+            if (hasThreadId)
+            {
+                threadId = reader.ReadString();
+
+#if DEBUG
+                _globalLogger.Info($"threadId = {threadId}");
+#endif
+            }
+
+            var messageNumber = reader.ReadUInt64();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = reader.ReadUInt64();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var kindOfMessage = reader.ReadInt32();
+
+#if DEBUG
+            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+#endif
+
+            var dataLength = reader.ReadInt32();
+
+#if DEBUG
+            _globalLogger.Info($"dataLength = {dataLength}");
+#endif
+
+            var data = reader.ReadBytes(dataLength);
+
+#if DEBUG
+            //_globalLogger.Info($" = {}");
+#endif
+
+            var endByte = reader.ReadByte();
+
+#if DEBUG
+            _globalLogger.Info($"endByte = {endByte.ToString("X2")}");
+#endif
+
+            return new ELogRecord(
+                NodeId: nodeId,
+                ThreadId: threadId,
+                MessageNumber: messageNumber,
+                GlobalMessageNumber: globalMessageNumber,
+                KindOfMessage: kindOfMessage,
+                DataLength: dataLength,
+                Data: data
+            );
         }
 
         public static void Write(BinaryWriter writer, string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, int kindOfMessage, long startPosition, int dataLength)

@@ -6,6 +6,8 @@
         string ThreadId,
         ulong MessageNumber,
         ulong GlobalMessageNumber,
-        int KindOfMessage
+        int KindOfMessage,
+        int DataLength,
+        byte[] Data
     );
 }

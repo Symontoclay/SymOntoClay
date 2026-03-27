@@ -50,8 +50,11 @@ namespace TestSandbox.MessagePacking
 
                 var record = MonitorIndexFileRowFormat.ReadELog(reader);
 
-                _logger.Info($"record = {record}");
+                //_logger.Info($"record = {record}");
             }
+
+            _logger.Info($"fs.Position = {fs.Position}");
+            _logger.Info($"fs.Length = {fs.Length}");
         }
 
         private void Case7()

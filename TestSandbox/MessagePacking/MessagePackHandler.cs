@@ -19,7 +19,8 @@ namespace TestSandbox.MessagePacking
         {
             _logger.Info("Begin");
 
-            Case8();
+            Case9();
+            //Case8();
             //Case7();
             //Case6();
             //Case5();
@@ -33,10 +34,53 @@ namespace TestSandbox.MessagePacking
             _logger.Info("End");
         }
 
+        private void Case9()
+        {
+            var targetDirectoryName = @"c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_23_20_54_28";
+
+            _logger.Info($"targetDirectoryName = {targetDirectoryName}");
+
+            ReadeLogsDirectory(targetDirectoryName, 1);
+        }
+
         private void Case8()
         {
             var fileName = @"c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_23_20_54_28\#020ED339-6313-459A-900D-92F809CEBDC5\eLogs.dat";
 
+            ReadeLogsFile(fileName);
+        }
+
+        private void ReadeLogsDirectory(string targetDirectoryName, int levelNum)
+        {
+#if DEBUG
+            _logger.Info($"targetDirectoryName = {targetDirectoryName}");
+            _logger.Info($"levelNum = {levelNum}");
+#endif
+
+            var elogFileName = Path.Combine(targetDirectoryName, "eLogs.dat");
+
+#if DEBUG
+            _logger.Info($"elogFileName = {elogFileName}");
+            _logger.Info($"File.Exists(elogFileName) = {File.Exists(elogFileName)}");
+#endif
+
+            if(File.Exists(elogFileName))
+            {
+                ReadeLogsFile(elogFileName);
+            }
+
+            var subDirectories = Directory.GetDirectories(targetDirectoryName);
+
+            var nextLevelNum = levelNum + 1;
+
+            foreach (var subDirectory in subDirectories)
+            {
+                ReadeLogsDirectory(subDirectory, nextLevelNum);
+            }
+        }
+
+        private void ReadeLogsFile(string fileName)
+        {
             _logger.Info($"fileName = {fileName}");
 
             using var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);

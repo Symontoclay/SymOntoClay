@@ -86,9 +86,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //RunWithPreparedOptions(options, logger, fileStreamsStorage, logFileCreatorContext, fileNamesList);//tmp
         }
 
-        public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, IDataFileReader dataFileReader, LogFileCreatorContext logFileCreatorContext, List<IndexFileRowRecord> itemIndexRowRecordsList)
+        public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, ILogFileReader logFileReader, LogFileCreatorContext logFileCreatorContext, List<LogFileRowRecord> itemLogRowRecordsList)
         {
-            itemIndexRowRecordsList = itemIndexRowRecordsList.OrderBy(p => p.GlobalMessageNumber).ToList();
+            itemLogRowRecordsList = itemLogRowRecordsList.OrderBy(p => p.GlobalMessageNumber).ToList();
 
             var showStages = (!(options.Silent ?? false)) && (logger != null);
 
@@ -102,7 +102,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 logger.Info("Fetching file names");
             }
 
-            var itemIndexRowRecordsListCount = itemIndexRowRecordsList.Count;
+            var itemIndexRowRecordsListCount = itemLogRowRecordsList.Count;
 
             if (showStages)
             {
@@ -129,7 +129,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             byte[] data = null;
             BaseMessage message = null;
 
-            foreach (var itemIndexRowRecord in itemIndexRowRecordsList)
+            foreach (var itemLogRowRecord in itemLogRowRecordsList)
             {
                 if (showStages)
                 {
@@ -138,12 +138,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-               logger.Info($"itemIndexRowRecord.FileName = {itemIndexRowRecord.FileName}");
+               logger.Info($"itemIndexRowRecord.FileName = {itemLogRowRecord.FileName}");
 #endif
 
                 try
                 {
-                    data = dataFileReader.Read(itemIndexRowRecord.FileName, itemIndexRowRecord.StartPosition, itemIndexRowRecord.DataLength);
+                    data = logFileReader.ReadData(itemLogRowRecord.FileName, itemLogRowRecord.Data);
                     
 
                     //var old_data = File.ReadAllBytes(itemIndexRowRecord.FileName);
@@ -151,11 +151,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #if DEBUG
                     _logger.Info($"data.Length = {data.Length}");
                     _logger.Info($"data = {BitConverter.ToString(data)}");
-                    _logger.Info($"itemIndexRowRecord.KindOfMessage = {itemIndexRowRecord.KindOfMessage}");
+                    _logger.Info($"itemIndexRowRecord.KindOfMessage = {itemLogRowRecord.KindOfMessage}");
                     message = null;
 #endif
 
-                    message = messagesFactory.ReadMessage(data, itemIndexRowRecord.KindOfMessage);
+                    message = messagesFactory.ReadMessage(data, itemLogRowRecord.KindOfMessage);
 
 #if DEBUG
                     _logger.Info($"message = {message}");

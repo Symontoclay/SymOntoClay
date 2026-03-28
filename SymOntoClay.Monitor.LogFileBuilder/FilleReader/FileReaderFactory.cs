@@ -5,12 +5,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader
 {
     public static class FileReaderFactory
     {
-        public static IIndexFileReader CreateMonitorIndexFileReader(KindOfSerialization kindOfSerialization)
+        public static ILogFileReader CreateMonitorLogFileReader(KindOfSerialization kindOfSerialization)
         {
             switch(kindOfSerialization)
             {
                 case KindOfSerialization.MessagePack:
-                    return new SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary.MonitorIndexFileReader();
+                    return new SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary.MonitorLogFileReader();
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, "AD37B0E9-E36C-42E8-B0C1-7B7528D6AE23");

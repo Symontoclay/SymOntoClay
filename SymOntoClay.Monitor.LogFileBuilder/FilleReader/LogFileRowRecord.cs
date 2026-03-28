@@ -2,13 +2,13 @@
 
 namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader
 {
-    public readonly record struct IndexFileRowRecord(
+    public readonly record struct LogFileRowRecord(
         string NodeId,
         string ThreadId,
         ulong MessageNumber,
         ulong GlobalMessageNumber,
         KindOfMessage KindOfMessage,
-        long StartPosition,
         int DataLength,
+        byte[] Data,
         string FileName);
 }

@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 {
-    public class MonitorIndexFileReader: IIndexFileReader
+    public class MonitorLogFileReader: ILogFileReader
     {
 #if DEBUG
         private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
@@ -20,20 +20,25 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
         private const int _nodeLevel = 2;
 
         /// <inheritdoc/>
-        public List<IndexFileRowRecord> GetIndexFileRowRecords(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
+        public List<LogFileRowRecord> GetIndexFileRowRecords(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
             //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
 #endif
 
-            var result = new List<IndexFileRowRecord>();
+            var result = new List<LogFileRowRecord>();
 
             FillUpFileRowRecords(ref result, targetDirectoryName, targetKindOfMessages, 1, targetNodes, targetThreads);
 
             return result;
         }
 
-        private void FillUpFileRowRecords(ref List<IndexFileRowRecord> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
+        public byte[] ReadData(string fileName, byte[] data)
+        {
+            return data;
+        }
+
+        private void FillUpFileRowRecords(ref List<LogFileRowRecord> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
             //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
@@ -99,14 +104,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
             }
         }
 
-        private List<IndexFileRowRecord> ReadIndexFile(string indexFileName, string logFileName)
+        private List<LogFileRowRecord> ReadIndexFile(string indexFileName, string logFileName)
         {
 #if DEBUG
             //_globalLogger.Info($"indexFileName = {indexFileName}");
             //_globalLogger.Info($"logFileName = {logFileName}");
 #endif
 
-            var records = new List<IndexFileRowRecord>();
+            var records = new List<LogFileRowRecord>();
 
             using var idxFs = new FileStream(indexFileName, FileMode.Open, FileAccess.Read);
             using var reader = new BinaryReader(idxFs);
@@ -119,14 +124,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
                 //_globalLogger.Info($"idxRecord = {idxRecord}");
 #endif
 
-                var record = new IndexFileRowRecord(
+                var record = new LogFileRowRecord(
                         NodeId: idxRecord.NodeId,
                         ThreadId: idxRecord.ThreadId,
                         MessageNumber: idxRecord.MessageNumber,
                         GlobalMessageNumber: idxRecord.GlobalMessageNumber,
                         KindOfMessage: (KindOfMessage)idxRecord.KindOfMessage,
-                        StartPosition: idxRecord.StartPosition,
                         DataLength: idxRecord.DataLength,
+                        Data: idxRecord.Data,
                         FileName: logFileName
                     );
 

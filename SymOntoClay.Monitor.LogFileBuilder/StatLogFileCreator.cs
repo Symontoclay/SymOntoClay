@@ -119,13 +119,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Source: '{options.SourceDirectoryName}'"));            
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
-            var indexFileReader = FileReaderFactory.CreateMonitorIndexFileReader(options.SerializationMode.Value);
+            var logFileReader = FileReaderFactory.CreateMonitorLogFileReader(options.SerializationMode.Value);
             var dataFileReader = FileReaderFactory.CreateMonitorDataFileReader(options.SerializationMode.Value);
 
-            var indexRowRecordsList = indexFileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
+            var logRowRecordsList = logFileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG
-            _logger.Info($"indexRowRecordsList.Count = {indexRowRecordsList.Count}");
+            _logger.Info($"logRowRecordsList.Count = {logRowRecordsList.Count}");
 #endif
 
             /*var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, null, null, null);
@@ -139,17 +139,17 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (showStages)
             {
-                logger.Info($"Fetched {indexRowRecordsList.Count} index items");
+                logger.Info($"Fetched {logRowRecordsList.Count} index items");
             }
 
-            var indexRowRecordsDictByNodes = indexRowRecordsList.GroupBy(p => p.NodeId).ToDictionary(p => p.Key, p => p.ToList());
+            var indexRowRecordsDictByNodes = logRowRecordsList.GroupBy(p => p.NodeId).ToDictionary(p => p.Key, p => p.ToList());
 
 #if DEBUG
             _logger.Info($"indexRowRecordsDictByNodes.Count = {indexRowRecordsDictByNodes.Count}");
 #endif
 
             outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
-            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {indexRowRecordsList.Count}"));
+            outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {logRowRecordsList.Count}"));
             outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Nodes: {indexRowRecordsDictByNodes.Count}"));
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
@@ -187,7 +187,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                             _logger.Info($"itemOptions = {itemOptions}");
 #endif
 
-                            LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, dataFileReader, logFileCreatorContext, itemIndexRowRecordsList);
+                            LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileReader, logFileCreatorContext, itemIndexRowRecordsList);
 
                             itemLogFileName = fileStreamsStorage.GetFileComplexName(nodeId, string.Empty);
                         }

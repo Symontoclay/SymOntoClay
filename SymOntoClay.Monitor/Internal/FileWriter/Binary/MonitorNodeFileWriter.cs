@@ -38,7 +38,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             //_globalLogger.Info($"dataFileName = {dataFileName}");
 #endif
 
-            var indexFileName = Path.Combine(_absoluteDirectory, "Logs.idx");
+            //var indexFileName = Path.Combine(_absoluteDirectory, "Logs.idx");
 
 #if DEBUG
             //_globalLogger.Info($"indexFileName = {indexFileName}");
@@ -50,9 +50,9 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             _globalLogger.Info($"elogFileName = {elogFileName}");
 #endif
 
-            //_dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+            _dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
             //_indexStream = new FileStream(indexFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
-            //_indexWriter = new BinaryWriter(_indexStream);
+            _dataWriter = new BinaryWriter(_dataStream);
 
             _eStream = new FileStream(elogFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
             _eWriter = new BinaryWriter(_eStream);
@@ -60,8 +60,8 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
 
         private readonly string _absoluteDirectory;
         private readonly FileStream _dataStream;
-        private readonly FileStream _indexStream;
-        private readonly BinaryWriter _indexWriter;
+        //private readonly FileStream _indexStream;
+        private readonly BinaryWriter _dataWriter;
         private readonly FileStream _eStream;
         private readonly BinaryWriter _eWriter;
 
@@ -75,17 +75,17 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         public void WriteData(string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, KindOfMessage kindOfMessage, byte[] data)
         {
 #if DEBUG
-            _globalLogger.Info($"nodeId = {nodeId}");
-            _globalLogger.Info($"threadId = {threadId}");
-            _globalLogger.Info($"messageNumber = {messageNumber}");
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
-            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
-            _globalLogger.Info($"data.Length = {data.Length}");
+            //_globalLogger.Info($"nodeId = {nodeId}");
+            //_globalLogger.Info($"threadId = {threadId}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+            //_globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
-            MonitorIndexFileRowFormat.WriteELog(_eWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
+            MonitorLogFileRowFormat.Write(_dataWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
 
-            _eStream.Flush();
+            _dataStream.Flush();
 
             /*
             var startPosition = _dataStream.Position;
@@ -109,8 +109,8 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-            //_indexWriter.Dispose();
-            //_dataStream.Dispose();
+            _dataWriter.Dispose();
+            _dataStream.Dispose();
             //_indexStream.Dispose();
 
             _eWriter.Dispose();

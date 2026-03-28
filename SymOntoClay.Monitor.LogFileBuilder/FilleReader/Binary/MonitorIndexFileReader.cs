@@ -113,7 +113,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 
             while (idxFs.Position < idxFs.Length)
             {
-                var idxRecord = MonitorIndexFileRowFormat.Read(reader);
+                var idxRecord = MonitorLogFileRowFormat.Read(reader);
 
 #if DEBUG
                 //_globalLogger.Info($"idxRecord = {idxRecord}");

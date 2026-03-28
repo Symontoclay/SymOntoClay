@@ -95,7 +95,7 @@ namespace TestSandbox.MessagePacking
             {
                 _logger.Info($"fs.Position = {fs.Position}");
 
-                var record = MonitorIndexFileRowFormat.ReadELog(reader);
+                var record = MonitorLogFileRowFormat.ReadELog(reader);
 
                 //_logger.Info($"record = {record}");
 

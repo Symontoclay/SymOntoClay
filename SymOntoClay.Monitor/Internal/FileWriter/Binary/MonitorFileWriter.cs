@@ -36,21 +36,15 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             //_globalLogger.Info($"dataFileName = {dataFileName}");
 #endif
 
-            var indexFileName = Path.Combine(_absoluteDirectory, "Logs.idx");
-
-#if DEBUG
-            //_globalLogger.Info($"indexFileName = {indexFileName}");
-#endif
-
             var elogFileName = Path.Combine(_absoluteDirectory, "eLogs.dat");
 
 #if DEBUG
             _globalLogger.Info($"elogFileName = {elogFileName}");
 #endif
 
-            //_dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.WriteThrough);
+            _dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.WriteThrough);
             //_indexStream = new FileStream(indexFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.WriteThrough);
-            //_indexWriter = new BinaryWriter(_indexStream);
+            _dataWriter = new BinaryWriter(_dataStream);
 
             _eStream = new FileStream(elogFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
             _eWriter = new BinaryWriter(_eStream);
@@ -58,8 +52,8 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
 
         private readonly string _absoluteDirectory;
         private readonly FileStream _dataStream;
-        private readonly FileStream _indexStream;
-        private readonly BinaryWriter _indexWriter;
+        //private readonly FileStream _indexStream;
+        private readonly BinaryWriter _dataWriter;
         private readonly FileStream _eStream;
         private readonly BinaryWriter _eWriter;
 
@@ -88,9 +82,9 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             //_globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
-            MonitorIndexFileRowFormat.WriteELog(_eWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
+            MonitorLogFileRowFormat.Write(_dataWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
 
-            _eStream.Flush();
+            _dataStream.Flush();
 
             /*
             var startPosition = _dataStream.Position;
@@ -114,8 +108,8 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-            //_indexWriter.Dispose();
-            //_dataStream.Dispose();
+            _dataWriter.Dispose();
+            _dataStream.Dispose();
             //_indexStream.Dispose();
 
             _eWriter.Dispose();

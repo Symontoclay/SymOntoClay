@@ -1,11 +1,12 @@
 ﻿namespace SymOntoClay.Monitor.Common.Formats
 {
-    public readonly record struct IndexFileRowRecord(
+    public readonly record struct LogFileRowRecord(
         string NodeId,
         string ThreadId,
         ulong MessageNumber,
         ulong GlobalMessageNumber,
         int KindOfMessage,
-        long StartPosition,
-        int DataLength);
+        int DataLength,
+        byte[] Data
+    );
 }

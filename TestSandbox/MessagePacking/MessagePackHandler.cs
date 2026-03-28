@@ -37,7 +37,7 @@ namespace TestSandbox.MessagePacking
 
         private void Case9()
         {
-            var targetDirectoryName = @"c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_23_20_54_28";
+            var targetDirectoryName = @"c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_28_21_26_49\";
 
             _logger.Info($"targetDirectoryName = {targetDirectoryName}");
 
@@ -58,7 +58,7 @@ namespace TestSandbox.MessagePacking
             _logger.Info($"levelNum = {levelNum}");
 #endif
 
-            var elogFileName = Path.Combine(targetDirectoryName, "eLogs.dat");
+            var elogFileName = Path.Combine(targetDirectoryName, "Logs.dat");
 
 #if DEBUG
             _logger.Info($"elogFileName = {elogFileName}");
@@ -95,7 +95,7 @@ namespace TestSandbox.MessagePacking
             {
                 _logger.Info($"fs.Position = {fs.Position}");
 
-                var record = MonitorLogFileRowFormat.ReadELog(reader);
+                var record = MonitorLogFileRowFormat.Read(reader);
 
                 //_logger.Info($"record = {record}");
 

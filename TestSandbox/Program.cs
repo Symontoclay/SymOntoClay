@@ -90,7 +90,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
-            TstMessagePack();
+            //TstMessagePack();
             //TstKindOfValueConversion();
             //TstPrintUnknownObjPropOptString();
             //TstSorting();
@@ -98,7 +98,7 @@ namespace TestSandbox
             //TstThreadTask();
             //TstThreadPoolCount();
             //TstLogFileBuilderParameterValueConverterToString();
-            //TstLogFileBuilder();//log <<----
+            TstLogFileBuilder();//log <<----
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDominantItems();

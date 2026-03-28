@@ -75,16 +75,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
             //_globalLogger.Info($"File.Exists(logFileName) = {File.Exists(logFileName)}");
 #endif
 
-            var indexFileName = Path.Combine(targetDirectoryName, "Logs.idx");
-
-#if DEBUG
-            _globalLogger.Info($"indexFileName = {indexFileName}");
-            _globalLogger.Info($"File.Exists(indexFileName) = {File.Exists(indexFileName)}");
-#endif
-
-            if(File.Exists(logFileName) && File.Exists(indexFileName))
+            if(File.Exists(logFileName))
             {
-                var recordsList = ReadIndexFile(indexFileName, logFileName);
+                var recordsList = ReadIndexFile(logFileName);
 
 #if DEBUG
                 //_globalLogger.Info($"recordsList.Count = {recordsList.Count}");
@@ -104,7 +97,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
             }
         }
 
-        private List<LogFileRowRecord> ReadIndexFile(string indexFileName, string logFileName)
+        private List<LogFileRowRecord> ReadIndexFile(string logFileName)
         {
 #if DEBUG
             //_globalLogger.Info($"indexFileName = {indexFileName}");
@@ -113,10 +106,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 
             var records = new List<LogFileRowRecord>();
 
-            using var idxFs = new FileStream(indexFileName, FileMode.Open, FileAccess.Read);
-            using var reader = new BinaryReader(idxFs);
+            using var fs = new FileStream(logFileName, FileMode.Open, FileAccess.Read);
+            using var reader = new BinaryReader(fs);
 
-            while (idxFs.Position < idxFs.Length)
+            while (fs.Position < fs.Length)
             {
                 var idxRecord = MonitorLogFileRowFormat.Read(reader);
 

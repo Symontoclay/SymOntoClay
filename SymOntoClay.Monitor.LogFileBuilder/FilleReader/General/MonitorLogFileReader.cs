@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
 #endif
 
         private const int _nodeLevel = 2;
+        private const int _threadLevel = 3;
 
         /// <inheritdoc/>
         public List<LogFileRowRecord> GetIndexFileRowRecords(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
@@ -47,7 +50,61 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
             _globalLogger.Info($"targetNodes?.Count() = {targetNodes?.Count()}");
 #endif
 
-            throw new NotImplementedException("C3D2704F-B0C7-4131-8F19-D1876C8A85FC");
+            switch (levelNum)
+            {
+                case _nodeLevel:
+                    if (targetNodes != null)
+                    {
+                        var directoryInfo = new DirectoryInfo(targetDirectoryName);
+
+#if DEBUG
+                        //_globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
+#endif
+
+                        if (!targetNodes.Contains(directoryInfo.Name))
+                        {
+                            return;
+                        }
+                    }
+                    break;
+
+                case _threadLevel:
+                    if (targetThreads != null)
+                    {
+                        var directoryInfo = new DirectoryInfo(targetDirectoryName);
+
+#if DEBUG
+                        //_globalLogger.Info($"directoryInfo.Name = {directoryInfo.Name}");
+#endif
+
+                        if (!targetThreads.Contains(directoryInfo.Name))
+                        {
+                            return;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            var filesList = Directory.GetFiles(targetDirectoryName).Where(p => p.EndsWith(FileCacheItemInfo.FileExt)).Select(p => (FileCacheItemInfo.GetFileInfo(p), p));
+
+            if (targetKindOfMessages?.Any() ?? false)
+            {
+                filesList = filesList.Where(p => targetKindOfMessages != null && targetKindOfMessages.Contains(p.Item1.KindOfMessage));
+            }
+
+            result.AddRange(filesList);
+
+            var subDirectories = Directory.GetDirectories(targetDirectoryName);
+
+            var nextLevelNum = levelNum + 1;
+
+            foreach (var subDirectory in subDirectories)
+            {
+                FillUpFileRowRecords(ref result, subDirectory, targetKindOfMessages, nextLevelNum, targetNodes, targetThreads);
+            }
         }
     }
 }

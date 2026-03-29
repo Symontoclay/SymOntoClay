@@ -20,8 +20,8 @@ namespace TestSandbox.MessagePacking
         {
             _logger.Info("Begin");
 
-            Case9();
-            //Case8();
+            //Case9();
+            Case8();
             //Case7();
             //Case6();
             //Case5();
@@ -46,7 +46,7 @@ namespace TestSandbox.MessagePacking
 
         private void Case8()
         {
-            var fileName = @"c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_23_20_54_28\#020ED339-6313-459A-900D-92F809CEBDC5\eLogs.dat";
+            var fileName = @"C:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2026_03_29_12_51_09\#020ED339-6313-459A-900D-92F809CEBDC5\Logs.dat";
 
             ReadeLogsFile(fileName);
         }

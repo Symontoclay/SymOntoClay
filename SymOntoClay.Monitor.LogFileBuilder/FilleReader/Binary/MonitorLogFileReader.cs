@@ -100,8 +100,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
         private List<LogFileRowRecord> ReadIndexFile(string logFileName, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            //_globalLogger.Info($"indexFileName = {indexFileName}");
-            //_globalLogger.Info($"logFileName = {logFileName}");
+            _globalLogger.Info($"logFileName = {logFileName}");
+            _globalLogger.Info($"targetThreads?.Count() = {targetThreads?.Count()}");
 #endif
 
             var records = new List<LogFileRowRecord>();

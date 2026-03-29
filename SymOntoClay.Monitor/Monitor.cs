@@ -43,7 +43,7 @@ namespace SymOntoClay.Monitor
     public class Monitor : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG
-        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly MonitorContext _monitorContext;
@@ -67,6 +67,8 @@ namespace SymOntoClay.Monitor
         private readonly MonitorLogger _monitorLoggerImpl;
 
         private readonly BaseMonitorSettings _baseMonitorSettings;
+
+        private readonly List<MonitorNode> _childMonitorNodes = new List<MonitorNode>();
 
         private readonly bool _TopSysEnable = true;
 
@@ -863,7 +865,11 @@ namespace SymOntoClay.Monitor
 
             var nodeSettings = GetMonitorNodeSettings(nodeId);
 
-            return new MonitorNode(nodeId, nodeSettings, _monitorContext);
+            var node = new MonitorNode(nodeId, nodeSettings, _monitorContext);
+
+            _childMonitorNodes.Add(node);
+
+            return node;
         }
 
         private BaseMonitorSettings GetMonitorNodeSettings(string nodeId)
@@ -1612,6 +1618,19 @@ namespace SymOntoClay.Monitor
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
+#if DEBUG
+            _globalLogger.Info("OnDisposing!!!!!! ");
+#endif
+
+            _fileWriter.Dispose();
+
+            foreach(var child in _childMonitorNodes)
+            {
+                child.Dispose();
+            }
+
+            _childMonitorNodes.Clear();
+
             _remoteMonitor?.Dispose();
             _cancellationTokenSource.Dispose();
             _threadPool.Dispose();

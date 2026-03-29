@@ -40,6 +40,8 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             _dataWriter = new BinaryWriter(_dataStream);
         }
 
+        private readonly object _lock = new object();
+
         private readonly string _absoluteDirectory;
         private readonly FileStream _dataStream;
         private readonly BinaryWriter _dataWriter;
@@ -69,14 +71,21 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             //_globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
-            MonitorLogFileRowFormat.Write(_dataWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
+            lock(_lock)
+            {
+                MonitorLogFileRowFormat.Write(_dataWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
 
-            _dataStream.Flush();
+                _dataStream.Flush();
+            }
         }
 
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
+#if DEBUG
+            _globalLogger.Info("OnDisposing!!!!!! ");
+#endif
+
             _dataWriter.Dispose();
             _dataStream.Dispose();
             

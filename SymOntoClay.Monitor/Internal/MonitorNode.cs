@@ -41,7 +41,7 @@ namespace SymOntoClay.Monitor.Internal
     public class MonitorNode : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitorNode
     {
 #if DEBUG
-        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly MonitorContext _monitorContext;
@@ -1578,6 +1578,12 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
+#if DEBUG
+            _globalLogger.Info("OnDisposing!!!!!! ");
+#endif
+
+            _fileWriter.Dispose();
+
             _cancellationTokenSource.Dispose();
             _threadPool.Dispose();
 

@@ -113,7 +113,7 @@ namespace TestSandbox.Handlers
             _world.Dispose();
 
             _logger.Info("40669EA9-0F77-4447-B128-5E940A3DCE2D", "End");
-            /*
+            
             Thread.Sleep(500);
             
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
@@ -135,7 +135,7 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"options = {options}");
 
             LogFileBuilderApp.Run(options);
-            */
+            
             _globalLogger.Info("End");
         }
     }

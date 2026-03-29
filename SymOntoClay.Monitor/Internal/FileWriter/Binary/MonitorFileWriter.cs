@@ -36,26 +36,13 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             //_globalLogger.Info($"dataFileName = {dataFileName}");
 #endif
 
-            var elogFileName = Path.Combine(_absoluteDirectory, "eLogs.dat");
-
-#if DEBUG
-            _globalLogger.Info($"elogFileName = {elogFileName}");
-#endif
-
-            _dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.WriteThrough);
-            //_indexStream = new FileStream(indexFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.WriteThrough);
+            _dataStream = new FileStream(dataFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
             _dataWriter = new BinaryWriter(_dataStream);
-
-            _eStream = new FileStream(elogFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
-            _eWriter = new BinaryWriter(_eStream);
         }
 
         private readonly string _absoluteDirectory;
         private readonly FileStream _dataStream;
-        //private readonly FileStream _indexStream;
         private readonly BinaryWriter _dataWriter;
-        private readonly FileStream _eStream;
-        private readonly BinaryWriter _eWriter;
 
         /// <inheritdoc/>
         public string AbsoluteDirectoryName => _absoluteDirectory;
@@ -85,24 +72,6 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
             MonitorLogFileRowFormat.Write(_dataWriter, nodeId, threadId, messageNumber, globalMessageNumber, (int)kindOfMessage, data);
 
             _dataStream.Flush();
-
-            /*
-            var startPosition = _dataStream.Position;
-
-#if DEBUG
-            //_globalLogger.Info($"startPosition = {startPosition}");
-#endif
-
-            _dataStream.Write(data, 0, data.Length);
-
-#if DEBUG
-            //_globalLogger.Info($"_dataStream.Position (after) = {_dataStream.Position}");
-#endif
-            
-            MonitorIndexFileRowFormat.Write(writer: _indexWriter, nodeId: nodeId, threadId: threadId, messageNumber: messageNumber, globalMessageNumber: globalMessageNumber, kindOfMessage: (int)kindOfMessage, startPosition: startPosition, dataLength: data.Length);
-
-            _dataStream.Flush(true);//tmp
-            _indexStream.Flush(true);//tmp*/
         }
 
         /// <inheritdoc/>
@@ -110,11 +79,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         {
             _dataWriter.Dispose();
             _dataStream.Dispose();
-            //_indexStream.Dispose();
-
-            _eWriter.Dispose();
-            _eStream.Dispose();
-
+            
             base.OnDisposing();
         }
     }

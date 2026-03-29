@@ -120,22 +120,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
             var logFileReader = FileReaderFactory.CreateMonitorLogFileReader(options.SerializationMode.Value);
-            var dataFileReader = FileReaderFactory.CreateMonitorDataFileReader(options.SerializationMode.Value);
-
+        
             var logRowRecordsList = logFileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG
             _logger.Info($"logRowRecordsList.Count = {logRowRecordsList.Count}");
 #endif
-
-            /*var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, null, null, null);
-
-#if DEBUG
-            _logger.Info($"fileNamesList.Count = {fileNamesList.Count}");
-#endif
-
-            throw new NotImplementedException("8CDD0CCF-93A7-4EEB-8C1D-D3DEE104CF2C");
-            */
 
             if (showStages)
             {

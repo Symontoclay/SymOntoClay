@@ -77,7 +77,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 
             if(File.Exists(logFileName))
             {
-                var recordsList = ReadIndexFile(logFileName);
+                var recordsList = ReadIndexFile(logFileName, targetThreads);
 
 #if DEBUG
                 //_globalLogger.Info($"recordsList.Count = {recordsList.Count}");
@@ -97,7 +97,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
             }
         }
 
-        private List<LogFileRowRecord> ReadIndexFile(string logFileName)
+        private List<LogFileRowRecord> ReadIndexFile(string logFileName, IEnumerable<string> targetThreads)
         {
 #if DEBUG
             //_globalLogger.Info($"indexFileName = {indexFileName}");
@@ -106,7 +106,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 
             var records = new List<LogFileRowRecord>();
 
-            using var fs = new FileStream(logFileName, FileMode.Open, FileAccess.Read);
+            using var fs = new FileStream(logFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             using var reader = new BinaryReader(fs);
 
             while (fs.Position < fs.Length)
@@ -116,6 +116,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
 #if DEBUG
                 //_globalLogger.Info($"idxRecord = {idxRecord}");
 #endif
+
+                if(targetThreads != null)
+                {
+                    if(!targetThreads.Contains(idxRecord.ThreadId))
+                    {
+                        continue;
+                    }
+                }
 
                 var record = new LogFileRowRecord(
                         NodeId: idxRecord.NodeId,

@@ -65,7 +65,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 isAbsUrl: options.IsAbsUrl ?? false,
                 fileNameTemplate: options.FileNameTemplate);
 
-            var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages, options.TargetNodes, options.TargetThreads);
+            var logFileReader = FileReaderFactory.CreateMonitorLogFileReader(options.SerializationMode.Value);
+
+            var logRowRecordsList = logFileReader.GetIndexFileRowRecords(options.SourceDirectoryName, options.KindOfMessages, options.TargetNodes, options.TargetThreads);
+
+            //var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages, options.TargetNodes, options.TargetThreads);
 
             var fileStreamsStorageOptions = new FileStreamsStorageOptions()
             {
@@ -83,7 +87,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
 
-            //RunWithPreparedOptions(options, logger, fileStreamsStorage, logFileCreatorContext, fileNamesList);//tmp
+            RunWithPreparedOptions(options, logger, fileStreamsStorage, logFileReader, logFileCreatorContext, logRowRecordsList);
         }
 
         public static void RunWithPreparedOptions(LogFileCreatorOptions options, ILogger logger, FileStreamsStorage fileStreamsStorage, ILogFileReader logFileReader, LogFileCreatorContext logFileCreatorContext, List<LogFileRowRecord> itemLogRowRecordsList)
@@ -150,7 +154,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
 #if DEBUG
                     _logger.Info($"data.Length = {data.Length}");
-                    _logger.Info($"data = {BitConverter.ToString(data)}");
+                    //_logger.Info($"data = {BitConverter.ToString(data)}");
                     _logger.Info($"itemIndexRowRecord.KindOfMessage = {itemLogRowRecord.KindOfMessage}");
                     message = null;
 #endif

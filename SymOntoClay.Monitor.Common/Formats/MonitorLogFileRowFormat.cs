@@ -16,12 +16,12 @@ namespace SymOntoClay.Monitor.Common.Formats
         public static void Write(BinaryWriter writer, string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, int kindOfMessage, byte[] data)
         {
 #if DEBUG
-            _globalLogger.Info($"nodeId = {nodeId}");
-            _globalLogger.Info($"threadId = {threadId}");
-            _globalLogger.Info($"messageNumber = {messageNumber}");
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
-            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
-            _globalLogger.Info($"data.Length = {data.Length}");
+            //_globalLogger.Info($"nodeId = {nodeId}");
+            //_globalLogger.Info($"threadId = {threadId}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+            //_globalLogger.Info($"data.Length = {data.Length}");
 #endif
 
             writer.Write(_startMarker);
@@ -59,13 +59,13 @@ namespace SymOntoClay.Monitor.Common.Formats
             var startByte = reader.ReadByte();
 
 #if DEBUG
-            _globalLogger.Info($"startByte = {startByte.ToString("X2")}");
+            //_globalLogger.Info($"startByte = {startByte.ToString("X2")}");
 #endif
 
             var hasNodeId = reader.ReadBoolean();
 
 #if DEBUG
-            _globalLogger.Info($"hasNodeId = {hasNodeId}");
+            //_globalLogger.Info($"hasNodeId = {hasNodeId}");
 #endif
 
             string nodeId = null;
@@ -75,14 +75,14 @@ namespace SymOntoClay.Monitor.Common.Formats
                 nodeId = reader.ReadString();
 
 #if DEBUG
-                _globalLogger.Info($"nodeId = {nodeId}");
+                //_globalLogger.Info($"nodeId = {nodeId}");
 #endif
             }
 
             var hasThreadId = reader.ReadBoolean();
 
 #if DEBUG
-            _globalLogger.Info($"hasThreadId = {hasThreadId}");
+            //_globalLogger.Info($"hasThreadId = {hasThreadId}");
 #endif
 
             string threadId = null;
@@ -92,32 +92,32 @@ namespace SymOntoClay.Monitor.Common.Formats
                 threadId = reader.ReadString();
 
 #if DEBUG
-                _globalLogger.Info($"threadId = {threadId}");
+                //_globalLogger.Info($"threadId = {threadId}");
 #endif
             }
 
             var messageNumber = reader.ReadUInt64();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = reader.ReadUInt64();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var kindOfMessage = reader.ReadInt32();
 
 #if DEBUG
-            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+            //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
 #endif
 
             var dataLength = reader.ReadInt32();
 
 #if DEBUG
-            _globalLogger.Info($"dataLength = {dataLength}");
+            //_globalLogger.Info($"dataLength = {dataLength}");
 #endif
 
             var data = reader.ReadBytes(dataLength);
@@ -129,7 +129,7 @@ namespace SymOntoClay.Monitor.Common.Formats
             var endByte = reader.ReadByte();
 
 #if DEBUG
-            _globalLogger.Info($"endByte = {endByte.ToString("X2")}");
+            //_globalLogger.Info($"endByte = {endByte.ToString("X2")}");
 #endif
 
             return new LogFileRowRecord(

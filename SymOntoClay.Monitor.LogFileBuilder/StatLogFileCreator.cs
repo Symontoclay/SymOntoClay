@@ -119,8 +119,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Source: '{options.SourceDirectoryName}'"));            
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
+#if DEBUG
+            _logger.Info($"options.SerializationMode.Value = {options.SerializationMode.Value}");
+#endif
+
             var logFileReader = FileReaderFactory.CreateMonitorLogFileReader(options.SerializationMode.Value);
-        
+
+#if DEBUG
+            _logger.Info($"logFileReader?.GetType()?.FullName = {logFileReader?.GetType()?.FullName}");
+#endif
+
             var logRowRecordsList = logFileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG

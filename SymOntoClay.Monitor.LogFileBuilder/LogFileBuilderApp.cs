@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.Common;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
@@ -52,8 +53,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public void Run(string[] args, LogFileCreatorInheritableOptions defaultConfiguration)
         {
 #if DEBUG
-            //_logger.Info($"args = {args.WritePODListToString()}");
-            //_logger.Info($"defaultConfiguration = {defaultConfiguration}");
+            _logger.Info($"args = {args.WritePODListToString()}");
+            _logger.Info($"defaultConfiguration = {defaultConfiguration}");
 #endif
 
             var parseArgsResult = ParseArgs(args);
@@ -66,8 +67,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var logFileBuilderOptions = parseArgsResult.Options;
 
 #if DEBUG
-            //_logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
-            //_logger.Info($"logFileBuilderOptions = {logFileBuilderOptions}");
+            _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+            _logger.Info($"logFileBuilderOptions = {logFileBuilderOptions}");
 #endif
 
             if (logFileBuilderOptions.IsHelp)
@@ -105,10 +106,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 options.Mode = logFileBuilderOptions.Mode;
             }
 
-            if (logFileBuilderOptions.SerializationMode != null)
-            {
-                options.SerializationMode = logFileBuilderOptions.SerializationMode;
-            }
+            //if (logFileBuilderOptions.SerializationMode != null)
+            //{
+            //    options.SerializationMode = logFileBuilderOptions.SerializationMode;
+            //}
 
             if (logFileBuilderOptions.Input != null)
             {
@@ -167,6 +168,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         public static void Run(LogFileCreatorOptions options)
         {
+#if DEBUG
+            _logger.Info($"options = {options}");
+#endif
+
             var mode = options.Mode;
 
             switch (mode)

@@ -33,6 +33,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
             return result;
         }
 
+        /// <inheritdoc/>
         public byte[] ReadData(string fileName, byte[] data)
         {
             return data;

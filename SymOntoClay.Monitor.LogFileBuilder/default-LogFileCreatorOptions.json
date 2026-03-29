@@ -1,6 +1,7 @@
 {
   "ParentCfg": null,
   "SourceDirectoryName": null,
+  "SerializationMode": 0,
   "TargetNodes": null,
   "TargetThreads": null,
   "OutputDirectory": null,

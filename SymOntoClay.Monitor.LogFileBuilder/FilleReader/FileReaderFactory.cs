@@ -9,6 +9,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader
         {
             switch(kindOfSerialization)
             {
+                case KindOfSerialization.Json:
+                    return new SymOntoClay.Monitor.LogFileBuilder.FilleReader.General.MonitorLogFileReader();
+
                 case KindOfSerialization.MessagePack:
                     return new SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary.MonitorLogFileReader();
 

@@ -216,7 +216,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
                 catch (Exception e)
                 {
-                    _logger.Info($"data = {BitConverter.ToString(data)}");
+                    if(data == null)
+                    {
+                        _logger.Info("data = ");
+                    }
+                    else
+                    {
+                        _logger.Info($"data = {BitConverter.ToString(data)}");
+                    }
+                        
                     _logger.Info($"message = {message}");
                     _logger.Info($"e = {e}");
                 }

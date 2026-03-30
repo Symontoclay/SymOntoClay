@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
 {
@@ -39,7 +41,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
             _globalLogger.Info($"fileName = {fileName}");
 #endif
 
-            throw new NotImplementedException("C44CC7CF-7C8C-444D-8B96-9D270C8B6B57");
+            return File.ReadAllBytes(fileName);
         }
 
         private void FillUpFileRowRecords(ref List<LogFileRowRecord> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
@@ -90,12 +92,44 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
 
             var filesList = Directory.GetFiles(targetDirectoryName).Where(p => p.EndsWith(FileCacheItemInfo.FileExt)).Select(p => (FileCacheItemInfo.GetFileInfo(p), p));
 
-            if (targetKindOfMessages?.Any() ?? false)
+            foreach (var file in filesList)
             {
-                filesList = filesList.Where(p => targetKindOfMessages != null && targetKindOfMessages.Contains(p.Item1.KindOfMessage));
+#if DEBUG
+                _globalLogger.Info($"file = {file}");
+#endif
+
+                var item1 = file.Item1;
+
+                if (targetKindOfMessages != null)
+                {
+                    if(!targetKindOfMessages.Contains(item1.KindOfMessage))
+                    {
+                        continue;
+                    }
+                }
+
+                var record = new LogFileRowRecord
+                    (
+                        NodeId: item1.NodeId,
+                        ThreadId: item1.ThreadId,
+                        MessageNumber: item1.MessageNumber,
+                        GlobalMessageNumber: item1.GlobalMessageNumber,
+                        KindOfMessage: item1.KindOfMessage,
+                        DataLength: 0,
+                        Data: null,
+                        FileName: file.p
+                    );
+            
+#if DEBUG
+                _globalLogger.Info($"record = {record}");
+#endif
+
+                result.Add(record);
             }
 
-            result.AddRange(filesList);
+#if DEBUG
+            //throw new NotImplementedException("C49CCCE9-1C48-48B3-89C0-7ABF9EB6C80E");
+#endif
 
             var subDirectories = Directory.GetDirectories(targetDirectoryName);
 

@@ -24,7 +24,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
         public List<LogFileRowRecord> GetIndexFileRowRecords(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
 #endif
 
             var result = new List<LogFileRowRecord>();
@@ -38,7 +38,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
         public byte[] ReadData(string fileName, byte[] data)
         {
 #if DEBUG
-            _globalLogger.Info($"fileName = {fileName}");
+            //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
             return File.ReadAllBytes(fileName);
@@ -47,9 +47,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
         private void FillUpFileRowRecords(ref List<LogFileRowRecord> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages, int levelNum, IEnumerable<string> targetNodes, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            _globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
-            _globalLogger.Info($"levelNum = {levelNum}");
-            _globalLogger.Info($"targetNodes?.Count() = {targetNodes?.Count()}");
+            //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
+            //_globalLogger.Info($"levelNum = {levelNum}");
+            //_globalLogger.Info($"targetNodes?.Count() = {targetNodes?.Count()}");
 #endif
 
             switch (levelNum)
@@ -95,7 +95,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
             foreach (var file in filesList)
             {
 #if DEBUG
-                _globalLogger.Info($"file = {file}");
+                //_globalLogger.Info($"file = {file}");
 #endif
 
                 var item1 = file.Item1;
@@ -121,7 +121,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.General
                     );
             
 #if DEBUG
-                _globalLogger.Info($"record = {record}");
+                //_globalLogger.Info($"record = {record}");
 #endif
 
                 result.Add(record);

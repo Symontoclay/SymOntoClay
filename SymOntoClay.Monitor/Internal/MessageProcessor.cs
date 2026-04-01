@@ -43,7 +43,7 @@ namespace SymOntoClay.Monitor.Internal
             _hasRemoteMonitor = remoteMonitor != null;
 
 #if DEBUG
-            _globalLogger.Info($"kindOfSerialization = {kindOfSerialization}");
+            //_globalLogger.Info($"kindOfSerialization = {kindOfSerialization}");
 #endif
 
             _serializerAdapter = SerializerAdapterFactory.Create(kindOfSerialization);

@@ -35,7 +35,7 @@ namespace SymOntoClay.Monitor.Common.Data
         public MessagesFactory(KindOfSerialization kindOfSerialization)
         {
 #if DEBUG
-            _globalLogger.Info($"kindOfSerialization = {kindOfSerialization}");
+            //_globalLogger.Info($"kindOfSerialization = {kindOfSerialization}");
 #endif
 
             _kindOfSerialization = kindOfSerialization;

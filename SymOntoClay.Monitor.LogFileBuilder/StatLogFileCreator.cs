@@ -120,19 +120,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             outputSw.WriteLine(logFileCreatorContext.EndParagraph());
 
 #if DEBUG
-            _logger.Info($"options.SerializationMode.Value = {options.SerializationMode.Value}");
+            //_logger.Info($"options.SerializationMode.Value = {options.SerializationMode.Value}");
 #endif
 
             var logFileReader = FileReaderFactory.CreateMonitorLogFileReader(options.SerializationMode.Value);
 
 #if DEBUG
-            _logger.Info($"logFileReader?.GetType()?.FullName = {logFileReader?.GetType()?.FullName}");
+            //_logger.Info($"logFileReader?.GetType()?.FullName = {logFileReader?.GetType()?.FullName}");
 #endif
 
             var logRowRecordsList = logFileReader.GetIndexFileRowRecords(options.SourceDirectoryName, null, null, null);
 
 #if DEBUG
-            _logger.Info($"logRowRecordsList.Count = {logRowRecordsList.Count}");
+            //_logger.Info($"logRowRecordsList.Count = {logRowRecordsList.Count}");
 #endif
 
             if (showStages)
@@ -143,7 +143,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var indexRowRecordsDictByNodes = logRowRecordsList.GroupBy(p => p.NodeId).ToDictionary(p => p.Key, p => p.ToList());
 
 #if DEBUG
-            _logger.Info($"indexRowRecordsDictByNodes.Count = {indexRowRecordsDictByNodes.Count}");
+            //_logger.Info($"indexRowRecordsDictByNodes.Count = {indexRowRecordsDictByNodes.Count}");
 #endif
 
             outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
@@ -156,9 +156,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             foreach (var indexRowRecordsByNodesKvpItem in indexRowRecordsDictByNodes.OrderByDescending(p => p.Value.Count))
             {
 #if DEBUG
-                _logger.Info($"indexRowRecordsByNodesKvpItem.Key = {indexRowRecordsByNodesKvpItem.Key}");
-                _logger.Info($"indexRowRecordsByNodesKvpItem.Value.Count = {indexRowRecordsByNodesKvpItem.Value.Count}");
-                _logger.Info($"indexRowRecordsByNodesKvpItem.Value.Count(p => p.KindOfMessage == Common.Data.KindOfMessage.Error || p.KindOfMessage == Common.Data.KindOfMessage.Fatal) = {indexRowRecordsByNodesKvpItem.Value.Count(p => p.KindOfMessage == Common.Data.KindOfMessage.Error || p.KindOfMessage == Common.Data.KindOfMessage.Fatal)}");
+                //_logger.Info($"indexRowRecordsByNodesKvpItem.Key = {indexRowRecordsByNodesKvpItem.Key}");
+                //_logger.Info($"indexRowRecordsByNodesKvpItem.Value.Count = {indexRowRecordsByNodesKvpItem.Value.Count}");
+                //_logger.Info($"indexRowRecordsByNodesKvpItem.Value.Count(p => p.KindOfMessage == Common.Data.KindOfMessage.Error || p.KindOfMessage == Common.Data.KindOfMessage.Fatal) = {indexRowRecordsByNodesKvpItem.Value.Count(p => p.KindOfMessage == Common.Data.KindOfMessage.Error || p.KindOfMessage == Common.Data.KindOfMessage.Fatal)}");
 #endif
 
                 var nodeId = indexRowRecordsByNodesKvpItem.Key;
@@ -174,7 +174,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     case LogFileBuilderMode.StatAndFiles:
                         {
 #if DEBUG
-                            _logger.Info($"options = {options}");
+                            //_logger.Info($"options = {options}");
 #endif
 
                             var itemOptions = options.Clone();
@@ -182,7 +182,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                             itemOptions.TargetNodes = new List<string> { nodeId };
 
 #if DEBUG
-                            _logger.Info($"itemOptions = {itemOptions}");
+                            //_logger.Info($"itemOptions = {itemOptions}");
 #endif
 
                             LogFileCreator.RunWithPreparedOptions(itemOptions, logger, fileStreamsStorage, logFileReader, logFileCreatorContext, itemIndexRowRecordsList);
@@ -196,7 +196,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                _logger.Info($"itemLogFileName = {itemLogFileName}");
+                //_logger.Info($"itemLogFileName = {itemLogFileName}");
 #endif
 
                 outputSw.WriteLine(logFileCreatorContext.BeginParagraph());
@@ -231,7 +231,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 var visibleObjectIds = new List<string>();
 
 #if DEBUG
-                _logger.Info($"options.SerializationMode = {options.SerializationMode}");
+                //_logger.Info($"options.SerializationMode = {options.SerializationMode}");
 #endif
 
                 var messagesFactory = new MessagesFactory(options.SerializationMode.Value);

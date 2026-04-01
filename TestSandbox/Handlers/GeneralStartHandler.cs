@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using TestSandbox.CoreHostListener;
+using TestSandbox.Helpers;
 
 namespace TestSandbox.Handlers
 {
@@ -125,7 +126,7 @@ namespace TestSandbox.Handlers
             options.Write(new LogFileCreatorOptions()
             {
                 SourceDirectoryName = sourceDirectoryName,
-                SerializationMode = KindOfSerialization.Json,//tmp
+                SerializationMode = TstEngineContextHelper.KindOfSerialization,
                 OutputDirectory = logsOutputDirectory,
                 DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe",
                 ToHtml = true,

@@ -14,7 +14,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
     public class MonitorLogFileReader: ILogFileReader
     {
 #if DEBUG
-        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private const int _nodeLevel = 2;
@@ -101,8 +101,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FilleReader.Binary
         private List<LogFileRowRecord> ReadIndexFile(string logFileName, IEnumerable<string> targetThreads)
         {
 #if DEBUG
-            _globalLogger.Info($"logFileName = {logFileName}");
-            _globalLogger.Info($"targetThreads?.Count() = {targetThreads?.Count()}");
+            //_globalLogger.Info($"logFileName = {logFileName}");
+            //_globalLogger.Info($"targetThreads?.Count() = {targetThreads?.Count()}");
 #endif
 
             var records = new List<LogFileRowRecord>();

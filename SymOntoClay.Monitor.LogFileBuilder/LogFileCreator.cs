@@ -40,7 +40,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static void Run(LogFileCreatorOptions options, ILogger logger)
         {
 #if DEBUG
-            _logger.Info($"options = {options}");
+            //_logger.Info($"options = {options}");
 #endif
 
             if(!File.Exists(options.SourceDirectoryName))
@@ -142,27 +142,24 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-               logger.Info($"itemIndexRowRecord.FileName = {itemLogRowRecord.FileName}");
+               //logger.Info($"itemIndexRowRecord.FileName = {itemLogRowRecord.FileName}");
 #endif
 
                 try
                 {
                     data = logFileReader.ReadData(itemLogRowRecord.FileName, itemLogRowRecord.Data);
-                    
-
-                    //var old_data = File.ReadAllBytes(itemIndexRowRecord.FileName);
 
 #if DEBUG
-                    _logger.Info($"data.Length = {data.Length}");
+                    //_logger.Info($"data.Length = {data.Length}");
                     //_logger.Info($"data = {BitConverter.ToString(data)}");
-                    _logger.Info($"itemIndexRowRecord.KindOfMessage = {itemLogRowRecord.KindOfMessage}");
-                    message = null;
+                    //_logger.Info($"itemIndexRowRecord.KindOfMessage = {itemLogRowRecord.KindOfMessage}");
 #endif
 
+                    message = null;
                     message = messagesFactory.ReadMessage(data, itemLogRowRecord.KindOfMessage);
 
 #if DEBUG
-                    _logger.Info($"message = {message}");
+                    //_logger.Info($"message = {message}");
 #endif
 
                     //throw new NotImplementedException("0AF81867-2E69-41AF-B8C1-DA2A71486352");

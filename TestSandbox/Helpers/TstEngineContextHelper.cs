@@ -27,7 +27,6 @@ using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Helpers;
-using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Monitor.NLog.PlatformLoggers;
 using SymOntoClay.NLP;
@@ -44,6 +43,8 @@ namespace TestSandbox.Helpers
     public static class TstEngineContextHelper
     {
         private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
+
+        public static readonly KindOfSerialization KindOfSerialization = KindOfSerialization.MessagePack; //KindOfSerialization.Json;
 
         public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
@@ -147,7 +148,7 @@ namespace TestSandbox.Helpers
             var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 Enable = true,
-                KindOfSerialization = KindOfSerialization.Json,//tmp
+                KindOfSerialization = TstEngineContextHelper.KindOfSerialization,
                 MessagesDir = monitorMessagesDir,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpAlways,
                 //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),

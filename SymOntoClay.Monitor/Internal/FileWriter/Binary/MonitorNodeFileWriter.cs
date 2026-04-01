@@ -11,7 +11,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
     public class MonitorNodeFileWriter : Disposable, IMonitorNodeFileWriter, IThreadLoggerFileWriter
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public MonitorNodeFileWriter(string nodeId, string absoluteDirectory)
@@ -78,7 +78,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         protected override void OnDisposing()
         {
 #if DEBUG
-            _globalLogger.Info("OnDisposing!!!!!! ");
+            //_globalLogger.Info("OnDisposing!!!!!! ");
 #endif
 
             _dataWriter.Dispose();

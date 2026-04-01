@@ -38,7 +38,6 @@ namespace SymOntoClay.Monitor.Internal
         MessageProcessor MessageProcessor { get; }
         IMonitorFeatures Features { get; }
         IList<IPlatformLogger> PlatformLoggers { get; }
-        //IFileCache FileCache { get; }
         IFileWriter FileWriter { get; }
         MessageNumberGenerator GlobalMessageNumberGenerator { get; }
         MessageNumberGenerator MessageNumberGenerator { get; }

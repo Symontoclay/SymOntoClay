@@ -21,13 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
-using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
-using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;

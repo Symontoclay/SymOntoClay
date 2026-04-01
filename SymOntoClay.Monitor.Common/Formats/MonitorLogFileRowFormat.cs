@@ -7,7 +7,7 @@ namespace SymOntoClay.Monitor.Common.Formats
     public static class MonitorLogFileRowFormat
     {
 #if DEBUG
-        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private const byte _startMarker = 0xAA;

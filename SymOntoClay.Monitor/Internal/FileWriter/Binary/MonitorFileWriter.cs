@@ -9,7 +9,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
     public class MonitorFileWriter: Disposable, IMonitorFileWriter
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public MonitorFileWriter(string messagesDir, string sessionName)
@@ -83,7 +83,7 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         protected override void OnDisposing()
         {
 #if DEBUG
-            _globalLogger.Info("OnDisposing!!!!!! ");
+            //_globalLogger.Info("OnDisposing!!!!!! ");
 #endif
 
             _dataWriter.Dispose();

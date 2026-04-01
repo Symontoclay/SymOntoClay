@@ -27,7 +27,6 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
-using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
@@ -48,7 +47,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MonitorNodeContext _monitorNodeContext;
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
-        //private readonly MonitorNodeFileCache _fileCache;
+        
         private readonly IMonitorNodeFileWriter _fileWriter;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;

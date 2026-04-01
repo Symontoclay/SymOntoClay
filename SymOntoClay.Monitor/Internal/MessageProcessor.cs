@@ -20,17 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.Monitor.Common.Data;
-using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Monitor.Internal.FileWriter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {

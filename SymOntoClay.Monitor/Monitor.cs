@@ -29,7 +29,6 @@ using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Helpers;
 using SymOntoClay.Monitor.Internal;
-using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
@@ -43,14 +42,14 @@ namespace SymOntoClay.Monitor
     public class Monitor : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly MonitorContext _monitorContext;
         private readonly IRemoteMonitor _remoteMonitor;
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
-        //private readonly MonitorFileCache _fileCache;
+        
         private readonly IMonitorFileWriter _fileWriter;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -1619,7 +1618,7 @@ namespace SymOntoClay.Monitor
         protected override void OnDisposing()
         {
 #if DEBUG
-            _globalLogger.Info("OnDisposing!!!!!! ");
+            //_globalLogger.Info("OnDisposing!!!!!! ");
 #endif
 
             _fileWriter.Dispose();

@@ -22,17 +22,13 @@ SOFTWARE.*/
 
 using SymOntoClay.Monitor.Common.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal.FileCache
 {
     public static class FileCacheItemInfo
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public static string PrepareString(string value)

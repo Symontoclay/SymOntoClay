@@ -40,7 +40,7 @@ namespace SymOntoClay.Monitor.Internal
     public class MonitorLogger : Disposable, IMonitorLogger
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public MonitorLogger(IMonitorLoggerContext context)

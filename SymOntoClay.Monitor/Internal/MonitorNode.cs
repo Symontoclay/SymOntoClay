@@ -1577,10 +1577,6 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-#if DEBUG
-            _globalLogger.Info("OnDisposing!!!!!! ");
-#endif
-
             _fileWriter.Dispose();
 
             _cancellationTokenSource.Dispose();

@@ -41,7 +41,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static void Run(LogFileCreatorOptions options, ILogger logger)
         {
 #if DEBUG
-            _logger.Info($"options = {options}");
+            //_logger.Info($"options = {options}");
 #endif
 
             if (!Directory.Exists(options.SourceDirectoryName))
@@ -54,7 +54,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             LogFileCreatorOptionsHelper.PrepareOptions(options, logger);
 
 #if DEBUG
-            _logger.Info($"options (after) = {options}");
+            //_logger.Info($"options (after) = {options}");
 #endif
 
             var toHtml = options.ToHtml ?? false;

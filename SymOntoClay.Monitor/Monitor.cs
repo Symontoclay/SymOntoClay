@@ -1617,10 +1617,6 @@ namespace SymOntoClay.Monitor
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-#if DEBUG
-            //_globalLogger.Info("OnDisposing!!!!!! ");
-#endif
-
             _fileWriter.Dispose();
 
             foreach(var child in _childMonitorNodes)

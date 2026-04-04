@@ -82,10 +82,6 @@ namespace SymOntoClay.Monitor.Internal.FileWriter.Binary
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-#if DEBUG
-            //_globalLogger.Info("OnDisposing!!!!!! ");
-#endif
-
             _dataWriter.Dispose();
             _dataStream.Dispose();
             

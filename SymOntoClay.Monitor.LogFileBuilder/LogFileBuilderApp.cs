@@ -53,8 +53,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public void Run(string[] args, LogFileCreatorInheritableOptions defaultConfiguration)
         {
 #if DEBUG
-            _logger.Info($"args = {args.WritePODListToString()}");
-            _logger.Info($"defaultConfiguration = {defaultConfiguration}");
+            //_logger.Info($"args = {args.WritePODListToString()}");
+            //_logger.Info($"defaultConfiguration = {defaultConfiguration}");
 #endif
 
             var parseArgsResult = ParseArgs(args);
@@ -67,8 +67,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var logFileBuilderOptions = parseArgsResult.Options;
 
 #if DEBUG
-            _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
-            _logger.Info($"logFileBuilderOptions = {logFileBuilderOptions}");
+            //_logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+            //_logger.Info($"logFileBuilderOptions = {logFileBuilderOptions}");
 #endif
 
             if (logFileBuilderOptions.IsHelp)
@@ -98,7 +98,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var options = LoadOptions(defaultConfiguration, logFileBuilderOptions.ConfigurationFileName);
 
 #if DEBUG
-            _logger.Info($"options = {options}");            
+            //_logger.Info($"options = {options}");            
 #endif
 
             if (logFileBuilderOptions.Mode != null)
@@ -158,7 +158,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
 #if DEBUG
             //options.Mode = LogFileBuilderMode.StatAndFiles;
-            _logger.Info($"options (2) = {options}");
+            //_logger.Info($"options (2) = {options}");
 #endif
 
             //throw new NotImplementedException("1BABA355-14B7-4B1A-9D3C-92F36191B34B");

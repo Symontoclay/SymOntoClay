@@ -72,8 +72,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             Directory.CreateDirectory(_tmpDir);
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationToken ?? CancellationToken.None);
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, settings?.CancellationContext);
 
             WorldThreadingSettings = settings.WorldThreadingSettings;
             HumanoidNpcDefaultThreadingSettings = settings.HumanoidNpcDefaultThreadingSettings;
@@ -85,7 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _linkedCancellationTokenSource.Token);
+                _linkedCancellationTokenSourceContext.Token);
 
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
@@ -108,7 +108,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
-            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSource.Token);
+            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSourceContext);
             LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
 
             ModulesStorage = new ModulesStorageComponent(settings, this);
@@ -229,19 +229,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public ICustomThreadPool AsyncEventsThreadPool { get; private set; }
 
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationTokenSource _linkedCancellationTokenSource;
+        private CancellationTokenSourceContext _cancellationTokenSourceContext;
+        private ICancellationContext _linkedCancellationTokenSourceContext;
 
         /// <inheritdoc/>
         public ICancellationContext GetCancellationContext()
         {
-            return _linkedCancellationTokenSource;
+            return _linkedCancellationTokenSourceContext;
         }
 
         /// <inheritdoc/>
         public CancellationToken GetCancellationToken()
         {
-            return _linkedCancellationTokenSource.Token;
+            return _linkedCancellationTokenSourceContext.Token;
         }
 
         /// <inheritdoc/>
@@ -479,7 +479,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
             }
 
-            var cancellationToken = _cancellationTokenSource.Token;
+            var cancellationToken = _cancellationTokenSourceContext.Token;
 
             ThreadTask.Run(() => {
                 try
@@ -501,7 +501,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                             }
                         }
 
-                        if (_cancellationTokenSource.IsCancellationRequested)
+                        if (_cancellationTokenSourceContext.IsCancellationRequested)
                         {
                             break;
                         }
@@ -579,7 +579,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _state = ComponentState.Disposed;
             }
 
-            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSourceContext?.Cancel();
 
             lock (_gameComponentsListLockObj)
             {

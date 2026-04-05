@@ -772,6 +772,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.AsyncEventsThreadPool">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.GetCancellationContext">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.GetCancellationToken">
             <inheritdoc/>
         </member>
@@ -1358,6 +1361,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.AsyncEventsThreadPool">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.GetCancellationContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.GetCancellationToken">

@@ -25,6 +25,7 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Threading;
@@ -36,8 +37,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
-        public ProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
-            : base(cancellationToken, threadPool, activeObjectContext)
+        public ProcessInfo(ICancellationContext cancellationContext, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
+            : base(cancellationContext, threadPool, activeObjectContext)
         {
         }
 

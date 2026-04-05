@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Services
             codeFrame.LocalContext = localCodeExecutionContext;
             codeFrame.Instance = instance;
 
-            var processInfo = new ProcessInfo(_context.GetCancellationToken(), _context.AsyncEventsThreadPool, _context.ActiveObjectContext);
+            var processInfo = new ProcessInfo(_context.GetCancellationContext(), _context.AsyncEventsThreadPool, _context.ActiveObjectContext);
 
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;
@@ -162,7 +162,7 @@ namespace SymOntoClay.Core.Internal.Services
                 codeFrame.LocalContext = localCodeExecutionContext;
             }
 
-            var processInfo = new ProcessInfo(_context.GetCancellationToken(), _context.AsyncEventsThreadPool, _context.ActiveObjectContext);
+            var processInfo = new ProcessInfo(_context.GetCancellationContext(), _context.AsyncEventsThreadPool, _context.ActiveObjectContext);
 
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;

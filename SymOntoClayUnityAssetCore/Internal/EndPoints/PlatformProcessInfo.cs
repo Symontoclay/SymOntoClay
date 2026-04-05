@@ -25,6 +25,7 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Threading;
@@ -37,11 +38,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class PlatformProcessInfo : BaseProcessInfo
     {
-        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, CancellationToken parentCancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext,
+        public PlatformProcessInfo(CancellationTokenSourceContext cancellationTokenSourceContext, ICancellationContext parentCancellationContext, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext,
             string endPointName, Dictionary<string, Value> arguments, IReadOnlyList<int> devices, IReadOnlyList<string> friends, string callMethodId)
-            : base(parentCancellationToken, threadPool, activeObjectContext)
+            : base(parentCancellationContext, threadPool, activeObjectContext)
         {
-            _cancellationTokenSource = cancellationTokenSource;
+            _cancellationTokenSource = cancellationTokenSourceContext;
             _endPointName = endPointName;
             _arguments = arguments;
             _devices = devices;

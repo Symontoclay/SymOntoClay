@@ -28,6 +28,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
@@ -46,9 +47,9 @@ namespace SymOntoClay.Core
     {
         protected static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
         
-        protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
+        protected BaseProcessInfo(ICancellationContext cancellationContext, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
         {
-            _cancellationToken = cancellationToken;
+            _cancellationContext = cancellationContext;
             _threadPool = threadPool;
             _activeObjectContext = activeObjectContext;
             _serializationAnchor = new SerializationAnchor();
@@ -56,7 +57,7 @@ namespace SymOntoClay.Core
             Id = NameHelper.GetNewEntityNameString();
         }
 
-        protected readonly CancellationToken _cancellationToken;
+        protected readonly ICancellationContext _cancellationContext;
         protected readonly ICustomThreadPool _threadPool;
         protected IActiveObjectContext _activeObjectContext;
         protected SerializationAnchor _serializationAnchor;

@@ -13,17 +13,23 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            //Case2();
-            Case1();
+            Case2();
+            //Case1();
 
             _logger.Info("End");
         }
 
         private void Case2()
         {
-            //var source = new CancellationTokenSource();
+            var source = new CancellationTokenSource();
 
-            //CancellationTokenSourceContext
+            var context = new CancellationTokenSourceContext(source);
+
+            _logger.Info($"context = {context}");
+
+            var cancellationToken = context.Token;
+
+            _logger.Info($"cancellationToken = {cancellationToken}");
         }
 
         private void Case1()

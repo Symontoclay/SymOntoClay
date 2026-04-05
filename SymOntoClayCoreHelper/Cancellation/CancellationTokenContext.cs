@@ -1,8 +1,4 @@
-﻿using SymOntoClay.Common;
-using SymOntoClay.Common.DebugHelpers;
-using System;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 
 namespace SymOntoClay.CoreHelper.Cancellation
 {

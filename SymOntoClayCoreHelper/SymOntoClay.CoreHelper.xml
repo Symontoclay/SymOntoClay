@@ -46,6 +46,12 @@
         <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenContext.Token">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.IsCancellationRequested">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.Token">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.ToString">
             <inheritdoc/>
         </member>

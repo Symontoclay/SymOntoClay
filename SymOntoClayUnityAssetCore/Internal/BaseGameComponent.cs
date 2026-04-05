@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -55,15 +56,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, worldContext.GetCancellationToken());
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, worldContext.GetCancellationContext());
 
             var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
             var worldThreadingSettings = worldContext.GetDefaultThreadingSettings(kindOfWorldItem);
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount),
                 threadingSettings?.MaxThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount),
-                _linkedCancellationTokenSource.Token);
+                _linkedCancellationTokenSourceContext.Token);
 
             _monitorNode = _worldContext.Motitor.CreateMonitorNode("852f0d28-15ca-4671-8779-66e00d23a386", settings.Id);
             _logger = _monitorNode;
@@ -71,8 +72,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _standardFactsBuilder = worldContext.StandardFactsBuilder;
         }
 
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationTokenSource _linkedCancellationTokenSource;
+        private CancellationTokenSourceContext _cancellationTokenSourceContext;
+        private ICancellationContext _linkedCancellationTokenSourceContext;
         private readonly IStandardFactsBuilder _standardFactsBuilder;
         private readonly string _idForFacts;
         private readonly string _id;
@@ -81,9 +82,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public ICustomThreadPool AsyncEventsThreadPool { get; private set; }
 
         /// <inheritdoc/>
+        public ICancellationContext GetCancellationContext()
+        {
+            return _linkedCancellationTokenSourceContext;
+        }
+
+        /// <inheritdoc/>
         public CancellationToken GetCancellationToken()
         {
-            return _linkedCancellationTokenSource.Token;
+            return _linkedCancellationTokenSourceContext.Token;
         }
 
         /// <inheritdoc/>
@@ -242,7 +249,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _componentState = ComponentState.Disposed;
             }
 
-            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSourceContext?.Cancel();
 
             _worldContext.RemoveGameComponent(this);
 

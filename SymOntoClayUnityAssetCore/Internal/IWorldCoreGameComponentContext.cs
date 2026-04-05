@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -66,6 +67,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ThreadingSettings PlaceDefaultThreadingSettings { get; }
         ThreadingSettings GetDefaultThreadingSettings(KindOfWorldItem kindOfWorldItem);
         ICustomThreadPool AsyncEventsThreadPool { get; }
+
+        ICancellationContext GetCancellationContext();
         CancellationToken GetCancellationToken();
 
         HtnExecutionSettings HtnExecutionSettings { get; }

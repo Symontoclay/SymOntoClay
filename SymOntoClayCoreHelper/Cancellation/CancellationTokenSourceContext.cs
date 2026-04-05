@@ -23,6 +23,12 @@ namespace SymOntoClay.CoreHelper.Cancellation
         public override CancellationToken Token => _cancellationTokenSource.Token;
 
         /// <inheritdoc/>
+        public void Cancel()
+        {
+            _cancellationTokenSource.Cancel();
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposing()
         {
             _cancellationTokenSource.Dispose();

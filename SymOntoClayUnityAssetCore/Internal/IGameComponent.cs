@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -45,6 +46,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         bool CanBeTakenBy(IMonitorLogger logger, IEntity subject);
         Vector3? GetPosition(IMonitorLogger logger);
         ICustomThreadPool AsyncEventsThreadPool { get; }
+        ICancellationContext GetCancellationContext();
         CancellationToken GetCancellationToken();
     }
 }

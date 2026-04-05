@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -32,10 +33,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 {
     public class DateTimeProvider: BaseLoggedComponent, IDateTimeProvider, IDisposable
     {
-        public DateTimeProvider(IMonitorLogger logger, IActiveObjectCommonContext syncContext, ICustomThreadPool threadPool, CancellationToken cancellationToken)
+        public DateTimeProvider(IMonitorLogger logger, IActiveObjectCommonContext syncContext, ICustomThreadPool threadPool, ICancellationContext cancellationContext)
             : base(logger)
         {
-            var activeContext = new ActiveObjectContext(syncContext, cancellationToken);
+            var activeContext = new ActiveObjectContext(syncContext, cancellationContext);
 
             _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, logger)
             {
@@ -82,7 +83,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
             }
         }
 
-        private bool NRun(CancellationToken cancellationToken)
+        private bool NRun(ICancellationContext cancellationContext)
         {
             lock (_lockObj)
             {

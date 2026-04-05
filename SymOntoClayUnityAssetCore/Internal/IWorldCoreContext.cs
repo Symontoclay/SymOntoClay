@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -48,6 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ThreadingSettings GameObjectDefaultThreadingSettings { get; }
         ThreadingSettings PlaceDefaultThreadingSettings { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
+        ICancellationContext GetCancellationContext();
         CancellationToken GetCancellationToken();
     }
 }

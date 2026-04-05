@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
@@ -108,7 +109,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
         }
 
-        private bool CommandLoop(CancellationToken cancellationToken)
+        private bool CommandLoop(ICancellationContext cancellationContext)
         {
             Thread.Sleep(200);
 

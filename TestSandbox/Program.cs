@@ -39,6 +39,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.LogFileBuilder;
@@ -1162,15 +1163,15 @@ app PeaceKeeper is [very middle] exampleClass
 
             _logger.Info("33072297-0819-4B8F-8551-B655F4FA22B0", $"monitorMessagesDir = {monitorMessagesDir}");
 
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSource.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext.Token);
 
             var instance = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
 
-            settings.CancellationToken = cancellationTokenSource.Token;
+            settings.CancellationContext = cancellationTokenSourceContext;
 
             settings.EnableAutoloadingConvertors = true;
 
@@ -1194,7 +1195,7 @@ app PeaceKeeper is [very middle] exampleClass
                 MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
-                CancellationToken = cancellationTokenSource.Token,
+                CancellationToken = cancellationTokenSourceContext.Token,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
@@ -1221,7 +1222,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             Thread.Sleep(5000);
 
-            cancellationTokenSource.Cancel();
+            cancellationTokenSourceContext.Cancel();
 
             Directory.Delete(testDir, true);
 
@@ -2028,14 +2029,14 @@ primitive task SomePrimitiveTask4
 
             _logger.Info("BEDEEFAF-3DFE-4982-8441-206E5F863DA3", $"targetFiles = {targetFiles}");
 
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSource.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext.Token);
 
             var instance = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
-            settings.CancellationToken = cancellationTokenSource.Token;
+            settings.CancellationContext = cancellationTokenSourceContext;
 
             ThreadingSettingsHepler.ConfigureThreadingSettings(settings);
 
@@ -2053,7 +2054,7 @@ primitive task SomePrimitiveTask4
             {
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
-                CancellationToken = cancellationTokenSource.Token,
+                CancellationToken = cancellationTokenSourceContext.Token,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
@@ -2078,7 +2079,7 @@ primitive task SomePrimitiveTask4
 
             Thread.Sleep(50000);
 
-            cancellationTokenSource.Cancel();
+			cancellationTokenSourceContext.Cancel();
 
             _logger.Info("D1D4E5FE-B5AC-41E4-AA19-A1E8A6F989BF", "End");
         }

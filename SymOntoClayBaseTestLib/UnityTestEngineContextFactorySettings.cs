@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
@@ -57,8 +58,8 @@ namespace SymOntoClay.BaseTestLib
 
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
-
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        
+        public ICancellationContext CancellationContext { get; set; }
 
         public ThreadingSettings WorldThreadingSettings { get; set; }
         public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
@@ -112,7 +113,7 @@ namespace SymOntoClay.BaseTestLib
             sb.PrintPODListProp(n, nameof(Categories), Categories);
             sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
 
-            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
+            sb.PrintObjProp(n, nameof(CancellationContext), CancellationContext);
 
             sb.PrintObjProp(n, nameof(WorldThreadingSettings), WorldThreadingSettings);
             sb.PrintObjProp(n, nameof(HumanoidNpcDefaultThreadingSettings), HumanoidNpcDefaultThreadingSettings);

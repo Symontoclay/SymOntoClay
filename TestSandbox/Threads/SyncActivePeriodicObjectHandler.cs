@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.CoreHelper.Cancellation;
 using System.Threading;
 
 namespace TestSandbox.Threads
@@ -34,9 +35,9 @@ namespace TestSandbox.Threads
         {
             _logger.Info("Begin");
 
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var activeObject = new SyncActivePeriodicObject(cancellationTokenSource.Token);
+            var activeObject = new SyncActivePeriodicObject(cancellationTokenSourceContext);
             activeObject.PeriodicMethod = NRun;
             activeObject.Start();
 
@@ -45,7 +46,7 @@ namespace TestSandbox.Threads
 
         private int _n = 0;
 
-        private bool NRun(CancellationToken cancellationToken)
+        private bool NRun(ICancellationContext cancellationContext)
         {
             _n++;
 

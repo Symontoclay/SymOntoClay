@@ -81,7 +81,7 @@ namespace SymOntoClay.BaseTestLib
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(factorySettings.CancellationToken);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(factorySettings.CancellationContext.Token);
 
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;

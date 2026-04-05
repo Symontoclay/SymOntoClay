@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP;
@@ -44,7 +45,7 @@ namespace SymOntoClay.CLI
     {
         private IWorld world;
 
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSourceContext _cancellationTokenSourceContext;
 
         public void Run(CLICommand command)
         {
@@ -62,16 +63,16 @@ namespace SymOntoClay.CLI
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSource.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext.Token);
 
             var instance = WorldFactory.WorldInstance;
             world = instance;
 
             var settings = new WorldSettings();
 
-            settings.CancellationToken = _cancellationTokenSource.Token;
+            settings.CancellationContext = _cancellationTokenSourceContext;
 
             settings.EnableAutoloadingConvertors = true;
 
@@ -89,7 +90,7 @@ namespace SymOntoClay.CLI
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                CancellationToken = _cancellationTokenSource.Token,
+                CancellationToken = _cancellationTokenSourceContext.Token,
                 ThreadingSettings = ConfigureSoundBusThreadingSettings()
             });
 
@@ -166,7 +167,7 @@ namespace SymOntoClay.CLI
                     {
                         _npcLogger.Error("36F19773-BB0C-4216-A713-31CD3502BED9", e);
                     }
-                }, _cancellationTokenSource.Token);
+                }, _cancellationTokenSourceContext.Token);
             }
             else
             {
@@ -329,9 +330,9 @@ namespace SymOntoClay.CLI
 
         public void Dispose()
         {
-            _cancellationTokenSource.Cancel();
+            _cancellationTokenSourceContext.Cancel();
             world?.Dispose();
-            _cancellationTokenSource.Dispose();
+            _cancellationTokenSourceContext.Dispose();
         }
 
         [DebuggerHidden]

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
@@ -98,7 +99,7 @@ namespace TestSandbox.CreatingExamples
                 throw new ArgumentNullException(nameof(fileContent));
             }
 
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             _logger.Info("4D406E02-4CAD-48FB-823F-9A8EB99A6693", $"fileContent = {fileContent}");
             _logger.Info("47AFB0CF-AC13-4863-BFD0-1249DAE87B5D", $"fileName = {fileName}");
@@ -170,12 +171,12 @@ namespace TestSandbox.CreatingExamples
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSource.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext.Token);
 
             var instance = new WorldCore();
 
             var settings = new WorldSettings();
-            settings.CancellationToken = cancellationTokenSource.Token;
+            settings.CancellationContext = cancellationTokenSourceContext;
             settings.EnableAutoloadingConvertors = true;
 
             settings.LibsDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
@@ -204,7 +205,7 @@ namespace TestSandbox.CreatingExamples
                 MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
-                CancellationToken = cancellationTokenSource.Token,
+                CancellationToken = cancellationTokenSourceContext.Token,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
@@ -238,7 +239,7 @@ namespace TestSandbox.CreatingExamples
             Directory.Delete(testDir, true);
             Directory.Delete(fullDestDirName, true);
 
-            cancellationTokenSource.Cancel();
+            cancellationTokenSourceContext.Cancel();
         }
 
         protected string CreateName(string prefix, int n)

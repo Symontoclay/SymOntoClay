@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
@@ -42,13 +43,13 @@ namespace TestSandbox.MonoBehaviorTesting
 
         private IWorld _world;
 
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSourceContext _cancellationTokenSourceContext;
 
         public override void Awake()
         {
             _logger.Info("A5E4C33A-962D-4EE5-92C4-A6D2D1BCA31B", "Begin");
 
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
@@ -60,13 +61,13 @@ namespace TestSandbox.MonoBehaviorTesting
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSource.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext.Token);
 
             _world = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
 
-            settings.CancellationToken = _cancellationTokenSource.Token;
+            settings.CancellationContext = _cancellationTokenSourceContext;
 
             settings.LibsDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
@@ -80,7 +81,7 @@ namespace TestSandbox.MonoBehaviorTesting
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                CancellationToken = _cancellationTokenSource.Token,
+                CancellationToken = _cancellationTokenSourceContext.Token,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureSoundBusThreadingSettings()
             });
 
@@ -114,9 +115,9 @@ namespace TestSandbox.MonoBehaviorTesting
         {
             _logger.Info("89DF1C65-5299-4FB4-9AD6-3D323C456C7A", "Begin");
 
-            _cancellationTokenSource.Cancel();
+            _cancellationTokenSourceContext.Cancel();
             _world.Dispose();
-            _cancellationTokenSource.Dispose();
+            _cancellationTokenSourceContext.Dispose();
 
             _logger.Info("10DCCCD6-E965-4D20-93A8-F168F29AE5DB", "End");
         }

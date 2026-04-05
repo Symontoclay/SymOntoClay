@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
@@ -36,13 +37,13 @@ namespace TestSandbox.Threads
         {
             _logger.Info("9E0B3523-0D26-4864-A12B-D953C36A6BA2", "Begin");
 
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSourceContext.Token);
 
             var commonActiveContext = new ActiveObjectCommonContext();
 
-            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSourceContext);
 
             var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, _logger)
             {
@@ -108,7 +109,7 @@ namespace TestSandbox.Threads
         private int _n = 0;
         private int _m = 0;
 
-        private bool NRun(CancellationToken cancellationToken)
+        private bool NRun(ICancellationContext cancellationContext)
         {
             _n++;
 
@@ -118,7 +119,7 @@ namespace TestSandbox.Threads
             return true;
         }
 
-        private bool NRun_2(CancellationToken cancellationToken)
+        private bool NRun_2(ICancellationContext cancellationContext)
         {
             _m++;
 

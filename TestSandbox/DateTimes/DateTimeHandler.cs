@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
@@ -37,13 +38,13 @@ namespace TestSandbox.DateTimes
         {
             _logger.Info("318FB3BC-0385-4398-B412-9F7912CD4FAA", "Begin");
 
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             using var threadPool = new CustomThreadPool(0, 20);
 
             var commonActiveContext = new ActiveObjectCommonContext();
 
-            var dateTimeProvider = new DateTimeProvider(_logger, commonActiveContext, threadPool, cancellationTokenSource.Token);
+            var dateTimeProvider = new DateTimeProvider(_logger, commonActiveContext, threadPool, cancellationTokenSourceContext);
 
             dateTimeProvider.LoadFromSourceCode();
             dateTimeProvider.Start();

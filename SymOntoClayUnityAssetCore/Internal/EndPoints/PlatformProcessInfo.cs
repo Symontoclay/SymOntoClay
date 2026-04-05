@@ -42,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             string endPointName, Dictionary<string, Value> arguments, IReadOnlyList<int> devices, IReadOnlyList<string> friends, string callMethodId)
             : base(parentCancellationContext, threadPool, activeObjectContext)
         {
-            _cancellationTokenSource = cancellationTokenSourceContext;
+            _cancellationTokenSourceContext = cancellationTokenSourceContext;
             _endPointName = endPointName;
             _arguments = arguments;
             _devices = devices;
@@ -76,7 +76,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         protected override void ProcessPlatformCancelation(IMonitorLogger logger)
         {
-            _cancellationTokenSource.Cancel();
+            _cancellationTokenSourceContext.Cancel();
         }
 
         /// <inheritdoc/>
@@ -103,7 +103,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 if(!NIsFinished(_logger))
                 {
-                    _cancellationTokenSource.Cancel();
+                    _cancellationTokenSourceContext.Cancel();
                 }
             }
 
@@ -117,7 +117,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IReadOnlyList<string> _friends;
         private readonly string _callMethodId;
         private ThreadTask _task;
-        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSourceContext _cancellationTokenSourceContext;
         #endregion
 
         /// <inheritdoc/>

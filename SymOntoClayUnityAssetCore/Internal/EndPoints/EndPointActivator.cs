@@ -62,13 +62,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             //logger.Info("5B55107F-4196-45C3-87E4-13C6C88A9DB8", $"command = {command}");
 #endif
 
-            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, context.GetCancellationToken());
+            var linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(cancellationTokenSourceContext, context.GetCancellationContext());
 
-            var cancellationToken = linkedCancellationTokenSource.Token;
-
-            var mapParamsResult = MapParams(cancellationToken, logger, endpointInfo, command, context, localContext);
+            var mapParamsResult = MapParams(linkedCancellationTokenSourceContext, logger, endpointInfo, command, context, localContext);
 
 #if DEBUG
             //logger.Info("E2184458-2DA5-4E34-A224-BEA16B24A5F2", $"mapParamsResult.Item2 = {mapParamsResult.Item2.WriteDict_3_ToString()}");
@@ -80,7 +78,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #endif
 
             ThreadTask task = null;
-            var processInfo = new PlatformProcessInfo(cancellationTokenSource, context.GetCancellationToken(), context.AsyncEventsThreadPool, context.ActiveObjectContext, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
+            var processInfo = new PlatformProcessInfo(cancellationTokenSourceContext, context.GetCancellationContext(), context.AsyncEventsThreadPool, context.ActiveObjectContext, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
 
 #if DEBUG
             //logger.Info("F296338E-6DAC-4ED9-AA1E-D0A64DFC3285", $"processInfo != null = {processInfo != null}");
@@ -89,11 +87,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             if (endpointInfo.NeedMainThread)
             {
-                task = CreateTaskForMainThread(cancellationToken, logger, callMethodId, endpointInfo, paramsList, processInfo);
+                task = CreateTaskForMainThread(linkedCancellationTokenSourceContext, logger, callMethodId, endpointInfo, paramsList, processInfo);
             }
             else
             {
-                task = CreateTaskForUsualThread(cancellationToken, logger, callMethodId, endpointInfo, paramsList, processInfo);
+                task = CreateTaskForUsualThread(linkedCancellationTokenSourceContext, logger, callMethodId, endpointInfo, paramsList, processInfo);
             }
             
             processInfo.SetTask(task);
@@ -152,7 +150,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     processInfo.SetStatus(logger, "4EF49830-6C8B-499E-BC46-D71104191808", ProcessStatus.Faulted);
                 }
 
-            }, _threadPool, cancellationToken);
+            }, _threadPool, cancellationContext.Token);
 
             return task;
         }
@@ -227,7 +225,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #if DEBUG
                 //logger.Info("A046851F-4CB5-46D5-ADB0-2A3C61984000", $"Invoke End processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
 #endif
-            }, _threadPool, cancellationToken);
+            }, _threadPool, cancellationContext.Token);
 
             return task;
         }
@@ -290,7 +288,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 case KindOfCommandParameters.NoParameters:
                     {
                         var resultList = new List<object>();
-                        resultList.Add(cancellationToken);
+                        resultList.Add(cancellationContext.Token);
 
                         if(containsLogger)
                         {
@@ -309,10 +307,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
 
                 case KindOfCommandParameters.ParametersByDict:
-                    return MapParamsByParametersByDict(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
+                    return MapParamsByParametersByDict(cancellationContext, logger, endpointInfo, command, context, localContext, containsLogger);
 
                 case KindOfCommandParameters.ParametersByList:
-                    return MapParamsByParametersByList(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
+                    return MapParamsByParametersByList(cancellationContext, logger, endpointInfo, command, context, localContext, containsLogger);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);
@@ -323,13 +321,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
-                return MapGenericCallParamsByParametersByList(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
+                return MapGenericCallParamsByParametersByList(cancellationContext, logger, endpointInfo, command, context, localContext, containsLogger);
             }
 
             var argumentsList = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend);
 
             var resultList = new List<object>();
-            resultList.Add(cancellationToken);
+            resultList.Add(cancellationContext.Token);
 
             if(containsLogger)
             {
@@ -392,7 +390,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private (object[], Dictionary<string, Value>) MapGenericCallParamsByParametersByList(ICancellationContext cancellationContext, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
             var resultList = new List<object>();
-            resultList.Add(cancellationToken);
+            resultList.Add(cancellationContext.Token);
 
             if(containsLogger)
             {
@@ -428,7 +426,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
-                return MapGenericCallParamsByParametersByDict(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
+                return MapGenericCallParamsByParametersByDict(cancellationContext, logger, endpointInfo, command, context, localContext, containsLogger);
             }
 
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.Replace("`", string.Empty).ToLower(), p => p.Value);
@@ -450,7 +448,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var synonymsResolver = context.DataResolversFactory.GetSynonymsResolver();
 
             var resultList = new List<object>();
-            resultList.Add(cancellationToken);
+            resultList.Add(cancellationContext.Token);
 
             if(containsLogger)
             {
@@ -554,7 +552,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private (object[], Dictionary<string, Value>) MapGenericCallParamsByParametersByDict(ICancellationContext cancellationContext, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
             var resultList = new List<object>();
-            resultList.Add(cancellationToken);
+            resultList.Add(cancellationContext.Token);
 
             if(containsLogger)
             {

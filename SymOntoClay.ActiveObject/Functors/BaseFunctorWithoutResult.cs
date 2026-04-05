@@ -1,8 +1,9 @@
 ﻿using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
-using System.Threading;
 using System;
+using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
@@ -22,7 +23,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private Action _action;
 
         /// <inheritdoc/>
-        protected override void OnRun(CancellationToken cancellationToken)
+        protected override void OnRun(ICancellationContext cancellationTokenContext)
         {
             _action();
         }
@@ -46,7 +47,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T _arg;
 
         /// <inheritdoc/>
-        protected override void OnRun(CancellationToken cancellationToken)
+        protected override void OnRun(ICancellationContext cancellationTokenContext)
         {
             _action(_arg);
         }
@@ -72,7 +73,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T2 _arg2;
 
         /// <inheritdoc/>
-        protected override void OnRun(CancellationToken cancellationToken)
+        protected override void OnRun(ICancellationContext cancellationTokenContext)
         {
             _action(_arg1, _arg2);
         }
@@ -100,7 +101,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T3 _arg3;
 
         /// <inheritdoc/>
-        protected override void OnRun(CancellationToken cancellationToken)
+        protected override void OnRun(ICancellationContext cancellationTokenContext)
         {
             _action(_arg1, _arg2, _arg3);
         }
@@ -130,7 +131,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T4 _arg4;
 
         /// <inheritdoc/>
-        protected override void OnRun(CancellationToken cancellationToken)
+        protected override void OnRun(ICancellationContext cancellationTokenContext)
         {
             _action(_arg1, _arg2, _arg3, _arg4);
         }
@@ -162,7 +163,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T5 _arg5;
 
         /// <inheritdoc/>
-        protected override void OnRun(CancellationToken cancellationToken)
+        protected override void OnRun(ICancellationContext cancellationTokenContext)
         {
             _action(_arg1, _arg2, _arg3, _arg4, _arg5);
         }

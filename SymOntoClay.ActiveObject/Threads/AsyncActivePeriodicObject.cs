@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -35,7 +36,7 @@ namespace SymOntoClay.ActiveObject.Threads
         {
             _context = context;
             _threadPool = threadPool;
-            _cancellationToken = context.Token;
+            _cancellationTokenContext = context.CancellationContext;
             _logger = logger;
 
             context.AddChildActiveObject(this);
@@ -43,7 +44,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
-        private readonly CancellationToken _cancellationToken;
+        private readonly ICancellationContext _cancellationTokenContext;
         private readonly IMonitorLogger _logger;
 
         private readonly object _lockObj = new object();
@@ -107,9 +108,6 @@ namespace SymOntoClay.ActiveObject.Threads
                 _isExited = false;
                 _isWaited = false;
 
-                var cancellationTokenSource = new CancellationTokenSource();
-                var linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, _cancellationToken);
-
                 var task = new ThreadTask(() => {
                     try
                     {
@@ -117,7 +115,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                         while (true)
                         {
-                            if (_cancellationToken.IsCancellationRequested)
+                            if (_cancellationTokenContext.IsCancellationRequested)
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;
@@ -136,13 +134,13 @@ namespace SymOntoClay.ActiveObject.Threads
                                 return;
                             }
 
-                            if (_cancellationToken.IsCancellationRequested)
+                            if (_cancellationTokenContext.IsCancellationRequested)
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;
                             }
 
-                            if (!PeriodicMethod(linkedCancellationTokenSource.Token))
+                            if (!PeriodicMethod(_cancellationTokenContext))
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;
@@ -154,7 +152,7 @@ namespace SymOntoClay.ActiveObject.Threads
                         _logger.Error("7CA31B61-20CF-40E5-B275-E68213D00242", e);
                     }
 
-                }, _threadPool, linkedCancellationTokenSource.Token);
+                }, _threadPool, _cancellationTokenContext.Token);
 
                 _task = task;
 

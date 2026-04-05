@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.CoreHelper.Cancellation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,14 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public class ActiveObjectContext : IActiveObjectContext, IDisposable
     {
-        public ActiveObjectContext(IActiveObjectCommonContext commonContext, CancellationToken cancellationToken)
+        public ActiveObjectContext(IActiveObjectCommonContext commonContext, ICancellationContext cancellationTokenContext)
         {
             _commonContext = commonContext;
-            _cancellationToken = cancellationToken;
+            _cancellationTokenContext = cancellationTokenContext;
         }
 
         private readonly IActiveObjectCommonContext _commonContext;
-        private readonly CancellationToken _cancellationToken;
+        private readonly ICancellationContext _cancellationTokenContext;
 
         /// <inheritdoc/>
         public bool IsNeedWaiting => _commonContext.IsNeedWaiting;
@@ -142,7 +143,7 @@ namespace SymOntoClay.ActiveObject.Threads
         }
 
         /// <inheritdoc/>
-        public CancellationToken Token => _cancellationToken;
+        public ICancellationContext CancellationContext => _cancellationTokenContext;
 
         private bool _isDisposed;
 

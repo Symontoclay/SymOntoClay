@@ -20,9 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.CoreHelper.Cancellation;
 using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
-    public delegate bool PeriodicDelegate(CancellationToken cancellationToken);
+    public delegate bool PeriodicDelegate(ICancellationContext cancellationTokenContext);
 }

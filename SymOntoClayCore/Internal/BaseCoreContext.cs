@@ -60,13 +60,13 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         public ICustomThreadPool GarbageCollectionThreadPool { get; set; }
 
-        public CancellationTokenSourceContext CancellationTokenSourceContext { get; set; }
-        public CancellationTokenSource LinkedCancellationTokenSource { get; set; }
+        public ICancellationContext CancellationTokenSourceContext { get; set; }
+        public ICancellationContext LinkedCancellationTokenSourceContext { get; set; }
 
         /// <inheritdoc/>
         public CancellationToken GetCancellationToken()
         {
-            return LinkedCancellationTokenSource.Token;
+            return LinkedCancellationTokenSourceContext.Token;
         }
 
         /// <inheritdoc/>

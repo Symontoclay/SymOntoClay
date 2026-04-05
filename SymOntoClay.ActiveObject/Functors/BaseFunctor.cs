@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System.Threading;
@@ -26,7 +27,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public IThreadTask TaskValue => _asyncActiveOnceObject?.TaskValue;
 
-        protected abstract void OnRun(CancellationToken cancellationToken);
+        protected abstract void OnRun(ICancellationContext cancellationTokenContext);
 
         public void Run()
         {
@@ -68,7 +69,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public IThreadTask<TResult> TaskValue => _asyncActiveOnceObject?.TaskValueWithResult;
 
-        protected abstract TResult OnRun(CancellationToken cancellationToken);
+        protected abstract TResult OnRun(ICancellationContext cancellationTokenContext);
 
         public void Run()
         {

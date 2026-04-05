@@ -87,11 +87,11 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.CodeExecutionThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSource.Token);
+                context.LinkedCancellationTokenSourceContext.Token);
 
             context.TriggersThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSource.Token);
+                context.LinkedCancellationTokenSourceContext.Token);
 
             InitComponents(baseContextComponents);
 
@@ -195,7 +195,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.TypeConverter = typeConverter;
             baseContextComponents.Add(typeConverter);
 
-            context.ActiveObjectContext = new ActiveObjectContext(settings.SyncContext, context.LinkedCancellationTokenSource.Token);
+            context.ActiveObjectContext = new ActiveObjectContext(settings.SyncContext, context.LinkedCancellationTokenSourceContext);
             context.ModulesStorage = settings.ModulesStorage;
 
             var servicesFactory = new ServicesFactory(context);
@@ -210,19 +210,19 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.CancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            context.LinkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationTokenSource.Token, settings.CancellationToken);
+            context.LinkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(context.CancellationTokenSourceContext, settings.CancellationContext);
 
             var asyncEventsThreadingSettings = settings.ThreadingSettings?.AsyncEvents;
 
             context.AsyncEventsThreadPool = new CustomThreadPool(asyncEventsThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 asyncEventsThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSource.Token);
+                context.LinkedCancellationTokenSourceContext.Token);
 
             var garbageCollectionThreadingSettings = settings.ThreadingSettings?.GarbageCollection;
 
             context.GarbageCollectionThreadPool = new CustomThreadPool(garbageCollectionThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 garbageCollectionThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSource.Token);
+                context.LinkedCancellationTokenSourceContext.Token);
         }
 
         public static void InitComponents(List<IBaseContextComponent> baseContextComponents)

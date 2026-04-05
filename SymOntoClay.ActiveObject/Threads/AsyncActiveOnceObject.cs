@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -14,7 +15,7 @@ namespace SymOntoClay.ActiveObject.Threads
         {
             _context = context;
             _threadPool = threadPool;
-            _cancellationToken = context.Token;
+            _cancellationTokenContext = context.CancellationContext;
             _logger = logger;
 
             context.AddChildActiveObject(this);
@@ -22,7 +23,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
-        private readonly CancellationToken _cancellationToken;
+        private readonly ICancellationContext _cancellationTokenContext;
         private readonly IMonitorLogger _logger;
 
         private readonly object _lockObj = new object();
@@ -85,15 +86,12 @@ namespace SymOntoClay.ActiveObject.Threads
                 _isExited = false;
                 _isWaited = false;
 
-                var cancellationTokenSource = new CancellationTokenSource();
-                var linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, _cancellationToken);
-
                 var task = new ThreadTask(() => {
                     try
                     {
                         var autoResetEvent = _context.WaitEvent;
 
-                        if (_cancellationToken.IsCancellationRequested)
+                        if (_cancellationTokenContext.IsCancellationRequested)
                         {
                             _onCompletedHandlersCollection.Emit();
                             return;
@@ -106,13 +104,13 @@ namespace SymOntoClay.ActiveObject.Threads
                             _isWaited = false;
                         }
 
-                        if (_cancellationToken.IsCancellationRequested)
+                        if (_cancellationTokenContext.IsCancellationRequested)
                         {
                             _onCompletedHandlersCollection.Emit();
                             return;
                         }
 
-                        OnceMethod(linkedCancellationTokenSource.Token);
+                        OnceMethod(_cancellationTokenContext);
 
                         _onCompletedHandlersCollection.Emit();
                     }
@@ -122,7 +120,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     }
 
                     _isExited = true;
-                }, _threadPool, _cancellationToken);
+                }, _threadPool, _cancellationTokenContext.Token);
 
                 _task = task;
 
@@ -171,7 +169,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
-        private readonly CancellationToken _cancellationToken;
+        private readonly ICancellationContext _cancellationTokenContext;
         private readonly IMonitorLogger _logger;
 
         private readonly object _lockObj = new object();

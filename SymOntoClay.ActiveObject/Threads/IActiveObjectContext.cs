@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 
+using SymOntoClay.CoreHelper.Cancellation;
 using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads
@@ -38,6 +39,6 @@ namespace SymOntoClay.ActiveObject.Threads
         void StartAll();
         void StopAll();
 
-        CancellationToken Token { get; }
+        ICancellationContext CancellationContext { get; }
     }
 }

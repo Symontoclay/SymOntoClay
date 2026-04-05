@@ -38,6 +38,7 @@ using SymOntoClay.Core.Internal.Htn;
 using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Threading;
+using SymOntoClay.CoreHelper.Cancellation;
 
 namespace SymOntoClay.Core.Internal.Helpers
 {
@@ -207,7 +208,8 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.DateTimeProvider = settings.DateTimeProvider;
             context.StandardFactsBuilder = settings.StandardFactsBuilder;
 
-            context.CancellationTokenSource = new CancellationTokenSource();
+            context.CancellationTokenSourceContext = new CancellationTokenSourceContext();
+
             context.LinkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationTokenSource.Token, settings.CancellationToken);
 
             var asyncEventsThreadingSettings = settings.ThreadingSettings?.AsyncEvents;

@@ -61,6 +61,9 @@
         <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.Token">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.OnDisposing">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.ToString">
             <inheritdoc/>
         </member>

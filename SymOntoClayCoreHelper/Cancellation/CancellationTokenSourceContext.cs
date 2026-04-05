@@ -4,6 +4,11 @@ namespace SymOntoClay.CoreHelper.Cancellation
 {
     public class CancellationTokenSourceContext : BaseCancellationContext
     {
+        public CancellationTokenSourceContext()
+            : this (new CancellationTokenSource())
+        {
+        }
+
         public CancellationTokenSourceContext(CancellationTokenSource cancellationTokenSource)
         {
             _cancellationTokenSource = cancellationTokenSource;
@@ -16,5 +21,13 @@ namespace SymOntoClay.CoreHelper.Cancellation
 
         /// <inheritdoc/>
         public override CancellationToken Token => _cancellationTokenSource.Token;
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _cancellationTokenSource.Dispose();
+
+            base.OnDisposing();
+        }
     }
 }

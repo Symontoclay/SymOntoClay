@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -59,7 +60,7 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         public ICustomThreadPool GarbageCollectionThreadPool { get; set; }
 
-        public CancellationTokenSource CancellationTokenSource { get; set; }
+        public CancellationTokenSourceContext CancellationTokenSourceContext { get; set; }
         public CancellationTokenSource LinkedCancellationTokenSource { get; set; }
 
         /// <inheritdoc/>
@@ -71,7 +72,7 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            CancellationTokenSource.Dispose();
+            CancellationTokenSourceContext.Dispose();
 
             AsyncEventsThreadPool.Dispose();
             GarbageCollectionThreadPool.Dispose();

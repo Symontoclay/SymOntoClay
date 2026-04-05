@@ -1,13 +1,12 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using System;
-using System.Collections.Generic;
+using SymOntoClay.Common.Disposing;
 using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.CoreHelper.Cancellation
 {
-    public abstract class BaseCancellationContext : ICancellationContext
+    public abstract class BaseCancellationContext : Disposable, ICancellationContext
     {
         public abstract bool IsCancellationRequested { get; }
         public abstract CancellationToken Token { get; }

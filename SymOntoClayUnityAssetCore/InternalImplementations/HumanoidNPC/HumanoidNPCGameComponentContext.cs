@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
@@ -35,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
     {
         public string IdForFacts { get; set; }
         public int SelfInstanceId { get; set; }
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public ICancellationContext CancellationContext { get; set; }
         public VisionComponent VisionComponent { get; set; }
         public HostSupportComponent HostSupportComponent { get; set; }
         public ICustomThreadPool AsyncEventsThreadPool { get; set; }

@@ -20,15 +20,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using System;
-using SymOntoClay.Monitor.Common;
-using System.Collections.Generic;
-using System.Text;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.Cancellation;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core
@@ -75,7 +76,7 @@ namespace SymOntoClay.UnityAsset.Core
 
         public bool EnableAutoloadingConvertors { get; set; }
 
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public ICancellationContext CancellationContext { get; set; }
         
         public ThreadingSettings WorldThreadingSettings { get; set; }
         public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
@@ -113,7 +114,7 @@ namespace SymOntoClay.UnityAsset.Core
 
             sb.AppendLine($"{spaces}{nameof(EnableAutoloadingConvertors)} = {EnableAutoloadingConvertors}");
 
-            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
+            sb.PrintObjProp(n, nameof(CancellationContext), CancellationContext);
 
             sb.PrintObjProp(n, nameof(WorldThreadingSettings), WorldThreadingSettings);
             sb.PrintObjProp(n, nameof(HumanoidNpcDefaultThreadingSettings), HumanoidNpcDefaultThreadingSettings);

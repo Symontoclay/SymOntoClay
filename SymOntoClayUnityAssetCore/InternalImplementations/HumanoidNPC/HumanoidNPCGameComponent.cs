@@ -51,7 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 internalContext.IdForFacts = settings.IdForFacts;
                 internalContext.SelfInstanceId = settings.InstanceId;
 
-                internalContext.CancellationContext = GetCancellationToken();
+                internalContext.CancellationContext = GetCancellationContext();
 
                 internalContext.AsyncEventsThreadPool = AsyncEventsThreadPool;
 
@@ -97,7 +97,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.Categories = settings.Categories;
                 coreEngineSettings.EnableCategories = settings.EnableCategories;
 
-                coreEngineSettings.CancellationContext = worldContext.GetCancellationToken();
+                coreEngineSettings.CancellationContext = worldContext.GetCancellationContext();
                 coreEngineSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.HumanoidNpcDefaultThreadingSettings;
 
                 coreEngineSettings.HtnExecutionSettings = settings?.HtnExecutionSettings ?? worldContext.HtnExecutionSettings;

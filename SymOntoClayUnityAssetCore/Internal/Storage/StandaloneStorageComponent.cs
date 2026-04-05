@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 
             standaloneStorageSettings.ThreadingSettings = settings.WorldThreadingSettings;
-            standaloneStorageSettings.CancellationContext = coreContext.GetCancellationToken();
+            standaloneStorageSettings.CancellationContext = coreContext.GetCancellationContext();
 
             standaloneStorageSettings.DateTimeProvider = coreContext.DateTimeProvider;
 

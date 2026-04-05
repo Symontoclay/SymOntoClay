@@ -25,6 +25,7 @@ using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
@@ -230,6 +231,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationTokenSource _linkedCancellationTokenSource;
+
+        /// <inheritdoc/>
+        public ICancellationContext GetCancellationContext()
+        {
+            return _linkedCancellationTokenSource;
+        }
 
         /// <inheritdoc/>
         public CancellationToken GetCancellationToken()

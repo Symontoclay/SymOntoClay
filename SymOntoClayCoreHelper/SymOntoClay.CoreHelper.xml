@@ -46,6 +46,9 @@
         <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationLinkedTokenSourceContext.Token">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.Cancellation.CancellationLinkedTokenSourceContext.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenContext.IsCancellationRequested">
             <inheritdoc/>
         </member>

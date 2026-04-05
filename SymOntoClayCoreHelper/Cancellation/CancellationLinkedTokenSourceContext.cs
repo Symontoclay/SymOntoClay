@@ -1,4 +1,5 @@
-﻿using System.Runtime;
+﻿using SymOntoClay.Common.DebugHelpers;
+using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.CoreHelper.Cancellation
@@ -23,5 +24,18 @@ namespace SymOntoClay.CoreHelper.Cancellation
 
         /// <inheritdoc/>
         public override CancellationToken Token => _cancellationTokenSource.Token;
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(_cancellationContext1), _cancellationContext1);
+            sb.PrintObjProp(n, nameof(_cancellationContext2), _cancellationContext2);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
     }
 }

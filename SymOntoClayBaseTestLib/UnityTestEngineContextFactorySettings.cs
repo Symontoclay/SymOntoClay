@@ -58,8 +58,8 @@ namespace SymOntoClay.BaseTestLib
 
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
-        
-        public ICancellationContext CancellationContext { get; set; }
+
+        public ICancellationContext CancellationContext { get; set; } = new CancellationTokenContext(CancellationToken.None);
 
         public ThreadingSettings WorldThreadingSettings { get; set; }
         public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }

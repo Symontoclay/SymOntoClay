@@ -37,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
             modulesStorageSettings.MonitorNode = coreContext.MonitorNode;
             modulesStorageSettings.LibsDirs = settings.LibsDirs;
             modulesStorageSettings.ThreadingSettings = settings.WorldThreadingSettings;
-            modulesStorageSettings.CancellationToken = coreContext.GetCancellationToken();
+            modulesStorageSettings.CancellationContext = coreContext.GetCancellationToken();
             
             _modulesStorage = new SymOntoClay.Core.ModulesStorage(modulesStorageSettings);
         }

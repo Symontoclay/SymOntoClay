@@ -47,7 +47,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _dateTimeProvider = worldContext.DateTimeProvider;
             _standardFactsBuilder = worldContext.StandardFactsBuilder;
 
-            _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationToken);
+            _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationContext);
             _activeObject = new AsyncActivePeriodicObject(_activeObjectContext, null, logger);
             _activeObject.PeriodicMethod = CommandLoop;
         }

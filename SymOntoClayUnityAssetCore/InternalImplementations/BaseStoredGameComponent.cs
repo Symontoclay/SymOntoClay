@@ -63,7 +63,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                     _ => throw new ArgumentOutOfRangeException(nameof(kindOfWorldItem), kindOfWorldItem, null)
                 };
 
-                standaloneStorageSettings.CancellationToken = worldContext.GetCancellationToken();
+                standaloneStorageSettings.CancellationContext = worldContext.GetCancellationToken();
                 
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);
             }

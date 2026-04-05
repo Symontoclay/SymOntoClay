@@ -72,7 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             Directory.CreateDirectory(_tmpDir);
 
             _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationToken ?? CancellationToken.None);
+            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationContext ?? CancellationToken.None);
 
             WorldThreadingSettings = settings.WorldThreadingSettings;
             HumanoidNpcDefaultThreadingSettings = settings.HumanoidNpcDefaultThreadingSettings;

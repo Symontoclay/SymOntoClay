@@ -26,7 +26,6 @@ using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
-using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
@@ -36,7 +35,7 @@ namespace SymOntoClay.ActiveObject.Threads
         {
             _context = context;
             _threadPool = threadPool;
-            _cancellationTokenContext = context.CancellationContext;
+            _cancellationContext = context.CancellationContext;
             _logger = logger;
 
             context.AddChildActiveObject(this);
@@ -44,7 +43,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
-        private readonly ICancellationContext _cancellationTokenContext;
+        private readonly ICancellationContext _cancellationContext;
         private readonly IMonitorLogger _logger;
 
         private readonly object _lockObj = new object();
@@ -115,7 +114,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                         while (true)
                         {
-                            if (_cancellationTokenContext.IsCancellationRequested)
+                            if (_cancellationContext.IsCancellationRequested)
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;
@@ -134,13 +133,13 @@ namespace SymOntoClay.ActiveObject.Threads
                                 return;
                             }
 
-                            if (_cancellationTokenContext.IsCancellationRequested)
+                            if (_cancellationContext.IsCancellationRequested)
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;
                             }
 
-                            if (!PeriodicMethod(_cancellationTokenContext))
+                            if (!PeriodicMethod(_cancellationContext))
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;
@@ -152,7 +151,7 @@ namespace SymOntoClay.ActiveObject.Threads
                         _logger.Error("7CA31B61-20CF-40E5-B275-E68213D00242", e);
                     }
 
-                }, _threadPool, _cancellationTokenContext.Token);
+                }, _threadPool, _cancellationContext.Token);
 
                 _task = task;
 

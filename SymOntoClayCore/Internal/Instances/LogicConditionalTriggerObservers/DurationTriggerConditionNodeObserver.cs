@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.Cancellation;
 using System;
 using System.Threading;
 
@@ -58,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private readonly ulong _targetDuration;
 
-        private bool NRun(CancellationToken cancellationToken)
+        private bool NRun(ICancellationContext cancellationContext)
         {
             Thread.Sleep(100);
 

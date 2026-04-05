@@ -30,14 +30,14 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public class ActiveObjectContext : IActiveObjectContext, IDisposable
     {
-        public ActiveObjectContext(IActiveObjectCommonContext commonContext, ICancellationContext cancellationTokenContext)
+        public ActiveObjectContext(IActiveObjectCommonContext commonContext, ICancellationContext cancellationContext)
         {
             _commonContext = commonContext;
-            _cancellationTokenContext = cancellationTokenContext;
+            _cancellationContext = cancellationContext;
         }
 
         private readonly IActiveObjectCommonContext _commonContext;
-        private readonly ICancellationContext _cancellationTokenContext;
+        private readonly ICancellationContext _cancellationContext;
 
         /// <inheritdoc/>
         public bool IsNeedWaiting => _commonContext.IsNeedWaiting;
@@ -143,7 +143,7 @@ namespace SymOntoClay.ActiveObject.Threads
         }
 
         /// <inheritdoc/>
-        public ICancellationContext CancellationContext => _cancellationTokenContext;
+        public ICancellationContext CancellationContext => _cancellationContext;
 
         private bool _isDisposed;
 

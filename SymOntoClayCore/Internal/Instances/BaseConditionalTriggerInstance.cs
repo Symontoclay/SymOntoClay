@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -106,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _needRun = true;
         }
 
-        private bool Handler(CancellationToken cancellationToken)
+        private bool Handler(ICancellationContext cancellationContext)
         {
             try
             {

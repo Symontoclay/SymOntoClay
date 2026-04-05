@@ -64,6 +64,12 @@ namespace SymOntoClay.Core.Internal
         public ICancellationContext LinkedCancellationTokenSourceContext { get; set; }
 
         /// <inheritdoc/>
+        public ICancellationContext GetCancellationContext()
+        {
+            return LinkedCancellationTokenSourceContext;
+        }
+
+        /// <inheritdoc/>
         public CancellationToken GetCancellationToken()
         {
             return LinkedCancellationTokenSourceContext.Token;

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.CoreHelper.Cancellation;
 using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Htn
@@ -77,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Htn
             _activeObject.Start();
         }
 
-        private bool CommandLoop(CancellationToken cancellationToken)
+        private bool CommandLoop(ICancellationContext cancellationContext)
         {
 #if DEBUG
             //Info("688B9B84-D31E-4D6C-BB76-439F82430786", $"_planExecutionIterationsMaxCount= {_planExecutionIterationsMaxCount}");

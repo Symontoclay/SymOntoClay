@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Threading;
@@ -972,7 +973,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        private bool GCByTimeOutCommandLoop(CancellationToken cancellationToken)
+        private bool GCByTimeOutCommandLoop(ICancellationContext cancellationContext)
         {
             Thread.Sleep(200);
 

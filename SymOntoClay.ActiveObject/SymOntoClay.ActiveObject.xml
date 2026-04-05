@@ -4,22 +4,22 @@
         <name>SymOntoClay.ActiveObject</name>
     </assembly>
     <members>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult.OnRun(System.Threading.CancellationToken)">
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult.OnRun(SymOntoClay.CoreHelper.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`1.OnRun(System.Threading.CancellationToken)">
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`1.OnRun(SymOntoClay.CoreHelper.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`2.OnRun(SymOntoClay.CoreHelper.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`3.OnRun(System.Threading.CancellationToken)">
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`3.OnRun(SymOntoClay.CoreHelper.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`4.OnRun(System.Threading.CancellationToken)">
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`4.OnRun(SymOntoClay.CoreHelper.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`5.OnRun(System.Threading.CancellationToken)">
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`5.OnRun(SymOntoClay.CoreHelper.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.SerializationAnchor.AddFunctor(SymOntoClay.ActiveObject.Functors.IBaseFunctor)">
@@ -64,7 +64,7 @@
         <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.StopAll">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.Token">
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.CancellationContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.Dispose">

@@ -35,6 +35,7 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Instances.TaskInstances;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -290,7 +291,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private object _onCompletedHandlersLockObj = new object();
         private List<IOnCompletedThreadExecutorHandler> _onCompletedHandlers = new List<IOnCompletedThreadExecutorHandler>();
 
-        private bool CommandLoop(CancellationToken cancellationToken)
+        private bool CommandLoop(ICancellationContext cancellationContext)
         {
             try
             {
@@ -349,7 +350,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
                 }
 
-                if (cancellationToken.IsCancellationRequested)
+                if (cancellationContext.IsCancellationRequested)
                 {
                     GoBackToPrevCodeFrame("1F90CC1F-99B5-49FA-A661-754A81E0BC7B", ActionExecutionStatus.Canceled);
                     return true;

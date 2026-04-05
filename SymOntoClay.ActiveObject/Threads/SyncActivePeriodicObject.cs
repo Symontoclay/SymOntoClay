@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Threading;
 using System.Threading;
 
@@ -34,12 +35,12 @@ namespace SymOntoClay.ActiveObject.Threads
     /// </summary>
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
-        public SyncActivePeriodicObject(CancellationToken cancellationToken)
+        public SyncActivePeriodicObject(ICancellationContext cancellationContext)
         {
-            _cancellationToken = cancellationToken;
+            _cancellationContext = cancellationContext;
         }
 
-        private readonly CancellationToken _cancellationToken;
+        private readonly ICancellationContext _cancellationContext;
 
         /// <inheritdoc/>
         public PeriodicDelegate PeriodicMethod { get; set; }
@@ -78,13 +79,13 @@ namespace SymOntoClay.ActiveObject.Threads
 
             while (true)
             {
-                if (_cancellationToken.IsCancellationRequested)
+                if (_cancellationContext.IsCancellationRequested)
                 {
                     _onCompletedHandlersCollection.Emit();
                     return _taskValue;
                 }
 
-                if (!PeriodicMethod(_cancellationToken))
+                if (!PeriodicMethod(_cancellationContext))
                 {
                     _isActive = false;
                     _onCompletedHandlersCollection.Emit();

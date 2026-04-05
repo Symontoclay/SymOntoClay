@@ -27,7 +27,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public IThreadTask TaskValue => _asyncActiveOnceObject?.TaskValue;
 
-        protected abstract void OnRun(ICancellationContext cancellationTokenContext);
+        protected abstract void OnRun(ICancellationContext cancellationContext);
 
         public void Run()
         {
@@ -69,7 +69,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public IThreadTask<TResult> TaskValue => _asyncActiveOnceObject?.TaskValueWithResult;
 
-        protected abstract TResult OnRun(ICancellationContext cancellationTokenContext);
+        protected abstract TResult OnRun(ICancellationContext cancellationContext);
 
         public void Run()
         {

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -40,6 +41,7 @@ namespace SymOntoClay.Core.Internal
         IDateTimeProvider DateTimeProvider { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
         ICustomThreadPool GarbageCollectionThreadPool { get; }
+        ICancellationContext GetCancellationContext();
         CancellationToken GetCancellationToken();
     }
 }

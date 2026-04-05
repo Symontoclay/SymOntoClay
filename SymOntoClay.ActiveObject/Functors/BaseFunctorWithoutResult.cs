@@ -23,7 +23,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private Action _action;
 
         /// <inheritdoc/>
-        protected override void OnRun(ICancellationContext cancellationTokenContext)
+        protected override void OnRun(ICancellationContext cancellationContext)
         {
             _action();
         }
@@ -47,7 +47,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T _arg;
 
         /// <inheritdoc/>
-        protected override void OnRun(ICancellationContext cancellationTokenContext)
+        protected override void OnRun(ICancellationContext cancellationContext)
         {
             _action(_arg);
         }
@@ -73,7 +73,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T2 _arg2;
 
         /// <inheritdoc/>
-        protected override void OnRun(ICancellationContext cancellationTokenContext)
+        protected override void OnRun(ICancellationContext cancellationContext)
         {
             _action(_arg1, _arg2);
         }
@@ -101,7 +101,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T3 _arg3;
 
         /// <inheritdoc/>
-        protected override void OnRun(ICancellationContext cancellationTokenContext)
+        protected override void OnRun(ICancellationContext cancellationContext)
         {
             _action(_arg1, _arg2, _arg3);
         }
@@ -131,7 +131,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T4 _arg4;
 
         /// <inheritdoc/>
-        protected override void OnRun(ICancellationContext cancellationTokenContext)
+        protected override void OnRun(ICancellationContext cancellationContext)
         {
             _action(_arg1, _arg2, _arg3, _arg4);
         }
@@ -163,7 +163,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private T5 _arg5;
 
         /// <inheritdoc/>
-        protected override void OnRun(ICancellationContext cancellationTokenContext)
+        protected override void OnRun(ICancellationContext cancellationContext)
         {
             _action(_arg1, _arg2, _arg3, _arg4, _arg5);
         }

@@ -1,4 +1,4 @@
-﻿using SymOntoClay.CoreHelper.Cancellation;
+﻿using SymOntoClay.Common.Cancellation;
 using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads

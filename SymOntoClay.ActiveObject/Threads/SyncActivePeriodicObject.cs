@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
-using SymOntoClay.CoreHelper.Cancellation;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Threading;
 using System.Threading;
 

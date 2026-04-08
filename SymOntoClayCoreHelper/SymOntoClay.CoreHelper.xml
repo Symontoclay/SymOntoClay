@@ -4,69 +4,6 @@
         <name>SymOntoClay.CoreHelper</name>
     </assembly>
     <members>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToDbgString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.ToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.BaseCancellationContext.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationLinkedTokenSourceContext.IsCancellationRequested">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationLinkedTokenSourceContext.Token">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.CancellationLinkedTokenSourceContext.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenContext.IsCancellationRequested">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenContext.Token">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.IsCancellationRequested">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.Token">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.Cancel">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.Cancellation.CancellationTokenSourceContext.OnDisposing">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.ToString">
             <inheritdoc/>
         </member>

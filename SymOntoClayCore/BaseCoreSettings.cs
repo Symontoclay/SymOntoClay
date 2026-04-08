@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using System.Text;
 using System.Threading;

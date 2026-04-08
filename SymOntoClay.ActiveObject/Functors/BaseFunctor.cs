@@ -1,6 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.ActiveObject.Threads;
-using SymOntoClay.CoreHelper.Cancellation;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System.Threading;

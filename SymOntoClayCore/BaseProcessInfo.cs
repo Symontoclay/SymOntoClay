@@ -23,12 +23,12 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;

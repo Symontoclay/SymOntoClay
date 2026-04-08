@@ -1,6 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
-using SymOntoClay.CoreHelper.Cancellation;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -120,7 +120,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     }
 
                     _isExited = true;
-                }, _threadPool, _cancellationContext.Token);
+                }, _threadPool, _cancellationContext);
 
                 _task = task;
 
@@ -293,7 +293,7 @@ namespace SymOntoClay.ActiveObject.Threads
                         _isExited = true;
                         return default;
                     }
-                }, _threadPool, _cancellationContext.Token);
+                }, _threadPool, _cancellationContext);
 
                 _task = task;
 

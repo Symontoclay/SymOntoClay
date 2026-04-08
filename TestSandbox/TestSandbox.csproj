@@ -6,8 +6,8 @@
     <AssemblyVersion>0.5.6</AssemblyVersion>
     <FileVersion>0.5.6</FileVersion>
     <Copyright>Copyright (c) 2020 - 2026 Sergiy Tolkachov aka metatypeman</Copyright>
-	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-	<LangVersion>latest</LangVersion>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Handlers\GeneralStartHandler.cs~RF41e95b2a.TMP" />
@@ -43,18 +43,14 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
-    <PackageReference Include="SymOntoClay.Common" Version="0.5.5.12" />
+    <PackageReference Include="SymOntoClay.Common" Version="0.5.6" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
     <PackageReference Include="System.Speech" Version="7.0.0" />
   </ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\SymOntoClay.SerializationAnalyzer\SymOntoClay.SerializationAnalyzer.csproj"
-						  OutputItemType="Analyzer"
-						  ReferenceOutputAssembly="false" />
-	</ItemGroup>
-
-	<ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SymOntoClay.SerializationAnalyzer\SymOntoClay.SerializationAnalyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

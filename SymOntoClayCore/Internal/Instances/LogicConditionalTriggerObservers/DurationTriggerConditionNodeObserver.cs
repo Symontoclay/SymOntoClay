@@ -21,9 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.CoreHelper.Cancellation;
 using System;
 using System.Threading;
 

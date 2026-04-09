@@ -38,7 +38,7 @@ using SymOntoClay.Core.Internal.Htn;
 using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Threading;
-using SymOntoClay.CoreHelper.Cancellation;
+using SymOntoClay.Common.Cancellation;
 
 namespace SymOntoClay.Core.Internal.Helpers
 {
@@ -87,11 +87,11 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.CodeExecutionThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext.Token);
+                context.LinkedCancellationTokenSourceContext);
 
             context.TriggersThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext.Token);
+                context.LinkedCancellationTokenSourceContext);
 
             InitComponents(baseContextComponents);
 
@@ -216,13 +216,13 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.AsyncEventsThreadPool = new CustomThreadPool(asyncEventsThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 asyncEventsThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext.Token);
+                context.LinkedCancellationTokenSourceContext);
 
             var garbageCollectionThreadingSettings = settings.ThreadingSettings?.GarbageCollection;
 
             context.GarbageCollectionThreadPool = new CustomThreadPool(garbageCollectionThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 garbageCollectionThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext.Token);
+                context.LinkedCancellationTokenSourceContext);
         }
 
         public static void InitComponents(List<IBaseContextComponent> baseContextComponents)

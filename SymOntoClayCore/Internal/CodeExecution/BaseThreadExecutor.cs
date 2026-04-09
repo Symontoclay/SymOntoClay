@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
@@ -35,7 +36,6 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Instances.TaskInstances;
 using SymOntoClay.Core.Internal.Serialization;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -3715,7 +3715,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         //This will be replaces in other way.
                         ThreadTask.Run(() => {
                             ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
-                        }, _context.CodeExecutionThreadPool, _context.GetCancellationToken());
+                        }, _context.CodeExecutionThreadPool, _context.GetCancellationContext());
                     }
 
                     if (completeAnnotationSystemEvent != null)

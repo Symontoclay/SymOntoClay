@@ -169,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
 
                 logger.StopThreadTask("A1CE76A8-4CD5-49E2-90A8-D43FA04F8AD4", taskId);
-            }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationToken());
+            }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationContext());
         }
 
         private IAddFactOrRuleResult EmitIsolatedOnAddingFact(IMonitorLogger logger, RuleInstance ruleInstance)
@@ -189,7 +189,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     }
 
                     logger.StopThreadTask("76D7022F-2677-43F7-A1EC-519E00C60B25", taskId);
-                }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationToken());
+                }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationContext());
             }
 
             return new AddFactOrRuleResult() { KindOfResult = KindOfAddFactOrRuleResult.Accept };

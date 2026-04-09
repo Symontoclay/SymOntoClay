@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
@@ -42,7 +43,7 @@ namespace SymOntoClay.Monitor.Internal
 
         public BaseMonitorSettings Settings { get; set; }
 
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public ICancellationContext CancellationContext { get; set; }
         public CustomThreadPoolSettings ThreadingSettings { get; set; }
     }
 }

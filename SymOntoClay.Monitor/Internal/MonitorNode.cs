@@ -88,7 +88,7 @@ namespace SymOntoClay.Monitor.Internal
             _monitorNodeContext = new MonitorNodeContext();
             _monitorNodeContext.MonitorContext = monitorContext;
 
-            _monitorNodeContext.CancellationToken = _linkedCancellationTokenSourceContext.Token;
+            _monitorNodeContext.CancellationContext = _linkedCancellationTokenSourceContext;
             _monitorNodeContext.ThreadingSettings = monitorContext.ThreadingSettings;
 
             _baseMonitorSettings = nodeSettings;

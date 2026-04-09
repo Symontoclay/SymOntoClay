@@ -63,8 +63,8 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public string Id => _threadId;
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+        private readonly CancellationTokenSourceContext _cancellationTokenSourceContext;
+        private readonly ICancellationContext _linkedCancellationTokenSourceContext;
 
         public ThreadLogger(string threadId, MonitorNodeContext monitorNodeContext)
         {
@@ -72,8 +72,8 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"threadId = {threadId}");
 #endif
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorNodeContext.CancellationToken);
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, monitorNodeContext.CancellationContext);
 
             _monitorNodeContext = monitorNodeContext;
             _baseMonitorSettings = monitorNodeContext.Settings;
@@ -106,7 +106,7 @@ namespace SymOntoClay.Monitor.Internal
         string IMonitorLoggerContext.ThreadId => _threadId;
 
         /// <inheritdoc/>
-        public ICancellationContext CancellationContext => _linkedCancellationTokenSource.Token;
+        public ICancellationContext CancellationContext => _linkedCancellationTokenSourceContext;
 
         /// <inheritdoc/>
         public CustomThreadPoolSettings ThreadingSettings => _monitorNodeContext.ThreadingSettings;
@@ -1456,7 +1456,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             _fileWriter.Dispose();
 
-            _cancellationTokenSource.Dispose();
+            _cancellationTokenSourceContext.Dispose();
 
             base.OnDisposing();
         }

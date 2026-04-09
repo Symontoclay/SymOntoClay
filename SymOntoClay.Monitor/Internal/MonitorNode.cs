@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -59,8 +60,8 @@ namespace SymOntoClay.Monitor.Internal
 
         private readonly BaseMonitorSettings _baseMonitorSettings;
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+        private readonly CancellationTokenSourceContext _cancellationTokenSourceContext;
+        private readonly ICancellationContext _linkedCancellationTokenSourceContext;
 
         private readonly ICustomThreadPool _threadPool;
 
@@ -75,19 +76,19 @@ namespace SymOntoClay.Monitor.Internal
 
             _nodeId = nodeId;
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorContext.CancellationToken);
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, monitorContext.CancellationContext);
 
             var threadingSettings = monitorContext.ThreadingSettings;
 
             _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                monitorContext.CancellationToken);
+                monitorContext.CancellationContext);
 
             _monitorNodeContext = new MonitorNodeContext();
             _monitorNodeContext.MonitorContext = monitorContext;
 
-            _monitorNodeContext.CancellationToken = _linkedCancellationTokenSource.Token;
+            _monitorNodeContext.CancellationToken = _linkedCancellationTokenSourceContext.Token;
             _monitorNodeContext.ThreadingSettings = monitorContext.ThreadingSettings;
 
             _baseMonitorSettings = nodeSettings;
@@ -127,7 +128,7 @@ namespace SymOntoClay.Monitor.Internal
         string IMonitorLoggerContext.NodeId => _nodeId;
         string IMonitorLoggerContext.ThreadId => string.Empty;
 
-        CancellationToken IMonitorLoggerContext.CancellationToken => _linkedCancellationTokenSource.Token;
+        ICancellationContext IMonitorLoggerContext.CancellationContext => _linkedCancellationTokenSourceContext;
         CustomThreadPoolSettings IMonitorLoggerContext.ThreadingSettings => _monitorNodeContext.ThreadingSettings;
 
         /// <inheritdoc/>
@@ -835,7 +836,7 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
                     _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
-                }, _threadPool, _linkedCancellationTokenSource.Token);
+                }, _threadPool, _linkedCancellationTokenSourceContext);
             }
             else
             {
@@ -1579,7 +1580,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             _fileWriter.Dispose();
 
-            _cancellationTokenSource.Dispose();
+            _cancellationTokenSourceContext.Dispose();
             _threadPool.Dispose();
 
             base.OnDisposing();

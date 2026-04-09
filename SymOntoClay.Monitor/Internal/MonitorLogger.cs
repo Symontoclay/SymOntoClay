@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -59,20 +60,20 @@ namespace SymOntoClay.Monitor.Internal
             _nodeId = context.NodeId;
             _threadId = context.ThreadId;
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, context.CancellationToken);
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, context.CancellationContext);
 
             var threadingSettings = context.ThreadingSettings;
 
             _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount, 
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount, 
-                context.CancellationToken);
+                context.CancellationContext);
         }
 
         private readonly IMonitorLoggerContext _context;
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+        private readonly CancellationTokenSourceContext _cancellationTokenSourceContext;
+        private readonly ICancellationContext _linkedCancellationTokenSourceContext;
 
         private readonly ICustomThreadPool _threadPool;
 
@@ -4690,7 +4691,7 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
                     _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _context.EnableRemoteConnection);
-                }, _threadPool, _linkedCancellationTokenSource.Token);
+                }, _threadPool, _linkedCancellationTokenSourceContext);
             }
             else
             {
@@ -4701,7 +4702,7 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-            _cancellationTokenSource.Dispose();
+            _cancellationTokenSourceContext.Dispose();
             _threadPool.Dispose();
 
             base.OnDisposing();

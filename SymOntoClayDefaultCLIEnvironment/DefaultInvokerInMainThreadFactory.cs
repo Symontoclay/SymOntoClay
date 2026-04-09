@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
@@ -35,7 +36,7 @@ namespace SymOntoClay.DefaultCLIEnvironment
     {
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        public static InvokerInMainThread Create(CancellationToken cancellationToken)
+        public static InvokerInMainThread Create(ICancellationContext cancellationContext)
         {
             var invokingInMainThread = new InvokerInMainThread();
 
@@ -53,7 +54,7 @@ namespace SymOntoClay.DefaultCLIEnvironment
                 {
                     _logger.Error(e);
                 }
-            }, cancellationToken);
+            }, cancellationContext);
 
             return invokingInMainThread;
         }

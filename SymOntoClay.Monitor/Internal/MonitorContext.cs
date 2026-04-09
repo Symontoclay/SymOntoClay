@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileWriter;
@@ -51,7 +52,7 @@ namespace SymOntoClay.Monitor.Internal
         /// </summary>
         public IList<IPlatformLogger> PlatformLoggers { get; set; }
 
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public ICancellationContext CancellationContext { get; set; }
         public CustomThreadPoolSettings ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
@@ -79,7 +80,7 @@ namespace SymOntoClay.Monitor.Internal
             var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
             sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
             sb.PrintExisting(n, nameof(Settings), Settings);
-            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
+            sb.PrintExisting(n, nameof(CancellationContext), CancellationContext);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
             return sb.ToString();
         }

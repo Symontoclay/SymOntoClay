@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -105,7 +106,7 @@ namespace SymOntoClay.Monitor.Internal
         string IMonitorLoggerContext.ThreadId => _threadId;
 
         /// <inheritdoc/>
-        public CancellationToken CancellationToken => _linkedCancellationTokenSource.Token;
+        public ICancellationContext CancellationContext => _linkedCancellationTokenSource.Token;
 
         /// <inheritdoc/>
         public CustomThreadPoolSettings ThreadingSettings => _monitorNodeContext.ThreadingSettings;

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -52,8 +53,8 @@ namespace SymOntoClay.Monitor
         
         private readonly IMonitorFileWriter _fileWriter;
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+        private readonly CancellationTokenSourceContext _cancellationTokenSourceContext;
+        private readonly ICancellationContext _linkedCancellationTokenSourceContext;
 
         private readonly ICustomThreadPool _threadPool;
 
@@ -82,14 +83,14 @@ namespace SymOntoClay.Monitor
             //_globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorSettings.CancellationToken);
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, monitorSettings.CancellationContext);
 
             var threadingSettings = monitorSettings.ThreadingSettings;
 
             _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _linkedCancellationTokenSource.Token);
+                _linkedCancellationTokenSourceContext);
 
             _nodesSettings = monitorSettings.NodesSettings;
             _enableOnlyDirectlySetUpNodes = monitorSettings.EnableOnlyDirectlySetUpNodes;
@@ -131,7 +132,7 @@ namespace SymOntoClay.Monitor
                 PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),
                 Features = _features,
                 Settings = _baseMonitorSettings,
-                CancellationToken = _linkedCancellationTokenSource.Token,
+                CancellationContext = _linkedCancellationTokenSourceContext,
                 ThreadingSettings = monitorSettings.ThreadingSettings
             };
 
@@ -173,7 +174,7 @@ namespace SymOntoClay.Monitor
         string IMonitorLoggerContext.NodeId => string.Empty;
         string IMonitorLoggerContext.ThreadId => string.Empty;
 
-        CancellationToken IMonitorLoggerContext.CancellationToken => _linkedCancellationTokenSource.Token;
+        ICancellationContext IMonitorLoggerContext.CancellationContext => _linkedCancellationTokenSourceContext;
         CustomThreadPoolSettings IMonitorLoggerContext.ThreadingSettings => _monitorContext.ThreadingSettings;
 
         /// <inheritdoc/>
@@ -855,7 +856,7 @@ namespace SymOntoClay.Monitor
 #endif
 
                     _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _baseMonitorSettings.EnableRemoteConnection);
-                }, _threadPool, _linkedCancellationTokenSource.Token);
+                }, _threadPool, _linkedCancellationTokenSourceContext);
             }
             else
             {
@@ -1627,7 +1628,7 @@ namespace SymOntoClay.Monitor
             _childMonitorNodes.Clear();
 
             _remoteMonitor?.Dispose();
-            _cancellationTokenSource.Dispose();
+            _cancellationTokenSourceContext.Dispose();
             _threadPool.Dispose();
 
             base.OnDisposing();

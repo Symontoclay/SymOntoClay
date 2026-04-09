@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Threading;
@@ -41,20 +42,20 @@ namespace SymOntoClay.SoundBuses
         {
             _settings = settings;
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationToken ?? CancellationToken.None);
+            _cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, settings?.CancellationContext ?? new CancellationTokenContext(CancellationToken.None));
 
             var threadingSettings = settings?.ThreadingSettings;
 
             _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _linkedCancellationTokenSource.Token);
+                _linkedCancellationTokenSourceContext);
         }
 
         private readonly SimpleSoundBusSettings _settings;
         private readonly ICustomThreadPool _threadPool;
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+        private readonly CancellationTokenSourceContext _cancellationTokenSourceContext;
+        private readonly ICancellationContext _linkedCancellationTokenSourceContext;
 
         /// <inheritdoc/>
         public void AddReceiver(ISoundReceiver receiver)
@@ -123,7 +124,7 @@ namespace SymOntoClay.SoundBuses
                         }
 
                         logger.StopThreadTask("C9EA86C3-305A-4B5C-8A44-645155B32619", taskId);
-                    }, _threadPool, _linkedCancellationTokenSource.Token);
+                    }, _threadPool, _linkedCancellationTokenSourceContext);
                 }
             }
         }
@@ -163,7 +164,7 @@ namespace SymOntoClay.SoundBuses
                         }
 
                         logger.StopThreadTask("FAB648D7-58F3-4986-A7A3-8C8BCC6D6DCB", taskId);
-                    }, _threadPool, _linkedCancellationTokenSource.Token);
+                    }, _threadPool, _linkedCancellationTokenSourceContext);
                 }
             }
         }
@@ -175,7 +176,7 @@ namespace SymOntoClay.SoundBuses
 
         protected override void OnDisposing()
         {
-            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSourceContext?.Cancel();
 
             base.OnDisposing();
         }

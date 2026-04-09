@@ -21,11 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
@@ -85,7 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _linkedCancellationTokenSourceContext.Token);
+                _linkedCancellationTokenSourceContext);
 
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
@@ -479,8 +479,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
             }
 
-            var cancellationToken = _cancellationTokenSourceContext.Token;
-
             ThreadTask.Run(() => {
                 try
                 {
@@ -513,7 +511,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 {
                     Error("CDF6BAD4-76E3-4B1F-9379-C64BF752F9AE", e);
                 }
-            }, AsyncEventsThreadPool, cancellationToken);
+            }, AsyncEventsThreadPool, _cancellationTokenSourceContext);
         }
         
         private void WaitForAllGameComponentsWaiting()

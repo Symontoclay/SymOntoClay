@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -64,7 +64,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount),
                 threadingSettings?.MaxThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount),
-                _linkedCancellationTokenSourceContext.Token);
+                _linkedCancellationTokenSourceContext);
 
             _monitorNode = _worldContext.Motitor.CreateMonitorNode("852f0d28-15ca-4671-8779-66e00d23a386", settings.Id);
             _logger = _monitorNode;

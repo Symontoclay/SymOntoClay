@@ -21,9 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;

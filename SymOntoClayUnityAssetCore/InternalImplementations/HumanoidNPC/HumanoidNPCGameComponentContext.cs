@@ -20,8 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;

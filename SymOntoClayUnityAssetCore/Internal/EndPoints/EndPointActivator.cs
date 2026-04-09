@@ -20,12 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -150,7 +150,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     processInfo.SetStatus(logger, "4EF49830-6C8B-499E-BC46-D71104191808", ProcessStatus.Faulted);
                 }
 
-            }, _threadPool, cancellationContext.Token);
+            }, _threadPool, cancellationContext);
 
             return task;
         }
@@ -225,7 +225,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #if DEBUG
                 //logger.Info("A046851F-4CB5-46D5-ADB0-2A3C61984000", $"Invoke End processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
 #endif
-            }, _threadPool, cancellationContext.Token);
+            }, _threadPool, cancellationContext);
 
             return task;
         }

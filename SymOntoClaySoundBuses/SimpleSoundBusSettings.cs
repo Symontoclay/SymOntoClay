@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Threading;
@@ -33,7 +34,7 @@ namespace SymOntoClay.SoundBuses
 {
     public class SimpleSoundBusSettings: IObjectToString
     {
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public ICancellationContext CancellationContext { get; set; } = new CancellationTokenContext(CancellationToken.None);
         public CustomThreadPoolSettings ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
@@ -53,7 +54,7 @@ namespace SymOntoClay.SoundBuses
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
+            sb.PrintExisting(n, nameof(CancellationContext), CancellationContext);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
             return sb.ToString();
         }

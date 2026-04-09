@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using SymOntoClay.Monitor.Common;
@@ -46,7 +47,7 @@ namespace SymOntoClay.Monitor
         public IDictionary<string, BaseMonitorSettings> NodesSettings { get; set; }
         public bool EnableOnlyDirectlySetUpNodes { get; set; }
 
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public ICancellationContext CancellationContext { get; set; } = new CancellationTokenContext(CancellationToken.None);
         public CustomThreadPoolSettings ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
@@ -63,7 +64,7 @@ namespace SymOntoClay.Monitor
             sb.PrintExisting(n, nameof(PlatformLoggers), PlatformLoggers);
             sb.PrintObjDict_3_Prop(n, nameof(NodesSettings), NodesSettings);
             sb.AppendLine($"{spaces}{nameof(EnableOnlyDirectlySetUpNodes)} = {EnableOnlyDirectlySetUpNodes}");
-            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
+            sb.PrintExisting(n, nameof(CancellationContext), CancellationContext);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
             sb.Append(base.PropertiesToString(n));
 

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -33,10 +34,10 @@ namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
 {
     public class HostListenerHandlersRegistry : IDisposable
     {
-        public HostListenerHandlersRegistry(CancellationToken cancellationToken, ICustomThreadPool threadPool) 
+        public HostListenerHandlersRegistry(ICancellationContext cancellationContext, ICustomThreadPool threadPool) 
         {
-            _endPointHandlersRegistry = new HandlersRegistry(cancellationToken, threadPool);
-            _methodImplHandlersRegistry = new HandlersRegistry(cancellationToken, threadPool);
+            _endPointHandlersRegistry = new HandlersRegistry(cancellationContext, threadPool);
+            _methodImplHandlersRegistry = new HandlersRegistry(cancellationContext, threadPool);
         }
 
         public void SetLogger(IMonitorLogger logger)

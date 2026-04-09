@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners.Handlers;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -47,19 +48,19 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         }
 
         protected BaseHostListener(int minThreadsCount, int maxThreadsCount)
-            : this(minThreadsCount, maxThreadsCount, CancellationToken.None)
+            : this(minThreadsCount, maxThreadsCount, new CancellationTokenContext(CancellationToken.None))
         {
         }
 
-        protected BaseHostListener(int minThreadsCount, int maxThreadsCount, CancellationToken cancellationToken)
-            : this(cancellationToken, new CustomThreadPool(minThreadsCount, maxThreadsCount, cancellationToken))
+        protected BaseHostListener(int minThreadsCount, int maxThreadsCount, ICancellationContext cancellationContext)
+            : this(cancellationContext, new CustomThreadPool(minThreadsCount, maxThreadsCount, cancellationContext))
         {
         }
 
-        protected BaseHostListener(CancellationToken cancellationToken, ICustomThreadPool threadPool)
+        protected BaseHostListener(ICancellationContext cancellationContext, ICustomThreadPool threadPool)
         {
-            _onEnterHandlersRegistry = new HostListenerHandlersRegistry(cancellationToken, threadPool);
-            _onLeaveHandlersRegistry = new HostListenerHandlersRegistry(cancellationToken, threadPool);
+            _onEnterHandlersRegistry = new HostListenerHandlersRegistry(cancellationContext, threadPool);
+            _onLeaveHandlersRegistry = new HostListenerHandlersRegistry(cancellationContext, threadPool);
         }
 
         public void AddEnterSyncHandler(string methodName, Action handler)

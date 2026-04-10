@@ -22,8 +22,8 @@ SOFTWARE.*/
 
 using Newtonsoft.Json;
 using SymOntoClay.CLI.Helpers;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP;
@@ -65,7 +65,7 @@ namespace SymOntoClay.CLI
 
             _cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext);
 
             var instance = WorldFactory.WorldInstance;
             world = instance;
@@ -90,7 +90,7 @@ namespace SymOntoClay.CLI
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                CancellationToken = _cancellationTokenSourceContext.Token,
+                CancellationContext = _cancellationTokenSourceContext,
                 ThreadingSettings = ConfigureSoundBusThreadingSettings()
             });
 
@@ -167,7 +167,7 @@ namespace SymOntoClay.CLI
                     {
                         _npcLogger.Error("36F19773-BB0C-4216-A713-31CD3502BED9", e);
                     }
-                }, _cancellationTokenSourceContext.Token);
+                }, _cancellationTokenSourceContext);
             }
             else
             {

@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
@@ -171,7 +171,7 @@ namespace TestSandbox.CreatingExamples
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext);
 
             var instance = new WorldCore();
 
@@ -205,7 +205,7 @@ namespace TestSandbox.CreatingExamples
                 MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
-                CancellationToken = cancellationTokenSourceContext.Token,
+                CancellationContext = cancellationTokenSourceContext,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 

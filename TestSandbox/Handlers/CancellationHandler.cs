@@ -1,4 +1,4 @@
-﻿using SymOntoClay.CoreHelper.Cancellation;
+﻿using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using System.Threading;

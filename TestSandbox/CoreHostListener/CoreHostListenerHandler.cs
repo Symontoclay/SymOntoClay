@@ -62,7 +62,7 @@ namespace TestSandbox.CoreHostListener
 
             var endPointsResolver = new EndPointsResolver(context.Logger, platformTypesConvertorsRegistry);
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(context.GetCancellationToken());
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(context.GetCancellationContext());
 
             var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry, invokingInMainThread, complexContext.EngineContext.AsyncEventsThreadPool);
 

@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
-using SymOntoClay.CoreHelper.Cancellation;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
@@ -39,7 +39,7 @@ namespace TestSandbox.Threads
 
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSourceContext.Token);
+            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSourceContext);
 
             var commonActiveContext = new ActiveObjectCommonContext();
 

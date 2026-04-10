@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.StandardFacts;
@@ -55,11 +56,11 @@ namespace TestSandbox.SoundBusHandler
 
         private void Case4()
         {
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             var settings = new SimpleSoundBusSettings()
             {
-                CancellationToken = cancellationTokenSource.Token,
+                CancellationContext = cancellationTokenSourceContext,
                 ThreadingSettings = new CustomThreadPoolSettings
                 {
                     MaxThreadsCount = 100,
@@ -87,7 +88,7 @@ namespace TestSandbox.SoundBusHandler
 
             Thread.Sleep(10000);
 
-            cancellationTokenSource.Cancel();
+            cancellationTokenSourceContext.Cancel();
         }
 
         private void Case3()

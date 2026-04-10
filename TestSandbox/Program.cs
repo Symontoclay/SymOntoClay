@@ -27,6 +27,7 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.CLI;
 using SymOntoClay.Common;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
@@ -39,7 +40,6 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.LogFileBuilder;
@@ -357,13 +357,13 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            using var source = new CancellationTokenSource();
+            using var sourceContext = new CancellationTokenSourceContext();
 
             using var threadPool = new CustomThreadPool(0, 20);
 
             var task = new ThreadTask(() => {
                 _globalLogger.Info("Run");
-            }, threadPool, source.Token);
+            }, threadPool, sourceContext);
 
             task.OnStarted += () => { _globalLogger.Info("task.OnStarted"); };
             task.OnCanceled += () => { _globalLogger.Info("task.OnCanceled"); };
@@ -572,7 +572,7 @@ namespace TestSandbox
         {
             _logger.Info("D0577E69-6698-493D-B025-4AB190ABB503", "Begin");
 
-            var source1 = new CancellationTokenSource();
+            var source1 = new CancellationTokenSourceContext();
             var token1 = source1.Token;
 
             using var threadPool = new CustomThreadPool(0, 20);
@@ -583,7 +583,7 @@ namespace TestSandbox
                 Thread.Sleep(10000);
 
                 _logger.Info("F812B258-8F6B-4066-8698-55DA609BD01D", "End Hi!");
-            }, threadPool, token1);
+            }, threadPool, source1);
 
             //var taskValue = new TaskValue(task);
 
@@ -1165,7 +1165,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext);
 
             var instance = WorldFactory.WorldInstance;
 
@@ -1195,7 +1195,7 @@ app PeaceKeeper is [very middle] exampleClass
                 MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
-                CancellationToken = cancellationTokenSourceContext.Token,
+                CancellationContext = cancellationTokenSourceContext,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 
@@ -2031,7 +2031,7 @@ primitive task SomePrimitiveTask4
 
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext);
 
             var instance = WorldFactory.WorldInstance;
 
@@ -2054,7 +2054,7 @@ primitive task SomePrimitiveTask4
             {
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
-                CancellationToken = cancellationTokenSourceContext.Token,
+                CancellationContext = cancellationTokenSourceContext,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureMonitorThreadingSettings()
             });
 

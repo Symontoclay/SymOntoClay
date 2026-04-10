@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
-using SymOntoClay.CoreHelper.Cancellation;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
@@ -61,7 +61,7 @@ namespace TestSandbox.MonoBehaviorTesting
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext);
 
             _world = WorldFactory.WorldInstance;
 
@@ -81,7 +81,7 @@ namespace TestSandbox.MonoBehaviorTesting
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                CancellationToken = _cancellationTokenSourceContext.Token,
+                CancellationContext = _cancellationTokenSourceContext,
                 ThreadingSettings = ThreadingSettingsHepler.ConfigureSoundBusThreadingSettings()
             });
 

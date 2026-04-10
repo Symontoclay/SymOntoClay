@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor;
 using SymOntoClay.Monitor.Common;
@@ -77,7 +78,7 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"SomeEvent?.GetInvocationList().Length = {SomeEvent?.GetInvocationList().Length}");
             _globalLogger.Info($"OtherEvent?.GetInvocationList().Length = {OtherEvent?.GetInvocationList().Length}");
 
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
@@ -87,7 +88,7 @@ namespace TestSandbox.Handlers
 
             var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
-                CancellationToken = cancellationTokenSource.Token,
+                CancellationContext = cancellationTokenSourceContext,
                 ThreadingSettings = ConfigureThreadingSettings().AsyncEvents,
                 Enable = true,
                 MessagesDir = monitorMessagesDir,
@@ -111,7 +112,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(1000);
 
-            cancellationTokenSource.Cancel();
+            cancellationTokenSourceContext.Cancel();
 
             threadLogger.StopThreadTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
 
@@ -147,7 +148,7 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
-            using var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             var monitorFeatures = new MonitorFeatures();
 
@@ -155,7 +156,7 @@ namespace TestSandbox.Handlers
 
             var monitor = new SymOntoClay.Monitor.Monitor(new MonitorSettings
             {
-                CancellationToken = cancellationTokenSource.Token,
+                CancellationContext = cancellationTokenSourceContext,
                 ThreadingSettings = ConfigureThreadingSettings().AsyncEvents,
                 Enable = true,
                 MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
@@ -226,7 +227,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(10000);
 
-            cancellationTokenSource.Cancel();
+            cancellationTokenSourceContext.Cancel();
         }
 
         private ThreadingSettings ConfigureThreadingSettings()

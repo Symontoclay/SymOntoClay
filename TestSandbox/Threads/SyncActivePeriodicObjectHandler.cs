@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.ActiveObject.Threads;
-using SymOntoClay.CoreHelper.Cancellation;
+using SymOntoClay.Common.Cancellation;
 using System.Threading;
 
 namespace TestSandbox.Threads

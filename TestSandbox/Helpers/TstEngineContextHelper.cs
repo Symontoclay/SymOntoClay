@@ -56,7 +56,7 @@ namespace TestSandbox.Helpers
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(factorySettings.CancellationContext.Token);
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(factorySettings.CancellationContext);
 
             var codeDir = Path.Combine(Directory.GetCurrentDirectory(), "Source");
 
@@ -109,7 +109,7 @@ namespace TestSandbox.Helpers
 
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
-                CancellationToken = factorySettings.CancellationContext.Token,
+                CancellationContext = factorySettings.CancellationContext,
                 ThreadingSettings = factorySettings.SoundBusThreadingSettings
             });
 
@@ -154,7 +154,7 @@ namespace TestSandbox.Helpers
                 //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = true,
                 EnableFullCallInfo = true,
-                CancellationToken = factorySettings.CancellationContext.Token,
+                CancellationContext = factorySettings.CancellationContext,
                 ThreadingSettings = factorySettings.MonitorThreadingSettings,
                 Features = monitorFeatures
             };

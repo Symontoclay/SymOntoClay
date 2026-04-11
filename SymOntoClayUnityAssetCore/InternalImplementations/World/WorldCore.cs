@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.Serialization;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
@@ -226,6 +227,24 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public bool EnableCategories { get => throw new NotImplementedException("5B0E49C5-919F-40AE-A951-BCB364258B17"); set => throw new NotImplementedException("339F2D6D-0225-4439-9C9D-462CC4A356B2"); }
+
+        /// <inheritdoc/>
+        public void LoadFromSourceCode()
+        {
+            _context.LoadFromSourceCode();
+        }
+
+        /// <inheritdoc/>
+        public void LoadFromImage(SerializationSettings settings)
+        {
+            _context.LoadFromImage(settings);
+        }
+
+        /// <inheritdoc/>
+        public void SaveToImage(SerializationSettings settings)
+        {
+            _context.SaveToImage(settings);
+        }
 
         /// <inheritdoc/>
         public void Start()

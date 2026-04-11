@@ -754,6 +754,15 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.EnableCategories">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.LoadFromSourceCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.LoadFromImage(SymOntoClay.CoreHelper.Serialization.SerializationSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.SaveToImage(SymOntoClay.CoreHelper.Serialization.SerializationSettings)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Start">
             <inheritdoc/>
         </member>

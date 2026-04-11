@@ -26,6 +26,7 @@ using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.Serialization;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
@@ -523,6 +524,21 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     Thread.Sleep(10);
                 }
             }
+        }
+
+        public void LoadFromSourceCode()
+        {
+            throw new NotImplementedException("C3B828AF-4B06-4765-940A-D6500C1183F6");
+        }
+
+        public void LoadFromImage(SerializationSettings settings)
+        {
+            throw new NotImplementedException("C06FA5F1-80F9-4365-A41E-182CFD35B497");
+        }
+
+        public void SaveToImage(SerializationSettings settings)
+        {
+            throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
         }
 
         public void Stop()

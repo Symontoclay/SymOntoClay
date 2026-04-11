@@ -19,13 +19,15 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
+            var objectName = "Obj1";
+
             var autoResetEvent = new ManualResetEvent(true);
 
-            var state = ComponentState.Created;
+            var state = ComponentState.Disposed;
 
             _logger.Info($"state = {state}");
 
-            var result = GameComponentGuard.Check("3FEEC3AC-4636-471B-B500-11C880A4D81B", ref state, autoResetEvent);
+            var result = GameComponentGuard.Check("3FEEC3AC-4636-471B-B500-11C880A4D81B", objectName, ref state, autoResetEvent);
 
             _logger.Info($"result = {result}");
         }

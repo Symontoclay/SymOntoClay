@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static bool Check(string pointId, ref ComponentState componentState, EventWaitHandle waitEvent)
+        public static bool Check(string pointId, string objectName, ref ComponentState componentState, EventWaitHandle waitEvent)
         {
 #if DEBUG
             _logger.Info($"pointId = {pointId}");
@@ -17,9 +17,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             waitEvent?.WaitOne();
 
+            if (componentState == ComponentState.Disposed)
+            {
+                throw new ObjectDisposedException(objectName, pointId);
+            }
 
-
-            throw new NotImplementedException("C3FDDEE0-5572-4585-B71E-7CD64C9F244E");
+            //throw new NotImplementedException("C3FDDEE0-5572-4585-B71E-7CD64C9F244E");
+            return true;
         }
     }
 }

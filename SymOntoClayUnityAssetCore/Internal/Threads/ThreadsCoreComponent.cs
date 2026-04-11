@@ -38,10 +38,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
         private readonly ActiveObjectCommonContext _commonActiveContext = new ActiveObjectCommonContext();
 
         /// <inheritdoc/>
-        bool IActiveObjectCommonContext.IsNeedWaiting => _commonActiveContext.IsNeedWaiting;
+        public bool IsNeedWaiting => _commonActiveContext.IsNeedWaiting;
 
         /// <inheritdoc/>
-        EventWaitHandle IActiveObjectCommonContext.WaitEvent => _commonActiveContext.WaitEvent;
+        public EventWaitHandle WaitEvent => _commonActiveContext.WaitEvent;
 
         public void Lock()
         {

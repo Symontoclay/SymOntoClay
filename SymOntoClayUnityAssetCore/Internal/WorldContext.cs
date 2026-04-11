@@ -436,14 +436,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             lock (_stateLockObj)
             {
-                if (_state == ComponentState.Disposed)
+                if(!GameComponentGuard.Check("A7EBF771-7201-43AB-8034-725E5CF81C82", GetType().Name, ref _state, ThreadsComponent.WaitEvent, ComponentState.Started))
                 {
-                    throw new ObjectDisposedException(null);
+                    return;
                 }
 
                 ThreadsComponent.Lock();
 
-                if (_state != ComponentState.Loaded)
+                if (_state == ComponentState.Created)
                 {
                     NLoadFromSourceCode();
                     Thread.Sleep(100);

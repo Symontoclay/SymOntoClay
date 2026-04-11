@@ -1168,10 +1168,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.SymOntoClay#ActiveObject#Threads#IActiveObjectCommonContext#IsNeedWaiting">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.IsNeedWaiting">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.SymOntoClay#ActiveObject#Threads#IActiveObjectCommonContext#WaitEvent">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.WaitEvent">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.PlatformType">

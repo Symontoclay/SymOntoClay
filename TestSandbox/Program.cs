@@ -71,7 +71,6 @@ using TestSandbox.Navigations;
 using TestSandbox.Parsing;
 using TestSandbox.SoundBusHandler;
 using TestSandbox.Threads;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TestSandbox
 {
@@ -91,6 +90,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstGameComponentGuardHander();
             //TstCancellationHandler();
             //TstMessagePack();
             //TstKindOfValueConversion();
@@ -183,10 +183,20 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstGameComponentGuardHander()
+        {
+            _globalLogger.Info("Begin");
+
+            var handler = new GameComponentGuardHander();
+            handler.Run();
+
+            _globalLogger.Info("End");
         }
 
         private static void TstCancellationHandler()

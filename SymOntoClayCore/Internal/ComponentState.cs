@@ -29,9 +29,13 @@ namespace SymOntoClay.Core.Internal
     public enum ComponentState
     {
         Created,
+        LoadingFromSourceCode,
+        LoadingFromImage,
         Loaded,
         Started,
         Stopped,
+        SavingToImage,
+        Died,
         Disposed
     }
 }

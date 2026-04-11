@@ -24,6 +24,7 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.Serialization;

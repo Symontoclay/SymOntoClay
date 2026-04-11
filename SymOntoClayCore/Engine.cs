@@ -84,7 +84,7 @@ namespace SymOntoClay.Core
 #endif
             }
         }
-
+        
         /// <inheritdoc/>
         public void SaveToImage(string path)
         {

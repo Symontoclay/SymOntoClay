@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal;
+using System.Threading;
 
 namespace TestSandbox.Handlers
 {
@@ -18,7 +19,15 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
+            var autoResetEvent = new ManualResetEvent(true);
+
             var state = ComponentState.Created;
+
+            _logger.Info($"state = {state}");
+
+            var result = GameComponentGuard.Check("3FEEC3AC-4636-471B-B500-11C880A4D81B", ref state, autoResetEvent);
+
+            _logger.Info($"result = {result}");
         }
     }
 }

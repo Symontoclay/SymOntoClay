@@ -23,7 +23,7 @@ namespace TestSandbox.Handlers
 
             var autoResetEvent = new ManualResetEvent(true);
 
-            var state = ComponentState.Disposed;
+            var state = ComponentState.Created;
 
             _logger.Info($"state = {state}");
 

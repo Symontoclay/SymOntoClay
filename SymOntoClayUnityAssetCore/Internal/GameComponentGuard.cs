@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
@@ -8,11 +9,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static bool Check(string pointId, string objectName, ref ComponentState componentState, EventWaitHandle waitEvent)
+        public static bool Check(string pointId, string objectName, ref ComponentState componentState, EventWaitHandle waitEvent, params ComponentState[] leaveIf)
         {
 #if DEBUG
             _logger.Info($"pointId = {pointId}");
             _logger.Info($"componentState = {componentState}");
+            _logger.Info($"leaveIf.Length = {leaveIf.Length}");
 #endif
 
             waitEvent?.WaitOne();
@@ -23,7 +25,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
 
             //throw new NotImplementedException("C3FDDEE0-5572-4585-B71E-7CD64C9F244E");
-            return true;
+            return !leaveIf.Contains(componentState);
         }
     }
 }

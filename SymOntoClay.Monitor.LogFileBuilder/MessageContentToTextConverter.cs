@@ -247,7 +247,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     return GetFatal(message as FatalMessage, logFileCreatorContext);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, "9C0028D0-9F9C-4BE5-8681-892DFD5EDA88");
             }
         }
 

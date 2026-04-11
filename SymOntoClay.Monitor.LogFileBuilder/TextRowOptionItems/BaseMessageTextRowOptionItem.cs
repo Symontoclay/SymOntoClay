@@ -52,7 +52,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
                     return content.ToLower();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(TextTransformation), TextTransformation, null);
+                    throw new ArgumentOutOfRangeException(nameof(TextTransformation), TextTransformation, "D4B989FB-CAA5-40E8-8164-3D2F5D1674AA");
             }
         }
 

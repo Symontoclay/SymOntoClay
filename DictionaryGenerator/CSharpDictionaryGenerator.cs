@@ -170,7 +170,7 @@ namespace DictionaryGenerator
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(partOfSpeech), partOfSpeech, null);
+                        throw new ArgumentOutOfRangeException(nameof(partOfSpeech), partOfSpeech, "F56CA0F3-F9A8-46F8-8ADC-495106695602");
                 }
             }
         }

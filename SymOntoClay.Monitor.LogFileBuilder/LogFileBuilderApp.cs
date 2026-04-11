@@ -186,7 +186,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                    throw new ArgumentOutOfRangeException(nameof(mode), mode, "65B37833-5856-4DD7-847A-90536642F18E");
             }
         }
 

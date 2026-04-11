@@ -253,7 +253,7 @@ namespace SymOntoClay.Monitor.Common.Data
                     return _serializerAdapter.Deserialize<FatalMessage>(data);//Y
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, "893AEAFD-43BE-4358-8FAB-288D115F32D5");
             }
         }
     }

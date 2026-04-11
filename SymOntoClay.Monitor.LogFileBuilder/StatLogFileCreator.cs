@@ -101,7 +101,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, "F660D470-A4F6-488D-84AB-D41CDF2729B2");
                 }
 
                 logger.Info("Fetching index items");
@@ -192,7 +192,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, "BB4E12EE-03A9-47B8-9184-549F0369BFFF");
                 }
 
 #if DEBUG
@@ -220,7 +220,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, "0D2F5206-D50D-46C5-A3C1-D07B68C84120");
                 }
                 
                 outputSw.WriteLine(logFileCreatorContext.DecorateAsPreTextLine($"Messages: {itemIndexRowRecordsList.Count}"));

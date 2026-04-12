@@ -28,7 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
 {
-    public class ModulesStorageComponent : BaseWorldCoreComponent
+    public class ModulesStorageComponent : BaseSerializedWorldCoreComponent
     {
         public ModulesStorageComponent(IWorldCoreContext coreContext)
             : base(coreContext)

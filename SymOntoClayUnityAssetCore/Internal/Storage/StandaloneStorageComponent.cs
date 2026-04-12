@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Storage
 {
-    public class StandaloneStorageComponent: BaseWorldCoreComponent
+    public class StandaloneStorageComponent: BaseSerializedWorldCoreComponent
     {
         public StandaloneStorageComponent(IWorldCoreContext coreContext)
             : base(coreContext)

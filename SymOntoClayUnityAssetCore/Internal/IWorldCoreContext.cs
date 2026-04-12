@@ -37,6 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     public interface IWorldCoreContext
     {
         void AddWorldComponent(IWorldCoreComponent component);
+        void AddSerializedWorldComponent(ISerializedWorldCoreComponent component);
 
         WorldSettings WorldSettings { get; }
         IMonitorLogger Logger { get; }

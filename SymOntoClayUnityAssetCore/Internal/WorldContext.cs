@@ -177,7 +177,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         IActiveObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
 
-        public ModulesStorageComponent ModulesStorage { get; private set; }
+        
 
         IModulesStorage IWorldCoreGameComponentContext.ModulesStorage => ModulesStorage.ModulesStorage;
         IModulesStorage IWorldCoreContext.ModulesStorage => ModulesStorage.ModulesStorage;
@@ -264,7 +264,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => _serializedWorldContext.DateTimeProvider;
         IDateTimeProvider IWorldCoreContext.DateTimeProvider => _serializedWorldContext.DateTimeProvider;
 
-        public LogicQueryParseAndCache LogicQueryParseAndCache { get; private set; }
+        
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
 
@@ -451,10 +451,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             CreateSerializedWorldContext();
 
             _serializedWorldContext.LoadFromSourceCode();
-
-            ModulesStorage.LoadFromSourceCode();
-            StandaloneStorage.LoadFromSourceCode();
-            
 
             lock (_gameComponentsListLockObj)
             {

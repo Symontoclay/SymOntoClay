@@ -33,7 +33,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
 {
-    public class LogicQueryParseAndCache: BaseWorldCoreComponent, ILogicQueryParseAndCache
+    public class LogicQueryParseAndCache: BaseSerializedWorldCoreComponent, ILogicQueryParseAndCache
     {
         public LogicQueryParseAndCache(IWorldCoreContext coreContext)
             : base(coreContext)

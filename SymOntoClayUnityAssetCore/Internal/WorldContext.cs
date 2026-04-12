@@ -117,8 +117,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ModulesStorage = new ModulesStorageComponent(this);
             StandaloneStorage = new StandaloneStorageComponent(this);
             ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
+
+            CreateSerializedWorldContext();
         }
-        
+
+        private void CreateSerializedWorldContext()
+        {
+            _serializedWorldContext = new SerializedWorldContext(this);
+        }
+
         private void LoadTypesPlatformTypesConvertors()
         {
             var targetAttributeType = typeof(PlatformTypesConverterAttribute);
@@ -165,6 +172,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         IMonitor IWorldCoreGameComponentContext.Motitor => Monitor;
+
+        private SerializedWorldContext _serializedWorldContext;
 
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
@@ -436,6 +445,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void NLoadFromSourceCode()
         {
+            CreateSerializedWorldContext();
+            _serializedWorldContext.LoadFromSourceCode();
+
             ModulesStorage.LoadFromSourceCode();
             StandaloneStorage.LoadFromSourceCode();
             DateTimeProvider.LoadFromSourceCode();

@@ -32,7 +32,6 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using SymOntoClay.UnityAsset.Core.Internal.Images;
 using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
@@ -110,7 +109,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             NLPConverterFactory = settings.NLPConverterProvider?.GetFactory(Logger);
 
-            ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSourceContext);
@@ -166,7 +164,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         IMonitor IWorldCoreGameComponentContext.Motitor => Monitor;
 
-        public ImagesRegistry ImagesRegistry { get; private set; }
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
         IActiveObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;

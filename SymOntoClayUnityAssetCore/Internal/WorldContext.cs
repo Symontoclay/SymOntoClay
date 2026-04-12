@@ -54,13 +54,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         public void SetSettings(WorldSettings settings)
         {
-            _settings = settings;
-
             WorldSettingsValidator.Validate(settings);
 
-            ImplementGeneralSettings(settings);
-            CreateMonitoring(settings);
-            CreateComponents(settings);
+            _settings = settings;
+
+            ImplementGeneralSettings();
+            CreateMonitoring();
+            CreateComponents();
 
             if (settings.EnableAutoloadingConvertors)
             {
@@ -70,52 +70,52 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _isInitialized = true;
         }
         
-        private void ImplementGeneralSettings(WorldSettings settings)
+        private void ImplementGeneralSettings()
         {
-            _tmpDir = settings.TmpDir;
+            _tmpDir = _settings.TmpDir;
 
             Directory.CreateDirectory(_tmpDir);
 
             _cancellationTokenSourceContext = new CancellationTokenSourceContext();
-            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, settings?.CancellationContext);
+            _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, _settings?.CancellationContext);
 
-            WorldThreadingSettings = settings.WorldThreadingSettings;
-            HumanoidNpcDefaultThreadingSettings = settings.HumanoidNpcDefaultThreadingSettings;
-            PlayerDefaultThreadingSettings = settings.PlayerDefaultThreadingSettings;
-            GameObjectDefaultThreadingSettings = settings.GameObjectDefaultThreadingSettings;
-            PlaceDefaultThreadingSettings = settings.PlaceDefaultThreadingSettings;
+            WorldThreadingSettings = _settings.WorldThreadingSettings;
+            HumanoidNpcDefaultThreadingSettings = _settings.HumanoidNpcDefaultThreadingSettings;
+            PlayerDefaultThreadingSettings = _settings.PlayerDefaultThreadingSettings;
+            GameObjectDefaultThreadingSettings = _settings.GameObjectDefaultThreadingSettings;
+            PlaceDefaultThreadingSettings = _settings.PlaceDefaultThreadingSettings;
 
-            var threadingSettings = settings.WorldThreadingSettings?.AsyncEvents;
+            var threadingSettings = _settings.WorldThreadingSettings?.AsyncEvents;
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 _linkedCancellationTokenSourceContext);
 
-            InvokerInMainThread = settings.InvokerInMainThread;
-            SoundBus = settings.SoundBus;
-            StandardFactsBuilder = settings.StandardFactsBuilder;
+            InvokerInMainThread = _settings.InvokerInMainThread;
+            SoundBus = _settings.SoundBus;
+            StandardFactsBuilder = _settings.StandardFactsBuilder;
 
-            HtnExecutionSettings = settings.HtnExecutionDefaultSettings;
+            HtnExecutionSettings = _settings.HtnExecutionDefaultSettings;
         }
 
-        private void CreateMonitoring(WorldSettings settings)
+        private void CreateMonitoring()
         {
-            Monitor = settings.Monitor;            
+            Monitor = _settings.Monitor;            
             MonitorNode = Monitor.CreateMonitorNode("6B299F25-9FD9-46BE-A833-9C52B279444F", "world");
             Logger = MonitorNode;
         }
 
-        private void CreateComponents(WorldSettings settings)
+        private void CreateComponents()
         {
-            NLPConverterFactory = settings.NLPConverterProvider?.GetFactory(Logger);
+            NLPConverterFactory = _settings.NLPConverterProvider?.GetFactory(Logger);
 
             ThreadsComponent = new ThreadsCoreComponent(this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSourceContext);
-            LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
+            LogicQueryParseAndCache = new LogicQueryParseAndCache(_settings, this);
 
-            ModulesStorage = new ModulesStorageComponent(settings, this);
-            StandaloneStorage = new StandaloneStorageComponent(settings, this);
+            ModulesStorage = new ModulesStorageComponent(_settings, this);
+            StandaloneStorage = new StandaloneStorageComponent(_settings, this);
             ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
         }
         

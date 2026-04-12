@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     return GroupToString(expr, options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, "FCB51592-A96A-453A-B9AE-BB0D2B4AFE33");
             }
         }
 
@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, "97BBF91B-A51D-49FD-8F83-84383D1CEA80");
             }
 
             if(options.IsHtml)

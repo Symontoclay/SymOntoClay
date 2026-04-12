@@ -360,7 +360,7 @@ namespace SymOntoClay.Core
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+                    throw new ArgumentOutOfRangeException(nameof(status), status, "A5CEAA98-526A-438E-BDD2-A5FEFF74D6FC");
             }
         }
 

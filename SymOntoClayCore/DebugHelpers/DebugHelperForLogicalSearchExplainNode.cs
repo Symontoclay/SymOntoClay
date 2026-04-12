@@ -784,7 +784,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "7538FB27-DF7E-4292-AECB-4E63155FBF17");
             }
 
             /*

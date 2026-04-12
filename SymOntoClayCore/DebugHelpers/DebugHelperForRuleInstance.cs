@@ -294,7 +294,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     return FuzzyLogicNonNumericSequenceValueToString(expr.FuzzyLogicNonNumericSequenceValue, options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, "997F911B-63B7-48B3-A05C-3B48ADAB9016");
             }
         }
 
@@ -367,7 +367,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, "6E552A2A-2818-4F7C-B8C7-600EC2DCC01B");
             }
 
             var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
@@ -429,7 +429,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, "9800E44B-4E92-4C25-8404-7BB125FC7B0E");
             }
 
             if (options.IsHtml)
@@ -650,7 +650,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     return ConditionalEntitySourceValueToString(value, options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, "68B4A404-0B82-4776-85F4-BBE708572B9C");
             }
         }
 
@@ -747,7 +747,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     return DebugHelperForLogicalModalityExpression.ToString(value.AsLogicalModalityExpressionValue.Expression, options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, "6CCD6DA6-904A-40AD-B0D7-2F348CD1A72B");
             }
         }
     }

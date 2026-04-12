@@ -417,6 +417,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public bool EnableRemoteConnection { get => Monitor.EnableRemoteConnection; set => Monitor.EnableRemoteConnection = value; }
 
+        public void LoadFromSourceCode()
+        {
+            lock (_stateLockObj)
+            {
+                if (!GameComponentGuard.Check("F69A12D4-8B21-469B-9582-F7DE53C0466A", GetType().Name, ref _state, ThreadsComponent.WaitEvent, ComponentState.Loading))
+                {
+                    return;
+                }
+
+                throw new NotImplementedException("C3B828AF-4B06-4765-940A-D6500C1183F6");
+            }
+        }
+
         private void NLoadFromSourceCode()
         {
             ModulesStorage.LoadFromSourceCode();
@@ -429,6 +442,34 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 {
                     item.LoadFromSourceCode();
                 }
+            }
+
+            _state = ComponentState.Loaded;
+        }
+
+        public void LoadFromImage(SerializationSettings settings)
+        {
+            lock (_stateLockObj)
+            {
+                if (!GameComponentGuard.Check("2CCDA020-46EA-4234-A35A-8045F804A2B3", GetType().Name, ref _state, ThreadsComponent.WaitEvent, ComponentState.Loading))
+                {
+                    return;
+                }
+
+                throw new NotImplementedException("C06FA5F1-80F9-4365-A41E-182CFD35B497");
+            }
+        }
+
+        public void SaveToImage(SerializationSettings settings)
+        {
+            lock (_stateLockObj)
+            {
+                if (!GameComponentGuard.Check("7F8B10DD-8255-4110-8BD3-9F459276A78D", GetType().Name, ref _state, ThreadsComponent.WaitEvent, ComponentState.Saving))
+                {
+                    return;
+                }
+
+                throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
             }
         }
 
@@ -527,28 +568,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
-        public void LoadFromSourceCode()
-        {
-            throw new NotImplementedException("C3B828AF-4B06-4765-940A-D6500C1183F6");
-        }
-
-        public void LoadFromImage(SerializationSettings settings)
-        {
-            throw new NotImplementedException("C06FA5F1-80F9-4365-A41E-182CFD35B497");
-        }
-
-        public void SaveToImage(SerializationSettings settings)
-        {
-            throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
-        }
-
         public void Stop()
         {
             lock (_stateLockObj)
             {
-                if (_state == ComponentState.Disposed)
+                if (!GameComponentGuard.Check("633DD96E-52F0-4737-88A8-405EC03C1C7B", GetType().Name, ref _state, ThreadsComponent.WaitEvent, ComponentState.Stopped))
                 {
-                    throw new ObjectDisposedException(null);
+                    return;
                 }
 
                 throw new NotImplementedException("6136D992-B17A-4FB0-97D1-C647D733FCF3");

@@ -2,5 +2,8 @@
 {
     public class SerializedWorldContext
     {
+        public SerializedWorldContext(IWorldCoreContext coreContext)
+        {
+        }
     }
 }

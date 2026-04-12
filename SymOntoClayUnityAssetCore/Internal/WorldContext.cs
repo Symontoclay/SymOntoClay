@@ -45,6 +45,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Runtime;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -54,6 +55,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         public void SetSettings(WorldSettings settings)
         {
+            _settings = settings;
+
             WorldSettingsValidator.Validate(settings);
 
             ImplementGeneralSettings(settings);
@@ -150,6 +153,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private bool _isInitialized;
 
         public bool IsInitialized => _isInitialized;
+
+        private WorldSettings _settings;
 
         private string _tmpDir;
         public string TmpDir => _tmpDir;

@@ -157,7 +157,7 @@ namespace SymOntoClay.CLI
                                                 break;
 
                                             default:
-                                                throw new ArgumentOutOfRangeException(nameof(secondArg), secondArg, null);
+                                                throw new ArgumentOutOfRangeException(nameof(secondArg), secondArg, "7A73B007-2B3A-4E0C-BC1F-7B5081409DB0");
                                         }
 
                                         command.ProjectName = args[2];
@@ -231,7 +231,7 @@ namespace SymOntoClay.CLI
                         break;
                     
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(firstArg), firstArg, null);
+                        throw new ArgumentOutOfRangeException(nameof(firstArg), firstArg, "A6BDCBC3-C15A-4ABF-B572-3F1DBA39A3A0");
                 }
 
                 argsList = argsList.Skip(reallyUsedArgs).ToList();

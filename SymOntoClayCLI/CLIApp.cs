@@ -121,7 +121,7 @@ namespace SymOntoClay.CLI
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfCommand), kindOfCommand, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfCommand), kindOfCommand, "1B52E392-CBD4-47C3-8B9F-C687B31CA059");
             }
         }
 

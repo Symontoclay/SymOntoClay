@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                        throw new ArgumentOutOfRangeException(nameof(n), n, "A4593F61-6122-46C2-8203-19FBA7FE2176");
                 }
             }, true);
 
@@ -207,7 +207,7 @@ action check
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                        throw new ArgumentOutOfRangeException(nameof(n), n, "54C367AD-C2D0-4821-AA4F-B48AC5681DBC");
                 }
             }, true);
 
@@ -347,7 +347,7 @@ action check
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                        throw new ArgumentOutOfRangeException(nameof(n), n, "4D474E60-EDA0-4C45-AEDE-D885A0BB5773");
                 }
             }, true);
 
@@ -497,7 +497,7 @@ action move
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                        throw new ArgumentOutOfRangeException(nameof(n), n, "765B5FE3-A651-48B8-993C-A917F902748E");
                 }
             }, true);
 
@@ -648,7 +648,7 @@ action move
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                        throw new ArgumentOutOfRangeException(nameof(n), n, "F5452AB2-919D-442A-B33C-522A6343975E");
                 }
             }, true);
 

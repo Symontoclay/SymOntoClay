@@ -120,7 +120,7 @@ namespace SymOntoClay.BaseTestLib
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(useStandardLibrary), useStandardLibrary, null);
+                        throw new ArgumentOutOfRangeException(nameof(useStandardLibrary), useStandardLibrary, "BDB8F717-3C3D-4718-BCA0-3EA062530170");
                 }
             }
             else
@@ -192,7 +192,7 @@ namespace SymOntoClay.BaseTestLib
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(useStandardLibrary), useStandardLibrary, null);
+                        throw new ArgumentOutOfRangeException(nameof(useStandardLibrary), useStandardLibrary, "D6525C70-4DDB-41FC-8174-F33EAD77317A");
                 }
             }
 

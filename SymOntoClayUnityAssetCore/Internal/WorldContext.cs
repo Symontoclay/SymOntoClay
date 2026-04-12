@@ -26,6 +26,7 @@ using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.Serialization;
 using SymOntoClay.Monitor.Common;
@@ -246,6 +247,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private CancellationTokenSourceContext _cancellationTokenSourceContext;
         private ICancellationContext _linkedCancellationTokenSourceContext;
+        private CancellationTokenSourceContext _startedCancellationContext;
 
         /// <inheritdoc/>
         public ICancellationContext GetCancellationContext()
@@ -439,13 +441,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return;
                 }
 
-                throw new NotImplementedException("C3B828AF-4B06-4765-940A-D6500C1183F6");
+                NLoadFromSourceCode();
             }
         }
 
         private void NLoadFromSourceCode()
         {
+            if(!ComponentStateHelper.IsStopped(_state))
+            {
+                NStop();
+            }            
+
             CreateSerializedWorldContext();
+
             _serializedWorldContext.LoadFromSourceCode();
 
             ModulesStorage.LoadFromSourceCode();
@@ -498,9 +506,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return;
                 }
 
-                ThreadsComponent.Lock();
-
-                if (_state == ComponentState.Created)
+                if (!ComponentStateHelper.IsLoaded(_state))
                 {
                     NLoadFromSourceCode();
                     Thread.Sleep(100);
@@ -538,6 +544,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
             }
 
+            StartgameComponentsForLateInitializing();
+        }
+        
+        private void StartgameComponentsForLateInitializing()
+        {
+            _startedCancellationContext = new CancellationTokenSourceContext();
+            var startedCancellationLinkedContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, _linkedCancellationTokenSourceContext);
+
             ThreadTask.Run(() => {
                 try
                 {
@@ -558,7 +572,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                             }
                         }
 
-                        if (_cancellationTokenSourceContext.IsCancellationRequested)
+                        if (startedCancellationLinkedContext.IsCancellationRequested)
                         {
                             break;
                         }
@@ -570,9 +584,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 {
                     Error("CDF6BAD4-76E3-4B1F-9379-C64BF752F9AE", e);
                 }
-            }, AsyncEventsThreadPool, _cancellationTokenSourceContext);
+            }, AsyncEventsThreadPool, startedCancellationLinkedContext);
         }
-        
+
         private void WaitForAllGameComponentsWaiting()
         {
             lock (_gameComponentsListLockObj)
@@ -593,8 +607,24 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return;
                 }
 
-                throw new NotImplementedException("6136D992-B17A-4FB0-97D1-C647D733FCF3");
+                if (ComponentStateHelper.IsStopped(_state))
+                {
+                    return;
+                }
+
+                NStop();
             }
+        }
+
+        private void NStop()
+        {
+            _startedCancellationContext?.Cancel();
+
+            ThreadsComponent.Lock();
+
+            WaitForAllGameComponentsWaiting();
+
+            _state = ComponentState.Stopped;
         }
 
         public bool IsActive
@@ -637,7 +667,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
 
             _cancellationTokenSourceContext?.Cancel();
-
+            
             lock (_gameComponentsListLockObj)
             {
                 foreach (var item in _gameComponentsList.ToList())

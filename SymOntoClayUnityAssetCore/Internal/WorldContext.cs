@@ -177,14 +177,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         IActiveObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
 
-        
+        IModulesStorage IWorldCoreGameComponentContext.ModulesStorage => _serializedWorldContext.ModulesStorage.ModulesStorage;
+        IModulesStorage IWorldCoreContext.ModulesStorage => _serializedWorldContext.ModulesStorage.ModulesStorage;
 
-        IModulesStorage IWorldCoreGameComponentContext.ModulesStorage => ModulesStorage.ModulesStorage;
-        IModulesStorage IWorldCoreContext.ModulesStorage => ModulesStorage.ModulesStorage;
-
-        public StandaloneStorageComponent StandaloneStorage { get; private set; }
-
-        IStandaloneStorage IWorldCoreGameComponentContext.StandaloneStorage => StandaloneStorage.StandaloneStorage;
+        IStandaloneStorage IWorldCoreGameComponentContext.StandaloneStorage => _serializedWorldContext.StandaloneStorage.StandaloneStorage;
 
         public PlatformTypesConvertersRegistry PlatformTypesConvertorsRegistry { get; private set; }
         IPlatformTypesConvertersRegistry IWorldCoreContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
@@ -265,8 +261,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IDateTimeProvider IWorldCoreContext.DateTimeProvider => _serializedWorldContext.DateTimeProvider;
 
         
-        ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
-        ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
+        ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => _serializedWorldContext.LogicQueryParseAndCache;
+        ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => _serializedWorldContext.LogicQueryParseAndCache;
 
         private readonly object _worldComponentsListLockObj = new object();
         private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
@@ -283,6 +279,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
                 _worldComponentsList.Add(component);
             }
+        }
+
+        /// <inheritdoc/>
+        void IWorldCoreContext.AddSerializedWorldComponent(ISerializedWorldCoreComponent component)
+        {
+            _serializedWorldContext.AddSerializedWorldComponent(component);
         }
 
         private readonly object _gameComponentsListLockObj = new object();
@@ -327,7 +329,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 var publicFactsStorage = component.PublicFactsStorage;
 
-                StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.AddConsolidatedStorage(Logger, publicFactsStorage);
+                _serializedWorldContext.AddPublicFactsStorage(publicFactsStorage);
             }
         }
 
@@ -347,7 +349,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
                     var publicFactsStorage = component.PublicFactsStorage;
 
-                    StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.RemoveConsolidatedStorage(Logger, publicFactsStorage);
+                    _serializedWorldContext.RemoveGameComponent(publicFactsStorage);
                 }
             }
         }
@@ -677,6 +679,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     item.Dispose();
                 }
             }
+
+            _serializedWorldContext?.Dispose();
 
             Monitor.Dispose();
         }

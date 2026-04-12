@@ -832,6 +832,12 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Dispose">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseSerializedWorldCoreComponent.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseSerializedWorldCoreComponent.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.IsDisposed">
             <inheritdoc/>
         </member>
@@ -1126,6 +1132,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext.OnDisposing">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.InstanceId">
             <inheritdoc/>
         </member>
@@ -1382,6 +1391,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreContext#AddWorldComponent(SymOntoClay.UnityAsset.Core.Internal.IWorldCoreComponent)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreContext#AddSerializedWorldComponent(SymOntoClay.UnityAsset.Core.Internal.ISerializedWorldCoreComponent)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#AddGameComponent(SymOntoClay.UnityAsset.Core.Internal.IGameComponent)">

@@ -27,9 +27,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
 {
     public class StandaloneStorageComponent: BaseWorldCoreComponent
     {
-        public StandaloneStorageComponent(WorldSettings settings, IWorldCoreContext coreContext)
+        public StandaloneStorageComponent(IWorldCoreContext coreContext)
             : base(coreContext)
         {
+            var settings = coreContext.WorldSettings;
+
             var standaloneStorageSettings = new StandaloneStorageSettings();
             standaloneStorageSettings.Id = "world";
             standaloneStorageSettings.IsWorld = true;

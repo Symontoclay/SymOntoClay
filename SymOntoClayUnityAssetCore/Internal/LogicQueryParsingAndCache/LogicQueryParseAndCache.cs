@@ -35,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
 {
     public class LogicQueryParseAndCache: BaseWorldCoreComponent, ILogicQueryParseAndCache
     {
-        public LogicQueryParseAndCache(WorldSettings settings, IWorldCoreContext coreContext)
+        public LogicQueryParseAndCache(IWorldCoreContext coreContext)
             : base(coreContext)
         {
             var settingsOfContext = new BaseCoreSettings();

@@ -448,7 +448,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             if(!ComponentStateHelper.IsStopped(_state))
             {
                 NStop();
-            }            
+            }
 
             CreateSerializedWorldContext();
 

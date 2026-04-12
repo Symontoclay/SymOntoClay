@@ -94,7 +94,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 
             return true;
         }
-
+        
         /// <inheritdoc/>
         public IThreadTask Start()
         {

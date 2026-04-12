@@ -119,13 +119,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private void CreateSerializedWorldContext()
         {
             _serializedWorldContext = new SerializedWorldContext(this);
-
-            //TODO: move It to SerializedWorldContext
-            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSourceContext);
-            LogicQueryParseAndCache = new LogicQueryParseAndCache(this);
-            ModulesStorage = new ModulesStorageComponent(this);
-            StandaloneStorage = new StandaloneStorageComponent(this);
-            ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
+            _serializedWorldContext.Init();
         }
 
         private void LoadTypesPlatformTypesConvertors()
@@ -178,6 +172,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private SerializedWorldContext _serializedWorldContext;
 
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
+
+        IActiveObjectCommonContext IWorldCoreContext.SyncContext => ThreadsComponent;
 
         IActiveObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
 
@@ -265,9 +261,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public ISoundBus SoundBus { get; private set; }
 
-        public DateTimeProvider DateTimeProvider { get; private set; }
-        IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => DateTimeProvider;
-        IDateTimeProvider IWorldCoreContext.DateTimeProvider => DateTimeProvider;
+        IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => _serializedWorldContext.DateTimeProvider;
+        IDateTimeProvider IWorldCoreContext.DateTimeProvider => _serializedWorldContext.DateTimeProvider;
 
         public LogicQueryParseAndCache LogicQueryParseAndCache { get; private set; }
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
@@ -459,7 +454,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             ModulesStorage.LoadFromSourceCode();
             StandaloneStorage.LoadFromSourceCode();
-            DateTimeProvider.LoadFromSourceCode();
+            
 
             lock (_gameComponentsListLockObj)
             {
@@ -521,7 +516,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             ThreadsComponent.Lock();
 
-            DateTimeProvider.Start();
+            _serializedWorldContext.DateTimeProvider.Start();
 
             lock (_gameComponentsListLockObj)
             {
@@ -624,6 +619,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ThreadsComponent.Lock();
 
             WaitForAllGameComponentsWaiting();
+
+            _serializedWorldContext.DateTimeProvider.Stop();
 
             _state = ComponentState.Stopped;
         }

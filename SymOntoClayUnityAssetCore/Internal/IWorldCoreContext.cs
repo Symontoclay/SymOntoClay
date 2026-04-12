@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -51,6 +52,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ThreadingSettings GameObjectDefaultThreadingSettings { get; }
         ThreadingSettings PlaceDefaultThreadingSettings { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
+        IActiveObjectCommonContext SyncContext { get; }
         ICancellationContext GetCancellationContext();
         CancellationToken GetCancellationToken();
     }

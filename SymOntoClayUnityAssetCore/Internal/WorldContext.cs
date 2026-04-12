@@ -112,12 +112,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             ThreadsComponent = new ThreadsCoreComponent(this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
-            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSourceContext);
-            LogicQueryParseAndCache = new LogicQueryParseAndCache(this);
-
-            ModulesStorage = new ModulesStorageComponent(this);
-            StandaloneStorage = new StandaloneStorageComponent(this);
-            ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
 
             CreateSerializedWorldContext();
         }
@@ -125,6 +119,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private void CreateSerializedWorldContext()
         {
             _serializedWorldContext = new SerializedWorldContext(this);
+
+            //TODO: move It to SerializedWorldContext
+            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSourceContext);
+            LogicQueryParseAndCache = new LogicQueryParseAndCache(this);
+            ModulesStorage = new ModulesStorageComponent(this);
+            StandaloneStorage = new StandaloneStorageComponent(this);
+            ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
         }
 
         private void LoadTypesPlatformTypesConvertors()

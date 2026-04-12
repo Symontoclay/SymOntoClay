@@ -112,10 +112,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ThreadsComponent = new ThreadsCoreComponent(this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSourceContext);
-            LogicQueryParseAndCache = new LogicQueryParseAndCache(_settings, this);
+            LogicQueryParseAndCache = new LogicQueryParseAndCache(this);
 
-            ModulesStorage = new ModulesStorageComponent(_settings, this);
-            StandaloneStorage = new StandaloneStorageComponent(_settings, this);
+            ModulesStorage = new ModulesStorageComponent(this);
+            StandaloneStorage = new StandaloneStorageComponent(this);
             ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
         }
         
@@ -153,6 +153,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public bool IsInitialized => _isInitialized;
 
         private WorldSettings _settings;
+
+        WorldSettings IWorldCoreContext.WorldSettings => _settings;
 
         private string _tmpDir;
         public string TmpDir => _tmpDir;

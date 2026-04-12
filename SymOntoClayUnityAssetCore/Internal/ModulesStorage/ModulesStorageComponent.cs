@@ -30,9 +30,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
 {
     public class ModulesStorageComponent : BaseWorldCoreComponent
     {
-        public ModulesStorageComponent(WorldSettings settings, IWorldCoreContext coreContext)
+        public ModulesStorageComponent(IWorldCoreContext coreContext)
             : base(coreContext)
         {
+            var settings = coreContext.WorldSettings;
+
             var modulesStorageSettings = new ModulesStorageSettings();
             modulesStorageSettings.MonitorNode = coreContext.MonitorNode;
             modulesStorageSettings.LibsDirs = settings.LibsDirs;

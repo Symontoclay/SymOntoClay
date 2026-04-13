@@ -28,6 +28,7 @@ using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -38,34 +39,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             try
             {
+                _settings = settings;
+                _kindOfWorldItem = kindOfWorldItem;
+
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, settings.IdForFacts, _hostSupport, worldContext);
-
-                var standaloneStorageSettings = new StandaloneStorageSettings();
-                standaloneStorageSettings.Id = settings.Id;
-                standaloneStorageSettings.IsWorld = false;
-                standaloneStorageSettings.AppFile = settings.HostFile;
-                standaloneStorageSettings.MonitorNode = MonitorNode;
-                standaloneStorageSettings.StandardFactsBuilder = worldContext.StandardFactsBuilder;
-                
-                standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
-                standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
-                standaloneStorageSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
-
-                standaloneStorageSettings.Categories = settings.Categories;
-                standaloneStorageSettings.EnableCategories = settings.EnableCategories;
-
-                standaloneStorageSettings.ThreadingSettings = kindOfWorldItem switch
-                {
-                    KindOfWorldItem.Player => worldContext.PlayerDefaultThreadingSettings,
-                    KindOfWorldItem.GameObject => worldContext.GameObjectDefaultThreadingSettings,
-                    KindOfWorldItem.Place => worldContext.PlaceDefaultThreadingSettings,
-                    _ => throw new ArgumentOutOfRangeException(nameof(kindOfWorldItem), kindOfWorldItem, null)
-                };
-
-                standaloneStorageSettings.CancellationContext = worldContext.GetCancellationContext();
-                
-                HostStorage = new StandaloneStorage(standaloneStorageSettings);
             }
             catch (Exception e)
             {
@@ -74,38 +52,49 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 throw e;
             }
         }
-        
+
+        private readonly BaseStoredGameComponentSettings _settings;
+        private readonly KindOfWorldItem _kindOfWorldItem;
+
+        private BaseStoredGameComponentSerializedContext _internalSerializedContext;
+
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
 
-        protected StandaloneStorage HostStorage { get; private set; }
+        protected StandaloneStorage HostStorage => _internalSerializedContext.HostStorage;
 
         /// <inheritdoc/>
-        public override IStorage PublicFactsStorage => HostStorage.PublicFactsStorage;
+        public override IStorage PublicFactsStorage => _internalSerializedContext.HostStorage.PublicFactsStorage;
+
+        private void CreateSerializedComponents()
+        {
+            _internalSerializedContext?.Dispose();
+            _internalSerializedContext = new BaseStoredGameComponentSerializedContext(_settings, _worldContext, _kindOfWorldItem, this);
+        }
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
         {
             base.LoadFromSourceCode();
 
-            HostStorage.LoadFromSourceCode();
+            _internalSerializedContext?.LoadFromSourceCode();
 
             _worldContext.AddPublicFactsStorage(this);
         }
 
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return HostStorage.InsertPublicFact(logger, text);
+            return _internalSerializedContext.HostStorage.InsertPublicFact(logger, text);
         }
 
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return HostStorage.InsertPublicFact(logger, fact);
+            return _internalSerializedContext.HostStorage.InsertPublicFact(logger, fact);
         }
 
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            HostStorage.RemovePublicFact(logger, id);
+            _internalSerializedContext.HostStorage.RemovePublicFact(logger, id);
         }
 
         public void PushSoundFact(float power, string text)
@@ -120,30 +109,30 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.AddCategory(logger, category);
+            _internalSerializedContext.HostStorage.AddCategory(logger, category);
         }
 
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.AddCategories(logger, categories);
+            _internalSerializedContext.HostStorage.AddCategories(logger, categories);
         }
 
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.RemoveCategory(logger, category);
+            _internalSerializedContext.HostStorage.RemoveCategory(logger, category);
         }
 
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.RemoveCategories(logger, categories);
+            _internalSerializedContext.HostStorage.RemoveCategories(logger, categories);
         }
 
-        public bool EnableCategories { get => HostStorage.EnableCategories; set => HostStorage.EnableCategories = value; }
+        public bool EnableCategories { get => _internalSerializedContext.HostStorage.EnableCategories; set => _internalSerializedContext.HostStorage.EnableCategories = value; }
 
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            HostStorage.Dispose();
+            _internalSerializedContext?.Dispose();
 
             base.OnDisposed();
         }

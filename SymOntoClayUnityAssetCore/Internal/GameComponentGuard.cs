@@ -12,9 +12,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public static bool Check(string pointId, string objectName, ref ComponentState componentState, EventWaitHandle waitEvent, params ComponentState[] leaveIf)
         {
 #if DEBUG
-            _logger.Info($"pointId = {pointId}");
-            _logger.Info($"componentState = {componentState}");
-            _logger.Info($"leaveIf.Length = {leaveIf.Length}");
+            //_logger.Info($"pointId = {pointId}");
+            //_logger.Info($"componentState = {componentState}");
+            //_logger.Info($"leaveIf.Length = {leaveIf.Length}");
 #endif
 
             waitEvent?.WaitOne();

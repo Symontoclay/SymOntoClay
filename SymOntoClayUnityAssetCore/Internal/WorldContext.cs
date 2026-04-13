@@ -447,8 +447,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private void NLoadFromSourceCode()
         {
 #if DEBUG
-            Info("ABBEACF5-242F-487A-AE96-8C7F61B04B7E", $"_state = {_state}");
-            Info("17CB100F-3DB9-40E3-8EA5-CDF76ADC4272", $"ComponentStateHelper.IsStopped(_state) = {ComponentStateHelper.IsStopped(_state)}");
+            //Info("ABBEACF5-242F-487A-AE96-8C7F61B04B7E", $"_state = {_state}");
+            //Info("17CB100F-3DB9-40E3-8EA5-CDF76ADC4272", $"ComponentStateHelper.IsStopped(_state) = {ComponentStateHelper.IsStopped(_state)}");
 #endif
 
             if (!ComponentStateHelper.IsStopped(_state))

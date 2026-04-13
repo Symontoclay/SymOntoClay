@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.BaseTestLib;
+using SymOntoClay.CoreHelper.Serialization;
 using SymOntoClay.Monitor.LogFileBuilder;
 using System.Collections.Generic;
 using System.IO;
@@ -68,13 +69,23 @@ namespace TestSandbox.Handlers
             Thread.Sleep(10000);
             //Thread.Sleep(100000);
 
+            var serializationSettings = new SerializationSettings();
+
+            _globalLogger.Info($"serializationSettings = {serializationSettings}");
+
+            _world.SaveToImage(serializationSettings);
+
+            _globalLogger.Info("|-|-|-|-|-|-|-|-|");
+
+            Thread.Sleep(10000);
+
             _world.Dispose();
 
             _logger.Info("40669EA9-0F77-4447-B128-5E940A3DCE2D", "End");
             
             Thread.Sleep(500);
             
-            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
+            /*var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
 
             _globalLogger.Info($"logsOutputDirectory = {logsOutputDirectory}");
 
@@ -92,7 +103,7 @@ namespace TestSandbox.Handlers
 
             _globalLogger.Info($"options = {options}");
 
-            LogFileBuilderApp.Run(options);
+            LogFileBuilderApp.Run(options);*/
             
             _globalLogger.Info("End");
         }

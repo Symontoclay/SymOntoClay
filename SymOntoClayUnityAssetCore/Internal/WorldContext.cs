@@ -493,8 +493,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return;
                 }
 
-                throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
+                if (!ComponentStateHelper.IsStopped(_state))
+                {
+                    NStop();
+                }
+
+                NSaveToImage(settings);
             }
+        }
+
+        private void NSaveToImage(SerializationSettings settings)
+        {
+#if DEBUG
+            Info("882C72DD-4D60-4A70-AB2C-44A5CCC51F15", $"settings = {settings}");
+#endif
+
+            throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
         }
 
         public void Start()

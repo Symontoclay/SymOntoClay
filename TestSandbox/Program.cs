@@ -183,7 +183,8 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
+            TstGeneralStartSerializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -2646,6 +2647,16 @@ primitive task SomePrimitiveTask4
             _logger.Info("82BF5322-13F3-4EB8-ABF7-6A152052EF41", "End");
         }
 
+        private static void TstGeneralStartSerializationHandler()
+        {
+            _logger.Info("873CDAF0-F622-42EE-AF75-5FF4EDB3BC18", "Begin");
+
+            using var handler = new GeneralStartSerializationHandler();
+            handler.Run();
+
+            _logger.Info("A7BDAF30-8479-489D-9144-328082EE51EE", "End");
+        }
+        
         private static void TstGetParsedFilesInfo()
         {
             _logger.Info("BD8086E6-A01F-4D41-88F0-749C93F88D34", "Begin");

@@ -418,6 +418,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext.OnDisposing">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation">
             <inheritdoc/>
         </member>

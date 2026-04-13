@@ -17,12 +17,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             if (settings.VisionProvider != null)
             {
-                VisionComponent = new VisionComponent(gameComponent.Logger, settings.VisionProvider, internalContext, worldContext);
+                VisionComponent = new VisionComponent(gameComponent.Logger, settings.VisionProvider, internalContext, this, worldContext);
             }
 
             ConditionalEntityHostSupportComponent = new ConditionalEntityHostSupportComponent(gameComponent.Logger, settings, VisionComponent, internalContext.HostSupportComponent, worldContext);
 
-            SoundReceiverComponent = new SoundReceiverComponent(gameComponent.Logger, settings.InstanceId, internalContext, worldContext);
+            SoundReceiverComponent = new SoundReceiverComponent(gameComponent.Logger, settings.InstanceId, internalContext, this, worldContext);
 
             BackpackStorage = new ConsolidatedPublicFactsStorage(gameComponent.Logger, KindOfStorage.BackpackStorage);
 

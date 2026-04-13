@@ -88,7 +88,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         //private readonly ConsolidatedPublicFactsStorage _backpackStorage;
 
         /// <inheritdoc/>
-        public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
+        public override IStorage PublicFactsStorage => _internalSerializedContext.CoreEngine.PublicFactsStorage;
 
         private void CreateSerializedComponents()
         {
@@ -143,48 +143,46 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             get
             {
-                if(_visionComponent == null)
-                {
-                    return _coreEngine.IsWaited;
-                }
+                var visionComponent = _internalSerializedContext?.VisionComponent;
+                var coreEngine = _internalSerializedContext?.CoreEngine;
 
-                return _coreEngine.IsWaited && _visionComponent.IsWaited;
+                return (coreEngine?.IsWaited ?? false) && (visionComponent?.IsWaited ?? false);
             }
         }
 
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.InsertPublicFact(logger, text);
+            return _internalSerializedContext.CoreEngine.InsertPublicFact(logger, text);
         }
 
         public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _coreEngine.InsertPublicFact(logger, factName, text);
+            return _internalSerializedContext.CoreEngine.InsertPublicFact(logger, factName, text);
         }
 
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _coreEngine.InsertPublicFact(logger, fact);
+            return _internalSerializedContext.CoreEngine.InsertPublicFact(logger, fact);
         }
 
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.RemovePublicFact(logger, id);
+            _internalSerializedContext.CoreEngine.RemovePublicFact(logger, id);
         }
 
         public string InsertFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.InsertFact(logger, text);
+            return _internalSerializedContext.CoreEngine.InsertFact(logger, text);
         }
 
         public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _coreEngine.InsertFact(logger, factName, text);
+            return _internalSerializedContext.CoreEngine.InsertFact(logger, factName, text);
         }
 
         public void RemoveFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.RemoveFact(logger, id);
+            _internalSerializedContext.CoreEngine.RemoveFact(logger, id);
         }
 
         public void PushSoundFact(float power, string text)
@@ -199,25 +197,25 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.AddCategory(logger, category);
+            _internalSerializedContext.CoreEngine.AddCategory(logger, category);
         }
 
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.AddCategories(logger, categories);
+            _internalSerializedContext.CoreEngine.AddCategories(logger, categories);
         }
 
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.RemoveCategory(logger, category);
+            _internalSerializedContext.CoreEngine.RemoveCategory(logger, category);
         }
 
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.RemoveCategories(logger, categories);
+            _internalSerializedContext.CoreEngine.RemoveCategories(logger, categories);
         }
 
-        public bool EnableCategories { get => _coreEngine.EnableCategories; set => _coreEngine.EnableCategories = value; }
+        public bool EnableCategories { get => _internalSerializedContext.CoreEngine.EnableCategories; set => _internalSerializedContext.CoreEngine.EnableCategories = value; }
 
         /// <inheritdoc/>
         public override bool CanBeTakenBy(IMonitorLogger logger, IEntity subject)
@@ -236,22 +234,22 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return null;
         }
 
-        public IStorage BackpackStorage => _backpackStorage;
+        public IStorage BackpackStorage => _internalSerializedContext.BackpackStorage;
 
         public void AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
+            _internalSerializedContext.BackpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
         public void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _backpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
+            _internalSerializedContext.BackpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
         /// <summary>
         /// Gets engine context. Onkly for debugging and testing!
         /// </summary>
-        public IEngineContext EngineContext => _coreEngine.EngineContext;
+        public IEngineContext EngineContext => _internalSerializedContext.CoreEngine.EngineContext;
 
         public void Die()
         {

@@ -37,10 +37,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 {
     public class VisionComponent : BaseComponent
     {
-        public VisionComponent(IMonitorLogger logger, IVisionProvider visionProvider, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
+        public VisionComponent(IMonitorLogger logger, IVisionProvider visionProvider, HumanoidNPCGameComponentContext internalContext, HumanoidNPCGameComponentSerializedContext internalSerializedContext, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
             _internalContext = internalContext;
+            _internalSerializedContext = internalSerializedContext;
             _selfInstanceId = internalContext.SelfInstanceId;
             _worldContext = worldContext;
             _visionProvider = visionProvider;
@@ -53,6 +54,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         }
 
         private readonly HumanoidNPCGameComponentContext _internalContext;
+        private readonly HumanoidNPCGameComponentSerializedContext _internalSerializedContext;
         private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IStandardFactsBuilder _standardFactsBuilder;
         private readonly int _selfInstanceId;
@@ -93,7 +95,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _lifeTimeCycleOfVisibleObjectsRegistry = new Dictionary<int, int>();
 
             _idForFacts = _internalContext.IdForFacts;
-            _coreEngine = _internalContext.CoreEngine;
+            _coreEngine = _internalSerializedContext.CoreEngine;
         }
 
         public Vector3? GetPosition(int instanceId)

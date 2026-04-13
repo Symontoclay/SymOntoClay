@@ -36,10 +36,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public class SoundReceiverComponent : BaseSoundReceiverComponent
     {
-        public SoundReceiverComponent(IMonitorLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
+        public SoundReceiverComponent(IMonitorLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, HumanoidNPCGameComponentSerializedContext internalSerializedContext, IWorldCoreGameComponentContext worldContext)
             : base(logger, instanceId, worldContext.StandardFactsBuilder)
         {
             _internalContext = internalContext;
+            _internalSerializedContext = internalSerializedContext;
             _standardFactsBuilder = worldContext.StandardFactsBuilder;
 
             _soundBus = worldContext.SoundBus;
@@ -48,6 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         }
 
         private readonly HumanoidNPCGameComponentContext _internalContext;
+        private readonly HumanoidNPCGameComponentSerializedContext _internalSerializedContext;
         private readonly ISoundBus _soundBus;
         private IHostSupport _hostSupport;
         private Engine _coreEngine;
@@ -62,7 +64,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         public void LoadFromSourceCode()
         {
             _hostSupport = _internalContext.HostSupportComponent;
-            _coreEngine = _internalContext.CoreEngine;
+            _coreEngine = _internalSerializedContext.CoreEngine;
         }
 
         /// <inheritdoc/>

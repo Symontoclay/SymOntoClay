@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     return OnceToString(source, options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, "5644FD05-A8F8-42AD-BFE8-8152B408F0BF");
             }
         }
 

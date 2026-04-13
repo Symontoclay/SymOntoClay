@@ -343,7 +343,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, null);
+                                throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, "1D846549-94A9-4B9A-AF3F-083E3B5A7DD0");
                         }
 
                         return true;
@@ -598,7 +598,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return CheckHtnTaskCondition();
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, "39BA2FA5-5300-42B4-9207-3A5C327ADE2D");
                 }
 
                 return true;
@@ -639,7 +639,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, null);
+                    throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, "96FF3F68-1494-4CBD-AB41-BE74B667D4FB");
             }
         }
 
@@ -706,7 +706,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return new CompoundTaskInstance(compoundTask.AsCompoundHtnTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfTask), kindOfTask, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfTask), kindOfTask, "46250024-515C-4558-98A8-3F9D4A561738");
             }
         }
 
@@ -774,7 +774,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return true;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, "8CE1C201-0615-455A-8C17-34DC7699E400");
                 }
             }
 
@@ -899,7 +899,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfLifeCycleEventName), kindOfLifeCycleEventName, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfLifeCycleEventName), kindOfLifeCycleEventName, "503FCA5A-E16A-4F69-AC8C-6420480B3580");
                 }
 
                 _currentCodeFrame.CurrentPosition++;
@@ -947,7 +947,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, "639FBE1B-44A5-45ED-B986-F06B05B60332");
                 }
             }
 
@@ -997,7 +997,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     return;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, "87086989-F46C-4985-97A9-C03EC2CA9A81");
                             }
 
 #if DEBUG
@@ -1030,7 +1030,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     return;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, "4548C5B2-8FA9-44FC-B7AD-FB5D7703ADAA");
                             }
 
 #if DEBUG
@@ -1041,7 +1041,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_currentCodeFrame.KindOfParameters), _currentCodeFrame.KindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(_currentCodeFrame.KindOfParameters), _currentCodeFrame.KindOfParameters, "8D366910-7ADD-4EA3-AC06-14EE13145BB4");
                 }
 
                 _currentCodeFrame.State = CodeFrameState.CommandExecution;
@@ -1088,7 +1088,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "7A07FCA0-6880-48FF-AB26-FB26EEC366D3");
                 }
 
                 if (constructorResolvingResult != null)
@@ -1184,7 +1184,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                 default:
-                    throw new Exception($"The value {prototypeValue.ToHumanizedString()} can not be instantiated.");
+                    throw new Exception($"8BDA6B8C-17A6-4E11-882C-2ADE8A74DC3D: The value {prototypeValue.ToHumanizedString()} can not be instantiated.");
             }            
         }
 
@@ -1301,7 +1301,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, "D5982047-CBE2-46B2-BEF2-AC833C8F26DE");
                 }
             }
 
@@ -1335,7 +1335,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                            throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, "B898634F-9BFA-4A9C-A041-73D4A2DA3599");
                     }
                 }
 
@@ -1520,7 +1520,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, "D2CB87F4-206D-42FE-993F-8D363F3650EC");
                 }
 
 #if DEBUG
@@ -1554,7 +1554,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(codeItemKind), codeItemKind, null);
+                                throw new ArgumentOutOfRangeException(nameof(codeItemKind), codeItemKind, "3A9DB54A-123E-4F76-BF18-C8697DD178A4");
                         }
                         break;
 
@@ -1564,7 +1564,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfCurrentValue), kindOfCurrentValue, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfCurrentValue), kindOfCurrentValue, "BF4EF74C-BC69-4669-9DF5-04CF21A50D53");
                 }
             }
         }
@@ -1615,7 +1615,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, "357C7D26-651E-46B4-B84D-FA3FF4DE0982");
                 }
 
 #if DEBUG
@@ -1684,7 +1684,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(paramsListCallResultKindOfResult), paramsListCallResultKindOfResult, "568A5ED2-6338-415D-99AB-78133B93D70C");
                 }
 
 #if DEBUG
@@ -1770,7 +1770,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return (true, _usualUnOpTakeParametersSettings);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "18CE42E8-0B37-4040-B07C-00BEF4C2B908");
             }
         }
 
@@ -1964,7 +1964,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, "07D32E3D-6681-4337-8A2A-F41386E2BDAD");
             }*/
             _currentCodeFrame.CurrentPosition++;//tmp
             //throw new NotImplementedException("4EB61280-1522-422E-88F8-301A9ACA25AD");
@@ -2045,7 +2045,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, "1D9C397A-57B9-41E6-83EF-A3BEDE5B1D79");
                 }
 
 #if DEBUG
@@ -2127,7 +2127,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, "CE8BF6C3-0914-4EDF-95AE-57F24B7B0877");
                 }
             }
 
@@ -2197,7 +2197,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, "6004EE4C-3239-4E43-98FF-2692F76D1307");
             }
         }
 
@@ -2352,7 +2352,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(specialMark), specialMark, null);
+                        throw new ArgumentOutOfRangeException(nameof(specialMark), specialMark, "F0BE5379-71DA-401A-A151-EB17B3270489");
                 }
             }
 
@@ -2387,7 +2387,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(targetActionExecutionStatus), targetActionExecutionStatus, null);
+                        throw new ArgumentOutOfRangeException(nameof(targetActionExecutionStatus), targetActionExecutionStatus, "62A8871D-F999-4EC5-A082-17C50C024149");
                 }
             }
             else
@@ -2666,7 +2666,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             return new ValueListCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
+                            throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, "08CFEA32-8462-4710-87CD-C693F393576B");
                     }
                 }
 
@@ -2849,7 +2849,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             return new NamedParametersCallResult() { KindOfResult = KindOfCallResult.ExecutingCodeInOtherCodeFrame };
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, null);
+                            throw new ArgumentOutOfRangeException(nameof(conversionCallResultKindOfResult), conversionCallResultKindOfResult, "9D986443-8E6F-41B7-88F3-AD9F2634F651");
                     }
                 }
 
@@ -2927,7 +2927,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, "F045C594-E241-4714-86CA-C56D6B871248");
             }
         }
 
@@ -2988,7 +2988,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, "BC292BAD-C5C7-4D5A-A556-A03438CDBFBC");
                 }
             }
 
@@ -3038,7 +3038,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     return;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, "74E6B15C-E79A-4A10-95EF-9F0FA830C80E");
                             }
 
 #if DEBUG
@@ -3071,7 +3071,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     return;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, "78451F0D-0BA8-4A7E-896A-0EF463917E85");
                             }
 
 #if DEBUG
@@ -3082,7 +3082,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_currentCodeFrame.KindOfParameters), _currentCodeFrame.KindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(_currentCodeFrame.KindOfParameters), _currentCodeFrame.KindOfParameters, "E1089B77-5048-4081-BEA5-C95E2157A618");
                 }
 
                 _currentCodeFrame.State = CodeFrameState.CommandExecution;
@@ -3124,7 +3124,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "3DE7B2BC-7F4D-4A84-B260-08E74993930C");
                 }
 
                 if (constructorResolvingResult.NeedTypeConversion)
@@ -3337,7 +3337,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(currentValueCallResultKindOfResult), currentValueCallResultKindOfResult, "143194F0-69C5-485E-9C7D-8920A07D01AB");
                 }
             }
 
@@ -3410,7 +3410,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     return;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(namedParametersCallResultKindOfResult), namedParametersCallResultKindOfResult, "78F92F77-A54D-4B36-85AA-CA16EEC312FC");
                             }
 
 #if DEBUG
@@ -3448,7 +3448,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     return;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, "5544B38F-36B4-419D-B4CB-5D85E645533C");
                             }
 
 #if DEBUG
@@ -3468,7 +3468,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_currentCodeFrame.KindOfParameters), _currentCodeFrame.KindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(_currentCodeFrame.KindOfParameters), _currentCodeFrame.KindOfParameters, "30D4A98B-26E4-4583-958E-F7ABA59ACA83");
                 }
 
                 _currentCodeFrame.State = CodeFrameState.CommandExecution;
@@ -3575,7 +3575,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "DBB3948A-24A4-4369-B2CD-94249F4130AD");
             }
 
             AnnotationSystemEvent completeAnnotationSystemEvent = null;
@@ -3774,7 +3774,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "4C92F859-69FD-4BB9-873C-D3D2A8E49ECE");
             }
 
 #if DEBUG
@@ -3790,7 +3790,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return;
                 }
 
-                throw new Exception($"Method '{methodName.NameValue}' is not found.");
+                throw new Exception($"90BC2F72-9B7F-4832-A631-66BD5AED4648: Method '{methodName.NameValue}' is not found.");
             }
 
             if(methodResolvingResult.NeedTypeConversion)
@@ -3813,7 +3813,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "6A1111ED-382D-464B-931D-B0B3BA4F1AC5");
                 }
 
 #if DEBUG
@@ -4020,7 +4020,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, "2A35E006-3E2B-47F0-B45C-BEC438080B21");
                             }
                         }                        
                         break;
@@ -4036,7 +4036,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, "BC1E9CAD-FD19-4691-9843-CC2981C0B428");
                             }
                         }
                         break;
@@ -4052,13 +4052,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, null);
+                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, "7DEC76CE-E2F1-417B-B4B1-639AF5F0D891");
                             }
                         }
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "3084DB12-90F6-43C3-A7BE-C5B715921F40");
                 }
                 
                 _currentCodeFrame.ValuesStack.Push(result);
@@ -4268,7 +4268,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, null);
+                    throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, "8831175B-5830-4A97-AACF-E3A7F14A776B");
             }
         }
 
@@ -4308,7 +4308,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfInstance), kindOfInstance, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfInstance), kindOfInstance, "CDE7CE6F-65A0-4412-A49D-7480AF541A58");
             }
         }
 
@@ -4360,7 +4360,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, "F59759B4-2A3F-4E9B-95B1-334BBBACB11B");
                 }
 
 #if DEBUG
@@ -4437,7 +4437,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(positionedParametersCallResultKindOfResult), positionedParametersCallResultKindOfResult, "7F445054-AD04-4C24-9DBB-FEB0F10CB1F7");
                 }
 
 #if DEBUG

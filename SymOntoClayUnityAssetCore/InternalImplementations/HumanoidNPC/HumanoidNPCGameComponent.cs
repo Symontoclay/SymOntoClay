@@ -146,7 +146,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 var visionComponent = _internalSerializedContext?.VisionComponent;
                 var coreEngine = _internalSerializedContext?.CoreEngine;
 
-                return (coreEngine?.IsWaited ?? false) && (visionComponent?.IsWaited ?? false);
+                if (visionComponent == null)
+                {
+                    return coreEngine.IsWaited;
+                }
+
+                return coreEngine.IsWaited && visionComponent.IsWaited;
             }
         }
 

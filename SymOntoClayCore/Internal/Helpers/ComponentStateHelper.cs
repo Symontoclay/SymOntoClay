@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                     return true;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+                    throw new ArgumentOutOfRangeException(nameof(state), state, "09FC518C-A9DF-4D22-A851-6CF7F80E94E1");
             }
         }
 
@@ -27,19 +27,11 @@ namespace SymOntoClay.Core.Internal.Helpers
         {
             switch (state)
             {
-                case ComponentState.Created:
-                case ComponentState.Loaded:
                 case ComponentState.Started:
                     return false;
 
-
-                case ComponentState.Stopped:
-                case ComponentState.Died:
-                case ComponentState.Disposed:
-                    return true;
-
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+                    return true;
             }
         }
     }

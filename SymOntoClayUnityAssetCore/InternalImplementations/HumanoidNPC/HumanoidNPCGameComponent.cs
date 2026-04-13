@@ -23,13 +23,10 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
-using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
-using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,7 +41,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             try
             {
+                _settings = settings;
+
                 var internalContext = new HumanoidNPCGameComponentContext();
+                _internalContext = internalContext;
 
                 _allowPublicPosition = settings.AllowPublicPosition;
                 
@@ -56,54 +56,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 internalContext.AsyncEventsThreadPool = AsyncEventsThreadPool;
 
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
+                internalContext.TmpDir = tmpDir;
 
                 Directory.CreateDirectory(worldContext.TmpDir);
-
-                if(settings.VisionProvider != null)
-                {
-                    _visionComponent = new VisionComponent(Logger, settings.VisionProvider, internalContext, worldContext);
-                    internalContext.VisionComponent = _visionComponent;
-                }
 
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 internalContext.HostSupportComponent = _hostSupport;
 
-                _conditionalEntityHostSupportComponent = new ConditionalEntityHostSupportComponent(Logger, settings, _visionComponent, _hostSupport, worldContext);
-
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, settings.IdForFacts, _hostSupport, worldContext);
-
-                _soundReceiverComponent = new SoundReceiverComponent(Logger, settings.InstanceId, internalContext, worldContext);
-
-                _backpackStorage = new ConsolidatedPublicFactsStorage(Logger, KindOfStorage.BackpackStorage);
-
-                var coreEngineSettings = new EngineSettings();
-                coreEngineSettings.Id = settings.Id;
-                coreEngineSettings.AppFile = settings.LogicFile;
-                coreEngineSettings.MonitorNode = MonitorNode;
-                coreEngineSettings.SyncContext = worldContext.SyncContext;
-                coreEngineSettings.StandardFactsBuilder = worldContext.StandardFactsBuilder;
-                
-                coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
-                coreEngineSettings.ParentStorage = worldContext.StandaloneStorage;
-                coreEngineSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
-                coreEngineSettings.TmpDir = tmpDir;
-                coreEngineSettings.HostListener = this;
-                coreEngineSettings.DateTimeProvider = worldContext.DateTimeProvider;
-                coreEngineSettings.HostSupport = _hostSupport;
-                coreEngineSettings.ConditionalEntityHostSupport = _conditionalEntityHostSupportComponent;
-                coreEngineSettings.SoundPublisherProvider = _soundPublisher;
-                coreEngineSettings.NLPConverterFactory = worldContext.NLPConverterFactory;
-
-                coreEngineSettings.Categories = settings.Categories;
-                coreEngineSettings.EnableCategories = settings.EnableCategories;
-
-                coreEngineSettings.CancellationContext = worldContext.GetCancellationContext();
-                coreEngineSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.HumanoidNpcDefaultThreadingSettings;
-
-                coreEngineSettings.HtnExecutionSettings = settings?.HtnExecutionSettings ?? worldContext.HtnExecutionSettings;
-
-                _coreEngine = new Engine(coreEngineSettings);
-                internalContext.CoreEngine = _coreEngine;
+                internalContext.SoundPublisherComponent = _soundPublisher;
             }
             catch (Exception e)
             {
@@ -113,29 +74,38 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
+        private readonly HumanoidNPCSettings _settings;
+        private readonly HumanoidNPCGameComponentContext _internalContext;
+        private HumanoidNPCGameComponentSerializedContext _internalSerializedContext;
         private readonly bool _allowPublicPosition;
-        private readonly Engine _coreEngine;
-        private readonly VisionComponent _visionComponent;
+        
+        //private readonly Engine _coreEngine;
+        //private readonly VisionComponent _visionComponent;
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
-        private readonly SoundReceiverComponent _soundReceiverComponent;
-        private readonly ConditionalEntityHostSupportComponent _conditionalEntityHostSupportComponent;
-        private readonly ConsolidatedPublicFactsStorage _backpackStorage;
+        //private readonly SoundReceiverComponent _soundReceiverComponent;
+        //private readonly ConditionalEntityHostSupportComponent _conditionalEntityHostSupportComponent;
+        //private readonly ConsolidatedPublicFactsStorage _backpackStorage;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
+
+        private void CreateSerializedComponents()
+        {
+            _internalSerializedContext?.Dispose();
+            _internalSerializedContext = new HumanoidNPCGameComponentSerializedContext(this, _settings, _internalContext, _worldContext);
+        }
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
         {
             base.LoadFromSourceCode();
 
-            _visionComponent?.LoadFromSourceCode();
-            _soundReceiverComponent.LoadFromSourceCode();
-            _coreEngine.LoadFromSourceCode();
+            CreateSerializedComponents();
+
+            _internalSerializedContext?.LoadFromSourceCode();
 
             _worldContext.AddPublicFactsStorage(this);
-
         }
 
         /// <inheritdoc/>
@@ -143,8 +113,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             try
             {
-                _coreEngine.BeginStarting();
-                _visionComponent?.BeginStarting();
+                _internalSerializedContext?.BeginStarting();
             }
             catch (Exception e)
             {
@@ -159,7 +128,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             try
             {
-                _coreEngine.EndStarting();
+                _internalSerializedContext?.EndStarting();
             }
             catch (Exception e)
             {
@@ -286,17 +255,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public void Die()
         {
-            _coreEngine.Die();
-            _visionComponent?.Die();
+            _internalSerializedContext?.Die();
         }
 
         /// <inheritdoc/>
         protected override void OnDisposed()
-        {           
-            _coreEngine.Dispose();
-            _visionComponent?.Dispose();
+        {
+            _internalSerializedContext?.Dispose();
+
             _soundPublisher.Dispose();
-            _soundReceiverComponent.Dispose();
+            
             _hostSupport.Dispose();
 
             base.OnDisposed();

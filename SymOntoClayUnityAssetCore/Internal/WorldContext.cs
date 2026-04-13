@@ -113,11 +113,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ThreadsComponent = new ThreadsCoreComponent(this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
 
-            CreateSerializedWorldContext();
+            //CreateWorldSerializedContext();
         }
 
-        private void CreateSerializedWorldContext()
+        private void CreateWorldSerializedContext()
         {
+            _serializedWorldContext?.Dispose();
             _serializedWorldContext = new SerializedWorldContext(this);
             _serializedWorldContext.Init();
         }
@@ -450,7 +451,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 NStop();
             }
 
-            CreateSerializedWorldContext();
+            CreateWorldSerializedContext();
 
             _serializedWorldContext.LoadFromSourceCode();
 

@@ -24,6 +24,7 @@ using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
+using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
     {
         public string IdForFacts { get; set; }
         public int SelfInstanceId { get; set; }
+        public string TmpDir { get; set; }
         public ICancellationContext CancellationContext { get; set; }
-        public VisionComponent VisionComponent { get; set; }
+        
         public HostSupportComponent HostSupportComponent { get; set; }
         public ICustomThreadPool AsyncEventsThreadPool { get; set; }
-        public Engine CoreEngine { get; set; }
+
+        public SoundPublisherComponent SoundPublisherComponent { get; set; }
+
+
     }
 }

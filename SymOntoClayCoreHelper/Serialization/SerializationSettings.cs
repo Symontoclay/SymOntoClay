@@ -6,12 +6,14 @@ namespace SymOntoClay.CoreHelper.Serialization
 {
     public class SerializationSettings : IObjectToString
     {
+        public string ImagePath { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
         }
-
+        
         /// <inheritdoc/>
         public string ToString(uint n)
         {
@@ -28,6 +30,8 @@ namespace SymOntoClay.CoreHelper.Serialization
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(ImagePath)} = {ImagePath}");
 
             return sb.ToString();
         }

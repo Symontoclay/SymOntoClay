@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.BaseTestLib;
 using SymOntoClay.CoreHelper.Serialization;
 using SymOntoClay.Monitor.LogFileBuilder;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -69,7 +70,19 @@ namespace TestSandbox.Handlers
             Thread.Sleep(10000);
             //Thread.Sleep(100000);
 
+            var serializationImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+
+            if(!Directory.Exists(serializationImagesPath))
+            {
+                Directory.CreateDirectory(serializationImagesPath);
+            }
+
+            var serializationPath = Path.Combine(serializationImagesPath, $"Img_{DateTime.Now:yyyyMMdd_HHmmss}");
+
+            _globalLogger.Info($"serializationPath = {serializationPath}");
+
             var serializationSettings = new SerializationSettings();
+            serializationSettings.ImagePath = serializationPath;
 
             _globalLogger.Info($"serializationSettings = {serializationSettings}");
 

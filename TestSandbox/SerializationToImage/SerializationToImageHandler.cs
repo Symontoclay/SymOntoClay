@@ -1,4 +1,6 @@
-﻿namespace TestSandbox.SerializationToImage
+﻿using SymOntoClay.CoreHelper.Serialization;
+
+namespace TestSandbox.SerializationToImage
 {
     public class SerializationToImageHandler
     {
@@ -15,7 +17,9 @@
 
         private void Case1()
         {
+            var worlContext = new TstWorldContext();
 
+            var serializer = new Serializer();
         }
     }
 }

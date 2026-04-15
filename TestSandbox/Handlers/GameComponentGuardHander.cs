@@ -20,7 +20,7 @@ namespace TestSandbox.Handlers
         private void Case1()
         {
             var objectName = "Obj1";
-
+            
             var autoResetEvent = new ManualResetEvent(true);
 
             var state = ComponentState.Created;

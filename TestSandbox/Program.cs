@@ -69,6 +69,7 @@ using TestSandbox.MessagePacking;
 using TestSandbox.MonoBehaviorTesting;
 using TestSandbox.Navigations;
 using TestSandbox.Parsing;
+using TestSandbox.SerializationToImage;
 using TestSandbox.SoundBusHandler;
 using TestSandbox.Threads;
 
@@ -90,6 +91,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstSerializationToImageHandler();
             //TstGameComponentGuardHander();
             //TstCancellationHandler();
             //TstMessagePack();
@@ -184,10 +186,20 @@ namespace TestSandbox
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
-            TstGeneralStartSerializationHandler();
+            //TstGeneralStartSerializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstSerializationToImageHandler()
+        {
+            _globalLogger.Info("Begin");
+
+            var handler = new SerializationToImageHandler();
+            handler.Run();
+
+            _globalLogger.Info("End");
         }
 
         private static void TstGameComponentGuardHander()

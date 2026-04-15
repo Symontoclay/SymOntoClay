@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public class SerializationSettings : IObjectToString
+    public class SerializationToImageSettings : IObjectToString
     {
         public string ImagePath { get; set; }
 

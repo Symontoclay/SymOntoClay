@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public interface IStructuralContext
+    public interface IStructuralToImageContext
     {
     }
 }

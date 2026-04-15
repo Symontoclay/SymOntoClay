@@ -1,4 +1,4 @@
-﻿using SymOntoClay.CoreHelper.Serialization;
+﻿using SymOntoClay.CoreHelper.SerializationToImage;
 
 namespace TestSandbox.SerializationToImage
 {
@@ -19,7 +19,7 @@ namespace TestSandbox.SerializationToImage
         {
             var worlContext = new TstWorldContext();
 
-            var serializer = new Serializer();
+            var serializer = new SerializerToImage();
         }
     }
 }

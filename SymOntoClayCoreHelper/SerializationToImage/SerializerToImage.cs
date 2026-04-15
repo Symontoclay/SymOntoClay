@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public class Serializer
+    public class SerializerToImage
     {
     }
 }

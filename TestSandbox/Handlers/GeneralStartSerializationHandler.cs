@@ -1,5 +1,5 @@
 ﻿using SymOntoClay.BaseTestLib;
-using SymOntoClay.CoreHelper.Serialization;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.LogFileBuilder;
 using System;
 using System.Collections.Generic;
@@ -81,7 +81,7 @@ namespace TestSandbox.Handlers
 
             _globalLogger.Info($"serializationPath = {serializationPath}");
 
-            var serializationSettings = new SerializationSettings();
+            var serializationSettings = new SerializationToImageSettings();
             serializationSettings.ImagePath = serializationPath;
 
             _globalLogger.Info($"serializationSettings = {serializationSettings}");

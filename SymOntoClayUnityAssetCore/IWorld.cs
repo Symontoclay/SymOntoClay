@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.Serialization;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
@@ -98,8 +98,8 @@ namespace SymOntoClay.UnityAsset.Core
         IPlace GetPlace(PlaceSettings settings);
 
         void LoadFromSourceCode();
-        void LoadFromImage(SerializationSettings settings);
-        void SaveToImage(SerializationSettings settings);
+        void LoadFromImage(SerializationToImageSettings settings);
+        void SaveToImage(SerializationToImageSettings settings);
 
         /// <summary>
         /// Starts execution loaded image.

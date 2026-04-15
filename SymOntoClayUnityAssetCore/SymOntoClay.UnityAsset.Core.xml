@@ -763,10 +763,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.LoadFromSourceCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.LoadFromImage(SymOntoClay.CoreHelper.Serialization.SerializationSettings)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.LoadFromImage(SymOntoClay.CoreHelper.SerializationToImage.SerializationToImageSettings)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.SaveToImage(SymOntoClay.CoreHelper.Serialization.SerializationSettings)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.SaveToImage(SymOntoClay.CoreHelper.SerializationToImage.SerializationToImageSettings)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Start">

@@ -28,7 +28,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.Serialization;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
@@ -471,7 +471,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _state = ComponentState.Loaded;
         }
 
-        public void LoadFromImage(SerializationSettings settings)
+        public void LoadFromImage(SerializationToImageSettings settings)
         {
             lock (_stateLockObj)
             {
@@ -484,7 +484,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
-        public void SaveToImage(SerializationSettings settings)
+        public void SaveToImage(SerializationToImageSettings settings)
         {
             lock (_stateLockObj)
             {
@@ -502,7 +502,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
-        private void NSaveToImage(SerializationSettings settings)
+        private void NSaveToImage(SerializationToImageSettings settings)
         {
 #if DEBUG
             Info("882C72DD-4D60-4A70-AB2C-44A5CCC51F15", $"settings = {settings}");

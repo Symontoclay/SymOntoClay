@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.Serialization;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
@@ -235,13 +235,13 @@ namespace SymOntoClay.UnityAsset.Core.World
         }
 
         /// <inheritdoc/>
-        public void LoadFromImage(SerializationSettings settings)
+        public void LoadFromImage(SerializationToImageSettings settings)
         {
             _context.LoadFromImage(settings);
         }
 
         /// <inheritdoc/>
-        public void SaveToImage(SerializationSettings settings)
+        public void SaveToImage(SerializationToImageSettings settings)
         {
             _context.SaveToImage(settings);
         }

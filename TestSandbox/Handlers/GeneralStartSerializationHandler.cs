@@ -77,7 +77,7 @@ namespace TestSandbox.Handlers
                 Directory.CreateDirectory(serializationImagesPath);
             }
 
-            var serializationPath = Path.Combine(serializationImagesPath, $"Img_{DateTime.Now:yyyyMMdd_HHmmss}");
+            var serializationPath = Path.Combine(serializationImagesPath, $"Img_{DateTime.Now:yyyyMMdd_HHmmss}.pckg");
 
             _globalLogger.Info($"serializationPath = {serializationPath}");
 

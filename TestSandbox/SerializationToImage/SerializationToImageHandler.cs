@@ -1,4 +1,6 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage;
+using System;
+using System.IO;
 
 namespace TestSandbox.SerializationToImage
 {
@@ -19,7 +21,25 @@ namespace TestSandbox.SerializationToImage
         {
             var worlContext = new TstWorldContext();
 
-            var serializer = new SerializerToImage();
+
+            var serializationImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+
+            if (!Directory.Exists(serializationImagesPath))
+            {
+                Directory.CreateDirectory(serializationImagesPath);
+            }
+
+            var serializationPath = Path.Combine(serializationImagesPath, $"Img_{DateTime.Now:yyyyMMdd_HHmmss}.pckg");
+
+            _logger.Info($"serializationPath = {serializationPath}");
+
+            var serializationSettings = new SerializationToImageSettings();
+            serializationSettings.ImagePath = serializationPath;
+
+            _logger.Info($"serializationSettings = {serializationSettings}");
+
+            var serializer = new SerializerToImage(serializationSettings);
+            serializer.Serialize(worlContext);
         }
     }
 }

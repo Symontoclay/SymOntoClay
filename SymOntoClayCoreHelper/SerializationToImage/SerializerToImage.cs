@@ -14,11 +14,28 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         public void Serialize(object obj)
         {
+            Preparation();
+            Run(obj);
+            Finalization();
+        }
+
+        private void Preparation()
+        {
+
+        }
+
+        private void Run(object obj)
+        {
 #if DEBUG
             _logger.Info($"obj = {obj}");
 #endif
 
             throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
+        }
+
+        private void Finalization()
+        {
+
         }
     }
 }

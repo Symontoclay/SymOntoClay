@@ -12,15 +12,15 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
+            //Case2();
             Case1();
 
             _logger.Info("End");
         }
 
-        private void Case1()
+        private void Case2()
         {
             var worlContext = new TstWorldContext();
-
 
             var serializationImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
@@ -40,6 +40,14 @@ namespace TestSandbox.SerializationToImage
 
             var serializer = new SerializerToImage(serializationSettings);
             serializer.Serialize(worlContext);
+        }
+
+        private void Case1()
+        {
+            var value = new SerializedValue(KindOfSerializedValue.ObjectPtr, 1, 1, null);
+
+            _logger.Info($"value.GetHashCode() = {value.GetHashCode()}");
+            _logger.Info($"value = {value}");
         }
     }
 }

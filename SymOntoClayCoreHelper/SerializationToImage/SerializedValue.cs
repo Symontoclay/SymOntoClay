@@ -1,4 +1,6 @@
-﻿namespace SymOntoClay.CoreHelper.SerializationToImage
+﻿using System;
+
+namespace SymOntoClay.CoreHelper.SerializationToImage
 {
     public class SerializedValue
     {
@@ -19,11 +21,11 @@
         public int TypeId { get; private set; }
         public string Literal { get; private set; }
 
-        //public override int GetHashCode()
-        //{
-        //    return Id.GetHashCode();
-        //}
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(KindOfSerializedValue, Id, TypeId, Literal);
+        }
 
-        //public override string ToString() => $"({nameof(Id)}: '{Id}', {nameof(TypeId)}: '{TypeId}')";
+        public override string ToString() => $"({nameof(KindOfSerializedValue)}: {KindOfSerializedValue}, {nameof(Id)}: {Id}, {nameof(TypeId)}: {TypeId}, {nameof(Literal)}: '{Literal}')";
     }
 }

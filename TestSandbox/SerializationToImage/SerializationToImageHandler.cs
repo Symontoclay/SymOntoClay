@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.IO;
 
@@ -12,13 +13,14 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            //Case2();
-            Case1();
+            //Case3();
+            Case2();
+            //Case1();
 
             _logger.Info("End");
         }
 
-        private void Case2()
+        private void Case3()
         {
             var worlContext = new TstWorldContext();
 
@@ -40,6 +42,26 @@ namespace TestSandbox.SerializationToImage
 
             var serializer = new SerializerToImage(serializationSettings);
             serializer.Serialize(worlContext);
+        }
+
+        private void Case2()
+        {
+            var serializedObjectsPool = new SerializedObjectsPool();
+
+            var worlContext = new TstWorldContext();
+
+            var result = serializedObjectsPool.IsSerialized(worlContext);
+
+            _logger.Info($"result = {result}");
+
+            var result2 = serializedObjectsPool.TryGetSerializedValue(worlContext, out var serializedValue);
+
+            _logger.Info($"result2 = {result2}");
+            _logger.Info($"serializedValue = {serializedValue}");
+
+            var serializedValue2 = serializedObjectsPool.RegSerializedValue(worlContext);
+
+            _logger.Info($"serializedValue2 = {serializedValue2}");
         }
 
         private void Case1()

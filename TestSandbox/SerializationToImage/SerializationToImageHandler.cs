@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace TestSandbox.SerializationToImage
@@ -13,6 +14,7 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
+            //Case4();
             //Case3();
             Case2();
             //Case1();
@@ -20,7 +22,7 @@ namespace TestSandbox.SerializationToImage
             _logger.Info("End");
         }
 
-        private void Case3()
+        private void Case4()
         {
             var worlContext = new TstWorldContext();
 
@@ -44,7 +46,7 @@ namespace TestSandbox.SerializationToImage
             serializer.Serialize(worlContext);
         }
 
-        private void Case2()
+        private void Case3()
         {
             var serializedObjectsPool = new SerializedObjectsPool();
 
@@ -62,6 +64,31 @@ namespace TestSandbox.SerializationToImage
             var serializedValue2 = serializedObjectsPool.RegSerializedValue(worlContext);
 
             _logger.Info($"serializedValue2 = {serializedValue2}");
+        }
+
+        private void Case2()
+        {
+            var serializedTypesPool = new SerializedTypesPool();
+
+            var typeId = serializedTypesPool.GetOrRegisterType(null);
+
+            _logger.Info($"typeId = {typeId}");
+
+            typeId = serializedTypesPool.GetOrRegisterType(typeof(int));
+
+            _logger.Info($"typeId = {typeId}");
+
+            var worlContext = new TstWorldContext();
+
+            typeId = serializedTypesPool.GetOrRegisterType(worlContext?.GetType());
+
+            _logger.Info($"typeId = {typeId}");
+
+            var dict = new Dictionary<int, string>();
+
+            typeId = serializedTypesPool.GetOrRegisterType(dict?.GetType());
+
+            _logger.Info($"typeId = {typeId}");
         }
 
         private void Case1()

@@ -15,8 +15,8 @@ namespace TestSandbox.SerializationToImage
             _logger.Info("Begin");
 
             //Case4();
-            Case3();
-            //Case2();
+            //Case3();
+            Case2();
             //Case1();
 
             _logger.Info("End");
@@ -83,25 +83,34 @@ namespace TestSandbox.SerializationToImage
         {
             var serializedTypesPool = new SerializedTypesPool();
 
-            var typeId = serializedTypesPool.GetOrRegisterType(null);
+            NWorkWithSerializedTypesPool(serializedTypesPool, null);
 
-            _logger.Info($"typeId = {typeId}");
-
-            typeId = serializedTypesPool.GetOrRegisterType(typeof(int));
-
-            _logger.Info($"typeId = {typeId}");
+            NWorkWithSerializedTypesPool(serializedTypesPool, 12);
 
             var worlContext = new TstWorldContext();
 
-            typeId = serializedTypesPool.GetOrRegisterType(worlContext?.GetType());
-
-            _logger.Info($"typeId = {typeId}");
+            NWorkWithSerializedTypesPool(serializedTypesPool, worlContext);
 
             var dict = new Dictionary<int, string>();
 
-            typeId = serializedTypesPool.GetOrRegisterType(dict?.GetType());
+            NWorkWithSerializedTypesPool(serializedTypesPool, dict);
+        }
+
+        private void NWorkWithSerializedTypesPool(SerializedTypesPool serializedTypesPool, object obj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            var type = obj?.GetType();
+
+            var typeId = serializedTypesPool.GetOrRegisterType(type);
 
             _logger.Info($"typeId = {typeId}");
+
+            var kindOfSerializedValue = serializedTypesPool.GetKindOfSerializedValue(type);
+
+            _logger.Info($"kindOfSerializedValue = {kindOfSerializedValue}");
         }
 
         private void Case1()

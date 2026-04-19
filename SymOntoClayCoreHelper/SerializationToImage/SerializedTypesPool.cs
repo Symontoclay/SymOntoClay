@@ -46,6 +46,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return typeId;
         }
 
+        /// <inheritdoc/>
+        public KindOfSerializedValue GetKindOfSerializedValue(Type type)
+        {
+            if(type == null)
+            {
+                return KindOfSerializedValue.Null;
+            }
+
+            throw new NotImplementedException("C2172792-58FF-4E95-BA4A-7092F929938E");
+        }
+
         private int GetTypeId()
         {
             lock (_lock) 

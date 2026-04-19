@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -8,6 +9,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
+        private readonly object _lock = new object();
+
+        private int _nullTypeId = 0;
+        private int _currentTypeId = 0;
+
+        private Dictionary<string, int> _typeIdsDict = new Dictionary<string, int>();
+
         /// <inheritdoc/>
         public int GetOrRegisterType(Type type)
         {
@@ -16,7 +24,32 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
-            throw new NotImplementedException("C9B426E3-9803-4460-A016-88C9A6E92717");
+            if(type == null)
+            {
+                return 0;
+            }
+
+            var typeFullName = type.FullName;
+
+            if (_typeIdsDict.TryGetValue(typeFullName, out var typeId))
+            {
+                return typeId;
+            }
+
+            typeId = GetTypeId();
+
+            _typeIdsDict[typeFullName] = typeId;
+
+            return typeId;
+        }
+
+        private int GetTypeId()
+        {
+            lock (_lock) 
+            {
+                _currentTypeId++;
+                return _currentTypeId;
+            }
         }
     }
 }

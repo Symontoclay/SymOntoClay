@@ -17,6 +17,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private Dictionary<string, int> _typeIdsDict = new Dictionary<string, int>();
 
         /// <inheritdoc/>
+        public int NullTypeId => _nullTypeId;
+
+        /// <inheritdoc/>
         public int GetOrRegisterType(Type type)
         {
 #if DEBUG

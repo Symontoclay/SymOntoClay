@@ -15,8 +15,8 @@ namespace TestSandbox.SerializationToImage
             _logger.Info("Begin");
 
             //Case4();
-            //Case3();
-            Case2();
+            Case3();
+            //Case2();
             //Case1();
 
             _logger.Info("End");
@@ -48,20 +48,33 @@ namespace TestSandbox.SerializationToImage
 
         private void Case3()
         {
-            var serializedObjectsPool = new SerializedObjectsPool();
+            var serializedTypesPool = new SerializedTypesPool();
+
+            var serializedObjectsPool = new SerializedObjectsPool(serializedTypesPool);
+
+            NWorkWithSerializedObjectsPool(serializedObjectsPool, null);
 
             var worlContext = new TstWorldContext();
 
-            var result = serializedObjectsPool.IsSerialized(worlContext);
+            NWorkWithSerializedObjectsPool(serializedObjectsPool, worlContext);
+        }
+
+        private void NWorkWithSerializedObjectsPool(SerializedObjectsPool serializedObjectsPool, object obj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            var result = serializedObjectsPool.IsSerialized(obj);
 
             _logger.Info($"result = {result}");
 
-            var result2 = serializedObjectsPool.TryGetSerializedValue(worlContext, out var serializedValue);
+            var result2 = serializedObjectsPool.TryGetSerializedValue(obj, out var serializedValue);
 
             _logger.Info($"result2 = {result2}");
             _logger.Info($"serializedValue = {serializedValue}");
 
-            var serializedValue2 = serializedObjectsPool.RegSerializedValue(worlContext);
+            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj);
 
             _logger.Info($"serializedValue2 = {serializedValue2}");
         }

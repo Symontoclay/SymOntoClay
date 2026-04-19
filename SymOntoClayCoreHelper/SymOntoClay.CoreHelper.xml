@@ -31,6 +31,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.RegSerializedValue(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.NullTypeId">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.GetOrRegisterType(System.Type)">
             <inheritdoc/>
         </member>

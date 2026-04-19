@@ -8,6 +8,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
         }
 
+        public SerializedValue(KindOfSerializedValue kindOfSerializedValue, long id, int typeId)
+            : this(kindOfSerializedValue, id, typeId, string.Empty)
+        {
+        }
+
         public SerializedValue(KindOfSerializedValue kindOfSerializedValue, long id, int typeId, string literal)
         {
             KindOfSerializedValue = kindOfSerializedValue;

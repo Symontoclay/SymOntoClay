@@ -15,8 +15,8 @@ namespace TestSandbox.SerializationToImage
             _logger.Info("Begin");
 
             //Case4();
-            //Case3();
-            Case2();
+            Case3();
+            //Case2();
             //Case1();
 
             _logger.Info("End");
@@ -50,13 +50,17 @@ namespace TestSandbox.SerializationToImage
         {
             var serializedTypesPool = new SerializedTypesPool();
 
-            var serializedObjectsPool = new SerializedObjectsPool(serializedTypesPool);
+            var typesHelper = new TypesHelper();
+
+            var serializedObjectsPool = new SerializedObjectsPool(serializedTypesPool, typesHelper);
 
             NWorkWithSerializedObjectsPool(serializedObjectsPool, null);
 
             var worlContext = new TstWorldContext();
 
             NWorkWithSerializedObjectsPool(serializedObjectsPool, worlContext);
+
+            NWorkWithSerializedObjectsPool(serializedObjectsPool, 16);
         }
 
         private void NWorkWithSerializedObjectsPool(SerializedObjectsPool serializedObjectsPool, object obj)
@@ -87,13 +91,17 @@ namespace TestSandbox.SerializationToImage
 
             NWorkWithSerializedTypesPool(serializedTypesPool, 12);
 
-            var worlContext = new TstWorldContext();
-
-            NWorkWithSerializedTypesPool(serializedTypesPool, worlContext);
-
             var dict = new Dictionary<int, string>();
 
             NWorkWithSerializedTypesPool(serializedTypesPool, dict);
+
+            var list = new List<string>();
+
+            NWorkWithSerializedTypesPool(serializedTypesPool, list);
+
+            var worlContext = new TstWorldContext();
+
+            NWorkWithSerializedTypesPool(serializedTypesPool, worlContext);
         }
 
         private void NWorkWithSerializedTypesPool(SerializedTypesPool serializedTypesPool, object obj)
@@ -108,7 +116,9 @@ namespace TestSandbox.SerializationToImage
 
             _logger.Info($"typeId = {typeId}");
 
-            var kindOfSerializedValue = serializedTypesPool.GetKindOfSerializedValue(type);
+            var typesHelper = new TypesHelper();
+
+            var kindOfSerializedValue = typesHelper.GetKindOfSerializedValue(type);
 
             _logger.Info($"kindOfSerializedValue = {kindOfSerializedValue}");
         }

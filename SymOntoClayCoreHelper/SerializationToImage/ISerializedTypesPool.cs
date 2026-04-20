@@ -6,6 +6,5 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
     {
         int NullTypeId { get; }
         int GetOrRegisterType(Type type);
-        KindOfSerializedValue GetKindOfSerializedValue(Type type);
     }
 }

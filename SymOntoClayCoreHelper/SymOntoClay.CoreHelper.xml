@@ -37,7 +37,10 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.GetOrRegisterType(System.Type)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.GetKindOfSerializedValue(System.Type)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.TypesHelper.GetKindOfSerializedValue(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.TypesHelper.ToString(System.Object)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.BsonSerializerAdapter.Serialize``1(``0)">

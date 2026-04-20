@@ -14,8 +14,8 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            //Case4();
-            Case3();
+            Case4();
+            //Case3();
             //Case2();
             //Case1();
 

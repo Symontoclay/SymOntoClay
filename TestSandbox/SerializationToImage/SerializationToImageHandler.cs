@@ -109,7 +109,28 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"dataFileName = {dataFileName}");
 #endif
 
-            using var fs = new FileStream(dataFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            SaveSerializedTypesPoolToFile(dataFileName, serializedTypesPool);
+
+            var serializedTypesPool2 = new SerializedTypesPool();
+
+            LoadSerializedTypesPoolFromFile(dataFileName, serializedTypesPool2);
+
+            var typeId = serializedTypesPool2.GetOrRegisterType(worlContext.GetType());
+
+            _logger.Info($"typeId = {typeId}");
+        }
+
+        private void LoadSerializedTypesPoolFromFile(string fileName, SerializedTypesPool serializedTypesPool)
+        {
+            using var fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+            using var reader = new BinaryReader(fs);
+
+            serializedTypesPool.Load(reader);
+        }
+
+        private void SaveSerializedTypesPoolToFile(string fileName, SerializedTypesPool serializedTypesPool)
+        {
+            using var fs = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
             using var writer = new BinaryWriter(fs);
 
             serializedTypesPool.Save(writer);

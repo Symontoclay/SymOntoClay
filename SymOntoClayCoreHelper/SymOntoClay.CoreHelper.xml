@@ -40,7 +40,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.Save(System.IO.BinaryWriter)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.LoadFromStream(System.IO.Stream)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.Load(System.IO.BinaryReader)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.TypesHelper.GetKindOfSerializedValue(System.Type)">

@@ -80,8 +80,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        public void LoadFromStream(Stream stream)
+        public void Load(BinaryReader reader)
         {
+            _currentTypeId = reader.ReadInt32();
+
+#if DEBUG
+            _logger.Info($"_currentTypeId = {_currentTypeId}");
+#endif
+
+            var typeIdsDictDataLength = reader.ReadInt32();
+
+#if DEBUG
+            _logger.Info($"typeIdsDictDataLength = {typeIdsDictDataLength}");
+#endif
+
+            var typeIdsDictData = reader.ReadBytes(typeIdsDictDataLength);
+
+
+
             throw new NotImplementedException("C2D406C9-A03D-4025-B29F-AFAE64054AAB");
         }
     }

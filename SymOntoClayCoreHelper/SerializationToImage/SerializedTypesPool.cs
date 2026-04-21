@@ -96,9 +96,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             var typeIdsDictData = reader.ReadBytes(typeIdsDictDataLength);
 
+            using var ms = new MemoryStream(typeIdsDictData);
+            using var bsonReader = new BsonDataReader(ms);
 
+            var serializer = new JsonSerializer();
 
-            throw new NotImplementedException("C2D406C9-A03D-4025-B29F-AFAE64054AAB");
+            _typeIdsDict = serializer.Deserialize<Dictionary<string, int>>(bsonReader);
         }
     }
 }

@@ -37,6 +37,12 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.GetOrRegisterType(System.Type)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.SaveToStream(System.IO.Stream)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.LoadFromStream(System.IO.Stream)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.TypesHelper.GetKindOfSerializedValue(System.Type)">
             <inheritdoc/>
         </member>

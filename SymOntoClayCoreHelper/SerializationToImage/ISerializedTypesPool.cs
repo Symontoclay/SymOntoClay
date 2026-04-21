@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -6,5 +7,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
     {
         int NullTypeId { get; }
         int GetOrRegisterType(Type type);
+        void SaveToStream(Stream stream);
+        void LoadFromStream(Stream stream);
     }
 }

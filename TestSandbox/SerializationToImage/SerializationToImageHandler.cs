@@ -14,9 +14,9 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            Case4();
+            //Case4();
             //Case3();
-            //Case2();
+            Case2();
             //Case1();
 
             _logger.Info("End");
@@ -102,6 +102,18 @@ namespace TestSandbox.SerializationToImage
             var worlContext = new TstWorldContext();
 
             NWorkWithSerializedTypesPool(serializedTypesPool, worlContext);
+
+            var dataFileName = Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName());
+
+#if DEBUG
+            _logger.Info($"dataFileName = {dataFileName}");
+#endif
+
+            using var fs = new FileStream(dataFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+
+            serializedTypesPool.SaveToStream(fs);
+
+            fs.Flush();
         }
 
         private void NWorkWithSerializedTypesPool(SerializedTypesPool serializedTypesPool, object obj)

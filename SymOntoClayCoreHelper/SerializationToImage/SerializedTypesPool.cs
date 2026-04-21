@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -53,6 +56,34 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _currentTypeId++;
                 return _currentTypeId;
             }
+        }
+
+        /// <inheritdoc/>
+        public void SaveToStream(Stream stream)
+        {
+            using var writer = new BinaryWriter(stream);
+            writer.Write(_currentTypeId);
+
+            using var ms = new MemoryStream();
+            using var bsonWriter = new BsonDataWriter(ms);
+
+            var serializer = new JsonSerializer();
+            serializer.Serialize(bsonWriter, _typeIdsDict);
+
+            var typeIdsDictData = ms.ToArray();
+
+#if DEBUG
+            _logger.Info($"typeIdsDictData.Length = {typeIdsDictData.Length}");
+#endif
+
+            writer.Write(typeIdsDictData.Length);
+            writer.Write(typeIdsDictData);
+        }
+
+        /// <inheritdoc/>
+        public void LoadFromStream(Stream stream)
+        {
+            throw new NotImplementedException("C2D406C9-A03D-4025-B29F-AFAE64054AAB");
         }
     }
 }

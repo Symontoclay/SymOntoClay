@@ -7,7 +7,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
     {
         int NullTypeId { get; }
         int GetOrRegisterType(Type type);
-        void SaveToStream(Stream stream);
+        void Save(BinaryWriter writer);
         void LoadFromStream(Stream stream);
     }
 }

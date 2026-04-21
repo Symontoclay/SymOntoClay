@@ -110,8 +110,9 @@ namespace TestSandbox.SerializationToImage
 #endif
 
             using var fs = new FileStream(dataFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            using var writer = new BinaryWriter(fs);
 
-            serializedTypesPool.SaveToStream(fs);
+            serializedTypesPool.Save(writer);
 
             fs.Flush();
         }

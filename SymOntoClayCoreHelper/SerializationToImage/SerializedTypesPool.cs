@@ -59,9 +59,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        public void SaveToStream(Stream stream)
+        public void Save(BinaryWriter writer)
         {
-            using var writer = new BinaryWriter(stream);
             writer.Write(_currentTypeId);
 
             using var ms = new MemoryStream();

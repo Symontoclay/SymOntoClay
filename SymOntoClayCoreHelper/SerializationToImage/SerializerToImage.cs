@@ -28,10 +28,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 Directory.CreateDirectory(_tempPath);
             }
+
+            _serializedTypesPool = new SerializedTypesPool();
         }
 
         private readonly string _baseTempPath;
         private readonly string _tempPath;
+        private readonly ISerializedTypesPool _serializedTypesPool;
 
         public void Serialize(object obj)
         {
@@ -56,7 +59,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void Finalization()
         {
+            SaveSerializedTypesPoolToFile();
+        }
 
+        private void SaveSerializedTypesPoolToFile()
+        {
+            throw new NotImplementedException("C325153A-8795-49EA-8382-929223C49CE7");
         }
     }
 }

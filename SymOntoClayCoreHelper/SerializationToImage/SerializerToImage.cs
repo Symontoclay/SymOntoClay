@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -10,7 +11,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         public SerializerToImage(SerializationToImageSettings serializationSettings)
         {
+            _baseTempPath = serializationSettings.BaseTempPath;
+
+            if(string.IsNullOrWhiteSpace(_baseTempPath))
+            {
+                _baseTempPath = Environment.GetEnvironmentVariable("TMP");
+            }
+
+#if DEBUG
+            _logger.Info($"_baseTempPath = {_baseTempPath}");
+#endif
+
+            _tempPath = Path.Combine(_baseTempPath, $"TempImage_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
+
+            if (!Directory.Exists(_tempPath))
+            {
+                Directory.CreateDirectory(_tempPath);
+            }
         }
+
+        private readonly string _baseTempPath;
+        private readonly string _tempPath;
 
         public void Serialize(object obj)
         {

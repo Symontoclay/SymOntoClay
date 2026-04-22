@@ -14,9 +14,9 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            //Case4();
+            Case4();
             //Case3();
-            Case2();
+            //Case2();
             //Case1();
 
             _logger.Info("End");
@@ -37,8 +37,16 @@ namespace TestSandbox.SerializationToImage
 
             _logger.Info($"serializationPath = {serializationPath}");
 
+            var baseTempPath = Path.Combine(Directory.GetCurrentDirectory(), "Temp");
+
+            if (!Directory.Exists(baseTempPath))
+            {
+                Directory.CreateDirectory(baseTempPath);
+            }
+
             var serializationSettings = new SerializationToImageSettings();
             serializationSettings.ImagePath = serializationPath;
+            serializationSettings.BaseTempPath = baseTempPath;
 
             _logger.Info($"serializationSettings = {serializationSettings}");
 

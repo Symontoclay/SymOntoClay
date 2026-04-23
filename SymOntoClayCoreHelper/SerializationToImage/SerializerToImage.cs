@@ -30,11 +30,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
             _serializedTypesPool = new SerializedTypesPool();
+            _typesHelper = new TypesHelper();
+            _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
         }
 
         private readonly string _baseTempPath;
         private readonly string _tempPath;
         private readonly ISerializedTypesPool _serializedTypesPool;
+        private readonly ITypesHelper _typesHelper;
+        private readonly ISerializedObjectsPool _serializedObjectsPool;
 
         public void Serialize(object obj)
         {
@@ -54,7 +58,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"obj = {obj}");
 #endif
 
+            var rootSerializedValue = GetSerializedObjectPtr(obj);
+
+#if DEBUG
+            _logger.Info($"rootSerializedValue = {rootSerializedValue}");
+#endif
+
             throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
+        }
+
+        private SerializedValue GetSerializedObjectPtr(object obj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            if(_serializedObjectsPool.TryGetSerializedValue(obj, out var serializedValue))
+            {
+                return serializedValue;
+            }
+
+            throw new NotImplementedException("C5394237-52FF-4CDB-89ED-5F3FEA383FD0");
         }
 
         private void Finalization()

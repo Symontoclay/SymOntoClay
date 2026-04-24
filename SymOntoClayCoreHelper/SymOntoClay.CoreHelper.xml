@@ -13,6 +13,9 @@
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseObjectSerializer.GetSerializedValue(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializationToImageSettings.ToString">
             <inheritdoc/>
         </member>

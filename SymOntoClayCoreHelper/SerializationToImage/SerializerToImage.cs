@@ -84,6 +84,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             SaveSerializedTypesPoolToFile();
             CreatePackage();
+
+            Directory.Delete(_tempPath, true);
         }
 
         private void SaveSerializedTypesPoolToFile()
@@ -116,9 +118,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 _logger.Info($"entry = {entry}");
 #endif
-            }
 
-            throw new NotImplementedException("C6CD65A7-871F-42E5-9518-665A0552941D");
+                archive.CreateEntryFromFile(entry.FilePath, entry.EntryName, CompressionLevel.Optimal);
+            }
         }
     }
 }

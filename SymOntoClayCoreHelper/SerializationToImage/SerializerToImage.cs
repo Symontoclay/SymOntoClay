@@ -13,8 +13,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public SerializerToImage(SerializationToImageSettings serializationSettings)
+        public SerializerToImage(SerializationToImageSettings serializationSettings, IStructuralContext structuralContext)
         {
+            _structuralContext = structuralContext;
+
             _imageFileName = serializationSettings.ImageFileName;
 
             _baseTempPath = serializationSettings.BaseTempPath;
@@ -38,13 +40,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedTypesPool = new SerializedTypesPool();
             _typesHelper = new TypesHelper();
             _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
-            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool);
+            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, structuralContext);
             _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool);
         }
 
         private readonly string _imageFileName;
         private readonly string _baseTempPath;
         private readonly string _tempPath;
+        private readonly IStructuralContext _structuralContext;
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
         private readonly ISerializedObjectsPool _serializedObjectsPool;
@@ -69,6 +72,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
+#endif
+
+            var rootSerializedSettingsValue = _rootObjectsAndSettingsSerializer.SerializeValue(obj);
+
+#if DEBUG
+            _logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
 #endif
 
             //var rootSerializedValue = _objectToImageSerializer.SerializeValue(obj);

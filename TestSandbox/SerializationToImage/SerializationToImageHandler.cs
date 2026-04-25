@@ -50,7 +50,9 @@ namespace TestSandbox.SerializationToImage
 
             _logger.Info($"serializationSettings = {serializationSettings}");
 
-            var serializer = new SerializerToImage(serializationSettings);
+            var structuralContext = new WorldStructuralContext();
+
+            var serializer = new SerializerToImage(serializationSettings, structuralContext);
             serializer.Serialize(worlContext);
         }
 

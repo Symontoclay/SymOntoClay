@@ -42,18 +42,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.FullName.StartsWith("System.Action"))
             {
-                return SerializeAction(obj);
+                return SerializeAction(obj, type);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                return SerializeAction(obj);
+                return SerializeAction(obj, type);
             }
 
             switch (type.FullName)
             {
                 case "System.Object":
-                    return SerializeBareObject(obj);
+                    return SerializeBareObject(obj, type);
 
                 case "System.Threading.CancellationTokenSource":
                     throw new NotImplementedException("C9A45E85-6923-46AE-8E46-EA25956B3385");
@@ -76,16 +76,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (type.Name)
             {
                 case "List`1":
-                    return SerializeGenericList(obj);
+                    return SerializeGenericList(obj, type);
 
                 case "Stack`1":
-                    return SerializeGenericStack(obj);
+                    return SerializeGenericStack(obj, type);
 
                 case "Queue`1":
-                    return SerializeGenericQueue(obj);
+                    return SerializeGenericQueue(obj, type);
 
                 case "Dictionary`2":
-                    return SerializeGenericDictionary(obj);
+                    return SerializeGenericDictionary(obj, type);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -94,16 +94,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                         throw new NotImplementedException("C7BE5FD7-C04F-4584-80C9-F2DDA4069926");
                     }
 
-                    return SerializeComposite(obj);
+                    return SerializeComposite(obj, type);
             }
         }
 
-        protected abstract SerializedValue SerializeBareObject(object obj);
-        protected abstract SerializedValue SerializeGenericList(object obj);
-        protected abstract SerializedValue SerializeGenericStack(object obj);
-        protected abstract SerializedValue SerializeGenericQueue(object obj);
-        protected abstract SerializedValue SerializeGenericDictionary(object obj);
-        protected abstract SerializedValue SerializeComposite(object obj);
-        protected abstract SerializedValue SerializeAction(object obj);
+        protected abstract SerializedValue SerializeBareObject(object obj, Type type);
+        protected abstract SerializedValue SerializeGenericList(object obj, Type type);
+        protected abstract SerializedValue SerializeGenericStack(object obj, Type type);
+        protected abstract SerializedValue SerializeGenericQueue(object obj, Type type);
+        protected abstract SerializedValue SerializeGenericDictionary(object obj, Type type);
+        protected abstract SerializedValue SerializeComposite(object obj, Type type);
+        protected abstract SerializedValue SerializeAction(object obj, Type type);
     }
 }

@@ -64,13 +64,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"obj = {obj}");
 #endif
 
-            var rootSerializedValue = _objectToImageSerializer.GetSerializedValue(obj);
+            //var rootSerializedValue = _objectToImageSerializer.SerializeValue(obj);
 
 #if DEBUG
-            _logger.Info($"rootSerializedValue = {rootSerializedValue}");
+            //_logger.Info($"rootSerializedValue = {rootSerializedValue}");
 #endif
 
-            throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
+            //throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
         }
 
         private void Finalization()
@@ -80,7 +80,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void SaveSerializedTypesPoolToFile()
         {
-            throw new NotImplementedException("C325153A-8795-49EA-8382-929223C49CE7");
+            var fileName = Path.Combine(_tempPath, "Types.dat");
+
+#if DEBUG
+            _logger.Info($"fileName = {fileName}");
+#endif
+
+            using var fs = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            using var writer = new BinaryWriter(fs);
+
+            _serializedTypesPool.Save(writer);
+
+            fs.Flush();
         }
     }
 }

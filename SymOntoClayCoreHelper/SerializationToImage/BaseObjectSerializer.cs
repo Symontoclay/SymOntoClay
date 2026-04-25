@@ -16,7 +16,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedObjectsPool _serializedObjectsPool;
 
         /// <inheritdoc/>
-        public SerializedValue GetSerializedValue(object obj)
+        public SerializedValue SerializeValue(object obj)
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
@@ -42,18 +42,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.FullName.StartsWith("System.Action"))
             {
-                throw new NotImplementedException("C1D988C7-C669-4F35-BD9A-0CB5A905681D");
+                return SerializeAction(obj);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                throw new NotImplementedException("C95A929D-6481-4BFC-AE03-69AB4BDA31EA");
+                return SerializeAction(obj);
             }
 
             switch (type.FullName)
             {
                 case "System.Object":
-                    throw new NotImplementedException("C2852EA5-8D1B-4C22-9CF6-692DF4CAA5E3");
+                    return SerializeBareObject(obj);
 
                 case "System.Threading.CancellationTokenSource":
                     throw new NotImplementedException("C9A45E85-6923-46AE-8E46-EA25956B3385");
@@ -76,16 +76,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (type.Name)
             {
                 case "List`1":
-                    throw new NotImplementedException("C2461E4C-E8BF-4D0B-9FEC-99CD7FFA1A6A");
+                    return SerializeGenericList(obj);
 
                 case "Stack`1":
-                    throw new NotImplementedException("C24CD827-A2CB-4918-8F7F-D7F877C1348E");
+                    return SerializeGenericStack(obj);
 
                 case "Queue`1":
-                    throw new NotImplementedException("C63365DB-1BDC-4DC6-901E-AF6D216B7122");
+                    return SerializeGenericQueue(obj);
 
                 case "Dictionary`2":
-                    throw new NotImplementedException("C3B8333F-D325-485A-AC21-66F223500EB5");
+                    return SerializeGenericDictionary(obj);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -94,8 +94,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                         throw new NotImplementedException("C7BE5FD7-C04F-4584-80C9-F2DDA4069926");
                     }
 
-                    throw new NotImplementedException("C5394237-52FF-4CDB-89ED-5F3FEA383FD0");
+                    return SerializeComposite(obj);
             }
         }
+
+        protected abstract SerializedValue SerializeBareObject(object obj);
+        protected abstract SerializedValue SerializeGenericList(object obj);
+        protected abstract SerializedValue SerializeGenericStack(object obj);
+        protected abstract SerializedValue SerializeGenericQueue(object obj);
+        protected abstract SerializedValue SerializeGenericDictionary(object obj);
+        protected abstract SerializedValue SerializeComposite(object obj);
+        protected abstract SerializedValue SerializeAction(object obj);
     }
 }

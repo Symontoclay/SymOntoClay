@@ -2,6 +2,6 @@
 {
     public interface IObjectSerializer
     {
-        SerializedValue GetSerializedValue(object obj);
+        SerializedValue SerializeValue(object obj);
     }
 }

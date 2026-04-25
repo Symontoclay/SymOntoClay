@@ -45,7 +45,7 @@ namespace TestSandbox.SerializationToImage
             }
 
             var serializationSettings = new SerializationToImageSettings();
-            serializationSettings.ImagePath = serializationPath;
+            serializationSettings.ImageFileName = serializationPath;
             serializationSettings.BaseTempPath = baseTempPath;
 
             _logger.Info($"serializationSettings = {serializationSettings}");

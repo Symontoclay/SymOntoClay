@@ -82,7 +82,7 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"serializationPath = {serializationPath}");
 
             var serializationSettings = new SerializationToImageSettings();
-            serializationSettings.ImagePath = serializationPath;
+            serializationSettings.ImageFileName = serializationPath;
 
             _globalLogger.Info($"serializationSettings = {serializationSettings}");
 

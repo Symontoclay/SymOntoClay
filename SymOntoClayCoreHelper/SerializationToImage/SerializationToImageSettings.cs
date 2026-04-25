@@ -6,7 +6,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 {
     public class SerializationToImageSettings : IObjectToString
     {
-        public string ImagePath { get; set; }
+        public string ImageFileName { get; set; }
         public string BaseTempPath { get; set; }
 
         /// <inheritdoc/>
@@ -32,7 +32,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(ImagePath)} = {ImagePath}");
+            sb.AppendLine($"{spaces}{nameof(ImageFileName)} = {ImageFileName}");
             sb.AppendLine($"{spaces}{nameof(BaseTempPath)} = {BaseTempPath}");
 
             return sb.ToString();

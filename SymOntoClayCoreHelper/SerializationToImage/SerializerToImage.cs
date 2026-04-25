@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Threading;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
@@ -13,6 +15,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         public SerializerToImage(SerializationToImageSettings serializationSettings)
         {
+            _imageFileName = serializationSettings.ImageFileName;
+
             _baseTempPath = serializationSettings.BaseTempPath;
 
             if(string.IsNullOrWhiteSpace(_baseTempPath))
@@ -38,6 +42,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool);
         }
 
+        private readonly string _imageFileName;
         private readonly string _baseTempPath;
         private readonly string _tempPath;
         private readonly ISerializedTypesPool _serializedTypesPool;
@@ -45,6 +50,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedObjectsPool _serializedObjectsPool;
         private readonly IObjectSerializer _rootObjectsAndSettingsSerializer;
         private readonly IObjectSerializer _objectToImageSerializer;
+
+        private List<(string EntryName, string FilePath)> _filesToPack = new List<(string EntryName, string FilePath)>();
 
         public void Serialize(object obj)
         {
@@ -76,22 +83,42 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private void Finalization()
         {
             SaveSerializedTypesPoolToFile();
+            CreatePackage();
         }
 
         private void SaveSerializedTypesPoolToFile()
         {
-            var fileName = Path.Combine(_tempPath, "Types.dat");
+            var packEntryName = "Types.dat";
+
+            var fullFileName = Path.Combine(_tempPath, packEntryName);
 
 #if DEBUG
-            _logger.Info($"fileName = {fileName}");
+            _logger.Info($"fullFileName = {fullFileName}");
 #endif
 
-            using var fs = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            _filesToPack.Add((packEntryName, fullFileName));
+
+            using var fs = new FileStream(fullFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
             using var writer = new BinaryWriter(fs);
 
             _serializedTypesPool.Save(writer);
 
             fs.Flush();
+        }
+
+        private void CreatePackage()
+        {
+            using var zipToOpen = new FileStream(_imageFileName, FileMode.Create);
+            using var archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create);
+
+            foreach (var entry in _filesToPack) 
+            {
+#if DEBUG
+                _logger.Info($"entry = {entry}");
+#endif
+            }
+
+            throw new NotImplementedException("C6CD65A7-871F-42E5-9518-665A0552941D");
         }
     }
 }

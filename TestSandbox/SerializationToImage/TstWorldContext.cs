@@ -1,9 +1,13 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using System;
 using System.Text;
 
 namespace TestSandbox.SerializationToImage
 {
+    [WorldRootAttribute]
+    [SerializeOnlyExplicitlySerializedMembersAttribute]
     public class TstWorldContext : IObjectToString
     {
 

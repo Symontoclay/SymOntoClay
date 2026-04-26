@@ -77,11 +77,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (_serializedObjects.TryGetValue(obj, out var serializedValue))
             {
-                if (isPreregistered)
-                {
-                    throw new NotImplementedException("C580B76F-12AD-4D47-A18F-0A44D0549493");
-                }
-
                 return serializedValue;
             }
 
@@ -99,7 +94,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (isPreregistered)
             {
-                throw new NotImplementedException("C2EAE0AF-BC0B-453A-93BB-3D32B17A34DB");
+                kindOfSerializedValue = KindOfSerializedValue.Preregistered;
             }
 
             var literal = string.Empty;

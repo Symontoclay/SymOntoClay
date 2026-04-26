@@ -16,13 +16,13 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseObjectSerializer.SerializeValue(System.Object)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Cards.ClassCard.ToString">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCard.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Cards.ClassCard.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCard.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Cards.ClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type)">
@@ -44,6 +44,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsDataCardWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.KindOfDataCard,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsDataCardWriter.OnDisposing">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type)">

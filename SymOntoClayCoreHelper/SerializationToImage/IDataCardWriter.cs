@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public interface IDataCardWriter
+    public interface IDataCardWriter: IDisposable
     {
         void Write(KindOfDataCard kindOfDataCard, object dataCard);
     }

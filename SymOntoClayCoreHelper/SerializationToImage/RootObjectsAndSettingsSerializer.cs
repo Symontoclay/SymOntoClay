@@ -152,6 +152,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
             throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
+
+            //return serializedValue;
         }
 
         private SerializedValue SerializeSettings(object obj, Type type)
@@ -212,6 +214,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _dataCardWriter.Write(KindOfDataCard.ClassCard, card);
 
             throw new NotImplementedException("C9EBF62E-2FB3-4241-A9BB-E70A5D6A0774");
+
+            //return serializedValue;
         }
 
         /// <inheritdoc/>

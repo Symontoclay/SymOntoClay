@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.SerializerAdapters;
+﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,7 +41,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedTypesPool = new SerializedTypesPool();
             _typesHelper = new TypesHelper();
             _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
-            _rootObjectsAndSettingsDataCardWriter = new RootObjectsAndSettingsDataCardWriter();
+            _rootObjectsAndSettingsDataCardWriter = new RootObjectsAndSettingsDataCardWriter(_tempPath, _filesToPack);
             _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, structuralContext, _rootObjectsAndSettingsDataCardWriter);
             _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool);
         }
@@ -93,6 +94,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void Finalization()
         {
+            _rootObjectsAndSettingsDataCardWriter.Dispose();
+
             SaveSerializedTypesPoolToFile();
             CreatePackage();
 

@@ -1,24 +1,41 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
-using System;
+using SymOntoClay.Common.Disposing;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public class RootObjectsAndSettingsDataCardWriter: IDataCardWriter
+    public class RootObjectsAndSettingsDataCardWriter: Disposable, IDataCardWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public RootObjectsAndSettingsDataCardWriter(string basePath)
+        public RootObjectsAndSettingsDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack)
         {
             _basePath = basePath;
+            _filesToPack = filesToPack;
+
+            var packEntryName = "RootObjectsAndSettings.dat";
+
+            var fullFileName = Path.Combine(_basePath, packEntryName);
+
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            _filesToPack.Add((packEntryName, fullFileName));
+
+            _fs = new FileStream(fullFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            _writer = new BinaryWriter(_fs);
         }
 
+        private List<(string EntryName, string FilePath)> _filesToPack;
+
         private readonly string _basePath;
+        private readonly Stream _fs;
+        private readonly BinaryWriter _writer;
 
         /// <inheritdoc/>
         public void Write(KindOfDataCard kindOfDataCard, object dataCard)
@@ -39,13 +56,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"data.Length = {data.Length}");
 #endif
 
-            var record = new DataCardRecord(
-                    KindOfDataCard: (int)kindOfDataCard,
-                    DataLength: data.Length,
-                    Data: data
-                );
+            _writer.Write((int)kindOfDataCard);
+            _writer.Write(data.Length);
+            _writer.Write(data);
 
-            throw new NotImplementedException();
+            _fs.Flush();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _writer.Dispose();
+            _fs.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

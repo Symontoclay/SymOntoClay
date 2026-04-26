@@ -162,35 +162,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 Header = serializedValue
             };
 
-            var fields = GetFields(type);
+            var propertyInfos = GetProperties(type);
 
 #if DEBUG
-            _logger.Info($"fields.Count() = {fields.Count()}");
-#endif
-
-            foreach (var field in fields)
-            {
-#if DEBUG
-                _logger.Info($"field.Name = {field.Name}");
-#endif
-
-                var fieldValue = field.GetValue(obj);
-
-#if DEBUG
-                _logger.Info($"fieldValue = {fieldValue}");
-#endif
-
-                var fieldSerializedValue = SerializeValue(fieldValue);
-
-#if DEBUG
-                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
-#endif
-            }
-
-            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-#if DEBUG
-            _logger.Info($"propertyInfos.Length = {propertyInfos.Length}");
+            _logger.Info($"propertyInfos.Length = {propertyInfos.Count()}");
 #endif
 
             foreach (var property in propertyInfos)

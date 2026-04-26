@@ -138,5 +138,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             return type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => !p.Name.EndsWith("k__BackingField"));
         }
+
+        protected IEnumerable<PropertyInfo> GetProperties(Type type)
+        {
+            return type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.CanWrite);
+        }
     }
 }

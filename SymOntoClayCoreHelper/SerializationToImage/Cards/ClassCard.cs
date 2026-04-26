@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.Cards
@@ -7,6 +8,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Cards
     public class ClassCard : IObjectToString
     {
         public SerializedValue Header { get; set; }
+        public Dictionary<string, SerializedValue> Fields { get; set; }
+        public Dictionary<string, SerializedValue> Properties { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -32,7 +35,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Cards
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
-            //sb.AppendLine($"{spaces}{nameof(KindOfStructuralObject)} = {KindOfStructuralObject}");
+            sb.PrintPODDictProp(n, nameof(Fields), Fields);
+            sb.PrintPODDictProp(n, nameof(Properties), Properties);
 
             return sb.ToString();
         }

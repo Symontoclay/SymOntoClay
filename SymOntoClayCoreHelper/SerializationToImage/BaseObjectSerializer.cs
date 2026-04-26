@@ -13,7 +13,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedObjectsPool = serializedObjectsPool;
         }
 
-        private readonly ISerializedObjectsPool _serializedObjectsPool;
+        protected readonly ISerializedObjectsPool _serializedObjectsPool;
 
         /// <inheritdoc/>
         public SerializedValue SerializeValue(object obj)

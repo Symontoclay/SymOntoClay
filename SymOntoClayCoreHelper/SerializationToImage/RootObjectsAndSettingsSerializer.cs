@@ -110,7 +110,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private SerializedValue SerializeWorldRoot(object obj, Type type)
         {
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj);
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, true);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");

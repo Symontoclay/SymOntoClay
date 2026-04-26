@@ -15,7 +15,8 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            Case4();
+            //Case4();
+            Case3_a();
             //Case3();
             //Case2();
             //Case1();
@@ -67,6 +68,45 @@ namespace TestSandbox.SerializationToImage
             serializer.Serialize(worlContext);
         }
 
+        private void Case3_a()
+        {
+            var serializedTypesPool = new SerializedTypesPool();
+
+            var typesHelper = new TypesHelper();
+
+            var serializedObjectsPool = new SerializedObjectsPool(serializedTypesPool, typesHelper);
+
+            NWorkWithSerializedObjectsPoolPreregistered(serializedObjectsPool, null);
+
+            var worldSettings = CreateWorldSetting();
+
+            var worlContext = new TstWorldContext(worldSettings);
+
+            NWorkWithSerializedObjectsPoolPreregistered(serializedObjectsPool, worlContext);
+
+            NWorkWithSerializedObjectsPoolPreregistered(serializedObjectsPool, 16);
+        }
+
+        private void NWorkWithSerializedObjectsPoolPreregistered(SerializedObjectsPool serializedObjectsPool, object obj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            var result = serializedObjectsPool.IsSerialized(obj, true);
+
+            _logger.Info($"result = {result}");
+
+            var result2 = serializedObjectsPool.TryGetSerializedValue(obj, out var serializedValue);
+
+            _logger.Info($"result2 = {result2}");
+            _logger.Info($"serializedValue = {serializedValue}");
+
+            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj, true);
+
+            _logger.Info($"serializedValue2 = {serializedValue2}");
+        }
+
         private void Case3()
         {
             var serializedTypesPool = new SerializedTypesPool();
@@ -92,7 +132,7 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"obj = {obj}");
 #endif
 
-            var result = serializedObjectsPool.IsSerialized(obj);
+            var result = serializedObjectsPool.IsSerialized(obj, false);
 
             _logger.Info($"result = {result}");
 
@@ -101,7 +141,7 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"result2 = {result2}");
             _logger.Info($"serializedValue = {serializedValue}");
 
-            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj);
+            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj, false);
 
             _logger.Info($"serializedValue2 = {serializedValue2}");
         }

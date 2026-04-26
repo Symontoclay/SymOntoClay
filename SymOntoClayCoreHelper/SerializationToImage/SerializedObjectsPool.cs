@@ -28,11 +28,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private int _currentId = 0;
 
         /// <inheritdoc/>
-        public bool IsSerialized(object obj)
+        public bool IsSerialized(object obj, bool ignorePreregistered)
         {
             if(obj == null)
             {
                 return true;
+            }
+
+            if(ignorePreregistered)
+            {
+                throw new NotImplementedException("C08E450B-4EA0-42BC-B18F-DD04D5DD66A8");
             }
 
             return _serializedObjects.ContainsKey(obj);
@@ -51,11 +56,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        public SerializedValue RegSerializedValue(object obj)
+        public SerializedValue RegSerializedValue(object obj, bool isPreregistered)
         {
             if (obj == null)
             {
                 return _nullValue;
+            }
+
+            if(isPreregistered)
+            {
+                throw new NotImplementedException("C580B76F-12AD-4D47-A18F-0A44D0549493");
             }
 
             if (_serializedObjects.TryGetValue(obj, out var serializedValue))

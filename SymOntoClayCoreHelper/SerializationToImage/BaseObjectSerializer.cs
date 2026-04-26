@@ -29,7 +29,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (obj == null)
             {
-                return _serializedObjectsPool.RegSerializedValue(obj);
+                return _serializedObjectsPool.RegSerializedValue(obj, false);
             }
 
             var type = obj.GetType();

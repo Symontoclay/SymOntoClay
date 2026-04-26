@@ -1,5 +1,8 @@
-﻿using System;
+﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -115,6 +118,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
+
+            var fieldsWithSettigs = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
+                .ToList();
+
+#if DEBUG
+            _logger.Info($"fieldsWithSettigs.Count = {fieldsWithSettigs.Count}");
+#endif
+
+            foreach(var field in fieldsWithSettigs)
+            {
+                var fieldValue = field.GetValue(obj);
+
+#if DEBUG
+                _logger.Info($"fieldValue = {fieldValue}");
+#endif
+            }
 
             throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
         }

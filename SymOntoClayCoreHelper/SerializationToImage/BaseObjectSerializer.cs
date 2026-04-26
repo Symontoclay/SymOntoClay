@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -71,6 +72,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 case "SymOntoClay.Threading.CustomThreadPool":
                     throw new NotImplementedException("C6891BB7-9AFD-4B3F-B0AA-BFD3C849B48D");
+
+                case "System.Byte":
+                case "System.SByte":
+                case "System.Int16":
+                case "System.Int32":
+                case "System.Int64":
+                case "System.UInt16":
+                case "System.UInt32":
+                case "System.UInt64":
+                case "System.Single":
+                case "System.Decimal":
+                case "System.Double":
+                case "System.Boolean":
+                case "System.String":
+                case "System.Char":
+                case "System.DateTime":
+                case "System.DateOnly":
+                case "System.TimeOnly":
+                case "System.TimeSpan":
+                    return SerializePrimitiveType(obj, type);
             }
 
             switch (type.Name)
@@ -98,6 +119,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
         }
 
+        protected virtual SerializedValue SerializePrimitiveType(object obj, Type type)
+        {
+            return _serializedObjectsPool.RegSerializedValue(obj, false);
+        }
+
         protected abstract SerializedValue SerializeBareObject(object obj, Type type);
         protected abstract SerializedValue SerializeGenericList(object obj, Type type);
         protected abstract SerializedValue SerializeGenericStack(object obj, Type type);
@@ -105,5 +131,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected abstract SerializedValue SerializeGenericDictionary(object obj, Type type);
         protected abstract SerializedValue SerializeComposite(object obj, Type type);
         protected abstract SerializedValue SerializeAction(object obj, Type type);
+
+        protected FieldInfo[] GetFields(Type type)
+        {
+            return type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        }
     }
 }

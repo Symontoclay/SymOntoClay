@@ -3,6 +3,7 @@
     public enum KindOfStructuralObject
     {
         Unknown,
-        WorldRoot
+        WorldRoot,
+        WorldSettings
     }
 }

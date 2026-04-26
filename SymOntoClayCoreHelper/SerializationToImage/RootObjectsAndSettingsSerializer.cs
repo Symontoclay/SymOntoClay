@@ -106,6 +106,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case KindOfStructuralObject.WorldRoot:
                     return SerializeWorldRoot(obj, type);
 
+                case KindOfStructuralObject.WorldSettings:
+                    return SerializeWorldSettings(obj, type);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStructuralObject), kindOfStructuralObject, "5A89589A-C1E1-4133-BFAE-9BE1FA882427");
             }
@@ -119,7 +122,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var fieldsWithSettigs = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            var fieldsWithSettigs = GetFields(type)
                 .Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
                 .ToList();
 
@@ -134,9 +137,47 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 _logger.Info($"fieldValue = {fieldValue}");
 #endif
+
+                var fieldSerializedValue = SerializeValue(fieldValue);
+
+#if DEBUG
+                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
             }
 
             throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
+        }
+
+        private SerializedValue SerializeWorldSettings(object obj, Type type)
+        {
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, false);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var fields = GetFields(type);
+
+#if DEBUG
+            _logger.Info($"fields.Count = {fields.Length}");
+#endif
+
+            foreach (var field in fields)
+            {
+                var fieldValue = field.GetValue(obj);
+
+#if DEBUG
+                _logger.Info($"fieldValue = {fieldValue}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(fieldValue);
+
+#if DEBUG
+                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
+            }
+
+            throw new NotImplementedException("C9EBF62E-2FB3-4241-A9BB-E70A5D6A0774");
         }
 
         /// <inheritdoc/>
@@ -154,7 +195,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private readonly List<string> _tmpProcessedTypes = new List<string>()
         {
-            "TestSandbox.SerializationToImage.TstWorldContext"
+            "TestSandbox.SerializationToImage.TstWorldContext",
+            "SymOntoClay.UnityAsset.Core.WorldSettings"
         };
     }
 }

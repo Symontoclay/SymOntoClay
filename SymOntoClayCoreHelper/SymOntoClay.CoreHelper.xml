@@ -106,6 +106,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.WorldStructuralContext.GetAdvice(System.Type)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.WorldStructuralContext.GetKindOfStructuralObject(System.Type)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializerAdapters.BsonSerializerAdapter.Serialize``1(``0)">
             <inheritdoc/>
         </member>

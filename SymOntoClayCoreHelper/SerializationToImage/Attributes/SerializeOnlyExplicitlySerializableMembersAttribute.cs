@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.Attributes
 {
-    public class SerializeOnlyExplicitlySerializedMembersAttribute : Attribute
+    public class SerializeOnlyExplicitlySerializableMembersAttribute : Attribute
     {
     }
 }

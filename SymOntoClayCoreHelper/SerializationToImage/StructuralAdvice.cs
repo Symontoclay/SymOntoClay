@@ -6,6 +6,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 {
     public class StructuralAdvice : IObjectToString
     {
+        public StructuralAdvice(KindOfSerializationStrategy kindOfSerializationStrategy, KindOfStructuralObject kindOfStructuralObject) 
+        {
+            KindOfSerializationStrategy = kindOfSerializationStrategy;
+            KindOfStructuralObject = kindOfStructuralObject;
+        }
+
+        public KindOfSerializationStrategy KindOfSerializationStrategy { get; private set; }
+        public KindOfStructuralObject KindOfStructuralObject { get; private set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -28,6 +37,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KindOfSerializationStrategy)} = {KindOfSerializationStrategy}");
+            sb.AppendLine($"{spaces}{nameof(KindOfStructuralObject)} = {KindOfStructuralObject}");
 
             return sb.ToString();
         }

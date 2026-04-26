@@ -17,32 +17,46 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
-            var attributes = type.GetCustomAttributes(true);
+            var kindOfStructuralObject = GetKindOfStructuralObject(type);
 
 #if DEBUG
-            _logger.Info($"attributes.Length = {attributes.Length}");
+            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
-            foreach (var attribute in attributes)
+            switch(kindOfStructuralObject)
             {
-#if DEBUG
-                _logger.Info($"attribute.GetType().FullName = {attribute.GetType().FullName}");
-#endif
+                case KindOfStructuralObject.WorldRoot:
+                    return new StructuralAdvice(KindOfSerializationStrategy.SerializeOnlyExplicitlySerializableMembers, kindOfStructuralObject);
             }
 
-            var serializeOnlyExplicitlySerializedMembersAttribute = type.GetCustomAttribute<SerializeOnlyExplicitlySerializedMembersAttribute>(true);
+            /*var serializeOnlyExplicitlySerializedMembersAttribute = type.GetCustomAttribute<SerializeOnlyExplicitlySerializedMembersAttribute>(true);
 
 #if DEBUG
             _logger.Info($"serializeOnlyExplicitlySerializedMembersAttribute = {serializeOnlyExplicitlySerializedMembersAttribute}");
 #endif
 
-            var worldRootAttribute = type.GetCustomAttribute<WorldRootAttribute>(true);
+            var worldRootAttribute = type.GetCustomAttribute<>(true);
 
 #if DEBUG
             _logger.Info($"worldRootAttribute = {worldRootAttribute}");
-#endif
+#endif*/
 
             throw new NotImplementedException("7CA8D943-D5C3-433F-96DE-6AEE55FEA1EB");
+        }
+
+        /// <inheritdoc/>
+        public KindOfStructuralObject GetKindOfStructuralObject(Type type)
+        {
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
+            if(type.IsDefined(typeof(WorldRootAttribute), true))
+            {
+                return KindOfStructuralObject.WorldRoot;
+            }
+
+            throw new NotImplementedException("C26A1FB7-0121-48B7-A0D4-1FB452AE4CB6");
         }
     }
 }

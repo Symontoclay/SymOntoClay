@@ -7,7 +7,7 @@ using System.Text;
 namespace TestSandbox.SerializationToImage
 {
     [WorldRootAttribute]
-    [SerializeOnlyExplicitlySerializedMembersAttribute]
+    [SerializeOnlyExplicitlySerializableMembersAttribute]
     public class TstWorldContext : IObjectToString
     {
 

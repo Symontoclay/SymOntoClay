@@ -4,6 +4,7 @@
     {
         Null,
         Literal,
-        ObjectPtr
+        ObjectPtr,
+        Preregistered
     }
 }

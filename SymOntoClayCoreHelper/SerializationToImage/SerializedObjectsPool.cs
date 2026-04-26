@@ -37,7 +37,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if(ignorePreregistered)
             {
-                throw new NotImplementedException("C08E450B-4EA0-42BC-B18F-DD04D5DD66A8");
+                if (_serializedObjects.TryGetValue(obj, out var serializedValue))
+                {
+                    if(serializedValue.KindOfSerializedValue == KindOfSerializedValue.Preregistered)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             return _serializedObjects.ContainsKey(obj);
@@ -63,13 +75,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return _nullValue;
             }
 
-            if(isPreregistered)
-            {
-                throw new NotImplementedException("C580B76F-12AD-4D47-A18F-0A44D0549493");
-            }
-
             if (_serializedObjects.TryGetValue(obj, out var serializedValue))
             {
+                if (isPreregistered)
+                {
+                    throw new NotImplementedException("C580B76F-12AD-4D47-A18F-0A44D0549493");
+                }
+
                 return serializedValue;
             }
 
@@ -84,6 +96,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"typeId = {typeId}");
             _logger.Info($"kindOfSerializedValue = {kindOfSerializedValue}");
 #endif
+
+            if (isPreregistered)
+            {
+                throw new NotImplementedException("C2EAE0AF-BC0B-453A-93BB-3D32B17A34DB");
+            }
 
             var literal = string.Empty;
 

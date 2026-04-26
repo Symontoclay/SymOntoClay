@@ -3,7 +3,7 @@ using SymOntoClay.Common.DebugHelpers;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.CoreHelper.SerializationToImage.Cards
+namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
     public class ClassCard : IObjectToString
     {

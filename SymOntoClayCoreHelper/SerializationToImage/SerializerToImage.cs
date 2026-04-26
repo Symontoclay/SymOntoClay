@@ -40,7 +40,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedTypesPool = new SerializedTypesPool();
             _typesHelper = new TypesHelper();
             _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
-            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, structuralContext);
+            _rootObjectsAndSettingsDataCardWriter = new RootObjectsAndSettingsDataCardWriter();
+            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, structuralContext, _rootObjectsAndSettingsDataCardWriter);
             _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool);
         }
 
@@ -51,6 +52,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
         private readonly ISerializedObjectsPool _serializedObjectsPool;
+        private readonly IDataCardWriter _rootObjectsAndSettingsDataCardWriter;
         private readonly IObjectSerializer _rootObjectsAndSettingsSerializer;
         private readonly IObjectSerializer _objectToImageSerializer;
 

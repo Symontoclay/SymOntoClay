@@ -1,7 +1,10 @@
-﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
-using SymOntoClay.CoreHelper.SerializationToImage.Cards;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -13,13 +16,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext)
+        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext, IDataCardWriter dataCardWriter)
             : base(serializedObjectsPool)
         {
             _structuralContext = structuralContext;
+            _dataCardWriter = dataCardWriter;
         }
 
         private readonly IStructuralContext _structuralContext;
+        private readonly IDataCardWriter _dataCardWriter;
 
         /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type)
@@ -108,7 +113,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     return SerializeWorldRoot(obj, type);
 
                 case KindOfStructuralObject.WorldSettings:
-                    return SerializeWorldSettings(obj, type);
+                    return SerializeSettings(obj, type);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStructuralObject), kindOfStructuralObject, "5A89589A-C1E1-4133-BFAE-9BE1FA882427");
@@ -149,7 +154,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
         }
 
-        private SerializedValue SerializeWorldSettings(object obj, Type type)
+        private SerializedValue SerializeSettings(object obj, Type type)
         {
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, false);
 
@@ -161,6 +166,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 Header = serializedValue
             };
+
+            var fields = GetFields(type);
+
+            if(fields.Any())
+            {
+                throw new NotImplementedException("B71D9BC6-FF5E-4621-8665-599B2685B0BE");
+            }
+
+            var cardPropertyDict = new Dictionary<string, SerializedValue>();
 
             var propertyInfos = GetProperties(type);
 
@@ -185,11 +199,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 _logger.Info($"propertySerializedValue = {propertySerializedValue}");
 #endif
+
+                cardPropertyDict[property.Name] = propertySerializedValue;
             }
+
+            card.Properties = cardPropertyDict;
 
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _dataCardWriter.Write(KindOfDataCard.ClassCard, card);
 
             throw new NotImplementedException("C9EBF62E-2FB3-4241-A9BB-E70A5D6A0774");
         }

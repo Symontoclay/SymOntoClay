@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
@@ -132,9 +134,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected abstract SerializedValue SerializeComposite(object obj, Type type);
         protected abstract SerializedValue SerializeAction(object obj, Type type);
 
-        protected FieldInfo[] GetFields(Type type)
+        protected IEnumerable<FieldInfo> GetFields(Type type)
         {
-            return type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            return type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => !p.Name.EndsWith("k__BackingField"));
         }
     }
 }

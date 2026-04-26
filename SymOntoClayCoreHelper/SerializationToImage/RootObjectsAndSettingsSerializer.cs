@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.Cards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -156,14 +157,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
+            var card = new ClassCard()
+            {
+                Header = serializedValue
+            };
+
             var fields = GetFields(type);
 
 #if DEBUG
-            _logger.Info($"fields.Count = {fields.Length}");
+            _logger.Info($"fields.Count() = {fields.Count()}");
 #endif
 
             foreach (var field in fields)
             {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+#endif
+
                 var fieldValue = field.GetValue(obj);
 
 #if DEBUG
@@ -176,6 +186,35 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
             }
+
+            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+#if DEBUG
+            _logger.Info($"propertyInfos.Length = {propertyInfos.Length}");
+#endif
+
+            foreach (var property in propertyInfos)
+            {
+#if DEBUG
+                _logger.Info($"property.Name = {property.Name}");
+#endif
+
+                var propertyValue = property.GetValue(obj);
+
+#if DEBUG
+                _logger.Info($"propertyValue = {propertyValue}");
+#endif
+
+                var propertySerializedValue = SerializeValue(propertyValue);
+
+#if DEBUG
+                _logger.Info($"propertySerializedValue = {propertySerializedValue}");
+#endif
+            }
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
 
             throw new NotImplementedException("C9EBF62E-2FB3-4241-A9BB-E70A5D6A0774");
         }

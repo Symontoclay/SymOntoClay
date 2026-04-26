@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,17 @@ namespace TestSandbox.SerializationToImage
 
         private void Case4()
         {
-            var worlContext = new TstWorldContext();
+            var worldSettings = CreateWorldSetting();
+
+#if DEBUG
+            _logger.Info($"worldSettings = {worldSettings}");
+#endif
+
+            var worlContext = new TstWorldContext(worldSettings);
+
+#if DEBUG
+            _logger.Info($"worlContext = {worlContext}");
+#endif
 
             var serializationImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
@@ -66,7 +77,9 @@ namespace TestSandbox.SerializationToImage
 
             NWorkWithSerializedObjectsPool(serializedObjectsPool, null);
 
-            var worlContext = new TstWorldContext();
+            var worldSettings = CreateWorldSetting();
+
+            var worlContext = new TstWorldContext(worldSettings);
 
             NWorkWithSerializedObjectsPool(serializedObjectsPool, worlContext);
 
@@ -109,7 +122,9 @@ namespace TestSandbox.SerializationToImage
 
             NWorkWithSerializedTypesPool(serializedTypesPool, list);
 
-            var worlContext = new TstWorldContext();
+            var worldSettings = CreateWorldSetting();
+
+            var worlContext = new TstWorldContext(worldSettings);
 
             NWorkWithSerializedTypesPool(serializedTypesPool, worlContext);
 
@@ -173,6 +188,13 @@ namespace TestSandbox.SerializationToImage
 
             _logger.Info($"value.GetHashCode() = {value.GetHashCode()}");
             _logger.Info($"value = {value}");
+        }
+
+        private WorldSettings CreateWorldSetting()
+        {
+            var settings = new WorldSettings();
+
+            return settings;
         }
     }
 }

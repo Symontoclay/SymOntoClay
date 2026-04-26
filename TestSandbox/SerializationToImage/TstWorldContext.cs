@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Text;
 
@@ -10,7 +11,13 @@ namespace TestSandbox.SerializationToImage
     [SerializeOnlyExplicitlySerializableMembersAttribute]
     public class TstWorldContext : IObjectToString
     {
+        public TstWorldContext(WorldSettings worldSettings) 
+        {
+            _settings = worldSettings;
+        }
 
+        [SettingsMemberAttribute]
+        private WorldSettings _settings;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -27,6 +34,8 @@ namespace TestSandbox.SerializationToImage
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(_settings)} = {_settings}");
 
             return sb.ToString();
         }

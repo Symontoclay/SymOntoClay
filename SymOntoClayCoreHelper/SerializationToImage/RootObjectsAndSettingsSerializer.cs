@@ -92,12 +92,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 #endif
 
-            var structuralAdvice = _structuralContext.GetAdvice(type);
+            var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
 
 #if DEBUG
-            _logger.Info($"structuralAdvice = {structuralAdvice}");
+            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
+            switch(kindOfStructuralObject)
+            {
+                case KindOfStructuralObject.WorldRoot:
+                    return SerializeWorldRoot(obj, type);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStructuralObject), kindOfStructuralObject, "5A89589A-C1E1-4133-BFAE-9BE1FA882427");
+            }
+        }
+
+        private SerializedValue SerializeWorldRoot(object obj, Type type)
+        {
             throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
         }
 

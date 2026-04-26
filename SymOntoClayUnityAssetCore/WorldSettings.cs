@@ -25,6 +25,7 @@ using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
@@ -37,6 +38,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// General settings of a game world.
     /// </summary>
+    [WorldSettingsAttribute]
     public class WorldSettings: IObjectToString
     {
         /// <summary>

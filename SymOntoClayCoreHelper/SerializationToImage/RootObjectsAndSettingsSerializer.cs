@@ -16,15 +16,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext, IDataCardWriter dataCardWriter)
+        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext, IDataCardWriter settingsDataCardWriter, IDataCardWriter rootObjectsDataCardWriter)
             : base(serializedObjectsPool)
         {
             _structuralContext = structuralContext;
-            _dataCardWriter = dataCardWriter;
+            _settingsDataCardWriter = settingsDataCardWriter;
+            _rootObjectsDataCardWriter = rootObjectsDataCardWriter;
         }
 
         private readonly IStructuralContext _structuralContext;
-        private readonly IDataCardWriter _dataCardWriter;
+        private readonly IDataCardWriter _settingsDataCardWriter;
+        private readonly IDataCardWriter _rootObjectsDataCardWriter;
 
         /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type)
@@ -211,7 +213,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _dataCardWriter.Write(KindOfDataCard.ClassCard, card);
+            _settingsDataCardWriter.Write(KindOfDataCard.ClassCard, card);
 
             throw new NotImplementedException("C9EBF62E-2FB3-4241-A9BB-E70A5D6A0774");
 

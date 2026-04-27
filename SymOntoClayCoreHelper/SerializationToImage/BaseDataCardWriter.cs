@@ -1,23 +1,23 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using SymOntoClay.Common.Disposing;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public class RootObjectsAndSettingsDataCardWriter: Disposable, IDataCardWriter
+    public abstract class BaseDataCardWriter : Disposable, IDataCardWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public RootObjectsAndSettingsDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack)
+        protected BaseDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack, string packEntryName)
         {
             _basePath = basePath;
             _filesToPack = filesToPack;
-
-            var packEntryName = "RootObjectsAndSettings.dat";
 
             var fullFileName = Path.Combine(_basePath, packEntryName);
 

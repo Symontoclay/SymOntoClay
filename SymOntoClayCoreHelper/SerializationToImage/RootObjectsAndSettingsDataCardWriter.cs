@@ -6,13 +6,13 @@ using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public class SettingsDataCardWriter: Disposable, IDataCardWriter
+    public class RootObjectsAndSettingsDataCardWriter: Disposable, IDataCardWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public SettingsDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack)
+        public RootObjectsAndSettingsDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack)
         {
             var packEntryName = PackEntryNames.Settings;
 

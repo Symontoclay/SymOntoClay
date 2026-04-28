@@ -44,6 +44,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// Gets or sets list of file paths for describing places for searching shared modules.
         /// </summary>
+        [MemberWithExternalValue]
         public IList<string> LibsDirs { get; set; }
 
         /// <summary>
@@ -54,12 +55,14 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// Gets or sets list of file paths for describing places searching dictionaries of translation text to facts.
         /// </summary>
+        [MemberWithExternalValue]
         public IList<string> DictionariesDirs { get; set; }
 
         public string BuiltInStandardLibraryDir { get; set; }
 
         public string TmpDir { get; set; }
 
+        [MemberWithExternalValue]
         public IMonitor Monitor { get; set; }
 
         /// <summary>
@@ -68,24 +71,29 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public string HostFile { get; set; }
 
+        [MemberWithExternalValue]
         public IInvokerInMainThread InvokerInMainThread { get; set; }
 
+        [MemberWithExternalValue]
         public ISoundBus SoundBus { get; set; }
 
+        [MemberWithExternalValue]
         public INLPConverterProvider NLPConverterProvider { get; set; }
 
+        [MemberWithExternalValue]
         public IStandardFactsBuilder StandardFactsBuilder { get; set; }
 
         public bool EnableAutoloadingConvertors { get; set; }
 
+        [MemberWithExternalValue]
         public ICancellationContext CancellationContext { get; set; }
-        
         public ThreadingSettings WorldThreadingSettings { get; set; }
         public ThreadingSettings HumanoidNpcDefaultThreadingSettings { get; set; }
         public ThreadingSettings PlayerDefaultThreadingSettings { get; set; }
         public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
         public ThreadingSettings PlaceDefaultThreadingSettings { get; set; }
-        
+
+        [MemberWithExternalValue]
         public HtnExecutionSettings HtnExecutionDefaultSettings { get; set; }
 
         /// <inheritdoc/>

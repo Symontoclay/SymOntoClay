@@ -1,9 +1,12 @@
-﻿using SymOntoClay.CoreHelper.SerializationToImage;
+﻿using SymOntoClay.BaseTestLib;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TestSandbox.Helpers;
 
 namespace TestSandbox.SerializationToImage
 {
@@ -26,6 +29,7 @@ namespace TestSandbox.SerializationToImage
 
         private void Case4()
         {
+            //var worldSettings = CreateEmptyWorldSetting();
             var worldSettings = CreateWorldSetting();
 
 #if DEBUG
@@ -78,7 +82,7 @@ namespace TestSandbox.SerializationToImage
 
             NWorkWithSerializedObjectsPoolPreregistered(serializedObjectsPool, null);
 
-            var worldSettings = CreateWorldSetting();
+            var worldSettings = CreateEmptyWorldSetting();
 
             var worlContext = new TstWorldContext(worldSettings);
 
@@ -117,7 +121,7 @@ namespace TestSandbox.SerializationToImage
 
             NWorkWithSerializedObjectsPool(serializedObjectsPool, null);
 
-            var worldSettings = CreateWorldSetting();
+            var worldSettings = CreateEmptyWorldSetting();
 
             var worlContext = new TstWorldContext(worldSettings);
 
@@ -162,7 +166,7 @@ namespace TestSandbox.SerializationToImage
 
             NWorkWithSerializedTypesPool(serializedTypesPool, list);
 
-            var worldSettings = CreateWorldSetting();
+            var worldSettings = CreateEmptyWorldSetting();
 
             var worlContext = new TstWorldContext(worldSettings);
 
@@ -230,9 +234,24 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"value = {value}");
         }
 
-        private WorldSettings CreateWorldSetting()
+        private WorldSettings CreateEmptyWorldSetting()
         {
             var settings = new WorldSettings();
+
+            return settings;
+        }
+
+        private WorldSettings CreateWorldSetting()
+        {
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.HostListener = this;
+
+            factorySettings.Categories = new List<string>() { "elf" };
+            factorySettings.EnableCategories = true;
+
+            var settings = TstEngineContextHelper.CreateWorldSettings(factorySettings);
+
+            _logger.Info($"settings = {settings}");
 
             return settings;
         }

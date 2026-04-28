@@ -42,12 +42,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
-#if DEBUG
-            if (!_tmpProcessedTypes.Contains(type.FullName))
-            {
-                throw new NotSupportedException($"3D791193-442D-42B2-A1E7-B64000EF7E9F: please check type '{type.FullName}'");
-            }
-#endif
+
 
             throw new NotImplementedException("C9EB3A71-1CFD-47C5-8095-F8A7AEEE7296");
         }

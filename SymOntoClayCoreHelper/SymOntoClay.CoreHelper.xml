@@ -46,6 +46,12 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsDataCardWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.KindOfDataCard,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsDataCardWriter.OnDisposing">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type)">
             <inheritdoc/>
         </member>
@@ -95,12 +101,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.Load(System.IO.BinaryReader)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SettingsDataCardWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.KindOfDataCard,System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SettingsDataCardWriter.OnDisposing">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.StructuralAdvice.ToString">

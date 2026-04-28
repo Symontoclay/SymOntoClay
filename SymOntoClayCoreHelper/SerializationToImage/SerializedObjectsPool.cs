@@ -68,7 +68,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        public SerializedValue RegSerializedValue(object obj, bool isPreregistered)
+        public SerializedValue RegSerializedValue(object obj, SerializedObjectsPoolMode mode)
         {
             if (obj == null)
             {
@@ -92,9 +92,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"kindOfSerializedValue = {kindOfSerializedValue}");
 #endif
 
-            if (isPreregistered)
+            switch(mode)
             {
-                kindOfSerializedValue = KindOfSerializedValue.Preregistered;
+                case SerializedObjectsPoolMode.ExternalValue:
+                    kindOfSerializedValue = KindOfSerializedValue.ExternalValue;
+                    break;
+
+                case SerializedObjectsPoolMode.IsPreregistered:
+                    kindOfSerializedValue = KindOfSerializedValue.Preregistered;
+                    break;
             }
 
             var literal = string.Empty;

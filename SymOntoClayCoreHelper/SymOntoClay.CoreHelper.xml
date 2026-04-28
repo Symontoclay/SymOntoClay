@@ -88,7 +88,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.RegSerializedValue(System.Object,System.Boolean)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.RegSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPoolMode)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.NullTypeId">

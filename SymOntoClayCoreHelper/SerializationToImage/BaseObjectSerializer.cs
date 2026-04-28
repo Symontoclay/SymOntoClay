@@ -34,7 +34,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (obj == null)
             {
-                return _serializedObjectsPool.RegSerializedValue(obj, false);
+                return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
             }
 
             var type = obj.GetType();
@@ -125,7 +125,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         protected virtual SerializedValue SerializePrimitiveType(object obj, Type type)
         {
-            return _serializedObjectsPool.RegSerializedValue(obj, false);
+            return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
         }
 
         protected abstract SerializedValue SerializeBareObject(object obj, Type type);

@@ -106,7 +106,7 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"result2 = {result2}");
             _logger.Info($"serializedValue = {serializedValue}");
 
-            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj, true);
+            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
 
             _logger.Info($"serializedValue2 = {serializedValue2}");
         }
@@ -145,7 +145,7 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"result2 = {result2}");
             _logger.Info($"serializedValue = {serializedValue}");
 
-            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj, false);
+            var serializedValue2 = serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
             _logger.Info($"serializedValue2 = {serializedValue2}");
         }

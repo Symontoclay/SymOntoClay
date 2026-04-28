@@ -1,8 +1,9 @@
 ﻿namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public enum SerializeValueMode
+    public enum SerializedObjectsPoolMode
     {
         General,
-        ExternalValue
+        ExternalValue,
+        IsPreregistered
     }
 }

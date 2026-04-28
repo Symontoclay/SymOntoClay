@@ -121,7 +121,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"path = {path}");
 #endif
 
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, true);
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
@@ -182,7 +182,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"path = {path}");
 #endif
 
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, false);
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");

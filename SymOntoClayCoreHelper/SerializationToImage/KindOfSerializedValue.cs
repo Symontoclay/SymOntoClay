@@ -5,6 +5,7 @@
         Null,
         Literal,
         ObjectPtr,
-        Preregistered
+        Preregistered,
+        ExternalValue
     }
 }

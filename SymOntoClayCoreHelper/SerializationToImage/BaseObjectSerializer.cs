@@ -19,10 +19,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected readonly ISerializedObjectsPool _serializedObjectsPool;
 
         /// <inheritdoc/>
-        public SerializedValue SerializeValue(object obj)
+        public SerializedValue SerializeValue(object obj, string path = "")
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
+            _logger.Info($"path = {path}");
 #endif
 
             if (_serializedObjectsPool.TryGetSerializedValue(obj, out var serializedValue))
@@ -99,16 +100,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (type.Name)
             {
                 case "List`1":
-                    return SerializeGenericList(obj, type);
+                    return SerializeGenericList(obj, type, path);
 
                 case "Stack`1":
-                    return SerializeGenericStack(obj, type);
+                    return SerializeGenericStack(obj, type, path);
 
                 case "Queue`1":
-                    return SerializeGenericQueue(obj, type);
+                    return SerializeGenericQueue(obj, type, path);
 
                 case "Dictionary`2":
-                    return SerializeGenericDictionary(obj, type);
+                    return SerializeGenericDictionary(obj, type, path);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -117,7 +118,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                         throw new NotImplementedException("C7BE5FD7-C04F-4584-80C9-F2DDA4069926");
                     }
 
-                    return SerializeComposite(obj, type);
+                    return SerializeComposite(obj, type, path);
             }
         }
 
@@ -127,11 +128,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         protected abstract SerializedValue SerializeBareObject(object obj, Type type);
-        protected abstract SerializedValue SerializeGenericList(object obj, Type type);
-        protected abstract SerializedValue SerializeGenericStack(object obj, Type type);
-        protected abstract SerializedValue SerializeGenericQueue(object obj, Type type);
-        protected abstract SerializedValue SerializeGenericDictionary(object obj, Type type);
-        protected abstract SerializedValue SerializeComposite(object obj, Type type);
+        protected abstract SerializedValue SerializeGenericList(object obj, Type type, string path);
+        protected abstract SerializedValue SerializeGenericStack(object obj, Type type, string path);
+        protected abstract SerializedValue SerializeGenericQueue(object obj, Type type, string path);
+        protected abstract SerializedValue SerializeGenericDictionary(object obj, Type type, string path);
+        protected abstract SerializedValue SerializeComposite(object obj, Type type, string path);
         protected abstract SerializedValue SerializeAction(object obj, Type type);
 
         protected IEnumerable<FieldInfo> GetFields(Type type)

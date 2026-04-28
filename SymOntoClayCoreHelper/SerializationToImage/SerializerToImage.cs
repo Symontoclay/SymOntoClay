@@ -41,9 +41,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedTypesPool = new SerializedTypesPool();
             _typesHelper = new TypesHelper();
             _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
-            _settingsDataCardWriter = new SettingsDataCardWriter(_tempPath, _filesToPack);
-            _rootObjectsDataCardWriter = new RootObjectsDataCardWriter(_tempPath, _filesToPack);
-            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, structuralContext, _settingsDataCardWriter, _rootObjectsDataCardWriter);
+            _dataCardWriter = new SettingsDataCardWriter(_tempPath, _filesToPack);
+            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, structuralContext, _dataCardWriter);
             _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool);
         }
 
@@ -54,8 +53,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
         private readonly ISerializedObjectsPool _serializedObjectsPool;
-        private readonly IDataCardWriter _settingsDataCardWriter;
-        private readonly IDataCardWriter _rootObjectsDataCardWriter;
+        private readonly IDataCardWriter _dataCardWriter;
         private readonly IObjectSerializer _rootObjectsAndSettingsSerializer;
         private readonly IObjectSerializer _objectToImageSerializer;
 
@@ -96,8 +94,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void Finalization()
         {
-            _settingsDataCardWriter.Dispose();
-            _rootObjectsDataCardWriter.Dispose();
+            _dataCardWriter.Dispose();
 
             SaveSerializedTypesPoolToFile();
             CreatePackage();

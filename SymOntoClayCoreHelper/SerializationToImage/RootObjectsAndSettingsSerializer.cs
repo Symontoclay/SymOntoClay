@@ -16,17 +16,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext, IDataCardWriter settingsDataCardWriter, IDataCardWriter rootObjectsDataCardWriter)
+        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext, IDataCardWriter dataCardWriter)
             : base(serializedObjectsPool)
         {
             _structuralContext = structuralContext;
-            _settingsDataCardWriter = settingsDataCardWriter;
-            _rootObjectsDataCardWriter = rootObjectsDataCardWriter;
+            _dataCardWriter = dataCardWriter;
         }
 
         private readonly IStructuralContext _structuralContext;
-        private readonly IDataCardWriter _settingsDataCardWriter;
-        private readonly IDataCardWriter _rootObjectsDataCardWriter;
+        private readonly IDataCardWriter _dataCardWriter;
 
         /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type)
@@ -42,7 +40,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericList(object obj, Type type)
+        protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -55,7 +53,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericStack(object obj, Type type)
+        protected override SerializedValue SerializeGenericStack(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -68,7 +66,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericQueue(object obj, Type type)
+        protected override SerializedValue SerializeGenericQueue(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -81,7 +79,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericDictionary(object obj, Type type)
+        protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -94,7 +92,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeComposite(object obj, Type type)
+        protected override SerializedValue SerializeComposite(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -112,45 +110,70 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch(kindOfStructuralObject)
             {
                 case KindOfStructuralObject.WorldRoot:
-                    return SerializeWorldRoot(obj, type);
+                    return SerializeWorldRoot(obj, type, path);
 
                 case KindOfStructuralObject.WorldSettings:
-                    return SerializeSettings(obj, type);
+                    return SerializeSettings(obj, type, path);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStructuralObject), kindOfStructuralObject, "5A89589A-C1E1-4133-BFAE-9BE1FA882427");
             }
         }
 
-        private SerializedValue SerializeWorldRoot(object obj, Type type)
+        private SerializedValue SerializeWorldRoot(object obj, Type type, string path)
         {
+#if DEBUG
+            _logger.Info($"path = {path}");
+#endif
+
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, true);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var fieldsWithSettigs = GetFields(type)
+            var fields = GetFields(type)
                 .Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
                 .ToList();
 
 #if DEBUG
-            _logger.Info($"fieldsWithSettigs.Count = {fieldsWithSettigs.Count}");
+            _logger.Info($"fieldsWithSettigs.Count = {fields.Count}");
 #endif
 
-            foreach(var field in fieldsWithSettigs)
+            foreach(var field in fields)
             {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+#endif
+
                 var fieldValue = field.GetValue(obj);
 
 #if DEBUG
                 _logger.Info($"fieldValue = {fieldValue}");
 #endif
 
-                var fieldSerializedValue = SerializeValue(fieldValue);
+                var fieldPath = $"{path}/{field.Name}";
+
+#if DEBUG
+                _logger.Info($"fieldPath = {fieldPath}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(fieldValue, fieldPath);
 
 #if DEBUG
                 _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
+            }
+
+            var propertyInfos = GetProperties(type);
+
+#if DEBUG
+            _logger.Info($"propertyInfos.Length = {propertyInfos.Count()}");
+#endif
+
+            if(propertyInfos.Any())
+            {
+                throw new NotImplementedException("CFD2C27A-2E72-40D7-A365-3A6BFE4467CF");
             }
 
             throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
@@ -158,17 +181,22 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //return serializedValue;
         }
 
-        private SerializedValue SerializeSettings(object obj, Type type)
+        private SerializedValue SerializeSettings(object obj, Type type, string path)
         {
+#if DEBUG
+            _logger.Info($"path = {path}");
+#endif
+
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, false);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var card = new ClassCard()
+            var card = new ExternalClassCard()
             {
-                Header = serializedValue
+                Header = serializedValue,
+                Path = path
             };
 
             var fields = GetFields(type);
@@ -213,7 +241,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _settingsDataCardWriter.Write(KindOfDataCard.ClassCard, card);
+            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
 
             throw new NotImplementedException("C9EBF62E-2FB3-4241-A9BB-E70A5D6A0774");
 

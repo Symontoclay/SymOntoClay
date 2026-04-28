@@ -6,11 +6,70 @@ using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public class SettingsDataCardWriter: BaseDataCardWriter
+    public class SettingsDataCardWriter: Disposable, IDataCardWriter
     {
+#if DEBUG
+        private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         public SettingsDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack)
-            : base(basePath, filesToPack, PackEntryNames.Settings)
         {
+            var packEntryName = PackEntryNames.Settings;
+
+            _basePath = basePath;
+            _filesToPack = filesToPack;
+
+            var fullFileName = Path.Combine(_basePath, packEntryName);
+
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            _filesToPack.Add((packEntryName, fullFileName));
+
+            _fs = new FileStream(fullFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            _writer = new BinaryWriter(_fs);
+        }
+
+        private List<(string EntryName, string FilePath)> _filesToPack;
+
+        private readonly string _basePath;
+        private readonly Stream _fs;
+        private readonly BinaryWriter _writer;
+
+        /// <inheritdoc/>
+        public void Write(KindOfDataCard kindOfDataCard, object dataCard)
+        {
+#if DEBUG
+            _logger.Info($"kindOfDataCard = {kindOfDataCard}");
+#endif
+
+            using var ms = new MemoryStream();
+            using var bsonWriter = new BsonDataWriter(ms);
+
+            var serializer = new JsonSerializer();
+            serializer.Serialize(bsonWriter, dataCard);
+
+            var data = ms.ToArray();
+
+#if DEBUG
+            _logger.Info($"data.Length = {data.Length}");
+#endif
+
+            _writer.Write((int)kindOfDataCard);
+            _writer.Write(data.Length);
+            _writer.Write(data);
+
+            _fs.Flush();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _writer.Dispose();
+            _fs.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

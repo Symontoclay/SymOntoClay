@@ -28,7 +28,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericList(object obj, Type type)
+        protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -41,7 +41,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericStack(object obj, Type type)
+        protected override SerializedValue SerializeGenericStack(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -54,7 +54,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericQueue(object obj, Type type)
+        protected override SerializedValue SerializeGenericQueue(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -67,7 +67,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeGenericDictionary(object obj, Type type)
+        protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -80,7 +80,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeComposite(object obj, Type type)
+        protected override SerializedValue SerializeComposite(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))

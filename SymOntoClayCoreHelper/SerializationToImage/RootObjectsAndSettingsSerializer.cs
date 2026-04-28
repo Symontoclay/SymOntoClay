@@ -221,14 +221,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"propertyValue = {propertyValue}");
 #endif
 
-                if(property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
+                var serializeValueMode = SerializeValueMode.General;
+
+                if (property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
                 {
-#if DEBUG
-                    _logger.Info($"property.IsDefined(typeof(MemberWithExternalValueAttribute), true)!!!!!!!!!");
-#endif
+                    serializeValueMode = SerializeValueMode.ExternalValue;
                 }
 
-                var propertySerializedValue = SerializeValue(propertyValue);
+                var propertyPath = $"{path}/{property.Name}";
+
+#if DEBUG
+                _logger.Info($"propertyPath = {propertyPath}");
+#endif
+
+                var propertySerializedValue = SerializeValue(propertyValue, propertyPath, serializeValueMode);
 
 #if DEBUG
                 _logger.Info($"propertySerializedValue = {propertySerializedValue}");

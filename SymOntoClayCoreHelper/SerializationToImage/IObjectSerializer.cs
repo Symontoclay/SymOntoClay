@@ -2,6 +2,6 @@
 {
     public interface IObjectSerializer
     {
-        SerializedValue SerializeValue(object obj, string path = "");
+        SerializedValue SerializeValue(object obj, string path = "", SerializeValueMode serializeValueMode = SerializeValueMode.General);
     }
 }

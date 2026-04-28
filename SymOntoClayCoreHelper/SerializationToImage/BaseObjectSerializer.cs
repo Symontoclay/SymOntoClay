@@ -19,11 +19,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected readonly ISerializedObjectsPool _serializedObjectsPool;
 
         /// <inheritdoc/>
-        public SerializedValue SerializeValue(object obj, string path = "")
+        public SerializedValue SerializeValue(object obj, string path = "", SerializeValueMode serializeValueMode = SerializeValueMode.General)
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
             _logger.Info($"path = {path}");
+            _logger.Info($"serializeValueMode = {serializeValueMode}");
 #endif
 
             if (_serializedObjectsPool.TryGetSerializedValue(obj, out var serializedValue))

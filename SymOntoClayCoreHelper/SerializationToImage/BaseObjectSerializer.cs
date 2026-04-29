@@ -37,6 +37,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
             }
 
+            if(serializeValueMode == SerializeValueMode.ExternalValue)
+            {
+                return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
+            }
+
             var type = obj.GetType();
 
 #if DEBUG

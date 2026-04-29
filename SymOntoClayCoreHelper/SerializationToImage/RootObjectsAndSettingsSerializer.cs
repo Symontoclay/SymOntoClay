@@ -127,15 +127,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var fields = GetFields(type)
+            var fieldsWithSettings = GetFields(type)
                 .Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
                 .ToList();
 
 #if DEBUG
-            _logger.Info($"fieldsWithSettigs.Count = {fields.Count}");
+            _logger.Info($"fieldsWithSettigs.Count = {fieldsWithSettings.Count}");
 #endif
 
-            foreach(var field in fields)
+            foreach(var field in fieldsWithSettings)
             {
 #if DEBUG
                 _logger.Info($"field.Name = {field.Name}");
@@ -272,7 +272,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly List<string> _tmpProcessedTypes = new List<string>()
         {
             "TestSandbox.SerializationToImage.TstWorldContext",
-            "SymOntoClay.UnityAsset.Core.WorldSettings"
+            "SymOntoClay.UnityAsset.Core.WorldSettings",
+            "SymOntoClay.UnityAsset.Core.Internal.WorldContext"
         };
     }
 }

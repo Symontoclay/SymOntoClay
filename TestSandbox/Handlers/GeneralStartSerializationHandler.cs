@@ -81,8 +81,16 @@ namespace TestSandbox.Handlers
 
             _globalLogger.Info($"serializationPath = {serializationPath}");
 
+            var baseTempPath = Path.Combine(Directory.GetCurrentDirectory(), "Temp");
+
+            if (!Directory.Exists(baseTempPath))
+            {
+                Directory.CreateDirectory(baseTempPath);
+            }
+
             var serializationSettings = new SerializationToImageSettings();
             serializationSettings.ImageFileName = serializationPath;
+            serializationSettings.BaseTempPath = baseTempPath;
 
             _globalLogger.Info($"serializationSettings = {serializationSettings}");
 

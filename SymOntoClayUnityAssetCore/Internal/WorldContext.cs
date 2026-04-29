@@ -159,6 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public bool IsInitialized => _isInitialized;
 
+        [SettingsMemberAttribute]
         private WorldSettings _settings;
 
         WorldSettings IWorldCoreContext.WorldSettings => _settings;
@@ -510,6 +511,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 #if DEBUG
             Info("882C72DD-4D60-4A70-AB2C-44A5CCC51F15", $"settings = {settings}");
 #endif
+
+            var structuralContext = new WorldStructuralContext();
+
+            var serializer = new SerializerToImage(settings, structuralContext);
+            serializer.Serialize(this);
 
             throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
         }

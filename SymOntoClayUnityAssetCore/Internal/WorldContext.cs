@@ -175,6 +175,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         IMonitor IWorldCoreGameComponentContext.Motitor => Monitor;
 
+        [SerializedMember]
         private SerializedWorldContext _serializedWorldContext;
 
         public ThreadsCoreComponent ThreadsComponent { get; private set; }

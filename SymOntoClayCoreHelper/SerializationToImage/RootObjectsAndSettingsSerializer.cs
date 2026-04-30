@@ -144,6 +144,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"field.Name = {field.Name}");
 #endif
 
+                if(field.IsDefined(typeof(SerializedMemberAttribute), false))
+                {
+                    continue;
+                }
+
                 var fieldValue = field.GetValue(obj);
 
 #if DEBUG
@@ -342,7 +347,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.WorldSettings",
             "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
             "SymOntoClay.Core.ThreadingSettings",
-            "SymOntoClay.Threading.CustomThreadPoolSettings"
+            "SymOntoClay.Threading.CustomThreadPoolSettings",
+            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"
         };
     }
 }

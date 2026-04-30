@@ -209,7 +209,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var propertyInfos = GetProperties(type);
 
 #if DEBUG
-            _logger.Info($"propertyInfos.Length = {propertyInfos.Count()}");
+            _logger.Info($"propertyInfos.Count() = {propertyInfos.Count()}");
 #endif
 
             foreach (var property in propertyInfos)
@@ -218,32 +218,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"property.Name = {property.Name}");
 #endif
 
-                var propertyValue = property.GetValue(obj);
-
-#if DEBUG
-                _logger.Info($"propertyValue = {propertyValue}");
-#endif
-
-                var serializeValueMode = SerializeValueMode.General;
-
-                if (property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
-                {
-                    serializeValueMode = SerializeValueMode.ExternalValue;
-                }
-
-                var propertyPath = $"{path}/{property.Name}";
-
-#if DEBUG
-                _logger.Info($"propertyPath = {propertyPath}");
-#endif
-
-                var propertySerializedValue = SerializeValue(propertyValue, propertyPath, serializeValueMode);
-
-#if DEBUG
-                _logger.Info($"propertySerializedValue = {propertySerializedValue}");
-#endif
-
-                cardPropertyDict[property.Name] = propertySerializedValue;
+                ProcessPropertyInfo(property, obj, path, cardPropertyDict);
             }
 
             card.Properties = cardPropertyDict;
@@ -293,7 +268,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var propertyInfos = GetProperties(type);
 
 #if DEBUG
-            _logger.Info($"propertyInfos.Length = {propertyInfos.Count()}");
+            _logger.Info($"propertyInfos.Count() = {propertyInfos.Count()}");
 #endif
 
             foreach (var property in propertyInfos)
@@ -302,32 +277,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"property.Name = {property.Name}");
 #endif
 
-                var propertyValue = property.GetValue(obj);
-
-#if DEBUG
-                _logger.Info($"propertyValue = {propertyValue}");
-#endif
-
-                var serializeValueMode = SerializeValueMode.General;
-
-                if (property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
-                {
-                    serializeValueMode = SerializeValueMode.ExternalValue;
-                }
-
-                var propertyPath = $"{path}/{property.Name}";
-
-#if DEBUG
-                _logger.Info($"propertyPath = {propertyPath}");
-#endif
-
-                var propertySerializedValue = SerializeValue(propertyValue, propertyPath, serializeValueMode);
-
-#if DEBUG
-                _logger.Info($"propertySerializedValue = {propertySerializedValue}");
-#endif
-
-                cardPropertyDict[property.Name] = propertySerializedValue;
+                ProcessPropertyInfo(property, obj, path, cardPropertyDict);
             }
 
             card.Properties = cardPropertyDict;
@@ -341,6 +291,36 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //throw new NotImplementedException("C871A015-857B-4C95-B5AA-A4DCAB10EB43");
 
             return serializedValue;
+        }
+
+        private void ProcessPropertyInfo(PropertyInfo property, object obj, string path, Dictionary<string, SerializedValue> cardPropertyDict)
+        {
+            var propertyValue = property.GetValue(obj);
+
+#if DEBUG
+            _logger.Info($"propertyValue = {propertyValue}");
+#endif
+
+            var serializeValueMode = SerializeValueMode.General;
+
+            if (property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
+            {
+                serializeValueMode = SerializeValueMode.ExternalValue;
+            }
+
+            var propertyPath = $"{path}/{property.Name}";
+
+#if DEBUG
+            _logger.Info($"propertyPath = {propertyPath}");
+#endif
+
+            var propertySerializedValue = SerializeValue(propertyValue, propertyPath, serializeValueMode);
+
+#if DEBUG
+            _logger.Info($"propertySerializedValue = {propertySerializedValue}");
+#endif
+
+            cardPropertyDict[property.Name] = propertySerializedValue;
         }
 
         /// <inheritdoc/>

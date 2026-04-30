@@ -61,7 +61,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return KindOfStructuralObject.WorldSettings;
             }
 
-            throw new NotImplementedException("C26A1FB7-0121-48B7-A0D4-1FB452AE4CB6");
+            return KindOfStructuralObject.UsualObject;
         }
     }
 }

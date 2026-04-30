@@ -110,6 +110,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case KindOfStructuralObject.WorldSettings:
                     return SerializeSettings(obj, type, path);
 
+                case KindOfStructuralObject.UsualObject:
+                    return SerializeUsualObject(obj, type, path);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStructuralObject), kindOfStructuralObject, "5A89589A-C1E1-4133-BFAE-9BE1FA882427");
             }
@@ -127,15 +130,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var fieldsWithSettings = GetFields(type)
-                .Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
+            var fields = GetFields(type)
+                //.Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
                 .ToList();
 
 #if DEBUG
-            _logger.Info($"fieldsWithSettigs.Count = {fieldsWithSettings.Count}");
+            _logger.Info($"fields.Count = {fields.Count}");
 #endif
 
-            foreach(var field in fieldsWithSettings)
+            foreach(var field in fields)
             {
 #if DEBUG
                 _logger.Info($"field.Name = {field.Name}");
@@ -256,6 +259,90 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return serializedValue;
         }
 
+        private SerializedValue SerializeUsualObject(object obj, Type type, string path)
+        {
+#if DEBUG
+            _logger.Info($"path = {path}");
+#endif
+
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ExternalClassCard()
+            {
+                Header = serializedValue,
+                Path = path
+            };
+
+            var fields = GetFields(type);
+
+#if DEBUG
+            _logger.Info($"fields.Count() = {fields.Count()}");
+#endif
+
+            if (fields.Any())
+            {
+                throw new NotImplementedException("77F44418-A732-45C6-A52A-99C88700A0F5");
+            }
+
+            var cardPropertyDict = new Dictionary<string, SerializedValue>();
+
+            var propertyInfos = GetProperties(type);
+
+#if DEBUG
+            _logger.Info($"propertyInfos.Length = {propertyInfos.Count()}");
+#endif
+
+            foreach (var property in propertyInfos)
+            {
+#if DEBUG
+                _logger.Info($"property.Name = {property.Name}");
+#endif
+
+                var propertyValue = property.GetValue(obj);
+
+#if DEBUG
+                _logger.Info($"propertyValue = {propertyValue}");
+#endif
+
+                var serializeValueMode = SerializeValueMode.General;
+
+                if (property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
+                {
+                    serializeValueMode = SerializeValueMode.ExternalValue;
+                }
+
+                var propertyPath = $"{path}/{property.Name}";
+
+#if DEBUG
+                _logger.Info($"propertyPath = {propertyPath}");
+#endif
+
+                var propertySerializedValue = SerializeValue(propertyValue, propertyPath, serializeValueMode);
+
+#if DEBUG
+                _logger.Info($"propertySerializedValue = {propertySerializedValue}");
+#endif
+
+                cardPropertyDict[property.Name] = propertySerializedValue;
+            }
+
+            card.Properties = cardPropertyDict;
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
+
+            //throw new NotImplementedException("C871A015-857B-4C95-B5AA-A4DCAB10EB43");
+
+            return serializedValue;
+        }
+
         /// <inheritdoc/>
         protected override SerializedValue SerializeAction(object obj, Type type)
         {
@@ -273,7 +360,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             "TestSandbox.SerializationToImage.TstWorldContext",
             "SymOntoClay.UnityAsset.Core.WorldSettings",
-            "SymOntoClay.UnityAsset.Core.Internal.WorldContext"
+            "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
+            "SymOntoClay.Core.ThreadingSettings"
         };
     }
 }

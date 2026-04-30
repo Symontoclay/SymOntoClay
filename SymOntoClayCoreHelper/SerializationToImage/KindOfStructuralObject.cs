@@ -4,6 +4,7 @@
     {
         Unknown,
         WorldRoot,
-        WorldSettings
+        WorldSettings,
+        UsualObject
     }
 }

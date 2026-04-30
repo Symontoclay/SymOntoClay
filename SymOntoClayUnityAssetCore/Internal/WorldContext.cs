@@ -167,6 +167,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private string _tmpDir;
         public string TmpDir => _tmpDir;
 
+        [MemberWithExternalValue]
         public IMonitor Monitor { get; private set; }
         public IMonitorNode MonitorNode { get; private set; }
         public IMonitorLogger Logger { get; private set; }

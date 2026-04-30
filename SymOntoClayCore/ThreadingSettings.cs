@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,13 @@ namespace SymOntoClay.Core
 {
     public class ThreadingSettings : IObjectToString
     {
+        [MemberWithExternalValue]
         public CustomThreadPoolSettings CodeExecution { get; set; }
+
+        [MemberWithExternalValue]
         public CustomThreadPoolSettings AsyncEvents { get; set; }
+
+        [MemberWithExternalValue]
         public CustomThreadPoolSettings GarbageCollection { get; set; }
 
         /// <inheritdoc/>

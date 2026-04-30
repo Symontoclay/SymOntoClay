@@ -341,7 +341,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "TestSandbox.SerializationToImage.TstWorldContext",
             "SymOntoClay.UnityAsset.Core.WorldSettings",
             "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
-            "SymOntoClay.Core.ThreadingSettings"
+            "SymOntoClay.Core.ThreadingSettings",
+            "SymOntoClay.Threading.CustomThreadPoolSettings"
         };
     }
 }

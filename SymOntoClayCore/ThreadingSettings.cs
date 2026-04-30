@@ -32,13 +32,8 @@ namespace SymOntoClay.Core
 {
     public class ThreadingSettings : IObjectToString
     {
-        [MemberWithExternalValue]
         public CustomThreadPoolSettings CodeExecution { get; set; }
-
-        [MemberWithExternalValue]
         public CustomThreadPoolSettings AsyncEvents { get; set; }
-
-        [MemberWithExternalValue]
         public CustomThreadPoolSettings GarbageCollection { get; set; }
 
         /// <inheritdoc/>

@@ -273,6 +273,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => _serializedWorldContext.LogicQueryParseAndCache;
 
         private readonly object _worldComponentsListLockObj = new object();
+
         private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
 
         /// <inheritdoc/>
@@ -296,11 +297,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
 
         private readonly object _gameComponentsListLockObj = new object();
+
+        [SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
+
+        [SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<int> _availableInstanceIdList = new List<int>();
+
+        [SerializedMemberAttributeWithChildrenAttribute]
         private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
+
+        [SerializedMemberAttributeWithChildrenAttribute]
         private readonly Dictionary<string, int> _instancesIdDict = new Dictionary<string, int>();
 
+        [SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<IGameComponent> _gameComponentsForLateInitializingList = new List<IGameComponent>();
 
         /// <inheritdoc/>

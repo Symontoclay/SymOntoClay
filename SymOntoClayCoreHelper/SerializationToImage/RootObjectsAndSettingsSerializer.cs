@@ -386,7 +386,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
             "SymOntoClay.Core.ThreadingSettings",
             "SymOntoClay.Threading.CustomThreadPoolSettings",
-            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"
+            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
+            "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
+            "SymOntoClay.Common.Cancellation.CancellationTokenContext"
         };
     }
 }

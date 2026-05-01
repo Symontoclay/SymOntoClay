@@ -133,6 +133,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             var cardFieldDict = new Dictionary<string, SerializedValue>();
 
+            var fieldsWithSettings = GetFields(type)
+                .Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
+                .ToList();
+
+#if DEBUG
+            _logger.Info($"fieldsWithSettings.Count = {fieldsWithSettings.Count}");
+#endif
+
+            foreach(var field in fieldsWithSettings)
+            {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+#endif
+
+                ProcessFieldInfo(field, obj, path, cardFieldDict);
+            }
+
             var fields = GetFields(type)
                 //.Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
                 .ToList();

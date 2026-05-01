@@ -30,14 +30,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type)
         {
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
 #if DEBUG
-            if(!_tmpProcessedTypes.Contains(type.FullName))
-            {
-                throw new NotSupportedException($"08F6D26A-980F-44A5-9D27-0739393C5BB7: please check type '{type.FullName}'");
-            }
+            _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            throw new NotImplementedException("C3125912-DADF-4A90-AC93-19102439840D");
+            return serializedValue;
         }
 
         /// <inheritdoc/>

@@ -120,6 +120,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
+            _serializedObjects[obj] = serializedValue;
+
             return serializedValue;
         }
 

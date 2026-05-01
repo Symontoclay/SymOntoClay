@@ -18,7 +18,8 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            Case4();
+            //Case4();
+            Case3_b();
             //Case3_a();
             //Case3();
             //Case2();
@@ -70,6 +71,31 @@ namespace TestSandbox.SerializationToImage
 
             var serializer = new SerializerToImage(serializationSettings, structuralContext);
             serializer.Serialize(worlContext);
+        }
+
+        private void Case3_b()
+        {
+            var serializedTypesPool = new SerializedTypesPool();
+
+            var typesHelper = new TypesHelper();
+
+            var serializedObjectsPool = new SerializedObjectsPool(serializedTypesPool, typesHelper);
+
+            var worldSettings = CreateEmptyWorldSetting();
+
+            var worlContext = new TstWorldContext(worldSettings);
+
+            var result = serializedObjectsPool.IsSerialized(worlContext, false);
+
+            _logger.Info($"result = {result}");
+
+            var serializedValue2 = serializedObjectsPool.RegSerializedValue(worlContext, SerializedObjectsPoolMode.General);
+
+            _logger.Info($"serializedValue2 = {serializedValue2}");
+
+            var result2 = serializedObjectsPool.IsSerialized(worlContext, false);
+
+            _logger.Info($"result2 = {result2}");
         }
 
         private void Case3_a()
@@ -124,6 +150,8 @@ namespace TestSandbox.SerializationToImage
             var worldSettings = CreateEmptyWorldSetting();
 
             var worlContext = new TstWorldContext(worldSettings);
+
+            NWorkWithSerializedObjectsPool(serializedObjectsPool, worlContext);
 
             NWorkWithSerializedObjectsPool(serializedObjectsPool, worlContext);
 

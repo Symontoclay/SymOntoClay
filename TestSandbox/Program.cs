@@ -91,7 +91,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
-            //TstSerializationToImageHandler();
+            TstSerializationToImageHandler();
             //TstGameComponentGuardHander();
             //TstCancellationHandler();
             //TstMessagePack();
@@ -186,7 +186,7 @@ namespace TestSandbox
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
-            TstGeneralStartSerializationHandler();
+            //TstGeneralStartSerializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

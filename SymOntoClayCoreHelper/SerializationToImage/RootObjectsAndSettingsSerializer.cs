@@ -4,6 +4,7 @@ using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,7 +43,32 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var enumerable = (IEnumerable)obj;
+
+            foreach (var item in enumerable) 
+            {
+#if DEBUG
+                _logger.Info($"item = {item}");
+#endif
+
+                var fieldPath = $"{path}/[*]";
+
+#if DEBUG
+                _logger.Info($"fieldPath = {fieldPath}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(item, fieldPath);
+
+#if DEBUG
+                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
+            }
 
             throw new NotImplementedException("C9EB3A71-1CFD-47C5-8095-F8A7AEEE7296");
         }
@@ -404,7 +430,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Threading.CustomThreadPoolSettings",
             "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
             "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
-            "SymOntoClay.Common.Cancellation.CancellationTokenContext"
+            "SymOntoClay.Common.Cancellation.CancellationTokenContext",
+            "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent",
+            "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext"
         };
     }
 }

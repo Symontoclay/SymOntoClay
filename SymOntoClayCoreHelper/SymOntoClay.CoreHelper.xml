@@ -25,7 +25,16 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
@@ -43,6 +52,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeComposite(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type)">
             <inheritdoc/>
         </member>
@@ -52,7 +64,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsDataCardWriter.OnDisposing">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
@@ -68,6 +80,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeComposite(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeAction(System.Object,System.Type)">

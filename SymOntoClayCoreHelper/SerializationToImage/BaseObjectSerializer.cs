@@ -63,7 +63,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (type.FullName)
             {
                 case "System.Object":
-                    return SerializeBareObject(obj, type);
+                    return SerializeBareObject(obj, type, path);
 
                 case "System.Threading.CancellationTokenSource":
                     throw new NotImplementedException("C9A45E85-6923-46AE-8E46-EA25956B3385");
@@ -77,7 +77,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     throw new NotImplementedException("C14F0793-B2B5-417B-960F-346D27852C23");
 
                 case "System.Threading.ManualResetEvent":
-                    throw new NotImplementedException("C80B4E5C-B0C2-4670-AFF5-A9CB895DC57C");
+                    return SerializeManualResetEvent(obj, type, path);
 
                 case "SymOntoClay.Threading.CustomThreadPool":
                     throw new NotImplementedException("C6891BB7-9AFD-4B3F-B0AA-BFD3C849B48D");
@@ -133,12 +133,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
         }
 
-        protected abstract SerializedValue SerializeBareObject(object obj, Type type);
+        protected abstract SerializedValue SerializeBareObject(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericList(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericStack(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericQueue(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericDictionary(object obj, Type type, string path);
         protected abstract SerializedValue SerializeComposite(object obj, Type type, string path);
+        protected abstract SerializedValue SerializeManualResetEvent(object obj, Type type, string path);
         protected abstract SerializedValue SerializeAction(object obj, Type type);
 
         protected IEnumerable<FieldInfo> GetFields(Type type)

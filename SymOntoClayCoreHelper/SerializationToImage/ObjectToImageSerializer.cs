@@ -15,7 +15,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeBareObject(object obj, Type type)
+        protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
 #if DEBUG
             if (!_tmpProcessedTypes.Contains(type.FullName))
@@ -90,6 +90,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
             throw new NotImplementedException("C8F59117-E3EC-4B09-84D2-CDBC0CB7CCD0");
+        }
+
+        /// <inheritdoc/>
+        protected override SerializedValue SerializeManualResetEvent(object obj, Type type, string path)
+        {
+            throw new NotImplementedException("C3083A33-361D-4786-AE17-0546BE153C9D");
         }
 
         /// <inheritdoc/>

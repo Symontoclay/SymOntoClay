@@ -6,6 +6,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 {
     public enum KindOfDataCard
     {
-        ExternalClassCard
+        ExternalClassCard,
+        ExternalManualResetEventClassCard
     }
 }

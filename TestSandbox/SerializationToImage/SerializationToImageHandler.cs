@@ -6,6 +6,8 @@ using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Threading;
 using TestSandbox.Helpers;
 
 namespace TestSandbox.SerializationToImage
@@ -18,8 +20,9 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            //Case4();
-            Case3_b();
+            //Case5();
+            Case4();
+            //Case3_b();
             //Case3_a();
             //Case3();
             //Case2();
@@ -28,7 +31,7 @@ namespace TestSandbox.SerializationToImage
             _logger.Info("End");
         }
 
-        private void Case4()
+        private void Case5()
         {
             //var worldSettings = CreateEmptyWorldSetting();
             var worldSettings = CreateWorldSetting();
@@ -71,6 +74,49 @@ namespace TestSandbox.SerializationToImage
 
             var serializer = new SerializerToImage(serializationSettings, structuralContext);
             serializer.Serialize(worlContext);
+        }
+
+        private void Case4()
+        {
+            var autoResetEvent = new ManualResetEvent(true);
+
+            var type = autoResetEvent.GetType();
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+#if DEBUG
+            _logger.Info($"fields.Length = {fields.Length}");
+#endif
+
+            foreach (var field in fields) 
+            {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+#endif
+            }
+
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+#if DEBUG
+            _logger.Info($"properties.Length = {properties.Length}");
+#endif
+
+            foreach (var property in properties) 
+            {
+#if DEBUG
+                _logger.Info($"property.Name = {property.Name}");
+#endif
+            }
+
+            var isSet = autoResetEvent.WaitOne(0);
+
+#if DEBUG
+            _logger.Info($"isSet = {isSet}");
+#endif
         }
 
         private void Case3_b()

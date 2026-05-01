@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -29,13 +30,25 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly IDataCardWriter _dataCardWriter;
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeBareObject(object obj, Type type)
+        protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
+
+            var card = new ExternalClassCard()
+            {
+                Header = serializedValue,
+                Path = path
+            };
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
 
             return serializedValue;
         }
@@ -406,6 +419,44 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
             cardPropertyDict[property.Name] = propertySerializedValue;
+        }
+
+        /// <inheritdoc/>
+        protected override SerializedValue SerializeManualResetEvent(object obj, Type type, string path)
+        {
+#if DEBUG
+            _logger.Info($"path = {path}");
+#endif
+
+            var autoResetEvent = (ManualResetEvent)obj;
+
+            var isSet = autoResetEvent.WaitOne(0);
+
+#if DEBUG
+            _logger.Info($"isSet = {isSet}");
+#endif
+
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ExternalManualResetEventClassCard()
+            {
+                Header = serializedValue,
+                Path = path,
+                IsSet = isSet
+            };
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(KindOfDataCard.ExternalManualResetEventClassCard, card);
+
+
+            throw new NotImplementedException("C076085F-8CDD-4BD7-8ECD-13DEADDEEB73");
         }
 
         /// <inheritdoc/>

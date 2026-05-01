@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.UnityAsset.Core;
 using System;

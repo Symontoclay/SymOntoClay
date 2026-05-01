@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;

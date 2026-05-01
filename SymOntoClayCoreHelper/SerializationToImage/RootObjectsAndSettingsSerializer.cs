@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
@@ -151,6 +152,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     continue;
                 }
 
+                if (field.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+                {
+                    continue;
+                }
+
                 ProcessFieldInfo(field, obj, path, cardFieldDict);
             }
 
@@ -209,6 +215,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"property.Name = {property.Name}");
 #endif
 
+                if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+                {
+                    continue;
+                }
+
                 ProcessPropertyInfo(property, obj, path, cardPropertyDict);
             }
 
@@ -257,6 +268,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"field.Name = {field.Name}");
 #endif
 
+                if (field.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+                {
+                    continue;
+                }
+
                 ProcessFieldInfo(field, obj, path, cardFieldDict);
             }
 
@@ -275,6 +291,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 _logger.Info($"property.Name = {property.Name}");
 #endif
+
+                if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+                {
+                    continue;
+                }
 
                 ProcessPropertyInfo(property, obj, path, cardPropertyDict);
             }

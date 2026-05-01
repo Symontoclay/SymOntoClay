@@ -15,7 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MessagePack" Version="3.1.4" />
-    <PackageReference Include="SymOntoClay.Common" Version="0.5.6.3" />
-    <PackageReference Include="SymOntoClay.Threading" Version="0.5.6.3" />
+    <PackageReference Include="SymOntoClay.Common" Version="0.5.6.5" />
+    <PackageReference Include="SymOntoClay.Threading" Version="0.5.6.5" />
   </ItemGroup>
 </Project>

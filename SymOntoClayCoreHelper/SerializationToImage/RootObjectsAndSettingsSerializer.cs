@@ -28,7 +28,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private readonly IStructuralContext _structuralContext;
         private readonly IDataCardWriter _dataCardWriter;
-
+        
         /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
@@ -493,15 +493,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly List<string> _tmpProcessedTypes = new List<string>()
         {
             "TestSandbox.SerializationToImage.TstWorldContext",
-            "SymOntoClay.UnityAsset.Core.WorldSettings",
-            "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
-            "SymOntoClay.Core.ThreadingSettings",
-            "SymOntoClay.Threading.CustomThreadPoolSettings",
-            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
-            "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
-            "SymOntoClay.Common.Cancellation.CancellationTokenContext",
-            "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent",
-            "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext"
+            "SymOntoClay.UnityAsset.Core.World.WorldCore"
         };
     }
 }

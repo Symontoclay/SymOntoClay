@@ -53,8 +53,8 @@ using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    [WorldRootAttribute]
-    [SerializeOnlyExplicitlySerializableMembersAttribute]
+    //[WorldRootAttribute]
+    //[SerializeOnlyExplicitlySerializableMembersAttribute]
     public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
     {
         public WorldContext(WorldSettings settings)
@@ -71,6 +71,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 LoadTypesPlatformTypesConvertors();
             }
+
+            CreateWorldSerializedContext();
 
             _isInitialized = true;
         }
@@ -160,7 +162,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public bool IsInitialized => _isInitialized;
 
-        [SettingsMemberAttribute]
+        //[SettingsMemberAttribute]
         private WorldSettings _settings;
 
         WorldSettings IWorldCoreContext.WorldSettings => _settings;
@@ -176,7 +178,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         IMonitor IWorldCoreGameComponentContext.Motitor => Monitor;
 
-        [SerializedMember]
+        //[SerializedMember]
         private SerializedWorldContext _serializedWorldContext;
 
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
@@ -298,19 +300,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private readonly object _gameComponentsListLockObj = new object();
 
-        [SerializedMemberAttributeWithChildrenAttribute]
+        //[SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
 
-        [SerializedMemberAttributeWithChildrenAttribute]
+        //[SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<int> _availableInstanceIdList = new List<int>();
 
-        [SerializedMemberAttributeWithChildrenAttribute]
+        //[SerializedMemberAttributeWithChildrenAttribute]
         private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
 
-        [SerializedMemberAttributeWithChildrenAttribute]
+        //[SerializedMemberAttributeWithChildrenAttribute]
         private readonly Dictionary<string, int> _instancesIdDict = new Dictionary<string, int>();
 
-        [SerializedMemberAttributeWithChildrenAttribute]
+        //[SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<IGameComponent> _gameComponentsForLateInitializingList = new List<IGameComponent>();
 
         /// <inheritdoc/>
@@ -472,8 +474,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 NStop();
             }
-
-            CreateWorldSerializedContext();
 
             _serializedWorldContext.LoadFromSourceCode();
 

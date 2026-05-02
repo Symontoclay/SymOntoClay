@@ -20,8 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
@@ -30,14 +32,19 @@ using SymOntoClay.UnityAsset.Core.InternalImplementations.Place;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {
+    [WorldRootAttribute]
+    [SerializeOnlyExplicitlySerializableMembersAttribute]
     public class WorldCore: IWorld
     {
         #region constructors
         public WorldCore(WorldSettings settings)
         {
+            _settings = settings;
+
             _context = new WorldContext(settings);
         }
         #endregion
@@ -65,7 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.World
             lock (_lockObj)
             {
                 _context.AddConvertor(convertor);
-            }                
+            }
         }
 
         /// <inheritdoc/>
@@ -191,7 +198,21 @@ namespace SymOntoClay.UnityAsset.Core.World
         /// <inheritdoc/>
         public void SaveToImage(SerializationToImageSettings settings)
         {
-            _context.SaveToImage(settings);
+
+#if DEBUG
+            //Info(, $"settings = {settings}");
+#endif
+
+            _context.Stop();
+
+            var structuralContext = new WorldStructuralContext();
+
+            var serializer = new SerializerToImage(settings, structuralContext);
+            serializer.Serialize(this);
+
+            throw new NotImplementedException("C0A8D36D-50A8-4015-87C2-861455D6D421");
+
+            //_context.SaveToImage(settings);
         }
 
         /// <inheritdoc/>
@@ -220,7 +241,10 @@ namespace SymOntoClay.UnityAsset.Core.World
         #endregion
 
         #region private members
+        private readonly WorldSettings _settings;
+
         private readonly object _lockObj = new object();
+        private ComponentState _state = ComponentState.Created;
 
         private readonly WorldContext _context;
         #endregion

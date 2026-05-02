@@ -54,18 +54,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public int InstanceId => _gameComponent.InstanceId;
 
-        //private readonly object _initializeLockObj = new object();
-
         private readonly HumanoidNPCSettings _settings;
-
-        //private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
-        //private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-        //private List<string> _deferredRemovedPublicFacts = new List<string>();
-        //private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
-        //private List<string> _deferredRemovedFacts = new List<string>();
-        //private List<string> _deferredAddedCategories = new List<string>();
-        //private List<string> _deferredRemovedCategories = new List<string>();
-        //private bool? _enableCategories;
 
         /// <inheritdoc/>
         public bool EnableLogging { get => _gameComponent.EnableLogging; set => _gameComponent.EnableLogging = value; }

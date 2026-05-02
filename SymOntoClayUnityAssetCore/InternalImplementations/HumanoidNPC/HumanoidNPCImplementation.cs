@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -33,7 +34,7 @@ using System.Linq;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
     /// <inheritdoc/>
-    public class HumanoidNPCImplementation: IHumanoidNPC
+    public class HumanoidNPCImplementation: IHumanoidNPC, ISerializedWorldComponent
     {
         private HumanoidNPCGameComponent _gameComponent;
 
@@ -53,6 +54,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public int InstanceId => _gameComponent.InstanceId;
 
+        [SettingsMember]
         private readonly HumanoidNPCSettings _settings;
 
         /// <inheritdoc/>

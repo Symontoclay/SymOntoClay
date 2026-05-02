@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.SerializationToImage;
@@ -241,10 +242,15 @@ namespace SymOntoClay.UnityAsset.Core.World
         #endregion
 
         #region private members
+        [SettingsMember]
         private readonly WorldSettings _settings;
 
         private readonly object _lockObj = new object();
         private ComponentState _state = ComponentState.Created;
+
+
+        private List<ISerializedWorldComponent> serializedWorldComponents = new List<ISerializedWorldComponent>();
+
 
         private readonly WorldContext _context;
         #endregion

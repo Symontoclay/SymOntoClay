@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -29,7 +30,7 @@ using System.Collections.Generic;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
 {
     /// <inheritdoc/>
-    public class PlayerImlementation : IPlayer
+    public class PlayerImlementation : IPlayer, ISerializedWorldComponent
     {
         private PlayerGameComponent _gameComponent;
 
@@ -49,6 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         /// <inheritdoc/>
         public int InstanceId => _gameComponent.InstanceId;
 
+        [SettingsMember]
         private readonly PlayerSettings _settings;
 
         /// <inheritdoc/>

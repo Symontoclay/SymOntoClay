@@ -187,6 +187,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
+            var card = new ExternalClassCard()
+            {
+                Header = serializedValue,
+                Path = path
+            };
+
             var cardFieldDict = new Dictionary<string, SerializedValue>();
 
             var fieldsWithSettings = GetFields(type)
@@ -233,6 +239,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 ProcessFieldInfo(field, obj, path, cardFieldDict);
             }
 
+            card.Fields = cardFieldDict;
+
             var properties = GetProperties(type);
 
 #if DEBUG
@@ -243,6 +251,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 throw new NotImplementedException("CFD2C27A-2E72-40D7-A365-3A6BFE4467CF");
             }
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
 
             //throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
 

@@ -49,7 +49,7 @@ namespace TestSandbox.MonoBehaviorTesting
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Things\Barrel\Barrel.sobj");
             settings.HostListener = platformListener;
 
-            _gameObject = WorldFactory.WorldInstance.GetGameObject(settings);
+            //_gameObject = WorldFactory.WorldInstance.GetGameObject(settings);
 
             _logger.Info("930C4944-BC9E-4F83-8258-04F3983BB94F", "End");
         }

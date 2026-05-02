@@ -30,6 +30,7 @@ using SymOntoClay.Monitor.NLog.PlatformLoggers;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.World;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,7 +64,7 @@ namespace TestSandbox.MonoBehaviorTesting
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext);
 
-            _world = WorldFactory.WorldInstance;
+            
 
             var settings = new WorldSettings();
 
@@ -97,7 +98,7 @@ namespace TestSandbox.MonoBehaviorTesting
 
             _logger.Info("B41FD963-D229-4BDF-A3A9-CBF339B120A5", $"settings = {settings}");
 
-            _world.SetSettings(settings);
+            _world = new WorldCore(settings);
 
             _logger.Info("175D394F-43AD-4B26-BCED-E97F79D3D846", "End");
         }

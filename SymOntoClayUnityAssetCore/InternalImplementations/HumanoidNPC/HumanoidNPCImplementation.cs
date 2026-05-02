@@ -34,131 +34,15 @@ using System.Linq;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
     /// <inheritdoc/>
-    public class HumanoidNPCImplementation: IHumanoidNPC, IDeferredInitialized
+    public class HumanoidNPCImplementation: IHumanoidNPC
     {
         private HumanoidNPCGameComponent _gameComponent;
 
         public HumanoidNPCImplementation(HumanoidNPCSettings settings, IWorldCoreGameComponentContext worldContext)
         {
-            _gameComponent = new HumanoidNPCGameComponent(settings, worldContext);
-        }
-
-        public HumanoidNPCImplementation(HumanoidNPCSettings settings)
-        {
             _settings = settings;
-        }
 
-        void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
-        {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _gameComponent = new HumanoidNPCGameComponent(_settings, worldContext);
-                }
-
-                if(_deferredPublicFactsTexts.Any())
-                {
-                    foreach(var item in _deferredPublicFactsTexts)
-                    {
-                        _gameComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
-                    }
-
-                    _deferredPublicFactsTexts.Clear();
-                    _deferredPublicFactsTexts = null;
-                }
-                else
-                {
-                    _deferredPublicFactsTexts = null;
-                }
-
-                if (_deferredPublicFactsInstances.Any())
-                {
-                    foreach (var item in _deferredPublicFactsInstances)
-                    {
-                        _gameComponent.InsertPublicFact(Logger, item);
-                    }
-
-                    _deferredPublicFactsInstances.Clear();
-                    _deferredPublicFactsInstances = null;
-                }
-                else
-                {
-                    _deferredPublicFactsInstances = null;
-                }
-
-                if (_deferredRemovedPublicFacts.Any())
-                {
-                    foreach (var item in _deferredRemovedPublicFacts)
-                    {
-                        _gameComponent.RemovePublicFact(Logger, item);
-                    }
-
-                    _deferredRemovedPublicFacts.Clear();
-                    _deferredRemovedPublicFacts = null;
-                }
-                else
-                {
-                    _deferredRemovedPublicFacts = null;
-                }
-
-                if (_deferredFactsTexts.Any())
-                {
-                    foreach (var item in _deferredFactsTexts)
-                    {
-                        _gameComponent.InsertFact(Logger, item.Item1, item.Item2);
-                    }
-
-                    _deferredFactsTexts.Clear();
-                    _deferredFactsTexts = null;
-                }
-                else
-                {
-                    _deferredFactsTexts = null;
-                }
-
-                if (_deferredRemovedFacts.Any())
-                {
-                    foreach (var item in _deferredRemovedFacts)
-                    {
-                        _gameComponent.RemoveFact(Logger, item);
-                    }
-
-                    _deferredRemovedFacts.Clear();
-                    _deferredRemovedFacts = null;
-                }
-                else
-                {
-                    _deferredRemovedFacts = null;
-                }
-
-                if (_deferredAddedCategories.Any())
-                {
-                    _gameComponent.AddCategories(null, _deferredAddedCategories);
-                    _deferredAddedCategories.Clear();
-                    _deferredAddedCategories = null;
-                }
-                else
-                {
-                    _deferredAddedCategories = null;
-                }
-
-                if (_deferredRemovedCategories.Any())
-                {
-                    _gameComponent.RemoveCategories(null, _deferredRemovedCategories);
-                    _deferredRemovedCategories.Clear();
-                    _deferredRemovedCategories = null;
-                }
-                else
-                {
-                    _deferredRemovedCategories = null;
-                }
-
-                if (_enableCategories.HasValue)
-                {
-                    _gameComponent.EnableCategories = _enableCategories.Value;
-                }
-            }
+            _gameComponent = new HumanoidNPCGameComponent(settings, worldContext);
         }
 
         /// <inheritdoc/>
@@ -170,18 +54,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public int InstanceId => _gameComponent.InstanceId;
 
-        private readonly object _initializeLockObj = new object();
+        //private readonly object _initializeLockObj = new object();
 
         private readonly HumanoidNPCSettings _settings;
 
-        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-        private List<string> _deferredRemovedPublicFacts = new List<string>();
-        private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<string> _deferredRemovedFacts = new List<string>();
-        private List<string> _deferredAddedCategories = new List<string>();
-        private List<string> _deferredRemovedCategories = new List<string>();
-        private bool? _enableCategories;
+        //private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
+        //private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
+        //private List<string> _deferredRemovedPublicFacts = new List<string>();
+        //private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
+        //private List<string> _deferredRemovedFacts = new List<string>();
+        //private List<string> _deferredAddedCategories = new List<string>();
+        //private List<string> _deferredRemovedCategories = new List<string>();
+        //private bool? _enableCategories;
 
         /// <inheritdoc/>
         public bool EnableLogging { get => _gameComponent.EnableLogging; set => _gameComponent.EnableLogging = value; }
@@ -242,83 +126,31 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    var factName = NameHelper.CreateRuleOrFactName();
-                    _deferredPublicFactsTexts.Add((factName, text));
-                    return factName.NameValue;
-                }
-
-                return _gameComponent.InsertPublicFact(logger, text);
-            }
+            return _gameComponent.InsertPublicFact(logger, text);
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    if (fact.Name == null)
-                    {
-                        fact.Name = NameHelper.CreateRuleOrFactName();
-                    }
-
-                    _deferredPublicFactsInstances.Add(fact);
-                    return fact.Name.NameValue;
-                }
-
-                return _gameComponent.InsertPublicFact(logger, fact);
-            }
+            return _gameComponent.InsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _deferredRemovedPublicFacts.Add(id);
-                    return;
-                }
-
-                _gameComponent.RemovePublicFact(logger, id);
-            }
+            _gameComponent.RemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
         public string InsertFact(IMonitorLogger logger, string text)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    var factName = NameHelper.CreateRuleOrFactName();
-                    _deferredFactsTexts.Add((factName, text));
-                    return factName.NameValue;
-                }
-
-                return _gameComponent.InsertFact(logger, text);
-            }
+            return _gameComponent.InsertFact(logger, text);
         }
 
         /// <inheritdoc/>
         public void RemoveFact(IMonitorLogger logger, string id)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _deferredRemovedFacts.Add(id);
-                    return;
-                }
-
-                _gameComponent.RemoveFact(logger, id);
-            }
+            _gameComponent.RemoveFact(logger, id);
         }
 
         /// <inheritdoc/>
@@ -336,61 +168,25 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _deferredAddedCategories.Add(category);
-                    return;
-                }
-
-                _gameComponent.AddCategory(logger, category);
-            }
+            _gameComponent.AddCategory(logger, category);
         }
 
         /// <inheritdoc/>
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _deferredAddedCategories.AddRange(categories);
-                    return;
-                }
-
-                _gameComponent.AddCategories(logger, categories);
-            }
+            _gameComponent.AddCategories(logger, categories);
         }
 
         /// <inheritdoc/>
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _deferredRemovedCategories.Add(category);
-                    return;
-                }
-
-                _gameComponent.RemoveCategory(logger, category);
-            }
+            _gameComponent.RemoveCategory(logger, category);
         }
 
         /// <inheritdoc/>
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _deferredRemovedCategories.AddRange(categories);
-                    return;
-                }
-
-                _gameComponent.RemoveCategories(logger, categories);
-            }
+            _gameComponent.RemoveCategories(logger, categories);
         }
 
         /// <inheritdoc/>
@@ -398,29 +194,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             get
             {
-                lock (_initializeLockObj)
-                {
-                    if (_gameComponent == null)
-                    {
-                        return _enableCategories ?? _settings.EnableCategories;
-                    }
-
-                    return _gameComponent.EnableCategories;
-                }
+                return _gameComponent.EnableCategories;
             }
 
             set
             {
-                lock (_initializeLockObj)
-                {
-                    if (_gameComponent == null)
-                    {
-                        _enableCategories = value;
-                        return;
-                    }
-
-                    _gameComponent.EnableCategories = value;
-                }
+                _gameComponent.EnableCategories = value;
             }
         }
 

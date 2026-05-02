@@ -65,7 +65,7 @@ namespace TestSandbox.Handlers
             settings.HostListener = platformListener2;
             settings.PlatformSupport = new PlatformSupportCLIStub(new Vector3(100, 100, 100));
 
-            var gameObject = WorldFactory.WorldInstance.GetGameObject(settings);
+            var gameObject = _world.GetGameObject(settings);
 
             _world.Start();
 

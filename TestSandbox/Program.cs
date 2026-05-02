@@ -50,6 +50,7 @@ using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
+using SymOntoClay.UnityAsset.Core.World;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1190,8 +1191,6 @@ app PeaceKeeper is [very middle] exampleClass
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext);
 
-            var instance = WorldFactory.WorldInstance;
-
             var settings = new WorldSettings();
 
             settings.CancellationContext = cancellationTokenSourceContext;
@@ -1226,7 +1225,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             _logger.Info("E17F812C-9900-4B6B-9210-A5CE8742C9DA", $"settings = {settings}");
 
-            instance.SetSettings(settings);
+            var instance = new WorldCore(settings);
 
             var platformListener = new object();
 
@@ -2056,8 +2055,6 @@ primitive task SomePrimitiveTask4
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext);
 
-            var instance = WorldFactory.WorldInstance;
-
             var settings = new WorldSettings();
             settings.CancellationContext = cancellationTokenSourceContext;
 
@@ -2083,7 +2080,7 @@ primitive task SomePrimitiveTask4
 
             _logger.Info("ECB2A35D-05A6-48C4-9C9E-27D54D70C501", $"settings = {settings}");
 
-            instance.SetSettings(settings);
+            var instance = new WorldCore(settings);
 
             var platformListener = new TstPlatformHostListener();
 

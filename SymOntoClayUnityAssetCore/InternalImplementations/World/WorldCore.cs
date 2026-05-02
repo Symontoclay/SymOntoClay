@@ -20,12 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
-using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Place;
@@ -38,9 +36,9 @@ namespace SymOntoClay.UnityAsset.Core.World
     public class WorldCore: IWorld
     {
         #region constructors
-        public WorldCore()
+        public WorldCore(WorldSettings settings)
         {
-            _context = new WorldContext();
+            _context = new WorldContext(settings);
         }
         #endregion
 
@@ -62,29 +60,11 @@ namespace SymOntoClay.UnityAsset.Core.World
         public IMonitor Monitor => _context.Monitor;
 
         /// <inheritdoc/>
-        public void SetSettings(WorldSettings settings)
-        {
-            lock(_lockObj)
-            {
-                _context.SetSettings(settings);
-
-                InitializeDeferred();
-            }
-        }
-
-        /// <inheritdoc/>
         public void AddConvertor(IPlatformTypesConverter convertor)
         {
             lock (_lockObj)
             {
-                if (_context.IsInitialized)
-                {
-                    _context.AddConvertor(convertor);
-                }
-                else
-                {
-                    _deferredPlatformTypesConvertorsList.Add(convertor);
-                }
+                _context.AddConvertor(convertor);
             }                
         }
 
@@ -114,58 +94,26 @@ namespace SymOntoClay.UnityAsset.Core.World
         {
             lock (_lockObj)
             {
-                if (_context.IsInitialized)
-                {
-                    return new HumanoidNPCImplementation(settings, _context);
-                }
-
-                var result = new HumanoidNPCImplementation(settings);
-                AddToDeferredInitialization(result);
-
-                return result;
+                return new HumanoidNPCImplementation(settings, _context);
             }
         }
 
         /// <inheritdoc/>
         public IPlayer GetPlayer(PlayerSettings settings)
         {
-            if (_context.IsInitialized)
-            {
-                return new PlayerImlementation(settings, _context);
-            }
-
-            var result = new PlayerImlementation(settings);
-            AddToDeferredInitialization(result);
-
-            return result;
+            return new PlayerImlementation(settings, _context);
         }
 
         /// <inheritdoc/>
         public IGameObject GetGameObject(GameObjectSettings settings)
         {
-            if (_context.IsInitialized)
-            {
-                return new GameObjectImplementation(settings, _context);
-            }
-
-            var result = new GameObjectImplementation(settings);
-            AddToDeferredInitialization(result);
-
-            return result;
+            return new GameObjectImplementation(settings, _context);
         }
 
         /// <inheritdoc/>
         public IPlace GetPlace(PlaceSettings settings)
         {
-            if (_context.IsInitialized)
-            {
-                return new PlaceImplementation(settings, _context);
-            }
-
-            var result = new PlaceImplementation(settings);
-            AddToDeferredInitialization(result);
-
-            return result;
+            return new PlaceImplementation(settings, _context);
         }
 
         /// <inheritdoc/>
@@ -275,31 +223,6 @@ namespace SymOntoClay.UnityAsset.Core.World
         private readonly object _lockObj = new object();
 
         private readonly WorldContext _context;
-
-        private void AddToDeferredInitialization(IDeferredInitialized deferredInitialized)
-        {
-            _deferredInitializedList.Add(deferredInitialized);
-        }
-
-        private void InitializeDeferred()
-        {
-            if(!_deferredPlatformTypesConvertorsList.IsNullOrEmpty())
-            {
-                foreach(var deferredPlatformTypesConvertor in _deferredPlatformTypesConvertorsList)
-                {
-                    _context.AddConvertor(deferredPlatformTypesConvertor);
-                }                
-            }
-
-            foreach(var deferredInitialized in _deferredInitializedList)
-            {
-                deferredInitialized.Initialize(_context);
-            }
-        }
-
-        private List<IDeferredInitialized> _deferredInitializedList = new List<IDeferredInitialized>();
-
-        private List<IPlatformTypesConverter> _deferredPlatformTypesConvertorsList = new List<IPlatformTypesConverter>();
         #endregion
     }
 }

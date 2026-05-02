@@ -173,7 +173,7 @@ namespace TestSandbox.CreatingExamples
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSourceContext);
 
-            var instance = new WorldCore();
+            
 
             var settings = new WorldSettings();
             settings.CancellationContext = cancellationTokenSourceContext;
@@ -211,7 +211,7 @@ namespace TestSandbox.CreatingExamples
 
             ThreadingSettingsHepler.ConfigureThreadingSettings(settings);
 
-            instance.SetSettings(settings);
+            var instance = new WorldCore(settings);
 
             var platformListener = new object();
 

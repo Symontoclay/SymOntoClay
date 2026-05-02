@@ -57,7 +57,7 @@ namespace TestSandbox.MonoBehaviorTesting
 
             _logger.Info("468926C0-E364-4D57-9BE0-FA2BBA7386D3", $"npcSettings = {npcSettings}");
 
-            _npc = WorldFactory.WorldInstance.GetHumanoidNPC(npcSettings);
+            //_npc = WorldFactory.WorldInstance.GetHumanoidNPC(npcSettings);
 
             _logger.Info("816078D8-87DA-4215-AC74-30D83391651E", $"_npc == null = {_npc == null}");
 

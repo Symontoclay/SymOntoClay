@@ -36,16 +36,6 @@ namespace SymOntoClay.UnityAsset.Core
     public interface IWorld: IWorldComponent
     {
         /// <summary>
-        /// Sets general settings into the instance.
-        /// This method can be run just once in the start of game or application.
-        /// You can not use the framework before calling this method.
-        /// Calling other methods before this will provoke exceptions.
-        /// You can not call the method after disposing the instance.
-        /// </summary>
-        /// <param name="settings">Instance of settings.</param>
-        void SetSettings(WorldSettings settings);
-
-        /// <summary>
         /// Adds platform type convertor manually.
         /// You should add platform type convertor manually using Unity3d, because automatic loading convertors provokes exception on Unity3d.
         /// </summary>

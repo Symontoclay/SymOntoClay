@@ -32,6 +32,7 @@ using SymOntoClay.SoundBuses;
 using SymOntoClay.StandardFacts;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.World;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -66,9 +67,6 @@ namespace SymOntoClay.CLI
             _cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSourceContext);
-
-            var instance = WorldFactory.WorldInstance;
-            world = instance;
 
             var settings = new WorldSettings();
 
@@ -131,7 +129,8 @@ namespace SymOntoClay.CLI
             settings.GameObjectDefaultThreadingSettings = ConfigureGameObjectDefaultThreadingSettings();
             settings.PlaceDefaultThreadingSettings = ConfigurePlaceDefaultThreadingSettings();
 
-            instance.SetSettings(settings);
+            var instance = new WorldCore(settings);
+            world = instance;
 
             var platformListener = this;
 

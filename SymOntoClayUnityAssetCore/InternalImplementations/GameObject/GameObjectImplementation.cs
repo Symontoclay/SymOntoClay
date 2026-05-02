@@ -22,55 +22,23 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Runtime;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 {
     /// <inheritdoc/>
-    public class GameObjectImplementation: IGameObject, IDeferredInitialized
+    public class GameObjectImplementation: IGameObject
     {
         public GameObjectImplementation(GameObjectSettings settings, IWorldCoreGameComponentContext context)
         {
-            _gameComponent = new GameObjectGameComponent(settings, context);
-        }
-
-        public GameObjectImplementation(GameObjectSettings settings)
-        {
             _settings = settings;
-        }
 
-        void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
-        {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _gameComponent = new GameObjectGameComponent(_settings, worldContext);
-
-                    if (_addedCategories.Any())
-                    {
-                        _gameComponent.AddCategories(null, _addedCategories);
-                        _addedCategories = null;
-                    }
-
-                    if (_removedCategories.Any())
-                    {
-                        _gameComponent.RemoveCategories(null, _removedCategories);
-                        _removedCategories = null;
-                    }
-
-                    if (_enableCategories.HasValue)
-                    {
-                        _gameComponent.EnableCategories = _enableCategories.Value;
-                    }
-                }
-            }
+            _gameComponent = new GameObjectGameComponent(settings, context);
         }
 
         /// <inheritdoc/>
@@ -81,11 +49,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 
         /// <inheritdoc/>
         public int InstanceId => _gameComponent.InstanceId;
-
-        private readonly object _initializeLockObj = new object();
-        private List<string> _addedCategories = new List<string>();
-        private List<string> _removedCategories = new List<string>();
-        private bool? _enableCategories;
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)
@@ -132,61 +95,25 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         /// <inheritdoc/>
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _addedCategories.Add(category);
-                    return;
-                }
-
-                _gameComponent.AddCategory(logger, category);
-            }
+            _gameComponent.AddCategory(logger, category);
         }
 
         /// <inheritdoc/>
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _addedCategories.AddRange(categories);
-                    return;
-                }
-
-                _gameComponent.AddCategories(logger, categories);
-            }
+            _gameComponent.AddCategories(logger, categories);
         }
 
         /// <inheritdoc/>
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _removedCategories.Add(category);
-                    return;
-                }
-
-                _gameComponent.RemoveCategory(logger, category);
-            }
+            _gameComponent.RemoveCategory(logger, category);
         }
 
         /// <inheritdoc/>
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            lock (_initializeLockObj)
-            {
-                if (_gameComponent == null)
-                {
-                    _removedCategories.AddRange(categories);
-                    return;
-                }
-
-                _gameComponent.RemoveCategories(logger, categories);
-            }
+            _gameComponent.RemoveCategories(logger, categories);
         }
 
         /// <inheritdoc/>
@@ -194,29 +121,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         {
             get
             {
-                lock (_initializeLockObj)
-                {
-                    if (_gameComponent == null)
-                    {
-                        return _enableCategories ?? _settings.EnableCategories;
-                    }
-
-                    return _gameComponent.EnableCategories;
-                }
+                return _gameComponent.EnableCategories;
             }
 
             set
             {
-                lock (_initializeLockObj)
-                {
-                    if (_gameComponent == null)
-                    {
-                        _enableCategories = value;
-                        return;
-                    }
-
-                    _gameComponent.EnableCategories = value;
-                }
+                _gameComponent.EnableCategories = value;
             }
         }
 

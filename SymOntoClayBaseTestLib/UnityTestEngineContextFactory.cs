@@ -329,8 +329,7 @@ namespace SymOntoClay.BaseTestLib
 
         public static IWorld CreateWorld(WorldSettings settings)
         {
-            var world = new WorldCore();
-            world.SetSettings(settings);
+            var world = new WorldCore(settings);
 
             return world;
         }

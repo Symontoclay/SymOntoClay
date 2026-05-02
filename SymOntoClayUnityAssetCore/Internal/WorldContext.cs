@@ -57,7 +57,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     [SerializeOnlyExplicitlySerializableMembersAttribute]
     public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
     {
-        public void SetSettings(WorldSettings settings)
+        public WorldContext(WorldSettings settings)
         {
             WorldSettingsValidator.Validate(settings);
 

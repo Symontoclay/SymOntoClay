@@ -24,7 +24,6 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;

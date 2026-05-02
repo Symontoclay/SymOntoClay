@@ -50,6 +50,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
+            if(type.IsEnum)
+            {
+                return SerializePrimitiveType(obj, type);
+            }
+
             if (type.FullName.StartsWith("System.Action"))
             {
                 return SerializeAction(obj, type);

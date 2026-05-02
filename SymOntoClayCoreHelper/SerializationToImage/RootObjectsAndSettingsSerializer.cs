@@ -62,7 +62,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
+            var card = new ExternalListCard()
+            {
+                Header = serializedValue,
+                Path = path
+            };
+
             var enumerable = (IEnumerable)obj;
+
+            var items = new List<SerializedValue>();
 
             foreach (var item in enumerable) 
             {
@@ -81,9 +89,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
+
+                items.Add(fieldSerializedValue);
             }
 
-            throw new NotImplementedException("C9EB3A71-1CFD-47C5-8095-F8A7AEEE7296");
+            card.Items = items;
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(KindOfDataCard.ExternalListCard, card);
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>
@@ -456,7 +474,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _dataCardWriter.Write(KindOfDataCard.ExternalManualResetEventClassCard, card);
 
 
-            throw new NotImplementedException("C076085F-8CDD-4BD7-8ECD-13DEADDEEB73");
+            return serializedValue;
         }
 
         /// <inheritdoc/>

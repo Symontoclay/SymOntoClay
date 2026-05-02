@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, null);
+                    throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, "090AA8B0-9493-48AE-B56B-EA2A5CC9E386");
             }
 
             var targetCurrentCodeFrame = currentCodeFrame;

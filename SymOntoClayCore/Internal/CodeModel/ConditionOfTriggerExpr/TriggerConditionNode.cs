@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode(options);
                     
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, "9E6EAE50-14C9-4E77-AA82-460EE475C718");
             }
 
             throw new NotImplementedException("57A46B03-A1B7-4E2C-A62E-13F257370E71");

@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode(options) ^ Right.GetLongHashCode(options);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, "6DBE660B-334C-4FD6-88D2-1A9A45B22BF7");
                     }
 
                 case KindOfLogicalQueryNode.UnaryOperator:
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode(options);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, "4CC211E9-C29F-4267-8B8C-1438287068D6");
                     }
 
                 case KindOfLogicalQueryNode.Concept:
@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode(options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, "B1D9268C-0DC7-49D0-BAC3-DE99D21B3A03");
             }
 
             throw new NotImplementedException("31CF361D-8FC2-482C-8C4C-B21E1595AFBA");

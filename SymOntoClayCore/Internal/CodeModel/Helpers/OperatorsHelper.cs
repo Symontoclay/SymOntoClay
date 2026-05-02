@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                     return 2;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "CBC51B90-9A5F-4AFD-AC72-CB5F5BC4893B");
             }
         }
 
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                     return "/";
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "47F2961C-44C3-4B20-BD0C-D3C7268D3CE1");
             }
         }
     }

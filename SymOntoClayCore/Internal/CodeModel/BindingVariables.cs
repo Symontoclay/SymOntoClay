@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                        throw new ArgumentOutOfRangeException(nameof(kind), kind, "4F5E54E2-005C-4516-8C5B-7F818AE0AEA0");
                 }
             }
         }

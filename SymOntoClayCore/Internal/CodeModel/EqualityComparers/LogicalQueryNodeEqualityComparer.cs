@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.EqualityComparers
                     return x.Name == y.Name;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "69260897-0479-4CF1-A7DB-438068685A83");
             }
         }
 
@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.EqualityComparers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "B5C687BE-F086-417B-BAC5-9F367FE0F8F2");
             }
         }
     }

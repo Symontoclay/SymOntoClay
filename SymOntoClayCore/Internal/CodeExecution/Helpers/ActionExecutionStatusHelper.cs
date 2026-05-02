@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                     return ProcessStatus.Canceled;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(actionExecutionStatus), actionExecutionStatus, null);
+                    throw new ArgumentOutOfRangeException(nameof(actionExecutionStatus), actionExecutionStatus, "EBDB8B92-D0C3-43C3-B66B-F5723AF85B22");
             }
         }
     }

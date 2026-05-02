@@ -325,7 +325,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return AddFactToHumanizedLabel(options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(KindOfInlineTrigger), KindOfInlineTrigger, null);
+                    throw new ArgumentOutOfRangeException(nameof(KindOfInlineTrigger), KindOfInlineTrigger, "1143F725-9E00-4CBB-9F5B-9DE0EAF30271");
             }
         }
 
@@ -340,7 +340,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return "on Leave";
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(KindOfSystemEvent), KindOfSystemEvent, null);
+                    throw new ArgumentOutOfRangeException(nameof(KindOfSystemEvent), KindOfSystemEvent, "00B0A90F-8C1B-4CA0-BC28-2B7E44235C0C");
             }
         }
 
@@ -398,7 +398,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(DoubleConditionsStrategy), DoubleConditionsStrategy, null);
+                        throw new ArgumentOutOfRangeException(nameof(DoubleConditionsStrategy), DoubleConditionsStrategy, "D55D18F4-A15C-4BDB-B452-0BAFF0545752");
                 }
             }
 

@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, "95F50D8F-1A37-4D43-9BA9-AA3234A19DAC");
             }
 
             sb.Append(RightVariable.ToHumanizedLabel(options));

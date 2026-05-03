@@ -126,10 +126,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var card = new ExternalClassCard()
+            var card = new ExternalWorldRootClassCard()
             {
-                Header = serializedValue,
-                Path = path
+                Header = serializedValue
             };
 
             var cardFieldDict = new Dictionary<string, SerializedValue>();

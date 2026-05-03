@@ -53,6 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.World
         #region public members
 
         /// <inheritdoc/>
+        [WorldComponentIdMember]
         public string Id => string.Empty;
 
         /// <inheritdoc/>
@@ -72,6 +73,12 @@ namespace SymOntoClay.UnityAsset.Core.World
         {
             lock (_lockObj)
             {
+                if(_platformTypesConverters.Contains(convertor))
+                {
+                    return;
+                }
+
+                _platformTypesConverters.Add(convertor);
                 _context.AddConvertor(convertor);
             }
         }
@@ -102,26 +109,51 @@ namespace SymOntoClay.UnityAsset.Core.World
         {
             lock (_lockObj)
             {
-                return new HumanoidNPCImplementation(settings, _context);
+                var worldComponent = new HumanoidNPCImplementation(settings, _context);
+
+                _serializedWorldComponents.Add(worldComponent);
+
+                return worldComponent;
             }
         }
 
         /// <inheritdoc/>
         public IPlayer GetPlayer(PlayerSettings settings)
         {
-            return new PlayerImlementation(settings, _context);
+            lock (_lockObj)
+            {
+                var worldComponent = new PlayerImlementation(settings, _context);
+
+                _serializedWorldComponents.Add(worldComponent);
+
+                return worldComponent;
+            }
         }
 
         /// <inheritdoc/>
         public IGameObject GetGameObject(GameObjectSettings settings)
         {
-            return new GameObjectImplementation(settings, _context);
+            lock (_lockObj)
+            {
+                var worldComponent = new GameObjectImplementation(settings, _context);
+
+                _serializedWorldComponents.Add(worldComponent);
+
+                return worldComponent;
+            }
         }
 
         /// <inheritdoc/>
         public IPlace GetPlace(PlaceSettings settings)
         {
-            return new PlaceImplementation(settings, _context);
+            lock (_lockObj)
+            {
+                var worldComponent = new PlaceImplementation(settings, _context);
+
+                _serializedWorldComponents.Add(worldComponent);
+
+                return worldComponent;
+            }
         }
 
         /// <inheritdoc/>
@@ -248,9 +280,11 @@ namespace SymOntoClay.UnityAsset.Core.World
         private readonly object _lockObj = new object();
         private ComponentState _state = ComponentState.Created;
 
+        [SerializedMemberAttributeWithChildren]
+        private List<ISerializedWorldComponent> _serializedWorldComponents = new List<ISerializedWorldComponent>();
 
-        private List<ISerializedWorldComponent> serializedWorldComponents = new List<ISerializedWorldComponent>();
 
+        private List<IPlatformTypesConverter> _platformTypesConverters = new List<IPlatformTypesConverter>();
 
         private readonly WorldContext _context;
         #endregion

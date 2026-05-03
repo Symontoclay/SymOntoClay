@@ -5,5 +5,6 @@
         bool IsSerialized(object obj, bool ignorePreregistered);
         bool TryGetSerializedValue(object obj, out SerializedValue serializedValue);
         SerializedValue RegSerializedValue(object obj, SerializedObjectsPoolMode mode);
+        SerializedValue GetOrRegSerializedValue(object obj, SerializedObjectsPoolMode mode);
     }
 }

@@ -106,6 +106,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -170,6 +173,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.RegSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPoolMode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.GetOrRegSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPoolMode)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.NullTypeId">

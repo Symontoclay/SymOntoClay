@@ -125,6 +125,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return serializedValue;
         }
 
+        /// <inheritdoc/>
+        public SerializedValue GetOrRegSerializedValue(object obj, SerializedObjectsPoolMode mode)
+        {
+            if(TryGetSerializedValue(obj, out var serializedValue))
+            {
+                return serializedValue;
+            }
+
+            return RegSerializedValue(obj, mode);
+        }
+
         private int GetId()
         {
             lock (_lock)

@@ -28,11 +28,32 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private readonly IStructuralContext _structuralContext;
         private readonly IDataCardWriter _dataCardWriter;
-        
+
+        private HashSet<object> _visitedObjects = new HashSet<object>();
+
+        /// <inheritdoc/>
+        protected override bool TryGetSerializedValue(object obj, out SerializedValue serializedValue)
+        {
+#if DEBUG
+            _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
+#endif
+
+            if(!_visitedObjects.Contains(obj))
+            {
+                serializedValue = null;
+
+                return false;
+            }
+
+            return base.TryGetSerializedValue(obj, out serializedValue);
+        }
+
         /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+            _visitedObjects.Add(obj);
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
@@ -56,7 +77,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+            _visitedObjects.Add(obj);
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
@@ -177,11 +200,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private SerializedValue SerializeWorldRoot(object obj, Type type, string path)
         {
+            _visitedObjects.Add(obj);
+
 #if DEBUG
             _logger.Info($"path = {path}");
 #endif
 
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
@@ -265,11 +290,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private SerializedValue SerializeSettings(object obj, Type type, string path)
         {
+            _visitedObjects.Add(obj);
+
 #if DEBUG
             _logger.Info($"path = {path}");
 #endif
 
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
@@ -325,11 +352,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private SerializedValue SerializeUsualObject(object obj, Type type, string path)
         {
+            _visitedObjects.Add(obj);
+
 #if DEBUG
             _logger.Info($"path = {path}");
 #endif
 
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
@@ -456,6 +485,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeManualResetEvent(object obj, Type type, string path)
         {
+            _visitedObjects.Add(obj);
+
 #if DEBUG
             _logger.Info($"path = {path}");
 #endif
@@ -468,7 +499,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"isSet = {isSet}");
 #endif
 
-            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");

@@ -27,11 +27,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializeValueMode = {serializeValueMode}");
 #endif
 
-            if (_serializedObjectsPool.TryGetSerializedValue(obj, out var serializedValue))
+            if (TryGetSerializedValue(obj, out var serializedValue))
             {
+#if DEBUG
+                _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
                 return serializedValue;
             }
-
+            
             if (obj == null)
             {
                 return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
@@ -131,6 +135,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                     return SerializeComposite(obj, type, path);
             }
+        }
+
+        protected virtual bool TryGetSerializedValue(object obj, out SerializedValue serializedValue)
+        {
+            return _serializedObjectsPool.TryGetSerializedValue(obj, out serializedValue);
         }
 
         protected virtual SerializedValue SerializePrimitiveType(object obj, Type type)

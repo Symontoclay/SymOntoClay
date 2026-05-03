@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -49,6 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         /// <inheritdoc/>
         public int InstanceId => _gameComponent.InstanceId;
 
+        [SerializedMember]
         private PlaceGameComponent _gameComponent;
 
         [SettingsMember]

@@ -25,6 +25,7 @@ using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -35,8 +36,11 @@ using System.Linq;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
     /// <inheritdoc/>
+    [WorldComponent]
+    [SerializeOnlyExplicitlySerializableMembers]
     public class HumanoidNPCImplementation: IHumanoidNPC, ISerializedWorldComponent
     {
+        [SerializedMember]
         private HumanoidNPCGameComponent _gameComponent;
 
         public HumanoidNPCImplementation(HumanoidNPCSettings settings, IWorldCoreGameComponentContext worldContext)

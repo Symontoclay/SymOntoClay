@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Bson;
 using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections;
@@ -185,7 +186,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch(kindOfStructuralObject)
             {
                 case KindOfStructuralObject.WorldRoot:
-                    return SerializeWorldRoot(obj, type, path);
+                case KindOfStructuralObject.WorldComponent:
+                    return SerializeKeyWorldComponent(obj, type, path);
 
                 case KindOfStructuralObject.WorldSettings:
                     return SerializeSettings(obj, type, path);
@@ -198,7 +200,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
         }
 
-        private SerializedValue SerializeWorldRoot(object obj, Type type, string path)
+        private SerializedValue SerializeKeyWorldComponent(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);
 
@@ -538,7 +540,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly List<string> _tmpProcessedTypes = new List<string>()
         {
             "TestSandbox.SerializationToImage.TstWorldContext",
-            "SymOntoClay.UnityAsset.Core.World.WorldCore"
+            "SymOntoClay.UnityAsset.Core.World.WorldCore",
+            "SymOntoClay.UnityAsset.Core.WorldSettings",
+            "SymOntoClay.Core.ThreadingSettings",
+            "SymOntoClay.Threading.CustomThreadPoolSettings",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"
         };
     }
 }

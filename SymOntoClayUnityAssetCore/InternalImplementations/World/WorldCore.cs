@@ -38,8 +38,8 @@ using System.Runtime;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {
-    [WorldRootAttribute]
-    [SerializeOnlyExplicitlySerializableMembersAttribute]
+    [WorldRoot]
+    [SerializeOnlyExplicitlySerializableMembers]
     public class WorldCore: IWorld, ISerializedWorldRoot
     {
         #region constructors
@@ -290,6 +290,7 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         private List<IPlatformTypesConverter> _platformTypesConverters = new List<IPlatformTypesConverter>();
 
+        [SerializedMember]
         private readonly WorldContext _context;
         #endregion
     }

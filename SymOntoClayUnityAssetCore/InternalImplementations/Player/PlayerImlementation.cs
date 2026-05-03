@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -33,6 +34,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
     /// <inheritdoc/>
     public class PlayerImlementation : IPlayer, ISerializedWorldComponent
     {
+        [SerializedMember]
         private PlayerGameComponent _gameComponent;
 
         public PlayerImlementation(PlayerSettings settings, IWorldCoreGameComponentContext context)

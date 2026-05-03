@@ -5,6 +5,7 @@
         Unknown,
         WorldRoot,
         WorldSettings,
+        WorldComponent,
         UsualObject
     }
 }

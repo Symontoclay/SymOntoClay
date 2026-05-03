@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -136,6 +137,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         [SettingsMember]
         private readonly GameObjectSettings _settings;
 
+        [SerializedMember]
         private GameObjectGameComponent _gameComponent;
 
         /// <inheritdoc/>

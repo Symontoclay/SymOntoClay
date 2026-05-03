@@ -2,7 +2,7 @@
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.Attributes
 {
-    public class SerializedMemberAttributeWithChildrenAttribute : Attribute
+    public class SerializedMemberWithChildrenAttribute : Attribute
     {
     }
 }

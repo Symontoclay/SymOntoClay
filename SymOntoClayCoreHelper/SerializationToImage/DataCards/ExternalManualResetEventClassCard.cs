@@ -6,6 +6,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
     public class ExternalManualResetEventClassCard : IDataCard, IObjectToString
     {
+        /// <inheritdoc/>
+        public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalManualResetEventClassCard;
+
         public SerializedValue Header { get; set; }
         public string Path { get; set; }
         public bool IsSet { get; set; }
@@ -33,6 +36,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfDataCard)} = {KindOfDataCard}");
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
             sb.AppendLine($"{spaces}{nameof(Path)} = {Path}");
             sb.AppendLine($"{spaces}{nameof(IsSet)} = {IsSet}");

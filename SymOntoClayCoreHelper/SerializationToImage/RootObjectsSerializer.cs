@@ -1,7 +1,8 @@
-﻿using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
+﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -132,6 +133,35 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
             var cardFieldDict = new Dictionary<string, SerializedValue>();
+
+            var fieldsWithChildren = GetFields(type)
+                .Where(f => f.IsDefined(typeof(SerializedMemberWithChildrenAttribute), false))
+                .ToList();
+
+#if DEBUG
+            _logger.Info($"fieldsWithChildren.Count = {fieldsWithChildren.Count}");
+#endif
+
+            foreach (var field in fieldsWithChildren)
+            {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+#endif
+
+                var fieldValue = field.GetValue(obj);
+
+#if DEBUG
+                _logger.Info($"fieldValue = {fieldValue}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(fieldValue, path);
+
+#if DEBUG
+                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
+
+                cardFieldDict[field.Name] = fieldSerializedValue;
+            }
 
 #if DEBUG
             _logger.Info($"card = {card}");

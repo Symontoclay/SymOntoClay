@@ -7,6 +7,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
     public class ExternalListCard : IDataCard, IObjectToString
     {
+        /// <inheritdoc/>
+        public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalListCard;
+
         public SerializedValue Header { get; set; }
         public string Path { get; set; }
         public List<SerializedValue> Items { get; set; }
@@ -34,6 +37,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfDataCard)} = {KindOfDataCard}");
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
             sb.AppendLine($"{spaces}{nameof(Path)} = {Path}");
             sb.PrintPODListProp(n, nameof(Items), Items);

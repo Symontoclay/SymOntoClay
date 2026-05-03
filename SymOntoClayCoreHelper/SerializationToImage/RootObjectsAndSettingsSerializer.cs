@@ -48,7 +48,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
+            _dataCardWriter.Write(card);
 
             return serializedValue;
         }
@@ -99,7 +99,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _dataCardWriter.Write(KindOfDataCard.ExternalListCard, card);
+            _dataCardWriter.Write(card);
 
             return serializedValue;
         }
@@ -256,7 +256,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
+            _dataCardWriter.Write(card);
 
             //throw new NotImplementedException("C90EDF11-865C-4725-ABA4-A803814DC014");
 
@@ -316,7 +316,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
+            _dataCardWriter.Write(card);
 
             //throw new NotImplementedException("C9EBF62E-2FB3-4241-A9BB-E70A5D6A0774");
 
@@ -393,7 +393,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _dataCardWriter.Write(KindOfDataCard.ExternalClassCard, card);
+            _dataCardWriter.Write(card);
 
             //throw new NotImplementedException("C871A015-857B-4C95-B5AA-A4DCAB10EB43");
 
@@ -485,7 +485,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            _dataCardWriter.Write(KindOfDataCard.ExternalManualResetEventClassCard, card);
+            _dataCardWriter.Write(card);
 
 
             return serializedValue;

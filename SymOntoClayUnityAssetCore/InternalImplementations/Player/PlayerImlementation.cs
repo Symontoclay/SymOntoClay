@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;

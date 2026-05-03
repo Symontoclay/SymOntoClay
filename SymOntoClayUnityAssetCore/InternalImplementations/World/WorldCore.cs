@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
@@ -280,7 +281,7 @@ namespace SymOntoClay.UnityAsset.Core.World
         private readonly object _lockObj = new object();
         private ComponentState _state = ComponentState.Created;
 
-        [SerializedMemberAttributeWithChildren]
+        [SerializedMemberWithChildren]
         private List<ISerializedWorldComponent> _serializedWorldComponents = new List<ISerializedWorldComponent>();
 
 

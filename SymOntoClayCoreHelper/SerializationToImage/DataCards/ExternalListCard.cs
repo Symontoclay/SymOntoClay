@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ExternalListCard : IObjectToString
+    public class ExternalListCard : IDataCard, IObjectToString
     {
         public SerializedValue Header { get; set; }
         public string Path { get; set; }

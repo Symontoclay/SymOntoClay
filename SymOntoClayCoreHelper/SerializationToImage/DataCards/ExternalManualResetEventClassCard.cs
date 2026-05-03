@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ExternalManualResetEventClassCard : IObjectToString
+    public class ExternalManualResetEventClassCard : IDataCard, IObjectToString
     {
         public SerializedValue Header { get; set; }
         public string Path { get; set; }

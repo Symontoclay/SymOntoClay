@@ -7,8 +7,10 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ExternalWorldRootClassCard : IObjectToString
+    public class ExternalWorldRootClassCard : IDataCard, IObjectToString
     {
+        public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalWorldRootClassCard;
+
         public SerializedValue Header { get; set; }
 
         /// <inheritdoc/>

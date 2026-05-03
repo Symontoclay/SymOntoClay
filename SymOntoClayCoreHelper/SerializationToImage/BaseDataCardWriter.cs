@@ -36,10 +36,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly BinaryWriter _writer;
 
         /// <inheritdoc/>
-        public void Write(KindOfDataCard kindOfDataCard, object dataCard)
+        public void Write(IDataCard dataCard)
         {
 #if DEBUG
-            _logger.Info($"kindOfDataCard = {kindOfDataCard}");
+            _logger.Info($"dataCard.KindOfDataCard = {dataCard.KindOfDataCard}");
 #endif
 
             using var ms = new MemoryStream();
@@ -54,7 +54,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"data.Length = {data.Length}");
 #endif
 
-            _writer.Write((int)kindOfDataCard);
+            _writer.Write((int)dataCard.KindOfDataCard);
             _writer.Write(data.Length);
             _writer.Write(data);
 

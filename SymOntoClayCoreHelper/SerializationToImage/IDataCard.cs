@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SymOntoClay.CoreHelper.SerializationToImage
+﻿namespace SymOntoClay.CoreHelper.SerializationToImage
 {
     public interface IDataCard
     {

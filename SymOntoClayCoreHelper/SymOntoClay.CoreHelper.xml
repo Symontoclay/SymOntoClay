@@ -58,6 +58,18 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldComponentClassCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldComponentClassCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldComponentClassCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldComponentClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldRootClassCard.KindOfDataCard">
             <inheritdoc/>
         </member>

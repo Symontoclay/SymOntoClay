@@ -9,6 +9,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         ExternalClassCard,
         ExternalManualResetEventClassCard,
         ExternalListCard,
-        ExternalWorldRootClassCard
+        ExternalWorldRootClassCard,
+        ExternalWorldComponentClassCard
     }
 }

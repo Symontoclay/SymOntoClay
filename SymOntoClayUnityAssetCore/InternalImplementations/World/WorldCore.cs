@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.World
 {
     [WorldRootAttribute]
     [SerializeOnlyExplicitlySerializableMembersAttribute]
-    public class WorldCore: IWorld
+    public class WorldCore: IWorld, ISerializedWorldRoot
     {
         #region constructors
         public WorldCore(WorldSettings settings)
@@ -216,6 +216,9 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public bool EnableCategories { get => throw new NotImplementedException("5B0E49C5-919F-40AE-A951-BCB364258B17"); set => throw new NotImplementedException("339F2D6D-0225-4439-9C9D-462CC4A356B2"); }
+
+        /// <inheritdoc/>
+        public List<ISerializedWorldComponent> SerializedWorldComponents => _serializedWorldComponents;
 
         /// <inheritdoc/>
         public void LoadFromSourceCode()

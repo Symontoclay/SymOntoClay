@@ -104,6 +104,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void Finalization()
         {
+            _rootObjectsDataCardWriter.Dispose();
             _rootObjectsAndSettingsDataCardWriter.Dispose();
 
             SaveSerializedTypesPoolToFile();

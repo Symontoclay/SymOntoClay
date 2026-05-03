@@ -757,6 +757,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.EnableCategories">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.SerializedWorldComponents">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.LoadFromSourceCode">
             <inheritdoc/>
         </member>

@@ -1,17 +1,18 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ExternalWorldRootClassCard : IDataCard, IObjectToString
+    public class ExternalWorldComponentClassCard : IDataCard, IObjectToString
     {
         /// <inheritdoc/>
-        public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalWorldRootClassCard;
+        public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalWorldComponentClassCard;
 
         public SerializedValue Header { get; set; }
-        public List<SerializedValue> Items { get; set; }
+        public string Id { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -38,7 +39,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 
             sb.AppendLine($"{spaces}{nameof(KindOfDataCard)} = {KindOfDataCard}");
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
-            sb.PrintPODListProp(n, nameof(Items), Items);
+            sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
 
             return sb.ToString();
         }

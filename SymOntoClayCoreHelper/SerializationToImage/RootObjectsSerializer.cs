@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections.Generic;
@@ -121,6 +122,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"path = {path}");
 #endif
 
+            var world = (ISerializedWorldRoot)obj;
+
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
 
 #if DEBUG
@@ -132,42 +135,51 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 Header = serializedValue
             };
 
-            var cardFieldDict = new Dictionary<string, SerializedValue>();
+            var cardItems = new List<SerializedValue>();
 
-            var fieldsWithChildren = GetFields(type)
-                .Where(f => f.IsDefined(typeof(SerializedMemberWithChildrenAttribute), false))
-                .ToList();
-
-#if DEBUG
-            _logger.Info($"fieldsWithChildren.Count = {fieldsWithChildren.Count}");
-#endif
-
-            foreach (var field in fieldsWithChildren)
+            foreach(var worldComponent in world.SerializedWorldComponents)
             {
-#if DEBUG
-                _logger.Info($"field.Name = {field.Name}");
-#endif
-
-                var fieldValue = field.GetValue(obj);
-
-#if DEBUG
-                _logger.Info($"fieldValue = {fieldValue}");
-#endif
-
-                var fieldSerializedValue = SerializeValue(fieldValue, path);
+                var fieldSerializedValue = SerializeWorldComponent(worldComponent);
 
 #if DEBUG
                 _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
 
-                cardFieldDict[field.Name] = fieldSerializedValue;
+                cardItems.Add(fieldSerializedValue);
             }
+
+            card.Items = cardItems;
 
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
-            throw new NotImplementedException("C16052AB-C4CD-4111-AC89-94FBDBFEE487");
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
+        }
+
+        private SerializedValue SerializeWorldComponent(ISerializedWorldComponent obj)
+        {
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ExternalWorldComponentClassCard()
+            {
+                Header = serializedValue,
+                Id = obj.Id
+            };
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>

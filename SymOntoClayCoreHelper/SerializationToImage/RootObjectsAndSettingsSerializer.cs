@@ -276,6 +276,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if(properties.Any())
             {
+                foreach (var property in properties)
+                {
+#if DEBUG
+                    _logger.Info($"type.FullName = {type.FullName}");
+                    _logger.Info($"property.Name = {property.Name}");
+#endif
+                }
+
                 throw new NotImplementedException("CFD2C27A-2E72-40D7-A365-3A6BFE4467CF");
             }
 
@@ -544,7 +552,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.WorldSettings",
             "SymOntoClay.Core.ThreadingSettings",
             "SymOntoClay.Threading.CustomThreadPoolSettings",
-            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation",
+            "SymOntoClay.UnityAsset.Core.HumanoidNPCSettings"
         };
     }
 }

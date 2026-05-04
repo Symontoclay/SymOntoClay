@@ -163,7 +163,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         protected IEnumerable<PropertyInfo> GetProperties(Type type)
         {
-            return type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.CanWrite);
+            return type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.CanWrite && IsAutoProperty(p));
+        }
+
+        public static bool IsAutoProperty(PropertyInfo prop)
+        {
+            // Ищем поле, которое компилятор генерирует автоматически
+            var backingField = prop.DeclaringType.GetField($"<{prop.Name}>k__BackingField",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+
+            return backingField != null;
         }
     }
 }

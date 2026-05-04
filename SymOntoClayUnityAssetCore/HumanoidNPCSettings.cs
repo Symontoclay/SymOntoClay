@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,6 +33,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Biped NPC (Non-Player Character) setting.
     /// </summary>
+    [WorldComponentSettings]
     public class HumanoidNPCSettings: BaseManualControllingGameComponentSettings
     {
         /// <summary>
@@ -39,10 +41,14 @@ namespace SymOntoClay.UnityAsset.Core
         /// The file describes active logic which will be executed on the NPC.
         /// </summary>
         public string LogicFile { get; set; }
-        
+
+        [MemberWithExternalValue]
         public IPlatformSupport PlatformSupport { get; set; }
+
+        [MemberWithExternalValue]
         public IVisionProvider VisionProvider { get; set; }
 
+        [MemberWithExternalValue]
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
 

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,8 +36,11 @@ namespace SymOntoClay.UnityAsset.Core
         /// The file describes facts which are visible for other NPCs or can be recognized in some way by player.
         /// </summary>
         public string HostFile { get; set; }
+
+        [MemberWithExternalValue]
         public IPlatformSupport PlatformSupport { get; set; }
 
+        [MemberWithExternalValue]
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
 

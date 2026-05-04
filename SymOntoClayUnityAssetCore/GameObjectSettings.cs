@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,11 +32,13 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Game object settings.
     /// </summary>
+    [WorldComponentSettings]
     public class GameObjectSettings : BaseStoredGameComponentSettings
     {
         /// <summary>
         /// Gets or sets host listener.
         /// </summary>
+        [MemberWithExternalValue]
         public object HostListener { get; set; }
 
         /// <inheritdoc/>

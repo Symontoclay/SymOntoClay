@@ -168,7 +168,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         public static bool IsAutoProperty(PropertyInfo prop)
         {
-            // Ищем поле, которое компилятор генерирует автоматически
             var backingField = prop.DeclaringType.GetField($"<{prop.Name}>k__BackingField",
                 BindingFlags.NonPublic | BindingFlags.Instance);
 

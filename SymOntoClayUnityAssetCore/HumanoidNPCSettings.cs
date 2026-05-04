@@ -22,9 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
-using System;
 using System.Collections.Generic;
 using System.Text;
 

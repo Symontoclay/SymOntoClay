@@ -8,7 +8,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
-
+        
         public ObjectToImageSerializer(ISerializedObjectsPool serializedObjectsPool)
             : base(serializedObjectsPool)
         {

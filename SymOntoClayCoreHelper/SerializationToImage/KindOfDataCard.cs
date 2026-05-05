@@ -11,6 +11,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         ExternalListCard,
         ExternalWorldRootClassCard,
         ExternalWorldComponentClassCard,
-        ClassCard
+        ClassCard,
+        ListCard
     }
 }

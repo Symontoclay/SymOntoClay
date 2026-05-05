@@ -2,6 +2,7 @@
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -93,11 +94,42 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
+            _visitedObjects.Add(obj);
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
 #if DEBUG
-            if (!_tmpProcessedTypes.Contains(type.FullName))
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ListCard()
             {
-                throw new NotSupportedException($"F1157033-4AE6-43B1-A81C-502CB932F4B6: please check type '{type.FullName}'");
+                Header = serializedValue
+            };
+
+            var enumerable = (IEnumerable)obj;
+
+            var items = new List<SerializedValue>();
+
+            foreach ( var item in enumerable)
+            {
+#if DEBUG
+                _logger.Info($"item = {item}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(item, string.Empty);
+
+#if DEBUG
+                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
+
+                items.Add(fieldSerializedValue);
             }
+
+            card.Items = items;
+
+#if DEBUG
+            _logger.Info($"card = {card}");
 #endif
 
             throw new NotImplementedException("C7F00063-BE35-44CD-9528-32C3600EF75E");
@@ -381,7 +413,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             "SymOntoClay.UnityAsset.Core.World.WorldCore",
             "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
-            "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"
+            "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext",
+            "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
+            "SymOntoClay.Core.Internal.BaseCoreContext",
+            "SymOntoClay.Monitor.Internal.MonitorNode"
         };
     }
 }

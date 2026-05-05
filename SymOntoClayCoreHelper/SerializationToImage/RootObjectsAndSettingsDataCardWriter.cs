@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
-using SymOntoClay.Common.Disposing;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {

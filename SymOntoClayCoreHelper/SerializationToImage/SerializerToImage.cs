@@ -43,9 +43,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
             _rootObjectsDataCardWriter = new RootObjectsDataCardWriter(_tempPath, _filesToPack);
             _rootObjectsAndSettingsDataCardWriter = new RootObjectsAndSettingsDataCardWriter(_tempPath, _filesToPack);
+            _objectsDataCardWriter = new ObjectsDataCardWriter(_tempPath, _filesToPack);
             _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, structuralContext, _rootObjectsDataCardWriter);
             _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, structuralContext, _rootObjectsAndSettingsDataCardWriter);
-            _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool);
+            _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool, structuralContext, _objectsDataCardWriter);
         }
 
         private readonly string _imageFileName;
@@ -57,6 +58,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedObjectsPool _serializedObjectsPool;
         private readonly IDataCardWriter _rootObjectsDataCardWriter;
         private readonly IDataCardWriter _rootObjectsAndSettingsDataCardWriter;
+        private readonly IDataCardWriter _objectsDataCardWriter;
         private readonly IObjectSerializer _rootObjectsSerializer;
         private readonly IObjectSerializer _rootObjectsAndSettingsSerializer;
         private readonly IObjectSerializer _objectToImageSerializer;
@@ -106,6 +108,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             _rootObjectsDataCardWriter.Dispose();
             _rootObjectsAndSettingsDataCardWriter.Dispose();
+            _objectsDataCardWriter.Dispose();
 
             SaveSerializedTypesPoolToFile();
             CreatePackage();

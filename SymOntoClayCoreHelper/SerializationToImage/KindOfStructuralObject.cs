@@ -6,6 +6,7 @@
         WorldRoot,
         WorldSettings,
         WorldComponent,
+        SerializeWithDataCreation,
         UsualObject
     }
 }

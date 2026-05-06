@@ -59,6 +59,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 case KindOfStructuralObject.WorldSettings:
                 case KindOfStructuralObject.UsualObject:
+                case KindOfStructuralObject.SerializeWithDataCreation:
                     return base.TryGetSerializedValue(obj, out serializedValue);
 
                 default:
@@ -415,8 +416,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
             "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext",
             "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
-            "SymOntoClay.Core.Internal.BaseCoreContext",
-            "SymOntoClay.Monitor.Internal.MonitorNode"
+            "SymOntoClay.Core.Internal.BaseCoreContext"
         };
     }
 }

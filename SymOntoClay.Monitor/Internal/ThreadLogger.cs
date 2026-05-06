@@ -25,6 +25,7 @@ using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileWriter;
@@ -37,6 +38,7 @@ using System.Threading;
 
 namespace SymOntoClay.Monitor.Internal
 {
+    [SerializeWithDataCreation]
     public class ThreadLogger : Disposable, IMonitorLoggerContext, IMonitorFeatures, IThreadLogger
     {
 #if DEBUG

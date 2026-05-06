@@ -25,6 +25,7 @@ using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
@@ -34,10 +35,10 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 
 namespace SymOntoClay.Monitor.Internal
 {
+    [SerializeWithDataCreation]
     public class MonitorNode : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitorNode
     {
 #if DEBUG

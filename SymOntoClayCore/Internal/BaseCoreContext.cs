@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -41,6 +42,7 @@ namespace SymOntoClay.Core.Internal
         }
 
         /// <inheritdoc/>
+        [DeserializeInPostHandler]
         public IMonitorNode MonitorNode { get; private set; }
 
         public Compiler Compiler { get; set; }

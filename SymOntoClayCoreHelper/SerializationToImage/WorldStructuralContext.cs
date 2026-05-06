@@ -66,6 +66,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return KindOfStructuralObject.WorldComponent;
             }
 
+            if (type.IsDefined(typeof(SerializeWithDataCreationAttribute), true))
+            {
+                return KindOfStructuralObject.SerializeWithDataCreation;
+            }
+            
             return KindOfStructuralObject.UsualObject;
         }
     }

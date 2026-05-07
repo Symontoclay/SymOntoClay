@@ -197,6 +197,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case KindOfStructuralObject.WorldComponent:
                     return SerializeKeyWorldComponent(obj, type, path);
 
+                case KindOfStructuralObject.SerializeWithDataCreation:
+                    return SerializeWithDataCreation(obj, type, path);
+
                 case KindOfStructuralObject.UsualObject:
                     return SerializeUsualObject(obj, type, path);
 
@@ -274,6 +277,31 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
             throw new NotImplementedException("C34FFEC2-FEC7-412A-BF4E-985ACF39DEA8");
+        }
+
+        private SerializedValue SerializeWithDataCreation(object obj, Type type, string path)
+        {
+            _visitedObjects.Add(obj);
+
+#if DEBUG
+            //_logger.Info($"path = {path}");
+#endif
+
+            var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var serializationDataFactory = (ISerializationDataFactory)obj;
+
+            var serializationData = serializationDataFactory.GetSerializationData();
+
+#if DEBUG
+            _logger.Info($"serializationData = {serializationData}");
+#endif
+
+            throw new NotImplementedException("C5F70377-A0F4-4847-8DD5-829AA6472C35");
         }
 
         private SerializedValue SerializeUsualObject(object obj, Type type, string path)
@@ -416,7 +444,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
             "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext",
             "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
-            "SymOntoClay.Core.Internal.BaseCoreContext"
+            "SymOntoClay.Core.Internal.BaseCoreContext",
+            "SymOntoClay.Monitor.Internal.MonitorNode"
         };
     }
 }

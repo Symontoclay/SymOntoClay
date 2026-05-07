@@ -25,6 +25,7 @@ using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
@@ -39,7 +40,7 @@ using System.Text;
 namespace SymOntoClay.Monitor.Internal
 {
     [SerializeWithDataCreation]
-    public class MonitorNode : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitorNode
+    public class MonitorNode : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitorNode, ISerializationDataFactory
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -655,6 +656,12 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         public bool EnableAsyncMessageCreation => _baseMonitorSettings.EnableAsyncMessageCreation && _monitorContext.Settings.EnableAsyncMessageCreation;
+
+        /// <inheritdoc/>
+        public object GetSerializationData()
+        {
+            throw new NotImplementedException("C4CADC5A-0AE6-445D-AF08-8CC60834CE55");
+        }
 
         /// <inheritdoc/>
         public override string ToString()

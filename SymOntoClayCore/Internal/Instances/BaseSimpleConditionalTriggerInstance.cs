@@ -40,7 +40,9 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IOnChangedLogicalStorageHandler, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent,
+        IOnChangedLogicalStorageHandler, IObjectWithPeriodicMethod,
+        IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
@@ -74,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _serializationAnchor = new SerializationAnchor();
 
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
-            _activeObject.ObjectWithPeriodicMethod = Handler;
+            _activeObject.ObjectWithPeriodicMethod = this;
         }
 
         private readonly LogicalSearchResolver _searcher;
@@ -130,7 +132,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private bool Handler(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             try
             {

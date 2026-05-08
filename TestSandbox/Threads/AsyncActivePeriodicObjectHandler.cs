@@ -29,7 +29,7 @@ using System.Threading;
 
 namespace TestSandbox.Threads
 {
-    public class AsyncActivePeriodicObjectHandler
+    public class AsyncActivePeriodicObjectHandler: IObjectWithPeriodicMethod
     {
         private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImplementation();
 
@@ -47,12 +47,12 @@ namespace TestSandbox.Threads
 
             var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, _logger)
             {
-                ObjectWithPeriodicMethod = NRun
+                ObjectWithPeriodicMethod = this
             };
 
             var activeObject2 = new AsyncActivePeriodicObject(activeContext, threadPool, _logger)
             {
-                ObjectWithPeriodicMethod = NRun_2
+                ObjectWithPeriodicMethod = this
             };
 
             _logger.Info("5442E7B9-A695-40B2-BC02-4CD3F5333FB1", $"activeObject.IsWaited (0) = {activeObject.IsWaited}");
@@ -109,7 +109,7 @@ namespace TestSandbox.Threads
         private int _n = 0;
         private int _m = 0;
 
-        private bool NRun(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             _n++;
 
@@ -119,14 +119,14 @@ namespace TestSandbox.Threads
             return true;
         }
 
-        private bool NRun_2(ICancellationContext cancellationContext)
-        {
-            _m++;
+        //private bool NRun_2(ICancellationContext cancellationContext)
+        //{
+        //    _m++;
 
-            _logger.Info("4D1A0A5A-3ADA-4001-96C2-472CF4ECE6C1", $"_m = {_m}");
+        //    _logger.Info("4D1A0A5A-3ADA-4001-96C2-472CF4ECE6C1", $"_m = {_m}");
 
 
-            return true;
-        }
+        //    return true;
+        //}
     }
 }

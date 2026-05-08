@@ -24,11 +24,11 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
-using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
-    public class HtnExecutorComponent: BaseContextComponent, IHtnExecutorComponent
+    public class HtnExecutorComponent: BaseContextComponent, IHtnExecutorComponent,
+        IObjectWithPeriodicMethod
     {
         private enum ExecutionState
         {
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Htn
             base.Init();
 
             _activeObject = new AsyncActivePeriodicObject(_context.ActiveObjectContext, _context.CodeExecutionThreadPool, _context.Logger);
-            _activeObject.ObjectWithPeriodicMethod = CommandLoop;
+            _activeObject.ObjectWithPeriodicMethod = this;
         }
 
         private readonly IEngineContext _context;
@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Htn
             _activeObject.Start();
         }
 
-        private bool CommandLoop(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
 #if DEBUG
             //Info("688B9B84-D31E-4D6C-BB76-439F82430786", $"_planExecutionIterationsMaxCount= {_planExecutionIterationsMaxCount}");

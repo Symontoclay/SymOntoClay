@@ -85,7 +85,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     return _taskValue;
                 }
 
-                if (!ObjectWithPeriodicMethod.PeriodicRun(_cancellationContext))
+                if (!ObjectWithPeriodicMethod.PeriodicHandler(_cancellationContext))
                 {
                     _isActive = false;
                     _onCompletedHandlersCollection.Emit();

@@ -35,7 +35,8 @@ using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 {
-    public class VisionComponent : BaseComponent
+    public class VisionComponent : BaseComponent,
+        IObjectWithPeriodicMethod
     {
         public VisionComponent(IMonitorLogger logger, IVisionProvider visionProvider, HumanoidNPCGameComponentContext internalContext, HumanoidNPCGameComponentSerializedContext internalSerializedContext, IWorldCoreGameComponentContext worldContext)
             : base(logger)
@@ -50,7 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
             _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationContext);
             _activeObject = new AsyncActivePeriodicObject(_activeObjectContext, null, logger);
-            _activeObject.ObjectWithPeriodicMethod = CommandLoop;
+            _activeObject.ObjectWithPeriodicMethod = this;
         }
 
         private readonly HumanoidNPCGameComponentContext _internalContext;
@@ -111,7 +112,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
         }
 
-        private bool CommandLoop(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             Thread.Sleep(200);
 

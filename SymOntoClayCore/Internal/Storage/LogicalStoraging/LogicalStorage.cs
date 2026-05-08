@@ -44,6 +44,7 @@ using System.Threading;
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class LogicalStorage: BaseSpecificStorage, ILogicalStorage,
+        IObjectWithPeriodicMethod,
         IOnAddingFactHandler, IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedLogicalStorageHandler, IOnChangedWithKeysLogicalStorageHandler,
         ILogicalStorageSerializedEventsHandler
     {
@@ -144,7 +145,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private void InitGCByTimeOut()
         {
             _activeObject = new AsyncActivePeriodicObject(_mainStorageContext.ActiveObjectContext, _mainStorageContext.GarbageCollectionThreadPool, Logger);
-            _activeObject.ObjectWithPeriodicMethod = GCByTimeOutCommandLoop;
+            _activeObject.ObjectWithPeriodicMethod = this;
             _activeObject.Start();
         }
 
@@ -973,7 +974,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        private bool GCByTimeOutCommandLoop(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             Thread.Sleep(200);
 

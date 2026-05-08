@@ -139,7 +139,7 @@ namespace SymOntoClay.ActiveObject.Threads
                                 return;
                             }
 
-                            if (!ObjectWithPeriodicMethod.PeriodicRun(_cancellationContext))
+                            if (!ObjectWithPeriodicMethod.PeriodicHandler(_cancellationContext))
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;

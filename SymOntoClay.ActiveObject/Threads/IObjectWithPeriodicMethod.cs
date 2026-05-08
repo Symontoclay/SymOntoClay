@@ -4,6 +4,6 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public interface IObjectWithPeriodicMethod
     {
-        bool PeriodicRun(ICancellationContext cancellationContext);
+        bool PeriodicHandler(ICancellationContext cancellationContext);
     }
 }

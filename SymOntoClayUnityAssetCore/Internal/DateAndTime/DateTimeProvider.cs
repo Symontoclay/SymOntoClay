@@ -31,7 +31,9 @@ using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 {
-    public class DateTimeProvider: BaseLoggedComponent, IDateTimeProvider, IDisposable
+    public class DateTimeProvider: BaseLoggedComponent,
+        IDateTimeProvider, IDisposable,
+        IObjectWithPeriodicMethod
     {
         public DateTimeProvider(IMonitorLogger logger, IActiveObjectCommonContext syncContext, ICustomThreadPool threadPool, ICancellationContext cancellationContext)
             : base(logger)
@@ -40,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 
             _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, logger)
             {
-                ObjectWithPeriodicMethod = NRun
+                ObjectWithPeriodicMethod = this
             };
         }
 
@@ -83,7 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
             }
         }
 
-        private bool NRun(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             lock (_lockObj)
             {

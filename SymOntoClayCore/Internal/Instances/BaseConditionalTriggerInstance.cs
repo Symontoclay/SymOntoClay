@@ -40,6 +40,7 @@ using System.Threading;
 namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseConditionalTriggerInstance: BaseComponent,
+        IObjectWithPeriodicMethod,
         IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseConditionalTriggerInstance(BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
@@ -70,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
-            _activeObject.ObjectWithPeriodicMethod = Handler;
+            _activeObject.ObjectWithPeriodicMethod = this;
         }
 
         public string Id { get; }
@@ -107,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _needRun = true;
         }
 
-        private bool Handler(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             try
             {

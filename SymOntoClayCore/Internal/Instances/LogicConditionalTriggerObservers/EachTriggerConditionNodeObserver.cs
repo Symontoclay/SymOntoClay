@@ -29,7 +29,8 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
-    public class EachTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
+    public class EachTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver,
+        IObjectWithPeriodicMethod
     {
         public EachTriggerConditionNodeObserver(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(context.EngineContext.Logger)
@@ -50,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(Logger, condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue, localCodeExecutionContext);
 
             _activeObject = new AsyncActivePeriodicObject(engineContext.ActiveObjectContext, engineContext.TriggersThreadPool, Logger);
-            _activeObject.ObjectWithPeriodicMethod = NRun;
+            _activeObject.ObjectWithPeriodicMethod = this;
             _activeObject.Start();
         }
 
@@ -61,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private readonly ulong _targetDuration;
 
-        private bool NRun(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             Thread.Sleep(100);
 

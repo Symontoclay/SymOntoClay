@@ -41,12 +41,11 @@ using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public abstract class BaseThreadExecutor : BaseLoggedComponent, IThreadExecutor,
-        IOnCompletedActiveObjectHandler
+        IOnCompletedActiveObjectHandler, IObjectWithPeriodicMethod
     {
         protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context)
         {
@@ -86,7 +85,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _activeObject = activeObject;
             activeObject.AddOnCompletedHandler(this);
-            activeObject.ObjectWithPeriodicMethod = CommandLoop;
+            activeObject.ObjectWithPeriodicMethod = this;
 
             var dataResolversFactory = context.DataResolversFactory;
 
@@ -291,7 +290,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private object _onCompletedHandlersLockObj = new object();
         private List<IOnCompletedThreadExecutorHandler> _onCompletedHandlers = new List<IOnCompletedThreadExecutorHandler>();
 
-        private bool CommandLoop(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             try
             {

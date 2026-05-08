@@ -27,7 +27,7 @@ using System.Threading;
 
 namespace TestSandbox.Threads
 {
-    public class SyncActivePeriodicObjectHandler
+    public class SyncActivePeriodicObjectHandler: IObjectWithPeriodicMethod
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -38,7 +38,7 @@ namespace TestSandbox.Threads
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             var activeObject = new SyncActivePeriodicObject(cancellationTokenSourceContext);
-            activeObject.ObjectWithPeriodicMethod = NRun;
+            activeObject.ObjectWithPeriodicMethod = this;
             activeObject.Start();
 
             _logger.Info("End");
@@ -46,7 +46,7 @@ namespace TestSandbox.Threads
 
         private int _n = 0;
 
-        private bool NRun(ICancellationContext cancellationContext)
+        bool IObjectWithPeriodicMethod.PeriodicHandler(ICancellationContext cancellationContext)
         {
             _n++;
 

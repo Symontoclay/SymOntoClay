@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _activeObject = activeObject;
             activeObject.AddOnCompletedHandler(this);
-            activeObject.PeriodicMethod = CommandLoop;
+            activeObject.ObjectWithPeriodicMethod = CommandLoop;
 
             var dataResolversFactory = context.DataResolversFactory;
 

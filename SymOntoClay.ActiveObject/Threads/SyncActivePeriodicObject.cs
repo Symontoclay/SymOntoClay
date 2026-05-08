@@ -43,7 +43,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private readonly ICancellationContext _cancellationContext;
 
         /// <inheritdoc/>
-        public PeriodicDelegate PeriodicMethod { get; set; }
+        public IObjectWithPeriodicMethod ObjectWithPeriodicMethod { get; set; }
 
         private volatile bool _isActive;
 
@@ -85,7 +85,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     return _taskValue;
                 }
 
-                if (!PeriodicMethod(_cancellationContext))
+                if (!ObjectWithPeriodicMethod.PeriodicRun(_cancellationContext))
                 {
                     _isActive = false;
                     _onCompletedHandlersCollection.Emit();

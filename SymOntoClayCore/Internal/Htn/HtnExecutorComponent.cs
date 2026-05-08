@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Htn
             base.Init();
 
             _activeObject = new AsyncActivePeriodicObject(_context.ActiveObjectContext, _context.CodeExecutionThreadPool, _context.Logger);
-            _activeObject.PeriodicMethod = CommandLoop;
+            _activeObject.ObjectWithPeriodicMethod = CommandLoop;
         }
 
         private readonly IEngineContext _context;

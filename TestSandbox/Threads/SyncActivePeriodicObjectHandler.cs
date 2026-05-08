@@ -38,7 +38,7 @@ namespace TestSandbox.Threads
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
             var activeObject = new SyncActivePeriodicObject(cancellationTokenSourceContext);
-            activeObject.PeriodicMethod = NRun;
+            activeObject.ObjectWithPeriodicMethod = NRun;
             activeObject.Start();
 
             _logger.Info("End");

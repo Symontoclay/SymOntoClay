@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _serializationAnchor = new SerializationAnchor();
 
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
-            _activeObject.PeriodicMethod = Handler;
+            _activeObject.ObjectWithPeriodicMethod = Handler;
         }
 
         private readonly LogicalSearchResolver _searcher;

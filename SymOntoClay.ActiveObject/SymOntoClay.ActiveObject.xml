@@ -115,7 +115,7 @@
         <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.Dispose">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.PeriodicMethod">
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.ObjectWithPeriodicMethod">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.IsWaited">
@@ -149,7 +149,7 @@
             The loop of the class must not be blocked with AutoResetEvent.
             </summary>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.PeriodicMethod">
+        <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.ObjectWithPeriodicMethod">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.IsActive">

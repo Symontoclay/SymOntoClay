@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 
             _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, logger)
             {
-                PeriodicMethod = NRun
+                ObjectWithPeriodicMethod = NRun
             };
         }
 

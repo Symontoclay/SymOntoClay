@@ -25,5 +25,5 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
-    public delegate bool PeriodicDelegate(ICancellationContext cancellationContext);
+    //public delegate bool PeriodicDelegate(ICancellationContext cancellationContext);
 }

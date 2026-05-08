@@ -50,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
             _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationContext);
             _activeObject = new AsyncActivePeriodicObject(_activeObjectContext, null, logger);
-            _activeObject.PeriodicMethod = CommandLoop;
+            _activeObject.ObjectWithPeriodicMethod = CommandLoop;
         }
 
         private readonly HumanoidNPCGameComponentContext _internalContext;

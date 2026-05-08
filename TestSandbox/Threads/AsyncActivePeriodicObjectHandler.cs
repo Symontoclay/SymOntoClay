@@ -47,12 +47,12 @@ namespace TestSandbox.Threads
 
             var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, _logger)
             {
-                PeriodicMethod = NRun
+                ObjectWithPeriodicMethod = NRun
             };
 
             var activeObject2 = new AsyncActivePeriodicObject(activeContext, threadPool, _logger)
             {
-                PeriodicMethod = NRun_2
+                ObjectWithPeriodicMethod = NRun_2
             };
 
             _logger.Info("5442E7B9-A695-40B2-BC02-4CD3F5333FB1", $"activeObject.IsWaited (0) = {activeObject.IsWaited}");

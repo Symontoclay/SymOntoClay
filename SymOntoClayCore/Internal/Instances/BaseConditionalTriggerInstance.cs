@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
-            _activeObject.PeriodicMethod = Handler;
+            _activeObject.ObjectWithPeriodicMethod = Handler;
         }
 
         public string Id { get; }

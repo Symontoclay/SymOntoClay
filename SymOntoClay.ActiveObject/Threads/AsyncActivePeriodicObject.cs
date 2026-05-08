@@ -49,7 +49,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
-        public PeriodicDelegate PeriodicMethod { get; set; }
+        public IObjectWithPeriodicMethod ObjectWithPeriodicMethod { get; set; }
 
         private volatile bool _isWaited;
 
@@ -139,7 +139,7 @@ namespace SymOntoClay.ActiveObject.Threads
                                 return;
                             }
 
-                            if (!PeriodicMethod(_cancellationContext))
+                            if (!ObjectWithPeriodicMethod.PeriodicRun(_cancellationContext))
                             {
                                 _onCompletedHandlersCollection.Emit();
                                 return;

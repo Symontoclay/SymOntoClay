@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return _items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Relation && p.RelationName == reason.RelationName);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfReson), kindOfReson, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfReson), kindOfReson, "A67D0B77-2C53-41BF-B0F2-7ED9C84D4669");
             }
         }
 

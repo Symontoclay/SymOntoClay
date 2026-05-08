@@ -191,7 +191,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(KindOfLogicalQueryOperation), KindOfLogicalQueryOperation, null);
+                    throw new ArgumentOutOfRangeException(nameof(KindOfLogicalQueryOperation), KindOfLogicalQueryOperation, "E59E02C9-4D17-42B5-91D9-70F1FC381F7C");
             }
 
             if (Target != null)
@@ -217,13 +217,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(codeItem.Kind), codeItem.Kind, null);
+                                    throw new ArgumentOutOfRangeException(nameof(codeItem.Kind), codeItem.Kind, "37D6033A-8F90-4BE6-9950-0A3BB81E5A70");
                             }
                         }
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(Target.KindOfValue), Target.KindOfValue, null);
+                        throw new ArgumentOutOfRangeException(nameof(Target.KindOfValue), Target.KindOfValue, "6CB5E093-36F2-4532-848A-D25131F627EA");
                 }
             }
 
@@ -232,7 +232,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 switch (Source.KindOfValue)
                 {
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(Source.KindOfValue), Source.KindOfValue, null);
+                        throw new ArgumentOutOfRangeException(nameof(Source.KindOfValue), Source.KindOfValue, "46033809-53BE-48F3-A397-73580EC71A86");
                 }
             }
 
@@ -241,7 +241,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 switch (Dest.KindOfValue)
                 {
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(Dest.KindOfValue), Dest.KindOfValue, null);
+                        throw new ArgumentOutOfRangeException(nameof(Dest.KindOfValue), Dest.KindOfValue, "F98A8D56-BD0D-4073-8065-39086B16F01D");
                 }
             }
 

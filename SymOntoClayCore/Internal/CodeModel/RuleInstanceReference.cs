@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return new SelfObligationModalityMember(this);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(normalizedMemberName), normalizedMemberName, null);
+                    throw new ArgumentOutOfRangeException(nameof(normalizedMemberName), normalizedMemberName, "518EBE1E-63AA-4253-AF29-BD66755653B6");
             }
         }
 

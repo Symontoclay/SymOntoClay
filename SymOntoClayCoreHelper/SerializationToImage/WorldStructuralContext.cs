@@ -68,7 +68,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.IsDefined(typeof(SerializeWithDataCreationAttribute), true))
             {
-                return KindOfStructuralObject.SerializeWithDataCreation;
+                return KindOfStructuralObject.SerializeWithSerializationDataCreation;
             }
             
             return KindOfStructuralObject.UsualObject;

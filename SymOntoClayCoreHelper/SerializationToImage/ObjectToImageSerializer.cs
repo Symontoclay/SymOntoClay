@@ -34,6 +34,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
 #endif
 
+            if(obj == null)
+            {
+                return base.TryGetSerializedValue(obj, out serializedValue);
+            }
+
             var type = obj.GetType();
 
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
@@ -59,7 +64,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 case KindOfStructuralObject.WorldSettings:
                 case KindOfStructuralObject.UsualObject:
-                case KindOfStructuralObject.SerializeWithDataCreation:
+                case KindOfStructuralObject.SerializeWithSerializationDataCreation:
                     return base.TryGetSerializedValue(obj, out serializedValue);
 
                 default:
@@ -197,8 +202,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case KindOfStructuralObject.WorldComponent:
                     return SerializeKeyWorldComponent(obj, type, path);
 
-                case KindOfStructuralObject.SerializeWithDataCreation:
-                    return SerializeWithDataCreation(obj, type, path);
+                case KindOfStructuralObject.SerializeWithSerializationDataCreation:
+                    return SerializeWithSerializationDataCreation(obj, type, path);
 
                 case KindOfStructuralObject.UsualObject:
                     return SerializeUsualObject(obj, type, path);
@@ -279,7 +284,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C34FFEC2-FEC7-412A-BF4E-985ACF39DEA8");
         }
 
-        private SerializedValue SerializeWithDataCreation(object obj, Type type, string path)
+        private SerializedValue SerializeWithSerializationDataCreation(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);
 
@@ -292,6 +297,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
+            
+            var card = new ClassCardWithSerializationData()
+            {
+                Header = serializedValue
+            };
 
             var serializationDataFactory = (ISerializationDataFactory)obj;
 
@@ -301,7 +311,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializationData = {serializationData}");
 #endif
 
-            throw new NotImplementedException("C5F70377-A0F4-4847-8DD5-829AA6472C35");
+            var serializedSerializationDataValue = SerializeValue(serializationData, string.Empty);
+
+#if DEBUG
+            _logger.Info($"serializedSerializationDataValue = {serializedSerializationDataValue}");
+#endif
+
+            card.SerializationData = serializedSerializationDataValue;
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         private SerializedValue SerializeUsualObject(object obj, Type type, string path)
@@ -375,7 +399,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            throw new NotImplementedException("C7CD5A5F-3C44-4237-8B7A-FE214B775B29");
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         private void ProcessFieldInfo(FieldInfo field, object obj, Dictionary<string, SerializedValue> cardFieldDict)
@@ -445,7 +471,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext",
             "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
             "SymOntoClay.Core.Internal.BaseCoreContext",
-            "SymOntoClay.Monitor.Internal.MonitorNode"
+            "SymOntoClay.Monitor.Internal.MonitorNode",
+            "SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData"
         };
     }
 }

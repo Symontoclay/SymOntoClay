@@ -36,6 +36,8 @@ namespace SymOntoClay.Monitor.Internal
 {
     public class MonitorContext : IObjectToString
     {
+        public IMonitor Owner { get; set; }
+
         public MonitorFeatures Features { get; set; }
         
         public IMonitorFileWriter FileWriter { get; set; }
@@ -72,6 +74,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.PrintExisting(n, nameof(Owner), Owner);
             sb.PrintObjProp(n, nameof(Features), Features);
             sb.PrintExisting(n, nameof(FileWriter), FileWriter);
             sb.PrintExisting(n, nameof(MessageProcessor), MessageProcessor);

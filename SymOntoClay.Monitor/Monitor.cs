@@ -126,6 +126,7 @@ namespace SymOntoClay.Monitor
 
             _monitorContext = new MonitorContext()
             {
+                Owner = this,
                 OutputHandler = monitorSettings.OutputHandler,
                 ErrorHandler = monitorSettings.ErrorHandler,
                 PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),

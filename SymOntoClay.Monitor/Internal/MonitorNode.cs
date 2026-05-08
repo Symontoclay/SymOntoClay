@@ -31,6 +31,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileWriter;
+using SymOntoClay.Monitor.Internal.SerializationData;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -660,7 +661,15 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public object GetSerializationData()
         {
-            throw new NotImplementedException("C4CADC5A-0AE6-445D-AF08-8CC60834CE55");
+            var serializationData = new MonitorNodeSerializationData();
+            serializationData.Parent = _monitorContext.Owner;
+            serializationData.NodeId = _nodeId;
+
+#if DEBUG
+            _globalLogger.Info($"serializationData = {serializationData}");
+#endif
+
+            return serializationData;
         }
 
         /// <inheritdoc/>

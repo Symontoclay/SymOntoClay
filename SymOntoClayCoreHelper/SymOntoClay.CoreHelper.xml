@@ -34,6 +34,18 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCardWithSerializationData.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCardWithSerializationData.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCardWithSerializationData.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCardWithSerializationData.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.KindOfDataCard">
             <inheritdoc/>
         </member>

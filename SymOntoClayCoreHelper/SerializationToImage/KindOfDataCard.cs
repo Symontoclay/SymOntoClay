@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SymOntoClay.CoreHelper.SerializationToImage
+﻿namespace SymOntoClay.CoreHelper.SerializationToImage
 {
     public enum KindOfDataCard
     {
@@ -12,6 +8,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         ExternalWorldRootClassCard,
         ExternalWorldComponentClassCard,
         ClassCard,
+        ClassCardWithSerializationData,
         ListCard
     }
 }

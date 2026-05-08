@@ -472,7 +472,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
             "SymOntoClay.Core.Internal.BaseCoreContext",
             "SymOntoClay.Monitor.Internal.MonitorNode",
-            "SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData"
+            "SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData",
+            "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider"
         };
     }
 }

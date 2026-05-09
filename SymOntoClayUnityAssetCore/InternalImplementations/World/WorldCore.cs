@@ -34,7 +34,6 @@ using SymOntoClay.UnityAsset.Core.InternalImplementations.Place;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
 using System;
 using System.Collections.Generic;
-using System.Runtime;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {

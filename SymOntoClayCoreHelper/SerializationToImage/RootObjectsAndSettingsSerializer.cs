@@ -132,10 +132,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override SerializedValue SerializeGenericStack(object obj, Type type, string path)
         {
 #if DEBUG
-            if (!_tmpProcessedTypes.Contains(type.FullName))
-            {
-                throw new NotSupportedException($"4330F2DE-ED81-4790-9089-E3094E76C6B4: please check type '{type.FullName}'");
-            }
+            TmpCheckProcessedTypes("1CBE32CC-957C-4E43-A548-EE3705613153", type);
 #endif
 
             throw new NotImplementedException("C81F1DFE-FACE-4AFA-BD4A-ED501B903D3F");
@@ -145,10 +142,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override SerializedValue SerializeGenericQueue(object obj, Type type, string path)
         {
 #if DEBUG
-            if (!_tmpProcessedTypes.Contains(type.FullName))
-            {
-                throw new NotSupportedException($"590B9CF6-26F9-4E25-BEA2-9F64B836B53D: please check type '{type.FullName}'");
-            }
+            TmpCheckProcessedTypes("5052BA76-14D6-436B-89C7-3910FDB46920", type);
 #endif
 
             throw new NotImplementedException("C925989B-E02A-469D-9703-C73A22E7491D");
@@ -158,10 +152,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
 #if DEBUG
-            if (!_tmpProcessedTypes.Contains(type.FullName))
-            {
-                throw new NotSupportedException($"73ED2E1B-CF3C-4F38-A818-D5EBA81566EB: please check type '{type.FullName}'");
-            }
+            TmpCheckProcessedTypes("4923A521-BE0E-4ACC-8AF9-CCD1D78BA117", type);
 #endif
 
             throw new NotImplementedException("C6176FA0-9C26-4183-B80B-3A3D7E0D873F");
@@ -171,10 +162,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override SerializedValue SerializeComposite(object obj, Type type, string path)
         {
 #if DEBUG
-            if (!_tmpProcessedTypes.Contains(type.FullName))
-            {
-                throw new NotSupportedException($"EBD4F7D6-9027-4385-B9CE-46064B264766: please check type '{type.FullName}'");
-            }
+            TmpCheckProcessedTypes("BFC68775-0E7F-4EF9-8393-9AFD8ED57344", type);
 #endif
 
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
@@ -263,6 +251,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     continue;
                 }
 
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("ADC70B21-5098-4EC0-A43B-C118D67A72A9", type, field.Name);
+#endif
+
                 ProcessFieldInfo(field, obj, path, cardFieldDict);
             }
 
@@ -281,6 +273,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                     _logger.Info($"type.FullName = {type.FullName}");
                     _logger.Info($"property.Name = {property.Name}");
+#endif
+
+#if DEBUG
+                    TmpCheckProcessedMembersOfTypes("675FF756-50FE-4073-9B08-7AAA916ACCD9", type, property.Name);
 #endif
                 }
 
@@ -344,6 +340,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     continue;
                 }
 
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("85FEC95E-9478-4037-BB84-7F1C6328872B", type, property.Name);
+#endif
+
                 ProcessPropertyInfo(property, obj, path, cardPropertyDict);
             }
 
@@ -399,6 +399,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     continue;
                 }
 
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("E09901B9-7B79-4DD3-9BD3-1F89B1AFC600", type, field.Name);
+#endif
+
                 ProcessFieldInfo(field, obj, path, cardFieldDict);
             }
 
@@ -422,6 +426,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 {
                     continue;
                 }
+
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("8CF41E0D-1BEB-4BAF-8D3A-6107D6B788D7", type, property.Name);
+#endif
 
                 ProcessPropertyInfo(property, obj, path, cardPropertyDict);
             }
@@ -536,16 +544,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override SerializedValue SerializeAction(object obj, Type type)
         {
 #if DEBUG
-            if (!_tmpProcessedTypes.Contains(type.FullName))
-            {
-                throw new NotSupportedException($"FC8ED02D-2489-43ED-A10E-DDC32406325F: please check type '{type.FullName}'");
-            }
+            TmpCheckProcessedTypes("D6559AD4-8808-4D7A-95C8-EAB973C4ADA6", type);
 #endif
 
             throw new NotImplementedException("C6866BBD-6E0A-46CD-BBCA-2D9B66381B2B");
         }
 
-        private readonly List<string> _tmpProcessedTypes = new List<string>()
+        /// <inheritdoc/>
+        protected override List<string> _tmpProcessedTypes { get; set; } = new List<string>()
         {
             "TestSandbox.SerializationToImage.TstWorldContext",
             "SymOntoClay.UnityAsset.Core.World.WorldCore",
@@ -555,5 +561,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation",
             "SymOntoClay.UnityAsset.Core.HumanoidNPCSettings"
         };
+
+        /// <inheritdoc/>
+        protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
     }
 }

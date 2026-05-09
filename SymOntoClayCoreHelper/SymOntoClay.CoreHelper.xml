@@ -145,6 +145,12 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer._tmpProcessedTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer._tmpProcessedMembersOfTypes">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
@@ -172,6 +178,12 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeAction(System.Object,System.Type)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer._tmpProcessedTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer._tmpProcessedMembersOfTypes">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -194,6 +206,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeAction(System.Object,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer._tmpProcessedTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer._tmpProcessedMembersOfTypes">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializationToImageSettings.ToString">

@@ -173,5 +173,31 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             return backingField != null;
         }
+
+        protected void TmpCheckProcessedTypes(string id, Type type)
+        {
+            if (!_tmpProcessedTypes.Contains(type.FullName))
+            {
+                throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
+            }
+        }
+
+        protected void TmpCheckProcessedMembersOfTypes(string id, Type type, string memberName)
+        {
+            if(_tmpProcessedMembersOfTypes.TryGetValue(type.FullName, out var memberNamesList))
+            {
+                if (!memberNamesList.Contains(memberName))
+                {
+                    throw new NotSupportedException($"{id}: please check mebmer '{memberName}' of type '{type.FullName}'");
+                }
+            }
+            else
+            {
+                throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
+            }
+        }
+
+        protected abstract List<string> _tmpProcessedTypes { get; set; }
+        protected abstract Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; }
     }
 }

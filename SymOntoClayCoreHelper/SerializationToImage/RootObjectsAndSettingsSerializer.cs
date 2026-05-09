@@ -572,7 +572,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void InitTmpProcessedMembersOfTypes()
         {
-            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.WorldSettings"] = new List<string>();
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.WorldSettings"] = new List<string>()
+            {
+                "LibsDirs",
+                "ImagesRootDir",
+                "DictionariesDirs",
+                "BuiltInStandardLibraryDir",
+                "TmpDir",
+                "Monitor",
+                "HostFile",
+                "InvokerInMainThread",
+                "SoundBus",
+                "NLPConverterProvider",
+                "StandardFactsBuilder",
+                "EnableAutoloadingConvertors",
+                "CancellationContext",
+                "WorldThreadingSettings",
+                "HumanoidNpcDefaultThreadingSettings",
+                "PlayerDefaultThreadingSettings",
+                "GameObjectDefaultThreadingSettings",
+                "PlaceDefaultThreadingSettings",
+                "HtnExecutionDefaultSettings"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.ThreadingSettings"] = new List<string>()
+            { 
+                "CodeExecution",
+                "AsyncEvents",
+                "GarbageCollection"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Threading.CustomThreadPoolSettings"] = new List<string>()
+            {
+                "MinThreadsCount",
+                "MaxThreadsCount"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
+            { };
         }
 #endif
     }

@@ -93,7 +93,6 @@ namespace SymOntoClay.UnityAsset.Core
         public ThreadingSettings GameObjectDefaultThreadingSettings { get; set; }
         public ThreadingSettings PlaceDefaultThreadingSettings { get; set; }
 
-        [MemberWithExternalValue]
         public HtnExecutionSettings HtnExecutionDefaultSettings { get; set; }
 
         /// <inheritdoc/>

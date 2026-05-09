@@ -156,6 +156,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C140367A-7BC2-4A3A-8BBF-A059D907E7E0");
         }
 
+#if DEBUG
         /// <inheritdoc/>
         protected override List<string> _tmpProcessedTypes { get; set; } = new List<string>()
         {
@@ -164,5 +165,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         /// <inheritdoc/>
         protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
+#endif
     }
 }

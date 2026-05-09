@@ -20,6 +20,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             _structuralContext = structuralContext;
             _dataCardWriter = dataCardWriter;
+
+#if DEBUG
+            InitTmpProcessedMembersOfTypes();
+#endif
         }
 
         private readonly IStructuralContext _structuralContext;
@@ -465,6 +469,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C741439E-BC15-4F4C-8F0A-C775975A3863");
         }
 
+#if DEBUG
         /// <inheritdoc/>
         protected override List<string> _tmpProcessedTypes { get; set; } = new List<string>()
         {
@@ -480,5 +485,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         /// <inheritdoc/>
         protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
+
+        private void InitTmpProcessedMembersOfTypes()
+        {
+
+        }
+#endif
     }
 }

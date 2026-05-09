@@ -610,7 +610,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_settings",
                 "_lockObj",
                 "_state",
-                "_serializedWorldComponents"
+                "_serializedWorldComponents",
+                "_platformTypesConverters"//tmp
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.HumanoidNPCSettings"] = new List<string>()
             { 
@@ -620,6 +621,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Categories",
                 "EnableCategories",
                 "HtnExecutionSettings"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"] = new List<string>()
+            {
+                "_settings"
             };
         }
 #endif

@@ -488,7 +488,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void InitTmpProcessedMembersOfTypes()
         {
-
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
+            {
+                "_context"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>()
+            {
+                "_isInitialized",
+                "_settings",
+                "_tmpDir"
+            };
         }
 #endif
     }

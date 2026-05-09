@@ -26,10 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
 {

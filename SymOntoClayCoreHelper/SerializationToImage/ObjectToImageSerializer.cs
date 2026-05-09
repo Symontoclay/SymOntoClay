@@ -496,8 +496,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_isInitialized",
                 "_settings",
-                "_tmpDir"
+                "_tmpDir",
+                "_serializedWorldContext"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"] = new List<string>()
+            { 
+                "_coreContext",
+                "_worldComponentsList",
+                "_worldComponentsListLockObj"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>()
+            { };
         }
 #endif
     }

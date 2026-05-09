@@ -1,11 +1,9 @@
-﻿using NLog;
-using SymOntoClay.Common.Disposing;
+﻿using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
-using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
@@ -16,7 +14,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             _coreContext = coreContext;
         }
-
+        
         private IWorldCoreContext _coreContext;
 
         public DateTimeProvider DateTimeProvider { get; private set; }

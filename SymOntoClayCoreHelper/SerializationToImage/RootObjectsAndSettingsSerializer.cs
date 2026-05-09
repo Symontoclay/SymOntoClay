@@ -606,7 +606,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "MaxThreadsCount"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
-            { };
+            { 
+                "_settings",
+                "_lockObj",
+                "_state",
+                "_serializedWorldComponents"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.HumanoidNPCSettings"] = new List<string>()
+            { 
+                "LogicFile",
+                "PlatformSupport",
+                "VisionProvider",
+                "Categories",
+                "EnableCategories",
+                "HtnExecutionSettings"
+            };
         }
 #endif
     }

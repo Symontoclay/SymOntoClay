@@ -158,12 +158,36 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         protected IEnumerable<FieldInfo> GetFields(Type type)
         {
-            return type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => !p.Name.EndsWith("k__BackingField"));
+            var result = new List<FieldInfo>();
+            var currentType = type;
+
+            while (currentType != null)
+            {
+                var currentFields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                result.AddRange(currentFields);
+
+                currentType = currentType.BaseType;
+            }
+
+            return result.Where(p => !p.Name.EndsWith("k__BackingField"));
         }
 
         protected IEnumerable<PropertyInfo> GetProperties(Type type)
         {
-            return type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.CanWrite && IsAutoProperty(p));
+            var result = new List<PropertyInfo>();
+            var currentType = type;
+
+            while (currentType != null)
+            {
+                var currentProperties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                result.AddRange(currentProperties);
+
+                currentType = currentType.BaseType;
+            }
+                
+            return result.Where(p => p.CanWrite && IsAutoProperty(p));
         }
 
         public static bool IsAutoProperty(PropertyInfo prop)

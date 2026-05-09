@@ -22,10 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Threading;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core

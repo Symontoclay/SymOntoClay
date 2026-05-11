@@ -11,6 +11,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
         /// <inheritdoc/>
+        public KindOfStructuralContext Kind => KindOfStructuralContext.World;
+
+        /// <inheritdoc/>
         public StructuralAdvice GetAdvice(Type type)
         {
 #if DEBUG

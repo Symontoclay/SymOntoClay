@@ -262,6 +262,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.TypesHelper.ToString(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.WorldStructuralContext.Kind">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.WorldStructuralContext.GetAdvice(System.Type)">
             <inheritdoc/>
         </member>

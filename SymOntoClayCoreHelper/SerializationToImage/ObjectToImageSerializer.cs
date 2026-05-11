@@ -437,12 +437,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"propertyValue = {propertyValue}");
 #endif
 
-            var serializeValueMode = SerializeValueMode.General;
+            var serializeValueMode = GetSerializeValueMode(property);
 
-            if (property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
+            /*if (property.IsDefined(typeof(MemberWithExternalValueAttribute), true))
             {
                 serializeValueMode = SerializeValueMode.ExternalValue;
-            }
+            }*/
 
             var propertySerializedValue = SerializeValue(propertyValue, string.Empty, serializeValueMode);
 
@@ -451,6 +451,28 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
             cardPropertyDict[property.Name] = propertySerializedValue;
+        }
+
+        private SerializeValueMode GetSerializeValueMode(MemberInfo member)
+        {
+            var attr = member.GetCustomAttribute<MemberWithExternalValueAttribute>();
+
+            if(attr == null)
+            {
+                return SerializeValueMode.General;
+            }
+
+            if(attr.KindOfStructuralContext == KindOfStructuralContext.All)
+            {
+                return SerializeValueMode.ExternalValue;
+            }
+
+            if(_structuralContext.Kind == attr.KindOfStructuralContext)
+            {
+                return SerializeValueMode.ExternalValue;
+            }
+
+            return SerializeValueMode.General;
         }
 
         /// <inheritdoc/>
@@ -480,7 +502,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.BaseCoreContext",
             "SymOntoClay.Monitor.Internal.MonitorNode",
             "SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData",
-            "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider"
+            "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider",
+            "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"
         };
 
         /// <inheritdoc/>
@@ -506,7 +529,30 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_worldComponentsListLockObj"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>()
-            { };
+            { 
+                "_context"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.BaseCoreContext"] = new List<string>()
+            {
+                "MonitorNode",
+                "Compiler",
+                "DateTimeProvider"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData"] = new List<string>()
+            {
+                "Parent",
+                "NodeId"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider"] = new List<string>()
+            {
+                "_lockObj",
+                "_activeObject",
+                "_ticks"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>()
+            {
+
+            };
         }
 #endif
     }

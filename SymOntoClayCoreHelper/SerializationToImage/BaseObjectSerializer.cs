@@ -212,7 +212,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 if (!memberNamesList.Contains(memberName))
                 {
-                    throw new NotSupportedException($"{id}: please check mebmer '{memberName}' of type '{type.FullName}'");
+                    throw new NotSupportedException($"{id}: please check member '{memberName}' of type '{type.FullName}'");
                 }
             }
             else

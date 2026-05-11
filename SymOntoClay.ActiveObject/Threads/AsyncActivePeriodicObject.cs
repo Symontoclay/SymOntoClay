@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.Common.Cancellation;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -44,6 +45,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
         private readonly ICancellationContext _cancellationContext;
+
         private readonly IMonitorLogger _logger;
 
         private readonly object _lockObj = new object();

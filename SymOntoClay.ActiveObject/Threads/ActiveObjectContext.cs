@@ -35,7 +35,7 @@ namespace SymOntoClay.ActiveObject.Threads
             _commonContext = commonContext;
             _cancellationContext = cancellationContext;
         }
-
+        
         private readonly IActiveObjectCommonContext _commonContext;
         private readonly ICancellationContext _cancellationContext;
 

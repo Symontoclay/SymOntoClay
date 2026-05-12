@@ -503,7 +503,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Monitor.Internal.MonitorNode",
             "SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData",
             "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider",
-            "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"
+            "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject",
+            "SymOntoClay.ActiveObject.Threads.ActiveObjectContext",
+            "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent"
         };
 
         /// <inheritdoc/>
@@ -551,7 +553,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>()
             {
-
+                "_context"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>()
+            {
+                "_commonContext"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent"] = new List<string>()
+            {
+                "_lockObj",
+                "_isLocked"
             };
         }
 #endif

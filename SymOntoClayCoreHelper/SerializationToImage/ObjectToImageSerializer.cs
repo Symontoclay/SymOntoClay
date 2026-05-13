@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -478,7 +479,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeManualResetEvent(object obj, Type type, string path)
         {
-            throw new NotImplementedException("C3083A33-361D-4786-AE17-0546BE153C9D");
+            _visitedObjects.Add(obj);
+
+#if DEBUG
+            _logger.Info($"path = {path}");
+#endif
+
+            var autoResetEvent = (ManualResetEvent)obj;
+
+            var isSet = autoResetEvent.WaitOne(0);
+
+#if DEBUG
+            _logger.Info($"isSet = {isSet}");
+#endif
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ExternalManualResetEventClassCard()
+            {
+                Header = serializedValue,
+                Path = path,
+                IsSet = isSet
+            };
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>
@@ -505,7 +540,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider",
             "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject",
             "SymOntoClay.ActiveObject.Threads.ActiveObjectContext",
-            "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent"
+            "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent",
+            "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext",
+            "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
+            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"
         };
 
         /// <inheritdoc/>
@@ -557,13 +595,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>()
             {
-                "_commonContext"
+                "_commonContext",
+                "_cancellationContext"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent"] = new List<string>()
             {
                 "_lockObj",
-                "_isLocked"
+                "_isLocked",
+                "_commonActiveContext"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext"] = new List<string>()
+            {
+                "_autoResetEvent",
+                "_isNeedWating"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext"] = new List<string>()
+            {
+                "_cancellationContext1",
+                "_cancellationContext2"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"] = new List<string>()
+            { };
         }
 #endif
     }

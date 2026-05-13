@@ -78,6 +78,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeExternalValue(object obj)
+        {
+
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);

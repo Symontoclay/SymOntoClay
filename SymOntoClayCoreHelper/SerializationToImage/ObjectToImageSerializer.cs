@@ -80,7 +80,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeExternalValue(object obj)
         {
-
+            return _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
         }
 
         /// <inheritdoc/>

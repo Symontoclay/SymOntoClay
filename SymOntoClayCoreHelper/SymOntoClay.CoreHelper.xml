@@ -121,6 +121,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeExternalValue(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -152,6 +155,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeExternalValue(System.Object)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">

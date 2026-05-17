@@ -149,7 +149,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
-            throw new NotImplementedException("C7F00063-BE35-44CD-9528-32C3600EF75E");
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>
@@ -597,12 +599,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>()
             {
-                "_context"
+                "_context",
+                "_threadPool"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>()
             {
                 "_commonContext",
-                "_cancellationContext"
+                "_cancellationContext",
+                "_lockObj",
+                "_periodicChildren",
+                "_onceChildren",
+                "_isDisposed"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent"] = new List<string>()
             {

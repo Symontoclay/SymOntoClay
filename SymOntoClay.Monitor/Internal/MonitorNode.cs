@@ -84,9 +84,7 @@ namespace SymOntoClay.Monitor.Internal
 
             var threadingSettings = monitorContext.ThreadingSettings;
 
-            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                monitorContext.CancellationContext);
+            _threadPool = new CustomThreadPool(threadingSettings, monitorContext.CancellationContext);
 
             _monitorNodeContext = new MonitorNodeContext();
             _monitorNodeContext.MonitorContext = monitorContext;

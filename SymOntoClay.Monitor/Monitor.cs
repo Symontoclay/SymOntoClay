@@ -87,9 +87,7 @@ namespace SymOntoClay.Monitor
 
             var threadingSettings = monitorSettings.ThreadingSettings;
 
-            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _linkedCancellationTokenSourceContext);
+            _threadPool = new CustomThreadPool(threadingSettings, _linkedCancellationTokenSourceContext);
 
             _nodesSettings = monitorSettings.NodesSettings;
             _enableOnlyDirectlySetUpNodes = monitorSettings.EnableOnlyDirectlySetUpNodes;

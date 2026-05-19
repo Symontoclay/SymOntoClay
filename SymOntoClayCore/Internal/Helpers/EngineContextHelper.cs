@@ -85,13 +85,9 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             var threadingSettings = settings.ThreadingSettings?.CodeExecution;
 
-            context.CodeExecutionThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext);
+            context.CodeExecutionThreadPool = new CustomThreadPool(threadingSettings, context.LinkedCancellationTokenSourceContext);
 
-            context.TriggersThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext);
+            context.TriggersThreadPool = new CustomThreadPool(threadingSettings, context.LinkedCancellationTokenSourceContext);
 
             InitComponents(baseContextComponents);
 

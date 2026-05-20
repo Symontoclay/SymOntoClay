@@ -631,7 +631,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"] = new List<string>() { };
             _tmpProcessedMembersOfTypes["SymOntoClay.Threading.CustomThreadPool"] = new List<string>() 
             { 
-                "_settings" 
+                "_settings",
+                "_maxThreadsCount",
+                "_minThreadsCount",
+                "_cancellationContext",
+                "_needToRun"
             };
         }
 #endif

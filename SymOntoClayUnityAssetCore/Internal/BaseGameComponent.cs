@@ -57,11 +57,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, worldContext.GetCancellationContext());
 
             var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
-            var worldThreadingSettings = worldContext.GetDefaultThreadingSettings(kindOfWorldItem);
+            var worldThreadingSettings = worldContext.GetDefaultThreadingSettings(kindOfWorldItem)?.AsyncEvents;
 
-            AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount),
-                threadingSettings?.MaxThreadsCount ?? (worldThreadingSettings?.AsyncEvents?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount),
-                _linkedCancellationTokenSourceContext);
+            AsyncEventsThreadPool = new CustomThreadPool(threadingSettings ?? worldThreadingSettings, _linkedCancellationTokenSourceContext);
 
             _monitorNode = _worldContext.Motitor.CreateMonitorNode("852f0d28-15ca-4671-8779-66e00d23a386", settings.Id);
             _logger = _monitorNode;

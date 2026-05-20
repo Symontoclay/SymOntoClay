@@ -210,15 +210,11 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             var asyncEventsThreadingSettings = settings.ThreadingSettings?.AsyncEvents;
 
-            context.AsyncEventsThreadPool = new CustomThreadPool(asyncEventsThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                asyncEventsThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext);
+            context.AsyncEventsThreadPool = new CustomThreadPool(asyncEventsThreadingSettings, context.LinkedCancellationTokenSourceContext);
 
             var garbageCollectionThreadingSettings = settings.ThreadingSettings?.GarbageCollection;
 
-            context.GarbageCollectionThreadPool = new CustomThreadPool(garbageCollectionThreadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                garbageCollectionThreadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                context.LinkedCancellationTokenSourceContext);
+            context.GarbageCollectionThreadPool = new CustomThreadPool(garbageCollectionThreadingSettings, context.LinkedCancellationTokenSourceContext);
         }
 
         public static void InitComponents(List<IBaseContextComponent> baseContextComponents)

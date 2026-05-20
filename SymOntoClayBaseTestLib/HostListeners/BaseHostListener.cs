@@ -53,7 +53,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         }
 
         protected BaseHostListener(int minThreadsCount, int maxThreadsCount, ICancellationContext cancellationContext)
-            : this(cancellationContext, new CustomThreadPool(minThreadsCount, maxThreadsCount, cancellationContext))
+            : this(cancellationContext, new CustomThreadPool(new CustomThreadPoolSettings(minThreadsCount, maxThreadsCount), cancellationContext))
         {
         }
 

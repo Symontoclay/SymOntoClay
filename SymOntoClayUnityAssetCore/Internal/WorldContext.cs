@@ -94,9 +94,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             var threadingSettings = _settings.WorldThreadingSettings?.AsyncEvents;
 
-            AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _linkedCancellationTokenSourceContext);
+            AsyncEventsThreadPool = new CustomThreadPool(threadingSettings, _linkedCancellationTokenSourceContext);
 
             InvokerInMainThread = _settings.InvokerInMainThread;
             SoundBus = _settings.SoundBus;

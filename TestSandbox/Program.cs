@@ -383,7 +383,9 @@ namespace TestSandbox
 
             using var sourceContext = new CancellationTokenSourceContext();
 
-            using var threadPool = new CustomThreadPool(0, 20);
+            var threadPoolSettings = new CustomThreadPoolSettings(0, 20);
+
+            using var threadPool = new CustomThreadPool(threadPoolSettings);
 
             var task = new ThreadTask(() => {
                 _globalLogger.Info("Run");
@@ -599,7 +601,9 @@ namespace TestSandbox
             var source1 = new CancellationTokenSourceContext();
             var token1 = source1.Token;
 
-            using var threadPool = new CustomThreadPool(0, 20);
+            var threadPoolSettings = new CustomThreadPoolSettings(0, 20);
+
+            using var threadPool = new CustomThreadPool(threadPoolSettings);
 
             var task = ThreadTask.Run(() => {
                 _logger.Info("EB024ABD-0889-4DEF-A6E9-1D36CA08F839", "Hi!");

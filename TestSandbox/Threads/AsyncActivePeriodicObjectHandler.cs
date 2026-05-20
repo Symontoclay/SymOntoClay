@@ -39,7 +39,9 @@ namespace TestSandbox.Threads
 
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSourceContext);
+            var threadPoolSettings = new CustomThreadPoolSettings(0, 20);
+
+            using var threadPool = new CustomThreadPool(threadPoolSettings, cancellationTokenSourceContext);
 
             var commonActiveContext = new ActiveObjectCommonContext();
 

@@ -47,9 +47,7 @@ namespace SymOntoClay.SoundBuses
 
             var threadingSettings = settings?.ThreadingSettings;
 
-            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _linkedCancellationTokenSourceContext);
+            _threadPool = new CustomThreadPool(threadingSettings, _linkedCancellationTokenSourceContext);
         }
 
         private readonly SimpleSoundBusSettings _settings;

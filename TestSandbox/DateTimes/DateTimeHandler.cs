@@ -40,7 +40,9 @@ namespace TestSandbox.DateTimes
 
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
-            using var threadPool = new CustomThreadPool(0, 20);
+            var threadPoolSettings = new CustomThreadPoolSettings(0, 20);
+
+            using var threadPool = new CustomThreadPool(threadPoolSettings);
 
             var commonActiveContext = new ActiveObjectCommonContext();
 

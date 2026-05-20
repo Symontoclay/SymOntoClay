@@ -88,9 +88,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case "System.Threading.ManualResetEvent":
                     return SerializeManualResetEvent(obj, type, path);
 
-                case "SymOntoClay.Threading.CustomThreadPool":
-                    throw new NotImplementedException("C6891BB7-9AFD-4B3F-B0AA-BFD3C849B48D");
-
                 case "System.Byte":
                 case "System.SByte":
                 case "System.Int16":

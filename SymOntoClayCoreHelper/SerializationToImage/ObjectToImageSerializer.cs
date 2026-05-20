@@ -551,7 +551,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent",
             "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext",
             "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
-            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"
+            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
+            "SymOntoClay.Threading.CustomThreadPool"
         };
 
         /// <inheritdoc/>
@@ -627,8 +628,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_cancellationContext1",
                 "_cancellationContext2"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"] = new List<string>()
-            { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Threading.CustomThreadPool"] = new List<string>() 
+            { 
+                "_settings" 
+            };
         }
 #endif
     }

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.CollectionsHelpers;
@@ -216,24 +217,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public IThreadTask Start()
+        public IThreadTaskPointer Start()
         {
             return _activeObject.Start();
         }
 
         /// <inheritdoc/>
-        public ThreadTaskStatus RunningStatus => _activeObject.TaskValue?.Status ?? ThreadTaskStatus.Created;
+        public ThreadTaskStatus RunningStatus => _activeObject.TaskValue?.Task?.Status ?? ThreadTaskStatus.Created;
 
         /// <inheritdoc/>
         public void Cancel()
         {
-            _activeObject.TaskValue?.Cancel();
+            _activeObject.TaskValue?.Task?.Cancel();
         }
 
         /// <inheritdoc/>
         public void Wait()
         {
-            _activeObject.TaskValue?.Wait();
+            _activeObject.TaskValue?.Task?.Wait();
         }
 
         /// <inheritdoc/>

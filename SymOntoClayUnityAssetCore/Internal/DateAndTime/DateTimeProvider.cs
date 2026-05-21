@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
@@ -98,7 +99,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         }
         
         /// <inheritdoc/>
-        public IThreadTask Start()
+        public IThreadTaskPointer Start()
         {
             return _activeObject.Start();
         }

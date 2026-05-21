@@ -400,7 +400,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Level), Level, null);
+                    throw new ArgumentOutOfRangeException(nameof(Level), Level, "5EA29214-ACD4-41CE-B8C4-1292528F008C");
             }
 
             switch(KindOfName)
@@ -433,7 +433,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(KindOfName), KindOfName, null);
+                    throw new ArgumentOutOfRangeException(nameof(KindOfName), KindOfName, "F48D7EB1-A003-4E0C-99A4-DE4FFEC00ECB");
             }
 
             if (IsArray)

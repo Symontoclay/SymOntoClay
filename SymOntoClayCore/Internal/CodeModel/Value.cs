@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return SetPropertyValue(logger, memberName, value);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, "9A0122F4-4382-4ED2-AA74-39C8E446B252");
             }
         }
 
@@ -217,7 +217,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return GetPropertyValue(logger, memberName);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, "D4C177FF-F3E8-4E5D-979D-6F56FD7C24BB");
             }
         }
 

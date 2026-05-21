@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     return $"{operationCode} {commandItem.CompoundTask?.ToHumanizedLabel()}";
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(operationCode), operationCode, null);
+                    throw new ArgumentOutOfRangeException(nameof(operationCode), operationCode, "E6E02ACA-C481-421A-9679-CDF626BD69B2");
             }
         }
 #endif

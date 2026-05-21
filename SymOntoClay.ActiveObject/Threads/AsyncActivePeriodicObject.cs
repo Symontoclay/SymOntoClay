@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
@@ -63,10 +64,10 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
-        private IThreadTask _task = null;
+        private IThreadTaskPointer _task = new ThreadTaskPointer();
 
         /// <inheritdoc/>
-        public IThreadTask TaskValue
+        public IThreadTaskPointer TaskValue
         {
             get
             {
@@ -92,7 +93,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
 
         /// <inheritdoc/>
-        public IThreadTask Start()
+        public IThreadTaskPointer Start()
         {
             lock (_lockObj)
             {
@@ -155,7 +156,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 }, _threadPool, _cancellationContext);
 
-                _task = task;
+                _task.Task = task;
 
                 task.Start();
 
@@ -181,7 +182,7 @@ namespace SymOntoClay.ActiveObject.Threads
                 _isExited = true;
                 _isWaited = false;
 
-                _task = null;
+                _task.Task = null;
             }
         }
 
@@ -205,7 +206,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 _onCompletedHandlersCollection.Clear();
 
-                _task = null;
+                _task.Task = null;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Common;
@@ -25,7 +26,7 @@ namespace SymOntoClay.ActiveObject.Functors
         private AsyncActiveOnceObject _asyncActiveOnceObject;
         private ISerializationAnchor _serializationAnchor;
 
-        public IThreadTask TaskValue => _asyncActiveOnceObject?.TaskValue;
+        public IThreadTaskPointer TaskValue => _asyncActiveOnceObject?.TaskValue;
 
         protected abstract void OnRun(ICancellationContext cancellationContext);
 
@@ -67,7 +68,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private ISerializationAnchor _serializationAnchor;
 
-        public IThreadTask<TResult> TaskValue => _asyncActiveOnceObject?.TaskValueWithResult;
+        public IThreadTaskPointer<TResult> TaskValue => _asyncActiveOnceObject?.TaskValueWithResult;
 
         protected abstract TResult OnRun(ICancellationContext cancellationContext);
 

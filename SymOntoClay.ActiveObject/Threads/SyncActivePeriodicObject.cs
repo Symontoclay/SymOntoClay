@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Threading;
 using System.Threading;
@@ -53,10 +54,10 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public bool IsWaited => false;
 
-        private IThreadTask _taskValue = null;
+        private IThreadTaskPointer _taskValue = new ThreadTaskPointer();
 
         /// <inheritdoc/>
-        public IThreadTask TaskValue => _taskValue;
+        public IThreadTaskPointer TaskValue => _taskValue;
 
         /// <inheritdoc/>
         public void AddOnCompletedHandler(IOnCompletedActiveObjectHandler handler)
@@ -73,7 +74,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
 
         /// <inheritdoc/>
-        public IThreadTask Start()
+        public IThreadTaskPointer Start()
         {
             _isActive = true;
 

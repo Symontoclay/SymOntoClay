@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -40,10 +41,10 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
-        private ThreadTask _task = null;
+        private IThreadTaskPointer _task = new ThreadTaskPointer();
 
         /// <inheritdoc/>
-        public IThreadTask TaskValue
+        public IThreadTaskPointer TaskValue
         {
             get
             {
@@ -69,7 +70,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
 
         /// <inheritdoc/>
-        public IThreadTask Start()
+        public IThreadTaskPointer Start()
         {
             lock (_lockObj)
             {
@@ -122,7 +123,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     _isExited = true;
                 }, _threadPool, _cancellationContext);
 
-                _task = task;
+                _task.Task = task;
 
                 task.Start();
 
@@ -148,7 +149,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 _context.RemoveChildActiveObject(this);
 
-                _task = null;
+                _task.Task = null;
 
                 _onCompletedHandlersCollection.Clear();
             }
@@ -187,9 +188,9 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
-        private ThreadTask<TResult> _task = null;
+        private IThreadTaskPointer<TResult> _task = new ThreadTaskPointer<TResult>();
 
-        public IThreadTask<TResult> TaskValueWithResult
+        public IThreadTaskPointer<TResult> TaskValueWithResult
         {
             get
             {
@@ -201,7 +202,7 @@ namespace SymOntoClay.ActiveObject.Threads
         }
 
         /// <inheritdoc/>
-        public IThreadTask TaskValue
+        public IThreadTaskPointer TaskValue
         {
             get
             {
@@ -218,7 +219,7 @@ namespace SymOntoClay.ActiveObject.Threads
             {
                 lock (_lockObj)
                 {
-                    return _task.Result;
+                    return _task.TaskWithResult.Result;
                 }
             }
         }
@@ -238,7 +239,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
 
         /// <inheritdoc/>
-        public IThreadTask Start()
+        public IThreadTaskPointer Start()
         {
             lock (_lockObj)
             {
@@ -295,7 +296,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     }
                 }, _threadPool, _cancellationContext);
 
-                _task = task;
+                _task.Task = task;
 
                 task.Start();
 
@@ -321,7 +322,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 _context.RemoveChildActiveObject(this);
 
-                _task = null;
+                _task.Task = null;
 
                 _onCompletedHandlersCollection.Clear();
             }

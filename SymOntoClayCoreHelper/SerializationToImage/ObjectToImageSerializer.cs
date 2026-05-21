@@ -601,7 +601,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>()
             {
                 "_context",
-                "_threadPool"
+                "_threadPool",
+                "_cancellationContext",
+                "_logger",
+                "_lockObj",
+                "_isWaited",
+                "_isExited"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>()
             {

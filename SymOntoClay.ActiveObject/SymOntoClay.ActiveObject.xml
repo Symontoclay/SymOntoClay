@@ -31,6 +31,15 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.SerializationAnchor.Dispose">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer.Task">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer`1.Task">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer`1.TaskWithResult">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWaiting">
             <inheritdoc/>
         </member>

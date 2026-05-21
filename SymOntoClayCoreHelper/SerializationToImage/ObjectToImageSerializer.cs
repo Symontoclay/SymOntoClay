@@ -552,7 +552,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext",
             "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
             "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
-            "SymOntoClay.Threading.CustomThreadPool"
+            "SymOntoClay.Threading.CustomThreadPool",
+            "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"
         };
 
         /// <inheritdoc/>
@@ -606,7 +607,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger",
                 "_lockObj",
                 "_isWaited",
-                "_isExited"
+                "_isExited",
+                "_task"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>()
             {
@@ -642,6 +644,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_cancellationContext",
                 "_needToRun"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"] = new List<string>() { };
         }
 #endif
     }

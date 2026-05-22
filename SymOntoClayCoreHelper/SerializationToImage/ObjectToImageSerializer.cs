@@ -553,7 +553,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
             "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
             "SymOntoClay.Threading.CustomThreadPool",
-            "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"
+            "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer",
+            "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection"
         };
 
         /// <inheritdoc/>
@@ -580,13 +581,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>()
             { 
-                "_context"
+                "_context",
+                "_parser"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.BaseCoreContext"] = new List<string>()
             {
                 "MonitorNode",
                 "Compiler",
-                "DateTimeProvider"
+                "DateTimeProvider",
+                "StandardFactsBuilder",
+                "AsyncEventsThreadPool",
+                "GarbageCollectionThreadPool",
+                "CancellationTokenSourceContext",
+                "LinkedCancellationTokenSourceContext"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData"] = new List<string>()
             {
@@ -597,7 +604,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_lockObj",
                 "_activeObject",
-                "_ticks"
+                "_ticks",
+                "_millisecondsTimeout",
+                "_ulongMillisecondsTimeout"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>()
             {
@@ -608,7 +617,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_lockObj",
                 "_isWaited",
                 "_isExited",
-                "_task"
+                "_task",
+                "_onCompletedHandlersCollection",
+                "_isDisposed",
+                "ObjectWithPeriodicMethod"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>()
             {
@@ -645,6 +657,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_needToRun"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection"] = new List<string>() 
+            { 
+                "_lockObj",
+                "_handlers"
+            };
         }
 #endif
     }

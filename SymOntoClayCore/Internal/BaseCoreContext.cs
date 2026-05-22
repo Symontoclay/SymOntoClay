@@ -22,13 +22,9 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core.Internal.Compiling;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.Core.Internal
@@ -54,6 +50,7 @@ namespace SymOntoClay.Core.Internal
         public IDateTimeProvider DateTimeProvider { get; set; }
 
         /// <inheritdoc/>
+        [MemberWithExternalValue]
         public IStandardCoreFactsBuilder StandardFactsBuilder { get; set; }
 
         /// <inheritdoc/>

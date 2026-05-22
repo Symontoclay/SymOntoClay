@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             : this(context, false)
         {
         }
-
+        
         public ProjectLoader(IMainStorageContext context, bool isDeferredImport)
             : base(context.Logger)
         {

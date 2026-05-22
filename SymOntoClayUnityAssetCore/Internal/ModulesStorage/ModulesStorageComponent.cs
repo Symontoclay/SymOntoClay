@@ -22,9 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
 {

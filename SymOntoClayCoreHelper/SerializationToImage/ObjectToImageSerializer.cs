@@ -169,7 +169,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
-            throw new NotImplementedException("C59FDA1A-7C7B-4E67-A6F4-B0507CA6E2DF");
+            _visitedObjects.Add(obj);
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new DictionaryCard()
+            {
+                Header = serializedValue
+            };
+
+            var dictionary = (IDictionary)obj;
+
+            var items = new List<KeyValuePair<SerializedValue, SerializedValue>>();
+
+            foreach (var item in dictionary) 
+            {
+#if DEBUG
+                _logger.Info($"item.GetType().FullName = {item.GetType().FullName}");
+#endif
+
+                throw new NotImplementedException("C59FDA1A-7C7B-4E67-A6F4-B0507CA6E2DF");
+            }
+
+            card.Items = items;
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>
@@ -543,7 +577,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Threading.CustomThreadPool",
             "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer",
             "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection",
-            "SymOntoClay.Core.Internal.Parsing.Parser"
+            "SymOntoClay.Core.Internal.Parsing.Parser",
+            "SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent",
+            "SymOntoClay.Core.ModulesStorage"
         };
 
         /// <inheritdoc/>
@@ -656,6 +692,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_context"                
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent"] = new List<string>() 
+            { 
+                "_modulesStorage" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.ModulesStorage"] = new List<string>() { };
         }
 #endif
     }

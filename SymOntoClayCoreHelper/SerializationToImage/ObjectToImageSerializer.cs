@@ -157,30 +157,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericStack(object obj, Type type, string path)
         {
-#if DEBUG
-            TmpCheckProcessedTypes("465A0240-A92F-42E4-B818-1F24E143F90E", type);
-#endif
-
             throw new NotImplementedException("C577B505-79EB-4EB0-81D6-CEE7E181C31D");
         }
 
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericQueue(object obj, Type type, string path)
         {
-#if DEBUG
-            TmpCheckProcessedTypes("E9297F06-C751-4EF8-8382-580BDE551303", type);
-#endif
-
             throw new NotImplementedException("C3BE6016-0DA1-4238-BB7E-C12668369925");
         }
 
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
-#if DEBUG
-            TmpCheckProcessedTypes("E772EDEF-8B73-4D4F-B2D6-53802563E045", type);
-#endif
-
             throw new NotImplementedException("C59FDA1A-7C7B-4E67-A6F4-B0507CA6E2DF");
         }
 
@@ -554,7 +542,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
             "SymOntoClay.Threading.CustomThreadPool",
             "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer",
-            "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection"
+            "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection",
+            "SymOntoClay.Core.Internal.Parsing.Parser"
         };
 
         /// <inheritdoc/>
@@ -582,7 +571,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>()
             { 
                 "_context",
-                "_parser"
+                "_parser",
+                "_cache"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.BaseCoreContext"] = new List<string>()
             {
@@ -661,6 +651,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_lockObj",
                 "_handlers"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Parsing.Parser"] = new List<string>() 
+            { 
+                "_context"                
             };
         }
 #endif

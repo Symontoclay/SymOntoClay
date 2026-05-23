@@ -611,7 +611,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_context",
                 "_parser",
-                "_cache"
+                "_cache",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.BaseCoreContext"] = new List<string>()
             {
@@ -622,7 +626,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "AsyncEventsThreadPool",
                 "GarbageCollectionThreadPool",
                 "CancellationTokenSourceContext",
-                "LinkedCancellationTokenSourceContext"
+                "LinkedCancellationTokenSourceContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData"] = new List<string>()
             {
@@ -635,7 +642,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_activeObject",
                 "_ticks",
                 "_millisecondsTimeout",
-                "_ulongMillisecondsTimeout"
+                "_ulongMillisecondsTimeout",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>()
             {
@@ -664,7 +672,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_lockObj",
                 "_isLocked",
-                "_commonActiveContext"
+                "_commonActiveContext",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext"] = new List<string>()
             {
@@ -674,9 +686,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext"] = new List<string>()
             {
                 "_cancellationContext1",
-                "_cancellationContext2"
+                "_cancellationContext2",
+                "_isDisposed",
+                "_lockObj"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"] = new List<string>()
+            { 
+                "_isDisposed",
+                "_lockObj"
+            };
             _tmpProcessedMembersOfTypes["SymOntoClay.Threading.CustomThreadPool"] = new List<string>() 
             { 
                 "_settings",
@@ -693,7 +711,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Parsing.Parser"] = new List<string>() 
             { 
-                "_context"                
+                "_context",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent"] = new List<string>() 
             { 
@@ -719,7 +740,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Id",
                 "SelfName",
                 "AppFile",
-                "ActiveObjectContext"
+                "ActiveObjectContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue"] = new List<string>()
             { 
@@ -730,7 +754,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "NormalizedNameValue",
                 "NameWithoutPrefix",
                 "IsArray",
-                //"Capacity",
+                "Capacity",
                 "HasInfiniteCapacity",
                 "Level",
                 "Namespaces",

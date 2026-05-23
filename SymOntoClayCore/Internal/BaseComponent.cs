@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal
 
         protected ComponentState _state = ComponentState.Created;
         protected readonly object _stateLockObj = new object();
-
+        
         /// <inheritdoc/>
         public bool IsDisposed
         {

@@ -17,7 +17,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _coreContext = coreContext;
             _logger = _coreContext.Logger;
         }
-
+        
         protected IMonitorLogger Logger => _logger;
 
         [MethodForLoggingSupport]

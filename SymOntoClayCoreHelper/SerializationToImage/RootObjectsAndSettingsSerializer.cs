@@ -626,7 +626,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "VisionProvider",
                 "Categories",
                 "EnableCategories",
-                "HtnExecutionSettings"
+                "HtnExecutionSettings",
+                "_id",
+                "_idForFacts",
+                "HostListener",
+                "InstanceId",
+                "AllowPublicPosition",
+                "UseStaticPosition",
+                "ThreadingSettings"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"] = new List<string>()
             {

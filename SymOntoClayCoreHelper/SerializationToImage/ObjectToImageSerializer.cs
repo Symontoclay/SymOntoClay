@@ -579,7 +579,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection",
             "SymOntoClay.Core.Internal.Parsing.Parser",
             "SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent",
-            "SymOntoClay.Core.ModulesStorage"
+            "SymOntoClay.Core.ModulesStorage",
+            "SymOntoClay.Core.Internal.Serialization.ProjectLoader",
+            "SymOntoClay.Core.Internal.MainStorageContext"
         };
 
         /// <inheritdoc/>
@@ -696,7 +698,28 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_modulesStorage" 
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.ModulesStorage"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.ModulesStorage"] = new List<string>() 
+            { 
+                "_projectLoader",
+                "_mainStorageContext",
+                "_lockObj"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Serialization.ProjectLoader"] = new List<string>() 
+            { 
+                "_context",
+                "_compiler",
+                "_isDeferredImport",
+                "_defaultSettingsOfCodeEntity",
+                "_globalStorage",
+                "_commonNamesStorage"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.MainStorageContext"] = new List<string>()
+            { 
+                "Id",
+                "SelfName",
+                "AppFile",
+                "ActiveObjectContext"
+            };
         }
 #endif
     }

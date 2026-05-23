@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Common.DebugHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -165,7 +166,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             while (currentType != null)
             {
-                var currentFields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                var currentFields = currentType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
                 result.AddRange(currentFields);
 
@@ -177,12 +178,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         protected IEnumerable<PropertyInfo> GetProperties(Type type)
         {
+#if DEBUG
+            //_logger.Info($"type?.FullName = {type?.FullName}");
+#endif
+
             var result = new List<PropertyInfo>();
             var currentType = type;
 
             while (currentType != null)
             {
-                var currentProperties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+#if DEBUG
+                //_logger.Info($"currentType?.FullName = {currentType?.FullName}");
+#endif
+
+                var currentProperties = currentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+#if DEBUG
+                //_logger.Info($"currentProperties = {currentProperties.Select(p => p.Name).WritePODListToString()}");
+#endif
 
                 result.AddRange(currentProperties);
 

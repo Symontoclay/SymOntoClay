@@ -581,7 +581,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent",
             "SymOntoClay.Core.ModulesStorage",
             "SymOntoClay.Core.Internal.Serialization.ProjectLoader",
-            "SymOntoClay.Core.Internal.MainStorageContext"
+            "SymOntoClay.Core.Internal.MainStorageContext",
+            "SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue"
         };
 
         /// <inheritdoc/>
@@ -719,6 +720,22 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "SelfName",
                 "AppFile",
                 "ActiveObjectContext"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue"] = new List<string>()
+            { 
+                "_isNull",
+                "IsEmpty",
+                "KindOfName",
+                "NameValue",
+                "NormalizedNameValue",
+                "NameWithoutPrefix",
+                "IsArray",
+                //"Capacity",
+                "HasInfiniteCapacity",
+                "Level",
+                "Namespaces",
+                "ForResolving",
+                "_builtInSuperTypes"
             };
         }
 #endif

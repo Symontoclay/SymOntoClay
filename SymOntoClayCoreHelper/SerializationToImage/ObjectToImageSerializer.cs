@@ -766,7 +766,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_settingsDict",
                 "_annotationValueLockObj",
                 "_disposingLockObj",
-                "_isDisposed"
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId"
             };
         }
 #endif

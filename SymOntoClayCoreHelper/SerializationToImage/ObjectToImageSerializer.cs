@@ -582,7 +582,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.ModulesStorage",
             "SymOntoClay.Core.Internal.Serialization.ProjectLoader",
             "SymOntoClay.Core.Internal.MainStorageContext",
-            "SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue"
+            "SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue",
+            "SymOntoClay.Core.Internal.Storage.StorageComponent",
+            "SymOntoClay.Core.Internal.Storage.StorageComponentSettings",
+            "SymOntoClay.Core.Internal.Storage.WorldStorage",
+            "SymOntoClay.ActiveObject.Functors.SerializationAnchor",
+            "SymOntoClay.Core.Internal.Storage.RealStorageContext"
         };
 
         /// <inheritdoc/>
@@ -743,7 +748,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "ActiveObjectContext",
                 "_state",
                 "_stateLockObj",
-                "_logger"
+                "_logger",
+                "Storage",
+                "Parser",
+                "DataResolversFactory"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue"] = new List<string>()
             { 
@@ -770,7 +778,47 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_isDirty",
                 "_longConditionalHashCode",
                 "_longHashCode",
-                "InternalSystemId"
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.StorageComponent"] = new List<string>()
+            { 
+                "_settings",
+                "_context",
+                "_parentStorage",
+                "_kindGlobalOfStorage",
+                "_logicQueryParseAndCache",
+                "_parser",
+                "_globalStorage",
+                "_publicFactsStorage",
+                "_selfFactsStorage",
+                "_perceptedFactsStorage",
+                "_listenedFactsStorage",
+                "_visibleFactsStorage",
+                "_worldPublicFactsStorage"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.StorageComponentSettings"] = new List<string>() 
+            { 
+                "Categories",
+                "EnableCategories"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.WorldStorage"] = new List<string>() 
+            { 
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.SerializationAnchor"] = new List<string>() 
+            { 
+                "_lockObj",
+                "_functors"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.RealStorageContext"] = new List<string>() 
+            { 
+                "_onAddParentStorageHandlersLockObj" 
             };
         }
 #endif

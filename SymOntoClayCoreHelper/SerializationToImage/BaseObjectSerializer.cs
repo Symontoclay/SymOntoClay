@@ -107,6 +107,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case "System.DateOnly":
                 case "System.TimeOnly":
                 case "System.TimeSpan":
+                case "System.Guid":
                     return SerializePrimitiveType(obj, type);
             }
 

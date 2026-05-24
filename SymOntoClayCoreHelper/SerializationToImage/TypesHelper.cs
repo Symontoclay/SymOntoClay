@@ -73,6 +73,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case "System.TimeOnly":
                     return KindOfSerializedValue.Literal;
 
+                case "System.Guid": 
+                    return KindOfSerializedValue.Literal;
+
                 case "System.TimeSpan":
                     return KindOfSerializedValue.Literal;
             }
@@ -112,6 +115,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case DateTime date: return date.ToString(_cultureInfo);
 
                 case TimeSpan timeSpan: return timeSpan.ToString("G", _cultureInfo);
+
+                case System.Guid giud: return giud.ToString("D", _cultureInfo);
 
                 default: return obj.ToString();
             }

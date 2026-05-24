@@ -759,7 +759,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Level",
                 "Namespaces",
                 "ForResolving",
-                "_builtInSuperTypes"
+                "_builtInSuperTypes",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed"
             };
         }
 #endif

@@ -193,7 +193,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"item.Value = {item.Value}");
 #endif
 
-                throw new NotImplementedException("C59FDA1A-7C7B-4E67-A6F4-B0507CA6E2DF");
+                var keySerializedValue = _serializedObjectsPool.GetOrRegSerializedValue(item.Key, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+                _logger.Info($"keySerializedValue = {keySerializedValue}");
+#endif
+
+                var valueSerializedValue = _serializedObjectsPool.GetOrRegSerializedValue(item.Value, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+                _logger.Info($"valueSerializedValue = {valueSerializedValue}");
+#endif
+
+                items.Add(new KeyValuePair<SerializedValue, SerializedValue>(keySerializedValue, valueSerializedValue));
             }
 
             card.Items = items;
@@ -845,7 +857,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData"] = new List<string>() 
             {
                 "_leafsDict",
-                "_logicalQueryNodeEqualityComparer"
+                "_logicalQueryNodeEqualityComparer",
+                "_logger"
             };
         }
 #endif

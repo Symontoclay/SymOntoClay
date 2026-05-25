@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext = realStorageContext;
             _mainStorageContext = realStorageContext.MainStorageContext;
         }
-
+        
         protected readonly KindOfStorage _kind;
 
         /// <inheritdoc/>

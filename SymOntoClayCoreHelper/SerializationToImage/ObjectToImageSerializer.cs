@@ -587,7 +587,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.StorageComponentSettings",
             "SymOntoClay.Core.Internal.Storage.WorldStorage",
             "SymOntoClay.ActiveObject.Functors.SerializationAnchor",
-            "SymOntoClay.Core.Internal.Storage.RealStorageContext"
+            "SymOntoClay.Core.Internal.Storage.RealStorageContext",
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage",
+            "SymOntoClay.Core.Internal.CodeModel.RuleInstance"
         };
 
         /// <inheritdoc/>
@@ -818,7 +820,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.RealStorageContext"] = new List<string>() 
             { 
-                "_onAddParentStorageHandlersLockObj" 
+                "_onAddParentStorageHandlersLockObj",
+                "_onAddParentStorageHandlers"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage"] = new List<string>()
+            { 
+                "_lockObj",
+                "_ruleInstancesList",
+                "_factsList",
+                "_ruleInstancesDict",
+                "_ruleInstancesDictByHashCode",
+                "_ruleInstancesDictById",
+                "_lifeTimeCycleById",
+                "_enableAddingRemovingFactLoggingInStorages"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.RuleInstance"] = new List<string>() 
+            {
+                "_builtInSuperTypes" 
             };
         }
 #endif

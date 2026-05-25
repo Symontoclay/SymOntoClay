@@ -186,10 +186,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             var items = new List<KeyValuePair<SerializedValue, SerializedValue>>();
 
-            foreach (var item in dictionary) 
+            foreach (DictionaryEntry item in dictionary) 
             {
 #if DEBUG
-                _logger.Info($"item.GetType().FullName = {item.GetType().FullName}");
+                _logger.Info($"item.Key = {item.Key}");
+                _logger.Info($"item.Value = {item.Value}");
 #endif
 
                 throw new NotImplementedException("C59FDA1A-7C7B-4E67-A6F4-B0507CA6E2DF");
@@ -589,7 +590,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.ActiveObject.Functors.SerializationAnchor",
             "SymOntoClay.Core.Internal.Storage.RealStorageContext",
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage",
-            "SymOntoClay.Core.Internal.CodeModel.RuleInstance"
+            "SymOntoClay.Core.Internal.CodeModel.RuleInstance",
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData"
         };
 
         /// <inheritdoc/>
@@ -836,7 +838,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.RuleInstance"] = new List<string>() 
             {
-                "_builtInSuperTypes" 
+                "_builtInSuperTypes",
+                "_timeStamp",
+                "_commonPersistIndexedLogicalData"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData"] = new List<string>() 
+            {
+                "_leafsDict",
+                "_logicalQueryNodeEqualityComparer"
             };
         }
 #endif

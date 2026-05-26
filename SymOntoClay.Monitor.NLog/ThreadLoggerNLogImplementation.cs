@@ -21,13 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Monitor.NLog
 {
+    [SerializeWithDataCreation]
     public class ThreadLoggerNLogImplementation: MonitorLoggerNLogImplementation, IThreadLogger
     {
         public ThreadLoggerNLogImplementation(Logger logger)

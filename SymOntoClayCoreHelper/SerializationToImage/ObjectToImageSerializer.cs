@@ -603,7 +603,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.RealStorageContext",
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage",
             "SymOntoClay.Core.Internal.CodeModel.RuleInstance",
-            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData"
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData",
+            "SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"
         };
 
         /// <inheritdoc/>
@@ -860,6 +861,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logicalQueryNodeEqualityComparer",
                 "_logger"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"] = new List<string>() { };
         }
 #endif
     }

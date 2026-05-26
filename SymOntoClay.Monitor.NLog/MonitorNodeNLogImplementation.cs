@@ -21,12 +21,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    public class MonitorNodeNLogImplementation: MonitorLoggerNLogImplementation, IMonitorNode
+    [SerializeWithDataCreation]
+    public class MonitorNodeNLogImplementation: MonitorLoggerNLogImplementation, IMonitorNode, ISerializationDataFactory
     {
         public MonitorNodeNLogImplementation()
             : this(LogManager.GetCurrentClassLogger())
@@ -59,6 +63,12 @@ namespace SymOntoClay.Monitor.NLog
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId, string parentTheadId, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
             return _threadLogger;
+        }
+
+        /// <inheritdoc/>
+        public override object GetSerializationData()
+        {
+            throw new NotImplementedException("C263F755-D0EA-49BE-96F2-E246ED4EDD8C");
         }
     }
 }

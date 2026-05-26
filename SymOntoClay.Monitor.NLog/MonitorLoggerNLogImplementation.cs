@@ -70,7 +70,8 @@ namespace SymOntoClay.Monitor.NLog
         /// <inheritdoc/>
         public virtual object GetSerializationData()
         {
-            throw new NotImplementedException("C84FA1A9-886A-4385-80CC-5F5D511DDEC0");
+            var serializationData = new MonitorNodeSerializationData();
+            return serializationData;
         }
 
         /// <inheritdoc/>

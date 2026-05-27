@@ -579,7 +579,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
             "SymOntoClay.Core.Internal.BaseCoreContext",
             "SymOntoClay.Monitor.Internal.MonitorNode",
-            "SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData",
+            "SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData",
             "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider",
             "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject",
             "SymOntoClay.ActiveObject.Threads.ActiveObjectContext",
@@ -653,7 +653,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Internal.SerializationData.MonitorNodeSerializationData"] = new List<string>()
+            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData"] = new List<string>()
             {
                 "Parent",
                 "NodeId"

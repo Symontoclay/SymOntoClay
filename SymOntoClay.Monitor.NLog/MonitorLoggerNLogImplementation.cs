@@ -27,6 +27,7 @@ using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Common.SerializationData;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;

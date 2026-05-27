@@ -1,10 +1,9 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
-using SymOntoClay.Monitor.Common;
 using System.Text;
 
-namespace SymOntoClay.Monitor.Internal.SerializationData
+namespace SymOntoClay.Monitor.Common.SerializationData
 {
     public class MonitorNodeSerializationData : IObjectToString
     {

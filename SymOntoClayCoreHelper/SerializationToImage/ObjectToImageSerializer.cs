@@ -605,7 +605,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.RuleInstance",
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData",
             "SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation",
-            "SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode"
+            "SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode",
+            "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
+            "SymOntoClay.Core.Internal.CodeModel.LogicalValue"
         };
 
         /// <inheritdoc/>
@@ -868,7 +870,87 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "RelationsList"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"] = new List<string>() { };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode"] = new List<string>() 
+            { 
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "Kind",
+                "KindOfOperator",
+                "Name",
+                "Left",
+                "Right",
+                "ParamsList",
+                "LinkedVars",
+                "Value",
+                "FuzzyLogicNonNumericSequenceValue",
+                "Fact",
+                "IsQuestion",
+                "IsNull",
+                "CountParams",
+                "VarsInfoList",
+                "KnownInfoList",
+                "RuleInstance",
+                "RulePart",
+                "TypeOfAccess",
+                "Holder",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart"] = new List<string>()
+            {
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "SecondaryParts",
+                "Parent",
+                "IsActive",
+                "Expression",
+                "AliasesDict",
+                "HasQuestionVars",
+                "HasVars",
+                "IsParameterized",
+                "TypeOfAccess",
+                "Holder",
+                "RelationsDict",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.LogicalValue"] = new List<string>() 
+            { 
+                "_builtInSuperTypes",
+                "_isBoolean",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "SystemValue",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
         }
 #endif
     }

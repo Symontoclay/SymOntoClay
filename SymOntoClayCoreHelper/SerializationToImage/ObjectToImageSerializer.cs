@@ -607,7 +607,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation",
             "SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode",
             "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
-            "SymOntoClay.Core.Internal.CodeModel.LogicalValue"
+            "SymOntoClay.Core.Internal.CodeModel.LogicalValue",
+            "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo"
         };
 
         /// <inheritdoc/>
@@ -856,7 +857,52 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_builtInSuperTypes",
                 "_timeStamp",
-                "_commonPersistIndexedLogicalData"
+                "_commonPersistIndexedLogicalData",
+                "_synonymsStorage",
+                "_synonymsStorageLockObj",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsSource",
+                "IsParameterized",
+                "KindOfRuleInstance",
+                "PrimaryPart",
+                "SecondaryParts",
+                "ObligationModality",
+                "SelfObligationModality",
+                "UsedKeysList",
+                "LeavesList",
+                "Original",
+                "Normalized",
+                "LogicalStorages",
+                "SymOntoClay.Core.IStorage.DefaultSettingsOfCodeEntity",
+                "CodeItemsStoragesList",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData"] = new List<string>() 
             {
@@ -950,6 +996,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "InternalSystemId",
                 "WhereSection",
                 "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo"] = new List<string>() 
+            { 
+                "Kind",
+                "NameOfVar",
+                "Position",
+                "Expression",
+                "AdditionalExpressions"
             };
         }
 #endif

@@ -608,7 +608,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode",
             "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
             "SymOntoClay.Core.Internal.CodeModel.LogicalValue",
-            "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo"
+            "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo",
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage"
         };
 
         /// <inheritdoc/>
@@ -851,7 +852,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_ruleInstancesDictByHashCode",
                 "_ruleInstancesDictById",
                 "_lifeTimeCycleById",
-                "_enableAddingRemovingFactLoggingInStorages"
+                "_enableAddingRemovingFactLoggingInStorages",
+                "_commonPersistIndexedLogicalData",
+                "_parentLogicalStoragesList",
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_activeObject",
+                "_enableOnAddingFactEvent",
+                "_fuzzyLogicResolver",
+                "_localCodeExecutionContext",
+                "_dateTimeProvider"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.RuleInstance"] = new List<string>() 
             {
@@ -1005,6 +1016,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Expression",
                 "AdditionalExpressions"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage"] = new List<string>() { };
         }
 #endif
     }

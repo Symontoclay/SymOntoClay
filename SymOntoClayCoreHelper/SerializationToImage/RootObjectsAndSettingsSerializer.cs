@@ -40,7 +40,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override bool TryGetSerializedValue(object obj, out SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
+            //_logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
 #endif
 
             if(!_visitedObjects.Contains(obj))
@@ -67,7 +67,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalClassCard()
@@ -77,7 +77,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -93,7 +93,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalListCard()
@@ -109,19 +109,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in enumerable) 
             {
 #if DEBUG
-                _logger.Info($"item = {item}");
+                //_logger.Info($"item = {item}");
 #endif
 
                 var fieldPath = $"{path}/[*]";
 
 #if DEBUG
-                _logger.Info($"fieldPath = {fieldPath}");
+                //_logger.Info($"fieldPath = {fieldPath}");
 #endif
 
                 var fieldSerializedValue = SerializeValue(item, fieldPath);
 
 #if DEBUG
-                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+                //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
 
                 items.Add(fieldSerializedValue);
@@ -130,7 +130,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.Items = items;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -178,7 +178,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
 
 #if DEBUG
-            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
+            //_logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
             switch(kindOfStructuralObject)
@@ -203,13 +203,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _visitedObjects.Add(obj);
 
 #if DEBUG
-            _logger.Info($"path = {path}");
+            //_logger.Info($"path = {path}");
 #endif
 
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalClassCard()
@@ -225,13 +225,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 .ToList();
 
 #if DEBUG
-            _logger.Info($"fieldsWithSettings.Count = {fieldsWithSettings.Count}");
+            //_logger.Info($"fieldsWithSettings.Count = {fieldsWithSettings.Count}");
 #endif
 
             foreach(var field in fieldsWithSettings)
             {
 #if DEBUG
-                _logger.Info($"field.Name = {field.Name}");
+                //_logger.Info($"field.Name = {field.Name}");
 #endif
 
                 ProcessFieldInfo(field, obj, path, cardFieldDict);
@@ -242,13 +242,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 .ToList();
 
 #if DEBUG
-            _logger.Info($"fields.Count = {fields.Count}");
+            //_logger.Info($"fields.Count = {fields.Count}");
 #endif
 
             foreach(var field in fields)
             {
 #if DEBUG
-                _logger.Info($"field.Name = {field.Name}");
+                //_logger.Info($"field.Name = {field.Name}");
 #endif
 
                 if(field.IsDefined(typeof(SerializedMemberAttribute), false))
@@ -273,7 +273,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var properties = GetProperties(type);
 
 #if DEBUG
-            _logger.Info($"properties.Length = {properties.Count()}");
+            //_logger.Info($"properties.Length = {properties.Count()}");
 #endif
 
             if(properties.Any())
@@ -281,8 +281,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 foreach (var property in properties)
                 {
 #if DEBUG
-                    _logger.Info($"type.FullName = {type.FullName}");
-                    _logger.Info($"property.Name = {property.Name}");
+                    //_logger.Info($"type.FullName = {type.FullName}");
+                    //_logger.Info($"property.Name = {property.Name}");
 #endif
 
 #if DEBUG
@@ -294,7 +294,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -309,13 +309,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _visitedObjects.Add(obj);
 
 #if DEBUG
-            _logger.Info($"path = {path}");
+            //_logger.Info($"path = {path}");
 #endif
 
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalClassCard()
@@ -336,13 +336,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var properties = GetProperties(type);
 
 #if DEBUG
-            _logger.Info($"properties.Count() = {properties.Count()}");
+            //_logger.Info($"properties.Count() = {properties.Count()}");
 #endif
 
             foreach (var property in properties)
             {
 #if DEBUG
-                _logger.Info($"property.Name = {property.Name}");
+                //_logger.Info($"property.Name = {property.Name}");
 #endif
 
                 if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
@@ -360,7 +360,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.Properties = cardPropertyDict;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -375,13 +375,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _visitedObjects.Add(obj);
 
 #if DEBUG
-            _logger.Info($"path = {path}");
+            //_logger.Info($"path = {path}");
 #endif
 
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalClassCard()
@@ -401,7 +401,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var field in fields)
             {
 #if DEBUG
-                _logger.Info($"field.Name = {field.Name}");
+                //_logger.Info($"field.Name = {field.Name}");
 #endif
 
                 if (field.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
@@ -423,13 +423,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var propertyInfos = GetProperties(type);
 
 #if DEBUG
-            _logger.Info($"propertyInfos.Count() = {propertyInfos.Count()}");
+            //_logger.Info($"propertyInfos.Count() = {propertyInfos.Count()}");
 #endif
 
             foreach (var property in propertyInfos)
             {
 #if DEBUG
-                _logger.Info($"property.Name = {property.Name}");
+                //_logger.Info($"property.Name = {property.Name}");
 #endif
 
                 if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
@@ -447,7 +447,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.Properties = cardPropertyDict;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -462,19 +462,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var fieldValue = field.GetValue(obj);
 
 #if DEBUG
-            _logger.Info($"fieldValue = {fieldValue}");
+            //_logger.Info($"fieldValue = {fieldValue}");
 #endif
 
             var fieldPath = $"{path}/{field.Name}";
 
 #if DEBUG
-            _logger.Info($"fieldPath = {fieldPath}");
+            //_logger.Info($"fieldPath = {fieldPath}");
 #endif
 
             var fieldSerializedValue = SerializeValue(fieldValue, fieldPath);
 
 #if DEBUG
-            _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+            //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
 
             cardFieldDict[field.Name] = fieldSerializedValue;
@@ -485,7 +485,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var propertyValue = property.GetValue(obj);
 
 #if DEBUG
-            _logger.Info($"propertyValue = {propertyValue}");
+            //_logger.Info($"propertyValue = {propertyValue}");
 #endif
 
             var serializeValueMode = SerializeValueMode.General;
@@ -498,13 +498,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var propertyPath = $"{path}/{property.Name}";
 
 #if DEBUG
-            _logger.Info($"propertyPath = {propertyPath}");
+            //_logger.Info($"propertyPath = {propertyPath}");
 #endif
 
             var propertySerializedValue = SerializeValue(propertyValue, propertyPath, serializeValueMode);
 
 #if DEBUG
-            _logger.Info($"propertySerializedValue = {propertySerializedValue}");
+            //_logger.Info($"propertySerializedValue = {propertySerializedValue}");
 #endif
 
             cardPropertyDict[property.Name] = propertySerializedValue;
@@ -516,7 +516,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _visitedObjects.Add(obj);
 
 #if DEBUG
-            _logger.Info($"path = {path}");
+            //_logger.Info($"path = {path}");
 #endif
 
             var autoResetEvent = (ManualResetEvent)obj;
@@ -524,13 +524,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var isSet = autoResetEvent.WaitOne(0);
 
 #if DEBUG
-            _logger.Info($"isSet = {isSet}");
+            //_logger.Info($"isSet = {isSet}");
 #endif
 
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalManualResetEventClassCard()
@@ -541,7 +541,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);

@@ -616,7 +616,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.EngineContext",
             "SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent",
             "SymOntoClay.Core.Internal.Services.CodeFrameService",
-            "SymOntoClay.Core.Internal.DataResolvers.BaseResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.BaseResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.InheritanceResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.ResolverOptions"
         };
 
         /// <inheritdoc/>
@@ -1104,6 +1106,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_context",
                 "_inheritanceResolver"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.InheritanceResolver"] = new List<string>() 
+            {
+                "DefaultOptions",
+                "_logicalValueLinearResolver",
+                "_synonymsResolver"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.ResolverOptions"] = new List<string>() 
+            {
+                "AddSelf",
+                "AddTopType",
+                "OnlyDirectInheritance",
+                "JustDistinct",
+                "SkipRealSearching"
             };
         }
 #endif

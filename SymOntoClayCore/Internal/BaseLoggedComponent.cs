@@ -23,9 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {

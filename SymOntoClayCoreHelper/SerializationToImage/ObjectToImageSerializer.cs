@@ -1076,7 +1076,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_planExecutionIterationsMaxCount",
                 "_runPlanExecutionIterations"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.EngineContext"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.EngineContext"] = new List<string>() 
+            { 
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
 #endif
     }

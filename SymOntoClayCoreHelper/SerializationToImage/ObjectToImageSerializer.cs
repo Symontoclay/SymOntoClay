@@ -1100,7 +1100,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_context",
                 "_baseResolver"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.BaseResolver"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.BaseResolver"] = new List<string>() 
+            {
+                "_context",
+                "_inheritanceResolver"
+            };
         }
 #endif
     }

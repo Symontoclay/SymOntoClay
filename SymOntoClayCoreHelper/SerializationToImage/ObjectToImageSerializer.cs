@@ -612,7 +612,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage",
             "SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage",
             "SymOntoClay.Core.Internal.Storage.RealStorage",
-            "SymOntoClay.Core.Internal.Htn.HtnExecutorComponent"
+            "SymOntoClay.Core.Internal.Htn.HtnExecutorComponent",
+            "SymOntoClay.Core.Internal.EngineContext"
         };
 
         /// <inheritdoc/>
@@ -1063,7 +1064,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_serializationAnchor",
                 "_kind"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.HtnExecutorComponent"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.HtnExecutorComponent"] = new List<string>() 
+            {
+                "_context",
+                "_activeObject",
+                "_htnPlanner",
+                "_compiler",
+                "_executionState",
+                "_plan",
+                "_threadExecutor",
+                "_planExecutionIterationsMaxCount",
+                "_runPlanExecutionIterations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.EngineContext"] = new List<string>() { };
         }
 #endif
     }

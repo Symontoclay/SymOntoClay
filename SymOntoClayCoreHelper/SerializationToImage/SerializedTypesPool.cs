@@ -26,8 +26,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public int GetOrRegisterType(Type type)
         {
 #if DEBUG
-            _logger.Info($"type?.Name = {type?.Name}");
-            _logger.Info($"type?.FullName = {type?.FullName}");
+            //_logger.Info($"type?.Name = {type?.Name}");
+            //_logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
             if(type == null)
@@ -72,7 +72,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var typeIdsDictData = ms.ToArray();
 
 #if DEBUG
-            _logger.Info($"typeIdsDictData.Length = {typeIdsDictData.Length}");
+            //_logger.Info($"typeIdsDictData.Length = {typeIdsDictData.Length}");
 #endif
 
             writer.Write(typeIdsDictData.Length);
@@ -85,13 +85,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _currentTypeId = reader.ReadInt32();
 
 #if DEBUG
-            _logger.Info($"_currentTypeId = {_currentTypeId}");
+            //_logger.Info($"_currentTypeId = {_currentTypeId}");
 #endif
 
             var typeIdsDictDataLength = reader.ReadInt32();
 
 #if DEBUG
-            _logger.Info($"typeIdsDictDataLength = {typeIdsDictDataLength}");
+            //_logger.Info($"typeIdsDictDataLength = {typeIdsDictDataLength}");
 #endif
 
             var typeIdsDictData = reader.ReadBytes(typeIdsDictDataLength);

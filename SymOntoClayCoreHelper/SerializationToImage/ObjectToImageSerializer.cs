@@ -613,7 +613,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage",
             "SymOntoClay.Core.Internal.Storage.RealStorage",
             "SymOntoClay.Core.Internal.Htn.HtnExecutorComponent",
-            "SymOntoClay.Core.Internal.EngineContext"
+            "SymOntoClay.Core.Internal.EngineContext",
+            "SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent",
+            "SymOntoClay.Core.Internal.Services.CodeFrameService",
+            "SymOntoClay.Core.Internal.DataResolvers.BaseResolver"
         };
 
         /// <inheritdoc/>
@@ -1080,8 +1083,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_state",
                 "_stateLockObj",
-                "_logger"
+                "_logger",
+                "CodeExecutor"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent"] = new List<string>()
+            {
+                "_context",
+                "_codeFrameService",
+                "_operatorsResolver",
+                "_methodsResolver",
+                "_numberValueLinearResolver",
+                "_globalExecutionContext"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Services.CodeFrameService"] = new List<string>() 
+            { 
+                "_context",
+                "_baseResolver"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.BaseResolver"] = new List<string>() { };
         }
 #endif
     }

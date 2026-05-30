@@ -63,7 +63,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
 
 #if DEBUG
-            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
+            //_logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
             switch (kindOfStructuralObject)
@@ -81,7 +81,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private SerializedValue SerializeWorldRoot(object obj, Type type, string path)
         {
 #if DEBUG
-            _logger.Info($"path = {path}");
+            //_logger.Info($"path = {path}");
 #endif
 
             var world = (ISerializedWorldRoot)obj;
@@ -89,7 +89,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalWorldRootClassCard()
@@ -104,7 +104,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var fieldSerializedValue = SerializeWorldComponent(worldComponent);
 
 #if DEBUG
-                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+                //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
 
                 cardItems.Add(fieldSerializedValue);
@@ -113,7 +113,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.Items = cardItems;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -126,7 +126,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.IsPreregistered);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalWorldComponentClassCard()
@@ -136,7 +136,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);

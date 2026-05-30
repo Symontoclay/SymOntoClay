@@ -17,13 +17,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public StructuralAdvice GetAdvice(Type type)
         {
 #if DEBUG
-            _logger.Info($"type.FullName = {type.FullName}");
+            //_logger.Info($"type.FullName = {type.FullName}");
 #endif
 
             var kindOfStructuralObject = GetKindOfStructuralObject(type);
 
 #if DEBUG
-            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
+            //_logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
             switch(kindOfStructuralObject)
@@ -51,7 +51,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public KindOfStructuralObject GetKindOfStructuralObject(Type type)
         {
 #if DEBUG
-            _logger.Info($"type.FullName = {type.FullName}");
+            //_logger.Info($"type.FullName = {type.FullName}");
 #endif
 
             if(type.IsDefined(typeof(WorldRootAttribute), true))

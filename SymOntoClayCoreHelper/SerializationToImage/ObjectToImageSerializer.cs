@@ -609,7 +609,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
             "SymOntoClay.Core.Internal.CodeModel.LogicalValue",
             "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo",
-            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage"
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage",
+            "SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage",
+            "SymOntoClay.Core.Internal.Storage.RealStorage",
+            "SymOntoClay.Core.Internal.Htn.HtnExecutorComponent"
         };
 
         /// <inheritdoc/>
@@ -1016,7 +1019,51 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Expression",
                 "AdditionalExpressions"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage"] = new List<string>() 
+            { 
+                "_lockObj",
+                "_mainStorageContext",
+                "_parent",
+                "_logicalStorages",
+                "_rejectedFacts",
+                "_processedOnAddingFacts",
+                "_onAddingFactLockObj",
+                "_enableOnAddingFactEvent",
+                "_fuzzyLogicResolver",
+                "_localCodeExecutionContext",
+                "_kind"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage"] = new List<string>()
+            {
+                "_lockObj",
+                "_storages",
+                "_logicalStorage",
+                "_inheritanceStorage",
+                "_triggersStorage",
+                "_varStorage",
+                "_statesStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_kind"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.RealStorage"] = new List<string>() 
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.HtnExecutorComponent"] = new List<string>() { };
         }
 #endif
     }

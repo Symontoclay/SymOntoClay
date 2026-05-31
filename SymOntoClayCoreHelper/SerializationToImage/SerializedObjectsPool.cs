@@ -87,9 +87,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var kindOfSerializedValue = _typesHelper.GetKindOfSerializedValue(type);
 
 #if DEBUG
-            _logger.Info($"id = {id}");
-            _logger.Info($"typeId = {typeId}");
-            _logger.Info($"kindOfSerializedValue = {kindOfSerializedValue}");
+            //_logger.Info($"id = {id}");
+            //_logger.Info($"typeId = {typeId}");
+            //_logger.Info($"kindOfSerializedValue = {kindOfSerializedValue}");
 #endif
 
             switch(mode)
@@ -111,13 +111,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
 #if DEBUG
-            _logger.Info($"literal = {literal}");
+            //_logger.Info($"literal = {literal}");
 #endif
 
             serializedValue = new SerializedValue(kindOfSerializedValue, id, typeId, literal);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             _serializedObjects[obj] = serializedValue;

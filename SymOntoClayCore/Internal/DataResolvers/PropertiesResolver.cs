@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             : base(context)
         {
         }
-
+        
         /// <inheritdoc/>
         protected override void LinkWithOtherBaseContextComponents()
         {

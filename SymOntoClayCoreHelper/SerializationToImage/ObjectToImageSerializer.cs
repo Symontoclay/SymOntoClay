@@ -631,7 +631,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.VarsResolver",
             "SymOntoClay.Core.Internal.DataResolvers.PropertiesResolver",
             "SymOntoClay.Core.Internal.DataResolvers.LogicalSearchVarResultsItemInvertor",
-            "SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult"
+            "SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult",
+            "SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext",
+            "SymOntoClay.Core.Internal.StandardLibrary.StandardLibraryLoader",
+            "SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext",
+            "SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext",
+            "SymOntoClay.Core.Engine",
+            "SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent",
+            "SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent"
         };
 
         /// <inheritdoc/>
@@ -1099,7 +1109,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger",
-                "CodeExecutor"
+                "CodeExecutor",
+                "HtnExecutor",
+                "StandardLibraryLoader",
+                "HostSupport",
+                "HostListener"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent"] = new List<string>()
             {
@@ -1108,7 +1122,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_operatorsResolver",
                 "_methodsResolver",
                 "_numberValueLinearResolver",
-                "_globalExecutionContext"
+                "_globalExecutionContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Services.CodeFrameService"] = new List<string>() 
             { 
@@ -1282,6 +1299,102 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "KindOfResult",
                 "SuggestedType"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext"] = new List<string>() 
+            {
+                "Parent",
+                "UseParentInResolving",
+                "IsIsolated",
+                "Holder",
+                "Storage",
+                "Instance",
+                "Owner",
+                "OwnerStorage",
+                "Kind",
+                "KindOfAddFactResult",
+                "AddedRuleInstance"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.StandardLibraryLoader"] = new List<string>() 
+            { 
+                "_context",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent"] = new List<string>() 
+            {
+                "_invokerInMainThread",
+                "_platformSupport",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent"] = new List<string>() 
+            {
+                "_settings",
+                "_internalContext",
+                "_internalSerializedContext",
+                "_allowPublicPosition"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext"] = new List<string>() 
+            { 
+                "IdForFacts",
+                "SelfInstanceId",
+                "TmpDir",
+                "CancellationContext",
+                "HostSupportComponent",
+                "AsyncEventsThreadPool",
+                "SoundPublisherComponent"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent"] = new List<string>() 
+            { 
+                "_soundBus",
+                "_hostSupport",
+                "_instanceId",
+                "_idForFacts",
+                "_standardFactsBuilder",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext"] = new List<string>() 
+            { 
+                "_isDisposed",
+                "_lockObj",
+                "VisionComponent",
+                "CoreEngine",
+                "ConditionalEntityHostSupportComponent",
+                "SoundReceiverComponent",
+                "BackpackStorage"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Engine"] = new List<string>() 
+            { 
+                "_context",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent"] = new List<string>() 
+            {
+                "_worldContext",
+                "_visionComponent",
+                "_hostSupport",
+                "_instanceId",
+                "_id",
+                "_idForFacts",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent"] = new List<string>() 
+            {
+                "_internalContext",
+                "_internalSerializedContext",
+                "_soundBus",
+                "_hostSupport",
+                "_coreEngine",
+                "_standardFactsBuilder",
+                "_instanceId"
             };
         }
 #endif

@@ -21,15 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.Cancellation;
-using SymOntoClay.Core;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
-using SymOntoClay.UnityAsset.Core.Internal.Vision;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {

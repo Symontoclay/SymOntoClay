@@ -23,13 +23,10 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
 {

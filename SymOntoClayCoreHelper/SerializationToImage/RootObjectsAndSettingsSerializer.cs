@@ -20,8 +20,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext, IDataCardWriter dataCardWriter)
-            : base(serializedObjectsPool)
+        public RootObjectsAndSettingsSerializer(ISerializedObjectsPool serializedObjectsPool, ISerializedTypesPool serializedTypesPool, IStructuralContext structuralContext, IDataCardWriter dataCardWriter)
+            : base(serializedObjectsPool, serializedTypesPool)
         {
             _structuralContext = structuralContext;
             _dataCardWriter = dataCardWriter;
@@ -218,23 +218,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 Path = path
             };
 
-            var cardFieldDict = new Dictionary<string, SerializedValue>();
+            var cardFieldList = new List<(string, int, SerializedValue)>();
 
             var fieldsWithSettings = GetFields(type)
-                .Where(f => f.IsDefined(typeof(SettingsMemberAttribute), false))
+                .Where(f => f.Field.IsDefined(typeof(SettingsMemberAttribute), false))
                 .ToList();
 
 #if DEBUG
             //_logger.Info($"fieldsWithSettings.Count = {fieldsWithSettings.Count}");
 #endif
 
-            foreach(var field in fieldsWithSettings)
+            foreach(var item in fieldsWithSettings)
             {
 #if DEBUG
                 //_logger.Info($"field.Name = {field.Name}");
 #endif
 
-                ProcessFieldInfo(field, obj, path, cardFieldDict);
+                ProcessFieldInfo(item.Field, item.TypeId, obj, path, cardFieldList);
             }
 
             var fields = GetFields(type)
@@ -245,13 +245,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"fields.Count = {fields.Count}");
 #endif
 
-            foreach(var field in fields)
+            foreach(var item in fields)
             {
+                var field = item.Field;
+
 #if DEBUG
                 //_logger.Info($"field.Name = {field.Name}");
 #endif
 
-                if(field.IsDefined(typeof(SerializedMemberAttribute), false))
+                if (field.IsDefined(typeof(SerializedMemberAttribute), false))
                 {
                     continue;
                 }
@@ -265,10 +267,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 TmpCheckProcessedMembersOfTypes("ADC70B21-5098-4EC0-A43B-C118D67A72A9", type, field.Name);
 #endif
 
-                ProcessFieldInfo(field, obj, path, cardFieldDict);
+                ProcessFieldInfo(field, item.TypeId, obj, path, cardFieldList);
             }
 
-            card.Fields = cardFieldDict;
+            card.Fields = cardFieldList;
 
             var properties = GetProperties(type);
 
@@ -278,7 +280,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if(properties.Any())
             {
-                foreach (var property in properties)
+                foreach (var item in properties)
                 {
 #if DEBUG
                     //_logger.Info($"type.FullName = {type.FullName}");
@@ -286,7 +288,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
 #if DEBUG
-                    TmpCheckProcessedMembersOfTypes("675FF756-50FE-4073-9B08-7AAA916ACCD9", type, property.Name);
+                    TmpCheckProcessedMembersOfTypes("675FF756-50FE-4073-9B08-7AAA916ACCD9", type, item.Prop.Name);
 #endif
                 }
 
@@ -331,7 +333,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 throw new NotImplementedException("B71D9BC6-FF5E-4621-8665-599B2685B0BE");
             }
 
-            var cardPropertyDict = new Dictionary<string, SerializedValue>();
+            var cardPropertyList = new List<(string, int, SerializedValue)>();
 
             var properties = GetProperties(type);
 
@@ -339,8 +341,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"properties.Count() = {properties.Count()}");
 #endif
 
-            foreach (var property in properties)
+            foreach (var item in properties)
             {
+                var property = item.Prop;
+
 #if DEBUG
                 //_logger.Info($"property.Name = {property.Name}");
 #endif
@@ -354,10 +358,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 TmpCheckProcessedMembersOfTypes("85FEC95E-9478-4037-BB84-7F1C6328872B", type, property.Name);
 #endif
 
-                ProcessPropertyInfo(property, obj, path, cardPropertyDict);
+                ProcessPropertyInfo(property, item.TypeId, obj, path, cardPropertyList);
             }
 
-            card.Properties = cardPropertyDict;
+            card.Properties = cardPropertyList;
 
 #if DEBUG
             //_logger.Info($"card = {card}");
@@ -396,10 +400,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"fields.Count() = {fields.Count()}");
 #endif
 
-            var cardFieldDict = new Dictionary<string, SerializedValue>();
+            var cardFieldList = new List<(string, int, SerializedValue)>();
 
-            foreach (var field in fields)
+            foreach (var item in fields)
             {
+                var field = item.Field;
+
 #if DEBUG
                 //_logger.Info($"field.Name = {field.Name}");
 #endif
@@ -413,12 +419,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 TmpCheckProcessedMembersOfTypes("E09901B9-7B79-4DD3-9BD3-1F89B1AFC600", type, field.Name);
 #endif
 
-                ProcessFieldInfo(field, obj, path, cardFieldDict);
+                ProcessFieldInfo(field, item.TypeId, obj, path, cardFieldList);
             }
 
-            card.Fields = cardFieldDict;
+            card.Fields = cardFieldList;
 
-            var cardPropertyDict = new Dictionary<string, SerializedValue>();
+            var cardPropertyList = new List<(string, int, SerializedValue)>();
 
             var propertyInfos = GetProperties(type);
 
@@ -426,8 +432,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"propertyInfos.Count() = {propertyInfos.Count()}");
 #endif
 
-            foreach (var property in propertyInfos)
+            foreach (var item in propertyInfos)
             {
+                var property = item.Prop;
+
 #if DEBUG
                 //_logger.Info($"property.Name = {property.Name}");
 #endif
@@ -441,10 +449,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 TmpCheckProcessedMembersOfTypes("8CF41E0D-1BEB-4BAF-8D3A-6107D6B788D7", type, property.Name);
 #endif
 
-                ProcessPropertyInfo(property, obj, path, cardPropertyDict);
+                ProcessPropertyInfo(property, item.TypeId, obj, path, cardPropertyList);
             }
 
-            card.Properties = cardPropertyDict;
+            card.Properties = cardPropertyList;
 
 #if DEBUG
             //_logger.Info($"card = {card}");
@@ -457,7 +465,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return serializedValue;
         }
 
-        private void ProcessFieldInfo(FieldInfo field, object obj, string path, Dictionary<string, SerializedValue> cardFieldDict)
+        private void ProcessFieldInfo(FieldInfo field, int typeId, object obj, string path, List<(string, int, SerializedValue)> cardFieldList)
         {
             var fieldValue = field.GetValue(obj);
 
@@ -477,10 +485,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
 
-            cardFieldDict[field.Name] = fieldSerializedValue;
+            cardFieldList.Add((field.Name, typeId, fieldSerializedValue));
         }
 
-        private void ProcessPropertyInfo(PropertyInfo property, object obj, string path, Dictionary<string, SerializedValue> cardPropertyDict)
+        private void ProcessPropertyInfo(PropertyInfo property, int typeId, object obj, string path, List<(string, int, SerializedValue)> cardPropertyList)
         {
             var propertyValue = property.GetValue(obj);
 
@@ -507,7 +515,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"propertySerializedValue = {propertySerializedValue}");
 #endif
 
-            cardPropertyDict[property.Name] = propertySerializedValue;
+            cardPropertyList.Add((property.Name, typeId, propertySerializedValue));
         }
 
         /// <inheritdoc/>

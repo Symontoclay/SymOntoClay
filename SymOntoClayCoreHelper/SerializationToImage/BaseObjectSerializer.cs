@@ -12,12 +12,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        protected BaseObjectSerializer(ISerializedObjectsPool serializedObjectsPool)
+        protected BaseObjectSerializer(ISerializedObjectsPool serializedObjectsPool, ISerializedTypesPool serializedTypesPool)
         {
             _serializedObjectsPool = serializedObjectsPool;
+            _serializedTypesPool = serializedTypesPool;
         }
 
         protected readonly ISerializedObjectsPool _serializedObjectsPool;
+        private readonly ISerializedTypesPool _serializedTypesPool;
 
         /// <inheritdoc/>
         public SerializedValue SerializeValue(object obj, string path = "", SerializeValueMode serializeValueMode = SerializeValueMode.General)
@@ -160,30 +162,34 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected abstract SerializedValue SerializeManualResetEvent(object obj, Type type, string path);
         protected abstract SerializedValue SerializeAction(object obj, Type type);
 
-        protected IEnumerable<FieldInfo> GetFields(Type type)
+        protected IEnumerable<(int TypeId, FieldInfo Field)> GetFields(Type type)
         {
-            var result = new List<FieldInfo>();
+            var result = new List<(int TypeId, FieldInfo Field)>();
             var currentType = type;
 
             while (currentType != null)
             {
-                var currentFields = currentType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                var typeId = _serializedTypesPool.GetOrRegisterType(currentType);
+
+                var currentFields = currentType
+                    .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                    .Select(p => (typeId, p));
 
                 result.AddRange(currentFields);
 
                 currentType = currentType.BaseType;
             }
 
-            return result.Where(p => !p.Name.EndsWith("k__BackingField"));
+            return result.Where(p => !p.Field.Name.EndsWith("k__BackingField"));
         }
 
-        protected IEnumerable<PropertyInfo> GetProperties(Type type)
+        protected IEnumerable<(int TypeId, PropertyInfo Prop)> GetProperties(Type type)
         {
 #if DEBUG
             //_logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
-            var result = new List<PropertyInfo>();
+            var result = new List<(int TypeId, PropertyInfo Prop)>();
             var currentType = type;
 
             while (currentType != null)
@@ -192,7 +198,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 //_logger.Info($"currentType?.FullName = {currentType?.FullName}");
 #endif
 
-                var currentProperties = currentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                var typeId = _serializedTypesPool.GetOrRegisterType(currentType);
+
+                var currentProperties = currentType
+                    .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                    .Select(p => (typeId, p));
 
 #if DEBUG
                 //_logger.Info($"currentProperties = {currentProperties.Select(p => p.Name).WritePODListToString()}");
@@ -203,7 +213,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 currentType = currentType.BaseType;
             }
                 
-            return result.Where(p => p.CanWrite && IsAutoProperty(p));
+            return result.Where(p => p.Prop.CanWrite && IsAutoProperty(p.Prop));
         }
 
         public static bool IsAutoProperty(PropertyInfo prop)

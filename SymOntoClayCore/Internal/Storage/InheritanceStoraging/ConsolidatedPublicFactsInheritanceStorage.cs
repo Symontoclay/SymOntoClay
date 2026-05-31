@@ -22,11 +22,9 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 {

@@ -12,8 +12,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 
         public SerializedValue Header { get; set; }
 
-        public Dictionary<string, SerializedValue> Fields { get; set; }
-        public Dictionary<string, SerializedValue> Properties { get; set; }
+        public List<(string, int, SerializedValue)> Fields { get; set; }
+        public List<(string, int, SerializedValue)> Properties { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -40,8 +40,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 
             sb.AppendLine($"{spaces}{nameof(KindOfDataCard)} = {KindOfDataCard}");
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
-            sb.PrintPODDictProp(n, nameof(Fields), Fields);
-            sb.PrintPODDictProp(n, nameof(Properties), Properties);
+            sb.PrintPODListProp(n, nameof(Fields), Fields);
+            sb.PrintPODListProp(n, nameof(Properties), Properties);
 
             return sb.ToString();
         }

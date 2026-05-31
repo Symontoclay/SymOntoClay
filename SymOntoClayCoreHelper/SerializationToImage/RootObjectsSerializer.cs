@@ -13,8 +13,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public RootObjectsSerializer(ISerializedObjectsPool serializedObjectsPool, IStructuralContext structuralContext, IDataCardWriter dataCardWriter)
-            : base(serializedObjectsPool)
+        public RootObjectsSerializer(ISerializedObjectsPool serializedObjectsPool, ISerializedTypesPool serializedTypesPool, IStructuralContext structuralContext, IDataCardWriter dataCardWriter)
+            : base(serializedObjectsPool, serializedTypesPool)
         {
             _structuralContext = structuralContext;
             _dataCardWriter = dataCardWriter;

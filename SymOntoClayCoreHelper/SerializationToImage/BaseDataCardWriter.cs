@@ -20,7 +20,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var fullFileName = Path.Combine(_basePath, packEntryName);
 
 #if DEBUG
-            _logger.Info($"fullFileName = {fullFileName}");
+            //_logger.Info($"fullFileName = {fullFileName}");
 #endif
 
             _filesToPack.Add((packEntryName, fullFileName));
@@ -39,7 +39,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public void Write(IDataCard dataCard)
         {
 #if DEBUG
-            _logger.Info($"dataCard.KindOfDataCard = {dataCard.KindOfDataCard}");
+            //_logger.Info($"dataCard.KindOfDataCard = {dataCard.KindOfDataCard}");
 #endif
 
             using var ms = new MemoryStream();
@@ -51,7 +51,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var data = ms.ToArray();
 
 #if DEBUG
-            _logger.Info($"data.Length = {data.Length}");
+            //_logger.Info($"data.Length = {data.Length}");
 #endif
 
             _writer.Write((int)dataCard.KindOfDataCard);

@@ -1186,7 +1186,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.OperatorsResolver"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.OperatorsResolver"] = new List<string>() 
+            {
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
 #endif
     }

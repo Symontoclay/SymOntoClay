@@ -1570,7 +1570,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_platformTypesConvertorsRegistry" 
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"] = new List<string>() 
+            { 
+                "_lockObj"
+            };
         }
 #endif
     }

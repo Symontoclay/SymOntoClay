@@ -162,7 +162,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfPrimitiveTask), kindOfPrimitiveTask, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfPrimitiveTask), kindOfPrimitiveTask, "B4AA2689-39E1-45FD-A2DA-BD6E170876F3");
                 }
 
 #if DEBUG

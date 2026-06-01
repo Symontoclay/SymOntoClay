@@ -145,7 +145,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                         break;
 
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "81587EE8-3907-4983-8F95-14BA37098EC9");
                                 }
                             }
                             else
@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                         break;
 
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "95386D96-98BE-4DAC-99C0-61C4A18855CC");
                                 }
                             }
                         }
@@ -186,7 +186,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "37381638-569B-4EBF-AEAA-3509E7AC00E7");
                             }
                         }
                     }
@@ -215,7 +215,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "404953C9-4B08-4B06-B2BE-A53957F167F6");
                             }
                         }
                     }
@@ -244,14 +244,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "24DBAA2B-23CE-4BE1-9A57-17BD24C32DD7");
                             }
                         }
                     }
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfCallingFunction), kindOfCallingFunction, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfCallingFunction), kindOfCallingFunction, "82E2FEB6-6961-43EC-B375-6611B316B9A9");
             }
 
             AddCommand(command);

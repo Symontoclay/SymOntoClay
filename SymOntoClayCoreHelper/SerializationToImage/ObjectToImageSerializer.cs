@@ -229,7 +229,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
 #if DEBUG
                 _logger.Info($"item.Key = {item.Key}");
-                _logger.Info($"item.Key?.GetType()?.FullName = {item.Key?.GetType()?.FullName}");
+                //_logger.Info($"item.Key?.GetType()?.FullName = {item.Key?.GetType()?.FullName}");
                 _logger.Info($"item.Value = {item.Value}");
 #endif
 
@@ -708,7 +708,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage",
             "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry",
             "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver",
-            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator"
         };
 
         /// <inheritdoc/>
@@ -1421,7 +1428,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_hostListener",
                 "_hostEndpointsRegistry",
                 "_endPointsResolver",
-                "_endPointActivator"
+                "_endPointActivator",
+                "_internalManualControlledObjectsList",
+                "_internalManualControlledObjectsDict",
+                "_endpointsRegistryForManualControlledObjectsDict",
+                "_manualControlLockObj",
+                "_worldContext",
+                "_logger",
+                "_monitorNode",
+                "_invokerInMainThread",
+                "_instanceId",
+                "_cancellationTokenSourceContext",
+                "_linkedCancellationTokenSourceContext",
+                "_standardFactsBuilder",
+                "_idForFacts",
+                "_id",
+                "_componentState",
+                "_stateLockObj",
+                "AsyncEventsThreadPool"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext"] = new List<string>() 
             { 
@@ -1608,12 +1632,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver"] = new List<string>() 
             { 
-                "_platformTypesConvertorsRegistry" 
+                "_platformTypesConvertorsRegistry",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"] = new List<string>() 
             { 
                 "_lockObj",
-                "_convertersDict"
+                "_convertersDict",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator"] = new List<string>()
+            {
+                "_platformTypesConvertorsRegistry",
+                "_invokingInMainThread",
+                "_threadPool",
+                "_logger"
             };
         }
 #endif

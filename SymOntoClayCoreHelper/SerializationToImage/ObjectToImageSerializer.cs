@@ -1200,7 +1200,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "HtnExecutor",
                 "StandardLibraryLoader",
                 "HostSupport",
-                "HostListener"
+                "HostListener",
+                "ConditionalEntityHostSupport",
+                "SoundPublisherProvider",
+                "NLPConverterFactory"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent"] = new List<string>()
             {

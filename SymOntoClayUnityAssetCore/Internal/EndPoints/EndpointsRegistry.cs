@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Monitor.Common;
 using System.Collections.Generic;
@@ -35,7 +36,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         private readonly object _lockObj = new object();
+
+        [SystemNoSerializedMember]
         private readonly Dictionary<string, Dictionary<int, List<IEndpointInfo>>> _endPointsDict = new Dictionary<string, Dictionary<int, List<IEndpointInfo>>>();
+
+        [SystemNoSerializedMember]
         private IEndpointInfo _generalCallEndPoint;
 
         public void AddEndpointsRange(IList<IEndpointInfo> platformEndpointsList)

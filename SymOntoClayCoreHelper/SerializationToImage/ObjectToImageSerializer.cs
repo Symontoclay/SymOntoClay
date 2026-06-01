@@ -666,7 +666,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage",
             "SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage",
             "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage",
-            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry"
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry",
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"
         };
 
         /// <inheritdoc/>
@@ -1375,7 +1377,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_allowPublicPosition",
                 "_hostSupport",
                 "_soundPublisher",
-                "_endpointsRegistries"
+                "_endpointsRegistries",
+                "_hostListener",
+                "_hostEndpointsRegistry",
+                "_endPointsResolver",
+                "_endPointActivator"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext"] = new List<string>() 
             { 
@@ -1557,8 +1563,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry"] = new List<string>() 
             { 
-                "_lockObj"
+                "_lockObj",
+                "_logger"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver"] = new List<string>() 
+            { 
+                "_platformTypesConvertorsRegistry" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"] = new List<string>() { };
         }
 #endif
     }

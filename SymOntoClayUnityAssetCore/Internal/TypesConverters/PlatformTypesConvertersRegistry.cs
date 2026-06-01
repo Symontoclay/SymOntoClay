@@ -25,6 +25,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         {
         }
 
+        [DeserializeInPostHandler]
         [SystemNoSerializedMember]
         private readonly Type _nullValueType = typeof(NullValue);
 

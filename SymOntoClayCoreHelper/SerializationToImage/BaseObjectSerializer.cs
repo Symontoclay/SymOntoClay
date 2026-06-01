@@ -55,9 +55,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type.FullName = {type.FullName}");
             _logger.Info($"type.Name = {type.Name}");
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+            if (type.FullName == "System.Type" || type.FullName == "System.RuntimeType")
+            {
+                throw new NotImplementedException("C9E50BDB-8432-4CE1-A56A-1FD24829BCAB");
+            }
 #endif
 
-            if(type.IsEnum)
+            if (type.IsEnum)
             {
                 return SerializePrimitiveType(obj, type);
             }

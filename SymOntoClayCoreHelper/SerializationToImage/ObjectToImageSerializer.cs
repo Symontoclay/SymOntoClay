@@ -171,6 +171,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             _visitedObjects.Add(obj);
 
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
@@ -190,16 +194,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
 #if DEBUG
                 _logger.Info($"item.Key = {item.Key}");
+                _logger.Info($"item.Key?.GetType()?.FullName = {item.Key?.GetType()?.FullName}");
                 _logger.Info($"item.Value = {item.Value}");
 #endif
 
-                var keySerializedValue = _serializedObjectsPool.GetOrRegSerializedValue(item.Key, SerializedObjectsPoolMode.General);
+                var keySerializedValue = SerializeValue(item.Key, string.Empty);
 
 #if DEBUG
                 _logger.Info($"keySerializedValue = {keySerializedValue}");
 #endif
 
-                var valueSerializedValue = _serializedObjectsPool.GetOrRegSerializedValue(item.Value, SerializedObjectsPoolMode.General);
+                var valueSerializedValue = SerializeValue(item.Value, string.Empty);
 
 #if DEBUG
                 _logger.Info($"valueSerializedValue = {valueSerializedValue}");
@@ -1573,7 +1578,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"] = new List<string>() 
             { 
                 "_lockObj",
-                "_convertorsDict"
+                "_convertersDict"
             };
         }
 #endif

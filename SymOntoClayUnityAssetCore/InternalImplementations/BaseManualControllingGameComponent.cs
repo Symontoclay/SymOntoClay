@@ -31,6 +31,7 @@ using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -48,9 +49,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _hostEndpointsRegistry = new EndpointsRegistry(Logger);
             _endpointsRegistries.Add(_hostEndpointsRegistry);
 
-            var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(settings.HostListener);
+            _hostListener = settings.HostListener;
 
-            _hostEndpointsRegistry.AddEndpointsRange(platformEndpointsList);
+            RegisterEndpointsFromHostListener();
 
             _endPointsResolver = new EndPointsResolver(Logger, platformTypesConvertorsRegistry);
 
@@ -60,6 +61,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _internalManualControlledObjectsDict = new Dictionary<IGameObject, InternalManualControlledObject>();
             _endpointsRegistryForManualControlledObjectsDict = new Dictionary<IGameObject, EndpointsProxyRegistryForDevices>();
         }
+
+        private void RegisterEndpointsFromHostListener()
+        {
+            var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(_hostListener);
+
+            _hostEndpointsRegistry.AddEndpointsRange(platformEndpointsList);
+        }
+
+        private object _hostListener;
 
         private readonly List<IEndpointsRegistry> _endpointsRegistries;
         private readonly EndpointsRegistry _hostEndpointsRegistry;

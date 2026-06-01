@@ -665,7 +665,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage",
             "SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage",
             "SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage",
-            "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage"
+            "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage",
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry"
         };
 
         /// <inheritdoc/>
@@ -1119,7 +1120,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_kind",
                 "_state",
                 "_stateLockObj",
-                "_logger"
+                "_logger",
+                "CodeItemsStoragesList"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.RealStorage"] = new List<string>() 
             {
@@ -1370,7 +1372,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_settings",
                 "_internalContext",
                 "_internalSerializedContext",
-                "_allowPublicPosition"
+                "_allowPublicPosition",
+                "_hostSupport",
+                "_soundPublisher",
+                "_endpointsRegistries"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext"] = new List<string>() 
             { 
@@ -1549,6 +1554,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry"] = new List<string>() 
+            { 
+                "_lockObj"
             };
         }
 #endif

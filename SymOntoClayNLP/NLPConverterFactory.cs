@@ -22,21 +22,27 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Dicts;
+using SymOntoClay.NLP.SerializationData;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SymOntoClay.NLP
 {
-    public class NLPConverterFactory: INLPConverterFactory
+    [SerializeWithDataCreation]
+    public class NLPConverterFactory: INLPConverterFactory, ISerializationDataFactory
     {
-        public NLPConverterFactory(NLPConverterProviderSettings settings, IMonitorLogger logger)
+        public NLPConverterFactory(NLPConverterProviderSettings settings, IMonitorLogger logger, INLPConverterProvider provider)
         {
             _logger = logger;
             _creationStrategy = settings.CreationStrategy;
+            _provider = provider;
 
             if(_creationStrategy == CreationStrategy.Unknown)
             {
@@ -76,11 +82,21 @@ namespace SymOntoClay.NLP
             }
         }
 
+        private readonly INLPConverterProvider _provider;
         private readonly CreationStrategy _creationStrategy;
         private readonly IMonitorLogger _logger;
         private readonly object _lockObj = new object();
         private readonly IWordsDict _wordsDict;
         private INLPConverter _converter;
+
+        /// <inheritdoc/>
+        public object GetSerializationData()
+        {
+            var serializationData = new NLPConverterFactorySerializationData();
+            serializationData.Provider = _provider;
+
+            return serializationData;
+        }
 
         /// <inheritdoc/>
         public INLPConverter GetConverter()
@@ -106,7 +122,7 @@ namespace SymOntoClay.NLP
                     default:
                         throw new ArgumentOutOfRangeException(nameof(_creationStrategy), _creationStrategy, null);
                 }
-            }            
+            }
         }
     }
 }

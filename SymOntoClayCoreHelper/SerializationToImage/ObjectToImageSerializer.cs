@@ -715,7 +715,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter",
             "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter",
             "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter",
-            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator"
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator",
+            "SymOntoClay.NLP.NLPConverterFactory",
+            "SymOntoClay.NLP.SerializationData.NLPConverterFactorySerializationData"
         };
 
         /// <inheritdoc/>
@@ -1656,6 +1658,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_invokingInMainThread",
                 "_threadPool",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.NLP.NLPConverterFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.NLP.SerializationData.NLPConverterFactorySerializationData"] = new List<string>() 
+            { 
+                "Provider" 
             };
         }
 #endif

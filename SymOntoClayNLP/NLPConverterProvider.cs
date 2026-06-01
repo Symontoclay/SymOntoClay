@@ -48,7 +48,7 @@ namespace SymOntoClay.NLP
             {
                 if(_factory == null)
                 {
-                    _factory = new NLPConverterFactory(_settings, logger);
+                    _factory = new NLPConverterFactory(_settings, logger, this);
                 }
 
                 return _factory;

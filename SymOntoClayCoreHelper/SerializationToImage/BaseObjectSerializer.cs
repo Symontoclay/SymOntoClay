@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,10 +56,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type.FullName = {type.FullName}");
             _logger.Info($"type.Name = {type.Name}");
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
-            if (type.FullName == "System.Type" || type.FullName == "System.RuntimeType")
-            {
-                throw new NotImplementedException("C9E50BDB-8432-4CE1-A56A-1FD24829BCAB");
-            }
 #endif
 
             if (type.IsEnum)
@@ -115,6 +112,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case "System.TimeSpan":
                 case "System.Guid":
                     return SerializePrimitiveType(obj, type);
+
+                case "System.Type":
+                case "System.RuntimeType":
+                    return SerializeReflectionType(obj, type);
             }
 
             switch (type.Name)
@@ -156,6 +157,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
         }
+
+        protected abstract SerializedValue SerializeReflectionType(object obj, Type type);
 
         protected abstract SerializedValue SerializeBareObject(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericList(object obj, Type type, string path);

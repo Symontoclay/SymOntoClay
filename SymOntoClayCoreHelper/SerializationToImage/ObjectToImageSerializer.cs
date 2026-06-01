@@ -84,6 +84,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeReflectionType(object obj, Type type)
+        {
+#if DEBUG
+            _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
+            var typeObj = (Type)obj;
+
+#if DEBUG
+            _logger.Info($"typeObj.FullName = {typeObj.FullName}");
+#endif
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ReflectionTypeCard()
+            {
+                Header = serializedValue,
+                OriginalTypeName = typeObj.FullName
+            };
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);

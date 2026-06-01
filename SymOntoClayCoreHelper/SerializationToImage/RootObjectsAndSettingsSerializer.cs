@@ -60,6 +60,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeReflectionType(object obj, Type type)
+        {
+            throw new NotImplementedException("C18526FF-CEE4-4BBF-828D-CC39965A5E99");
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);

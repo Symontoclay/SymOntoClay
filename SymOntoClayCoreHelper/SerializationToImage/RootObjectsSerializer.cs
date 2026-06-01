@@ -24,6 +24,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly IDataCardWriter _dataCardWriter;
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeReflectionType(object obj, Type type)
+        {
+            throw new NotImplementedException("C707B938-0FA8-4AD4-98D8-C5A805EB1011");
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeBareObject(object obj, Type type, string path)
         {
             throw new NotImplementedException("C8C98387-18AF-46E4-8F64-80EC18F28503");

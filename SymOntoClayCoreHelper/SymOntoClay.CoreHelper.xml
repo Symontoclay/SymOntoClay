@@ -130,10 +130,25 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ListCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ReflectionTypeCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ReflectionTypeCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ReflectionTypeCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ReflectionTypeCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeExternalValue(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeReflectionType(System.Object,System.Type)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
@@ -172,6 +187,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeExternalValue(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeReflectionType(System.Object,System.Type)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -200,6 +218,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer._tmpProcessedMembersOfTypes">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeReflectionType(System.Object,System.Type)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">

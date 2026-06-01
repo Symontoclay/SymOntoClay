@@ -45,43 +45,43 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         private readonly Type _nullValueType = typeof(NullValue);
 
         private readonly object _lockObj = new object();
-        private readonly Dictionary<Type, Dictionary<Type, IPlatformTypesConverter>> _convertorsDict = new Dictionary<Type, Dictionary<Type, IPlatformTypesConverter>>();
+        private readonly Dictionary<Type, Dictionary<Type, IPlatformTypesConverter>> _convertersDict = new Dictionary<Type, Dictionary<Type, IPlatformTypesConverter>>();
 
         /// <inheritdoc/>
-        public void AddConvertor(IMonitorLogger logger, IPlatformTypesConverter convertor)
+        public void AddConvertor(IMonitorLogger logger, IPlatformTypesConverter converter)
         {
             lock (_lockObj)
             {
                 Dictionary<Type, IPlatformTypesConverter> targetDict = null;
 
-                if (convertor.CanConvertToCoreType)
+                if (converter.CanConvertToCoreType)
                 {
-                    if (_convertorsDict.ContainsKey(convertor.PlatformType))
+                    if (_convertersDict.ContainsKey(converter.PlatformType))
                     {
-                        targetDict = _convertorsDict[convertor.PlatformType];
+                        targetDict = _convertersDict[converter.PlatformType];
                     }
                     else
                     {
                         targetDict = new Dictionary<Type, IPlatformTypesConverter>();
-                        _convertorsDict[convertor.PlatformType] = targetDict;
+                        _convertersDict[converter.PlatformType] = targetDict;
                     }
 
-                    targetDict[convertor.CoreType] = convertor;
+                    targetDict[converter.CoreType] = converter;
                 }
 
-                if (convertor.CanConvertToPlatformType)
+                if (converter.CanConvertToPlatformType)
                 {
-                    if (_convertorsDict.ContainsKey(convertor.CoreType))
+                    if (_convertersDict.ContainsKey(converter.CoreType))
                     {
-                        targetDict = _convertorsDict[convertor.CoreType];
+                        targetDict = _convertersDict[converter.CoreType];
                     }
                     else
                     {
                         targetDict = new Dictionary<Type, IPlatformTypesConverter>();
-                        _convertorsDict[convertor.CoreType] = targetDict;
+                        _convertersDict[converter.CoreType] = targetDict;
                     }
 
-                    targetDict[convertor.PlatformType] = convertor;
+                    targetDict[converter.PlatformType] = converter;
                 }
             }
         }
@@ -205,9 +205,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
         private bool NCanConvert(IMonitorLogger logger, Type source, Type dest)
         {
-            if (_convertorsDict.ContainsKey(source))
+            if (_convertersDict.ContainsKey(source))
             {
-                var targetDict = _convertorsDict[source];
+                var targetDict = _convertersDict[source];
 
                 if (targetDict.ContainsKey(dest))
                 {
@@ -290,9 +290,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
         private (object, bool) NConvert(IMonitorLogger logger, Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-            if (_convertorsDict.ContainsKey(sourceType))
+            if (_convertersDict.ContainsKey(sourceType))
             {
-                var targetDict = _convertorsDict[sourceType];
+                var targetDict = _convertersDict[sourceType];
 
                 if (targetDict.ContainsKey(destType))
                 {

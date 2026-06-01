@@ -33,7 +33,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 {
     public interface IPlatformTypesConvertersRegistry
     {
-        void AddConvertor(IMonitorLogger logger, IPlatformTypesConverter convertor);
+        void AddConvertor(IMonitorLogger logger, IPlatformTypesConverter converter);
         bool CanConvert(IMonitorLogger logger, Type source, Type dest);
         object Convert(IMonitorLogger logger, Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext);
         Value ConvertToValue(IMonitorLogger logger, Type sourceType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext);

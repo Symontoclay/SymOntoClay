@@ -110,7 +110,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -135,7 +135,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -181,7 +181,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.Items = items;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -251,7 +251,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.Items = items;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -408,7 +408,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.SerializationData = serializedSerializationDataValue;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -496,7 +496,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.Properties = cardPropertyList;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -598,11 +598,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
-
 
             return serializedValue;
         }
@@ -726,7 +725,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.Factories.RootTaskInstanceStorageFactory",
             "SymOntoClay.Core.Internal.Storage.Factories.StrategicTaskInstanceStorageFactory",
             "SymOntoClay.Core.Internal.Storage.Factories.TacticalTaskInstanceStorageFactory",
-            "SymOntoClay.Core.Internal.Storage.Factories.CompoundTaskInstanceStorageFactory"
+            "SymOntoClay.Core.Internal.Storage.Factories.CompoundTaskInstanceStorageFactory",
+            "SymOntoClay.Core.StandaloneStorage",
+            "SymOntoClay.Core.Internal.Storage.GlobalStorage",
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage",
+            "SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage",
+            "SymOntoClay.Core.Internal.Storage.AppInstanceStorage"
         };
 
         /// <inheritdoc/>
@@ -979,7 +983,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_enableOnAddingFactEvent",
                 "_fuzzyLogicResolver",
                 "_localCodeExecutionContext",
-                "_dateTimeProvider"
+                "_dateTimeProvider",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_onChangedWithKeysHandlersLockObj",
+                "_onChangedWithKeysHandlers",
+                "_onAddingFactHandlerLockObj",
+                "_onAddingFactHandlers"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.RuleInstance"] = new List<string>() 
             {
@@ -1188,7 +1198,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_activeObjectContext",
                 "_threadPool",
                 "_serializationAnchor",
-                "_kind"
+                "_kind",
+                "_realStorageContext"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.HtnExecutorComponent"] = new List<string>() 
             {
@@ -1217,7 +1228,22 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "NLPConverterFactory",
                 "StorageFactories",
                 "CodeExecutionThreadPool",
-                "TriggersThreadPool"
+                "TriggersThreadPool",
+                "Id",
+                "SelfName",
+                "AppFile",
+                "ActiveObjectContext",
+                "Storage",
+                "Parser",
+                "DataResolversFactory",
+                "ConvertersFactory",
+                "TypeConverter",
+                "CommonNamesStorage",
+                "InstancesStorage",
+                "LoaderFromSourceCode",
+                "ServicesFactory",
+                "LogicQueryParseAndCache",
+                "ModulesStorage"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent"] = new List<string>()
             {
@@ -1698,6 +1724,67 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.StrategicTaskInstanceStorageFactory"] = new List<string>() { };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.TacticalTaskInstanceStorageFactory"] = new List<string>() { };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.CompoundTaskInstanceStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.StandaloneStorage"] = new List<string>() 
+            {
+                "_context",
+                "_additionalSourceCodePaths",
+                "_storageComponent",
+                "_storage",
+                "_publicFactsStorage",
+                "_worldPublicFactsStorage",
+                "_deferredPublicFactsTexts",
+                "_deferredPublicFactsInstances",
+                "_deferredRemovedPublicFacts",
+                "_deferredAddedCategories",
+                "_deferredRemovedCategories",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.GlobalStorage"] = new List<string>() 
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage"] = new List<string>() 
+            {
+                "_parentStorage",
+                "_logicalStorage",
+                "_inheritanceStorage",
+                "_triggersStorage",
+                "_varStorage",
+                "_statesStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.AppInstanceStorage"] = new List<string>() 
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext"
+            };
         }
 #endif
     }

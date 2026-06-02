@@ -1668,7 +1668,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "Provider" 
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.StorageFactories"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.StorageFactories"] = new List<string>() 
+            {
+                "_appInstanceStorageFactory" 
+            };
         }
 #endif
     }

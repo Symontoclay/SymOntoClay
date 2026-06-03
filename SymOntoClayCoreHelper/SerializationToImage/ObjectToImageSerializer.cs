@@ -732,7 +732,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage",
             "SymOntoClay.Core.Internal.Storage.AppInstanceStorage",
             "SymOntoClay.Core.Internal.CodeModel.NumberValue",
-            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage"
+            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage",
+            "SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage",
+            "SymOntoClay.Core.Internal.Instances.PropertyInstance"
         };
 
         /// <inheritdoc/>
@@ -1777,7 +1779,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_fuzzyLogicStorage",
                 "_idleActionItemsStorage",
                 "_tasksStorage",
-                "_propertyStorage"
+                "_propertyStorage",
+                "_state",
+                "_stateLockObj",
+                "_logger",
+                "CodeItemsStoragesList"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.AppInstanceStorage"] = new List<string>() 
             {
@@ -1814,6 +1820,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage"] = new List<string>() 
+            {
+                "_storage",
+                "_lockObj",
+                "_allPropertiesList",
+                "_propertiesDict",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.PropertyInstance"] = new List<string>() { };
         }
 #endif
     }

@@ -730,7 +730,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.GlobalStorage",
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage",
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage",
-            "SymOntoClay.Core.Internal.Storage.AppInstanceStorage"
+            "SymOntoClay.Core.Internal.Storage.AppInstanceStorage",
+            "SymOntoClay.Core.Internal.CodeModel.NumberValue"
         };
 
         /// <inheritdoc/>
@@ -1784,6 +1785,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_serializationAnchor",
                 "_kind",
                 "_realStorageContext"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NumberValue"] = new List<string>() 
+            { 
+                "_builtInSuperTypes",
+                "_isFuzzy",
+                "_isBoolean",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "SystemValue"
             };
         }
 #endif

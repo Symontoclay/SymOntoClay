@@ -731,7 +731,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage",
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage",
             "SymOntoClay.Core.Internal.Storage.AppInstanceStorage",
-            "SymOntoClay.Core.Internal.CodeModel.NumberValue"
+            "SymOntoClay.Core.Internal.CodeModel.NumberValue",
+            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage"
         };
 
         /// <inheritdoc/>
@@ -1801,7 +1802,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_isDirty",
                 "_longConditionalHashCode",
                 "_longHashCode",
-                "SystemValue"
+                "SystemValue",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage"] = new List<string>() 
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
 #endif

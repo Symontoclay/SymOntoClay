@@ -734,7 +734,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.NumberValue",
             "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage",
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage",
-            "SymOntoClay.Core.Internal.Instances.PropertyInstance"
+            "SymOntoClay.Core.Internal.Instances.PropertyInstance",
+            "SymOntoClay.Core.Internal.Instances.AppInstance",
+            "SymOntoClay.Core.Internal.DataResolvers.StatesResolver"
         };
 
         /// <inheritdoc/>
@@ -1830,7 +1832,33 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.PropertyInstance"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.PropertyInstance"] = new List<string>() 
+            {
+                "_instance"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.AppInstance"] = new List<string>() 
+            {
+                "_activeObjectContext",
+                "_serializationAnchor",
+                "_statesResolver",
+                "_stateNameForAutomaticStart",
+                "_activeStatesDict",
+                "_mutuallyExclusiveStatesSet",
+                "_stateActivators",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.StatesResolver"] = new List<string>()
+            {
+                "_synonymsResolver",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
 #endif
     }

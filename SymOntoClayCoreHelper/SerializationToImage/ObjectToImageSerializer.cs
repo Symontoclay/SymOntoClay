@@ -736,7 +736,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage",
             "SymOntoClay.Core.Internal.Instances.PropertyInstance",
             "SymOntoClay.Core.Internal.Instances.AppInstance",
-            "SymOntoClay.Core.Internal.DataResolvers.StatesResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.StatesResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver",
+            "SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem"
         };
 
         /// <inheritdoc/>
@@ -1844,10 +1846,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateNameForAutomaticStart",
                 "_activeStatesDict",
                 "_mutuallyExclusiveStatesSet",
+                "_statesLockObj",
                 "_stateActivators",
                 "_state",
                 "_stateLockObj",
-                "_logger"
+                "_logger",
+                "_idleActionsResolver",
+                "_codeItem",
+                "Name",
+                "_activeObjectContext",
+                "_serializationAnchor",
+                "_threadPool",
+                "_context",
+                "_globalTriggersStorage",
+                "_parentStorage",
+                "_storage",
+                "_localCodeExecutionContext",
+                "_parentExecutionCoordinator",
+                "_triggersResolver",
+                "_constructorsResolver",
+                "_inheritanceResolver",
+                "_instanceState",
+                "_logicConditionalTriggersList",
+                "_addingFactNonConditionalTriggerInstancesList",
+                "_addingFactConditionalTriggerInstancesList",
+                "_executionCoordinator",
+                "_baseInstanceParentExecutionCoordinatorOnFinishedHandler",
+                "_childInstances",
+                "_parentInstance",
+                "_childInstancesLockObj",
+                "_superClassesStorages",
+                "_superClassesStoragesLockObj",
+                "_preConstructorsRunner",
+                "_constructors",
+                "_enterLifecycleTriggersRunner",
+                "_finalizationTriggersRunner"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.StatesResolver"] = new List<string>()
             {
@@ -1858,6 +1891,49 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver"] = new List<string>() 
+            {
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem"] = new List<string>() 
+            { 
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "SystemValue",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations",
+                "RootTasks",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList"
             };
         }
 #endif

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -38,11 +39,12 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(codeItem, context, parentStorage, parentCodeExecutionContext, null, storageFactory, varList)
         {
             _idleActionsResolver = context.DataResolversFactory.GetIdleActionsResolver();
-            _idleActionsRandom = new Random();
         }
 
         private readonly IdleActionsResolver _idleActionsResolver;
-        private readonly Random _idleActionsRandom;
+
+        [SystemNoSerializedMember]
+        private readonly Random _idleActionsRandom = new Random();
 
         /// <inheritdoc/>
         public override bool ActivateIdleAction(IMonitorLogger logger)

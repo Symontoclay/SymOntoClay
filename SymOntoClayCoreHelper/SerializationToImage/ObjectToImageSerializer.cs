@@ -738,7 +738,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Instances.AppInstance",
             "SymOntoClay.Core.Internal.DataResolvers.StatesResolver",
             "SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver",
-            "SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem"
+            "SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem",
+            "SymOntoClay.Core.Internal.CodeModel.InheritanceItem",
+            "SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage"
         };
 
         /// <inheritdoc/>
@@ -1935,6 +1937,29 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Priority",
                 "ImportsList"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.InheritanceItem"] = new List<string>() 
+            {
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "Id",
+                "SubName",
+                "SuperName",
+                "Rank",
+                "IsSystemDefined",
+                "KeysOfPrimaryRecords",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage"] = new List<string>() { };
         }
 #endif
     }

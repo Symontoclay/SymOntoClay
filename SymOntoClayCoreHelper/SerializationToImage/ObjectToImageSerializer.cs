@@ -791,7 +791,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage",
             "SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage",
             "SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage",
-            "SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage"
+            "SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage",
+            "SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage"
         };
 
         /// <inheritdoc/>
@@ -2178,6 +2179,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_lockObj",
                 "_namedFunctionsDict",
                 "_localNamedFunctionsDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage"] = new List<string>() 
+            {
+                "_constructorsLockObj",
+                "_constructorsDict",
+                "_preConstructorsLockObj",
+                "_preConstructorsDict",
                 "_kind",
                 "_realStorageContext",
                 "_mainStorageContext",

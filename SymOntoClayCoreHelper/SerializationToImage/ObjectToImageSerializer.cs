@@ -202,6 +202,52 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeHashSet(object obj, Type type, string path)
+        {
+            _visitedObjects.Add(obj);
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new HashSetCard()
+            {
+                Header = serializedValue
+            };
+
+            var enumerable = (IEnumerable)obj;
+
+            var items = new List<SerializedValue>();
+
+            foreach (var item in enumerable)
+            {
+#if DEBUG
+                _logger.Info($"item = {item}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(item, string.Empty);
+
+#if DEBUG
+                _logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
+
+                items.Add(fieldSerializedValue);
+            }
+
+            card.Items = items;
+
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);
@@ -740,7 +786,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver",
             "SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem",
             "SymOntoClay.Core.Internal.CodeModel.InheritanceItem",
-            "SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage"
+            "SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage",
+            "SymOntoClay.Core.Internal.CodeModel.Property",
+            "SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage"
         };
 
         /// <inheritdoc/>
@@ -999,7 +1047,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_onChangedWithKeysHandlersLockObj",
                 "_onChangedWithKeysHandlers",
                 "_onAddingFactHandlerLockObj",
-                "_onAddingFactHandlers"
+                "_onAddingFactHandlers",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.RuleInstance"] = new List<string>() 
             {
@@ -1838,7 +1892,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.PropertyInstance"] = new List<string>() 
             {
-                "_instance"
+                "_instance",
+                "_context",
+                "_logicalStorage",
+                "_typeConverter",
+                "IsReal",
+                "Name",
+                "Holder",
+                "CodeItem",
+                "_isArray",
+                "_propertyGetMethodExecutable",
+                "_value",
+                "_factId",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.AppInstance"] = new List<string>() 
             {
@@ -1974,7 +2044,72 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_onNamedTriggerInstanceChangedHandlersLockObj",
                 "_onNamedTriggerInstanceChangedHandlers",
                 "_onNamedTriggerInstanceChangedWithKeysHandlersLockObj",
-                "_onNamedTriggerInstanceChangedWithKeysHandlers"
+                "_onNamedTriggerInstanceChangedWithKeysHandlers",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Property"] = new List<string>() 
+            { 
+                "KindOfProperty",
+                "TypesList",
+                "DefaultValue",
+                "GetStatements",
+                "GetCompiledFunctionBody",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage"] = new List<string>() 
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_lockObj",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_onChangedWithKeysHandlersLockObj",
+                "_onChangedWithKeysHandlers",
+                "_parentVarStoragesList",
+                "_variablesDict",
+                "_localVariablesDict",
+                "_allVariablesList",
+                "_systemVariables",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
 #endif

@@ -165,6 +165,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeHashSet(object obj, Type type, string path)
+        {
+            throw new NotImplementedException("C674613E-B594-4460-BCE5-3F29E2EB250F");
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
 #if DEBUG

@@ -10,6 +10,7 @@
         ClassCard,
         ClassCardWithSerializationData,
         ListCard,
+        HashSetCard,
         DictionaryCard,
         ReflectionTypeCard
     }

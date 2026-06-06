@@ -129,6 +129,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case "Queue`1":
                     return SerializeGenericQueue(obj, type, path);
 
+                case "HashSet`1":
+                    return SerializeHashSet(obj, type, path);
+
                 case "Dictionary`2":
                     return SerializeGenericDictionary(obj, type, path);
 
@@ -164,6 +167,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected abstract SerializedValue SerializeGenericList(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericStack(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericQueue(object obj, Type type, string path);
+        protected abstract SerializedValue SerializeHashSet(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericDictionary(object obj, Type type, string path);
         protected abstract SerializedValue SerializeComposite(object obj, Type type, string path);
         protected abstract SerializedValue SerializeManualResetEvent(object obj, Type type, string path);

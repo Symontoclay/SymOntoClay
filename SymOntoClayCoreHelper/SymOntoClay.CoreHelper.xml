@@ -118,6 +118,18 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldRootClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.HashSetCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.HashSetCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.HashSetCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.HashSetCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ListCard.KindOfDataCard">
             <inheritdoc/>
         </member>
@@ -163,6 +175,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -202,6 +217,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -233,6 +251,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">

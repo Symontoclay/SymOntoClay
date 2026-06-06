@@ -21,14 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
 {

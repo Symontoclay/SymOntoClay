@@ -409,7 +409,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var fields = GetFields(type);
 
 #if DEBUG
-            _logger.Info($"fields.Count() = {fields.Count()}");
+            //_logger.Info($"fields.Count() = {fields.Count()}");
 #endif
 
             var cardFieldList = new List<(string, int, SerializedValue)>();

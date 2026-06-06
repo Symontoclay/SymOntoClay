@@ -21,14 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.IndexedData;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System.Linq;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
+using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
 {

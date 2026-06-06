@@ -26,15 +26,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public SerializedValue SerializeValue(object obj, string path = "", SerializeValueMode serializeValueMode = SerializeValueMode.General)
         {
 #if DEBUG
-            _logger.Info($"obj = {obj}");
-            _logger.Info($"path = {path}");
-            _logger.Info($"serializeValueMode = {serializeValueMode}");
+            //_logger.Info($"obj = {obj}");
+            //_logger.Info($"path = {path}");
+            //_logger.Info($"serializeValueMode = {serializeValueMode}");
 #endif
 
             if (TryGetSerializedValue(obj, out var serializedValue))
             {
 #if DEBUG
-                _logger.Info($"serializedValue = {serializedValue}");
+                //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
                 return serializedValue;
@@ -53,9 +53,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var type = obj.GetType();
 
 #if DEBUG
-            _logger.Info($"type.FullName = {type.FullName}");
-            _logger.Info($"type.Name = {type.Name}");
-            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+            //_logger.Info($"type.FullName = {type.FullName}");
+            //_logger.Info($"type.Name = {type.Name}");
+            //_logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
             if (type.IsEnum)

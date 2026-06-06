@@ -1959,7 +1959,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "WhereSection",
                 "Annotations"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage"] = new List<string>()
+            { 
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_lockObj",
+                "_parentTriggersStoragesList",
+                "_systemEventsInfoDict",
+                "_logicConditionalsDict",
+                "_addFactsDict",
+                "_namedTriggerInstancesList",
+                "_namedTriggerInstancesDict",
+                "_onNamedTriggerInstanceChangedHandlersLockObj",
+                "_onNamedTriggerInstanceChangedHandlers",
+                "_onNamedTriggerInstanceChangedWithKeysHandlersLockObj",
+                "_onNamedTriggerInstanceChangedWithKeysHandlers"
+            };
         }
 #endif
     }

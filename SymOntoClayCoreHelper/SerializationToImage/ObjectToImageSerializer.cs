@@ -36,7 +36,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override bool TryGetSerializedValue(object obj, out SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
+            //_logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
 #endif
 
             if(obj == null)
@@ -49,7 +49,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
 
 #if DEBUG
-            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
+            //_logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
             switch (kindOfStructuralObject)
@@ -788,7 +788,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.InheritanceItem",
             "SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage",
             "SymOntoClay.Core.Internal.CodeModel.Property",
-            "SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage"
+            "SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage",
+            "SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage"
         };
 
         /// <inheritdoc/>
@@ -2104,6 +2105,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_localVariablesDict",
                 "_allVariablesList",
                 "_systemVariables",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage"] = new List<string>()
+            { 
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_lockObj",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_onChangedWithKeysHandlersLockObj",
+                "_onChangedWithKeysHandlers",
+                "_parentPropertyStoragesList",
+                "_allPropertiesList",
+                "_propertiesDict",
                 "_kind",
                 "_realStorageContext",
                 "_mainStorageContext",

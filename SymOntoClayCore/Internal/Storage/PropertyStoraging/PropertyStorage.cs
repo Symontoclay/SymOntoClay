@@ -22,19 +22,15 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
-using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 {

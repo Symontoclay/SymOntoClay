@@ -792,7 +792,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage",
             "SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage",
             "SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage",
-            "SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage"
+            "SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage",
+            "SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage",
+            "SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage",
+            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage",
+            "SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage",
+            "SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage",
+            "SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage",
+            "SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage",
+            "SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage"
         };
 
         /// <inheritdoc/>
@@ -2199,6 +2207,107 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_actionsDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_statesDict",
+                "_activationInfoDict",
+                "_statesList",
+                "_activationInfoList",
+                "_stateNamesList",
+                "_defaultStateName",
+                "_mutuallyExclusiveStatesSetsList",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_factsIdRegistryLockObj",
+                "_inheritancePublicFactsReplicator",
+                "_nonIndexedInfo",
+                "_factsIdRegistry",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_synonymsDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_nonIndexedInfo",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_nonIndexedInfo",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_mainCodeEntity",
+                "_codeEntitiesDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage"] = new List<string>()
+            {
+                "_lockObj",
+                "_commonNamesStorage",
+                "valuesDict",
+                "_defaultOperatorsDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+
         }
 #endif
     }

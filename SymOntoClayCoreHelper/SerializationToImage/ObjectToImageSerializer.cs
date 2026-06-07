@@ -857,7 +857,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator",
             "SymOntoClay.Core.Internal.Storage.SuperClassStorage",
             "SymOntoClay.Core.Internal.Storage.LocalStorage",
-            "SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression"
+            "SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression",
+            "SymOntoClay.Core.Internal.CodeModel.CodeFile",
+            "SymOntoClay.Core.Internal.CodeModel.App",
+            "SymOntoClay.Core.Internal.CodeModel.NamedFunction",
+            "SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement"
         };
 
         /// <inheritdoc/>
@@ -2638,7 +2642,92 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger",
                 "IsIsolated"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression"] = new List<string>() 
+            { 
+                "Value",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.CodeFile"] = new List<string>() 
+            {
+                "FileName",
+                "IsMain",
+                "IsLocator",
+                "CodeEntities"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.App"] = new List<string>() 
+            {
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "RootTasks",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NamedFunction"] = new List<string>() 
+            { 
+                "Arguments",
+                "TypesList",
+                "Statements",
+                "CompiledFunctionBody",
+                "_argumentsDict",
+                "_iArgumentsList",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement"] = new List<string>() 
+            { 
+                "Expression",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode"
+            };
         }
 #endif
     }

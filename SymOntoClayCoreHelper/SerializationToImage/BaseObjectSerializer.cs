@@ -56,11 +56,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"type.FullName = {type.FullName}");
             //_logger.Info($"type.Name = {type.Name}");
             //_logger.Info($"type.IsGenericType = {type.IsGenericType}");
+            //_logger.Info($"type.IsArray = {type.IsArray}");
 #endif
 
             if (type.IsEnum)
             {
                 return SerializePrimitiveType(obj, type);
+            }
+
+            if(type.IsArray)
+            {
+                return SerializeArray(obj, type, path);
             }
 
             if (type.FullName.StartsWith("System.Action"))
@@ -170,6 +176,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected abstract SerializedValue SerializeReflectionType(object obj, Type type);
 
         protected abstract SerializedValue SerializeBareObject(object obj, Type type, string path);
+        protected abstract SerializedValue SerializeArray(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericList(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericStack(object obj, Type type, string path);
         protected abstract SerializedValue SerializeGenericQueue(object obj, Type type, string path);

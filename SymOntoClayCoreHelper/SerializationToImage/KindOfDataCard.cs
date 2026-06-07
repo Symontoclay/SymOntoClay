@@ -9,6 +9,7 @@
         ExternalWorldComponentClassCard,
         ClassCard,
         ClassCardWithSerializationData,
+        ArrayCard,
         ListCard,
         HashSetCard,
         DictionaryCard,

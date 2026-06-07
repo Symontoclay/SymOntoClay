@@ -144,6 +144,52 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeArray(object obj, Type type, string path)
+        {
+            _visitedObjects.Add(obj);
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            //_logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ArrayCard()
+            {
+                Header = serializedValue
+            };
+
+            var enumerable = (IEnumerable)obj;
+
+            var items = new List<SerializedValue>();
+
+            foreach (var item in enumerable)
+            {
+#if DEBUG
+                //_logger.Info($"item = {item}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(item, string.Empty);
+
+#if DEBUG
+                //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
+
+                items.Add(fieldSerializedValue);
+            }
+
+            card.Items = items;
+
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);

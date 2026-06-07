@@ -36,6 +36,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeArray(object obj, Type type, string path)
+        {
+            throw new NotImplementedException("9300E862-DEFB-4EA8-9EA8-D03DAB56B887");
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
             throw new NotImplementedException("C05F3042-8B65-41EC-9834-144108D9AF95");

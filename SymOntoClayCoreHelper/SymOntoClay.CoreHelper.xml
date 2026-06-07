@@ -22,6 +22,18 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseObjectSerializer.SerializeValue(System.Object,System.String,SymOntoClay.CoreHelper.SerializationToImage.SerializeValueMode)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ArrayCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ArrayCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ArrayCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ArrayCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ClassCard.KindOfDataCard">
             <inheritdoc/>
         </member>
@@ -166,6 +178,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeArray(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -208,6 +223,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeArray(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
@@ -242,6 +260,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeArray(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeGenericList(System.Object,System.Type,System.String)">

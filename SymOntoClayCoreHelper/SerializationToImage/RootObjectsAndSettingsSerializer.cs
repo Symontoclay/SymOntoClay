@@ -92,6 +92,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
+        protected override SerializedValue SerializeArray(object obj, Type type, string path)
+        {
+            throw new NotImplementedException("EAC30332-2182-4DEA-ADB9-2CDCE2860C6A");
+        }
+
+        /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
             _visitedObjects.Add(obj);

@@ -861,7 +861,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.CodeFile",
             "SymOntoClay.Core.Internal.CodeModel.App",
             "SymOntoClay.Core.Internal.CodeModel.NamedFunction",
-            "SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement"
+            "SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement",
+            "SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression",
+            "SymOntoClay.Core.Internal.CodeModel.StringValue",
+            "SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWaitStatement",
+            "SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody",
+            "SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand",
+            "SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask"
         };
 
         /// <inheritdoc/>
@@ -2688,7 +2694,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "InheritanceItems",
                 "CodeFile",
                 "ParentCodeEntity",
-                "SubItems"
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NamedFunction"] = new List<string>() 
             { 
@@ -2712,7 +2727,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_isDisposed",
                 "_isDirty",
                 "_longConditionalHashCode",
-                "_longHashCode"
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement"] = new List<string>() 
             { 
@@ -2726,8 +2755,84 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_isDisposed",
                 "_isDirty",
                 "_longConditionalHashCode",
-                "_longHashCode"
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression"] = new List<string>() 
+            { 
+                "KindOfOperator",
+                "Left",
+                "Right",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.StringValue"] = new List<string>() 
+            { 
+                "SystemValue",
+                "_toRuleInstanceValueLockObj",
+                "_ruleInstance",
+                "_usedSystemValueForRuleInstanceValue",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWaitStatement"] = new List<string>()
+            { 
+                "Items",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody"] = new List<string>() 
+            { 
+                "Commands",
+                "SEH"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand"] = new List<string>() 
+            {
+                "OperationCode",
+                "Position",
+                "Value",
+                "AnnotatedItem",
+                "CompoundTask",
+                "TargetPosition",
+                "KindOfOperator",
+                "CountParams"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask"] = new List<string>() { };
         }
 #endif
     }

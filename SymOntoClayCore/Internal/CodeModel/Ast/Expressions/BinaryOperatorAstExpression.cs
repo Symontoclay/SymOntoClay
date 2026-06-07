@@ -23,10 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
 using System.Text;
 

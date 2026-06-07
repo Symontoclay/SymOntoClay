@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
     public class ScriptCommand : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public OperationCode OperationCode { get; set; } = OperationCode.Nop;
-
+        
         public int Position { get; set; }
         public Value Value { get; set; }
         public IAnnotatedItem AnnotatedItem { get; set; }

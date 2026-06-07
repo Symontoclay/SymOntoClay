@@ -803,7 +803,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage",
             "SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage",
             "SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage",
-            "SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage"
+            "SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage",
+            "SymOntoClay.Core.Internal.Storage.TasksStoraging.CommonTasksStorage`1"
         };
 
         /// <inheritdoc/>
@@ -2360,6 +2361,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_kind",
                 "_realStorageContext",
                 "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TasksStoraging.CommonTasksStorage`1"] = new List<string>() 
+            {
+                "_tasksList",
+                "_tasksDict",
                 "_state",
                 "_stateLockObj",
                 "_logger"

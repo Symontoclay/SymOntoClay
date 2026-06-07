@@ -118,21 +118,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     return SerializeReflectionType(obj, type);
             }
 
-            switch (type.Name)
+            var fullShortTypeName = $"{type.Namespace}.{type.Name}";
+
+#if DEBUG
+            //_logger.Info($"fullShortTypeName = {fullShortTypeName}");
+#endif
+
+            switch (fullShortTypeName)
             {
-                case "List`1":
+                case "System.Collections.Generic.List`1":
                     return SerializeGenericList(obj, type, path);
 
-                case "Stack`1":
+                case "System.Collections.Generic.Stack`1":
                     return SerializeGenericStack(obj, type, path);
 
-                case "Queue`1":
+                case "System.Collections.Generic.Queue`1":
                     return SerializeGenericQueue(obj, type, path);
 
-                case "HashSet`1":
+                case "System.Collections.Generic.HashSet`1":
                     return SerializeHashSet(obj, type, path);
 
-                case "Dictionary`2":
+                case "System.Collections.Generic.Dictionary`2":
                     return SerializeGenericDictionary(obj, type, path);
 
                 default:
@@ -237,7 +243,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         protected void TmpCheckProcessedTypes(string id, Type type)
         {
-            if (!_tmpProcessedTypes.Contains(type.FullName))
+            var fullShortTypeName = $"{type.Namespace}.{type.Name}";
+
+#if DEBUG
+            //_logger.Info($"type.Name = {type.Name}");
+            //_logger.Info($"type.FullName = {type.FullName}");
+            //_logger.Info($"type.Namespace = {type.Namespace}");
+            //_logger.Info($"fullShortTypeName = {fullShortTypeName}");
+#endif
+
+            if (!_tmpProcessedTypes.Contains(type.FullName) && !_tmpProcessedTypes.Contains(fullShortTypeName))
             {
                 throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
             }
@@ -245,7 +260,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         protected void TmpCheckProcessedMembersOfTypes(string id, Type type, string memberName)
         {
-            if(_tmpProcessedMembersOfTypes.TryGetValue(type.FullName, out var memberNamesList))
+            var fullShortTypeName = $"{type.Namespace}.{type.Name}";
+
+            if (_tmpProcessedMembersOfTypes.TryGetValue(type.FullName, out var memberNamesList) || _tmpProcessedMembersOfTypes.TryGetValue(fullShortTypeName, out memberNamesList))
             {
                 if (!memberNamesList.Contains(memberName))
                 {

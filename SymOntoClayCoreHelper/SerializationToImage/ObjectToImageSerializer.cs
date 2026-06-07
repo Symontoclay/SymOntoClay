@@ -800,7 +800,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage",
             "SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage",
             "SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage",
-            "SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage"
+            "SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage",
+            "SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage",
+            "SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage",
+            "SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage"
         };
 
         /// <inheritdoc/>
@@ -2298,7 +2301,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_lockObj",
                 "_commonNamesStorage",
-                "valuesDict",
+                "_valuesDict",
                 "_defaultOperatorsDict",
                 "_kind",
                 "_realStorageContext",
@@ -2307,7 +2310,60 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
-
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage"] = new List<string>() 
+            {
+                "_context",
+                "WorldName",
+                "AppName",
+                "ClassName",
+                "ActionName",
+                "StateName",
+                "DefaultHolder",
+                "SelfSystemVarName",
+                "HostSystemVarName",
+                "AnonymousLogicalVarName",
+                "TargetLogicalVarName",
+                "SelfName",
+                "DefaultCtorName",
+                "RandomConstraintName",
+                "NearestConstraintName",
+                "TimeoutAttributeName",
+                "PriorityAttributeName",
+                "AnyTypeName",
+                "BooleanTypeName",
+                "FuzzyTypeName",
+                "NumberTypeName",
+                "TrueValueLiteral",
+                "FalseValueLiteral",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage"] = new List<string>() 
+            {
+                "_lockObj",
+                "_itemsDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage"] = new List<string>() 
+            {
+                "_rootTasksStorage",
+                "_strategicTasksStorage",
+                "_tacticalTasksStorage",
+                "_compoundCommonTasksStorage",
+                "_primitiveCommonTasksStorage",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
 #endif
     }

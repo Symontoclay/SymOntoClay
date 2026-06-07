@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         {
             return _tasksList;
         }
-
+        
         private T[] _tasksList = new T[0];
         private Dictionary<StrongIdentifierValue, T> _tasksDict = new Dictionary<StrongIdentifierValue, T>();
 

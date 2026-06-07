@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Converters
                             return ConvertGroup(source, options, convertingContext);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
+                            throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, "65087D03-3C84-4869-B383-7371DC288BB0");
                     }
 
                 case AdviceForConversionEntityConditionExpressionToRuleInstance.InRelation:
@@ -100,11 +100,11 @@ namespace SymOntoClay.Core.Internal.Converters
                             return ConvertInRelationConceptOrEntityOrValue(source, options, convertingContext);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
+                            throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, "40BB6C1A-1502-4841-9CB2-B884C9B4E03E");
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(advice), advice, null);
+                    throw new ArgumentOutOfRangeException(nameof(advice), advice, "353B2A75-D5E4-4FF6-B609-B7872DB07983");
             }
         }
 

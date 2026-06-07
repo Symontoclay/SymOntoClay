@@ -203,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Converters
                             return ConvertAndLogicalQueryNode(source, options, convertingContext, aliasesDict, processedRuleInstances);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, "44AFEEA6-91EC-4176-9208-91D66C746077");
                     }
 
                 case KindOfLogicalQueryNode.UnaryOperator:
@@ -213,7 +213,7 @@ namespace SymOntoClay.Core.Internal.Converters
                             return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, "47CF6A6A-FAFA-4AD1-89C5-9B63327D1FE9");
                     }
 
                 case KindOfLogicalQueryNode.Concept:
@@ -251,7 +251,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     return ConvertFactLogicalQueryNode(source, options, convertingContext, aliasesDict, processedRuleInstances);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, "7EFAA464-C7FA-4E59-9133-ACCF24DA85FE");
             }
         }
 
@@ -291,7 +291,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSourceName), kindOfSourceName, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSourceName), kindOfSourceName, "7DED2FFC-BAD0-4CDD-8122-F2948360A1C2");
             }
 
             superNameNode.Name = source.Name;
@@ -529,7 +529,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     return PackRelationNode(node, parents);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(node.Kind), node.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(node.Kind), node.Kind, "6BF971D9-91DB-476B-BC53-38713380E009");
             }
         }
 

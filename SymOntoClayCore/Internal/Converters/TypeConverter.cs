@@ -158,7 +158,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     throw new Exception($"435AEB0F-4EB7-4219-89D3-D63871296755: {BuildIsNotFitErrorMessage(value, typesList)}");
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, "716D9345-E752-4351-8AD0-523666E10D80");
             }
         }
 
@@ -299,7 +299,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(normalizedTypeName), normalizedTypeName, null);
+                    throw new ArgumentOutOfRangeException(nameof(normalizedTypeName), normalizedTypeName, "8815151A-496C-4628-B1F9-6FCD1BD8BC14");
             }
         }
 

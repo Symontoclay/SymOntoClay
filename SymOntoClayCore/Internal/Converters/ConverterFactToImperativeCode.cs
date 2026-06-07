@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstance), kindOfRuleInstance, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstance), kindOfRuleInstance, "BC2D3D49-24CB-48AE-B4A1-B4612E7DBC36");
             }
 
             return _compiler.Compile(statements);
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Converters
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                        throw new ArgumentOutOfRangeException(nameof(kind), kind, "56CE5A4B-F761-4AC6-8A02-FE1BA5B22A45");
                 }
             }
 
@@ -147,7 +147,7 @@ namespace SymOntoClay.Core.Internal.Converters
                         }
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameter), kindOfParameter, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameter), kindOfParameter, "FD8A77FA-4019-4B43-B696-8CE6FFCCB3BA");
                 }
             }
 
@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.Converters
                              */
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfSecondParameter), kindOfSecondParameter, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfSecondParameter), kindOfSecondParameter, "2BEE58D3-F50B-4ED6-89D5-49EC198C247F");
                         }
                     }
                 }
@@ -289,7 +289,7 @@ namespace SymOntoClay.Core.Internal.Converters
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(paramsCount), paramsCount, null);
+                                throw new ArgumentOutOfRangeException(nameof(paramsCount), paramsCount, "108C3DD9-BDBE-4E36-9BCF-874830AC743A");
                         }                        
                     }
                     break;
@@ -306,7 +306,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "1F6877FB-E601-4941-9714-E425881D4444");
             }
         }
 
@@ -366,7 +366,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "CE1C50E8-5C75-40B3-98F0-8CE96056411B");
             }
         }
     }

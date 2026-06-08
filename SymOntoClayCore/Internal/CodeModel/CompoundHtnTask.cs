@@ -21,10 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System.Collections.Generic;
-using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {

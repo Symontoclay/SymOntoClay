@@ -20,18 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog.Conditions;
-using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
-using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
-using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel

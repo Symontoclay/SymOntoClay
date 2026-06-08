@@ -23,7 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

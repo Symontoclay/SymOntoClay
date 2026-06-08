@@ -23,7 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel

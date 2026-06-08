@@ -867,7 +867,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWaitStatement",
             "SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody",
             "SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand",
-            "SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask"
+            "SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask",
+            "SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase",
+            "SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem"
         };
 
         /// <inheritdoc/>
@@ -2832,7 +2834,52 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "KindOfOperator",
                 "CountParams"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.CompoundHtnTask"] = new List<string>() 
+            {
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "Before",
+                "After",
+                "Backgrounds",
+                "Cases",
+                "Precondition",
+                "PreconditionExpression"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCase"] = new List<string>() 
+            {
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "Condition",
+                "ConditionExpression",
+                "Items"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.CompoundHtnTaskCaseItem"] = new List<string>() { };
         }
 #endif
     }

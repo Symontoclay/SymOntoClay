@@ -24,9 +24,7 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
-using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {

@@ -23,7 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.CodeModel

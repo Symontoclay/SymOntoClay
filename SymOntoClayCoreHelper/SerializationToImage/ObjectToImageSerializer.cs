@@ -874,7 +874,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator",
             "SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression",
             "SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand",
-            "SymOntoClay.Core.Internal.CodeModel.ExecutableCodeBlock"
+            "SymOntoClay.Core.Internal.CodeModel.ExecutableCodeBlock",
+            "SymOntoClay.Core.Internal.CodeModel.LogicalExecutableExpression",
+            "SymOntoClay.Core.Internal.CodeModel.HostValue",
+            "SymOntoClay.Core.Internal.CodeModel.InstanceValue",
+            "SymOntoClay.Core.Internal.DataResolvers.TriggersResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.ConstructorsResolver",
+            "SymOntoClay.Core.Internal.Instances.ExecutionCoordinator"
         };
 
         /// <inheritdoc/>
@@ -2935,7 +2941,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_isDisposed",
                 "_isDirty",
                 "_longConditionalHashCode",
-                "_longHashCode"
+                "_longHashCode",
+                "Precondition",
+                "PreconditionExpression",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.PrimitiveHtnTaskOperator"] = new List<string>() 
             { 
@@ -2974,7 +2996,137 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "CountParams",
                 "SEHGroup"
             };
-            "SymOntoClay.Core.Internal.CodeModel.ExecutableCodeBlock"
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.ExecutableCodeBlock"] = new List<string>() 
+            {
+                "Statements",
+                "CompiledFunctionBody",
+                "_iArgumentsList",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.LogicalExecutableExpression"] = new List<string>() 
+            { 
+                "_iArgumentsList",
+                "TypesList",
+                "Expression",
+                "CompiledFunctionBody",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.HostValue"] = new List<string>() 
+            { 
+                "_getMemberLockObj",
+                "_membersDict",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.InstanceValue"] = new List<string>() 
+            { 
+                "InstanceInfo",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.TriggersResolver"] = new List<string>() 
+            { 
+                "_synonymsResolver",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.ConstructorsResolver"] = new List<string>() 
+            {
+                "_emptyConstructorsList",
+                "_emptyPreConstructorsList",
+                "_synonymsResolver",
+                "_typeConverter",
+                "_fuzzyTypeName",
+                "_numberTypeName",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.ExecutionCoordinator"] = new List<string>() { };
         }
 #endif
     }

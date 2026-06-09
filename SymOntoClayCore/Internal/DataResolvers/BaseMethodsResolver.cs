@@ -37,7 +37,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected BaseMethodsResolver(IMainStorageContext context)
             : base(context)
         {
-            
         }
 
         /// <inheritdoc/>

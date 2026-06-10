@@ -25,10 +25,8 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 {

@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfEnumerableLocalCodeExecutionContext), kindOfEnumerableLocalCodeExecutionContext, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfEnumerableLocalCodeExecutionContext), kindOfEnumerableLocalCodeExecutionContext, "57C63524-DAB9-4567-A726-608D7401AE0F");
             }
         }
 
@@ -137,7 +137,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return FilterStoragesForVarResolving(logger, NGetStoragesList(logger, storage, options, KindOfStoragesList.CodeItems));
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, "2298CE01-82E7-463D-A393-4B4AC3385894");
             }
         }
 
@@ -202,7 +202,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                        throw new ArgumentOutOfRangeException(nameof(kind), kind, "9B0DC42A-29D3-4789-8873-4B4CC23C55ED");
                 }
             }
 
@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, "9140BB75-0F9F-4D45-867A-046F0B5AD0D5");
             }
 
             var result = new List<StorageUsingOptions>();
@@ -251,7 +251,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, "F6817272-471D-417D-AAAB-CD4200AF7A64");
             }
 
             return result;
@@ -418,10 +418,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         return true;
                     }
-                    throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+                    throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, "30360655-9224-492B-B713-5CD30076A88B");
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+                    throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, "54883E93-A201-4485-B32D-8A461E4064D1");
             }
 
             return false;

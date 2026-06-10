@@ -509,7 +509,7 @@ namespace SymOntoClay.Core.Internal.Converters
                             return PackBinaryOperatorNode(node, parents);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(node.KindOfOperator), node.KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(node.KindOfOperator), node.KindOfOperator, "4DF50BE2-C6AF-449F-BAC4-C4BA370BFED1");
                     }
 
                 case KindOfLogicalQueryNode.UnaryOperator:
@@ -519,7 +519,7 @@ namespace SymOntoClay.Core.Internal.Converters
                             return PackUnaryOperatorNode(node, parents);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(node.KindOfOperator), node.KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(node.KindOfOperator), node.KindOfOperator, "EB5D4E59-F9F0-4960-99C2-F01793232BFF");
                     }
 
                 case KindOfLogicalQueryNode.Group:

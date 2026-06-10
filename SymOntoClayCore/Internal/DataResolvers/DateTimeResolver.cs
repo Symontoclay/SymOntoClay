@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, "8E1E1511-66FE-439A-86F6-64C5F40409FE");
             }
         }
 
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return Convert.ToUInt64(sysValue * _dateTimeProvider.MillisecondsToTicksMultiplicator);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfDefaultTimeValue), kindOfDefaultTimeValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfDefaultTimeValue), kindOfDefaultTimeValue, "11B92A36-EF14-443A-A746-6905B01843B0");
             }
         }
 

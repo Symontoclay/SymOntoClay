@@ -504,7 +504,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(i), i, null);
+                        throw new ArgumentOutOfRangeException(nameof(i), i, "4448332F-9D0E-4904-A9DE-68092AD70BF0");
                 }
             }
 
@@ -561,7 +561,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(i), i, null);
+                        throw new ArgumentOutOfRangeException(nameof(i), i, "2598C094-BA60-468F-905A-AA86C00CEC24");
                 }
             }
 

@@ -886,7 +886,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Instances.TaskInstances.CompoundTaskInstance",
             "SymOntoClay.Core.Internal.Instances.InternalRunners.ConstructorsRunner",
             "SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor",
-            "SymOntoClay.Core.Internal.Instances.InternalRunners.EnterLifecycleTriggersRunner"
+            "SymOntoClay.Core.Internal.Instances.InternalRunners.EnterLifecycleTriggersRunner",
+            "SymOntoClay.Core.Internal.Instances.InternalRunners.FinalizationTriggersRunner",
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor"
         };
 
         /// <inheritdoc/>
@@ -3200,7 +3202,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_preConstructorsRunner",
                 "_constructors",
                 "_enterLifecycleTriggersRunner",
-                "_finalizationTriggersRunner"
+                "_finalizationTriggersRunner",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.ConstructorsRunner"] = new List<string>() 
             {
@@ -3218,69 +3223,54 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_constructorsResolver",
                 "_threadExecutor"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor"] = new List<string>() { };
-
-            /*   
-        private readonly IEngineContext _context;
-        private readonly ICodeFrameService _codeFrameService;
-        private readonly CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
-
-        private readonly string _threadId;
-
-        public string ThreadId => _threadId;
-
-        private readonly ProjectLoader _projectLoader;
-
-        private readonly IStorage _globalStorage;
-        private readonly ILogicalStorage _globalLogicalStorage;
-        private readonly IHostListener _hostListener;
-        private readonly IInstancesStorageComponent _instancesStorage;
-
-        private readonly OperatorsResolver _operatorsResolver;
-        private readonly LogicalValueLinearResolver _logicalValueLinearResolver;
-        private readonly NumberValueLinearResolver _numberValueLinearResolver;
-        private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
-        private readonly VarsResolver _varsResolver;
-        private readonly PropertiesResolver _propertiesResolver;
-        private readonly MethodsResolver _methodsResolver;
-        private readonly ConstructorsResolver _constructorsResolver;
-        private readonly LogicalSearchResolver _logicalSearchResolver;
-        private readonly StatesResolver _statesResolver;
-        private readonly AnnotationsResolver _annotationsResolver;
-        private readonly InheritanceResolver _inheritanceResolver;
-        private readonly DateTimeResolver _dateTimeResolver;
-        private readonly StrongIdentifierExprValueResolver _strongIdentifierExprValueResolver;
-
-        private readonly ValueResolvingHelper _valueResolvingHelper;
-
-        private readonly ITypeConverter _typeConverter;
-
-        private readonly ConverterFactToImperativeCode _converterFactToImperativeCode;
-        private readonly IDateTimeProvider _dateTimeProvider;
-
-        private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
-        private CodeFrame _currentCodeFrame;
-
-        private IExecutionCoordinator _executionCoordinator;
-        private IInstance _currentInstance;
-        private IVarStorage _currentVarStorage;
-        private IPropertyStorage _currentPropertyStorage;
-
-        private ErrorValue _currentError;
-        private bool _isCanceled;
-
-        private ulong? _endOfTargetDuration;
-        private List<IThreadExecutor> _waitedThreadExecutorsList;
-        private List<IProcessInfo> _waitedProcessInfoList;
-
-        private readonly StrongIdentifierValue _defaultCtorName;
-        private readonly StrongIdentifierValue _timeoutName;
-        private readonly StrongIdentifierValue _priorityName;        
-
-        public Value ExternalReturn { get; private set; }
-
-        protected IActivePeriodicObject _activeObject { get; private set; }
-             */
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor"] = new List<string>() 
+            {
+                "_context",
+                "_codeFrameService",
+                "_codeFrameAsyncExecutor",
+                "_threadId",
+                "_projectLoader",
+                "_globalStorage",
+                "_globalLogicalStorage",
+                "_hostListener",
+                "_instancesStorage",
+                "_operatorsResolver",
+                "_logicalValueLinearResolver",
+                "_numberValueLinearResolver",
+                "_strongIdentifierLinearResolver",
+                "_varsResolver",
+                "_propertiesResolver",
+                "_methodsResolver",
+                "_constructorsResolver",
+                "_logicalSearchResolver",
+                "_statesResolver",
+                "_annotationsResolver",
+                "_inheritanceResolver",
+                "_dateTimeResolver",
+                "_strongIdentifierExprValueResolver",
+                "_valueResolvingHelper",
+                "_typeConverter",
+                "_converterFactToImperativeCode",
+                "_dateTimeProvider",
+                "_codeFrames",
+                "_currentCodeFrame",
+                "_executionCoordinator",
+                "_currentInstance",
+                "_currentVarStorage",
+                "_currentPropertyStorage",
+                "_currentError",
+                "_isCanceled",
+                "_endOfTargetDuration",
+                "_waitedThreadExecutorsList",
+                "_waitedProcessInfoList",
+                "_defaultCtorName",
+                "_timeoutName",
+                "_priorityName",
+                "ExternalReturn",
+                "_activeObject",
+                "_onCompletedHandlersLockObj",
+                "_onCompletedHandlers"
+            };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.EnterLifecycleTriggersRunner"] = new List<string>() 
             {
@@ -3300,6 +3290,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_threadExecutor",
                 "_lockObj"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.FinalizationTriggersRunner"] = new List<string>() 
+            {
+                "_wasRun",
+                "_lockObj",
+                "_logger",
+                "_context",
+                "_triggersResolver",
+                "_instance",
+                "_holder",
+                "_localCodeExecutionContext",
+                "_storage",
+                "_finalizationExecutionCoordinator",
+                "_leaveLifecycleTriggersRunner"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor"] = new List<string>() { };
         }
 #endif
     }

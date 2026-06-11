@@ -24,7 +24,6 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
-using System;
 
 namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 {

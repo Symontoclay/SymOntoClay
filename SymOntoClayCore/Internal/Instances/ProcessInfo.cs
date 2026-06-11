@@ -31,7 +31,6 @@ using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {

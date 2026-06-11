@@ -888,7 +888,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor",
             "SymOntoClay.Core.Internal.Instances.InternalRunners.EnterLifecycleTriggersRunner",
             "SymOntoClay.Core.Internal.Instances.InternalRunners.FinalizationTriggersRunner",
-            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor"
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor",
+            "SymOntoClay.Core.Internal.Compiling.Compiler",
+            "SymOntoClay.Core.Internal.Instances.InstancesStorageComponent",
+            "SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithoutDevicesHandler",
+            "SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithDevicesHandler",
+            "SymOntoClay.Core.Internal.DataResolvers.MetadataResolver",
+            "SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`2",
+            "SymOntoClay.Core.Internal.Instances.ProcessInfo",
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrame"
         };
 
         /// <inheritdoc/>
@@ -1039,7 +1047,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_isDeferredImport",
                 "_defaultSettingsOfCodeEntity",
                 "_globalStorage",
-                "_commonNamesStorage"
+                "_commonNamesStorage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.MainStorageContext"] = new List<string>()
             { 
@@ -3304,7 +3315,94 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_finalizationExecutionCoordinator",
                 "_leaveLifecycleTriggersRunner"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor"] = new List<string>() 
+            { 
+                "_context",
+                "_codeFrameService",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Compiling.Compiler"] = new List<string>() 
+            {
+                "_context",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InstancesStorageComponent"] = new List<string>() 
+            {
+                "_instancesStorageComponentOnFinishProcessWithoutDevicesHandler",
+                "_instancesStorageComponentOnFinishProcessWithDevicesHandler",
+                "_context",
+                "_metadataResolver",
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_registryLockObj",
+                "_processLockObj",
+                "_projectLoader",
+                "_namesDict",
+                "_rootInstanceInfo",
+                "_processesInfoList",
+                "_processesInfoByDevicesDict",
+                "_commonNamesStorage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithoutDevicesHandler"] = new List<string>() 
+            { 
+                "_instancesStorageComponent"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithDevicesHandler"] = new List<string>()
+            {
+                "_instancesStorageComponent"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.MetadataResolver"] = new List<string>() 
+            { 
+                "_synonymsResolver",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`2"] = new List<string>() 
+            { 
+                "_functorId"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.ProcessInfo"] = new List<string>() 
+            { 
+                "CodeFrame",
+                "_devices",
+                "_friends",
+                "_cancellationContext",
+                "_threadPool",
+                "_activeObjectContext",
+                "_serializationAnchor",
+                "Id",
+                "EndPointName",
+                "_onFinishHandlersLockObj",
+                "_onFinishHandlers",
+                "_onCompleteHandlersLockObj",
+                "_onCompleteHandlers",
+                "_onWeakCanceledHandlersLockObj",
+                "_onWeakCanceledHandlers",
+                "Priority",
+                "_statusLockObj",
+                "_parentAndChildrenLockObj",
+                "_status",
+                "_parentProcessInfo",
+                "_childrenProcessInfoList",
+                "_removedChildrenProcessInfoList",
+                "_onFinishHandlersList",
+                "_onCompleteHandlersList",
+                "_onWeakCanceledHandlersList",
+                "_isDisposed"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrame"] = new List<string>() { };
+            /*
+             */
         }
 #endif
     }

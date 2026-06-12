@@ -781,10 +781,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeAction(object obj, Type type)
         {
-#if DEBUG
-            TmpCheckProcessedTypes("6D0075E7-92BE-4D55-9E4A-7E56083FB788", type);
-#endif
+            /*
+            var worldRootAttribute = type.GetCustomAttribute<SerializedActionMemberAttribute>(true);
 
+#if DEBUG
+            _logger.Info($"worldRootAttribute = {worldRootAttribute}");
+#endif
+            */
             /*
                          var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
 
@@ -1021,7 +1024,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`2",
             "SymOntoClay.Core.Internal.Instances.ProcessInfo",
             "SymOntoClay.Core.Internal.CodeExecution.CodeFrame",
-            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart"
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart",
+            "SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierLinearResolver"
         };
 
         /// <inheritdoc/>
@@ -3579,6 +3583,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Instance",
                 "ExecutionCoordinator",
                 "CompoundTaskInstance"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierLinearResolver"] = new List<string>() 
+            {
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
 #endif

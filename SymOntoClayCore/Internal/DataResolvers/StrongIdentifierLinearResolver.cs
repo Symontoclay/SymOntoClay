@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return source.AsInstanceValue.InstanceInfo.Name;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);
+                    throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, "51387B76-4E67-426D-8596-B4F489A50293");
             }
         }
     }

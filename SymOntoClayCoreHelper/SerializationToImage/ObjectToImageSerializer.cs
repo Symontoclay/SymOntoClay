@@ -3400,9 +3400,50 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_onWeakCanceledHandlersList",
                 "_isDisposed"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrame"] = new List<string>() { };
-            /*
-             */
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrame"] = new List<string>() 
+            {
+                "CompiledFunctionBody",
+                "CurrentPosition",
+                "State",
+                "CurrentSEHGroup",
+                "ValuesStack",
+                "SEHStack",
+                "LocalContext",
+                "ProcessInfo",
+                "Metadata",
+                "Arguments",
+                "CallMethodId",
+                "Instance",
+                "ExecutionCoordinator",
+                "SpecialMark",
+                "TargetDuration",
+                "EndOfTargetDuration",
+                "TimeoutCancellationMode",
+                "CalledCtorsList",
+                "PutToValueStackAfterReturningBack",
+                "NeedsExecCallEvent",
+                "LastProcessStatus",
+                "CompleteAnnotationSystemEvent",
+                "CancelAnnotationSystemEvent",
+                "WeakCancelAnnotationSystemEvent",
+                "ErrorAnnotationSystemEvent",
+                "PseudoSyncTask",
+                "CodeFrameEvnPartsStack",
+                "CompoundTaskInstance",
+                "_callMode",
+                "ForParameterValueResolving",
+                "TakingValuesState",
+                "ResolvingParameterValues",
+                "CurrentPositionOfResolvingParameter",
+                "ResolvedPositionedParameterValues",
+                "ResolvedNamedParameterValues",
+                "CurrentResolvedParameterValue",
+                "CurrentCaller",
+                "CurrentKindOfOperator",
+                "KindOfParameters",
+                "ParametersCount",
+                "CurrentFunctionCallMethodId"
+            };
         }
 #endif
     }

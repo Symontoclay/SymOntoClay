@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public CodeFrameState State { get; set; } = CodeFrameState.Init;
         public SEHGroup CurrentSEHGroup { get; set; }
         public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
-        public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();        
+        public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();    
         public ILocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeItem Metadata { get; set; }

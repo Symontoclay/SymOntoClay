@@ -12,6 +12,7 @@
         ArrayCard,
         ListCard,
         HashSetCard,
+        StackCard,
         DictionaryCard,
         ReflectionTypeCard
     }

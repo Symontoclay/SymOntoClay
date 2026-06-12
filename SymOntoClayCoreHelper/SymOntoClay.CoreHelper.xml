@@ -166,6 +166,18 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ReflectionTypeCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.StackCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.StackCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.StackCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.StackCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>

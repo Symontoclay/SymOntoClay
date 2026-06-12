@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -19,7 +20,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private string _functorId;
 
-        //[SocSerializableActionMember(nameof(_functorId), 0)]
+        [SerializedActionMember(nameof(_functorId), 0)]
         private Action _action;
 
         /// <inheritdoc/>
@@ -42,7 +43,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private string _functorId;
 
-        //[SocSerializableActionMember(nameof(_functorId), 0)]
+        [SerializedActionMember(nameof(_functorId), 0)]
         private Action<T> _action;
         private T _arg;
 
@@ -67,7 +68,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private string _functorId;
 
-        //[SocSerializableActionMember(nameof(_functorId), 0)]
+        [SerializedActionMember(nameof(_functorId), 0)]
         private Action<T1, T2> _action;
         private T1 _arg1;
         private T2 _arg2;
@@ -94,7 +95,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private string _functorId;
 
-        //[SocSerializableActionMember(nameof(_functorId), 0)]
+        [SerializedActionMember(nameof(_functorId), 0)]
         private Action<T1, T2, T3> _action;
         private T1 _arg1;
         private T2 _arg2;
@@ -123,7 +124,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private string _functorId;
 
-        //[SocSerializableActionMember(nameof(_functorId), 0)]
+        [SerializedActionMember(nameof(_functorId), 0)]
         private Action<T1, T2, T3, T4> _action;
         private T1 _arg1;
         private T2 _arg2;
@@ -154,7 +155,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private string _functorId;
 
-        //[SocSerializableActionMember(nameof(_functorId), 0)]
+        [SerializedActionMember(nameof(_functorId), 0)]
         private Action<T1, T2, T3, T4, T5> _action;
         private T1 _arg1;
         private T2 _arg2;

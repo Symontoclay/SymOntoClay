@@ -249,7 +249,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(resolvingNotResultsStrategy), resolvingNotResultsStrategy, null);
+                            throw new ArgumentOutOfRangeException(nameof(resolvingNotResultsStrategy), resolvingNotResultsStrategy, "0FF4A5E5-7E9C-4FFF-A7A5-944E1BF43A5C");
                     }
                 }
                 else
@@ -531,7 +531,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfBinaryOperator), kindOfBinaryOperator, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfBinaryOperator), kindOfBinaryOperator, "DAB81F69-6AB7-4147-9BFF-4E373A0D7A57");
                 }
             }
 
@@ -718,7 +718,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return CompareForPostFilterByOperatorsMoreOrLess(logger, kindOfOperator, leftNode, rightNode, options, queryExecutingCard);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "F2FC9403-A79F-4836-87D5-123319378F40");
             }
         }
 
@@ -747,7 +747,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfSourceNode), kindOfSourceNode, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSourceNode), kindOfSourceNode, "5DC5725F-32E6-4DED-985E-36ED8CCFA8AA");
                 }
 
                 var kindOfNodeOfFilter = rightNode.Kind;
@@ -763,7 +763,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfNodeOfFilter), kindOfNodeOfFilter, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfNodeOfFilter), kindOfNodeOfFilter, "3729991C-20CE-4CE6-A145-B01126AFF059");
                 }
             }
 
@@ -914,7 +914,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "352DC584-85E4-42A2-BBA6-B0C7887D4C08");
                     }
                 }
 
@@ -1023,7 +1023,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "DB673FFB-ECD6-4BAD-AD9A-12DCDCBBDA85");
                     }
                 }
 
@@ -1133,7 +1133,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "66600796-8DF0-49C9-AFA9-6DFC3B906620");
                     }
                 }
 
@@ -1243,7 +1243,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "AF75E2F7-E78A-4694-A491-361618DF4ADE");
                     }
                 }
 
@@ -1273,7 +1273,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return left <= right;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "B76A4B93-F523-410C-8FF0-7914CEC1F7BC");
             }
         }
 
@@ -1323,7 +1323,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(processedExpr.KindOfOperator), processedExpr.KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(processedExpr.KindOfOperator), processedExpr.KindOfOperator, "B2CF0497-794F-43D3-9241-25FFBD20B8EC");
                     }
                     break;
 
@@ -1335,7 +1335,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(processedExpr.KindOfOperator), processedExpr.KindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(processedExpr.KindOfOperator), processedExpr.KindOfOperator, "7A97135B-5B7F-4F34-871B-1E0DA9BCBC71");
                     }
                     break;
 
@@ -1344,7 +1344,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "394924F7-6A0C-4CC8-9A95-BEAEE2C6D113");
             }
 
         }
@@ -3558,7 +3558,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(knownInfoKind), knownInfoKind, null);
+                        throw new ArgumentOutOfRangeException(nameof(knownInfoKind), knownInfoKind, "AB1444A5-D3A5-4107-8FEC-6DD39E692A92");
                 }
             }
 

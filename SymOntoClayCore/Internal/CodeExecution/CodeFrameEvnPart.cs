@@ -23,8 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using SymOntoClay.Core.Internal.Instances;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution

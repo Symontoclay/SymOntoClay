@@ -976,7 +976,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.MetadataResolver",
             "SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`2",
             "SymOntoClay.Core.Internal.Instances.ProcessInfo",
-            "SymOntoClay.Core.Internal.CodeExecution.CodeFrame"
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrame",
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart"
         };
 
         /// <inheritdoc/>
@@ -3523,6 +3524,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "KindOfParameters",
                 "ParametersCount",
                 "CurrentFunctionCallMethodId"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart"] = new List<string>() 
+            {
+                "LocalContext",
+                "Metadata",
+                "Instance",
+                "ExecutionCoordinator",
+                "CompoundTaskInstance"
             };
         }
 #endif

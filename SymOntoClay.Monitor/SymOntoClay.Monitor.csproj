@@ -14,7 +14,7 @@
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MessagePack" Version="3.1.4" />
+    <PackageReference Include="MessagePack" Version="3.1.7" />
     <PackageReference Include="SymOntoClay.Common" Version="0.5.6.7" />
     <PackageReference Include="SymOntoClay.Threading" Version="0.5.6.7" />
   </ItemGroup>

@@ -785,6 +785,50 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             TmpCheckProcessedTypes("6D0075E7-92BE-4D55-9E4A-7E56083FB788", type);
 #endif
 
+            /*
+                         var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
+
+            if(targetAttribute == null)
+            {
+                return null;
+            }
+
+#if DEBUG
+            _logger.Info($"targetAttribute.AttributeType?.FullName = {targetAttribute.AttributeType?.FullName}");
+
+            foreach (var ctorArg in targetAttribute.ConstructorArguments)
+            {
+                _logger.Info($"ctorArg.Value = {ctorArg.Value}");
+            }
+
+            foreach (var namedArg in targetAttribute.NamedArguments)
+            {
+                _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
+                _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
+            }
+#endif
+
+            var fieldName = (string)targetAttribute.ConstructorArguments[0].Value;
+
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            var field = fields.SingleOrDefault(p => p.Name == fieldName);
+
+            var key = (string)field.GetValue(obj);
+
+#if DEBUG
+            _logger.Info($"key = {key}");
+#endif
+
+            return new ActionPo
+            {
+                Key = key,
+                Index = (int)targetAttribute.ConstructorArguments[1].Value
+            };
+             */
+
             throw new NotImplementedException("C741439E-BC15-4F4C-8F0A-C775975A3863");
         }
 
@@ -3452,7 +3496,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`2"] = new List<string>() 
             { 
-                "_functorId"
+                "_functorId",
+                "_action"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.ProcessInfo"] = new List<string>() 
             { 

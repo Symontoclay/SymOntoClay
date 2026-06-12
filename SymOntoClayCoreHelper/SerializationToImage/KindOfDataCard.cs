@@ -13,6 +13,7 @@
         ListCard,
         HashSetCard,
         StackCard,
+        QueueCard,
         DictionaryCard,
         ReflectionTypeCard
     }

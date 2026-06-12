@@ -284,7 +284,47 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericQueue(object obj, Type type, string path)
         {
-            throw new NotImplementedException("C3BE6016-0DA1-4238-BB7E-C12668369925");
+            _visitedObjects.Add(obj);
+
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
+
+#if DEBUG
+            //_logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new QueueCard()
+            {
+                Header = serializedValue
+            };
+
+            var enumerable = (IEnumerable)obj;
+
+            var items = new List<SerializedValue>();
+
+            foreach (var item in enumerable)
+            {
+#if DEBUG
+                //_logger.Info($"item = {item}");
+#endif
+
+                var fieldSerializedValue = SerializeValue(item, string.Empty);
+
+#if DEBUG
+                //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
+#endif
+
+                items.Add(fieldSerializedValue);
+            }
+
+            card.Items = items;
+
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>

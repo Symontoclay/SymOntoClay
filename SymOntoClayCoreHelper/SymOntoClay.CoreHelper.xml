@@ -154,6 +154,18 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ListCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.QueueCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.QueueCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.QueueCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.QueueCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ReflectionTypeCard.KindOfDataCard">
             <inheritdoc/>
         </member>

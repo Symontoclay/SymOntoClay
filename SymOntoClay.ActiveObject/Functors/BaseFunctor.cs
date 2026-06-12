@@ -42,10 +42,10 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private void OnCompletedHandler()
         {
-            //_serializationAnchor.RemoveFunctor(this);
-            //_asyncActiveOnceObject.RemoveOnCompletedHandler(this);
-            //_asyncActiveOnceObject.Dispose();
-            //_asyncActiveOnceObject = null;
+            _serializationAnchor.RemoveFunctor(this);
+            _asyncActiveOnceObject.RemoveOnCompletedHandler(this);
+            _asyncActiveOnceObject.Dispose();
+            _asyncActiveOnceObject = null;
         }
     }
 

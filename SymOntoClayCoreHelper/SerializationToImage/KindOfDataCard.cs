@@ -15,6 +15,7 @@
         StackCard,
         QueueCard,
         DictionaryCard,
-        ReflectionTypeCard
+        ReflectionTypeCard,
+        ActionCard
     }
 }

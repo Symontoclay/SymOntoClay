@@ -798,62 +798,37 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
 #if DEBUG
-            _logger.Info($"attribute = {attribute}");
-            _logger.Info($"attribute.KeyParameterName = {attribute.KeyParameterName}");
-            _logger.Info($"attribute.Index = {attribute.Index}");
+            //_logger.Info($"attribute = {attribute}");
+            //_logger.Info($"attribute.KeyParameterName = {attribute.KeyParameterName}");
+            //_logger.Info($"attribute.Index = {attribute.Index}");
 #endif
 
-            var keyValue = objMember.GetValue(attribute.KeyParameterName);
+            var keyValue = (string)objMember.GetValue(attribute.KeyParameterName);
 
 #if DEBUG
-            _logger.Info($"keyValue = {keyValue}");
+            //_logger.Info($"keyValue = {keyValue}");
 #endif
 
-            /*
-            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
-
-            if(targetAttribute == null)
-            {
-                return null;
-            }
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            _logger.Info($"targetAttribute.AttributeType?.FullName = {targetAttribute.AttributeType?.FullName}");
-
-            foreach (var ctorArg in targetAttribute.ConstructorArguments)
-            {
-                _logger.Info($"ctorArg.Value = {ctorArg.Value}");
-            }
-
-            foreach (var namedArg in targetAttribute.NamedArguments)
-            {
-                _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
-                _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
-            }
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var fieldName = (string)targetAttribute.ConstructorArguments[0].Value;
-
-#if DEBUG
-            _logger.Info($"fieldName = {fieldName}");
-#endif
-
-            var field = fields.SingleOrDefault(p => p.Name == fieldName);
-
-            var key = (string)field.GetValue(obj);
-
-#if DEBUG
-            _logger.Info($"key = {key}");
-#endif
-
-            return new ActionPo
+            var card = new ActionCard()
             {
-                Key = key,
-                Index = (int)targetAttribute.ConstructorArguments[1].Value
+                Header = serializedValue,
+                KeyValue = keyValue,
+                Index = attribute.Index
             };
-             */
 
-            throw new NotImplementedException("C741439E-BC15-4F4C-8F0A-C775975A3863");
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
 #if DEBUG
@@ -1046,7 +1021,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Instances.ProcessInfo",
             "SymOntoClay.Core.Internal.CodeExecution.CodeFrame",
             "SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart",
-            "SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierLinearResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierLinearResolver",
+            "SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject"
         };
 
         /// <inheritdoc/>
@@ -3522,7 +3498,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`2"] = new List<string>() 
             { 
                 "_functorId",
-                "_action"
+                "_action",
+                "_arg1",
+                "_arg2",
+                "_arg3",
+                "_asyncActiveOnceObject",
+                "_serializationAnchor"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.ProcessInfo"] = new List<string>() 
             { 
@@ -3613,6 +3594,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject"] = new List<string>() { };
+
+            /*
+            private readonly IActiveObjectContext _context;
+        private readonly ICustomThreadPool _threadPool;
+        private readonly ICancellationContext _cancellationContext;
+        private readonly IMonitorLogger _logger;
+
+        private readonly object _lockObj = new object();
+
+        public OnceDelegate OnceMethod { get; set; }
+
+        private volatile bool _isWaited;
+
+            private IThreadTaskPointer _task = new ThreadTaskPointer();
+
+            private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
+
+            private bool _isDisposed;
+            */
         }
 #endif
     }

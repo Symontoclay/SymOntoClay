@@ -19,7 +19,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseDataCardWriter.OnDisposing">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseObjectSerializer.SerializeValue(System.Object,System.String,SymOntoClay.CoreHelper.SerializationToImage.SerializeValueMode)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseObjectSerializer.SerializeValue(System.Object,System.String,SymOntoClay.CoreHelper.SerializationToImage.SerializeValueMode,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ArrayCard.KindOfDataCard">
@@ -226,7 +226,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer._tmpProcessedTypes">
@@ -271,7 +271,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeAction(System.Object,System.Type)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer._tmpProcessedTypes">
@@ -310,7 +310,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeAction(System.Object,System.Type)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer._tmpProcessedTypes">

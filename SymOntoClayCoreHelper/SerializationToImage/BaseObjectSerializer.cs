@@ -23,7 +23,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedTypesPool _serializedTypesPool;
 
         /// <inheritdoc/>
-        public SerializedValue SerializeValue(object obj, string path = "", SerializeValueMode serializeValueMode = SerializeValueMode.General)
+        public SerializedValue SerializeValue(object obj, string path = "", SerializeValueMode serializeValueMode = SerializeValueMode.General, ObjMemberRef objMember = null)
         {
 #if DEBUG
             //_logger.Info($"obj = {obj}");
@@ -71,12 +71,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.FullName.StartsWith("System.Action"))
             {
-                return SerializeAction(obj, type);
+                return SerializeAction(obj, type, objMember);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                return SerializeAction(obj, type);
+                return SerializeAction(obj, type, objMember);
             }
 
             switch (type.FullName)
@@ -184,7 +184,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected abstract SerializedValue SerializeGenericDictionary(object obj, Type type, string path);
         protected abstract SerializedValue SerializeComposite(object obj, Type type, string path);
         protected abstract SerializedValue SerializeManualResetEvent(object obj, Type type, string path);
-        protected abstract SerializedValue SerializeAction(object obj, Type type);
+        protected abstract SerializedValue SerializeAction(object obj, Type type, ObjMemberRef objMember);
 
         protected IEnumerable<(int TypeId, FieldInfo Field)> GetFields(Type type)
         {

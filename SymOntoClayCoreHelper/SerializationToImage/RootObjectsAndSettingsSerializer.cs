@@ -577,7 +577,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeAction(object obj, Type type)
+        protected override SerializedValue SerializeAction(object obj, Type type, ObjMemberRef objMember)
         {
 #if DEBUG
             TmpCheckProcessedTypes("D6559AD4-8808-4D7A-95C8-EAB973C4ADA6", type);

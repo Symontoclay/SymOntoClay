@@ -684,7 +684,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"fieldValue = {fieldValue}");
 #endif
 
-            var fieldSerializedValue = SerializeValue(fieldValue, string.Empty);
+            var objMember = new ObjMemberRef(obj, field);
+
+            var fieldSerializedValue = SerializeValue(obj: fieldValue, path: string.Empty, objMember: objMember);
 
 #if DEBUG
             //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
@@ -708,7 +710,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 serializeValueMode = SerializeValueMode.ExternalValue;
             }*/
 
-            var propertySerializedValue = SerializeValue(propertyValue, string.Empty, serializeValueMode);
+            var objMember = new ObjMemberRef(obj, property);
+
+            var propertySerializedValue = SerializeValue(obj: propertyValue, path: string.Empty, serializeValueMode: serializeValueMode, objMember: objMember);
 
 #if DEBUG
             //_logger.Info($"propertySerializedValue = {propertySerializedValue}");
@@ -779,17 +783,34 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeAction(object obj, Type type)
+        protected override SerializedValue SerializeAction(object obj, Type type, ObjMemberRef objMember)
         {
-            /*
-            var worldRootAttribute = type.GetCustomAttribute<SerializedActionMemberAttribute>(true);
+            if(objMember == null)
+            {
+                throw new NotImplementedException("E8497C8F-FC96-488E-BCD3-2143B8AF0858");
+            }
+
+            var attribute = objMember.GetCustomAttribute<SerializedActionMemberAttribute>(true);
+
+            if (attribute == null)
+            {
+                throw new NotImplementedException("23B60F49-9DC0-4065-93E7-25CFD9B5C69F");
+            }
 
 #if DEBUG
-            _logger.Info($"worldRootAttribute = {worldRootAttribute}");
+            _logger.Info($"attribute = {attribute}");
+            _logger.Info($"attribute.KeyParameterName = {attribute.KeyParameterName}");
+            _logger.Info($"attribute.Index = {attribute.Index}");
 #endif
-            */
+
+            var keyValue = objMember.GetValue(attribute.KeyParameterName);
+
+#if DEBUG
+            _logger.Info($"keyValue = {keyValue}");
+#endif
+
             /*
-                         var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
 
             if(targetAttribute == null)
             {

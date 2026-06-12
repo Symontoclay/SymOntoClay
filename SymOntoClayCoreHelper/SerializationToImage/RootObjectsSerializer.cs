@@ -4,6 +4,7 @@ using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -169,7 +170,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeAction(object obj, Type type)
+        protected override SerializedValue SerializeAction(object obj, Type type, ObjMemberRef objMember)
         {
             throw new NotImplementedException("C140367A-7BC2-4A3A-8BBF-A059D907E7E0");
         }

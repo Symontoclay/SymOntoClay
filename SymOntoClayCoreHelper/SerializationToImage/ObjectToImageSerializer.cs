@@ -3426,6 +3426,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_processesInfoList",
                 "_processesInfoByDevicesDict",
                 "_commonNamesStorage",
+                "_onIdleHandlersLockObj",
+                "_onIdleHandlers",
                 "_state",
                 "_stateLockObj",
                 "_logger"

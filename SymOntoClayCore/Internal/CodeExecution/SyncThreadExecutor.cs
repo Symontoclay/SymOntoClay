@@ -22,9 +22,11 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
+using System;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
+    [Obsolete("Use AsyncThreadExecutor", true)]
     public class SyncThreadExecutor: BaseThreadExecutor
     {
         public SyncThreadExecutor(IEngineContext context)

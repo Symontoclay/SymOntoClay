@@ -25,6 +25,7 @@ using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Threading;
+using System;
 using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads
@@ -34,6 +35,7 @@ namespace SymOntoClay.ActiveObject.Threads
     /// It is helpful for short calculations.
     /// The loop of the class must not be blocked with AutoResetEvent.
     /// </summary>
+    [Obsolete("Use AsyncActivePeriodicObject", true)]
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
         public SyncActivePeriodicObject(ICancellationContext cancellationContext)

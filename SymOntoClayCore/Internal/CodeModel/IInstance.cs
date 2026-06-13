@@ -43,6 +43,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IEngineContext EngineContext { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }
         ILocalCodeExecutionContext LocalCodeExecutionContext { get; }
+        bool IsInitializing { get; }
+        bool IsInitialized { get; }
         void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");
         void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
         void AddChildInstance(IMonitorLogger logger, IInstance instance);

@@ -9139,6 +9139,12 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.LocalCodeExecutionContext">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.IsInitializing">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.IsInitialized">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,SymOntoClay.Monitor.Common.Changer,System.String)">
             <inheritdoc/>
         </member>

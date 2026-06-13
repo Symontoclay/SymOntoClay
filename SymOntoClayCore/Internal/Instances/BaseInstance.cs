@@ -167,6 +167,12 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
+        /// <inheritdoc/>
+        public bool IsInitializing => _instanceState == InstanceState.Initializing;
+
+        /// <inheritdoc/>
+        public bool IsInitialized => _instanceState == InstanceState.Initialized;
+
         private readonly PreConstructorsRunner _preConstructorsRunner;
         private readonly ConstructorsRunner _constructors;
 

@@ -146,6 +146,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             instanceInfo.Init(logger);
 
+            if(!instanceInfo.IsInitialized)
+            {
+                throw new NotImplementedException("C67F340A-B762-47FA-8047-02EA6282ED84");
+            }
+
             LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler>.Run(Logger, "B9914EB7-3FBA-449D-9E1E-7A89BE7C25DF", this,
                 (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue) => {
                     instanceValue.NDelayedInitialDispatchIdleActions(loggerValue);
@@ -548,6 +553,11 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             instance.Init(logger);
+
+            if(!instance.IsInitialized)
+            {
+                throw new NotImplementedException("C12A9A91-36FA-4C47-8509-989678B5DA88");
+            }
 
             var instanceValue = new InstanceValue(instance);
             instanceValue.CheckDirty();

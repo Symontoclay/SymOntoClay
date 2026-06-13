@@ -21,15 +21,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.Cancellation;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileWriter;
 using SymOntoClay.Threading;
 using System;
-using System.Threading;
 
 namespace SymOntoClay.Monitor.Internal
 {
     public class MonitorNodeContext
     {
+        public IMonitorNode Owner { get; set; }
+
         public MonitorContext MonitorContext { get; set; }
 
         public IMonitorNodeFileWriter FileWriter { get; set; }

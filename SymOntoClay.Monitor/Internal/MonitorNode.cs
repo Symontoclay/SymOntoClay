@@ -87,6 +87,7 @@ namespace SymOntoClay.Monitor.Internal
             _threadPool = new CustomThreadPool(threadingSettings, monitorContext.CancellationContext);
 
             _monitorNodeContext = new MonitorNodeContext();
+            _monitorNodeContext.Owner = this;
             _monitorNodeContext.MonitorContext = monitorContext;
 
             _monitorNodeContext.CancellationContext = _linkedCancellationTokenSourceContext;
@@ -664,7 +665,7 @@ namespace SymOntoClay.Monitor.Internal
             serializationData.NodeId = _nodeId;
 
 #if DEBUG
-            _globalLogger.Info($"serializationData = {serializationData}");
+            //_globalLogger.Info($"serializationData = {serializationData}");
 #endif
 
             return serializationData;

@@ -1024,7 +1024,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierLinearResolver",
             "SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject",
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext",
-            "SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.DateTimeResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierExprValueResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.ValueResolvingHelper",
+            "SymOntoClay.Core.Internal.Converters.ConverterFactToImperativeCode",
+            "SymOntoClay.Core.Internal.DataResolvers.RelationsResolver"
         };
 
         /// <inheritdoc/>
@@ -3408,7 +3413,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "ExternalReturn",
                 "_activeObject",
                 "_onCompletedHandlersLockObj",
-                "_onCompletedHandlers"
+                "_onCompletedHandlers",
+                "_processAddLifeCycleEventParametersCount",
+                "_defaultTimeoutCancellationMode",
+                "_logger"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.EnterLifecycleTriggersRunner"] = new List<string>() 
@@ -3605,12 +3613,79 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_lockObj",
                 "ObjectWithOnceRunMethod",
                 "_isWaited",
+                "_isExited",
                 "_task",
                 "_onCompletedHandlersCollection",
                 "_isDisposed"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext"] = new List<string>() { };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext"] = new List<string>() 
+            { 
+                "_context",
+                "Parent",
+                "_storage",
+                "KindOfAddFactResult"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver"] = new List<string>() 
+            {
+                "_synonymsResolver",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.DateTimeResolver"] = new List<string>() 
+            {
+                "_dateTimeProvider",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierExprValueResolver"] = new List<string>() 
+            {
+                "_propertiesResolver",
+                "_fuzzyLogicResolver",
+                "_varsResolver",
+                "_trueValueLiteral",
+                "_falseValueLiteral",
+                "DefaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.ValueResolvingHelper"] = new List<string>() 
+            {
+                "_context",
+                "_varsResolver",
+                "_strongIdentifierExprValueResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Converters.ConverterFactToImperativeCode"] = new List<string>() 
+            {
+                "_context",
+                "_compiler",
+                "_relationsResolver",
+                "_actName",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.RelationsResolver"] = new List<string>() 
+            {
+                "DefaultOptions",
+                "_synonymsResolver",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
 #endif
     }

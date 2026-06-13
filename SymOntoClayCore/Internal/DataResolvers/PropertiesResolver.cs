@@ -446,6 +446,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Info("57E80E8A-8AF3-486D-A5E9-57B2AB6E8E2A", $"propertyValue = {propertyValue}");
 #endif
 
+                if(propertyValue.IsThreadExecutorValue)
+                {
+                    throw new NotImplementedException("86595A6D-C53A-4F57-BCAB-F6F3F51AB2DA");
+                }
+
                 var relation = _standardCoreFactsBuilder.BuildPropertyVirtualRelationInstance(propertyName, propInstance.Instance.Name, propertyValue);
 
                 result.Add(relation);

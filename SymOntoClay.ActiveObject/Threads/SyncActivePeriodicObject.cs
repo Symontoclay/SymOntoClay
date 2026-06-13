@@ -35,7 +35,7 @@ namespace SymOntoClay.ActiveObject.Threads
     /// It is helpful for short calculations.
     /// The loop of the class must not be blocked with AutoResetEvent.
     /// </summary>
-    [Obsolete("Use AsyncActivePeriodicObject", true)]
+    //[Obsolete("Use AsyncActivePeriodicObject", true)]
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
         public SyncActivePeriodicObject(ICancellationContext cancellationContext)

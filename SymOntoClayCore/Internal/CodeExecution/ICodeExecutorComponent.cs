@@ -33,13 +33,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         IThreadExecutor ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
         IThreadExecutor ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId);
 
-        [Obsolete("Use ExecuteBatchAsync", true)]
+        //[Obsolete("Use ExecuteBatchAsync", true)]
         IThreadExecutor ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
         IThreadExecutor ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo);
         IThreadExecutor ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId);
         Value CallOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode);
 
-        [Obsolete("Use CallExecutableAsync", true)]
+        //[Obsolete("Use CallExecutableAsync", true)]
         Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode);
         Value CallFunctionSync(IMonitorLogger logger, Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
     }

@@ -26,7 +26,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    [Obsolete("Use AsyncThreadExecutor", true)]
+    //[Obsolete("Use AsyncThreadExecutor", true)]
     public class SyncThreadExecutor: BaseThreadExecutor
     {
         public SyncThreadExecutor(IEngineContext context)

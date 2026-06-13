@@ -105,7 +105,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        [Obsolete("Use ExecuteBatchAsync", true)]
+        //[Obsolete("Use ExecuteBatchAsync", true)]
         public IThreadExecutor ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        [Obsolete("Use CallExecutableAsync", true)]
+        //[Obsolete("Use CallExecutableAsync", true)]
         public Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
             return CallExecutable(logger, null, executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext, callMode);
@@ -182,7 +182,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (executable == null)
             {
-                throw new ArgumentNullException(nameof(executable));
+                throw new ArgumentNullException(nameof(executable), "EEB520F6-055D-4CD1-AB86-D06DD55811AB");
             }
 
             var coordinator = executable.GetCoordinator(logger, _context, parentLocalCodeExecutionContext);

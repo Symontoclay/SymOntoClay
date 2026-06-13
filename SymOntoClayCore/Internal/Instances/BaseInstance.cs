@@ -242,7 +242,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             CreateConditionalTriggers(logger);
 
-            _instanceState = InstanceState.Initialized;            
+            _instanceState = InstanceState.Initialized;
         }
 
         private void RebuildSuperClassesStorages(IMonitorLogger logger)

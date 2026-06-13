@@ -2,5 +2,6 @@
 {
     public interface IBaseFunctor
     {
+        void Run();
     }
 }

@@ -4,6 +4,12 @@
         <name>SymOntoClay.ActiveObject</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctor.Run">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctor`1.Run">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
@@ -98,9 +104,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.OnceMethod">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.IsWaited">

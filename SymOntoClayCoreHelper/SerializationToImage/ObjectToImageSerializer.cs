@@ -1022,7 +1022,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeExecution.CodeFrame",
             "SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart",
             "SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierLinearResolver",
-            "SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject"
+            "SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject",
+            "SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext",
+            "SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver"
         };
 
         /// <inheritdoc/>
@@ -3594,26 +3596,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject"] = new List<string>() { };
-
-            /*
-            private readonly IActiveObjectContext _context;
-        private readonly ICustomThreadPool _threadPool;
-        private readonly ICancellationContext _cancellationContext;
-        private readonly IMonitorLogger _logger;
-
-        private readonly object _lockObj = new object();
-
-        public OnceDelegate OnceMethod { get; set; }
-
-        private volatile bool _isWaited;
-
-            private IThreadTaskPointer _task = new ThreadTaskPointer();
-
-            private OnCompletedActiveObjectHandlersCollection _onCompletedHandlersCollection = new OnCompletedActiveObjectHandlersCollection();
-
-            private bool _isDisposed;
-            */
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject"] = new List<string>() 
+            {
+                "_context",
+                "_threadPool",
+                "_cancellationContext",
+                "_logger",
+                "_lockObj",
+                "ObjectWithOnceRunMethod",
+                "_isWaited",
+                "_task",
+                "_onCompletedHandlersCollection",
+                "_isDisposed"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver"] = new List<string>() { };
         }
 #endif
     }

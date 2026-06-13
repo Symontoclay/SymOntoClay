@@ -8,7 +8,8 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public abstract class BaseFunctor : IBaseFunctor, IOnCompletedActiveObjectHandler
+    public abstract class BaseFunctor : IBaseFunctor, 
+        IOnCompletedActiveObjectHandler, IObjectWithOnceRunMethod
     {
         protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
@@ -17,7 +18,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
             _asyncActiveOnceObject = new AsyncActiveOnceObject(context, threadPool, logger)
             {
-                OnceMethod = OnRun
+                ObjectWithOnceRunMethod = this
             };
 
             _asyncActiveOnceObject.AddOnCompletedHandler(this);
@@ -28,8 +29,14 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public IThreadTaskPointer TaskValue => _asyncActiveOnceObject?.TaskValue;
 
+        void IObjectWithOnceRunMethod.OnceRunHandler(ICancellationContext cancellationContext)
+        {
+            OnRun(cancellationContext);
+        }
+
         protected abstract void OnRun(ICancellationContext cancellationContext);
 
+        /// <inheritdoc/>
         public void Run()
         {
             _asyncActiveOnceObject.Start();
@@ -49,7 +56,8 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract class BaseFunctor<TResult> : IBaseFunctor, IOnCompletedActiveObjectHandler
+    public abstract class BaseFunctor<TResult> : IBaseFunctor,
+        IOnCompletedActiveObjectHandler, IObjectWithOnceRunMethod<TResult>
     {
         protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
@@ -58,7 +66,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
             _asyncActiveOnceObject = new AsyncActiveOnceObject<TResult>(context, threadPool, logger)
             {
-                OnceMethod = OnRun
+                ObjectWithOnceRunMethod = this
             };
 
             _asyncActiveOnceObject.AddOnCompletedHandler(this);
@@ -70,8 +78,14 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public IThreadTaskPointer<TResult> TaskValue => _asyncActiveOnceObject?.TaskValueWithResult;
 
+        TResult IObjectWithOnceRunMethod<TResult>.OnceRunHandler(ICancellationContext cancellationContext)
+        {
+            return OnRun(cancellationContext);
+        }
+
         protected abstract TResult OnRun(ICancellationContext cancellationContext);
 
+        /// <inheritdoc/>
         public void Run()
         {
             _asyncActiveOnceObject.Start();

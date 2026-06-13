@@ -29,7 +29,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         private readonly object _lockObj = new object();
 
-        public OnceDelegate OnceMethod { get; set; }
+        public IObjectWithOnceRunMethod ObjectWithOnceRunMethod { get; set; }
 
         private volatile bool _isWaited;
 
@@ -111,7 +111,7 @@ namespace SymOntoClay.ActiveObject.Threads
                             return;
                         }
 
-                        OnceMethod(_cancellationContext);
+                        ObjectWithOnceRunMethod.OnceRunHandler(_cancellationContext);
 
                         _onCompletedHandlersCollection.Emit();
                     }
@@ -175,8 +175,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         private readonly object _lockObj = new object();
 
-        /// <inheritdoc/>
-        public OnceDelegateWithResult<TResult> OnceMethod { get; set; }
+        public IObjectWithOnceRunMethod<TResult> ObjectWithOnceRunMethod { get; set; }
 
         private volatile bool _isWaited;
 
@@ -282,7 +281,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
                         _isExited = true;
 
-                        var result = OnceMethod(_cancellationContext);
+                        var result = ObjectWithOnceRunMethod.OnceRunHandler(_cancellationContext);
 
                         _onCompletedHandlersCollection.Emit();
 

@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return _varsResolver.Resolve(logger, name, localCodeExecutionContext, options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, "E9486B3F-3CED-4AE1-9744-C26231CF8296");
             }
         }
 
@@ -126,7 +126,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return GetValueFromProperty(logger, name, kindOfValueConversion, instance, localCodeExecutionContext, options);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, "D85A4DD1-434B-4A1E-B784-6D572A40112E");
             }
         }
 

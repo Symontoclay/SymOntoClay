@@ -219,7 +219,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);
+                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, "A6822081-66F9-4802-B57D-E372D0CF9507");
             }
         }
 
@@ -339,7 +339,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);
+                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, "2D0124FD-7FF0-470F-80CD-1F08755E1693");
             }
         }
     }

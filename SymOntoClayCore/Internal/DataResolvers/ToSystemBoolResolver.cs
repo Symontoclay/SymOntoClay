@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return NullValueEquvivalent;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, "9D1BEA81-E8F6-4F2B-AFDB-8B865F679A66");
             }
 
             throw new NotImplementedException("6AAD28B0-C873-400F-95BC-A0E44EA45BDF");

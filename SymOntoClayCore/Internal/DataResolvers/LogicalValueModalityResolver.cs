@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return ProcessGroup(logger, modalityValue, expressionNode, localCodeExecutionContext);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expressionNode.Kind), expressionNode.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(expressionNode.Kind), expressionNode.Kind, "405BB8FF-7004-420B-9C88-A69A40B204CD");
             }
         }
 
@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return ProcessValue(logger, modalityValue, expressionNode, localCodeExecutionContext);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expressionNode.Kind), expressionNode.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(expressionNode.Kind), expressionNode.Kind, "99B0B4ED-E6BE-468E-A10C-D62DE2704119");
             }
         }
 
@@ -202,7 +202,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expressionNode.KindOfOperator), expressionNode.KindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(expressionNode.KindOfOperator), expressionNode.KindOfOperator, "5F2ECA38-0A26-4D35-A29A-E49AE895363E");
             }
         }
 
@@ -214,7 +214,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return !ProcessBoolExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(expressionNode.KindOfOperator), expressionNode.KindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(expressionNode.KindOfOperator), expressionNode.KindOfOperator, "799463B9-2483-4696-BE5E-855516B245BE");
             }
         }
 

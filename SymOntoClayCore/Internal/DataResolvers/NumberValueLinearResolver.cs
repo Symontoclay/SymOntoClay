@@ -105,7 +105,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);
+                    throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, "79419B17-D4EE-468B-A9C5-112F51CE8417");
             }
         }
     }

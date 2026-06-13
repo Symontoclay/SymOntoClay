@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 return new ValueCallResult(operand);
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, "DC011E64-0B59-49FB-AB62-84F18ABF0052");
                         }
                     }
 
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(valueResolvingMode), valueResolvingMode, null);
+                                throw new ArgumentOutOfRangeException(nameof(valueResolvingMode), valueResolvingMode, "2C45500D-FEF4-4629-957F-7D0865C79F70");
                         }
                     }
 

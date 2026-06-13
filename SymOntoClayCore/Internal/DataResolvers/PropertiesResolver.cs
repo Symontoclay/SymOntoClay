@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 return property.SetValue(logger, value);
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, "65F916E0-764C-4B3B-BAF8-1A53BE2A3BA2");
                         }
                     }
                 case CallMode.HtnPlanner:
@@ -137,12 +137,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 return property.SetValue(logger, value);
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, "460170DE-C6F3-4E87-9AE5-EB99E83027EE");
                         }
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);
+                    throw new ArgumentOutOfRangeException(nameof(callMode), callMode, "925C4158-F8DF-4056-ABDB-DC0DD87E21C8");
             }
         }
 
@@ -275,7 +275,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, "B81F4261-0D61-4C2D-AEE6-A54C24073028");
             }
         }
 

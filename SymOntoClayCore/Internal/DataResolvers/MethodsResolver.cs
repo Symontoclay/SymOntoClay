@@ -195,7 +195,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "BCF6993C-423C-400C-9C5F-8D39BD63B184");
             }
 
             throw new NotImplementedException("B37C1FB3-5810-460A-85C3-66C57C89907E");
@@ -670,7 +670,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, "E327CE32-6098-406E-87AD-A197604C2939");
                 }
 
                 result[parameterName] = namedParameter.Value;

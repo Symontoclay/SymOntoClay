@@ -4127,6 +4127,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (executable.NeedActivation && !executable.IsActivated)
                 {
                     executable = executable.Activate(Logger, _context, _currentCodeFrame.LocalContext, _executionCoordinator);
+
+                    if(executable.IsInstance)
+                    {
+                        var executableInstance = executable.AsInstance;
+
+                        if(!executableInstance.IsInitialized)
+                        {
+                            throw new NotImplementedException("C2F4274F-DEEC-49F3-A96D-FAEE827D5E68");
+                        }
+                    }
                 }
 
                 var coordinator = executable.GetCoordinator(Logger, _context, _currentCodeFrame.LocalContext);

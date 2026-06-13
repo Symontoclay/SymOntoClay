@@ -261,7 +261,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if(keysForAdding.Any())
                     {
-
                         foreach (var key in keysForAdding)
                         {
                             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _parentStorage);

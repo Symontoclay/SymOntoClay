@@ -105,6 +105,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
+        [Obsolete("Use ExecuteBatchAsync", true)]
         public IThreadExecutor ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
@@ -167,6 +168,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
+        [Obsolete("Use CallExecutableAsync", true)]
         public Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
             return CallExecutable(logger, null, executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext, callMode);

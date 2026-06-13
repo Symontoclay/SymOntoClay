@@ -33,20 +33,5 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             : base(context, new SyncActivePeriodicObject(context.GetCancellationContext()), BaseThreadExecutor.CreateInitParams(context))
         {
         }
-
-        public SyncThreadExecutor(IEngineContext context, string threadId)
-            : this(context, context.MonitorNode.CreateThreadLogger("92CB0C9C-C836-4A71-9D76-FE7FB33CEA6D", threadId), threadId)
-        {
-        }
-
-        public SyncThreadExecutor(IEngineContext context, IMonitorLogger logger)
-            : this(context, logger, logger.Id)
-        {
-        }
-
-        public SyncThreadExecutor(IEngineContext context, IMonitorLogger logger, string threadId)
-            : base(context, new SyncActivePeriodicObject(context.GetCancellationContext()), logger, threadId)
-        {
-        }
     }
 }

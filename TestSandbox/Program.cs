@@ -174,7 +174,6 @@ namespace TestSandbox
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
             //TstAsyncActivePeriodicObjectHandler();
-            //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
             //TstParseName();
             //TstCreateName();
@@ -2409,16 +2408,6 @@ primitive task SomePrimitiveTask4
             handler.Run();
 
             _logger.Info("E96DEF49-0830-4E78-835F-3E2EBE98FDA5", "End");
-        }
-
-        private static void TstSyncActivePeriodicObjectHandler()
-        {
-            _logger.Info("5AFA77C9-837A-406C-896C-AB60F46E0A5D", "Begin");
-
-            var handler = new SyncActivePeriodicObjectHandler();
-            handler.Run();
-
-            _logger.Info("A3701051-7969-4E1E-AB50-AC8770A980D7", "End");
         }
 
         private static void TstCodeExecution()

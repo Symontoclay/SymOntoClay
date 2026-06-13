@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Instances.TaskInstances;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -104,6 +105,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public KindOfFunctionParameters KindOfParameters { get; set; }
         public int ParametersCount { get; set; }
         public string CurrentFunctionCallMethodId { get; set; }
+        public BaseCompoundTaskInstance BaseCompoundTaskInstance { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

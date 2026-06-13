@@ -35,6 +35,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         ResolvedParameters,
         CommandExecution,
         CommandPostExecution,
+        CreatedCompoundTaskInstance,
+        InitializedCompoundTaskInstance,
         EndCommandExecution
     }
 }

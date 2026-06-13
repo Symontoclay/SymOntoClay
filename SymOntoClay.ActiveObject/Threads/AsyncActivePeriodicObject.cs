@@ -149,6 +149,9 @@ namespace SymOntoClay.ActiveObject.Threads
                             }
                         }
                     }
+                    catch (OperationCanceledException)
+                    {
+                    }
                     catch (Exception e)
                     {
                         _logger.Error("7CA31B61-20CF-40E5-B275-E68213D00242", e);

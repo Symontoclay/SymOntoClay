@@ -173,6 +173,9 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public bool IsInitialized => _instanceState == InstanceState.Initialized;
 
+        private bool _initializationWasStarted;
+        private object _initializationLockObj = new object();
+
         private readonly PreConstructorsRunner _preConstructorsRunner;
         private readonly ConstructorsRunner _constructors;
 
@@ -195,6 +198,16 @@ namespace SymOntoClay.Core.Internal.Instances
         
         public virtual void Init(IMonitorLogger logger)
         {
+            lock(_initializationLockObj)
+            {
+                if (_initializationWasStarted)
+                {
+                    return;
+                }
+
+                _initializationWasStarted = true;
+            }
+
             if (_parentExecutionCoordinator != null)
             {
                 if(_parentExecutionCoordinator.IsFinished)

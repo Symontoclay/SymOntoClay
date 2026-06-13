@@ -646,42 +646,82 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessBeginCompoundTask(ScriptCommand currentCommand)
         {
 #if DEBUG
-            //Info("D2F278BA-4BA0-4C8D-A424-F929BB816100", $"currentCommand = {currentCommand.ToDbgString()}");
+            Info("D2F278BA-4BA0-4C8D-A424-F929BB816100", $"currentCommand = {currentCommand.ToDbgString()}");
 #endif
 
-            var currentCodeFrame = _currentCodeFrame;
-
-            var compoundTask = currentCommand.CompoundTask;
-
-            var baseCompoundTaskInstance = BaseCompoundTaskInstanceFactory(compoundTask);
-            baseCompoundTaskInstance.Init(Logger);
-
-            var codeFrameEvnPart = new CodeFrameEvnPart
+            if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
             {
-                LocalContext = currentCodeFrame.LocalContext,
-                Metadata = currentCodeFrame.Metadata,
-                Instance = currentCodeFrame.Instance,
-                ExecutionCoordinator = currentCodeFrame.ExecutionCoordinator,
-                CompoundTaskInstance = currentCodeFrame.CompoundTaskInstance
-            };
+                _currentCodeFrame.State = CodeFrameState.BeginningCommandExecution;
+            }
 
 #if DEBUG
-            //Info("B5BDC6F0-3845-43AE-9820-405B99957D93", $"codeFrameEvnPart = {codeFrameEvnPart.ToDbgString()}");
+            Info("E67964D2-8B66-4A78-8EDB-721970B6988D", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
-            currentCodeFrame.CodeFrameEvnPartsStack.Push(codeFrameEvnPart);
+            if(_currentCodeFrame.State == CodeFrameState.BeginningCommandExecution)
+            {
+                var compoundTask = currentCommand.CompoundTask;
 
-            currentCodeFrame.LocalContext = baseCompoundTaskInstance.LocalCodeExecutionContext;
-            currentCodeFrame.Metadata = compoundTask;
-            currentCodeFrame.Instance = baseCompoundTaskInstance;
-            currentCodeFrame.ExecutionCoordinator = baseCompoundTaskInstance.ExecutionCoordinator;
-            currentCodeFrame.CompoundTaskInstance = baseCompoundTaskInstance;
+                _currentCodeFrame.BaseCompoundTaskInstance = BaseCompoundTaskInstanceFactory(compoundTask);
+
+                _currentCodeFrame.State = CodeFrameState.CreatedCompoundTaskInstance;
+            }
 
 #if DEBUG
-            //Info("ADDBA7B6-2766-497C-9B4B-1E1A9220BAF9", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+            Info("38592F29-644F-4E20-B23F-2B3BCCA9975C", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
-            _currentCodeFrame.CurrentPosition++;
+            if (_currentCodeFrame.State == CodeFrameState.CreatedCompoundTaskInstance)
+            {
+                var baseCompoundTaskInstance = _currentCodeFrame.BaseCompoundTaskInstance;
+
+                baseCompoundTaskInstance.Init(Logger);
+
+                if (baseCompoundTaskInstance.IsInitialized)
+                {
+                    _currentCodeFrame.State = CodeFrameState.InitializedCompoundTaskInstance;
+                }
+            }
+
+#if DEBUG
+            Info("26A3F7B2-5D95-4D36-A0CD-E964E8CC69E6", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
+#endif
+
+            if (_currentCodeFrame.State == CodeFrameState.InitializedCompoundTaskInstance)
+            {
+                var compoundTask = currentCommand.CompoundTask;
+
+                var baseCompoundTaskInstance = _currentCodeFrame.BaseCompoundTaskInstance;
+
+                var codeFrameEvnPart = new CodeFrameEvnPart
+                {
+                    LocalContext = _currentCodeFrame.LocalContext,
+                    Metadata = _currentCodeFrame.Metadata,
+                    Instance = _currentCodeFrame.Instance,
+                    ExecutionCoordinator = _currentCodeFrame.ExecutionCoordinator,
+                    CompoundTaskInstance = _currentCodeFrame.CompoundTaskInstance
+                };
+
+#if DEBUG
+                //Info("B5BDC6F0-3845-43AE-9820-405B99957D93", $"codeFrameEvnPart = {codeFrameEvnPart.ToDbgString()}");
+#endif
+
+                _currentCodeFrame.CodeFrameEvnPartsStack.Push(codeFrameEvnPart);
+
+                _currentCodeFrame.LocalContext = baseCompoundTaskInstance.LocalCodeExecutionContext;
+                _currentCodeFrame.Metadata = compoundTask;
+                _currentCodeFrame.Instance = baseCompoundTaskInstance;
+                _currentCodeFrame.ExecutionCoordinator = baseCompoundTaskInstance.ExecutionCoordinator;
+                _currentCodeFrame.CompoundTaskInstance = baseCompoundTaskInstance;
+
+#if DEBUG
+                //Info("ADDBA7B6-2766-497C-9B4B-1E1A9220BAF9", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                _currentCodeFrame.CurrentPosition++;
+
+                _currentCodeFrame.State = CodeFrameState.EndCommandExecution;
+            }
         }
 
         private BaseCompoundTaskInstance BaseCompoundTaskInstanceFactory(BaseCompoundHtnTask compoundTask)

@@ -646,7 +646,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessBeginCompoundTask(ScriptCommand currentCommand)
         {
 #if DEBUG
-            Info("D2F278BA-4BA0-4C8D-A424-F929BB816100", $"currentCommand = {currentCommand.ToDbgString()}");
+            //Info("D2F278BA-4BA0-4C8D-A424-F929BB816100", $"currentCommand = {currentCommand.ToDbgString()}");
 #endif
 
             if (CodeFrameStateHelper.CanBeginCommandExecution(_currentCodeFrame.State))
@@ -655,7 +655,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Info("E67964D2-8B66-4A78-8EDB-721970B6988D", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
+            //Info("E67964D2-8B66-4A78-8EDB-721970B6988D", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if(_currentCodeFrame.State == CodeFrameState.BeginningCommandExecution)
@@ -668,7 +668,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Info("38592F29-644F-4E20-B23F-2B3BCCA9975C", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
+            //Info("38592F29-644F-4E20-B23F-2B3BCCA9975C", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if (_currentCodeFrame.State == CodeFrameState.CreatedCompoundTaskInstance)
@@ -684,7 +684,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Info("26A3F7B2-5D95-4D36-A0CD-E964E8CC69E6", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
+            //Info("26A3F7B2-5D95-4D36-A0CD-E964E8CC69E6", $"_currentCodeFrame.State = {_currentCodeFrame.State}");
 #endif
 
             if (_currentCodeFrame.State == CodeFrameState.InitializedCompoundTaskInstance)

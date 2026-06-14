@@ -173,9 +173,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public bool IsInitialized => _instanceState == InstanceState.Initialized;
 
-        private bool _initializationWasStarted;
-        private object _initializationLockObj = new object();
-
         private readonly PreConstructorsRunner _preConstructorsRunner;
         private readonly ConstructorsRunner _constructors;
 
@@ -198,70 +195,182 @@ namespace SymOntoClay.Core.Internal.Instances
         
         public virtual void Init(IMonitorLogger logger)
         {
-            lock(_initializationLockObj)
+#if DEBUG
+            Info("FE65EAC1-B07F-465F-81C3-9F686F56DEF1", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.Created)
             {
-                if (_initializationWasStarted)
+                if (_parentExecutionCoordinator != null)
                 {
-                    return;
-                }
-
-                _initializationWasStarted = true;
-            }
-
-            if (_parentExecutionCoordinator != null)
-            {
-                if(_parentExecutionCoordinator.IsFinished)
-                {
-                    _executionCoordinator.SetExecutionStatus(logger, "710212D6-2705-4C71-A44A-780ECAA3B9C5", ActionExecutionStatus.WeakCanceled);
-                    _instanceState = InstanceState.Initialized;
-                    return;
-                }
-
-                _parentExecutionCoordinator.AddOnFinishedHandler(_baseInstanceParentExecutionCoordinatorOnFinishedHandler);
-            }
-
-            _instanceState = InstanceState.BeginInitializing;
-
-            _executionCoordinator.SetExecutionStatus(logger, "5ED62258-1580-4877-A8A0-1DDCBF7FF05A", ActionExecutionStatus.Executing);
-
-            ApplyCodeDirectives(logger);
-
-            RunPreConstructors(logger);
-            RunConstructors(logger);
-
-            RunInitialTriggers(logger);
-
-            RunMutuallyExclusiveStatesSets(logger);
-
-            RunExplicitStates(logger);
-
-            RunActivatorsOfStates(logger);
-            RunDeactivatorsOfStates(logger);
-
-            var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-            if(targetAddingFactTriggersList.Any())
-            {
-                foreach(var targetTrigger in targetAddingFactTriggersList)
-                {
-                    if(targetTrigger.SetCondition == null)
+                    if (_parentExecutionCoordinator.IsFinished)
                     {
-                        var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
-                        triggerInstance.Init();
-                        _addingFactNonConditionalTriggerInstancesList.Add(triggerInstance);
+                        _executionCoordinator.SetExecutionStatus(logger, "710212D6-2705-4C71-A44A-780ECAA3B9C5", ActionExecutionStatus.WeakCanceled);
+                        _instanceState = InstanceState.Initialized;
+                        return;
                     }
-                    else
-                    {
-                        var triggerInstance = new AddingFactConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
-                        triggerInstance.Init();
-                        _addingFactConditionalTriggerInstancesList.Add(triggerInstance);
-                    }
+
+                    _parentExecutionCoordinator.AddOnFinishedHandler(_baseInstanceParentExecutionCoordinatorOnFinishedHandler);
                 }
+
+                _instanceState = InstanceState.BeginInitializing;
             }
 
-            CreateConditionalTriggers(logger);
+#if DEBUG
+            Info("8034B218-5BA9-405E-AAC5-78FC392D1ACE", $"_instanceState = {_instanceState}");
+#endif
 
-            _instanceState = InstanceState.Initialized;
+            if (_instanceState == InstanceState.BeginInitializing)
+            {
+                _instanceState = InstanceState.SetingExecutionStatusExecuting;
+
+                _executionCoordinator.SetExecutionStatus(logger, "5ED62258-1580-4877-A8A0-1DDCBF7FF05A", ActionExecutionStatus.Executing);
+
+                _instanceState = InstanceState.SetExecutionStatusExecuting;
+            }
+
+#if DEBUG
+            Info("F05E4C57-CCB4-4796-9518-6F20579AA5C4", $"_instanceState = {_instanceState}");
+#endif
+
+            if(_instanceState == InstanceState.SetExecutionStatusExecuting)
+            {
+                _instanceState = InstanceState.ApplingCodeDirectives;
+
+                ApplyCodeDirectives(logger);
+
+                _instanceState = InstanceState.AppliedCodeDirectives;
+            }
+
+#if DEBUG
+            Info("4FA8F925-E5BF-4341-AD6E-4D1B8CC10AC8", $"_instanceState = {_instanceState}");
+#endif
+
+            if(_instanceState == InstanceState.AppliedCodeDirectives)
+            {
+                _instanceState = InstanceState.RunningPreConstructors;
+
+                RunPreConstructors(logger);
+
+                _instanceState = InstanceState.RunPreConstructors;
+            }
+
+#if DEBUG
+            Info("A6565753-5ED5-409F-8752-FA6BC84A4287", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.RunPreConstructors)
+            {
+                _instanceState = InstanceState.RunningConstructors;
+
+                RunConstructors(logger);
+
+                _instanceState = InstanceState.RunConstructors;
+            }
+
+#if DEBUG
+            Info("5137B916-AAAC-4479-9567-5DA545B39D53", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.RunConstructors)
+            {
+                _instanceState = InstanceState.RunningInitialTriggers;
+
+                RunInitialTriggers(logger);
+
+                _instanceState = InstanceState.RunInitialTriggers;
+            }
+
+#if DEBUG
+            Info("0B01755B-395B-4321-8EA7-95F477DD8655", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.RunInitialTriggers)
+            {
+                _instanceState = InstanceState.RunningMutuallyExclusiveStatesSets;
+
+                RunMutuallyExclusiveStatesSets(logger);
+
+                _instanceState = InstanceState.RunMutuallyExclusiveStatesSets;
+            }
+
+#if DEBUG
+            Info("9189985C-29C4-4731-9629-76C221845617", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.RunMutuallyExclusiveStatesSets)
+            {
+                _instanceState = InstanceState.RunningExplicitStates;
+
+                RunExplicitStates(logger);
+
+                _instanceState = InstanceState.RunExplicitStates;
+            }
+
+#if DEBUG
+            Info("143FC750-F61A-4B41-9746-0E0EE121EC99", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.RunExplicitStates)
+            {
+                _instanceState = InstanceState.RunningActivatorsOfStates;
+
+                RunActivatorsOfStates(logger);
+
+                _instanceState = InstanceState.RunActivatorsOfStates;
+            }
+
+#if DEBUG
+            Info("22274F67-8E72-44E9-8E49-C928BC9CB8A3", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.RunActivatorsOfStates)
+            {
+                _instanceState = InstanceState.RunningDeactivatorsOfStates;
+
+                RunDeactivatorsOfStates(logger);
+
+                _instanceState = InstanceState.RunDeactivatorsOfStates;
+            }
+
+#if DEBUG
+            Info("DBAEFB50-5FD1-4B8C-B8D3-1207FABBD04F", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.RunDeactivatorsOfStates)
+            {
+                _instanceState = InstanceState.CreatingAddFactTriggers;
+
+                CreateAddFactTriggers(logger);
+
+                _instanceState = InstanceState.CreatedAddFactTriggers;
+            }
+
+#if DEBUG
+            Info("7B04541B-9239-41C5-AAEE-AC20BE3E0666", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.CreatedAddFactTriggers)
+            {
+                _instanceState = InstanceState.CreatingConditionalTriggers;
+
+                CreateConditionalTriggers(logger);
+
+                _instanceState = InstanceState.CreatedConditionalTriggers;
+            }
+
+#if DEBUG
+            Info("3E3121A5-ADA5-4067-8A2F-037958B2AFEF", $"_instanceState = {_instanceState}");
+#endif
+
+            if (_instanceState == InstanceState.CreatedConditionalTriggers)
+            {
+                _instanceState = InstanceState.Initialized;
+            }
+
+#if DEBUG
+            Info("F5FF5303-B933-431D-BA0C-F4F313899191", $"_instanceState = {_instanceState}");
+#endif
         }
 
         private void RebuildSuperClassesStorages(IMonitorLogger logger)
@@ -416,6 +525,30 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunDeactivatorsOfStates(IMonitorLogger logger)
         {
+        }
+
+        protected virtual void CreateAddFactTriggers(IMonitorLogger logger)
+        {
+            var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+            if (targetAddingFactTriggersList.Any())
+            {
+                foreach (var targetTrigger in targetAddingFactTriggersList)
+                {
+                    if (targetTrigger.SetCondition == null)
+                    {
+                        var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
+                        triggerInstance.Init();
+                        _addingFactNonConditionalTriggerInstancesList.Add(triggerInstance);
+                    }
+                    else
+                    {
+                        var triggerInstance = new AddingFactConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
+                        triggerInstance.Init();
+                        _addingFactConditionalTriggerInstancesList.Add(triggerInstance);
+                    }
+                }
+            }
         }
 
         protected virtual void CreateConditionalTriggers(IMonitorLogger logger)

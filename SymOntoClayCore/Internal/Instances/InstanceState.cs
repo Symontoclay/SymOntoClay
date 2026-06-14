@@ -26,6 +26,8 @@ namespace SymOntoClay.Core.Internal.Instances
     {
         Created,
         BeginInitializing,
+        SetingExecutionStatusExecuting,
+        SetExecutionStatusExecuting,
         ApplingCodeDirectives,
         AppliedCodeDirectives,
         RunningPreConstructors,
@@ -40,22 +42,12 @@ namespace SymOntoClay.Core.Internal.Instances
         RunExplicitStates,
         RunningActivatorsOfStates,
         RunActivatorsOfStates,
+        RunningDeactivatorsOfStates,
+        RunDeactivatorsOfStates,        
+        CreatingAddFactTriggers,
+        CreatedAddFactTriggers,
+        CreatingConditionalTriggers,
+        CreatedConditionalTriggers,
         Initialized
     }
-
-    /*
-            (logger);
-            (logger);
-
-            (logger);
-
-            (logger);
-
-            (logger);
-
-            (logger);
-            RunDeactivatorsOfStates(logger);
-     CreateAddFactTriggers
-     CreateConditionalTriggers
-     */
 }

@@ -29,13 +29,15 @@ using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 {
-    public class PreConstructorsRunner
+    public class PreConstructorsRunner: BaseOnceCodeRunner
     {
-        public PreConstructorsRunner(IMonitorLogger logger, IEngineContext context, IInstance instance, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+        public PreConstructorsRunner(IMonitorLogger logger, IEngineContext context, IInstance instance, IInstanceWithChangingState instanceWithChangingState, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+            : base(logger)
         {
             _logger = logger;
             _context = context;
             _instance = instance;
+            _instanceWithChangingState = instanceWithChangingState;
             _instanceName = instance.Name;
             _holder = holder;
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -52,6 +54,7 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
         private readonly IEngineContext _context;
         private readonly TriggersResolver _triggersResolver;
         private readonly IInstance _instance;
+        private readonly IInstanceWithChangingState _instanceWithChangingState;
         private readonly StrongIdentifierValue _instanceName;
         private readonly StrongIdentifierValue _holder;
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
@@ -59,20 +62,9 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 
         private readonly ConstructorsResolver _constructorsResolver;
 
-        private IThreadExecutor _threadExecutor;
-
-        public void Run(IMonitorLogger logger)
+        /// <inheritdoc/>
+        protected override IThreadExecutor CreateExecutor(IMonitorLogger logger)
         {
-            lock (_lockObj)
-            {
-                if (_wasRun)
-                {
-                    return;
-                }
-
-                _wasRun = true;
-            }
-
             var preConstructors = _constructorsResolver.ResolvePreConstructors(logger, _instanceName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (preConstructors.Any())
@@ -105,8 +97,31 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                _threadExecutor = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
+                return _context.CodeExecutor.ExecuteBatchAsync(logger, processInitialInfoList);
             }
+
+            return null;
         }
+
+        /// <inheritdoc/>
+        protected override void OnFinshed()
+        {
+            _instanceWithChangingState.InstanceState = InstanceState.RunPreConstructors;
+        }
+
+        /*public void Run(IMonitorLogger logger)
+        {
+            lock (_lockObj)
+            {
+                if (_wasRun)
+                {
+                    return;
+                }
+
+                _wasRun = true;
+            }
+
+            }
+        }*/
     }
 }

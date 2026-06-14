@@ -112,7 +112,6 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
                 }
 
                 _threadExecutor = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
-
             }
         }
     }

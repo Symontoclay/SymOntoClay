@@ -42,7 +42,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseInstance : BaseComponent, IInstance,
+    public abstract class BaseInstance : BaseComponent, 
+        IInstance,
+        IInstanceWithChangingState,
         IObjectToString, IObjectToShortString, IObjectToBriefString,
         IOnFinishedExecutionCoordinatorHandler
     {
@@ -105,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            _preConstructorsRunner = new PreConstructorsRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator);
+            _preConstructorsRunner = new PreConstructorsRunner(Logger, _context, this, this, Name, _localCodeExecutionContext, _executionCoordinator);
             _constructors = new ConstructorsRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
 
             _enterLifecycleTriggersRunner = new EnterLifecycleTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
@@ -145,7 +147,10 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly ConstructorsResolver _constructorsResolver;
         private readonly InheritanceResolver _inheritanceResolver;
 
-        private InstanceState _instanceState = InstanceState.Created;
+        private volatile InstanceState _instanceState = InstanceState.Created;
+
+        InstanceState IInstanceWithChangingState.InstanceState { get => _instanceState; set => _instanceState = value; }
+
         private List<LogicConditionalTriggerInstance> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstance>();
         private List<AddingFactNonConditionalTriggerInstance> _addingFactNonConditionalTriggerInstancesList = new List<AddingFactNonConditionalTriggerInstance>();
         private List<AddingFactConditionalTriggerInstance> _addingFactConditionalTriggerInstancesList = new List<AddingFactConditionalTriggerInstance>();
@@ -168,7 +173,29 @@ namespace SymOntoClay.Core.Internal.Instances
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public bool IsInitializing => _instanceState == InstanceState.BeginInitializing;
+        public bool IsInitializing => _instanceState == InstanceState.BeginInitializing
+            || _instanceState == InstanceState.SetingExecutionStatusExecuting
+            || _instanceState == InstanceState.SetExecutionStatusExecuting
+            || _instanceState == InstanceState.ApplingCodeDirectives
+            || _instanceState == InstanceState.AppliedCodeDirectives
+            || _instanceState == InstanceState.RunningPreConstructors
+            || _instanceState == InstanceState.RunPreConstructors
+            || _instanceState == InstanceState.RunningConstructors
+            || _instanceState == InstanceState.RunConstructors
+            || _instanceState == InstanceState.RunningInitialTriggers
+            || _instanceState == InstanceState.RunInitialTriggers
+            || _instanceState == InstanceState.RunningMutuallyExclusiveStatesSets
+            || _instanceState == InstanceState.RunMutuallyExclusiveStatesSets
+            || _instanceState == InstanceState.RunningExplicitStates
+            || _instanceState == InstanceState.RunExplicitStates
+            || _instanceState == InstanceState.RunningActivatorsOfStates
+            || _instanceState == InstanceState.RunActivatorsOfStates
+            || _instanceState == InstanceState.RunningDeactivatorsOfStates
+            || _instanceState == InstanceState.RunDeactivatorsOfStates
+            || _instanceState == InstanceState.CreatingAddFactTriggers
+            || _instanceState == InstanceState.CreatedAddFactTriggers
+            || _instanceState == InstanceState.CreatingConditionalTriggers
+            || _instanceState == InstanceState.CreatedConditionalTriggers;
 
         /// <inheritdoc/>
         public bool IsInitialized => _instanceState == InstanceState.Initialized;
@@ -251,8 +278,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 _instanceState = InstanceState.RunningPreConstructors;
 
                 RunPreConstructors(logger);
-
-                _instanceState = InstanceState.RunPreConstructors;
             }
 
 #if DEBUG

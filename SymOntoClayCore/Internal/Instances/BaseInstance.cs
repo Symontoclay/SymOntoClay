@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public bool IsInitializing => _instanceState == InstanceState.Initializing;
+        public bool IsInitializing => _instanceState == InstanceState.BeginInitializing;
 
         /// <inheritdoc/>
         public bool IsInitialized => _instanceState == InstanceState.Initialized;
@@ -220,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _parentExecutionCoordinator.AddOnFinishedHandler(_baseInstanceParentExecutionCoordinatorOnFinishedHandler);
             }
 
-            _instanceState = InstanceState.Initializing;
+            _instanceState = InstanceState.BeginInitializing;
 
             _executionCoordinator.SetExecutionStatus(logger, "5ED62258-1580-4877-A8A0-1DDCBF7FF05A", ActionExecutionStatus.Executing);
 

@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                return _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
+                return _context.CodeExecutor.ExecuteBatchAsync(logger, processInitialInfoList);
             }
 
             return null;

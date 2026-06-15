@@ -557,9 +557,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo},System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchSync(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallOperator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.CallMode)">
             <inheritdoc/>
         </member>

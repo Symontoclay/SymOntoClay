@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using System;
+using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
@@ -52,6 +53,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public ValueCallResult Call(IMonitorLogger logger, KindOfValueConversion kindOfValueConversion, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
+#if DEBUG
+            //logger.Info("32F317F9-36CE-42E6-918E-34762DE54107", $"leftOperand = {leftOperand}");
+            //logger.Info("8A1D5252-1F46-4084-9695-159F4FA20907", $"rightOperand = {rightOperand}");
+#endif
+
             if (leftOperand.IsSystemNull && rightOperand.IsSystemNull)
             {
                 return new ValueCallResult(LogicalValue.TrueValue);
@@ -74,7 +80,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     return CompareWithFuzzyLogic(logger, rightOperand, leftOperand, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException("D8C168A2-DB52-4869-BE01-C78E795611E3");
+                var errorSb = new StringBuilder();
+                errorSb.AppendLine("D8C168A2-DB52-4869-BE01-C78E795611E3:");
+                errorSb.AppendLine($"leftOperand = {leftOperand}");
+                errorSb.AppendLine($"rightOperand = {rightOperand}");
+
+                throw new NotImplementedException(errorSb.ToString());
             }
 
             if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue) && (leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue))
@@ -82,7 +93,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return GetInheritanceRank(logger, leftOperand, rightOperand, localCodeExecutionContext);
             }
 
-            throw new NotImplementedException("30F5F633-3254-454C-9CD9-1DD619001B9A");
+            {
+                var errorSb = new StringBuilder();
+                errorSb.AppendLine("30F5F633-3254-454C-9CD9-1DD619001B9A:");
+                errorSb.AppendLine($"leftOperand = {leftOperand}");
+                errorSb.AppendLine($"rightOperand = {rightOperand}");
+
+                throw new NotImplementedException(errorSb.ToString());
+            }
         }
 
         private ValueCallResult CompareWithFuzzyLogic(IMonitorLogger logger, Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)

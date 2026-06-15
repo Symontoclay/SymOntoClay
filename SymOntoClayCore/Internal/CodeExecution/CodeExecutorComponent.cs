@@ -104,20 +104,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return threadExecutor;
         }
 
-        /// <inheritdoc/>
-        //[Obsolete("Use ExecuteBatchAsync", true)]
-        public IThreadExecutor ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
-        {
-            var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
-
-            var threadExecutor = new SyncThreadExecutor(_context);
-            threadExecutor.SetCodeFrames(codeFramesList);
-
-            threadExecutor.Start();
-
-            return threadExecutor;
-        }
-
         private List<CodeFrame> ConvertProcessInitialInfosToCodeFrames(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             var codeFramesList = new List<CodeFrame>();

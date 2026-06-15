@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Monitor.Common;
+using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -32,8 +33,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         IThreadExecutor ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
         IThreadExecutor ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId);
 
-        //[Obsolete("Use ExecuteBatchAsync", true)]
-        IThreadExecutor ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
         IThreadExecutor ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo);
         IThreadExecutor ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId);
         Value CallOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode);

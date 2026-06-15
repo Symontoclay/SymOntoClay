@@ -68,31 +68,6 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 
         private object _lockObj = new object();
 
-        public void Run(IMonitorLogger logger)
-        {
-            lock(_lockObj)
-            {
-                if (_runOnce)
-                {
-                    if (_wasRun)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        _wasRun = true;
-                    }
-                }
-            }
-
-            var processInitialInfoList = BuildProcessInitialInfoList(logger);
-
-            if(processInitialInfoList.Any())
-            {
-                _threadExecutor = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
-            }
-        }
-
         public void RunAsync(IMonitorLogger logger)
         {
             lock (_lockObj)

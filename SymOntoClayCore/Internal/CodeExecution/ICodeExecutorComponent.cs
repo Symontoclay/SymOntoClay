@@ -23,7 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.CodeExecution

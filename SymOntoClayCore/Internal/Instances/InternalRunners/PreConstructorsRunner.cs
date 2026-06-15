@@ -47,9 +47,6 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
             _constructorsResolver = dataResolversFactory.GetConstructorsResolver();
         }
 
-        private bool _wasRun;
-        private object _lockObj = new object();
-
         private readonly IMonitorLogger _logger;
         private readonly IEngineContext _context;
         private readonly TriggersResolver _triggersResolver;
@@ -108,20 +105,5 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
         {
             _instanceWithChangingState.InstanceState = InstanceState.RunPreConstructors;
         }
-
-        /*public void Run(IMonitorLogger logger)
-        {
-            lock (_lockObj)
-            {
-                if (_wasRun)
-                {
-                    return;
-                }
-
-                _wasRun = true;
-            }
-
-            }
-        }*/
     }
 }

@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _preConstructorsRunner = new PreConstructorsRunner(Logger, _context, this, this, Name, _localCodeExecutionContext, _executionCoordinator);
-            _constructors = new ConstructorsRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
+            _constructors = new ConstructorsRunner(Logger, _context, this, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
 
             _enterLifecycleTriggersRunner = new EnterLifecycleTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _executionCoordinator, _storage);
             _finalizationTriggersRunner = new FinalizationTriggersRunner(Logger, _context, this, Name, _localCodeExecutionContext, _storage);
@@ -289,8 +289,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 _instanceState = InstanceState.RunningConstructors;
 
                 RunConstructors(logger);
-
-                _instanceState = InstanceState.RunConstructors;
             }
 
 #if DEBUG

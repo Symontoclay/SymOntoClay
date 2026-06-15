@@ -144,12 +144,28 @@ namespace SymOntoClay.Core.Internal.Instances
                 globalStorage.VarStorage.SetSystemValue(logger, _context.CommonNamesStorage.SelfSystemVarName, new InstanceValue(instanceInfo));
             }
 
-            instanceInfo.Init(logger);
+            LoggedFunctorWithoutResult<AppInstance>.Run(Logger, "7349EEAF-716E-4B78-B191-C8EB61A5F756", instanceInfo,
+                (IMonitorLogger loggerValue, AppInstance instanceInfoValue) => {
+                    try
+                    {
+                        while (!instanceInfoValue.IsInitialized)
+                        {
+                            instanceInfoValue.Init(loggerValue);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        loggerValue.Error("CC961277-A757-4027-8A31-F34069D2E01E", e);
+                    }
 
-            if(!instanceInfo.IsInitialized)
-            {
-                throw new NotImplementedException("C67F340A-B762-47FA-8047-02EA6282ED84");
-            }
+                    
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+
+            //if (!instanceInfo.IsInitialized)
+            //{
+            //    throw new NotImplementedException("C67F340A-B762-47FA-8047-02EA6282ED84");
+            //}
 
             LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler>.Run(Logger, "B9914EB7-3FBA-449D-9E1E-7A89BE7C25DF", this,
                 (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue) => {

@@ -9424,6 +9424,12 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InternalRunners.ConstructorsRunner.CreateExecutor(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InternalRunners.ConstructorsRunner.OnFinshed">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InternalRunners.PreConstructorsRunner.CreateExecutor(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>

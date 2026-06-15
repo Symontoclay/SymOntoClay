@@ -223,7 +223,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public virtual void Init(IMonitorLogger logger)
         {
 #if DEBUG
-            Info("FE65EAC1-B07F-465F-81C3-9F686F56DEF1", $"_instanceState = {_instanceState}");
+            //Info("FE65EAC1-B07F-465F-81C3-9F686F56DEF1", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.Created)
@@ -244,7 +244,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("8034B218-5BA9-405E-AAC5-78FC392D1ACE", $"_instanceState = {_instanceState}");
+            //Info("8034B218-5BA9-405E-AAC5-78FC392D1ACE", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.BeginInitializing)
@@ -257,7 +257,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("F05E4C57-CCB4-4796-9518-6F20579AA5C4", $"_instanceState = {_instanceState}");
+            //Info("F05E4C57-CCB4-4796-9518-6F20579AA5C4", $"_instanceState = {_instanceState}");
 #endif
 
             if(_instanceState == InstanceState.SetExecutionStatusExecuting)
@@ -270,7 +270,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("4FA8F925-E5BF-4341-AD6E-4D1B8CC10AC8", $"_instanceState = {_instanceState}");
+            //Info("4FA8F925-E5BF-4341-AD6E-4D1B8CC10AC8", $"_instanceState = {_instanceState}");
 #endif
 
             if(_instanceState == InstanceState.AppliedCodeDirectives)
@@ -281,7 +281,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("A6565753-5ED5-409F-8752-FA6BC84A4287", $"_instanceState = {_instanceState}");
+            //Info("A6565753-5ED5-409F-8752-FA6BC84A4287", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.RunPreConstructors)
@@ -292,7 +292,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("5137B916-AAAC-4479-9567-5DA545B39D53", $"_instanceState = {_instanceState}");
+            //Info("5137B916-AAAC-4479-9567-5DA545B39D53", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.RunConstructors)
@@ -305,7 +305,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("0B01755B-395B-4321-8EA7-95F477DD8655", $"_instanceState = {_instanceState}");
+            //Info("0B01755B-395B-4321-8EA7-95F477DD8655", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.RunInitialTriggers)
@@ -318,7 +318,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("9189985C-29C4-4731-9629-76C221845617", $"_instanceState = {_instanceState}");
+            //Info("9189985C-29C4-4731-9629-76C221845617", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.RunMutuallyExclusiveStatesSets)
@@ -331,7 +331,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("143FC750-F61A-4B41-9746-0E0EE121EC99", $"_instanceState = {_instanceState}");
+            //Info("143FC750-F61A-4B41-9746-0E0EE121EC99", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.RunExplicitStates)
@@ -344,7 +344,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("22274F67-8E72-44E9-8E49-C928BC9CB8A3", $"_instanceState = {_instanceState}");
+            //Info("22274F67-8E72-44E9-8E49-C928BC9CB8A3", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.RunActivatorsOfStates)
@@ -357,7 +357,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("DBAEFB50-5FD1-4B8C-B8D3-1207FABBD04F", $"_instanceState = {_instanceState}");
+            //Info("DBAEFB50-5FD1-4B8C-B8D3-1207FABBD04F", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.RunDeactivatorsOfStates)
@@ -370,7 +370,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("7B04541B-9239-41C5-AAEE-AC20BE3E0666", $"_instanceState = {_instanceState}");
+            //Info("7B04541B-9239-41C5-AAEE-AC20BE3E0666", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.CreatedAddFactTriggers)
@@ -383,7 +383,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("3E3121A5-ADA5-4067-8A2F-037958B2AFEF", $"_instanceState = {_instanceState}");
+            //Info("3E3121A5-ADA5-4067-8A2F-037958B2AFEF", $"_instanceState = {_instanceState}");
 #endif
 
             if (_instanceState == InstanceState.CreatedConditionalTriggers)
@@ -392,7 +392,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("F5FF5303-B933-431D-BA0C-F4F313899191", $"_instanceState = {_instanceState}");
+            //Info("F5FF5303-B933-431D-BA0C-F4F313899191", $"_instanceState = {_instanceState}");
 #endif
         }
 

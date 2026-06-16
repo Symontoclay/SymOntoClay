@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             if(item == null)
             {
-                throw new ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(item), "A6B24B6B-E390-4817-8A9A-436A5A173B66");
             }
 
             if(_items.Contains(item))

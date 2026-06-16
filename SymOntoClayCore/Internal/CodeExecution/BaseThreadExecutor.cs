@@ -4034,7 +4034,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (executable == null)
             {
-                throw new ArgumentNullException(nameof(executable));
+                throw new ArgumentNullException(nameof(executable), "01729087-7249-4E92-BD44-C6C89C728F02");
             }
 
             var targetLocalContext = ownLocalCodeExecutionContext == null? _currentCodeFrame.LocalContext : ownLocalCodeExecutionContext;

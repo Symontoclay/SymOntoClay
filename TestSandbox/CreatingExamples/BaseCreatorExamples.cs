@@ -96,7 +96,7 @@ namespace TestSandbox.CreatingExamples
         {
             if(string.IsNullOrWhiteSpace(fileContent))
             {
-                throw new ArgumentNullException(nameof(fileContent));
+                throw new ArgumentNullException(nameof(fileContent), "DC46A0B6-B0E8-417C-A4B1-5181CDBED2DD");
             }
 
             using var cancellationTokenSourceContext = new CancellationTokenSourceContext();

@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if(varItem == null)
                     {
-                        throw new ArgumentNullException(nameof(varItem));
+                        throw new ArgumentNullException(nameof(varItem), "B45A5DB8-C917-4D40-94F3-16E486DA98EE");
                     }
 
                     varList.Add(varItem);

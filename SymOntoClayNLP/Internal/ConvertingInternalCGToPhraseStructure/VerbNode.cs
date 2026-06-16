@@ -263,7 +263,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                             if(nounPhrase == null)
                             {
-                                throw new ArgumentNullException(nameof(nounPhrase));
+                                throw new ArgumentNullException(nameof(nounPhrase), "2CB898E2-84B6-430B-8F36-8B709CEC033B");
                             }
 
                             var toWordFramesList = _wordsDict.GetWordFramesByWord("to").Where(p => p.IsPreposition).Select(p => p.AsPreposition);

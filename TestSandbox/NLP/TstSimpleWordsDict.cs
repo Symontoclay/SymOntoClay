@@ -95,12 +95,12 @@ namespace TestSandbox.NLP
         {
             if (string.IsNullOrWhiteSpace(word))
             {
-                throw new ArgumentNullException(nameof(word));
+                throw new ArgumentNullException(nameof(word), "7B752C0D-55BC-4EF3-BDB0-60B6BF29691F");
             }
 
             if (grammaticalWordFrame == null)
             {
-                throw new ArgumentNullException(nameof(grammaticalWordFrame));
+                throw new ArgumentNullException(nameof(grammaticalWordFrame), "21C2974A-F85F-49E7-8E9A-CBE7764C879A");
             }
 
             grammaticalWordFrame.Word = word;

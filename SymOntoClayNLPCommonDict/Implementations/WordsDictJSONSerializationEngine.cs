@@ -24,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Text;
 
 namespace SymOntoClay.NLP.CommonDict.Implementations
 {
@@ -48,12 +47,12 @@ namespace SymOntoClay.NLP.CommonDict.Implementations
         {
             if (item == null)
             {
-                throw new ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(item), "1E5D8387-531C-4E36-9A1F-0E6F69DDE66C");
             }
 
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException(nameof(fileName));
+                throw new ArgumentNullException(nameof(fileName), "8FA11DF0-98F2-4407-8378-79BDA3AD8257");
             }
 
             if (File.Exists(fileName))
@@ -72,7 +71,7 @@ namespace SymOntoClay.NLP.CommonDict.Implementations
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException(nameof(fileName));
+                throw new ArgumentNullException(nameof(fileName), "1A9FEC46-1D55-4C3E-A29D-3395A28E46A1");
             }
 
             using (var fs = File.OpenRead(fileName))

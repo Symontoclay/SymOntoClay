@@ -471,12 +471,12 @@ to have (when it means "to possess")*
         {
             if(string.IsNullOrWhiteSpace(word))
             {
-                throw new ArgumentNullException(nameof(word));
+                throw new ArgumentNullException(nameof(word), "BE7C0D45-1726-404C-96AA-054ADF5F8FA9");
             }
 
             if(grammaticalWordFrame == null)
             {
-                throw new ArgumentNullException(nameof(grammaticalWordFrame));
+                throw new ArgumentNullException(nameof(grammaticalWordFrame), "CF4059C6-4D18-43B6-A875-B61BE7CBF5D8");
             }
 
             var wordFrame = GetWordFrame(word);

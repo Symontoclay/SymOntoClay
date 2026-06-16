@@ -144,12 +144,12 @@ namespace DictionaryGenerator
         {
             if (string.IsNullOrWhiteSpace(word))
             {
-                throw new ArgumentNullException(nameof(word));
+                throw new ArgumentNullException(nameof(word), "4AECAB5E-E1BB-4C4A-8AE9-FC4586CB504D");
             }
 
             if (grammaticalWordFrame == null)
             {
-                throw new ArgumentNullException(nameof(grammaticalWordFrame));
+                throw new ArgumentNullException(nameof(grammaticalWordFrame), "52658379-7B47-437F-A7EA-FDBFB6FF38E5");
             }
 
             var wordFrame = GetWordFrameOfName(word);

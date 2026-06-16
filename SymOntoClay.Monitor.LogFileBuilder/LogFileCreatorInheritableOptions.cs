@@ -22,13 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
@@ -44,7 +39,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (originalSource == null)
             {
-                throw new ArgumentNullException(nameof(originalSource));
+                throw new ArgumentNullException(nameof(originalSource), "17CACA72-C04D-45EE-BD4D-693CC39720BF");
             }
 
             base.Write(originalSource);

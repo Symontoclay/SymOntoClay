@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 if(converter == null)
                 {
-                    throw new ArgumentNullException(nameof(converter));
+                    throw new ArgumentNullException(nameof(converter), "005F78BD-C620-476C-B819-E95A21F35594");
                 }
 
                 var factsList = converter.Convert(logger, _usedSystemValueForRuleInstanceValue);

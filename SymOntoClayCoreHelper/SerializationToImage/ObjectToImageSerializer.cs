@@ -1031,7 +1031,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.StrongIdentifierExprValueResolver",
             "SymOntoClay.Core.Internal.DataResolvers.ValueResolvingHelper",
             "SymOntoClay.Core.Internal.Converters.ConverterFactToImperativeCode",
-            "SymOntoClay.Core.Internal.DataResolvers.RelationsResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.RelationsResolver",
+            "SymOntoClay.Core.Internal.CodeExecution.AsyncThreadExecutor",
+            "SymOntoClay.Core.Internal.CodeModel.PreConstructor",
+            "SymOntoClay.Core.Internal.CodeModel.Operator"
         };
 
         /// <inheritdoc/>
@@ -2205,7 +2208,32 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_threadPool",
                 "_serializationAnchor",
                 "_kind",
-                "_realStorageContext"
+                "_realStorageContext",
+                "_lockObj",
+                "_logicalStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_statesStorage",
+                "_triggersStorage",
+                "_inheritanceStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_varStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_onParentStorageChangedHandlersLockObj",
+                "_onParentStorageChangedHandlers",
+                "DefaultSettingsOfCodeEntity",
+                "CodeItemsStoragesList",
+                "_isDisposed",
+                "_logger",
+                "IsIsolated"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NumberValue"] = new List<string>() 
             { 
@@ -2306,7 +2334,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_preConstructorsRunner",
                 "_constructors",
                 "_enterLifecycleTriggersRunner",
-                "_finalizationTriggersRunner"
+                "_finalizationTriggersRunner",
+                "RootTasks"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.StatesResolver"] = new List<string>()
             {
@@ -3308,18 +3337,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.PreConstructorsRunner"] = new List<string>() 
             {
-                "_wasRun",
-                "_lockObj",
                 "_logger",
                 "_context",
                 "_triggersResolver",
                 "_instance",
+                "_instanceWithChangingState",
                 "_instanceName",
                 "_holder",
                 "_localCodeExecutionContext",
                 "_executionCoordinator",
                 "_constructorsResolver",
-                "_threadExecutor"
+                "_threadExecutor",
+                "_state"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.TaskInstances.CompoundTaskInstance"] = new List<string>() 
             {
@@ -3360,19 +3389,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.ConstructorsRunner"] = new List<string>() 
             {
-                "_wasRun",
-                "_lockObj",
                 "_logger",
                 "_context",
                 "_triggersResolver",
                 "_instance",
+                "_instanceWithChangingState",
                 "_instanceName",
                 "_holder",
                 "_localCodeExecutionContext",
                 "_executionCoordinator",
                 "_storage",
                 "_constructorsResolver",
-                "_threadExecutor"
+                "_threadExecutor",
+                "_state"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor"] = new List<string>() 
             {
@@ -3425,7 +3454,57 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_defaultTimeoutCancellationMode",
                 "_logger"
             };
-
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.AsyncThreadExecutor"] = new List<string>()
+            {
+                "_context",
+                "_codeFrameService",
+                "_codeFrameAsyncExecutor",
+                "_threadId",
+                "_projectLoader",
+                "_globalStorage",
+                "_globalLogicalStorage",
+                "_hostListener",
+                "_instancesStorage",
+                "_operatorsResolver",
+                "_logicalValueLinearResolver",
+                "_numberValueLinearResolver",
+                "_strongIdentifierLinearResolver",
+                "_varsResolver",
+                "_propertiesResolver",
+                "_methodsResolver",
+                "_constructorsResolver",
+                "_logicalSearchResolver",
+                "_statesResolver",
+                "_annotationsResolver",
+                "_inheritanceResolver",
+                "_dateTimeResolver",
+                "_strongIdentifierExprValueResolver",
+                "_valueResolvingHelper",
+                "_typeConverter",
+                "_converterFactToImperativeCode",
+                "_dateTimeProvider",
+                "_codeFrames",
+                "_currentCodeFrame",
+                "_executionCoordinator",
+                "_currentInstance",
+                "_currentVarStorage",
+                "_currentPropertyStorage",
+                "_currentError",
+                "_isCanceled",
+                "_endOfTargetDuration",
+                "_waitedThreadExecutorsList",
+                "_waitedProcessInfoList",
+                "_defaultCtorName",
+                "_timeoutName",
+                "_priorityName",
+                "ExternalReturn",
+                "_activeObject",
+                "_onCompletedHandlersLockObj",
+                "_onCompletedHandlers",
+                "_processAddLifeCycleEventParametersCount",
+                "_defaultTimeoutCancellationMode",
+                "_logger"
+            };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.EnterLifecycleTriggersRunner"] = new List<string>() 
             {
                 "_logger",
@@ -3593,7 +3672,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "CurrentKindOfOperator",
                 "KindOfParameters",
                 "ParametersCount",
-                "CurrentFunctionCallMethodId"
+                "CurrentFunctionCallMethodId",
+                "BaseCompoundTaskInstance"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart"] = new List<string>() 
             {
@@ -3693,6 +3773,45 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.PreConstructor"] = new List<string>() 
+            {
+                "Arguments",
+                "TypesList",
+                "Statements",
+                "CompiledFunctionBody",
+                "_argumentsDict",
+                "_iArgumentsList",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Operator"] = new List<string>() { };
         }
 #endif
     }

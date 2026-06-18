@@ -1037,7 +1037,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.Operator",
             "SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler",
             "SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler",
-            "SymOntoClay.Core.Internal.DataResolvers.ChannelsResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.ChannelsResolver",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler",
+            "SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler"
         };
 
         /// <inheritdoc/>
@@ -3874,6 +3879,37 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_inheritanceResolver",
                 "_state",
                 "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler"] = new List<string>() 
+            {
+                "_engineContext",
+                "_inheritanceResolver",
+                "_strongIdentifierLinearResolver",
+                "_fuzzyLogicResolver",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler"] = new List<string>() 
+            {
+                "_logger" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler"] = new List<string>() 
+            { 
+                "_varsResolver",
+                "_propertiesResolver",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler"] = new List<string>() 
+            { 
+                "_operandKey",
+                "_operatorHandler"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler"] = new List<string>() 
+            {
+                "_engineContext",
+                "_searcher",
+                "_varsResolver",
+                "_globalLogicalStorage",
                 "_logger"
             };
         }

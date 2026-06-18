@@ -1034,7 +1034,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.RelationsResolver",
             "SymOntoClay.Core.Internal.CodeExecution.AsyncThreadExecutor",
             "SymOntoClay.Core.Internal.CodeModel.PreConstructor",
-            "SymOntoClay.Core.Internal.CodeModel.Operator"
+            "SymOntoClay.Core.Internal.CodeModel.Operator",
+            "SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler",
+            "SymOntoClay.Core.Internal.DataResolvers.ChannelsResolver"
         };
 
         /// <inheritdoc/>
@@ -3811,7 +3814,68 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "WhereSection",
                 "Annotations"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Operator"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Operator"] = new List<string>() 
+            {
+                "KindOfOperator",
+                "IsSystemDefined",
+                "Statements",
+                "CompiledFunctionBody",
+                "SystemHandler",
+                "Arguments",
+                "_argumentsDict",
+                "_iArgumentsList",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler"] = new List<string>() 
+            { 
+                "_leftOperandKey",
+                "_rightOperandKey",
+                "_operatorHandler"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler"] = new List<string>() 
+            { 
+                "_engineContext",
+                "_channelsResolver",
+                "_valueResolvingHelper",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.ChannelsResolver"] = new List<string>() 
+            { 
+                "_synonymsResolver",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
 #endif
     }

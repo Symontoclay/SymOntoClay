@@ -1042,7 +1042,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler",
             "SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler",
             "SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler",
-            "SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler"
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler",
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler"
         };
 
         /// <inheritdoc/>
@@ -3891,7 +3904,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler"] = new List<string>() 
             {
-                "_logger" 
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler"] = new List<string>() 
             { 
@@ -3910,6 +3923,66 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_searcher",
                 "_varsResolver",
                 "_globalLogicalStorage",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler"] = new List<string>()
+            { 
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler"] = new List<string>() 
+            { 
+                "_logger" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler"] = new List<string>() 
+            { 
+                "_logger" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler"] = new List<string>() 
+            { 
+                "_logger" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler"] = new List<string>() 
+            { 
+                "_logger" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler"] = new List<string>() 
+            { 
+                "_logger" 
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler"] = new List<string>() 
+            { 
+                "_engineContext",
+                "_fuzzyLogicResolver",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler"] = new List<string>() 
+            {   
+                "_engineContext",
+                "_fuzzyLogicResolver",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler"] = new List<string>() 
+            {
+                "_engineContext",
+                "_fuzzyLogicResolver",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler"] = new List<string>()
+            {
+                "_engineContext",
+                "_fuzzyLogicResolver",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler"] = new List<string>()
+            {
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler"] = new List<string>()
+            {
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler"] = new List<string>()
+            {
                 "_logger"
             };
         }

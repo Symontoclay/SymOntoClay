@@ -58,9 +58,17 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //logger.Info("8A1D5252-1F46-4084-9695-159F4FA20907", $"rightOperand = {rightOperand}");
 #endif
 
-            if (leftOperand.IsSystemNull && rightOperand.IsSystemNull)
+            var isLeftNull = leftOperand.IsSystemNull || leftOperand.IsNullValue;
+            var isRightNull = rightOperand.IsSystemNull || rightOperand.IsNullValue;
+
+            if (isLeftNull && isRightNull)
             {
                 return new ValueCallResult(LogicalValue.TrueValue);
+            }
+
+            if(isLeftNull != isRightNull)
+            {
+                return new ValueCallResult(LogicalValue.FalseValue);
             }
 
             if(leftOperand.IsNumberValue && rightOperand.IsNumberValue)

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,11 +22,19 @@ namespace TestSandbox.ThreadExecutorStackInv
 
                 var item = new ThreadExecutorListItem(threadExecutor);
                 _items.Add(item);
+                item.AddOnCompletedHandler(this);
             }
         }
 
         private object _lockObj = new object();
         private HashSet<IThreadExecutor> _existingItems = new HashSet<IThreadExecutor>();
         private List<ThreadExecutorListItem> _items = new List<ThreadExecutorListItem>();
+
+        void IOnCompletedThreadExecutorListItemHandler.Invoke(ThreadExecutorListItem sender)
+        {
+            sender.RemoveOnCompletedHandler(this);
+            _items.Remove(sender);
+            _existingItems.Remove(sender.Executor);
+        }
     }
 }

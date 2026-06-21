@@ -15,11 +15,15 @@ namespace TestSandbox.ThreadExecutorStackInv
             _threadExecutor.AddOnCompletedHandler(this);
         }
 
-        private readonly IThreadExecutor _threadExecutor;
+        private IThreadExecutor _threadExecutor;
+
+        public IThreadExecutor Executor => _threadExecutor;
 
         void IOnCompletedThreadExecutorHandler.Invoke()
         {
-            throw new NotImplementedException("C0C9EAE8-4542-43EC-A1B1-C59BFB3AEFC7");
+            _threadExecutor = null;
+
+            EmitOnCompletedHandlers();
         }
 
         private object _onCompletedHandlersLockObj = new object();

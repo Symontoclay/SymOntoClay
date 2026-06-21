@@ -193,6 +193,16 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
+        private static void TstThreadExecutorStackHandler()
+        {
+            _globalLogger.Info("Begin");
+
+            var handler = new ThreadExecutorStackHandler();
+            handler.Run();
+
+            _globalLogger.Info("End");
+        }
+
         private static void TstSerializationToImageHandler()
         {
             _globalLogger.Info("Begin");

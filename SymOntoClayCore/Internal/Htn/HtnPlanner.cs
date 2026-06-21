@@ -390,7 +390,7 @@ namespace SymOntoClay.Core.Internal.Htn
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfProcessedTask), kindOfProcessedTask, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProcessedTask), kindOfProcessedTask, "F0521C92-DF3F-4A63-B716-C42D637D66CF");
                         }
                         break;
 
@@ -431,12 +431,12 @@ namespace SymOntoClay.Core.Internal.Htn
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfProcessedTask), kindOfProcessedTask, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProcessedTask), kindOfProcessedTask, "22BA5139-0EA9-4525-BD18-B5B8DE46425D");
                         }
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(state), state, null);
+                        throw new ArgumentOutOfRangeException(nameof(state), state, "DA7F83D7-B95F-49F1-AAE9-B8144FC5112E");
                 }
             }
 
@@ -543,7 +543,7 @@ namespace SymOntoClay.Core.Internal.Htn
 
                     case KindOfTask.Primitive:
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfCurrentTask), kindOfCurrentTask, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfCurrentTask), kindOfCurrentTask, "BBE3DE70-007B-49C4-8569-69D302B5F47E");
                 }
 
                 //throw new NotImplementedException("2CDDF950-725E-45EC-8D3B-5BD2684F77FD");

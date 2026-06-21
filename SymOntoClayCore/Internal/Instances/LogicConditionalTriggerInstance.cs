@@ -209,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_trigger.DoubleConditionsStrategy), _trigger.DoubleConditionsStrategy, null);
+                        throw new ArgumentOutOfRangeException(nameof(_trigger.DoubleConditionsStrategy), _trigger.DoubleConditionsStrategy, "D62C341C-44AC-4CDB-A767-A8677F08A250");
                 }
             }
             else

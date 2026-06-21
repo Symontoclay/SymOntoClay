@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(condition.Kind), condition.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(condition.Kind), condition.Kind, "74ABB580-F3C3-422A-B86D-99B273349A73");
             }
         }
     }

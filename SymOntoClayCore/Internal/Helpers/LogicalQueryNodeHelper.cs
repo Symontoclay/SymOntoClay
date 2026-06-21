@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                     return node.Value;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfNode), kindOfNode, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfNode), kindOfNode, "3A8836A7-777D-4EE3-B476-11BDF4F19AF8");
             }
         }
 
@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "FD5335ED-C221-4213-8754-A94EBFA44B8B");
             }
         }
     }

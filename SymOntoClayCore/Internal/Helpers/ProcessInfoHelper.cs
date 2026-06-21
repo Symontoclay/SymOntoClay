@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, null);
+                                    throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, "157B1E7C-FC3A-425C-B1AF-33A1F7D00CAC");
                             }                            
                         }
 

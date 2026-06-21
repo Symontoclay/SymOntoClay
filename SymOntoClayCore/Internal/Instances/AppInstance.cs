@@ -132,7 +132,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfDirective), kindOfDirective, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfDirective), kindOfDirective, "B361D079-7B8E-47A7-8B8B-530807B17409");
                 }
             }
 

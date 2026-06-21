@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                     return $"{spaces}{OperationCode} {CompoundTask?.ToHumanizedLabel()}";
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);
+                    throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, "EFE5873D-72FF-4DC8-A453-331788AD8940");
             }
         }
     }

@@ -77,6 +77,7 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 
             _state = State.Finished;
             OnFinshed();
+            _threadExecutor = null;
         }
     }
 }

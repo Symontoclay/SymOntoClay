@@ -17,7 +17,7 @@
 
             var executor = new ThreadExecutorStub();
 
-
+            list.Add(executor);
 
         }
     }

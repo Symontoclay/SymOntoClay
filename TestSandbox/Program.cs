@@ -72,6 +72,7 @@ using TestSandbox.Navigations;
 using TestSandbox.Parsing;
 using TestSandbox.SerializationToImage;
 using TestSandbox.SoundBusHandler;
+using TestSandbox.ThreadExecutorStackInv;
 using TestSandbox.Threads;
 
 namespace TestSandbox
@@ -92,6 +93,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstThreadExecutorStackHandler();
             //TstSerializationToImageHandler();
             //TstGameComponentGuardHander();
             //TstCancellationHandler();
@@ -186,7 +188,7 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGeneralStartSerializationHandler();
             //TstGetParsedFilesInfo();
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TestSandbox.ThreadExecutorStackInv
 {
-    public class ThreadExecutorList
+    public class ThreadExecutorList: IOnCompletedThreadExecutorListItemHandler
     {
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 

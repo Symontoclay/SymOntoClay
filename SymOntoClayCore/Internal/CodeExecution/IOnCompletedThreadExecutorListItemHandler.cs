@@ -1,4 +1,4 @@
-﻿namespace TestSandbox.ThreadExecutorStackInv
+﻿namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IOnCompletedThreadExecutorListItemHandler
     {

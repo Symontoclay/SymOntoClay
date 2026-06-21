@@ -956,6 +956,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList.OnDisposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorListItem.OnDisposing">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.KindOfValue">
             <inheritdoc/>
         </member>

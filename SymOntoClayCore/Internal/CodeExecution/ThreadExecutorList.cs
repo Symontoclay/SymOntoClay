@@ -1,19 +1,18 @@
 ﻿using SymOntoClay.Common.Disposing;
-using SymOntoClay.Core.Internal.CodeExecution;
 using System.Collections.Generic;
 
-namespace TestSandbox.ThreadExecutorStackInv
+namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public class ThreadExecutorList: Disposable,
+    public class ThreadExecutorList : Disposable,
         IOnCompletedThreadExecutorListItemHandler
     {
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 
         public void Add(IThreadExecutor threadExecutor)
         {
-            lock(_lockObj)
+            lock (_lockObj)
             {
-                if(_existingItems.Contains(threadExecutor))
+                if (_existingItems.Contains(threadExecutor))
                 {
                     return;
                 }
@@ -42,7 +41,7 @@ namespace TestSandbox.ThreadExecutorStackInv
         {
             _existingItems.Clear();
 
-            foreach(var item in _items)
+            foreach (var item in _items)
             {
                 item.Dispose();
             }

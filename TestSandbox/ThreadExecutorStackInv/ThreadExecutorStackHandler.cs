@@ -13,6 +13,11 @@
 
         private void Case1()
         {
+            var list = new ThreadExecutorList();
+
+            var executor = new ThreadExecutorStub();
+
+
 
         }
     }

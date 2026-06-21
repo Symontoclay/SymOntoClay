@@ -10,13 +10,16 @@ namespace TestSandbox.ThreadExecutorStackInv
     {
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 
+        /// <inheritdoc/>
         public ThreadTaskStatus RunningStatus { get; set; } = ThreadTaskStatus.Created;
 
+        /// <inheritdoc/>
         public void Cancel()
         {
 
         }
 
+        /// <inheritdoc/>
         public void Wait()
         {
 

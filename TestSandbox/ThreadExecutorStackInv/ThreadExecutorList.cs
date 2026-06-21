@@ -1,11 +1,13 @@
-﻿using SymOntoClay.Core.Internal.CodeExecution;
+﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.Core.Internal.CodeExecution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace TestSandbox.ThreadExecutorStackInv
 {
-    public class ThreadExecutorList: IOnCompletedThreadExecutorListItemHandler
+    public class ThreadExecutorList: Disposable,
+        IOnCompletedThreadExecutorListItemHandler
     {
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -35,6 +37,19 @@ namespace TestSandbox.ThreadExecutorStackInv
             sender.RemoveOnCompletedHandler(this);
             _items.Remove(sender);
             _existingItems.Remove(sender.Executor);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _existingItems.Clear();
+
+            foreach(var item in _items)
+            {
+                item.Dispose();
+            }
+
+            _items.Clear();
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using SymOntoClay.Core.EventsInterfaces;
+﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using System;
 using System.Collections.Generic;
 
 namespace TestSandbox.ThreadExecutorStackInv
 {
-    public class ThreadExecutorListItem: IOnCompletedThreadExecutorHandler
+    public class ThreadExecutorListItem: Disposable,
+        IOnCompletedThreadExecutorHandler
     {
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -62,6 +64,13 @@ namespace TestSandbox.ThreadExecutorStackInv
                     handler.Invoke(this);
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _onCompletedHandlers.Clear();
+            _threadExecutor = null;
         }
     }
 }

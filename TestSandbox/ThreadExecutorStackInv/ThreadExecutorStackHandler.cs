@@ -8,6 +8,8 @@
         {
             _globalLogger.Info("Begin");
 
+            Case1();
+
             _globalLogger.Info("End");
         }
 
@@ -19,6 +21,7 @@
 
             list.Add(executor);
 
+            executor.Run();
         }
     }
 }

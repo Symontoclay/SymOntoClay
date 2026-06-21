@@ -6,6 +6,8 @@ namespace TestSandbox.ThreadExecutorStackInv
 {
     public class ThreadExecutorListItem: IOnCompletedThreadExecutorHandler
     {
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+
         public ThreadExecutorListItem(IThreadExecutor threadExecutor) 
         {
             _threadExecutor = threadExecutor;

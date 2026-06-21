@@ -8,6 +8,8 @@ namespace TestSandbox.ThreadExecutorStackInv
 {
     public class ThreadExecutorStub: IThreadExecutor
     {
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+
         public ThreadTaskStatus RunningStatus { get; set; } = ThreadTaskStatus.Created;
 
         public void Cancel()
@@ -19,6 +21,26 @@ namespace TestSandbox.ThreadExecutorStackInv
         {
 
         }
+
+        public void Run()
+        {
+            for (int i = 0; i < _maxIterations; i++)
+            {
+                _globalLogger.Info($"Run Iteration {i}");
+            }
+
+            NComplete();
+        }
+
+        private void NComplete()
+        {
+            _globalLogger.Info("NComplete");
+
+            RunningStatus = ThreadTaskStatus.RanToCompletion;
+            EmitOnCompletedHandlers();
+        }
+
+        private int _maxIterations = 10;
 
         private object _onCompletedHandlersLockObj = new object();
         private List<IOnCompletedThreadExecutorHandler> _onCompletedHandlers = new List<IOnCompletedThreadExecutorHandler>();

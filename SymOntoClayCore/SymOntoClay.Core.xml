@@ -9319,6 +9319,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.DoSearch(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.CompoundHtnTaskBackgroundTriggerInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.Id">
             <inheritdoc/>
         </member>

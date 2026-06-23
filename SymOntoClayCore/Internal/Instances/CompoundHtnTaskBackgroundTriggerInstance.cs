@@ -59,6 +59,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private CompoundHtnTaskBackground _background; 
         private readonly LogicConditionalTriggerObserver _conditionalTriggerObserver;
         private readonly LogicConditionalTriggerExecutor _conditionalTriggerExecutor;
+        private readonly ThreadExecutorList _runSetHandlerThreadExecutorList = new ThreadExecutorList();
 
         void IOnChangedLogicConditionalTriggerObserverHandler.Invoke()
         {
@@ -206,7 +207,17 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+            var threadExecutor = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+
+            _runSetHandlerThreadExecutorList.Add(threadExecutor);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _runSetHandlerThreadExecutorList.Dispose();
+
+            base.OnDisposed();
         }
     }
 }

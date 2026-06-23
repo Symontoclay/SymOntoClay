@@ -46,6 +46,8 @@ namespace SymOntoClay.Core.Internal.Instances
         [SystemNoSerializedMember]
         private readonly Random _idleActionsRandom = new Random();
 
+        private readonly ThreadExecutorList _activateIdleActionThreadExecutorList = new ThreadExecutorList();
+
         /// <inheritdoc/>
         public override bool ActivateIdleAction(IMonitorLogger logger)
         {
@@ -92,9 +94,17 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = this;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var taskValue = _context.CodeExecutor.ExecuteAsync(logger, processInitialInfo);
+            var threadExecutor = _context.CodeExecutor.ExecuteAsync(logger, processInitialInfo);
 
-            d
+            _activateIdleActionThreadExecutorList.Add(threadExecutor);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _activateIdleActionThreadExecutorList.Dispose();
+
+            base.OnDisposed();
         }
     }
 }

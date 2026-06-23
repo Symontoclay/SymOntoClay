@@ -101,6 +101,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
 
+        private readonly ThreadExecutorList _runSetHandlerThreadExecutorList = new ThreadExecutorList();
+        private readonly ThreadExecutorList _runResetHandlerThreadExecutorList = new ThreadExecutorList();
+
         /// <inheritdoc/>
         public IList<StrongIdentifierValue> NamesList => _namesList;
 
@@ -549,7 +552,9 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+            var threadExecutor = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+
+            _runSetHandlerThreadExecutorList.Add(threadExecutor);
         }
 
         private void RunResetHandler(IMonitorLogger logger, string doTriggerSearchId, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -561,7 +566,9 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+            var threadExecutor = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+
+            _runResetHandlerThreadExecutorList.Add(threadExecutor);
         }
 
         /// <inheritdoc/>
@@ -578,6 +585,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _setConditionalTriggerExecutor.Dispose();
             _resetConditionalTriggerExecutor?.Dispose();
+
+            _runSetHandlerThreadExecutorList.Dispose();
+            _runResetHandlerThreadExecutorList.Dispose();
 
             _onChangedHandlers.Clear();
 

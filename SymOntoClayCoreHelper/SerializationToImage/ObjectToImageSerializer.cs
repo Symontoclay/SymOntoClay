@@ -1055,7 +1055,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler",
             "SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler",
             "SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler",
-            "SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler"
+            "SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler",
+            "SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList",
+            "SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorListItem",
+            "SymOntoClay.Core.Internal.CodeModel.Channel",
+            "SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler",
+            "SymOntoClay.Core.DebugHelpers.DebugHelperOptions",
+            "SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler",
+            "SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator",
+            "SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler"
         };
 
         /// <inheritdoc/>
@@ -2356,7 +2364,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_constructors",
                 "_enterLifecycleTriggersRunner",
                 "_finalizationTriggersRunner",
-                "RootTasks"
+                "RootTasks",
+                "_activateIdleActionThreadExecutorList"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.StatesResolver"] = new List<string>()
             {
@@ -3984,6 +3993,99 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler"] = new List<string>()
             {
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList"] = new List<string>() 
+            { 
+                "_lockObj",
+                "_existingItems",
+                "_items",
+                "_isDisposed"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorListItem"] = new List<string>() 
+            {
+                "_threadExecutor",
+                "_onCompletedHandlersLockObj",
+                "_onCompletedHandlers",
+                "_isDisposed"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Channel"] = new List<string>() 
+            { 
+                "Handler",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler"] = new List<string>() 
+            { 
+                "_engineContext",
+                "_debugHelperOptions",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.DebugHelpers.DebugHelperOptions"] = new List<string>() 
+            {
+                "HumanizedOptions",
+                "IsHtml",
+                "ItemsForSelection",
+                "EnableMark",
+                "EnableParamsIfEmpty",
+                "ShowPrefixesForConceptLikeIdentifier"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler"] = new List<string>() 
+            {
+                "_engineContext",
+                "_soundPublisherProvider",
+                "_id",
+                "_logger",
+                "DefaultSoundPower"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator"] = new List<string>() 
+            {
+                "Name",
+                "Handler",
+                "Parent",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler"] = new List<string>()
+            {
+                //""
             };
         }
 #endif

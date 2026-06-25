@@ -1065,7 +1065,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator",
             "SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler",
             "SymOntoClay.Core.Internal.Storage.CategoriesStorage",
-            "SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings"
+            "SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings",
+            "SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions",
+            "SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory"
         };
 
         /// <inheritdoc/>
@@ -1285,7 +1287,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_worldPublicFactsStorage",
                 "_inheritancePublicFactsReplicator",
                 "_categoriesStorage",
-                "_checkDirtyOptions"
+                "_checkDirtyOptions",
+                "_deferredPublicFactsTexts",
+                "_deferredPublicFactsInstances",
+                "_deferredRemovedPublicFacts",
+                "_deferredFactsTexts",
+                "_deferredRemovedFacts",
+                "_deferredAddedCategories",
+                "_deferredRemovedCategories",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.StorageComponentSettings"] = new List<string>() 
             { 
@@ -4102,7 +4114,22 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
-            "SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings"
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings"] = new List<string>() 
+            {
+                "Categories",
+                "EnableCategories",
+                "InheritancePublicFactsReplicator"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions"] = new List<string>() 
+            {
+                "EngineContext",
+                "LocalContext",
+                "ConvertWaypointValueFromSource",
+                "ReplaceConcepts",
+                "DontConvertConceptsToInhRelations",
+                "IgnoreStandaloneConceptsInNormalization"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory"] = new List<string>() { };
         }
 #endif
     }

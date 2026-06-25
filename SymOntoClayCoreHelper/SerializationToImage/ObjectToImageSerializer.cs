@@ -1063,7 +1063,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.DebugHelpers.DebugHelperOptions",
             "SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler",
             "SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator",
-            "SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler"
+            "SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler",
+            "SymOntoClay.Core.Internal.Storage.CategoriesStorage",
+            "SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings"
         };
 
         /// <inheritdoc/>
@@ -1280,7 +1282,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_perceptedFactsStorage",
                 "_listenedFactsStorage",
                 "_visibleFactsStorage",
-                "_worldPublicFactsStorage"
+                "_worldPublicFactsStorage",
+                "_inheritancePublicFactsReplicator",
+                "_categoriesStorage",
+                "_checkDirtyOptions"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.StorageComponentSettings"] = new List<string>() 
             { 
@@ -4083,10 +4088,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_longConditionalHashCode",
                 "_longHashCode"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler"] = new List<string>()
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler"] = new List<string>() {};
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.CategoriesStorage"] = new List<string>() 
             {
-                //""
+                "_settings",
+                "_lockObj",
+                "_selfName",
+                "_storage",
+                "_inheritanceStorage",
+                "_categoriesList",
+                "_categoriesDict",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
+            "SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings"
         }
 #endif
     }

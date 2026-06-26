@@ -1067,7 +1067,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.CategoriesStorage",
             "SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings",
             "SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions",
-            "SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory"
+            "SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory",
+            "SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver"
         };
 
         /// <inheritdoc/>
@@ -4129,7 +4130,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "DontConvertConceptsToInhRelations",
                 "IgnoreStandaloneConceptsInNormalization"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory"] = new List<string>() 
+            { 
+                "_context",
+                "_baseContextComponents",
+                "_baseResolver",
+                "_channelsResolver",
+                "_inheritanceResolver",
+                "_logicalValueLinearResolver",
+                "_operatorsResolver",
+                "_numberValueLinearResolver",
+                "_strongIdentifierLinearResolver",
+                "_triggersResolver",
+                "_varsResolver",
+                "_propertiesResolver",
+                "_logicalSearchResolver",
+                "_methodsResolver",
+                "_constructorsResolver",
+                "_codeItemDirectivesResolver",
+                "_statesResolver",
+                "_toSystemBoolResolver",
+                "_relationsResolver",
+                "_logicalValueModalityResolver",
+                "_synonymsResolver",
+                "_idleActionsResolver",
+                "_annotationsResolver",
+                "_valueResolvingHelper",
+                "_metadataResolver",
+                "_logicalSearchVarResultsItemInvertor",
+                "_dateTimeResolver",
+                "_strongIdentifierExprValueResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver"] = new List<string>() { };
         }
 #endif
     }

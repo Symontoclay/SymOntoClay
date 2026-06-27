@@ -1079,7 +1079,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Htn.HtnPlanItem",
             "SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask",
             "SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask",
-            "SymOntoClay.Core.Internal.CodeModel.World"
+            "SymOntoClay.Core.Internal.CodeModel.World",
+            "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
+            "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode"
         };
 
         /// <inheritdoc/>
@@ -1220,13 +1222,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent"] = new List<string>() 
             { 
-                "_modulesStorage" 
+                "_modulesStorage",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.ModulesStorage"] = new List<string>() 
             { 
                 "_projectLoader",
                 "_mainStorageContext",
-                "_lockObj"
+                "_lockObj",
+                "_libDirs",
+                "_hasLibDirs",
+                "_storagesDict",
+                "_dependenciesDict",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Serialization.ProjectLoader"] = new List<string>() 
             { 
@@ -1251,7 +1264,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger",
                 "Storage",
                 "Parser",
-                "DataResolversFactory"
+                "DataResolversFactory",
+                "ConvertersFactory",
+                "TypeConverter",
+                "CommonNamesStorage",
+                "InstancesStorage",
+                "LoaderFromSourceCode",
+                "ServicesFactory",
+                "LogicQueryParseAndCache",
+                "ModulesStorage",
+                "MonitorNode",
+                "Compiler",
+                "DateTimeProvider",
+                "StandardFactsBuilder",
+                "AsyncEventsThreadPool",
+                "GarbageCollectionThreadPool",
+                "CancellationTokenSourceContext",
+                "LinkedCancellationTokenSourceContext"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue"] = new List<string>()
             { 
@@ -4367,6 +4396,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "InternalSystemId",
                 "WhereSection",
                 "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent"] = new List<string>() 
+            {
+                "_context",
+                "_commonNamesStorage",
+                "_onIdleHandlersLockObj",
+                "_onIdleHandlers",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode"] = new List<string>() 
+            {
+                "_context",
+                "_projectLoader",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
 #endif

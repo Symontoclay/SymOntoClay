@@ -1068,7 +1068,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings",
             "SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions",
             "SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory",
-            "SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.LogicalValueModalityResolver",
+            "SymOntoClay.Core.Internal.Converters.ConvertersFactory"
         };
 
         /// <inheritdoc/>
@@ -4143,6 +4145,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_strongIdentifierLinearResolver",
                 "_triggersResolver",
                 "_varsResolver",
+                "_fuzzyLogicResolver",
                 "_propertiesResolver",
                 "_logicalSearchResolver",
                 "_methodsResolver",
@@ -4164,7 +4167,34 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver"] = new List<string>() 
+            { 
+                "_metadataResolver",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.LogicalValueModalityResolver"] = new List<string>() 
+            { 
+                "_fuzzyLogicResolver",
+                "_toSystemBoolResolver",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Converters.ConvertersFactory"] = new List<string>() 
+            { 
+                "_context",
+                "_converterFactToImperativeCode",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
 #endif
     }

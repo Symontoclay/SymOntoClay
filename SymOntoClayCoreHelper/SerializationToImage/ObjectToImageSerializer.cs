@@ -1092,14 +1092,44 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
             {
-                "_context"
+                "_context",
+                "_serializedWorldComponents"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>()
             {
                 "_isInitialized",
                 "_settings",
                 "_tmpDir",
-                "_serializedWorldContext"
+                "_serializedWorldContext",
+                "_cancellationTokenSourceContext",
+                "_linkedCancellationTokenSourceContext",
+                "_startedCancellationContext",
+                "_worldComponentsListLockObj",
+                "_worldComponentsList",
+                "_gameComponentsListLockObj",
+                "_gameComponentsList",
+                "_availableInstanceIdList",
+                "_gameComponentsDictByInstanceId",
+                "_instancesIdDict",
+                "_gameComponentsForLateInitializingList",
+                "_state",
+                "_stateLockObj",
+                "Monitor",
+                "MonitorNode",
+                "Logger",
+                "ThreadsComponent",
+                "PlatformTypesConvertorsRegistry",
+                "NLPConverterFactory",
+                "StandardFactsBuilder",
+                "InvokerInMainThread",
+                "WorldThreadingSettings",
+                "HumanoidNpcDefaultThreadingSettings",
+                "PlayerDefaultThreadingSettings",
+                "GameObjectDefaultThreadingSettings",
+                "PlaceDefaultThreadingSettings",
+                "HtnExecutionSettings",
+                "AsyncEventsThreadPool",
+                "SoundBus"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"] = new List<string>()
             { 
@@ -4429,6 +4459,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger",
                 "_componentState",
                 "_stateLockObj"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NullValue"] = new List<string>() 
+            { 
+                "_builtInSuperTypes"
             };
         }
 #endif

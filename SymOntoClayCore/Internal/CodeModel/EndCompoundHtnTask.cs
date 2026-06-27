@@ -22,11 +22,10 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System.Collections.Generic;
 using System.Text;
-using System;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {

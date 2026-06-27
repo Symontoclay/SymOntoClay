@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
-using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Compiling;
@@ -29,8 +28,6 @@ using SymOntoClay.Core.Internal.Instances;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Htn
 {

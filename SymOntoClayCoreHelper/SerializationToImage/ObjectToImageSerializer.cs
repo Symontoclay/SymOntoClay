@@ -1081,7 +1081,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask",
             "SymOntoClay.Core.Internal.CodeModel.World",
             "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
-            "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode"
+            "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
+            "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent"
         };
 
         /// <inheritdoc/>
@@ -1104,7 +1105,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_coreContext",
                 "_worldComponentsList",
-                "_worldComponentsListLockObj"
+                "_worldComponentsListLockObj",
+                "_isDisposed",
+                "_lockObj",
+                "DateTimeProvider",
+                "LogicQueryParseAndCache",
+                "ModulesStorage",
+                "StandaloneStorage"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>()
             { 
@@ -4414,6 +4421,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent"] = new List<string>() 
+            { 
+                "_standaloneStorage",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
             };
         }
 #endif

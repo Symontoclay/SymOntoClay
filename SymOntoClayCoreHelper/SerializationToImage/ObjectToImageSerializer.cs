@@ -4217,34 +4217,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Services.EntityConstraintsService"] = new List<string>()
-            { 
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
+            {
+                "_context",
+                "_globalExecutionContext",
+                "_synonymsResolver",
+                "_randomConstraintName",
+                "_randomConstraintsList",
+                "_nearestConstraintName",
+                "_nearestConstraintsList",
+                "_constraintsList",
                 "_state",
                 "_stateLockObj",
                 "_logger"
             };
-
-            /*
-                     private readonly IMainStorageContext _context;
-
-        private ILocalCodeExecutionContext _globalExecutionContext;
-        private SynonymsResolver _synonymsResolver;
-
-        private StrongIdentifierValue _randomConstraintName;
-
-        private List<StrongIdentifierValue> _randomConstraintsList;
-
-        private StrongIdentifierValue _nearestConstraintName;
-        private List<StrongIdentifierValue> _nearestConstraintsList;
-
-        private List<StrongIdentifierValue> _constraintsList;
-             */
         }
 #endif
     }

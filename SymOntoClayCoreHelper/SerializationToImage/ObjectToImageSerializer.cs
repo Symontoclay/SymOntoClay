@@ -1070,7 +1070,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory",
             "SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver",
             "SymOntoClay.Core.Internal.DataResolvers.LogicalValueModalityResolver",
-            "SymOntoClay.Core.Internal.Converters.ConvertersFactory"
+            "SymOntoClay.Core.Internal.Converters.ConvertersFactory",
+            "SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode",
+            "SymOntoClay.Core.Internal.Services.ServicesFactory",
+            "SymOntoClay.Core.Internal.Services.EntityConstraintsService"
         };
 
         /// <inheritdoc/>
@@ -4195,6 +4198,53 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode"] = new List<string>() 
+            {
+                "_context",
+                "_projectLoader",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Services.ServicesFactory"] = new List<string>()
+            {
+                "_context",
+                "_entityConstraintsService",
+                "_codeFrameService",
+                "_baseContextComponents",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Services.EntityConstraintsService"] = new List<string>()
+            { 
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+
+            /*
+                     private readonly IMainStorageContext _context;
+
+        private ILocalCodeExecutionContext _globalExecutionContext;
+        private SynonymsResolver _synonymsResolver;
+
+        private StrongIdentifierValue _randomConstraintName;
+
+        private List<StrongIdentifierValue> _randomConstraintsList;
+
+        private StrongIdentifierValue _nearestConstraintName;
+        private List<StrongIdentifierValue> _nearestConstraintsList;
+
+        private List<StrongIdentifierValue> _constraintsList;
+             */
         }
 #endif
     }

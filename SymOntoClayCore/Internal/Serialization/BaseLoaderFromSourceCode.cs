@@ -30,7 +30,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             : base(context.Logger)
         {
             _context = context;
-            
         }
 
         /// <inheritdoc/>

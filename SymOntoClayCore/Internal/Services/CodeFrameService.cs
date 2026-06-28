@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.Services
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, "CF398303-F398-454A-9226-83DCCB926F50");
                 }
 
                 localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
@@ -268,7 +268,7 @@ namespace SymOntoClay.Core.Internal.Services
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, "371FE92C-CBF7-486D-8083-E12D15EDBC4C");
                 }
 
                 parameterName = CheckParameterName(logger, parameterName, function, synonymsResolver, localCodeExecutionContext);

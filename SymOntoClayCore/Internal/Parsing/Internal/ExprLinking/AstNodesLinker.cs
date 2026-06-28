@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(node.Kind), node.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(node.Kind), node.Kind, "50989526-AADD-420D-82CA-D997E4F8068D");
             }
         }
 
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     return false;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(currentNode.Kind), currentNode.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(currentNode.Kind), currentNode.Kind, "FE99EA45-7C46-4E8B-A8D6-A4BC9EF0EC58");
             }
         }
 
@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(currentNode.Kind), currentNode.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(currentNode.Kind), currentNode.Kind, "15E81539-85FB-468F-A41F-F3CF9167CAB2");
             }
         }
 
@@ -200,7 +200,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(possibleCurrentNode.Kind), possibleCurrentNode.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(possibleCurrentNode.Kind), possibleCurrentNode.Kind, "3C86F856-D258-4A7D-8356-0E2351A8F5D0");
             }
         }
 

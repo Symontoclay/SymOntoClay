@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, "E3836A41-EEA7-46E0-83D3-251E5FAC2E08");
             }
 
             return _astNode;

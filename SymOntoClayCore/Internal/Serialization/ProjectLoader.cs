@@ -293,7 +293,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, "E6419E8B-C171-4358-A823-45C681220A8E");
             }
         }
 
@@ -431,7 +431,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                         if (ruleInstance.IsParameterized)
                         {
-                            throw new Exception($"SymOntoClay does not support parameterized rule or facts on object declaration.");
+                            throw new Exception($"9CF9C0C4-EA25-45E1-A4A5-C970E6238412: SymOntoClay does not support parameterized rule or facts on object declaration.");
                         }
 
                         targetStorage.LogicalStorage.Append(logger, ruleInstance);
@@ -503,7 +503,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, "159C3349-5E11-46F6-B85C-33B5DA2EDF4E");
             }
 
             CheckCodeDirectives(logger, codeItem);
@@ -583,7 +583,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfDirective), kindOfDirective, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfDirective), kindOfDirective, "AE1CD5C4-3A17-4BD8-A01D-117E3A9B72A1");
                         }
                     }
                     break;
@@ -617,7 +617,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, "96724B13-86D5-40B4-9506-D21D5F80109A");
             }
         }
 

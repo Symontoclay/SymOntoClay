@@ -27,7 +27,7 @@ namespace TestSandbox.Handlers
 
             return factorySettings;
         }
-
+        
         public GeneralStartSerializationHandler()
             : base(CreateUnityTestEngineContextFactorySettings())
         {

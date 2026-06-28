@@ -190,6 +190,7 @@ namespace TestSandbox
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
             TstGeneralStartSerializationHandler();
+            TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -2681,7 +2682,17 @@ primitive task SomePrimitiveTask4
 
             _logger.Info("A7BDAF30-8479-489D-9144-328082EE51EE", "End");
         }
-        
+
+        private static void TstGeneralStartDeserializationHandler()
+        {
+            _logger.Info("18B3C0F4-0C82-419F-BCB8-BC4892EEFD3F", "Begin");
+
+            using var handler = new GeneralStartDeserializationHandler();
+            handler.Run();
+
+            _logger.Info("B5459C81-DEFE-4B0B-A3BE-1E00E3ECBCFB", "End");
+        }
+
         private static void TstGetParsedFilesInfo()
         {
             _logger.Info("BD8086E6-A01F-4D41-88F0-749C93F88D34", "Begin");

@@ -577,7 +577,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, $"In `{Text}`.");
             }
 
             var priority = OperatorsHelper.GetPriority(kind);

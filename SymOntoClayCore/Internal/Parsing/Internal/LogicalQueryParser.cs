@@ -345,7 +345,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstanceSectionMark), kindOfRuleInstanceSectionMark, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstanceSectionMark), kindOfRuleInstanceSectionMark, $"In `{Text}`.");
             }
         }
     }

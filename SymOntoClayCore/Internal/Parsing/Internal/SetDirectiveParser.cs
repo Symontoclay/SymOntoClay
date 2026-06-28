@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfStatement), kindOfStatement, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStatement), kindOfStatement, $"In `{Text}`.");
             }
 
             Exit();

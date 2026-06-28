@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfValueOnObjDefLevel), kindOfValueOnObjDefLevel, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfValueOnObjDefLevel), kindOfValueOnObjDefLevel, $"In `{Text}`.");
                         }
                     }
                     break;

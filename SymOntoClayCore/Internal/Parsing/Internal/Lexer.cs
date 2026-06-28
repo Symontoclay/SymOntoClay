@@ -502,7 +502,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         return CreateToken(TokenKind.Gravis);
 
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, $"In `{_text}`.");
                                 }
                                 break;
 
@@ -548,7 +548,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         }
 
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, $"In `{_text}`.");
                                 }
                                 break;
 
@@ -617,7 +617,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         }
 
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, $"In `{_text}`.");
                                 }
                                 break;
 
@@ -634,7 +634,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         return CreateToken(TokenKind.LogicalVarPrefix);
 
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, null);
+                                        throw new ArgumentOutOfRangeException(nameof(_mode), _mode, $"In `{_text}`.");
                                 }
                                 break;
 

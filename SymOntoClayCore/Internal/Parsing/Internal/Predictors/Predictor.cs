@@ -23,6 +23,7 @@ SOFTWARE.*/
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
 {
@@ -64,7 +65,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfSpecialPrediction), kindOfSpecialPrediction, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSpecialPrediction), kindOfSpecialPrediction, $"In `{context.Text}`.");
                 }
             }
         }

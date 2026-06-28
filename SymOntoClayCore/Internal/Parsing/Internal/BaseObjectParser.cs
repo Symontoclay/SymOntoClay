@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     return CreateLib();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, $"In `{Text}`.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                         break;
 
                                                     default:
-                                                        throw new ArgumentOutOfRangeException(nameof(Result.Kind), Result.Kind, null);
+                                                        throw new ArgumentOutOfRangeException(nameof(Result.Kind), Result.Kind, $"In `{Text}`.");
                                                 }
                                                 break;
 
@@ -297,7 +297,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                         break;
 
                                                     default:
-                                                        throw new ArgumentOutOfRangeException(nameof(Result.Kind), Result.Kind, null);
+                                                        throw new ArgumentOutOfRangeException(nameof(Result.Kind), Result.Kind, $"In `{Text}`.");
                                                 }
                                                 break;
 

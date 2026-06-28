@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _rootObjectsDataCardWriter = new RootObjectsDataCardWriter(_tempPath, _filesToPack);
             _rootObjectsAndSettingsDataCardWriter = new RootObjectsAndSettingsDataCardWriter(_tempPath, _filesToPack);
             _objectsDataCardWriter = new ObjectsDataCardWriter(_tempPath, _filesToPack);
+            _imageRootCardCardWriter = new ImageRootCardCardWriter(_tempPath, _filesToPack);
             _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, structuralContext, _rootObjectsDataCardWriter);
             _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, structuralContext, _rootObjectsAndSettingsDataCardWriter);
             _objectToImageSerializer = new ObjectToImageSerializer(_serializedObjectsPool, _serializedTypesPool, structuralContext, _objectsDataCardWriter);
@@ -59,6 +61,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly IDataCardWriter _rootObjectsDataCardWriter;
         private readonly IDataCardWriter _rootObjectsAndSettingsDataCardWriter;
         private readonly IDataCardWriter _objectsDataCardWriter;
+        private readonly IDataCardWriter _imageRootCardCardWriter;
         private readonly IObjectSerializer _rootObjectsSerializer;
         private readonly IObjectSerializer _rootObjectsAndSettingsSerializer;
         private readonly IObjectSerializer _objectToImageSerializer;
@@ -95,11 +98,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
 #endif
 
-            var rootSerializedValue2 = _objectToImageSerializer.SerializeValue(obj);
+            var mainRootSerializedValue = _objectToImageSerializer.SerializeValue(obj);
 
 #if DEBUG
-            _logger.Info($"rootSerializedValue2 = {rootSerializedValue2}");
+            _logger.Info($"mainRootSerializedValue = {mainRootSerializedValue}");
 #endif
+
+            var card = new ImageRootCard
+            {
+                RootSerializedValue = rootSerializedValue,
+                RootSerializedSettingsValue = rootSerializedSettingsValue,
+                MainRootSerializedValue = mainRootSerializedValue
+            };
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _imageRootCardCardWriter.Write(card);
 
             throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
         }
@@ -109,6 +125,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _rootObjectsDataCardWriter.Dispose();
             _rootObjectsAndSettingsDataCardWriter.Dispose();
             _objectsDataCardWriter.Dispose();
+            _imageRootCardCardWriter.Dispose();
 
             SaveSerializedTypesPoolToFile();
             CreatePackage();

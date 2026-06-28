@@ -36,6 +36,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly BinaryWriter _writer;
 
         /// <inheritdoc/>
+        public string BasePath => _basePath;
+
+        /// <inheritdoc/>
         public void Write(IDataCard dataCard)
         {
 #if DEBUG

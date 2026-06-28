@@ -2,6 +2,7 @@
 {
     public enum KindOfDataCard
     {
+        ImageRootCard,
         ExternalClassCard,
         ExternalManualResetEventClassCard,
         ExternalListCard,

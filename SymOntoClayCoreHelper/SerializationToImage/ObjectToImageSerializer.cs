@@ -513,7 +513,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 .ToList();
 
 #if DEBUG
-            _logger.Info($"fieldsWithChildren.Count = {fieldsWithChildren.Count}");
+            //_logger.Info($"fieldsWithChildren.Count = {fieldsWithChildren.Count}");
 #endif
 
             foreach(var item in fieldsWithChildren)

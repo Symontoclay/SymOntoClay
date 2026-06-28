@@ -246,7 +246,7 @@ namespace SymOntoClay.UnityAsset.Core.World
             var serializer = new SerializerToImage(settings, structuralContext);
             serializer.Serialize(this);
 
-            throw new NotImplementedException("C0A8D36D-50A8-4015-87C2-861455D6D421");
+            //throw new NotImplementedException("C0A8D36D-50A8-4015-87C2-861455D6D421");
 
             //_context.SaveToImage(settings);
         }

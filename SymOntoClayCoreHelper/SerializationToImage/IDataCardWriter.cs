@@ -4,7 +4,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 {
     public interface IDataCardWriter: IDisposable
     {
-        string BasePath { get; }
+        string RelativePath { get; }
         void Write(IDataCard dataCard);
     }
 }

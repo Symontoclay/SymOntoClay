@@ -1,10 +1,12 @@
-﻿using SymOntoClay.Common.Disposing;
+﻿using Newtonsoft.Json;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Reflection;
 using System.Threading;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
@@ -29,7 +31,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
 #if DEBUG
-            _logger.Info($"_baseTempPath = {_baseTempPath}");
+            //_logger.Info($"_baseTempPath = {_baseTempPath}");
 #endif
 
             _tempPath = Path.Combine(_baseTempPath, $"TempImage_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
@@ -68,6 +70,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private List<(string EntryName, string FilePath)> _filesToPack = new List<(string EntryName, string FilePath)>();
 
+        private string _rootObjectsRelativePath;
+        private string _rootObjectsAndSettingsRelativePath;
+        private string _objectsDataRelativePath;
+        private string _imageRootRelativePath;
+        private string _serializedTypesRelativePath;
+
         public void Serialize(object obj)
         {
             Preparation();
@@ -83,25 +91,25 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private void Run(object obj)
         {
 #if DEBUG
-            _logger.Info($"obj = {obj}");
+            //_logger.Info($"obj = {obj}");
 #endif
 
             var rootSerializedValue = _rootObjectsSerializer.SerializeValue(obj);
 
 #if DEBUG
-            _logger.Info($"rootSerializedValue = {rootSerializedValue}");
+            //_logger.Info($"rootSerializedValue = {rootSerializedValue}");
 #endif
 
             var rootSerializedSettingsValue = _rootObjectsAndSettingsSerializer.SerializeValue(obj);
 
 #if DEBUG
-            _logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
+            //_logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
 #endif
 
             var mainRootSerializedValue = _objectToImageSerializer.SerializeValue(obj);
 
 #if DEBUG
-            _logger.Info($"mainRootSerializedValue = {mainRootSerializedValue}");
+            //_logger.Info($"mainRootSerializedValue = {mainRootSerializedValue}");
 #endif
 
             var card = new ImageRootCard
@@ -112,22 +120,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _imageRootCardCardWriter.Write(card);
-
-            throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
         }
 
         private void Finalization()
         {
+            _rootObjectsRelativePath = _rootObjectsDataCardWriter.RelativePath;
+            _rootObjectsAndSettingsRelativePath = _rootObjectsAndSettingsDataCardWriter.RelativePath;
+            _objectsDataRelativePath = _objectsDataCardWriter.RelativePath;
+            _imageRootRelativePath = _imageRootCardCardWriter.RelativePath;
+
             _rootObjectsDataCardWriter.Dispose();
             _rootObjectsAndSettingsDataCardWriter.Dispose();
             _objectsDataCardWriter.Dispose();
             _imageRootCardCardWriter.Dispose();
 
             SaveSerializedTypesPoolToFile();
+            CreateManifest();
             CreatePackage();
 
             Directory.Delete(_tempPath, true);
@@ -137,10 +149,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             var packEntryName = PackEntryNames.Types;
 
+            _serializedTypesRelativePath = packEntryName;
+
             var fullFileName = Path.Combine(_tempPath, packEntryName);
 
 #if DEBUG
-            _logger.Info($"fullFileName = {fullFileName}");
+            //_logger.Info($"fullFileName = {fullFileName}");
 #endif
 
             _filesToPack.Add((packEntryName, fullFileName));
@@ -153,6 +167,49 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             fs.Flush();
         }
 
+        private void CreateManifest()
+        {
+#if DEBUG
+            //_logger.Info($"_rootObjectsRelativePath = {_rootObjectsRelativePath}");
+            //_logger.Info($"_rootObjectsAndSettingsRelativePath = {_rootObjectsAndSettingsRelativePath}");
+            //_logger.Info($"_objectsDataRelativePath = {_objectsDataRelativePath}");
+            //_logger.Info($"_imageRootRelativePath = {_imageRootRelativePath}");
+            //_logger.Info($"_serializedTypesRelativePath = {_serializedTypesRelativePath}");
+#endif
+
+            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+
+#if DEBUG
+            //_logger.Info($"assemblyVersion = {assemblyVersion}");
+#endif
+
+            var manifest = new ImageManifest
+            {
+                Version = assemblyVersion,
+                RootObjectsRelativePath = _rootObjectsRelativePath,
+                RootObjectsAndSettingsRelativePath = _rootObjectsAndSettingsRelativePath,
+                ObjectsDataRelativePath = _objectsDataRelativePath,
+                ImageRootRelativePath = _imageRootRelativePath,
+                SerializedTypesRelativePath = _serializedTypesRelativePath
+            };
+
+#if DEBUG
+            //_logger.Info($"manifest = {manifest}");
+#endif
+
+            var packEntryName = PackEntryNames.Manifest;
+
+            var fullFileName = Path.Combine(_tempPath, packEntryName);
+
+#if DEBUG
+            //_logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            _filesToPack.Add((packEntryName, fullFileName));
+
+            File.WriteAllText(fullFileName, JsonConvert.SerializeObject(manifest));
+        }
+
         private void CreatePackage()
         {
             using var zipToOpen = new FileStream(_imageFileName, FileMode.Create);
@@ -161,7 +218,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var entry in _filesToPack) 
             {
 #if DEBUG
-                _logger.Info($"entry = {entry}");
+                //_logger.Info($"entry = {entry}");
 #endif
 
                 archive.CreateEntryFromFile(entry.FilePath, entry.EntryName, CompressionLevel.Optimal);

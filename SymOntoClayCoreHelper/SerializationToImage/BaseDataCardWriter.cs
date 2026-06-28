@@ -14,10 +14,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         protected BaseDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack, string packEntryName)
         {
-            _basePath = basePath;
+            _packEntryName = packEntryName;
             _filesToPack = filesToPack;
 
-            var fullFileName = Path.Combine(_basePath, packEntryName);
+            var fullFileName = Path.Combine(basePath, packEntryName);
 
 #if DEBUG
             //_logger.Info($"fullFileName = {fullFileName}");
@@ -31,12 +31,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private List<(string EntryName, string FilePath)> _filesToPack;
 
-        private readonly string _basePath;
+        private readonly string _packEntryName;
         private readonly Stream _fs;
         private readonly BinaryWriter _writer;
 
         /// <inheritdoc/>
-        public string BasePath => _basePath;
+        public string RelativePath => _packEntryName;
 
         /// <inheritdoc/>
         public void Write(IDataCard dataCard)

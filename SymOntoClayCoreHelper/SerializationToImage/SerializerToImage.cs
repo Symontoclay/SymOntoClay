@@ -101,7 +101,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"rootSerializedValue2 = {rootSerializedValue2}");
 #endif
 
-            //throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
+            throw new NotImplementedException("C5663A8F-AD33-4C0B-A90A-6E82E64D9D8C");
         }
 
         private void Finalization()

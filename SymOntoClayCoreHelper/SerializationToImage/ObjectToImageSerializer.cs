@@ -541,7 +541,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
             }
 
-            throw new NotImplementedException("C34FFEC2-FEC7-412A-BF4E-985ACF39DEA8");
+            return serializedValue;
         }
 
         private SerializedValue SerializeWithSerializationDataCreation(object obj, Type type, string path)

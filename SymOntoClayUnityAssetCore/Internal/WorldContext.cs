@@ -495,8 +495,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return;
                 }
 
-                throw new NotImplementedException("C06FA5F1-80F9-4365-A41E-182CFD35B497");
+                NLoadFromImage(settings);
             }
+        }
+
+        private void NLoadFromImage(SerializationToImageSettings settings)
+        {
+            throw new NotImplementedException("C06FA5F1-80F9-4365-A41E-182CFD35B497");
         }
 
         public void SaveToImage(SerializationToImageSettings settings)

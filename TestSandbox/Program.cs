@@ -189,7 +189,7 @@ namespace TestSandbox
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
-            TstGeneralStartSerializationHandler();
+            //TstGeneralStartSerializationHandler();
             TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 

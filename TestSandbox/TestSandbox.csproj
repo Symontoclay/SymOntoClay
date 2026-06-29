@@ -54,6 +54,9 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="SerializationToImage\Img_20260628_192550.pckg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Source\Libs\lib1\lib1.slib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

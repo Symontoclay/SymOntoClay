@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
-using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
-using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
-using System.Threading;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {

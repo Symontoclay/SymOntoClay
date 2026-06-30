@@ -495,12 +495,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return;
                 }
 
+                if (!ComponentStateHelper.IsStopped(_state))
+                {
+                    NStop();
+                }
+
                 NLoadFromImage(settings);
             }
         }
 
         private void NLoadFromImage(SerializationToImageSettings settings)
         {
+#if DEBUG
+            Info("0263580D-90FF-4B16-84ED-F8D22E4ECA61", $"settings = {settings}");
+#endif
+
+            var structuralContext = new WorldStructuralContext();
+
+            var deserializer = new DeserializerFromImage(settings, structuralContext);
+            deserializer.Deserialize(this);
+
             throw new NotImplementedException("C06FA5F1-80F9-4365-A41E-182CFD35B497");
         }
 
@@ -533,7 +547,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             var serializer = new SerializerToImage(settings, structuralContext);
             serializer.Serialize(this);
 
-            throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
+            //throw new NotImplementedException("C87D7B69-F0F5-416E-8CBB-7D1727651172");
         }
 
         public void Start()

@@ -34,6 +34,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 Directory.CreateDirectory(_tempPath);
             }
+
+            _serializedTypesPool = new SerializedTypesPool();
+            _typesHelper = new TypesHelper();
         }
 
         private readonly IStructuralContext _structuralContext;
@@ -41,6 +44,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly string _baseTempPath;
         private readonly string _tempPath;
         private ImageManifest _manifest;
+        private readonly ISerializedTypesPool _serializedTypesPool;
+        private readonly ITypesHelper _typesHelper;
 
         public void Deserialize(object obj)
         {
@@ -57,6 +62,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             UnPackPackage();
             ReadManifest();
+            LoadSerializedTypesPoolFromFile();
         }
 
         private void UnPackPackage()
@@ -90,6 +96,22 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             _logger.Info($"_manifest = {_manifest}");
 #endif
+        }
+
+        private void LoadSerializedTypesPoolFromFile()
+        {
+            var packEntryName = PackEntryNames.Types;
+
+            var fullFileName = Path.Combine(_tempPath, packEntryName);
+
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            using var fs = new FileStream(fullFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+            using var reader = new BinaryReader(fs);
+
+            _serializedTypesPool.Load(reader);
         }
     }
 }

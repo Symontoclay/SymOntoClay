@@ -31,6 +31,8 @@ namespace TestSandbox.SerializationToImage
 
             _logger.Info($"fs.Length = {fs.Length}");
 
+            var serializer = new JsonSerializer();
+
             while (fs.Position < fs.Length)
             {
                 _logger.Info($"fs.Position = {fs.Position}");
@@ -49,8 +51,6 @@ namespace TestSandbox.SerializationToImage
 
                 using var ms = new MemoryStream(data);
                 using var bsonReader = new BsonDataReader(ms);
-
-                var serializer = new JsonSerializer();
 
                 var dataCard = serializer.Deserialize<IDataCard>(bsonReader);
 

@@ -1,8 +1,6 @@
 ﻿using SymOntoClay.BaseTestLib;
-using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;

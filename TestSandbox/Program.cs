@@ -95,6 +95,7 @@ namespace TestSandbox
 
             //TstThreadExecutorStackHandler();
             //TstSerializationToImageHandler();
+            TstDeserializerFromImageHandler();
             //TstGameComponentGuardHander();
             //TstCancellationHandler();
             //TstMessagePack();
@@ -190,7 +191,7 @@ namespace TestSandbox
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
             //TstGeneralStartSerializationHandler();
-            TstGeneralStartDeserializationHandler();
+            //TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -211,6 +212,16 @@ namespace TestSandbox
             _globalLogger.Info("Begin");
 
             var handler = new SerializationToImageHandler();
+            handler.Run();
+
+            _globalLogger.Info("End");
+        }
+
+        private static void TstDeserializerFromImageHandler()
+        {
+            _globalLogger.Info("Begin");
+
+            var handler = new DeserializerFromImageHandler();
             handler.Run();
 
             _globalLogger.Info("End");

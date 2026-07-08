@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -21,9 +22,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             Literal = literal;
         }
 
+        [JsonProperty]
         public KindOfSerializedValue KindOfSerializedValue { get; private set; }
+
+        [JsonProperty]
         public long Id { get; private set; }
+
+        [JsonProperty]
         public int TypeId { get; private set; }
+
+        [JsonProperty]
         public string Literal { get; private set; }
 
         public override int GetHashCode()

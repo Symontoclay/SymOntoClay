@@ -15,89 +15,10 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            //Case3();
-            Case2();
-            //Case1();
+            //Case2();
+            Case1();
 
             _logger.Info("End");
-        }
-
-        private void Case3()
-        {
-            var serializedValue = new SerializedValue(KindOfSerializedValue.Preregistered, 1, 1, "");
-
-#if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
-#endif
-
-            var dataCard = new ExternalWorldComponentClassCard()
-            {
-                Header = serializedValue,
-                Id = "#020ED339-6313-459A-900D-92F809CEBDC5"
-            };
-
-#if DEBUG
-            _logger.Info($"dataCard = {dataCard}");
-#endif
-
-            var tempFileName = Path.Combine(Directory.GetCurrentDirectory(), Path.GetRandomFileName());
-
-#if DEBUG
-            _logger.Info($"tempFileName = {tempFileName}");
-#endif
-
-            {
-                using var writeFs = new FileStream(tempFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-                using var writer = new BinaryWriter(writeFs);
-
-                using var ms = new MemoryStream();
-                using var bsonWriter = new BsonDataWriter(ms);
-
-                var serializer = new JsonSerializer();
-                serializer.Serialize(bsonWriter, dataCard);
-
-                var data = ms.ToArray();
-
-#if DEBUG
-                _logger.Info($"data.Length = {data.Length}");
-#endif
-
-                writer.Write((int)dataCard.KindOfDataCard);
-                writer.Write(data.Length);
-                writer.Write(data);
-
-                writeFs.Flush();
-            }
-
-            {
-                using var fs = new FileStream(tempFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
-                using var reader = new BinaryReader(fs);
-
-                var serializer = new JsonSerializer();
-
-                _logger.Info($"fs.Length = {fs.Length}");
-
-                _logger.Info($"fs.Position = {fs.Position}");
-
-                var kindOfDataCard = reader.ReadInt32();
-
-                _logger.Info($"kindOfDataCard = {kindOfDataCard}");
-
-                var dataLength = reader.ReadInt32();
-
-                _logger.Info($"dataLength = {dataLength}");
-
-                var data = reader.ReadBytes(dataLength);
-
-                _logger.Info($"data.Length = {data.Length}");
-
-                using var ms = new MemoryStream(data);
-                using var bsonReader = new BsonDataReader(ms);
-
-                var dataCard_1 = DeserializeDataCard((KindOfDataCard)kindOfDataCard, serializer, bsonReader);
-
-                _logger.Info($"dataCard_1 = {dataCard_1}");
-            }
         }
 
         private void Case2()

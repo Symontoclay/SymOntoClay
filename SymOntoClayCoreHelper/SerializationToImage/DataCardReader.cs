@@ -1,127 +1,75 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
-using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
-namespace TestSandbox.SerializationToImage
+namespace SymOntoClay.CoreHelper.SerializationToImage
 {
-    public class DeserializerFromImageHandler
+    public class DataCardReader : Disposable, IDataCardReader
     {
+#if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+#endif
 
-        public void Run()
+        public DataCardReader(string basePath, string packEntryName)
+            : this(Path.Combine(basePath, packEntryName))
         {
-            _logger.Info("Begin");
-
-            Case3();
-            //Case2();
-            //Case1();
-
-            _logger.Info("End");
         }
 
-        private void Case3()
+        public DataCardReader(string fullFileName)
         {
-            var fullFileName = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "RootObjects.dat");
-
-#if DEBUG
-            _logger.Info($"fullFileName = {fullFileName}");
-#endif
-
-            using var dataCardReader = new DataCardReader(fullFileName);
-
-            var cards = dataCardReader.ReadAll();
-
-#if DEBUG
-            _logger.Info($"cards.Count = {cards.Count}");
-#endif
-
-            foreach (var card in cards) 
-            {
-#if DEBUG
-                _logger.Info($"card = {card}");
-#endif
-            }
+            _fs = new FileStream(fullFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+            _reader = new BinaryReader(_fs);
         }
 
-        private void Case2()
+        private readonly Stream _fs;
+        private readonly BinaryReader _reader;
+        private readonly JsonSerializer _serializer = new JsonSerializer();
+
+        /// <inheritdoc/>
+        public List<IDataCard> ReadAll()
         {
-            var serializedValue = new SerializedValue(KindOfSerializedValue.Preregistered, 1, 1, "");
-
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            _logger.Info($"_fs.Length = {_fs.Length}");
+            _logger.Info($"_fs.Position = {_fs.Position}");
 #endif
 
-            var dataCard = new ExternalWorldComponentClassCard()
+            _fs.Position = 0;
+
+            var result = new List<IDataCard>();
+
+            while (_fs.Position < _fs.Length)
             {
-                Header = serializedValue,
-                Id = "#020ED339-6313-459A-900D-92F809CEBDC5"
-            };
-
 #if DEBUG
-            _logger.Info($"dataCard = {dataCard}");
+                _logger.Info($"_fs.Position = {_fs.Position}");
 #endif
 
-            using var ms = new MemoryStream();
-            using var bsonWriter = new BsonDataWriter(ms);
-
-            var serializer = new JsonSerializer();
-            serializer.Serialize(bsonWriter, dataCard);
-
-            var data = ms.ToArray();
-
-#if DEBUG
-            _logger.Info($"data.Length = {data.Length}");
-#endif
-
-            using var ms1 = new MemoryStream(data);
-            using var bsonReader = new BsonDataReader(ms1);
-
-            var card = DeserializeDataCard(dataCard.KindOfDataCard, serializer, bsonReader);
-
-            _logger.Info($"card = {card}");
-        }
-
-        private void Case1()
-        {
-            var fullFileName = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "RootObjects.dat");
-
-#if DEBUG
-            _logger.Info($"fullFileName = {fullFileName}");
-#endif
-
-            using var fs = new FileStream(fullFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
-            using var reader = new BinaryReader(fs);
-
-            _logger.Info($"fs.Length = {fs.Length}");
-
-            var serializer = new JsonSerializer();
-
-            while (fs.Position < fs.Length)
-            {
-                _logger.Info($"fs.Position = {fs.Position}");
-
-                var kindOfDataCard = reader.ReadInt32();
+                var kindOfDataCard = _reader.ReadInt32();
 
                 _logger.Info($"kindOfDataCard = {kindOfDataCard}");
 
-                var dataLength = reader.ReadInt32();
+                var dataLength = _reader.ReadInt32();
 
                 _logger.Info($"dataLength = {dataLength}");
 
-                var data = reader.ReadBytes(dataLength);
+                var data = _reader.ReadBytes(dataLength);
 
                 _logger.Info($"data.Length = {data.Length}");
 
                 using var ms = new MemoryStream(data);
                 using var bsonReader = new BsonDataReader(ms);
 
-                var dataCard = DeserializeDataCard((KindOfDataCard)kindOfDataCard, serializer, bsonReader);
+                var dataCard = DeserializeDataCard((KindOfDataCard)kindOfDataCard, _serializer, bsonReader);
 
                 _logger.Info($"dataCard = {dataCard}");
+
+                result.Add(dataCard);
             }
+
+            return result;
         }
 
         private IDataCard DeserializeDataCard(KindOfDataCard kindOfDataCard, JsonSerializer serializer, BsonDataReader bsonReader)
@@ -177,8 +125,17 @@ namespace TestSandbox.SerializationToImage
                     return serializer.Deserialize<ActionCard>(bsonReader);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfDataCard), kindOfDataCard, "7484D7DE-3409-40DC-A57E-2F1E912243E6");
+                    throw new ArgumentOutOfRangeException(nameof(kindOfDataCard), kindOfDataCard, "3EA4C344-7D39-47AD-B3D3-8F29FCE3C105");
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _reader.Dispose();
+            _fs.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

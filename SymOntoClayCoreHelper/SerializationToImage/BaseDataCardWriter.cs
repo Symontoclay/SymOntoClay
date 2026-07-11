@@ -34,6 +34,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly string _packEntryName;
         private readonly Stream _fs;
         private readonly BinaryWriter _writer;
+        private readonly JsonSerializer _serializer = new JsonSerializer();
 
         /// <inheritdoc/>
         public string RelativePath => _packEntryName;
@@ -49,8 +50,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             using var ms = new MemoryStream();
             using var bsonWriter = new BsonDataWriter(ms);
 
-            var serializer = new JsonSerializer();
-            serializer.Serialize(bsonWriter, dataCard);
+            _serializer.Serialize(bsonWriter, dataCard);
 
             var data = ms.ToArray();
 

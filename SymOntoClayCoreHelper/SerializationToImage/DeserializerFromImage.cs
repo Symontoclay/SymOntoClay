@@ -63,6 +63,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             UnPackPackage();
             ReadManifest();
             LoadSerializedTypesPoolFromFile();
+            ReadAndCheckImageRootCard();
         }
 
         private void UnPackPackage()
@@ -112,6 +113,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             using var reader = new BinaryReader(fs);
 
             _serializedTypesPool.Load(reader);
+        }
+
+        private void ReadAndCheckImageRootCard()
+        {
+            using var imageRootCardDataCardReader = new DataCardReader(_tempPath, PackEntryNames.ImageRoot);
+
+            var cardsList = imageRootCardDataCardReader.ReadAll();
+
+#if DEBUG
+            _logger.Info($"cardsList.Count = {cardsList.Count}");
+#endif
+
+            foreach (var card in cardsList)
+            {
+#if DEBUG
+                _logger.Info($"card = {card}");
+#endif
+            }
         }
     }
 }

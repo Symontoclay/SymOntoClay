@@ -394,6 +394,18 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.Load(System.IO.BinaryReader)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedValue.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedValue.Equals(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedValue.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedValue.ToString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.StructuralAdvice.ToString">
             <inheritdoc/>
         </member>

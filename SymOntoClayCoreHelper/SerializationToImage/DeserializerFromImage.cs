@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -120,6 +122,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             using var imageRootCardDataCardReader = new DataCardReader(_tempPath, PackEntryNames.ImageRoot);
 
             var cardsList = imageRootCardDataCardReader.ReadAll();
+                
+                //.Where(p => p.KindOfDataCard == KindOfDataCard.ImageRootCard).Cast<ImageRootCard>();
 
 #if DEBUG
             _logger.Info($"cardsList.Count = {cardsList.Count}");

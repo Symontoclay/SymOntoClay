@@ -67,6 +67,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             ReadManifest();
             LoadSerializedTypesPoolFromFile();
             ReadAndCheckImageRootCard();
+            ReadObjectsSerializedValues();
         }
 
         private void UnPackPackage()
@@ -170,6 +171,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             _logger.Info($"_rootSerializedValue = {_rootSerializedValue}");
 #endif
+        }
+
+        private void ReadObjectsSerializedValues()
+        {
+            throw new NotImplementedException("CCF0994E-1B9C-4B98-A3C9-C7458DC7D707");
         }
     }
 }

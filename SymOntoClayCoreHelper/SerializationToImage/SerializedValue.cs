@@ -81,7 +81,44 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         public override string ToString() => $"({nameof(KindOfSerializedValue)}: {KindOfSerializedValue}, {nameof(Id)}: {Id}, {nameof(TypeId)}: {TypeId}, {nameof(Literal)}: '{Literal}')";
 
-        public static bool operator ==(SerializedValue left, SerializedValue right) => left.Equals(right);
-        public static bool operator !=(SerializedValue left, SerializedValue right) => !left.Equals(right);
+        public static bool operator ==(SerializedValue left, SerializedValue right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(SerializedValue left, SerializedValue right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(right, null))
+            {
+                return true;
+            }
+
+            return !left.Equals(right);
+        }
     }
 }

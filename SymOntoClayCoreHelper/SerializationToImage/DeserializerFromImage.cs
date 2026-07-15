@@ -48,6 +48,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private ImageManifest _manifest;
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
+        private SerializedValue _rootSerializedValue;
 
         public void Deserialize(object obj)
         {
@@ -147,6 +148,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
 #if DEBUG
             _logger.Info($"card = {card}");
+#endif
+
+            _rootSerializedValue = card.RootSerializedValue;
+
+            if(_rootSerializedValue == null)
+            {
+                throw new NullReferenceException("6E0AB56C-6F5E-4FD2-9CCB-F8AB4564C1AB");
+            }
+
+            if(_rootSerializedValue != card.MainRootSerializedValue)
+            {
+                throw new NotImplementedException("D2FDB2FC-70EA-4E00-9903-701AC2F80DF9");
+            }
+
+            if (_rootSerializedValue != card.RootSerializedSettingsValue)
+            {
+                throw new NotImplementedException("84F21A9C-F172-4C50-A572-FD2BDDF17DD9");
+            }
+
+#if DEBUG
+            _logger.Info($"_rootSerializedValue = {_rootSerializedValue}");
 #endif
         }
     }

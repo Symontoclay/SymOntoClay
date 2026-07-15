@@ -95,7 +95,7 @@ namespace TestSandbox
 
             //TstThreadExecutorStackHandler();
             //TstSerializationToImageHandler();
-            //TstDeserializerFromImageHandler();
+            TstDeserializerFromImageHandler();
             //TstGameComponentGuardHander();
             //TstCancellationHandler();
             //TstMessagePack();
@@ -191,7 +191,7 @@ namespace TestSandbox
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
             //TstGeneralStartSerializationHandler();
-            TstGeneralStartDeserializationHandler();
+            //TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

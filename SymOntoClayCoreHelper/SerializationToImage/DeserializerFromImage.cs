@@ -122,19 +122,32 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             using var imageRootCardDataCardReader = new DataCardReader(_tempPath, PackEntryNames.ImageRoot);
 
             var cardsList = imageRootCardDataCardReader.ReadAll();
-                
-                //.Where(p => p.KindOfDataCard == KindOfDataCard.ImageRootCard).Cast<ImageRootCard>();
 
 #if DEBUG
             _logger.Info($"cardsList.Count = {cardsList.Count}");
 #endif
 
-            foreach (var card in cardsList)
+            if (cardsList.Count != 1)
             {
-#if DEBUG
-                _logger.Info($"card = {card}");
-#endif
+                throw new NotImplementedException($"D2E50FC7-B470-440D-A383-C82104E7E71C: cardsList.Count = {cardsList.Count}");
             }
+
+            var imageRootCard = cardsList.Where(p => p.KindOfDataCard == KindOfDataCard.ImageRootCard).Cast<ImageRootCard>();
+
+#if DEBUG
+            _logger.Info($"imageRootCard.Count() = {imageRootCard.Count()}");
+#endif
+
+            if(imageRootCard.Count() != 1)
+            {
+                throw new NotImplementedException($"183EB669-243C-44B1-89D4-B59F373A1735: imageRootCard.Count() = {imageRootCard.Count()}");
+            }
+
+            var card = imageRootCard.Single();
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
         }
     }
 }

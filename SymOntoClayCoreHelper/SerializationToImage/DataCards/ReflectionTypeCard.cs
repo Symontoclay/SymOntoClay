@@ -4,11 +4,12 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ReflectionTypeCard : IDataCard, IObjectToString
+    public class ReflectionTypeCard : IDataCard, IDataCardWithHeader, IObjectToString
     {
         /// <inheritdoc/>
         public KindOfDataCard KindOfDataCard => KindOfDataCard.ReflectionTypeCard;
 
+        /// <inheritdoc/>
         public SerializedValue Header { get; set; }
 
         public string OriginalTypeName { get; set; }

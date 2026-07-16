@@ -5,11 +5,12 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class StackCard : IDataCard, IObjectToString
+    public class StackCard : IDataCard, IDataCardWithHeader, IObjectToString
     {
         /// <inheritdoc/>
         public KindOfDataCard KindOfDataCard => KindOfDataCard.StackCard;
 
+        /// <inheritdoc/>
         public SerializedValue Header { get; set; }
         public List<SerializedValue> Items { get; set; }
 

@@ -6,11 +6,12 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ExternalWorldComponentClassCard : IDataCard, IObjectToString
+    public class ExternalWorldComponentClassCard : IDataCard, IDataCardWithHeader, IObjectToString
     {
         /// <inheritdoc/>
         public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalWorldComponentClassCard;
 
+        /// <inheritdoc/>
         public SerializedValue Header { get; set; }
         public string Id { get; set; }
 

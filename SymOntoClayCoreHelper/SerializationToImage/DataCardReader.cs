@@ -21,6 +21,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         public DataCardReader(string fullFileName)
         {
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
             _fs = new FileStream(fullFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
             _reader = new BinaryReader(_fs);
         }
@@ -33,8 +37,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public List<IDataCard> ReadAll()
         {
 #if DEBUG
-            _logger.Info($"_fs.Length = {_fs.Length}");
-            _logger.Info($"_fs.Position = {_fs.Position}");
+            //_logger.Info($"_fs.Length = {_fs.Length}");
+            //_logger.Info($"_fs.Position = {_fs.Position}");
 #endif
 
             _fs.Position = 0;
@@ -44,27 +48,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             while (_fs.Position < _fs.Length)
             {
 #if DEBUG
-                _logger.Info($"_fs.Position = {_fs.Position}");
+                //_logger.Info($"_fs.Position = {_fs.Position}");
 #endif
 
                 var kindOfDataCard = _reader.ReadInt32();
 
-                _logger.Info($"kindOfDataCard = {kindOfDataCard}");
+                //_logger.Info($"kindOfDataCard = {kindOfDataCard}");
 
                 var dataLength = _reader.ReadInt32();
 
-                _logger.Info($"dataLength = {dataLength}");
+                //_logger.Info($"dataLength = {dataLength}");
 
                 var data = _reader.ReadBytes(dataLength);
 
-                _logger.Info($"data.Length = {data.Length}");
+                //_logger.Info($"data.Length = {data.Length}");
 
                 using var ms = new MemoryStream(data);
                 using var bsonReader = new BsonDataReader(ms);
 
                 var dataCard = DeserializeDataCard((KindOfDataCard)kindOfDataCard, _serializer, bsonReader);
 
-                _logger.Info($"dataCard = {dataCard}");
+                //_logger.Info($"dataCard = {dataCard}");
 
                 result.Add(dataCard);
             }

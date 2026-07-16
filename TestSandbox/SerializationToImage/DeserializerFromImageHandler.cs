@@ -4,6 +4,7 @@ using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace TestSandbox.SerializationToImage
 {
@@ -33,10 +34,10 @@ namespace TestSandbox.SerializationToImage
 
             using var dataCardReader = new DataCardReader(fullFileName);
 
-            var cards = dataCardReader.ReadAll();
+            var cards = dataCardReader.ReadAll().Cast<IDataCardWithHeader>();
 
 #if DEBUG
-            _logger.Info($"cards.Count = {cards.Count}");
+            _logger.Info($"cards.Count() = {cards.Count()}");
 #endif
 
             foreach (var card in cards)

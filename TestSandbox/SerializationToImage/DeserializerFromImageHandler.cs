@@ -46,6 +46,12 @@ namespace TestSandbox.SerializationToImage
                 _logger.Info($"card = {card}");
 #endif
             }
+
+            var cardsDict = cards.ToDictionary(p => p.Header, p => p);
+
+#if DEBUG
+            _logger.Info($"cardsDict.Count = {cardsDict.Count}");
+#endif
         }
 
         private void Case3()

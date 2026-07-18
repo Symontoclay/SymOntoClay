@@ -16,12 +16,24 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            Case4();
+            Case5();
+            //Case4();
             //Case3();
             //Case2();
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case5()
+        {
+            var fullFileName = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "Objects.dat");
+
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            using var dataCardDictionary = new DataCardDictionary(fullFileName);
         }
 
         private void Case4()

@@ -32,6 +32,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private Dictionary<SerializedValue, IDataCardWithHeader> _cardsDict;
 
         /// <inheritdoc/>
+        public IDataCardWithHeader GetDataCardByHeader(SerializedValue header)
+        {
+            return _cardsDict[header];
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposing()
         {
             _dataCardReader.Dispose();

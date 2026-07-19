@@ -25,6 +25,12 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseObjectSerializer.SerializeValue(System.Object,System.String,SymOntoClay.CoreHelper.SerializationToImage.SerializeValueMode,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardDictionary.GetDataCardByHeader(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardDictionary.OnDisposing">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardReader.ReadAll">
             <inheritdoc/>
         </member>

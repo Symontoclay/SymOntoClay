@@ -49,6 +49,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
         private SerializedValue _rootSerializedValue;
+        private IDataCardDictionary _dataCardDictionary;
 
         public void Deserialize(object obj)
         {
@@ -57,6 +58,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
             Preparation();
+
+
+            Finalization();
 
             throw new NotImplementedException("C072330D-6772-4582-948D-CA412DCD07FE");
         }
@@ -121,7 +125,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void ReadAndCheckImageRootCard()
         {
-            using var imageRootCardDataCardReader = new DataCardReader(_tempPath, PackEntryNames.ImageRoot);
+            using var imageRootCardDataCardReader = new DataCardReader(_tempPath, _manifest.ImageRootRelativePath);
 
             var cardsList = imageRootCardDataCardReader.ReadAll();
 
@@ -175,7 +179,46 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void ReadObjectsSerializedValues()
         {
-            throw new NotImplementedException("CCF0994E-1B9C-4B98-A3C9-C7458DC7D707");
+            NTmpFindRootObject(_manifest.RootObjectsRelativePath);
+            NTmpFindRootObject(_manifest.RootObjectsAndSettingsRelativePath);
+            NTmpFindRootObject(_manifest.ObjectsDataRelativePath);
+
+            //_dataCardDictionary = new DataCardDictionary(_tempPath, _manifest.ObjectsDataRelativePath);
+
+#if DEBUG
+            //_logger.Info($"_dataCardDictionary.GetDataCardByHeader(_rootSerializedValue) = {_dataCardDictionary.GetDataCardByHeader(_rootSerializedValue)}");
+#endif
+        }
+
+        private void NTmpFindRootObject(string relativePath)
+        {
+#if DEBUG
+            _logger.Info($"_tempPath = {_tempPath}");
+            _logger.Info($"relativePath = {relativePath}");
+
+            var fullFileName = Path.Combine(_tempPath, relativePath);
+
+            _logger.Info($"fullFileName = {fullFileName}");
+
+            using var dataCardReader = new DataCardReader(fullFileName);
+
+            var cards = dataCardReader.ReadAll().Cast<IDataCardWithHeader>();
+
+            _logger.Info($"cards.Count() = {cards.Count()}");
+            _logger.Info($"_rootSerializedValue = {_rootSerializedValue}");
+
+            var targetObj = cards.FirstOrDefault(p => p.Header.KindOfSerializedValue == _rootSerializedValue.KindOfSerializedValue &&
+                p.Header.Id == _rootSerializedValue.Id &&
+                p.Header.TypeId == _rootSerializedValue.TypeId &&
+                p.Header.Literal == _rootSerializedValue.Literal);
+
+            _logger.Info($"targetObj = {targetObj}");
+#endif
+        }
+
+        private void Finalization()
+        {
+            //_dataCardDictionary.Dispose();
         }
     }
 }

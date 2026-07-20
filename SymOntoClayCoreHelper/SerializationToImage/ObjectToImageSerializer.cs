@@ -559,12 +559,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             card.FieldsWithChildren = cardFieldWithChildrenList;
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
-
-            throw new NotImplementedException("135EED75-8E0B-4192-8F61-1D2AE1187162");
 
             return serializedValue;
         }
@@ -4490,7 +4488,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_builtInSuperTypes"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NullValue"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NullValue"] = new List<string>() 
+            { 
+                "_builtInSuperTypes" 
+            };
         }
 #endif
     }

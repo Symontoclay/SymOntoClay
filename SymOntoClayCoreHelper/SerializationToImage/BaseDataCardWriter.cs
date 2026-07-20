@@ -43,7 +43,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public void Write(IDataCard dataCard)
         {
 #if DEBUG
-            _logger.Info($"dataCard = {dataCard}");
+            //_logger.Info($"dataCard = {dataCard}");
             //_logger.Info($"dataCard.KindOfDataCard = {dataCard.KindOfDataCard}");
 #endif
 

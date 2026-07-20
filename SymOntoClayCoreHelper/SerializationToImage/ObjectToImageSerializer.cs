@@ -475,6 +475,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
+            var card = new KeyWorldComponentClassCard()
+            {
+                Header = serializedValue
+            };
+
             var fieldsWithSerializedMembers = GetFields(type)
                 .Where(f => f.Field.IsDefined(typeof(SerializedMemberAttribute), false))
                 .ToList();
@@ -482,6 +487,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             //_logger.Info($"fieldsWithSerializedMembers.Count = {fieldsWithSerializedMembers.Count}");
 #endif
+
+            var cardFieldWithSerializedMembersList = new List<(string, int, SerializedValue)>();
 
             foreach (var item in fieldsWithSerializedMembers)
             {
@@ -506,7 +513,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
+
+                cardFieldWithSerializedMembersList.Add((field.Name, item.TypeId, fieldSerializedValue));
             }
+
+            card.FieldsWithSerializedMembers = cardFieldWithSerializedMembersList;
 
             var fieldsWithChildren = GetFields(type)
                 .Where(f => f.Field.IsDefined(typeof(SerializedMemberWithChildrenAttribute), false))
@@ -516,7 +527,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"fieldsWithChildren.Count = {fieldsWithChildren.Count}");
 #endif
 
-            foreach(var item in fieldsWithChildren)
+            var cardFieldWithChildrenList = new List<(string, int, SerializedValue)>();
+
+            foreach (var item in fieldsWithChildren)
             {
                 var field = item.Field;
 
@@ -539,7 +552,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 //_logger.Info($"fieldSerializedValue = {fieldSerializedValue}");
 #endif
+
+                cardFieldWithChildrenList.Add((field.Name, item.TypeId, fieldSerializedValue));
             }
+
+            card.FieldsWithChildren = cardFieldWithChildrenList;
+
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            throw new NotImplementedException("135EED75-8E0B-4192-8F61-1D2AE1187162");
 
             return serializedValue;
         }
@@ -1082,7 +1107,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.World",
             "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
             "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
-            "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent"
+            "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent",
+            "SymOntoClay.Core.Internal.CodeModel.NullValue"
         };
 
         /// <inheritdoc/>
@@ -4464,6 +4490,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_builtInSuperTypes"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NullValue"] = new List<string>() { };
         }
 #endif
     }

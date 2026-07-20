@@ -214,6 +214,21 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ImageRootCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCard.Header">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ListCard.KindOfDataCard">
             <inheritdoc/>
         </member>

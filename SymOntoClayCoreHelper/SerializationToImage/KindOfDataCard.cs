@@ -8,6 +8,7 @@
         ExternalListCard,
         ExternalWorldRootClassCard,
         ExternalWorldComponentClassCard,
+        KeyWorldComponentClassCard,
         ClassCard,
         ClassCardWithSerializationData,
         ArrayCard,

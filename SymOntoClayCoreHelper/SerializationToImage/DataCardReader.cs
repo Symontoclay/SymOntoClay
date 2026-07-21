@@ -98,6 +98,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case KindOfDataCard.ExternalWorldComponentClassCard:
                     return serializer.Deserialize<ExternalWorldComponentClassCard>(bsonReader);
 
+                case KindOfDataCard.KeyWorldComponentClassCard:
+                    return serializer.Deserialize<KeyWorldComponentClassCard>(bsonReader);
+
                 case KindOfDataCard.ClassCard:
                     return serializer.Deserialize<ClassCard>(bsonReader);
 

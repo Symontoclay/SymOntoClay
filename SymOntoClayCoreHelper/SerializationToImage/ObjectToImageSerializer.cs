@@ -80,7 +80,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeExternalValue(object obj)
         {
-            return _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
+
+#if DEBUG
+            //_logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ExternalValueCard
+            {
+                Header = serializedValue
+            };
+
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>

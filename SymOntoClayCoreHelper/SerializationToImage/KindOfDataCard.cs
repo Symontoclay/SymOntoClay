@@ -18,6 +18,7 @@
         QueueCard,
         DictionaryCard,
         ReflectionTypeCard,
-        ActionCard
+        ActionCard,
+        ExternalValueCard
     }
 }

@@ -131,6 +131,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case KindOfDataCard.ActionCard:
                     return serializer.Deserialize<ActionCard>(bsonReader);
 
+                case KindOfDataCard.ExternalValueCard:
+                    return serializer.Deserialize<ExternalValueCard>(bsonReader);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfDataCard), kindOfDataCard, "3EA4C344-7D39-47AD-B3D3-8F29FCE3C105");
             }

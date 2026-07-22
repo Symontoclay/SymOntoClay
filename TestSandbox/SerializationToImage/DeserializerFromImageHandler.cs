@@ -223,6 +223,9 @@ namespace TestSandbox.SerializationToImage
                 case KindOfDataCard.ActionCard:
                     return serializer.Deserialize<ActionCard>(bsonReader);
 
+                case KindOfDataCard.ExternalValueCard:
+                    return serializer.Deserialize<ExternalValueCard>(bsonReader);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfDataCard), kindOfDataCard, "7484D7DE-3409-40DC-A57E-2F1E912243E6");
             }

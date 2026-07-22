@@ -157,6 +157,21 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCard.Header">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCard.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCard.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldComponentClassCard.KindOfDataCard">
             <inheritdoc/>
         </member>

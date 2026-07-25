@@ -190,8 +190,8 @@ namespace TestSandbox
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
-            //TstGeneralStartSerializationHandler();
-            TstGeneralStartDeserializationHandler();
+            TstGeneralStartSerializationHandler();
+            //TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

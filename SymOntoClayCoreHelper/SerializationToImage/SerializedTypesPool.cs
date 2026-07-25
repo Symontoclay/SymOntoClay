@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private int _currentTypeId = 0;
 
         private Dictionary<string, int> _typeIdsDict = new Dictionary<string, int>();
+        private Dictionary<int, string> _typeNamesDict = new Dictionary<int, string>();
 
         /// <inheritdoc/>
         public int NullTypeId => _nullTypeId;
@@ -45,6 +47,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             typeId = GetTypeId();
 
             _typeIdsDict[typeFullName] = typeId;
+            _typeNamesDict[typeId] = typeFullName;
 
             return typeId;
         }
@@ -61,12 +64,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         public void Save(BinaryWriter writer)
         {
+            var bsonSerializerAdapter = new BsonSerializerAdapter();
+            var serializer = new JsonSerializer();
+
             writer.Write(_currentTypeId);
 
             using var ms = new MemoryStream();
             using var bsonWriter = new BsonDataWriter(ms);
 
-            var serializer = new JsonSerializer();
             serializer.Serialize(bsonWriter, _typeIdsDict);
 
             var typeIdsDictData = ms.ToArray();
@@ -77,11 +82,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             writer.Write(typeIdsDictData.Length);
             writer.Write(typeIdsDictData);
+
+            throw new NotImplementedException("C9AB9158-B8A1-4EF5-BE96-7863DF398EE4");
         }
 
         /// <inheritdoc/>
         public void Load(BinaryReader reader)
         {
+            var bsonSerializerAdapter = new BsonSerializerAdapter();
+            var serializer = new JsonSerializer();
+
             _currentTypeId = reader.ReadInt32();
 
 #if DEBUG
@@ -99,9 +109,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             using var ms = new MemoryStream(typeIdsDictData);
             using var bsonReader = new BsonDataReader(ms);
 
-            var serializer = new JsonSerializer();
+            
 
             _typeIdsDict = serializer.Deserialize<Dictionary<string, int>>(bsonReader);
+
+            throw new NotImplementedException("C651F307-54AA-4A2F-9F53-19CB61449F1D");
         }
     }
 }

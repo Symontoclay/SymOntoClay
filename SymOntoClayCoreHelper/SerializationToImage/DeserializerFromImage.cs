@@ -50,6 +50,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ITypesHelper _typesHelper;
         private SerializedValue _rootSerializedValue;
         private IDataCardDictionary _dataCardDictionary;
+        private IObjectDeserializer _objectDeserializer;
 
         public void Deserialize(object obj)
         {
@@ -59,6 +60,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             Preparation();
 
+            var deserializedObj = _objectDeserializer.DeserializeValue(_rootSerializedValue);
+
+#if DEBUG
+            _logger.Info($"deserializedObj = {deserializedObj}");
+#endif
 
             Finalization();
 
@@ -188,6 +194,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             //_logger.Info($"_dataCardDictionary.GetDataCardByHeader(_rootSerializedValue) = {_dataCardDictionary.GetDataCardByHeader(_rootSerializedValue)}");
 #endif
+
+            _objectDeserializer = new ObjectFromImageDeserializer();
         }
 
         private void NTmpFindRootObject(string relativePath)

@@ -313,6 +313,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ImageManifest.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectFromImageDeserializer.DeserializeValue(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>

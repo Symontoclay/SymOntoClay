@@ -49,7 +49,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
         private SerializedValue _rootSerializedValue;
-        private IDataCardDictionary _dataCardDictionary;
+        private IDataCardDictionary _objectsDataCardDictionary;
         private IObjectDeserialializationFactory _objectDeserialializationFactory;
         private IObjectDeserializer _objectDeserializer;
 
@@ -186,17 +186,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void ReadObjectsSerializedValues()
         {
-            NTmpFindRootObject(_manifest.RootObjectsRelativePath);
-            NTmpFindRootObject(_manifest.RootObjectsAndSettingsRelativePath);
-            NTmpFindRootObject(_manifest.ObjectsDataRelativePath);
+            //NTmpFindRootObject(_manifest.RootObjectsRelativePath);
+            //NTmpFindRootObject(_manifest.RootObjectsAndSettingsRelativePath);
+            //NTmpFindRootObject(_manifest.ObjectsDataRelativePath);
 
-            //_dataCardDictionary = new DataCardDictionary(_tempPath, _manifest.ObjectsDataRelativePath);
+            _objectsDataCardDictionary = new DataCardDictionary(_tempPath, _manifest.ObjectsDataRelativePath);
 
 #if DEBUG
-            //_logger.Info($"_dataCardDictionary.GetDataCardByHeader(_rootSerializedValue) = {_dataCardDictionary.GetDataCardByHeader(_rootSerializedValue)}");
+            _logger.Info($"_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue) = {_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue)}");
 #endif
 
-            _objectDeserialializationFactory = new ObjectDeserialializationFactory();
+            _objectDeserialializationFactory = new ObjectDeserialializationFactory(_objectsDataCardDictionary, _serializedTypesPool);
 
             _objectDeserializer = new ObjectFromImageDeserializer(_objectDeserialializationFactory);
         }

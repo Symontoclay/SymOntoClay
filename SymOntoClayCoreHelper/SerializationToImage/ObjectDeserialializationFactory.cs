@@ -10,9 +10,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public ObjectDeserialializationFactory()
+        public ObjectDeserialializationFactory(IDataCardDictionary objectsDataCardDictionary, ISerializedTypesPool serializedTypesPool)
         {
+            _objectsDataCardDictionary = objectsDataCardDictionary;
+            _serializedTypesPool = serializedTypesPool;
         }
+
+        private readonly IDataCardDictionary _objectsDataCardDictionary;
+        private readonly ISerializedTypesPool _serializedTypesPool;
 
         /// <inheritdoc/>
         public object GetValue(SerializedValue serializedValue)

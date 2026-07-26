@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Bson;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.IO;
 using System.Linq;
@@ -108,13 +109,10 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"dataCard = {dataCard}");
 #endif
 
-            using var ms = new MemoryStream();
-            using var bsonWriter = new BsonDataWriter(ms);
-
+            var bsonSerializerAdapter = new BsonSerializerAdapter();
             var serializer = new JsonSerializer();
-            serializer.Serialize(bsonWriter, dataCard);
-
-            var data = ms.ToArray();
+            
+            var data = bsonSerializerAdapter.Serialize(dataCard, serializer);
 
 #if DEBUG
             _logger.Info($"data.Length = {data.Length}");

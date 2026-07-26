@@ -69,12 +69,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             writer.Write(_currentTypeId);
 
-            using var ms = new MemoryStream();
-            using var bsonWriter = new BsonDataWriter(ms);
-
-            serializer.Serialize(bsonWriter, _typeIdsDict);
-
-            var typeIdsDictData = ms.ToArray();
+            var typeIdsDictData = bsonSerializerAdapter.Serialize(_typeIdsDict, serializer);
 
 #if DEBUG
             //_logger.Info($"typeIdsDictData.Length = {typeIdsDictData.Length}");
@@ -106,12 +101,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             var typeIdsDictData = reader.ReadBytes(typeIdsDictDataLength);
 
-            using var ms = new MemoryStream(typeIdsDictData);
-            using var bsonReader = new BsonDataReader(ms);
-
-            
-
-            _typeIdsDict = serializer.Deserialize<Dictionary<string, int>>(bsonReader);
+            _typeIdsDict = bsonSerializerAdapter.Deserialize<Dictionary<string, int>>(typeIdsDictData, serializer);
 
             throw new NotImplementedException("C651F307-54AA-4A2F-9F53-19CB61449F1D");
         }

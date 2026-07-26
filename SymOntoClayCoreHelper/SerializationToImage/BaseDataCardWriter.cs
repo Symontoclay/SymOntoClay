@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.CoreHelper.SerializerAdapters;
 using System.Collections.Generic;
 using System.IO;
 
@@ -34,6 +35,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly string _packEntryName;
         private readonly Stream _fs;
         private readonly BinaryWriter _writer;
+        private readonly BsonSerializerAdapter _bsonSerializerAdapter = new BsonSerializerAdapter();
         private readonly JsonSerializer _serializer = new JsonSerializer();
 
         /// <inheritdoc/>
@@ -47,12 +49,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"dataCard.KindOfDataCard = {dataCard.KindOfDataCard}");
 #endif
 
-            using var ms = new MemoryStream();
-            using var bsonWriter = new BsonDataWriter(ms);
-
-            _serializer.Serialize(bsonWriter, dataCard);
-
-            var data = ms.ToArray();
+            var data = _bsonSerializerAdapter.Serialize(dataCard, _serializer);
 
 #if DEBUG
             //_logger.Info($"data.Length = {data.Length}");

@@ -121,7 +121,7 @@ namespace TestSandbox.SerializationToImage
             using var ms1 = new MemoryStream(data);
             using var bsonReader = new BsonDataReader(ms1);
 
-            var card = DeserializeDataCard(dataCard.KindOfDataCard, serializer, bsonReader);
+            var card = DataCardReader.DeserializeDataCard(dataCard.KindOfDataCard, serializer, bsonReader);
 
             _logger.Info($"card = {card}");
         }
@@ -160,72 +160,9 @@ namespace TestSandbox.SerializationToImage
                 using var ms = new MemoryStream(data);
                 using var bsonReader = new BsonDataReader(ms);
 
-                var dataCard = DeserializeDataCard((KindOfDataCard)kindOfDataCard, serializer, bsonReader);
+                var dataCard = DataCardReader.DeserializeDataCard((KindOfDataCard)kindOfDataCard, serializer, bsonReader);
 
                 _logger.Info($"dataCard = {dataCard}");
-            }
-        }
-
-        private IDataCard DeserializeDataCard(KindOfDataCard kindOfDataCard, JsonSerializer serializer, BsonDataReader bsonReader)
-        {
-            switch (kindOfDataCard)
-            {
-                case KindOfDataCard.ImageRootCard:
-                    return serializer.Deserialize<ImageRootCard>(bsonReader);
-
-                case KindOfDataCard.ExternalClassCard:
-                    return serializer.Deserialize<ExternalClassCard>(bsonReader);
-
-                case KindOfDataCard.ExternalManualResetEventClassCard:
-                    return serializer.Deserialize<ExternalManualResetEventClassCard>(bsonReader);
-
-                case KindOfDataCard.ExternalListCard:
-                    return serializer.Deserialize<ExternalListCard>(bsonReader);
-
-                case KindOfDataCard.ExternalWorldRootClassCard:
-                    return serializer.Deserialize<ExternalWorldRootClassCard>(bsonReader);
-
-                case KindOfDataCard.ExternalWorldComponentClassCard:
-                    return serializer.Deserialize<ExternalWorldComponentClassCard>(bsonReader);
-
-                case KindOfDataCard.KeyWorldComponentClassCard:
-                    return serializer.Deserialize<KeyWorldComponentClassCard>(bsonReader);
-
-                case KindOfDataCard.ClassCard:
-                    return serializer.Deserialize<ClassCard>(bsonReader);
-
-                case KindOfDataCard.ClassCardWithSerializationData:
-                    return serializer.Deserialize<ClassCardWithSerializationData>(bsonReader);
-
-                case KindOfDataCard.ArrayCard:
-                    return serializer.Deserialize<ArrayCard>(bsonReader);
-
-                case KindOfDataCard.ListCard:
-                    return serializer.Deserialize<ListCard>(bsonReader);
-
-                case KindOfDataCard.HashSetCard:
-                    return serializer.Deserialize<HashSetCard>(bsonReader);
-
-                case KindOfDataCard.StackCard:
-                    return serializer.Deserialize<StackCard>(bsonReader);
-
-                case KindOfDataCard.QueueCard:
-                    return serializer.Deserialize<QueueCard>(bsonReader);
-
-                case KindOfDataCard.DictionaryCard:
-                    return serializer.Deserialize<DictionaryCard>(bsonReader);
-
-                case KindOfDataCard.ReflectionTypeCard:
-                    return serializer.Deserialize<ReflectionTypeCard>(bsonReader);
-
-                case KindOfDataCard.ActionCard:
-                    return serializer.Deserialize<ActionCard>(bsonReader);
-
-                case KindOfDataCard.ExternalValueCard:
-                    return serializer.Deserialize<ExternalValueCard>(bsonReader);
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfDataCard), kindOfDataCard, "7484D7DE-3409-40DC-A57E-2F1E912243E6");
             }
         }
     }

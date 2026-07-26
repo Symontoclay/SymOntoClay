@@ -76,7 +76,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return result;
         }
 
-        private IDataCard DeserializeDataCard(KindOfDataCard kindOfDataCard, JsonSerializer serializer, BsonDataReader bsonReader)
+        public static IDataCard DeserializeDataCard(KindOfDataCard kindOfDataCard, JsonSerializer serializer, BsonDataReader bsonReader)
         {
             switch (kindOfDataCard)
             {

@@ -475,6 +475,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.GetOrRegisterType(System.Type)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.GetTypeValue(System.Int32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedTypesPool.Save(System.IO.BinaryWriter)">
             <inheritdoc/>
         </member>

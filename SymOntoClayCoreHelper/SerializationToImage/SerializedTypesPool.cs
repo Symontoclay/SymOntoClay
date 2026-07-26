@@ -4,6 +4,7 @@ using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -58,6 +59,34 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 _currentTypeId++;
                 return _currentTypeId;
+            }
+        }
+
+        /// <inheritdoc/>
+        public Type GetTypeValue(int typeId)
+        {
+            lock (_lock)
+            {
+#if DEBUG
+                _logger.Info($"typeId = {typeId}");
+#endif
+
+                var typeFullName = _typeNamesDict[typeId];
+
+#if DEBUG
+                _logger.Info($"typeFullName = {typeFullName}");
+#endif
+
+                var type = AppDomain.CurrentDomain.GetAssemblies()
+                    .Select(a => a.GetType(typeFullName, false, true))
+                    .FirstOrDefault(t => t != null);
+
+#if DEBUG
+                _logger.Info($"type?.Name = {type?.Name}");
+                _logger.Info($"type?.FullName = {type?.FullName}");
+#endif
+
+                return type;
             }
         }
 

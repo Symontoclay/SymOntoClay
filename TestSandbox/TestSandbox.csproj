@@ -57,7 +57,7 @@
     <None Update="SerializationToImage\ImageRoot.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SerializationToImage\Img_20260722_202307.pckg">
+    <None Update="SerializationToImage\Img_20260726_175341.pckg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="SerializationToImage\Manifest.json">
@@ -70,6 +70,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="SerializationToImage\RootObjectsAndSettings.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SerializationToImage\Types.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\Libs\lib1\lib1.slib">

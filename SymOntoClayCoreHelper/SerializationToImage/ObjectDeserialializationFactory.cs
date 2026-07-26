@@ -26,6 +26,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
+            var type = _serializedTypesPool.GetTypeValue(serializedValue.TypeId);
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
             throw new NotImplementedException("C5F8FEE4-C8A8-48FC-A23E-CBEBDE5E47EF");
         }
     }

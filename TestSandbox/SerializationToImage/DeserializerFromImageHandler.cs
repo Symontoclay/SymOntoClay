@@ -17,13 +17,63 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            Case5();
+            Case7();
+            //Case6();
+            //Case5();
             //Case4();
             //Case3();
             //Case2();
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case7()
+        {
+            var fullFileName = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "RootObjectsAndSettings.dat");
+
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            using var dataCardReader = new DataCardReader(fullFileName);
+
+            var cards = dataCardReader.ReadAll();
+
+#if DEBUG
+            _logger.Info($"cards.Count = {cards.Count}");
+#endif
+
+            foreach (var card in cards)
+            {
+#if DEBUG
+                _logger.Info($"card = {card}");
+#endif
+            }
+        }
+
+        private void Case6()
+        {
+            var fullFileName = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "RootObjects.dat");
+
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            using var dataCardReader = new DataCardReader(fullFileName);
+
+            var cards = dataCardReader.ReadAll();
+
+#if DEBUG
+            _logger.Info($"cards.Count = {cards.Count}");
+#endif
+
+            foreach (var card in cards)
+            {
+#if DEBUG
+                _logger.Info($"card = {card}");
+#endif
+            }
         }
 
         private void Case5()

@@ -19,14 +19,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             Init();
         }
-
+        
         private void Init()
         {
             var cards = _dataCardReader.ReadAll().Cast<IDataCardWithHeader>();
 
             _cardsDict = cards.ToDictionary(p => p.Header, p => p);
         }
-
+        
         private readonly DataCardReader _dataCardReader;
 
         private Dictionary<SerializedValue, IDataCardWithHeader> _cardsDict;

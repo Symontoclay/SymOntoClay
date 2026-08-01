@@ -4,13 +4,15 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ExternalManualResetEventClassCard : IDataCard, IDataCardWithHeader, IObjectToString
+    public class ExternalManualResetEventClassCard : IDataCard, IDataCardWithHeader, IDataCardWithPath, IObjectToString
     {
         /// <inheritdoc/>
         public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalManualResetEventClassCard;
 
         /// <inheritdoc/>
         public SerializedValue Header { get; set; }
+
+        /// <inheritdoc/>
         public string Path { get; set; }
         public bool IsSet { get; set; }
 

@@ -118,6 +118,9 @@
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.Header">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.Path">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.ToString">
             <inheritdoc/>
         </member>
@@ -133,6 +136,9 @@
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalListCard.Header">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalListCard.Path">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalListCard.ToString">
             <inheritdoc/>
         </member>
@@ -146,6 +152,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.Header">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.Path">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.ToString">

@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     return ProcessInsert(logger, val, annotatedItem, localCodeExecutionContext);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfLogicalQueryOperation), kindOfLogicalQueryOperation, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfLogicalQueryOperation), kindOfLogicalQueryOperation, "F723F06C-CD42-4B19-8B16-642342AAD538");
             }
         }
 

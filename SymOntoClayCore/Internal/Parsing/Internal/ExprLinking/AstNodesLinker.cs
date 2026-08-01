@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(possibleCurrentNode.Kind), possibleCurrentNode.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(possibleCurrentNode.Kind), possibleCurrentNode.Kind, "D8340E2D-002E-4544-AEEC-BA571A1F9731");
             }
         }
 

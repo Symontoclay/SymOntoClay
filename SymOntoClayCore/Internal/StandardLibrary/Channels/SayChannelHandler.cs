@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, "DEFD096B-C298-449F-A28E-9633A1B81440");
             }
 
             return value;

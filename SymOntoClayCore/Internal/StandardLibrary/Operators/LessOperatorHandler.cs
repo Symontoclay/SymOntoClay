@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, "B0657405-2F5F-4339-A6CF-CB004CF8B0CC");
                     }
 
                     var fuzzyKindOfValue = rightOperand.KindOfValue;
@@ -147,7 +147,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, "03CF3CBB-FD32-4123-AADC-056A4A21F391");
                     }
 
                     throw new NotImplementedException("6B1761BB-F098-45DE-A640-2FDA13F1224B");
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, "909CEB4C-DA4C-444B-8A76-15D862CE17AD");
                     }
 
                     var fuzzyKindOfValue = leftOperand.KindOfValue;
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, "37E25EED-EA43-44E1-9B63-D9AB8E352649");
                     }
 
                     throw new NotImplementedException("E0396F4A-3BBF-432F-8188-AD527D57FD20");

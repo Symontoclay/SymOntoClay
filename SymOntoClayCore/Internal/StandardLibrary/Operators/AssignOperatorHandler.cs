@@ -82,7 +82,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                 return _propertiesResolver.SetPropertyValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext, callMode);
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfNameOfLeftIdentifierValue), kindOfNameOfLeftIdentifierValue, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfNameOfLeftIdentifierValue), kindOfNameOfLeftIdentifierValue, "6007E90A-AFC1-421C-8505-1D1FD45DE8CB");
                         }
                     }
 
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     return leftOperand.SetValue(logger, rightOperand);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfLeftOperand), kindOfLeftOperand, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfLeftOperand), kindOfLeftOperand, "F773EE1F-2839-4301-B30D-E7C9BB3CE811");
             }
 
             throw new NotImplementedException("30221B5A-697B-4A3A-8E34-32D5416D75F6");

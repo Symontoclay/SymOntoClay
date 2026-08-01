@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, "4D5E6A38-8C5B-417D-B745-C232A529030E");
                     }
 
                     var fuzzyKindOfValue = rightOperand.KindOfValue;
@@ -147,7 +147,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, "BC8D42FA-7C06-4CDB-9524-9EF084845ECD");
                     }
 
                     throw new NotImplementedException("654AADD5-AEA2-4664-85B2-B222A358841A");
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, "DD968CF5-96A1-4474-894B-5FE2E8074182");
                     }
 
                     var fuzzyKindOfValue = leftOperand.KindOfValue;
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
+                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, "BBDF92E9-1348-406E-8EE7-A953ECD9AF0C");
                     }
 
                     throw new NotImplementedException("C662BBCA-332B-408E-BE3B-337B0E191B88");

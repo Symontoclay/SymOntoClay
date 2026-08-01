@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(leftOperandCallResultKindOfResult), leftOperandCallResultKindOfResult, null);
+                    throw new ArgumentOutOfRangeException(nameof(leftOperandCallResultKindOfResult), leftOperandCallResultKindOfResult, "792CE612-11A8-42E7-BB82-1DB739E47AB3");
             }
 
             var rightOperandKindOfValue = rightOperand.KindOfValue;

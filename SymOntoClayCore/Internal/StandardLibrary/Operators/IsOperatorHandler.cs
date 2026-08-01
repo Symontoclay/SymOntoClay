@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, "9765C8D6-D6D4-4AF8-901D-A6ED5A3F5A9F");
             }
 
             var fuzzyKindOfValue = fuzzyOperand.KindOfValue;
@@ -158,7 +158,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     return new ValueCallResult(new LogicalValue(_fuzzyLogicResolver.Equals(logger, fuzzyOperand.AsFuzzyLogicNonNumericSequenceValue, numVal, localCodeExecutionContext)));
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, "55713001-F7F9-4799-B478-F4A0642A9DDF");
             }
 
             throw new NotImplementedException("1A2F8243-F4DB-44BB-B34E-701A32D3BFF3");

@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfGC), kindOfGC, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfGC), kindOfGC, "F81D229B-E9A7-48B7-8775-F40B3422E158");
             }
         }
 
@@ -340,12 +340,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                             break;
 
                                         default:
-                                            throw new ArgumentOutOfRangeException(nameof(kindOfThirdParameter), kindOfThirdParameter, null);
+                                            throw new ArgumentOutOfRangeException(nameof(kindOfThirdParameter), kindOfThirdParameter, "D6AEE065-4B67-4AD3-B2CE-5DFB19503E4D");
                                     }
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(paramsCount), paramsCount, null);
+                                    throw new ArgumentOutOfRangeException(nameof(paramsCount), paramsCount, "2A5CE4FD-9669-49F6-8DFF-652CBFA6A50F");
                             }                            
                         }
                         else
@@ -390,7 +390,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 return approvingRez.ChangedRuleInstance;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, "2F719C8E-3080-476D-A29B-16208181CAF9");
                         }
                     }
                 }

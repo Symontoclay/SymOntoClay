@@ -222,7 +222,7 @@ namespace SymOntoClay.Core.Internal.Storage
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_kindGlobalOfStorage), _kindGlobalOfStorage, null);
+                        throw new ArgumentOutOfRangeException(nameof(_kindGlobalOfStorage), _kindGlobalOfStorage, "6A882098-5F37-40F7-9B11-E4D37F80C6B7");
                 }
 
                 _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();

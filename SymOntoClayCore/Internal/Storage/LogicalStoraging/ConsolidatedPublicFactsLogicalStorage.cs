@@ -225,7 +225,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, "7B6A430C-0274-4C8E-8ACB-E11F8CB62E10");
                 }
             }            
         }
@@ -357,7 +357,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     return EmitIsolatedOnAddingFact(Logger, ruleInstance);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
+                    throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, "577E5AF5-B51C-431C-91E5-9F76F71F269B");
             }            
         }
 
@@ -495,7 +495,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         }
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
+                        throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, "A10FC536-0B29-4ED4-9496-36661780997A");
                 }
             }
         }
@@ -641,7 +641,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
+                        throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, "8D42D940-CF4C-4850-A42A-EDC0D0876FBF");
                 }
 
                 if (initialResult.Count <= 1)
@@ -780,7 +780,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
+                        throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, "AFC2B750-ACD6-42ED-B2F5-C2D2A3771C8C");
                 }
 
                 if (initialResult.Count <= 1)

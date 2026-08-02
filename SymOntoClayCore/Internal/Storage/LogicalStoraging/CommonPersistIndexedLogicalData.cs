@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 case KindOfRuleInstance.Question:
                     break;
 
-                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, "3E1A09C1-198F-4283-992A-444AAC232A72");
             }
 
             switch (kind)
@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 case KindOfRuleInstance.Question:
                     break;
 
-                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, "760CE4EB-BD78-4C53-A4AF-CFA68971ACED");
             }
 
             if(registerLeaves)
@@ -209,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 case KindOfRuleInstance.Question:
                     break;
 
-                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, "F201B048-A362-4CAA-BCF4-67765F4A6C67");
             }
 
             switch (kind)
@@ -220,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     break;
 
 
-                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, "9CE1EAD0-02A2-4F7E-89B3-1D6A0760E297");
             }
 
         }
@@ -300,7 +300,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);
+                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, "035123FB-DD3E-44D4-B84F-68CE3B6961F6");
             }
 
         }

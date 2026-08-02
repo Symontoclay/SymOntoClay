@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "666B48B2-CF23-4A34-A94D-248570D85319");
             }
         }
 

@@ -97,7 +97,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"rootSerializedValue = {rootSerializedValue}");
 #endif
 
-            var rootSerializedSettingsValue = _rootObjectsAndSettingsSerializer.SerializeValue(obj);
+            var rootSerializedSettingsValue = _rootObjectsAndSettingsSerializer.SerializeValue(obj, "@");
 
 #if DEBUG
             //_logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");

@@ -38,10 +38,10 @@ namespace TestSandbox.SerializationToImage
 
             using var dataCardReader = new DataCardReader(fullFileName);
 
-            var cards = dataCardReader.ReadAll();
+            var cards = dataCardReader.ReadAll().Cast<IDataCardWithPath>();
 
 #if DEBUG
-            _logger.Info($"cards.Count = {cards.Count}");
+            _logger.Info($"cards.Count() = {cards.Count()}");
 #endif
 
             foreach (var card in cards)

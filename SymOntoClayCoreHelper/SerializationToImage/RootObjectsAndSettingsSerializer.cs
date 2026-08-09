@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
-using SymOntoClay.Common.SerializationToImage.Attributes;
+﻿using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
-using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -100,12 +96,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
+#if DEBUG
+            _logger.Info($"path = {path}");
+#endif
+
             _visitedObjects.Add(obj);
 
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            //_logger.Info($"serializedValue = {serializedValue}");
+            _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalListCard()
@@ -121,13 +121,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in enumerable) 
             {
 #if DEBUG
-                //_logger.Info($"item = {item}");
+                _logger.Info($"item = {item}");
+                _logger.Info($"item?.GetType()?.FullName = {item?.GetType()?.FullName}");
+                _logger.Info($"item is IObjectWithStringId = {item is IObjectWithStringId}");
+                _logger.Info($"item as IObjectWithStringId = {item as IObjectWithStringId}");
 #endif
 
-                var fieldPath = $"{path}/[*]";
+                var objectWithStringId = item as IObjectWithStringId;
+
+                var fieldPath = $"{path}/[{(objectWithStringId == null ? "*" : objectWithStringId.Id)}]";
 
 #if DEBUG
-                //_logger.Info($"fieldPath = {fieldPath}");
+                _logger.Info($"fieldPath = {fieldPath}");
 #endif
 
                 var fieldSerializedValue = SerializeValue(item, fieldPath);

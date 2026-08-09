@@ -1,7 +1,6 @@
 ﻿namespace SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces
 {
-    public interface ISerializedWorldComponent
+    public interface ISerializedWorldComponent: IObjectWithStringId
     {
-        string Id { get; }
     }
 }

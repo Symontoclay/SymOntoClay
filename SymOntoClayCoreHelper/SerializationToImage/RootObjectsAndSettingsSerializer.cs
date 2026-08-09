@@ -97,7 +97,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         protected override SerializedValue SerializeGenericList(object obj, Type type, string path)
         {
 #if DEBUG
-            _logger.Info($"path = {path}");
+            //_logger.Info($"path = {path}");
 #endif
 
             _visitedObjects.Add(obj);
@@ -105,7 +105,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             var card = new ExternalListCard()
@@ -121,10 +121,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in enumerable) 
             {
 #if DEBUG
-                _logger.Info($"item = {item}");
-                _logger.Info($"item?.GetType()?.FullName = {item?.GetType()?.FullName}");
-                _logger.Info($"item is IObjectWithStringId = {item is IObjectWithStringId}");
-                _logger.Info($"item as IObjectWithStringId = {item as IObjectWithStringId}");
+                //_logger.Info($"item = {item}");
+                //_logger.Info($"item?.GetType()?.FullName = {item?.GetType()?.FullName}");
+                //_logger.Info($"item is IObjectWithStringId = {item is IObjectWithStringId}");
+                //_logger.Info($"item as IObjectWithStringId = {item as IObjectWithStringId}");
 #endif
 
                 var objectWithStringId = item as IObjectWithStringId;
@@ -132,7 +132,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var fieldPath = $"{path}/[{(objectWithStringId == null ? "*" : objectWithStringId.Id)}]";
 
 #if DEBUG
-                _logger.Info($"fieldPath = {fieldPath}");
+                //_logger.Info($"fieldPath = {fieldPath}");
 #endif
 
                 var fieldSerializedValue = SerializeValue(item, fieldPath);

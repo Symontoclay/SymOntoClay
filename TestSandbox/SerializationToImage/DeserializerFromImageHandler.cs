@@ -17,7 +17,8 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            Case7();
+            Case8();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -26,6 +27,15 @@ namespace TestSandbox.SerializationToImage
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case8()
+        {
+            var pathString = @"@/_settings/WorldThreadingSettings/CodeExecution";
+
+#if DEBUG
+            _logger.Info($"pathString = {pathString}");
+#endif
         }
 
         private void Case7()

@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Tests
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "B31206AC-E418-43DB-B6AC-CF88570E8EEC");
                     }
                 });
 

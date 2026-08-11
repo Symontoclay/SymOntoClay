@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Visitors
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "9810A9CE-F21F-4E29-834C-C72CE14A476A");
                     }
                     break;
 
@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Visitors
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                            throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "412EFD8C-79CF-40D1-A1D2-5CAB30262FEA");
                     }
                     break;
 
@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Visitors
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, "535C9B4A-53B6-485D-96E2-2257285E0EEA");
                             }
                         }
                         else
@@ -194,7 +194,7 @@ namespace SymOntoClay.Core.Internal.Visitors
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "03F10918-6C9F-4C39-BE4E-16E546B99576");
             }
         }
     }

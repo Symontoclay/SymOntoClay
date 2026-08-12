@@ -36,6 +36,12 @@ namespace TestSandbox.SerializationToImage
 #if DEBUG
             _logger.Info($"pathString = {pathString}");
 #endif
+
+            var path = SerializedObjectPath.Parse(pathString);
+
+#if DEBUG
+            _logger.Info($"pathString = {pathString}");
+#endif
         }
 
         private void Case7()

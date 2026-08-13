@@ -40,7 +40,7 @@ namespace TestSandbox.SerializationToImage
             var path = SerializedObjectPath.Parse(pathString);
 
 #if DEBUG
-            _logger.Info($"pathString = {pathString}");
+            _logger.Info($"path = {path}");
 #endif
         }
 

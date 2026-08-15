@@ -13,28 +13,16 @@
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.BaseDataCardWriter.RelativePath">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseDataCardWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.IDataCard)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseDataCardWriter.OnDisposing">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.BaseObjectSerializer.SerializeValue(System.Object,System.String,SymOntoClay.CoreHelper.SerializationToImage.SerializeValueMode,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardDictionary.GetDataCardByHeader(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardDictionary.OnDisposing">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardReader.ReadAll">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders.DataCardReader.ReadAll">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardReader.OnDisposing">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders.DataCardReader.OnDisposing">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ActionCard.KindOfDataCard">
@@ -313,6 +301,15 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.StackCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardWriter.RelativePath">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.IDataCard)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardWriter.OnDisposing">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ImageManifest.ToString">
             <inheritdoc/>
         </member>
@@ -326,135 +323,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectFromImageDeserializer.DeserializeValue(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeExternalValue(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeReflectionType(System.Object,System.Type)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeArray(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericStack(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeComposite(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer._tmpProcessedTypes">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.ObjectToImageSerializer._tmpProcessedMembersOfTypes">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeExternalValue(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeReflectionType(System.Object,System.Type)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeArray(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericStack(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeComposite(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer._tmpProcessedTypes">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsAndSettingsSerializer._tmpProcessedMembersOfTypes">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeReflectionType(System.Object,System.Type)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeArray(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeGenericStack(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeComposite(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer._tmpProcessedTypes">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.RootObjectsSerializer._tmpProcessedMembersOfTypes">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializationToImageSettings.ToString">
@@ -521,6 +389,138 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedValue.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.BaseObjectSerializer.SerializeValue(System.Object,System.String,SymOntoClay.CoreHelper.SerializationToImage.SerializeValueMode,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeExternalValue(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeReflectionType(System.Object,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeArray(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeGenericStack(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeComposite(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer._tmpProcessedTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer._tmpProcessedMembersOfTypes">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeExternalValue(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeReflectionType(System.Object,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeArray(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeGenericStack(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeComposite(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer._tmpProcessedTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer._tmpProcessedMembersOfTypes">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeReflectionType(System.Object,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeBareObject(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeArray(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeGenericList(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeGenericStack(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeGenericQueue(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeHashSet(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeGenericDictionary(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeComposite(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeManualResetEvent(System.Object,System.Type,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer._tmpProcessedTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer._tmpProcessedMembersOfTypes">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.StructuralAdvice.ToString">

@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters;
+using SymOntoClay.CoreHelper.SerializationToImage.Serializers;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -53,6 +56,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private IObjectDeserialializationFactory _objectDeserialializationFactory;
         private IObjectDeserializer _objectDeserializer;
 
+        private IObjectSerializer _rootObjectsSerializer;
+        private IObjectSerializer _rootObjectsAndSettingsSerializer;
+
         public void Deserialize(object obj)
         {
 #if DEBUG
@@ -60,6 +66,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
             Preparation();
+
+            CheckExisitgRootObject(obj);
 
             var deserializedObj = _objectDeserializer.DeserializeValue(_rootSerializedValue);
 
@@ -72,8 +80,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C072330D-6772-4582-948D-CA412DCD07FE");
         }
 
+        private void CheckExisitgRootObject(object obj)
+        {
+            var rootSerializedValue = _rootObjectsSerializer.SerializeValue(obj);
+
+#if DEBUG
+            _logger.Info($"rootSerializedValue = {rootSerializedValue}");
+#endif
+
+            var rootSerializedSettingsValue = _rootObjectsAndSettingsSerializer.SerializeValue(obj, "@");
+
+#if DEBUG
+            //_logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
+#endif
+        }
+
         private void Preparation()
         {
+            _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsDataCardWriter);
+            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsAndSettingsDataCardWriter);
+
             UnPackPackage();
             ReadManifest();
             LoadSerializedTypesPoolFromFile();

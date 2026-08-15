@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters;
+using SymOntoClay.CoreHelper.SerializationToImage.Serializers;
 using System;
 using System.Collections.Generic;
 using System.IO;

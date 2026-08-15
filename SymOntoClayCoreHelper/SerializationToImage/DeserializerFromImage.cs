@@ -56,6 +56,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private IObjectDeserialializationFactory _objectDeserialializationFactory;
         private IObjectDeserializer _objectDeserializer;
 
+        private ISerializedObjectsPool _serializedObjectsPool;
         private IObjectSerializer _rootObjectsSerializer;
         private IObjectSerializer _rootObjectsAndSettingsSerializer;
 
@@ -97,8 +98,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void Preparation()
         {
-            _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsDataCardWriter);
-            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsAndSettingsDataCardWriter);
+            _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
+            //_rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsDataCardWriter);
+            //_rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsAndSettingsDataCardWriter);
 
             UnPackPackage();
             ReadManifest();

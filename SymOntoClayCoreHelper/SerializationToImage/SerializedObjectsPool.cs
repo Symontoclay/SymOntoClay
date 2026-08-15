@@ -23,6 +23,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly SerializedValue _nullValue;
 
         private Dictionary<object, SerializedValue> _serializedObjects = new Dictionary<object, SerializedValue>();
+        private Dictionary<SerializedValue, object> _backSserializedObjectsDict = new Dictionary<SerializedValue, object>();
 
         private readonly object _lock = new object();
         private int _currentId = 0;
@@ -65,6 +66,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
             return _serializedObjects.TryGetValue(obj, out serializedValue);
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetObject(SerializedValue serializedValue, out object obj)
+        {
+            if(serializedValue == null)
+            {
+                obj = null;
+                return true;
+            }
+
+            if(serializedValue == _nullValue)
+            {
+                obj = null;
+                return true;
+            }
+
+            return _backSserializedObjectsDict.TryGetValue(serializedValue, out obj);
         }
 
         /// <inheritdoc/>
@@ -121,6 +140,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
             _serializedObjects[obj] = serializedValue;
+            _backSserializedObjectsDict[serializedValue] = obj;
 
             return serializedValue;
         }

@@ -364,6 +364,9 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.TryGetObject(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue,System.Object@)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPool.RegSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedObjectsPoolMode)">
             <inheritdoc/>
         </member>

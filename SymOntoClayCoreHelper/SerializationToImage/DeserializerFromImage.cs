@@ -54,6 +54,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ITypesHelper _typesHelper;
         private SerializedValue _rootSerializedValue;
         private IDataCardDictionary _objectsDataCardDictionary;
+        private IDataCardReader _deserializedRootObjectsAndSettingsdataCardReader;
         private IObjectDeserialializationFactory _objectDeserialializationFactory;
         private IObjectDeserializer _objectDeserializer;
 
@@ -71,9 +72,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"obj = {obj}");
 #endif
 
-            Preparation();
+            CreateCommonObjects();
 
             CheckExisitgRootObject(obj);
+
+            Preparation();
 
             var deserializedObj = _objectDeserializer.DeserializeValue(_rootSerializedValue);
 
@@ -84,6 +87,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             Finalization();
 
             throw new NotImplementedException("C072330D-6772-4582-948D-CA412DCD07FE");
+        }
+
+        private void CreateCommonObjects()
+        {
+            _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
+
+            _rootObjectsDataCardWriter = new DataCardListWriter(_rootObjectsDataCardsList);
+            _rootObjectsAndSettingsDataCardWriter = new DataCardListWriter(_rootObjectsAndSettingsDataCardsList);
+
+            _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsDataCardWriter);
+            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsAndSettingsDataCardWriter);
         }
 
         private void CheckExisitgRootObject(object obj)
@@ -105,14 +119,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void Preparation()
         {
-            _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
-
-            _rootObjectsDataCardWriter = new DataCardListWriter(_rootObjectsDataCardsList);
-            _rootObjectsAndSettingsDataCardWriter = new DataCardListWriter(_rootObjectsAndSettingsDataCardsList);
-
-            _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsDataCardWriter);
-            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsAndSettingsDataCardWriter);
-
             UnPackPackage();
             ReadManifest();
             LoadSerializedTypesPoolFromFile();
@@ -235,7 +241,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue) = {_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue)}");
 #endif
 
-            _objectDeserialializationFactory = new ObjectDeserialializationFactory(_objectsDataCardDictionary, _serializedTypesPool);
+            _deserializedRootObjectsAndSettingsdataCardReader = new DataCardReader(_tempPath, _manifest.RootObjectsAndSettingsRelativePath);
+
+            _objectDeserialializationFactory = new ObjectDeserialializationFactory(_objectsDataCardDictionary, _serializedTypesPool, _serializedObjectsPool, _deserializedRootObjectsAndSettingsdataCardReader, _rootObjectsAndSettingsDataCardsList);
 
             _objectDeserializer = new ObjectFromImageDeserializer(_objectDeserialializationFactory);
         }

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using System.Collections.Generic;
@@ -7,13 +6,13 @@ using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters
 {
-    public class BaseDataCardWriter : Disposable, IDataCardWriter
+    public class BaseDataCardFileWriter : Disposable, IDataCardWriter
     {
 #if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        protected BaseDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack, string packEntryName)
+        protected BaseDataCardFileWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack, string packEntryName)
         {
             _packEntryName = packEntryName;
             _filesToPack = filesToPack;

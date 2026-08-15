@@ -43,9 +43,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedTypesPool = new SerializedTypesPool();
             _typesHelper = new TypesHelper();
             _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
-            _rootObjectsDataCardWriter = new RootObjectsDataCardWriter(_tempPath, _filesToPack);
-            _rootObjectsAndSettingsDataCardWriter = new RootObjectsAndSettingsDataCardWriter(_tempPath, _filesToPack);
-            _objectsDataCardWriter = new ObjectsDataCardWriter(_tempPath, _filesToPack);
+            _rootObjectsDataCardWriter = new RootObjectsDataCardFileWriter(_tempPath, _filesToPack);
+            _rootObjectsAndSettingsDataCardWriter = new RootObjectsAndSettingsDataCardFileWriter(_tempPath, _filesToPack);
+            _objectsDataCardWriter = new ObjectsDataCardFileWriter(_tempPath, _filesToPack);
             _imageRootCardCardWriter = new ImageRootCardCardWriter(_tempPath, _filesToPack);
             _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, structuralContext, _rootObjectsDataCardWriter);
             _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, structuralContext, _rootObjectsAndSettingsDataCardWriter);

@@ -2,9 +2,9 @@
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters
 {
-    public class RootObjectsDataCardWriter : BaseDataCardWriter
+    public class RootObjectsDataCardFileWriter : BaseDataCardFileWriter
     {
-        public RootObjectsDataCardWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack)
+        public RootObjectsDataCardFileWriter(string basePath, List<(string EntryName, string FilePath)> filesToPack)
             : base(basePath, filesToPack, PackEntryNames.RootObjects)
         {
         }

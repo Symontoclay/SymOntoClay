@@ -301,13 +301,13 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.StackCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardWriter.RelativePath">
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardFileWriter.RelativePath">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.IDataCard)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardFileWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.IDataCard)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardWriter.OnDisposing">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardFileWriter.OnDisposing">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ImageManifest.ToString">

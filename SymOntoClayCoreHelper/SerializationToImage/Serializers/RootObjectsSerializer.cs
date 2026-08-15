@@ -1,12 +1,9 @@
-﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
-using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
+﻿using SymOntoClay.CoreHelper.SerializationToImage.ComponentsInterfaces;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
-namespace SymOntoClay.CoreHelper.SerializationToImage
+namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 {
     public class RootObjectsSerializer : BaseObjectSerializer
     {

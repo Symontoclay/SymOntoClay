@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SymOntoClay.CoreHelper.SerializationToImage
+namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 {
     public abstract class BaseObjectSerializer: IObjectSerializer
     {

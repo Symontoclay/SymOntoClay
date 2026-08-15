@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SymOntoClay.CoreHelper.SerializationToImage
+namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders
 {
     public class DataCardReader : Disposable, IDataCardReader
     {

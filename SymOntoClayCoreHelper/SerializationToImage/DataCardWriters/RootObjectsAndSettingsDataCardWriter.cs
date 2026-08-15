@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SymOntoClay.CoreHelper.SerializationToImage
+namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters
 {
     public class RootObjectsAndSettingsDataCardWriter: BaseDataCardWriter
     {

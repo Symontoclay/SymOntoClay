@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders;
 using System.Collections.Generic;
 using System.Linq;
 

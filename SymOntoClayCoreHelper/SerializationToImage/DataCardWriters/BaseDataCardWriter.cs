@@ -5,7 +5,7 @@ using SymOntoClay.CoreHelper.SerializerAdapters;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SymOntoClay.CoreHelper.SerializationToImage
+namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters
 {
     public class BaseDataCardWriter : Disposable, IDataCardWriter
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters;
+using System.Collections.Generic;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {

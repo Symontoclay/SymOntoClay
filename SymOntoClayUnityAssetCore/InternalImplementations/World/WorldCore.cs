@@ -228,13 +228,23 @@ namespace SymOntoClay.UnityAsset.Core.World
         /// <inheritdoc/>
         public void LoadFromImage(SerializationToImageSettings settings)
         {
-            _context.LoadFromImage(settings);
+#if DEBUG
+            //Info(, $"settings = {settings}");
+#endif
+
+            _context.Stop();
+
+            var structuralContext = new WorldStructuralContext();
+
+            var deserializer = new DeserializerFromImage(settings, structuralContext);
+            deserializer.Deserialize(this);
+
+            throw new NotImplementedException("C06FA5F1-80F9-4365-A41E-182CFD35B497");
         }
 
         /// <inheritdoc/>
         public void SaveToImage(SerializationToImageSettings settings)
         {
-
 #if DEBUG
             //Info(, $"settings = {settings}");
 #endif

@@ -4,6 +4,7 @@ using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters;
 using SymOntoClay.CoreHelper.SerializationToImage.Serializers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -57,6 +58,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private IObjectDeserializer _objectDeserializer;
 
         private ISerializedObjectsPool _serializedObjectsPool;
+        private List<IDataCard> _rootObjectsDataCardsList = new List<IDataCard>();
+        private List<IDataCard> _rootObjectsAndSettingsDataCardsList = new List<IDataCard>();
+        private IDataCardWriter _rootObjectsDataCardWriter;
+        private IDataCardWriter _rootObjectsAndSettingsDataCardWriter;
         private IObjectSerializer _rootObjectsSerializer;
         private IObjectSerializer _rootObjectsAndSettingsSerializer;
 
@@ -87,20 +92,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
 #if DEBUG
             _logger.Info($"rootSerializedValue = {rootSerializedValue}");
+            _logger.Info($"_rootObjectsDataCardsList.Count = {_rootObjectsDataCardsList.Count}");
 #endif
 
             var rootSerializedSettingsValue = _rootObjectsAndSettingsSerializer.SerializeValue(obj, "@");
 
 #if DEBUG
-            //_logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
+            _logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
+            _logger.Info($"_rootObjectsAndSettingsDataCardsList.Count = {_rootObjectsAndSettingsDataCardsList.Count}");
 #endif
         }
 
         private void Preparation()
         {
             _serializedObjectsPool = new SerializedObjectsPool(_serializedTypesPool, _typesHelper);
-            //_rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsDataCardWriter);
-            //_rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsAndSettingsDataCardWriter);
+
+            _rootObjectsDataCardWriter = new DataCardListWriter(_rootObjectsDataCardsList);
+            _rootObjectsAndSettingsDataCardWriter = new DataCardListWriter(_rootObjectsAndSettingsDataCardsList);
+
+            _rootObjectsSerializer = new RootObjectsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsDataCardWriter);
+            _rootObjectsAndSettingsSerializer = new RootObjectsAndSettingsSerializer(_serializedObjectsPool, _serializedTypesPool, _structuralContext, _rootObjectsAndSettingsDataCardWriter);
 
             UnPackPackage();
             ReadManifest();

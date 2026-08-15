@@ -310,6 +310,12 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.BaseDataCardFileWriter.OnDisposing">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.DataCardListWriter.RelativePath">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters.DataCardListWriter.Write(SymOntoClay.CoreHelper.SerializationToImage.IDataCard)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ImageManifest.ToString">
             <inheritdoc/>
         </member>

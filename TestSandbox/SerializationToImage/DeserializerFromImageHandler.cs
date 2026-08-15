@@ -18,8 +18,8 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
-            Case8();
-            //Case7();
+            //Case8();
+            Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -61,10 +61,24 @@ namespace TestSandbox.SerializationToImage
             _logger.Info($"cards.Count() = {cards.Count()}");
 #endif
 
-            foreach (var card in cards)
+//            foreach (var card in cards)
+//            {
+//#if DEBUG
+//                _logger.Info($"card = {card}");
+//#endif
+//            }
+
+            var cardsDict = cards.ToDictionary(p => p.Path, p => p);
+
+#if DEBUG
+            _logger.Info($"cardsDict.Count = {cardsDict.Count}");
+#endif
+
+            foreach(var item in cardsDict)
             {
 #if DEBUG
-                _logger.Info($"card = {card}");
+                _logger.Info($"item.Key = {item.Key}");
+                _logger.Info($"item.Value = {item.Value}");
 #endif
             }
         }

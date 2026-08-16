@@ -53,7 +53,31 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"deserializedCardsList.Count() = {deserializedCardsList.Count()}");
 #endif
 
-            throw new NotImplementedException("C8F2EC48-9FB7-4F8A-9D9D-D384458EE376");
+            var serializedCardsDict = serializedCardsList.ToDictionary(p => p.Path, p => p.Header);
+            var deserializedCardsDict = deserializedCardsList.ToDictionary(p => p.Path, p => p.Header);
+
+            foreach (var item in deserializedCardsDict)
+            {
+                var path = item.Key;
+                var serializedValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"path = {path}");
+                _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+                if(serializedCardsDict.ContainsKey(path))
+                {
+                    if(_serializedObjectsPool.TryGetObject(serializedValue, out var obj))
+                    {
+#if DEBUG
+                        _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
+#endif
+
+                        _alreadyExistingObjects[serializedValue] = obj;
+                    }
+                }
+            }
         }
 
         /// <inheritdoc/>

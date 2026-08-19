@@ -33,13 +33,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private void PrepareDictionaryForReplace()
         {
 #if DEBUG
-            _logger.Info($"_rootObjectsAndSettingsDataCardsList.Count = {_rootObjectsAndSettingsDataCardsList.Count}");
+            //_logger.Info($"_rootObjectsAndSettingsDataCardsList.Count = {_rootObjectsAndSettingsDataCardsList.Count}");
 #endif
 
             var serializedCardsList = _rootObjectsAndSettingsDataCardsList.Cast<IDataCardWithPath>();
 
 #if DEBUG
-            _logger.Info($"serializedCardsList.Count() = {serializedCardsList.Count()}");
+            //_logger.Info($"serializedCardsList.Count() = {serializedCardsList.Count()}");
 #endif
 
             if(!serializedCardsList.Any())
@@ -50,7 +50,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var deserializedCardsList = _deserializedRootObjectsAndSettingsdataCardReader.ReadAll().Cast<IDataCardWithPath>();
 
 #if DEBUG
-            _logger.Info($"deserializedCardsList.Count() = {deserializedCardsList.Count()}");
+            //_logger.Info($"deserializedCardsList.Count() = {deserializedCardsList.Count()}");
 #endif
 
             var serializedCardsDict = serializedCardsList.ToDictionary(p => p.Path, p => p.Header);
@@ -62,8 +62,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var serializedValue = item.Value;
 
 #if DEBUG
-                _logger.Info($"path = {path}");
-                _logger.Info($"serializedValue = {serializedValue}");
+                //_logger.Info($"path = {path}");
+                //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
                 if(serializedCardsDict.ContainsKey(path))
@@ -71,7 +71,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     if(_serializedObjectsPool.TryGetObject(serializedValue, out var obj))
                     {
 #if DEBUG
-                        _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
+                        //_logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
 #endif
 
                         _alreadyExistingObjects[serializedValue] = obj;

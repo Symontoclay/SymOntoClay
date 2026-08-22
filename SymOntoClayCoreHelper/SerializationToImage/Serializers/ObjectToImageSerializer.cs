@@ -497,7 +497,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 Header = serializedValue
             };
 
-            var fieldsWithSerializedMembers = GetFields(type)
+            var fields = GetFields(type).ToList();
+
+            var fieldsWithSerializedMembers = fields
                 .Where(f => f.Field.IsDefined(typeof(SerializedMemberAttribute), false))
                 .ToList();
 
@@ -536,7 +538,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
             card.FieldsWithSerializedMembers = cardFieldWithSerializedMembersList;
 
-            var fieldsWithChildren = GetFields(type)
+            var fieldsWithChildren = fields
                 .Where(f => f.Field.IsDefined(typeof(SerializedMemberWithChildrenAttribute), false))
                 .ToList();
 
@@ -574,6 +576,22 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             }
 
             card.FieldsWithChildren = cardFieldWithChildrenList;
+
+            var otherFields = fields
+                .Where(f => !f.Field.IsDefined(typeof(SerializedMemberWithChildrenAttribute), false) && !f.Field.IsDefined(typeof(SerializedMemberAttribute), false))
+                .ToList();
+
+            if(otherFields.Any())
+            {
+                throw new NotImplementedException("C1F0FD92-8746-4761-9169-9BA55E08AABA");
+            }
+
+            var propertyInfos = GetProperties(type);
+
+            if(propertyInfos.Any())
+            {
+                throw new NotImplementedException("C791DC83-6B2E-4463-854E-EF086E8AB6D9");
+            }
 
 #if DEBUG
             //_logger.Info($"card = {card}");

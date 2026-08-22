@@ -581,20 +581,72 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 .Where(f => !f.Field.IsDefined(typeof(SerializedMemberWithChildrenAttribute), false) && !f.Field.IsDefined(typeof(SerializedMemberAttribute), false))
                 .ToList();
 
-            if(otherFields.Any())
+            var cardOtherFieldList = new List<(string, int, SerializedValue)>();
+
+            if (otherFields.Any())
             {
-                throw new NotImplementedException("C1F0FD92-8746-4761-9169-9BA55E08AABA");
+#if DEBUG
+                _logger.Info($"otherFields.Count = {otherFields.Count}");
+#endif
+
+                foreach(var item in otherFields)
+                {
+                    var field = item.Field;
+
+#if DEBUG
+                    //_logger.Info($"field.Name = {field.Name}");
+#endif
+
+                    if (field.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+                    {
+                        continue;
+                    }
+
+#if DEBUG
+                    TmpCheckProcessedMembersOfTypes("F7F593D8-D8B5-4A9F-866D-4ABC7AF8AA88", type, field.Name);
+#endif
+
+                    ProcessFieldInfo(field, item.TypeId, obj, cardOtherFieldList);
+                }
             }
 
-            var propertyInfos = GetProperties(type);
+            card.OtherFields = cardOtherFieldList;
 
-            if(propertyInfos.Any())
+            var cardPropertyList = new List<(string, int, SerializedValue)>();
+
+            var properties = GetProperties(type);
+
+            if(properties.Any())
             {
-                throw new NotImplementedException("C791DC83-6B2E-4463-854E-EF086E8AB6D9");
+#if DEBUG
+                //_logger.Info($"properties.Count() = {properties.Count()}");
+#endif
+
+                foreach (var item in properties)
+                {
+                    var property = item.Prop;
+
+#if DEBUG
+                    //_logger.Info($"property.Name = {property.Name}");
+#endif
+
+                    if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+                    {
+                        continue;
+                    }
+
+#if DEBUG
+                    TmpCheckProcessedMembersOfTypes("5E1B7132-C79B-45F2-9D06-F4B749989D8D", type, property.Name);
+#endif
+
+                    ProcessPropertyInfo(property, item.TypeId, obj, cardPropertyList);
+                }
+
+                card.Properties = cardPropertyList;
             }
 
 #if DEBUG
-            //_logger.Info($"card = {card}");
+            _logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -697,13 +749,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
             var cardPropertyList = new List<(string, int, SerializedValue)>();
 
-            var propertyInfos = GetProperties(type);
+            var properties = GetProperties(type);
 
 #if DEBUG
-            //_logger.Info($"propertyInfos.Count() = {propertyInfos.Count()}");
+            //_logger.Info($"properties.Count() = {properties.Count()}");
 #endif
 
-            foreach (var item in propertyInfos)
+            foreach (var item in properties)
             {
                 var property = item.Prop;
 
@@ -1152,7 +1204,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
             {
                 "_context",
-                "_serializedWorldComponents"
+                "_serializedWorldComponents",
+                "_settings",
+                "_lockObj",
+                "_state",
+                "_platformTypesConverters"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>()
             {

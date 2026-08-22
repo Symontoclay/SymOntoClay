@@ -9,12 +9,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
     {
         /// <inheritdoc/>
         public KindOfDataCard KindOfDataCard => KindOfDataCard.KeyWorldComponentClassCard;
-
+        
         /// <inheritdoc/>
         public SerializedValue Header { get; set; }
 
         public List<(string, int, SerializedValue)> FieldsWithSerializedMembers { get; set; }
         public List<(string, int, SerializedValue)> FieldsWithChildren { get; set; }
+        public List<(string, int, SerializedValue)> OtherFields { get; set; }
+        public List<(string, int, SerializedValue)> Properties { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -43,6 +45,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
             sb.PrintPODListProp(n, nameof(FieldsWithSerializedMembers), FieldsWithSerializedMembers);
             sb.PrintPODListProp(n, nameof(FieldsWithChildren), FieldsWithChildren);
+            sb.PrintPODListProp(n, nameof(OtherFields), OtherFields);
+            sb.PrintPODListProp(n, nameof(Properties), Properties);
 
             return sb.ToString();
         }

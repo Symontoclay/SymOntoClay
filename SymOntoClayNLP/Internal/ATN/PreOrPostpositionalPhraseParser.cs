@@ -176,7 +176,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, "923E6DE5-A079-468C-B3C8-30B3E5AA04FA");
             }
         }
 
@@ -208,7 +208,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, "EF25210B-9203-42D7-8F88-9F2A344C85A1");
             }
         }
 
@@ -226,7 +226,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, "350827AB-889B-4B21-849E-E17FF8DB15B0");
             }
         }
 

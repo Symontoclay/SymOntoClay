@@ -61,7 +61,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, "07811CBA-72D1-408B-BD1C-C9823BBAF6BB");
             }
         }
 
@@ -117,7 +117,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(verbChainState), verbChainState, null);
+                    throw new ArgumentOutOfRangeException(nameof(verbChainState), verbChainState, "3855CCEC-AC7A-45CF-A788-34670FB0D35B");
             }
 
             sentence.IsNegation = targetVerbPhrase.Negation != null;

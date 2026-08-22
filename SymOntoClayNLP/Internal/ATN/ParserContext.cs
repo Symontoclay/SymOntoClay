@@ -408,7 +408,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(expectedBehavior), expectedBehavior, null);
+                        throw new ArgumentOutOfRangeException(nameof(expectedBehavior), expectedBehavior, "3E1431CF-47C7-4134-B2A7-602F69B0B18B");
                 }
             }
             catch (FailStepInPhraseException e)
@@ -501,7 +501,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, "7C93D433-C974-4519-B916-5BE183AC8C5A");
                 }
             }
             else
@@ -582,7 +582,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, "38C23C75-AB5A-4182-BC15-FE7CCA9826AD");
                 }
             }
         }

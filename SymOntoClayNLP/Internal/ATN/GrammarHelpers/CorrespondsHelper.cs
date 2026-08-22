@@ -46,7 +46,7 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
                     return NounSubjectAndVerb(subject.AsNoun, verb);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(subject.PartOfSpeech), subject.PartOfSpeech, null);
+                    throw new ArgumentOutOfRangeException(nameof(subject.PartOfSpeech), subject.PartOfSpeech, "DEA9F11F-1797-4F53-97B7-19FCCDE16662");
             }
         }
 

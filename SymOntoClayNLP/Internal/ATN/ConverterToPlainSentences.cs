@@ -48,7 +48,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     return ProcessSentence(sentenceItem.AsSentence);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, "1F919877-BCFB-4D32-B999-730C493E4385");
             }
         }
 

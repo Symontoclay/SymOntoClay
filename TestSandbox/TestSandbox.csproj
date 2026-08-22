@@ -57,6 +57,9 @@
     <None Update="SerializationToImage\ImageRoot.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="SerializationToImage\Img_20260822_184247.pckg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="SerializationToImage\Manifest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -586,7 +586,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             if (otherFields.Any())
             {
 #if DEBUG
-                _logger.Info($"otherFields.Count = {otherFields.Count}");
+                //_logger.Info($"otherFields.Count = {otherFields.Count}");
 #endif
 
                 foreach(var item in otherFields)
@@ -646,7 +646,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             }
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);

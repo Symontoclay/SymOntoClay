@@ -110,7 +110,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var typeNamesDictData = bsonSerializerAdapter.Serialize(_typeNamesDict, serializer);
 
 #if DEBUG
-            _logger.Info($"typeNamesDictData.Length = {typeNamesDictData.Length}");
+            //_logger.Info($"typeNamesDictData.Length = {typeNamesDictData.Length}");
 #endif
 
             writer.Write(typeNamesDictData.Length);

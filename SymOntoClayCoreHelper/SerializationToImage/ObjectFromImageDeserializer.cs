@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
@@ -10,14 +11,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public ObjectFromImageDeserializer(IObjectDeserialializationFactory objectDeserialializationFactory, IDataCardDictionary objectsDataCardDictionary)
+        public ObjectFromImageDeserializer(IObjectDeserialializationFactory objectDeserialializationFactory, IDataCardDictionary objectsDataCardDictionary, IStructuralContext structuralContext)
         {
             _objectDeserialializationFactory = objectDeserialializationFactory;
             _objectsDataCardDictionary = objectsDataCardDictionary;
+            _structuralContext = structuralContext;
         }
 
         private readonly IObjectDeserialializationFactory _objectDeserialializationFactory;
         private readonly IDataCardDictionary _objectsDataCardDictionary;
+        private readonly IStructuralContext _structuralContext;
 
         /// <inheritdoc/>
         public object DeserializeValue(SerializedValue serializedValue, ObjMemberRef objMember = null)
@@ -198,6 +201,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeComposite(object obj, Type type, IDataCardWithHeader card)
         {
+#if DEBUG
+            TmpCheckProcessedTypes("DAFDB7EA-1D12-4619-B3F5-1028016968BC", type);
+#endif
+
+            var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
+
+#if DEBUG
+            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
+#endif
+
             throw new NotImplementedException("C22099BC-728D-4059-9D80-5FA16DDC433D");
         }
 
@@ -210,5 +223,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
         }
+
+        private void TmpCheckProcessedTypes(string id, Type type)
+        {
+            var fullShortTypeName = $"{type.Namespace}.{type.Name}";
+
+#if DEBUG
+            //_logger.Info($"type.Name = {type.Name}");
+            //_logger.Info($"type.FullName = {type.FullName}");
+            //_logger.Info($"type.Namespace = {type.Namespace}");
+            //_logger.Info($"fullShortTypeName = {fullShortTypeName}");
+#endif
+
+            if (!_tmpProcessedTypes.Contains(type.FullName) && !_tmpProcessedTypes.Contains(fullShortTypeName))
+            {
+                throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
+            }
+        }
+
+        private List<string> _tmpProcessedTypes { get; set; } = new List<string>() 
+        { 
+            "SymOntoClay.UnityAsset.Core.World.WorldCore" 
+        };
     }
 }

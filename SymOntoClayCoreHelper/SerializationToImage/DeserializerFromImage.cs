@@ -245,7 +245,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _objectDeserialializationFactory = new ObjectDeserialializationFactory(_objectsDataCardDictionary, _serializedTypesPool, _serializedObjectsPool, _deserializedRootObjectsAndSettingsdataCardReader, _rootObjectsAndSettingsDataCardsList);
 
-            _objectDeserializer = new ObjectFromImageDeserializer(_objectDeserialializationFactory, _objectsDataCardDictionary);
+            _objectDeserializer = new ObjectFromImageDeserializer(_objectDeserialializationFactory, _objectsDataCardDictionary, _structuralContext);
         }
 
         private void NTmpFindRootObject(string relativePath)

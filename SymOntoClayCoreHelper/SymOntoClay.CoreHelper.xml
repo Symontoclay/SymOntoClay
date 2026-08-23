@@ -328,7 +328,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectDeserialializationFactory.GetValue(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectFromImageDeserializer.DeserializeValue(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.ObjectFromImageDeserializer.DeserializeValue(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.SerializationToImageSettings.ToString">

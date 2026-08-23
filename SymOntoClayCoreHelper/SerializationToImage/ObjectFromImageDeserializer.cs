@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
+using System;
 using System.IO;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
@@ -58,23 +59,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.IsArray)
             {
-                return DeserializeArray(obj, type);
+                return DeserializeArray(obj, type, dataCard as ArrayCard);
             }
 
             if (type.FullName.StartsWith("System.Action"))
             {
-                return DeserializeAction(obj, type, objMember);
+                return DeserializeAction(obj, type, objMember, dataCard as ActionCard);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                return DeserializeAction(obj, type, objMember);
+                return DeserializeAction(obj, type, objMember, dataCard as ActionCard);
             }
 
             switch (type.FullName)
             {
                 case "System.Object":
-                    return DeserializeBareObject(obj, type);
+                    return DeserializeBareObject(obj, type, dataCard as ClassCard);
 
                 case "System.Threading.CancellationTokenSource":
                     throw new NotImplementedException("C44E3BFE-ACF8-46EB-9059-0665A0BAB1E7");
@@ -88,7 +89,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     throw new NotImplementedException("C3F3E1DF-33BD-4C55-8B8D-62E4E79D21B0");
 
                 case "System.Threading.ManualResetEvent":
-                    return DeserializeManualResetEvent(obj, type);
+                    return DeserializeManualResetEvent(obj, type, dataCard as ExternalManualResetEventClassCard);
 
                 case "System.Byte":
                 case "System.SByte":
@@ -113,7 +114,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 case "System.Type":
                 case "System.RuntimeType":
-                    return DeserializeReflectionType(obj, type);
+                    return DeserializeReflectionType(obj, type, dataCard as ReflectionTypeCard);
             }
 
             var fullShortTypeName = $"{type.Namespace}.{type.Name}";
@@ -125,19 +126,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (fullShortTypeName)
             {
                 case "System.Collections.Generic.List`1":
-                    return DeserializeGenericList(obj, type);
+                    return DeserializeGenericList(obj, type, dataCard as ListCard);
 
                 case "System.Collections.Generic.Stack`1":
-                    return DeserializeGenericStack(obj, type);
+                    return DeserializeGenericStack(obj, type, dataCard as StackCard);
 
                 case "System.Collections.Generic.Queue`1":
-                    return DeserializeGenericQueue(obj, type);
+                    return DeserializeGenericQueue(obj, type, dataCard as QueueCard);
 
                 case "System.Collections.Generic.HashSet`1":
-                    return DeserializeHashSet(obj, type);
+                    return DeserializeHashSet(obj, type, dataCard as HashSetCard);
 
                 case "System.Collections.Generic.Dictionary`2":
-                    return DeserializeGenericDictionary(obj, type);
+                    return DeserializeGenericDictionary(obj, type, dataCard as DictionaryCard);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -146,7 +147,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                         throw new NotImplementedException("C8E00923-0AF2-448A-8B42-8B037C442532");
                     }
 
-                    return DeserializeComposite(obj, type);
+                    return DeserializeComposite(obj, type, dataCard);
             }
         }
 
@@ -155,57 +156,57 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotFiniteNumberException("C6466865-0D32-4523-9963-2D2244827666");
         }
 
-        private object DeserializeReflectionType(object obj, Type type)
+        private object DeserializeReflectionType(object obj, Type type, ReflectionTypeCard card)
         {
             throw new NotImplementedException("C800E9B2-9E20-402B-A3B2-EB025A76E76E");
         }
 
-        private object DeserializeBareObject(object obj, Type type)
+        private object DeserializeBareObject(object obj, Type type, ClassCard card)
         {
             throw new NotImplementedException("C11674D7-5BD0-4AA7-811F-D0B8495CD505");
         }
 
-        private object DeserializeArray(object obj, Type type)
+        private object DeserializeArray(object obj, Type type, ArrayCard card)
         {
             throw new NotImplementedException("C3A41E1D-BC85-453B-A6B0-8D84105B5E4A");
         }
 
-        private object DeserializeGenericList(object obj, Type type)
+        private object DeserializeGenericList(object obj, Type type, ListCard card)
         {
             throw new NotImplementedException("C9CA6832-F3F1-4724-9043-28156FB104C7");
         }
 
-        private object DeserializeGenericStack(object obj, Type type)
+        private object DeserializeGenericStack(object obj, Type type, StackCard card)
         {
             throw new NotImplementedException("C69DBB7C-2834-41D5-9568-D196D37DC196");
         }
 
-        private object DeserializeGenericQueue(object obj, Type type)
+        private object DeserializeGenericQueue(object obj, Type type, QueueCard card)
         {
             throw new NotImplementedException("C138422C-F405-4A36-8AB7-C4A5A9455BFB");
         }
 
-        private object DeserializeHashSet(object obj, Type type)
+        private object DeserializeHashSet(object obj, Type type, HashSetCard card)
         {
             throw new NotImplementedException("C2CD8D58-AC3D-451E-8C6B-11D02F521864");
         }
 
-        private object DeserializeGenericDictionary(object obj, Type type)
+        private object DeserializeGenericDictionary(object obj, Type type, DictionaryCard card)
         {
             throw new NotImplementedException("C7F18F76-A497-4A99-A950-8EEE7F2EBA16");
         }
 
-        private object DeserializeComposite(object obj, Type type)
+        private object DeserializeComposite(object obj, Type type, IDataCardWithHeader card)
         {
             throw new NotImplementedException("C22099BC-728D-4059-9D80-5FA16DDC433D");
         }
 
-        private object DeserializeManualResetEvent(object obj, Type type)
+        private object DeserializeManualResetEvent(object obj, Type type, ExternalManualResetEventClassCard card)
         {
             throw new NotImplementedException("C5C9CAEE-AAEB-437D-A2CE-552CE3F13FEC");
         }
 
-        private object DeserializeAction(object obj, Type type, ObjMemberRef objMember)
+        private object DeserializeAction(object obj, Type type, ObjMemberRef objMember, ActionCard card)
         {
             throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
         }

@@ -641,9 +641,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
                     ProcessPropertyInfo(property, item.TypeId, obj, cardPropertyList);
                 }
-
-                card.Properties = cardPropertyList;
             }
+
+            card.Properties = cardPropertyList;
 
 #if DEBUG
             //_logger.Info($"card = {card}");

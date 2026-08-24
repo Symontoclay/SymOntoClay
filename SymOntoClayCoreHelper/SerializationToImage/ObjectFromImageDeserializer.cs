@@ -230,6 +230,46 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            foreach(var item in card.FieldsWithSerializedMembers)
+            {
+                var name = item.Item1;
+
+#if DEBUG
+                _logger.Info($"name = {name}");
+#endif
+            }
+
+            foreach (var item in card.FieldsWithChildren)
+            {
+                var name = item.Item1;
+
+#if DEBUG
+                _logger.Info($"name = {name}");
+#endif
+            }
+
+            foreach (var item in card.OtherFields)
+            {
+                var name = item.Item1;
+
+#if DEBUG
+                _logger.Info($"name = {name}");
+#endif
+            }
+
+            foreach (var item in card.Properties)
+            {
+                var name = item.Item1;
+
+#if DEBUG
+                _logger.Info($"name = {name}");
+#endif
+            }
+
             throw new NotImplementedException("C8CA053E-8B82-40B4-90DC-B100748AE0A5");
         }
 

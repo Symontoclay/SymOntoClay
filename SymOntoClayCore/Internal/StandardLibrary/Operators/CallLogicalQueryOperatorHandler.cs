@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
             if (!operand.IsLogicalQueryOperationValue)
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException("29D4AD61-DBA9-4F82-B205-9BE106A4B8D2");
             }
 
             var val = operand.AsLogicalQueryOperationValue;

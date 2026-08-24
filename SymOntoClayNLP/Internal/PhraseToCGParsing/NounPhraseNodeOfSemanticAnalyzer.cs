@@ -123,7 +123,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, "0CA32790-1F1E-4D7F-8D0A-067ADE9EDE75");
             }
         }
 
@@ -188,7 +188,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, "6876291F-1656-4BE4-B803-C5E4C216D7B9");
             }
         }
 
@@ -291,7 +291,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, "CFC411E8-B12B-4F9B-AF47-FE8D18736D0B");
             }
         }
 

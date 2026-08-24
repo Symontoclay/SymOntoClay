@@ -94,7 +94,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(target), target, null);
+                            throw new ArgumentOutOfRangeException(nameof(target), target, "43F4A5A0-C9E2-48AB-A207-BEAAAB0AF169");
                     }
                 }
             }
@@ -115,7 +115,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     return GetVerbForActiveVoice();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(voice), voice, null);
+                    throw new ArgumentOutOfRangeException(nameof(voice), voice, "4681BC32-E1F7-4D5E-845C-173C194FD81D");
             }
         }
 
@@ -129,7 +129,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     return GetVerbForSimpleAspectOfActiveVoice();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(aspect), aspect, null);
+                    throw new ArgumentOutOfRangeException(nameof(aspect), aspect, "29A8F979-2595-4BED-8977-0C8C767424FA");
             }
         }
 
@@ -152,7 +152,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(tense), tense, null);
+                    throw new ArgumentOutOfRangeException(nameof(tense), tense, "2A2E3616-976F-4C5D-B8AD-20C1B8801044");
             }
 
             throw new NotImplementedException("84F3BB62-9A2A-48BA-8057-218546FC1510");
@@ -285,7 +285,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, null);
+                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, "95D5C35A-14AB-4BC7-BABB-1AB33BE24A5E");
                 }
             }
 

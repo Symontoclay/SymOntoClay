@@ -78,7 +78,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, "F5B72AEB-9C82-4053-BFE4-EA37546E9E39");
             }
         }
 

@@ -82,7 +82,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     throw new NotImplementedException("23A37A85-49EC-4F76-8205-F3F9C7935578");
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "77FBE355-4401-4286-84E5-841EEF1578FF");
             }
         }
 

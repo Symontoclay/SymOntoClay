@@ -64,7 +64,7 @@ namespace SymOntoClay.NLP.Internal.Dot
                 case KindOfCGNode.Relation:
                     return CreateRelationLeaf(node);
 
-                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, "DD537083-5776-4C84-B850-E14C9D3AE983");
             }
         }
 

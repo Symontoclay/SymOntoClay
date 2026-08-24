@@ -68,12 +68,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                                 }
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                                throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, "ADD38B24-5179-4C10-9F5D-52C9A2C8FCB0");
                         }
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "A3ABD477-D520-4E3A-BEDC-0147AF71EB5B");
             }
         }
 
@@ -90,7 +90,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, "5C1071D6-7A8E-45C7-B8E3-2AA252CA73A6");
             }
         }
     }

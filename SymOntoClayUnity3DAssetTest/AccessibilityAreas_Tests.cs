@@ -72,7 +72,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "19546649-1B48-4451-9E52-B6EF95F0DBDD");
                     }
                 }));
 
@@ -120,7 +120,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "67CD119D-D886-4A26-9597-0B1FF266AFE5");
                     }
                 }));
 
@@ -171,7 +171,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "5C4FAE01-28DD-4A1E-A1BD-3A34F9C25D44");
                     }
                 }));
 
@@ -223,7 +223,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "50EAE04E-D3C4-4136-ACDB-37128EBA781D");
                     }
                 }));
 
@@ -275,7 +275,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "15E63EE9-1DC6-4211-B243-ABEE310AF8C9");
                     }
                 }));
 
@@ -327,7 +327,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "E1E7543A-CF20-4414-A70B-2623D944EED4");
                     }
                 }));
 
@@ -381,7 +381,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "2B7CBFC1-4BFE-4841-AAFE-59D33D0AD621");
                     }
                 }));
 
@@ -435,7 +435,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "BB2C25FC-DAA4-475E-8746-8F6D686F2508");
                     }
                 }));
 
@@ -486,7 +486,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "531AEF18-A2A4-4E43-A5F7-531512511E7A");
                     }
                 }));
 
@@ -538,7 +538,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "3E0B82D8-EDDC-401A-BDAD-26E4D678FEA2");
                     }
                 }));
 
@@ -590,7 +590,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "621B263A-9D23-4D2F-9845-92FA9620D41F");
                     }
                 }));
 
@@ -682,7 +682,7 @@ app PeaceKeeper is cls1, cls2
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "843C18B7-546E-4FCB-A5C8-88C181A930E9");
                     }
                 }));
 
@@ -738,7 +738,7 @@ app PeaceKeeper
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "A96E9588-5CA6-48BD-95C8-77A8C6626604");
                     }
                 }));
 

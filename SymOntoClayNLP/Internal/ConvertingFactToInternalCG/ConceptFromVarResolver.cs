@@ -95,7 +95,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "011F5228-6309-480C-BBD4-A81D087F2BF7");
             }
         }
 

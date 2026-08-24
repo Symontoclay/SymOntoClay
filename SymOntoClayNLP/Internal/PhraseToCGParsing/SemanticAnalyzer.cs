@@ -59,7 +59,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, "FB6A7416-B4C7-4A10-94FF-8AD89F988A67");
             }
 
             return outerConceptualGraph;

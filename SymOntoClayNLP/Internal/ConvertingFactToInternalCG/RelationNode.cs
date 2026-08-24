@@ -283,7 +283,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     return value.AsStrongIdentifierValue.NormalizedNameValue;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, "0A85FD01-5F67-4155-BAB7-F014CC359E14");
             }
         }
     }

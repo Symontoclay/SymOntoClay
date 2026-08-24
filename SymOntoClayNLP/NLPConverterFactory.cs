@@ -120,7 +120,7 @@ namespace SymOntoClay.NLP
                         return new NLPConverter(_logger, _wordsDict);
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(_creationStrategy), _creationStrategy, null);
+                        throw new ArgumentOutOfRangeException(nameof(_creationStrategy), _creationStrategy, "DAD0E2E8-46A9-452B-BBDB-054E8D192E96");
                 }
             }
         }

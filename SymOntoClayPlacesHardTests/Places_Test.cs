@@ -72,7 +72,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "5F1A612B-15F1-4EDB-9777-F4F0E80D363E");
                     }
                 }, true);
 
@@ -152,7 +152,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "B719D260-C97D-4CB9-BAC8-66BFD369CDA2");
                     }
                 }, true);
 
@@ -232,7 +232,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "6DD2B135-938F-404A-985D-56C013E602D2");
                     }
                 }, true);
 
@@ -312,7 +312,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "0E68944E-85DC-4DA2-9D9B-79106484D48F");
                     }
                 }, true);
 
@@ -464,7 +464,7 @@ namespace SymOntoClayPlacesHardTests
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "EDA2C095-67C7-4E06-8715-BF136F6EA337");
                     }
                 }, true);
 
@@ -654,7 +654,7 @@ action check
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "A3EE46D6-921C-43DF-B810-9E60387A6F79");
                     }
                 }, true);
 

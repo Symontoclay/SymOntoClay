@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 if(expression.Parameters.Any(p => p.IsNamed) && expression.Parameters.Any(p => !p.IsNamed))
                 {
-                    throw new NotSupportedException();
+                    throw new NotSupportedException("4706F62E-CB01-48D1-A8A4-6BC6579B759F");
                 }
 
                 command.CountParams = expression.Parameters.Count;

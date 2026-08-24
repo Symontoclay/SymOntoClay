@@ -68,7 +68,7 @@ namespace SymOntoClay.ProjectFiles
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfNewCommand), kindOfNewCommand, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfNewCommand), kindOfNewCommand, "4543A10D-82AD-4A50-89DE-6E7759CF0125");
             }
 
             if (appDir == null)
@@ -201,7 +201,7 @@ namespace SymOntoClay.ProjectFiles
                     case KindOfNewCommand.Lib: targetDirName = libsDirName; break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfNewCommand), kindOfNewCommand, null);
+                        throw new ArgumentOutOfRangeException(nameof(kindOfNewCommand), kindOfNewCommand, "F1C6EA82-6A9B-46CA-82C2-328D43B2720C");
                 }
 
                 switch (kindOfNewCommand)

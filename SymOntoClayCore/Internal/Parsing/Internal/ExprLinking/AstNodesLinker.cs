@@ -114,7 +114,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
         {
             if (point.CurrentNode == null)
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException("095AB09C-F6F9-484D-B6EA-7B839910AB77");
             }
 
             var possibleCurrentNode = GetPossibleCurrentNode(node, point);
@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
         {
             if (point.CurrentNode == null)
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException("D304F368-33C5-47EA-9DD2-3BB15B5F2201");
             }
 
             var possibleCurrentNode = GetPossibleCurrentNode(node, point);

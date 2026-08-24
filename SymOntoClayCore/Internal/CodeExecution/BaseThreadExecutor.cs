@@ -1234,7 +1234,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (localExecutionContext.Kind != KindOfLocalCodeExecutionContext.AddingFact)
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException("D801EAE1-EA26-45A0-A9F0-F70FAAD38BA3");
             }
 
             localExecutionContext.KindOfAddFactResult = KindOfAddFactOrRuleResult.Reject;

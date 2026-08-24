@@ -248,7 +248,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         resultItem = context.ConceptsDict[(ConceptCGNode)sourceItem];
                         break;
 
-                    default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    default: throw new ArgumentOutOfRangeException(nameof(kind), kind, "4A123B20-764B-419F-8B6F-71293CBB393E");
                 }
 
                 var inputsNodesList = sourceItem.Inputs.Select(p => (RelationCGNode)p).ToList();
@@ -285,7 +285,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                 }
 
-
                 var outputsNodesList = sourceItem.Outputs.Select(p => (RelationCGNode)p).ToList();
 
                 foreach (var outputNode in outputsNodesList)
@@ -308,7 +307,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                     }
                 }
             }
-
         }
 
         public BaseInternalConceptCGNode GetBaseConceptCGNodeForMakingCommonRelation(BaseConceptCGNode sourceNode, ContextOfConvertingCGToInternal context)
@@ -328,7 +326,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                 case KindOfCGNode.Concept:
                     return context.ConceptsDict[(ConceptCGNode)sourceNode];
 
-                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, "035BD023-C741-47B3-80CB-F03A39F6FE60");
             }
         }
 
@@ -376,7 +374,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         resultItem = context.ConceptsDict[(ConceptCGNode)sourceItem];
                         break;
 
-                    default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    default: 
+                        throw new ArgumentOutOfRangeException(nameof(kind), kind, "AA508CF2-984B-460B-873C-08111CEC159C");
                 }
 
                 var inputsNodesList = sourceItem.Inputs.Where(p => sourceItems.Contains(p)).Select(p => (RelationCGNode)p).ToList();
@@ -403,7 +402,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                                 resultRelationInputNode = context.ConceptsDict[(ConceptCGNode)relationInputNode];
                                 break;
 
-                            default: throw new ArgumentOutOfRangeException(nameof(relationInputNodeKind), relationInputNodeKind, null);
+                            default: 
+                                throw new ArgumentOutOfRangeException(nameof(relationInputNodeKind), relationInputNodeKind, "E057B0EC-4931-4BC4-B072-660801D92426");
                         }
 
                         if (relationStorage.ContainsRelation(resultRelationInputNode.Name, resultRelationItem.Name, resultItem.Name))
@@ -442,8 +442,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                                 resultRelationOutputNode = context.ConceptsDict[(ConceptCGNode)relationOutputNode];
                                 break;
 
-
-                            default: throw new ArgumentOutOfRangeException(nameof(relationOutputNodeKind), relationOutputNodeKind, null);
+                            default: 
+                                throw new ArgumentOutOfRangeException(nameof(relationOutputNodeKind), relationOutputNodeKind, "6D80571A-4A0A-41F2-AAAD-69228C7004A1");
                         }
 
                         if (relationStorage.ContainsRelation(resultItem.Name, resultRelationItem.Name, resultRelationOutputNode.Name))
@@ -592,7 +592,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         ConvertRelation((RelationCGNode)child, targetParent, context);
                         break;
 
-                    default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    default: 
+                        throw new ArgumentOutOfRangeException(nameof(kind), kind, "9286B37B-5889-4FFD-89F7-D0844F4960F7");
                 }
             }
         }
@@ -615,7 +616,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("56FE03F8-E745-4163-872A-6A7DDE8544DD");
                             }
 
                             var relation = relationsList.Single();
@@ -624,7 +625,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("36B92392-A73A-46AD-A31B-6EE93CA0AF1D");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -633,7 +634,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (aspect == GrammaticalAspect.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("BB42C05D-6CC4-4D65-B5C7-1E52A3154615");
                             }
 
                             result.Aspect = aspect;
@@ -644,7 +645,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("364362F2-C9AE-4E2D-AFA9-7F7BC69A3F32");
                             }
 
                             var relation = relationsList.Single();
@@ -653,7 +654,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("3B3D46B8-B8C7-43CE-9A77-7D914D0EFFEF");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -662,7 +663,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (tense == GrammaticalTenses.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("5A770BBB-6C30-456C-8027-9D6854F0BE1B");
                             }
 
                             result.Tense = tense;
@@ -673,7 +674,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("88E82947-C6EA-4B9A-A5DA-82C9511391A7");
                             }
 
                             var relation = relationsList.Single();
@@ -682,7 +683,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("495BF02C-89A8-4AB8-94B7-3D0A579E2FBA");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -691,7 +692,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (voice == GrammaticalVoice.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("661CF9A5-F9A8-4CFC-A06B-8F3C6808C987");
                             }
 
                             result.Voice = voice;
@@ -702,7 +703,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("293EA4F4-BDE2-4CD2-81CB-C0751AF8CB26");
                             }
 
                             var relation = relationsList.Single();
@@ -711,7 +712,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("1B186ED1-20B6-4066-A764-39FFC2850C99");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -720,7 +721,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (mood == GrammaticalMood.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("3F984ED8-56E2-4150-B05A-92F9838B8544");
                             }
 
                             result.Mood = mood;
@@ -731,7 +732,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("FAEB74E8-C764-4EA1-A35E-51C4084DEE09");
                             }
 
                             var relation = relationsList.Single();
@@ -740,7 +741,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("6FC4EE30-0243-45CC-ACE3-822AE3E0C099");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -753,7 +754,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (modal == AbilityModality.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("B6039E6D-8EB4-4595-844A-9A47C8A5D76C");
                             }
 
                             result.AbilityModality = modal;
@@ -764,7 +765,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("B62531B0-0F41-44F1-A80E-873A421E2046");
                             }
 
                             var relation = relationsList.Single();
@@ -773,7 +774,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("3DFDF3F0-0A7A-4A87-8404-6CF312D7CD4E");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -782,7 +783,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (modal == PermissionModality.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("0571A4A6-E4C7-4764-8B44-341AEBAE0B5E");
                             }
 
                             result.PermissionModality = modal;
@@ -793,7 +794,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("2413CAF9-4B54-4041-9380-4CB669F4A45F");
                             }
 
                             var relation = relationsList.Single();
@@ -802,7 +803,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("5E01B55D-C90A-4C3D-83E8-542B04EEDA06");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -811,7 +812,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (modal == ObligationModality.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("40499818-EA4A-4636-B370-BCBAF611CE3F");
                             }
 
                             result.ObligationModality = modal;
@@ -822,7 +823,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("556D7DBE-0E3D-44B9-AE44-40D02FCB8E66");
                             }
 
                             var relation = relationsList.Single();
@@ -831,7 +832,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("42F4178E-6F4E-4890-85D7-CBEEC7828D07");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -840,7 +841,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (modal == ProbabilityModality.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("9FFDF5D1-1DD8-49FA-B004-F8488326217B");
                             }
 
                             result.ProbabilityModality = modal;
@@ -851,7 +852,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         {
                             if (relationsList.Count > 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("9785529E-1282-412B-81F8-D99F1DB112D8");
                             }
 
                             var relation = relationsList.Single();
@@ -860,7 +861,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (outputNodesOfTheRelation.Count != 1)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("E16227B3-D07A-4774-A75D-E7B1CAB55FE9");
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
@@ -869,14 +870,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             if (modal == ConditionalModality.Undefined)
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("FE317600-565A-4AAB-B10B-46659160D5D5");
                             }
 
                             result.ConditionalModality = modal;
                         }
                         break;
 
-                    default: throw new ArgumentOutOfRangeException(nameof(kindOfGrammaticalRelation), kindOfGrammaticalRelation, null);
+                    default: 
+                        throw new ArgumentOutOfRangeException(nameof(kindOfGrammaticalRelation), kindOfGrammaticalRelation, "F96A98DC-3B46-49AB-945E-29928984BFB8");
                 }
             }
 

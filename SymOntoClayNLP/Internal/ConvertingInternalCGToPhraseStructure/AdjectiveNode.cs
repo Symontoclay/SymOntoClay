@@ -62,7 +62,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     return ProcessConcept();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, "A51335F3-FE49-4000-AF64-A3165B40DD38");
             }
         }
 

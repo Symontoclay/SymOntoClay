@@ -59,7 +59,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     return ProcessImperativeMood();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(mood), mood, null);
+                    throw new ArgumentOutOfRangeException(nameof(mood), mood, "73834E38-4861-4B41-B6E2-45AE29AAC22A");
             }
         }
 

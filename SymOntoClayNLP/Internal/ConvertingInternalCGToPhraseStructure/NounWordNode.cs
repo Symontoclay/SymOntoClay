@@ -178,7 +178,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_roleOfNoun), _roleOfNoun, null);
+                    throw new ArgumentOutOfRangeException(nameof(_roleOfNoun), _roleOfNoun, "51DAC2B6-D469-4C6C-A574-AE8441DE34DA");
             }
         }
 

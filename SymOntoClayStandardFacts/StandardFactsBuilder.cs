@@ -944,7 +944,7 @@ namespace SymOntoClay.StandardFacts
                     break;
                      
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, "9473EFEC-B8CF-48CF-B324-6AA695A3C7D7");
             }
 
             return node;

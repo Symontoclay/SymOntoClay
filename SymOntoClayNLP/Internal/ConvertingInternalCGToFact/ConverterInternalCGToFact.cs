@@ -142,21 +142,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                     PrepareForEntityConditionExpression(source, dest, context);
                     break;
 
-                default: throw new ArgumentOutOfRangeException(nameof(kindOfGraphOrConcept), kindOfGraphOrConcept, null);
+                default: 
+                    throw new ArgumentOutOfRangeException(nameof(kindOfGraphOrConcept), kindOfGraphOrConcept, "A8B120A7-5A4D-444D-AA48-D66941B9CC1D");
             }
 
             var expression = CreateExpressionByWholeGraph(source, context, dest, part, contextForSingleRuleInstance);
 
 
             part.Expression = expression;
-
-
-
-
-
-
-
-
         }
 
         private void PrepareForGraphConditionExpression(InternalConceptualGraph source, RuleInstance dest, ContextOfConvertingInternalCGToFact context)
@@ -223,7 +216,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         }
                         break;
 
-                    default: throw new ArgumentOutOfRangeException(nameof(kindOfSpecialRelation), kindOfSpecialRelation, null);
+                    default: 
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSpecialRelation), kindOfSpecialRelation, "DAE302E0-D1B6-4A34-9060-6C8808B32189");
                 }
             }
 
@@ -329,17 +323,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
             }
 
             foreach (var initRelation in initRelationsList)
@@ -407,7 +390,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                     }
                     break;
 
-                default: throw new ArgumentOutOfRangeException(nameof(kindOfInputNode), kindOfInputNode, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kindOfInputNode), kindOfInputNode, "A2055F41-0B9D-4B2A-A8A9-B0823B996A56");
             }
         }
 
@@ -512,23 +495,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                 relationExpr.LinkedVars.Add(varNodeForRelation);
             }
 
-
-
-
-
-
-
-
-
             return relationExpr;
         }
 
         private void AddAnnotationForRelation(string annotationName, LogicalQueryNode relation, ContextOfConvertingInternalCGToFact context, ContextForSingleRuleInstanceOfConvertingInternalCGToFact contextForSingleRuleInstance)
         {
             return;
-
-
-
 
             ////param.Quantifier = KindOfQuantifier.Existential;
 
@@ -597,7 +569,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         return varExpr;
                     }
 
-                default: throw new ArgumentOutOfRangeException(nameof(kindOfGraphOrConcept), kindOfGraphOrConcept, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kindOfGraphOrConcept), kindOfGraphOrConcept, "55E2534B-7696-413A-859B-B377AD5DF92A");
             }
         }
     }

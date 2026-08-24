@@ -59,7 +59,7 @@ namespace SymOntoClay.ProjectFiles
                     return wSpaceFilesList.First();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(count), count, null);
+                    throw new ArgumentOutOfRangeException(nameof(count), count, "AA3B7766-EB12-4676-942A-A7C709E227A6");
             }
         }
     }

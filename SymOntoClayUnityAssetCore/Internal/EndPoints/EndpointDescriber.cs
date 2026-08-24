@@ -130,7 +130,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
                     else
                     {
-                        throw new NotSupportedException();
+                        throw new NotSupportedException("AD776367-4DC9-4EA4-A6F5-2F09C4B30564");
                     }
                 }
 

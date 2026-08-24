@@ -119,7 +119,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, null);
+                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, "B8122B31-6B4E-4F89-A526-F7269D28A42A");
                 }
             }
 
@@ -165,7 +165,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, null);
+                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, "CE2EAB93-C1D4-4256-B80B-664A8A627945");
                 }
             }
         }

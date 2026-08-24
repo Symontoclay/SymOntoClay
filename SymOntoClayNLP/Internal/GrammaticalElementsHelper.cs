@@ -53,7 +53,7 @@ namespace SymOntoClay.NLP.Internal
                 case KindOfQuestion.Tag:
                     return CGGramamaticalNamesOfConcepts.KindOfQuestion_Tag;
 
-                default: throw new ArgumentOutOfRangeException(nameof(kindOfQuestion), kindOfQuestion, null);
+                default: throw new ArgumentOutOfRangeException(nameof(kindOfQuestion), kindOfQuestion, "E1094CDD-9659-46AF-AAB7-44C213459153");
             }
         }
 
@@ -111,7 +111,7 @@ namespace SymOntoClay.NLP.Internal
                 case GrammaticalAspect.PerfectContinuous:
                     return CGGramamaticalNamesOfConcepts.GrammaticalAspect_PerfectContinuous;
 
-                default: throw new ArgumentOutOfRangeException(nameof(aspect), aspect, null);
+                default: throw new ArgumentOutOfRangeException(nameof(aspect), aspect, "29D6DD3B-F5F2-4F12-8B98-EAE0047DDC4A");
             }
         }
 
@@ -167,7 +167,7 @@ namespace SymOntoClay.NLP.Internal
                 case GrammaticalTenses.FutureInThePast:
                     return CGGramamaticalNamesOfConcepts.GrammaticalTenses_FutureInThePast;
 
-                default: throw new ArgumentOutOfRangeException(nameof(tense), tense, null);
+                default: throw new ArgumentOutOfRangeException(nameof(tense), tense, "B44D5027-AFAF-406F-9ED8-DB8AD799BBAC");
             }
         }
 
@@ -219,7 +219,7 @@ namespace SymOntoClay.NLP.Internal
                 case GrammaticalVoice.Passive:
                     return CGGramamaticalNamesOfConcepts.GrammaticalVoice_Passive;
 
-                default: throw new ArgumentOutOfRangeException(nameof(voice), voice, null);
+                default: throw new ArgumentOutOfRangeException(nameof(voice), voice, "7D918283-9C23-45EB-BED3-80B86C51AB78");
             }
         }
 
@@ -274,7 +274,7 @@ namespace SymOntoClay.NLP.Internal
                 case GrammaticalMood.Optative:
                     return CGGramamaticalNamesOfConcepts.GrammaticalMood_Optative;
 
-                default: throw new ArgumentOutOfRangeException(nameof(mood), mood, null);
+                default: throw new ArgumentOutOfRangeException(nameof(mood), mood, "960EFFA1-D2C9-46B0-BADD-5AB3411A03BC");
             }
         }
 
@@ -348,7 +348,7 @@ namespace SymOntoClay.NLP.Internal
                     return CGGramamaticalNamesOfConcepts.KindOfModal_BeAbleTo;
 
                 default: 
-                    throw new ArgumentOutOfRangeException(nameof(modal), modal, null);
+                    throw new ArgumentOutOfRangeException(nameof(modal), modal, "67C002F9-EE64-4DC0-A1B9-EAA05BCB7E3D");
             }
         }
 
@@ -401,7 +401,7 @@ namespace SymOntoClay.NLP.Internal
                 case PermissionModality.BePermittedTo:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_BePermittedTo;
 
-                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, null);
+                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, "DAF7DEAD-4E3E-4B55-A650-7E26E65AF639");
             }
         }
 
@@ -469,7 +469,7 @@ namespace SymOntoClay.NLP.Internal
                 case ObligationModality.BeSupposedTo:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_BeSupposedTo;
 
-                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, null);
+                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, "FE4595AC-E20A-49B1-933A-357BC6AA88DD");
             }
         }
 
@@ -541,7 +541,7 @@ namespace SymOntoClay.NLP.Internal
                 case ProbabilityModality.Might:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_Might;
 
-                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, null);
+                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, "54D6A469-81F7-4218-A1FA-235307E60A36");
             }
         }
 
@@ -587,7 +587,7 @@ namespace SymOntoClay.NLP.Internal
                 case ConditionalModality.BeSupposedTo:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_BeSupposedTo;
 
-                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, null);
+                default: throw new ArgumentOutOfRangeException(nameof(modal), modal, "44AF70A7-EE9F-4CBD-B449-B0812F1FCDE9");
             }
         }
 

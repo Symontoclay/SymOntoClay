@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         case ResolvingNotResultsStrategy.NotSupport:
                             if(queryExecutingCard.ResultsOfQueryToRelationList.Any())
                             {
-                                throw new NotSupportedException();
+                                throw new NotSupportedException("03BEE86B-9803-436D-B33C-D8BCA4C0A940");
                             }
 
                             result.IsSuccess = queryExecutingCard.IsSuccess;

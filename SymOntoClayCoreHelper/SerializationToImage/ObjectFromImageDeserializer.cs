@@ -211,7 +211,36 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
-            throw new NotImplementedException("C22099BC-728D-4059-9D80-5FA16DDC433D");
+            switch (kindOfStructuralObject)
+            {
+                case KindOfStructuralObject.WorldRoot:
+                case KindOfStructuralObject.WorldComponent:
+                    return DeserializeKeyWorldComponent(obj, type, card as KeyWorldComponentClassCard);
+
+                case KindOfStructuralObject.SerializeWithSerializationDataCreation:
+                    return DeserializeWithSerializationDataCreation(obj, type, card as ClassCardWithSerializationData);
+
+                case KindOfStructuralObject.UsualObject:
+                    return DeserializeUsualObject(obj, type, card as ClassCard);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStructuralObject), kindOfStructuralObject, "2F0E3A83-964D-4E30-B083-FFAC86976C3D");
+            }
+        }
+
+        private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCard card)
+        {
+            throw new NotImplementedException("C8CA053E-8B82-40B4-90DC-B100748AE0A5");
+        }
+
+        private object DeserializeWithSerializationDataCreation(object obj, Type type, ClassCardWithSerializationData card)
+        {
+            throw new NotImplementedException("C7A28E4A-70A5-4334-8700-E3FFE44A4604");
+        }
+
+        private object DeserializeUsualObject(object obj, Type type, ClassCard card)
+        {
+            throw new NotImplementedException("C0C998E4-4D33-4597-9CED-D51B04036D01");
         }
 
         private object DeserializeManualResetEvent(object obj, Type type, ExternalManualResetEventClassCard card)

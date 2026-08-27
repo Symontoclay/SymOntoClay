@@ -11,12 +11,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public ObjectFromImageDeserializer(IObjectDeserialializationFactory objectDeserialializationFactory, IDataCardDictionary objectsDataCardDictionary, IStructuralContext structuralContext, ISerializedTypesPool serializedTypesPool)
+        public ObjectFromImageDeserializer(IObjectDeserialializationFactory objectDeserialializationFactory, IDataCardDictionary objectsDataCardDictionary, IStructuralContext structuralContext, ISerializedTypesPool serializedTypesPool, ITypesHelper typesHelper)
         {
             _objectDeserialializationFactory = objectDeserialializationFactory;
             _objectsDataCardDictionary = objectsDataCardDictionary;
             _structuralContext = structuralContext;
             _serializedTypesPool = serializedTypesPool;
+            _typesHelper = typesHelper;
 
 #if DEBUG
             InitTmpProcessedMembersOfTypes();
@@ -27,6 +28,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly IDataCardDictionary _objectsDataCardDictionary;
         private readonly IStructuralContext _structuralContext;
         private readonly ISerializedTypesPool _serializedTypesPool;
+        private readonly ITypesHelper _typesHelper;
 
         /// <inheritdoc/>
         public object DeserializeValue(SerializedValue serializedValue, ObjMemberRef objMember = null)
@@ -41,16 +43,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"obj = {obj}");
 #endif
 
-            if(obj == null)
+            if (obj == null)
             {
                 return null;
             }
-
-            var dataCard = _objectsDataCardDictionary.GetDataCardByHeader(serializedValue);
-
-#if DEBUG
-            _logger.Info($"dataCard = {dataCard}");
-#endif
 
             var type = obj.GetType();
 
@@ -61,9 +57,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type.IsArray = {type.IsArray}");
 #endif
 
+            var dataCard = GetDataCardByHeader(serializedValue, type);
+
+#if DEBUG
+            _logger.Info($"dataCard = {dataCard}");
+#endif
+
             if (type.IsEnum)
             {
-                return DeserializePrimitiveType(obj, type);
+                return DeserializePrimitiveType(type, serializedValue);
             }
 
             if (type.IsArray)
@@ -119,7 +121,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case "System.TimeOnly":
                 case "System.TimeSpan":
                 case "System.Guid":
-                    return DeserializePrimitiveType(obj, type);
+                    return DeserializePrimitiveType(type, serializedValue);
 
                 case "System.Type":
                 case "System.RuntimeType":
@@ -160,9 +162,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
         }
 
-        private object DeserializePrimitiveType(object obj, Type type)
+        private IDataCardWithHeader GetDataCardByHeader(SerializedValue header, Type type)
         {
-            throw new NotFiniteNumberException("C6466865-0D32-4523-9963-2D2244827666");
+            if (_typesHelper.GetKindOfSerializedValue(type) == KindOfSerializedValue.Literal)
+            {
+                return null;
+            }
+
+            return _objectsDataCardDictionary.GetDataCardByHeader(header);
+        }
+
+        private object DeserializePrimitiveType(Type type, SerializedValue header)
+        {
+            return _typesHelper.FromString(type, header.Literal);
         }
 
         private object DeserializeReflectionType(object obj, Type type, ReflectionTypeCard card)
@@ -328,6 +340,58 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeUsualObject(object obj, Type type, ClassCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            foreach(var item in card.Fields)
+            {
+                var name = item.Item1;
+
+#if DEBUG
+                _logger.Info($"name (1) = {name}");
+#endif
+
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("C1177B68-C0AE-4934-9F0A-F9B26330636E", type, name);
+#endif
+
+                var memberValue = DeserializeValue(item.Item3);
+
+#if DEBUG
+                _logger.Info($"typeId memberValue = {memberValue}");
+#endif
+
+                var typeId = item.Item2;
+
+#if DEBUG
+                _logger.Info($"typeId (1) = {typeId}");
+#endif
+
+                var levelType = _serializedTypesPool.GetTypeValue(typeId);
+
+#if DEBUG
+                _logger.Info($"levelType.FullName (1) = {levelType.FullName}");
+#endif
+
+                throw new NotImplementedException("C2BD25AD-4D16-4407-B9C0-B5A1204CADC1");
+            }
+
+            foreach (var item in card.Properties)
+            {
+                var name = item.Item1;
+
+#if DEBUG
+                _logger.Info($"name (2) = {name}");
+#endif
+
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("C69AE107-BBAF-40EE-838D-02FE94DE613C", type, name);
+#endif
+
+                throw new NotImplementedException("C4E71323-8AF9-4149-A2AD-EBCF0B342766");
+            }
+
             throw new NotImplementedException("C0C998E4-4D33-4597-9CED-D51B04036D01");
         }
 
@@ -377,7 +441,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private List<string> _tmpProcessedTypes { get; set; } = new List<string>() 
         { 
-            "SymOntoClay.UnityAsset.Core.World.WorldCore" 
+            "SymOntoClay.UnityAsset.Core.World.WorldCore",
+            "SymOntoClay.UnityAsset.Core.Internal.WorldContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -387,6 +452,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>() 
             {
                 "_context" 
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>() 
+            {
+                "_isInitialized" 
             };
         }
     }

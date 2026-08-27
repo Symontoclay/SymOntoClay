@@ -20,6 +20,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return KindOfSerializedValue.ObjectPtr;
             }
 
+            if (type.IsEnum)
+            {
+                return KindOfSerializedValue.Literal;
+            }
+
             switch (type.FullName)
             {
                 case "System.Byte":
@@ -126,6 +131,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             //TimeOnly
              */
+        }
+
+        /// <inheritdoc/>
+        public object FromString(Type type, string literal)
+        {
+            throw new NotImplementedException("C9C99FB3-2FE7-4652-9922-497908C9C170");
         }
     }
 }

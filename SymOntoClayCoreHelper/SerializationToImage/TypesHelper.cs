@@ -136,7 +136,73 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         /// <inheritdoc/>
         public object FromString(Type type, string literal)
         {
-            throw new NotImplementedException("C9C99FB3-2FE7-4652-9922-497908C9C170");
+            if (type.IsEnum)
+            {
+                return Enum.Parse(type, literal, true);
+            }
+
+            switch (type.FullName)
+            {
+                case "System.Byte":
+                    throw new NotImplementedException("C9719420-E5A5-41B5-849D-4E4FA0F98BBD");
+
+                case "System.SByte":
+                    throw new NotImplementedException("C8950F25-F286-4A5A-A62E-A8B556485E28");
+
+                case "System.Int16":
+                    throw new NotImplementedException("C5202D05-2D1D-4F66-A1F9-B9F9044C4B2A");
+
+                case "System.Int32":
+                    throw new NotImplementedException("C516FDBE-5701-4334-A9D3-32F23E2C2DAA");
+
+                case "System.Int64":
+                    throw new NotImplementedException("C3DE4402-94D8-4AFD-B67C-69E59304373B");
+
+                case "System.UInt16":
+                    throw new NotImplementedException("CCE6CE31-2758-46F1-A168-65F64A4EE64C");
+
+                case "System.UInt32":
+                    throw new NotImplementedException("C5F62D15-CE59-443E-8FFA-51575996DE3F");
+
+                case "System.UInt64":
+                    throw new NotImplementedException("C7A2F01C-CB41-4860-A118-5F14CB63F091");
+
+                case "System.Single":
+                    throw new NotImplementedException("C9DF0F3B-F993-43E6-9C29-BE7657E8C3F7");
+
+                case "System.Decimal":
+                    throw new NotImplementedException("C246AEBD-65C9-498C-8B51-9E765E901493");
+
+                case "System.Double":
+                    throw new NotImplementedException("C240B14D-831C-42E2-B3EB-AB59C8AE69C3");
+
+                case "System.Boolean":
+                    throw new NotImplementedException("C38A6CFF-21E4-438B-846D-F49B10B0D98D");
+
+                case "System.String":
+                    throw new NotImplementedException("C6590BE0-EEBC-440E-950A-B55D2EABD6EF");
+
+                case "System.Char":
+                    throw new NotImplementedException("C7C7001E-32DB-4982-97A0-6D4FB470CEA3");
+
+                case "System.DateTime":
+                    throw new NotImplementedException("C66C62EB-6EA9-41A2-B5A6-B93B14C8DBD0");
+
+                case "System.DateOnly":
+                    throw new NotImplementedException("C12854E3-1938-4869-B57D-46E246CF2FBA");
+
+                case "System.TimeOnly":
+                    throw new NotImplementedException("C757DBDB-C779-43AA-B854-7D481F860CAD");
+
+                case "System.TimeSpan":
+                    throw new NotImplementedException("C2C051F2-0E9C-4845-9E26-863DB6507FF6");
+
+                case "System.Guid":
+                    throw new NotImplementedException("C2B19843-1E68-4A2B-BDE3-CFC60EB809F9");
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type.FullName), type.FullName, "4A06B1F6-BBF3-4B58-A122-8AD1AD23CECB");
+            }
         }
     }
 }

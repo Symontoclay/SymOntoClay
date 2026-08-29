@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -359,7 +360,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var memberValue = DeserializeValue(item.Item3);
 
 #if DEBUG
-                _logger.Info($"typeId memberValue = {memberValue}");
+                _logger.Info($"memberValue (1) = {memberValue}");
 #endif
 
                 var typeId = item.Item2;
@@ -374,7 +375,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"levelType.FullName (1) = {levelType.FullName}");
 #endif
 
-                throw new NotImplementedException("C2BD25AD-4D16-4407-B9C0-B5A1204CADC1");
+                var field = levelType.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+#if DEBUG
+                _logger.Info($"field.Name (1) = {field.Name}");
+#endif
+
+                field.SetValue(obj, memberValue);
+
+                //throw new NotImplementedException("C2BD25AD-4D16-4407-B9C0-B5A1204CADC1");
             }
 
             foreach (var item in card.Properties)
@@ -456,7 +465,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>() 
             {
-                "_isInitialized" 
+                "_isInitialized",
+                "_settings"
             };
         }
     }

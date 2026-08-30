@@ -12,10 +12,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public ObjectFromImageDeserializer(IObjectDeserialializationFactory objectDeserialializationFactory, IDataCardDictionary objectsDataCardDictionary, IStructuralContext structuralContext, ISerializedTypesPool serializedTypesPool, ITypesHelper typesHelper)
+        public ObjectFromImageDeserializer(IObjectDeserialializationFactory objectDeserialializationFactory, IDataCardDictionary objectsDataCardDictionary, IDataCardDictionary rootObjectsAndSettingsDataCardDictionary, IStructuralContext structuralContext, ISerializedTypesPool serializedTypesPool, ITypesHelper typesHelper)
         {
             _objectDeserialializationFactory = objectDeserialializationFactory;
             _objectsDataCardDictionary = objectsDataCardDictionary;
+            _rootObjectsAndSettingsDataCardDictionary = rootObjectsAndSettingsDataCardDictionary;
             _structuralContext = structuralContext;
             _serializedTypesPool = serializedTypesPool;
             _typesHelper = typesHelper;
@@ -27,6 +28,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private readonly IObjectDeserialializationFactory _objectDeserialializationFactory;
         private readonly IDataCardDictionary _objectsDataCardDictionary;
+        private readonly IDataCardDictionary _rootObjectsAndSettingsDataCardDictionary;
         private readonly IStructuralContext _structuralContext;
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
@@ -170,7 +172,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return null;
             }
 
-            return _objectsDataCardDictionary.GetDataCardByHeader(header);
+            if(_objectsDataCardDictionary.TryGetDataCardByHeader(header, out var card))
+            {
+                return card;
+            }
+
+            if(_rootObjectsAndSettingsDataCardDictionary.TryGetDataCardByHeader(header, out card))
+            {
+                return card;
+            }
+
+            throw new NotImplementedException("C474E318-39B4-4DAA-8CE2-EF131FA95FE9");
         }
 
         private object DeserializePrimitiveType(Type type, SerializedValue header)
@@ -235,6 +247,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case KindOfStructuralObject.WorldRoot:
                 case KindOfStructuralObject.WorldComponent:
                     return DeserializeKeyWorldComponent(obj, type, card as KeyWorldComponentClassCard);
+
+                case KindOfStructuralObject.WorldSettings:
+                    return DeserializeWorldSettings(obj, type, card as ExternalClassCard);
 
                 case KindOfStructuralObject.SerializeWithSerializationDataCreation:
                     return DeserializeWithSerializationDataCreation(obj, type, card as ClassCardWithSerializationData);
@@ -332,6 +347,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
             throw new NotImplementedException("C8CA053E-8B82-40B4-90DC-B100748AE0A5");
+        }
+
+        private object DeserializeWorldSettings(object obj, Type type, ExternalClassCard card)
+        {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            throw new NotImplementedException("C31353B5-CE4C-477A-AC83-42B730137FF7");
         }
 
         private object DeserializeWithSerializationDataCreation(object obj, Type type, ClassCardWithSerializationData card)
@@ -451,7 +475,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private List<string> _tmpProcessedTypes { get; set; } = new List<string>() 
         { 
             "SymOntoClay.UnityAsset.Core.World.WorldCore",
-            "SymOntoClay.UnityAsset.Core.Internal.WorldContext"
+            "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
+            "SymOntoClay.UnityAsset.Core.WorldSettings"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();

@@ -13,7 +13,7 @@
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardDictionary.GetDataCardByHeader(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardDictionary.TryGetDataCardByHeader(SymOntoClay.CoreHelper.SerializationToImage.SerializedValue,SymOntoClay.CoreHelper.SerializationToImage.IDataCardWithHeader@)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCardDictionary.OnDisposing">

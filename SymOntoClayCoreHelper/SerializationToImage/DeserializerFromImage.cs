@@ -54,6 +54,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ITypesHelper _typesHelper;
         private SerializedValue _rootSerializedValue;
         private IDataCardDictionary _objectsDataCardDictionary;
+        private IDataCardDictionary _rootObjectsAndSettingsDataCardDictionary;
         private IDataCardReader _deserializedRootObjectsAndSettingsdataCardReader;
         private IObjectDeserialializationFactory _objectDeserialializationFactory;
         private IObjectDeserializer _objectDeserializer;
@@ -236,16 +237,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //NTmpFindRootObject(_manifest.ObjectsDataRelativePath);
 
             _objectsDataCardDictionary = new DataCardDictionary(_tempPath, _manifest.ObjectsDataRelativePath);
+            _rootObjectsAndSettingsDataCardDictionary = new DataCardDictionary(_tempPath, _manifest.RootObjectsAndSettingsRelativePath);
 
 #if DEBUG
-            _logger.Info($"_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue) = {_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue)}");
+            //_logger.Info($"_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue) = {_objectsDataCardDictionary.GetDataCardByHeader(_rootSerializedValue)}");
 #endif
 
             _deserializedRootObjectsAndSettingsdataCardReader = new DataCardReader(_tempPath, _manifest.RootObjectsAndSettingsRelativePath);
 
             _objectDeserialializationFactory = new ObjectDeserialializationFactory(_objectsDataCardDictionary, _serializedTypesPool, _serializedObjectsPool, _deserializedRootObjectsAndSettingsdataCardReader, _rootObjectsAndSettingsDataCardsList);
 
-            _objectDeserializer = new ObjectFromImageDeserializer(_objectDeserialializationFactory, _objectsDataCardDictionary, _structuralContext, _serializedTypesPool, _typesHelper);
+            _objectDeserializer = new ObjectFromImageDeserializer(_objectDeserialializationFactory, _objectsDataCardDictionary, _rootObjectsAndSettingsDataCardDictionary, _structuralContext, _serializedTypesPool, _typesHelper);
         }
 
         private void NTmpFindRootObject(string relativePath)

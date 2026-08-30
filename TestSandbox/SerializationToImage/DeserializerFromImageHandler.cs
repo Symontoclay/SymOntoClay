@@ -19,7 +19,8 @@ namespace TestSandbox.SerializationToImage
             _logger.Info("Begin");
 
             //Case8();
-            Case7();
+            Case7_a();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -42,6 +43,29 @@ namespace TestSandbox.SerializationToImage
 
 #if DEBUG
             _logger.Info($"path = {path}");
+#endif
+        }
+
+        private void Case7_a()
+        {
+            var fullFileName = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "RootObjectsAndSettings.dat");
+
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
+            using var dataCardReader = new DataCardReader(fullFileName);
+
+            var cards = dataCardReader.ReadAll().Cast<IDataCardWithPath>();
+
+#if DEBUG
+            _logger.Info($"cards.Count() = {cards.Count()}");
+#endif
+
+            var targetItem = cards.SingleOrDefault(p => p.Header.Id == 3);
+
+#if DEBUG
+            _logger.Info($"targetItem = {targetItem}");
 #endif
         }
 

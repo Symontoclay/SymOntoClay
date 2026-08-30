@@ -33,9 +33,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private Dictionary<SerializedValue, IDataCardWithHeader> _cardsDict;
 
         /// <inheritdoc/>
-        public IDataCardWithHeader GetDataCardByHeader(SerializedValue header)
+        public bool TryGetDataCardByHeader(SerializedValue header, out IDataCardWithHeader card)
         {
-            return _cardsDict[header];
+            return _cardsDict.TryGetValue(header, out card);
         }
 
         /// <inheritdoc/>

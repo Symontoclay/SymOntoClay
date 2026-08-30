@@ -25,7 +25,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders
             _logger.Info($"fullFileName = {fullFileName}");
 #endif
 
-            _fs = new FileStream(fullFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+            _fs = new FileStream(fullFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             _reader = new BinaryReader(_fs);
         }
 

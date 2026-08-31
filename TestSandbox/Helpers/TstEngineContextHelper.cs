@@ -227,7 +227,7 @@ namespace TestSandbox.Helpers
             var settings = CreateWorldSettings(factorySettings);
 
 #if DEBUG
-            //_logger.Info("9A63D388-144D-433E-A3B6-96A7BD3A9EB7", $"settings = {settings}");
+            _logger.Info("9A63D388-144D-433E-A3B6-96A7BD3A9EB7", $"settings = {settings}");
 #endif
 
             return UnityTestEngineContextFactory.CreateWorld(settings);

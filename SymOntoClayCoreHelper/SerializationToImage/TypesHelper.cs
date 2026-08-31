@@ -180,7 +180,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     return bool.Parse(literal);
 
                 case "System.String":
-                    throw new NotImplementedException("C6590BE0-EEBC-440E-950A-B55D2EABD6EF");
+                    return literal;
 
                 case "System.Char":
                     throw new NotImplementedException("C7C7001E-32DB-4982-97A0-6D4FB470CEA3");

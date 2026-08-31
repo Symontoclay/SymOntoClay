@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -167,6 +168,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private IDataCardWithHeader GetDataCardByHeader(SerializedValue header, Type type)
         {
+#if DEBUG
+            _logger.Info($"header = {header}");
+            _logger.Info($"type?.FullName = {type?.FullName}");
+#endif
+
+            if (header.KindOfSerializedValue == KindOfSerializedValue.Null)
+            {
+                return null;
+            }
+
+            if (header.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
+            {
+                return null;
+            }
+
             if (_typesHelper.GetKindOfSerializedValue(type) == KindOfSerializedValue.Literal)
             {
                 return null;
@@ -270,63 +286,45 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             foreach(var item in card.FieldsWithSerializedMembers)
             {
-                var name = item.Item1;
-
 #if DEBUG
-                _logger.Info($"name (1) = {name}");
+                _logger.Info($"name (1) = {item.Item1}");
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("72672943-9B36-46C9-91AF-53F701D4D105", type, name);
+                TmpCheckProcessedMembersOfTypes("72672943-9B36-46C9-91AF-53F701D4D105", type, item.Item1);
 #endif
 
-                var memberValue = DeserializeValue(item.Item3);
-
-#if DEBUG
-                _logger.Info($"typeId memberValue = {memberValue}");
-#endif
-
-                var typeId = item.Item2;
-
-#if DEBUG
-                _logger.Info($"typeId (1) = {typeId}");
-#endif
-
-                var levelType = _serializedTypesPool.GetTypeValue(typeId);
-
-#if DEBUG
-                _logger.Info($"levelType.FullName (1) = {levelType.FullName}");
-#endif
+                ProcessField(obj, item);
 
                 throw new NotImplementedException("C600854B-7E09-4B99-A29F-87A20272AA1D");
             }
 
             foreach (var item in card.FieldsWithChildren)
             {
-                var name = item.Item1;
-
 #if DEBUG
-                _logger.Info($"name (2) = {name}");
+                _logger.Info($"item.Item1 (2) = {item.Item1}");
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("7B69766C-9D83-4BFC-9246-CEA171935042", type, name);
+                TmpCheckProcessedMembersOfTypes("7B69766C-9D83-4BFC-9246-CEA171935042", type, item.Item1);
 #endif
+
+                ProcessField(obj, item);
 
                 throw new NotImplementedException("C179CFA3-14DC-4872-86F5-A35902FA72EF");
             }
 
             foreach (var item in card.OtherFields)
             {
-                var name = item.Item1;
-
 #if DEBUG
-                _logger.Info($"name (3) = {name}");
+                _logger.Info($"item.Item1 (3) = {item.Item1}");
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("05A68523-5259-4EDC-A439-53C3D2B61277", type, name);
+                TmpCheckProcessedMembersOfTypes("05A68523-5259-4EDC-A439-53C3D2B61277", type, item.Item1);
 #endif
+
+                ProcessField(obj, item);
 
                 throw new NotImplementedException("C13FCEC2-ED94-4A21-8B8D-1DF3148F39FC");
             }
@@ -355,6 +353,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"card = {card}");
 #endif
 
+            if(card.Fields != null)
+            {
+                foreach (var item in card.Fields)
+                {
+#if DEBUG
+                    _logger.Info($"item.Item1 (1) = {item.Item1}");
+#endif
+
+#if DEBUG
+                    TmpCheckProcessedMembersOfTypes("C440A66A-CC4E-46F0-A1F6-36CF018F5733", type, item.Item1);
+#endif
+
+                    ProcessField(obj, item);
+
+                    //throw new NotImplementedException("CC55C6C9-BB5E-40E6-97EB-2E0776A7A5AA");
+                }
+            }
+
+            foreach (var item in card.Properties)
+            {
+                var name = item.Item1;
+
+#if DEBUG
+                _logger.Info($"name (2) = {name}");
+#endif
+
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("C14E96E8-2F4B-4ECA-AE67-89ABBDD69475", type, name);
+#endif
+
+                ProcessProperty(obj, item);
+
+                //throw new NotImplementedException("CC190AD1-8A2D-458B-AF36-5D31C8E3F3EF");
+            }
+
             throw new NotImplementedException("C31353B5-CE4C-477A-AC83-42B730137FF7");
         }
 
@@ -371,41 +404,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             foreach(var item in card.Fields)
             {
-                var name = item.Item1;
-
 #if DEBUG
-                _logger.Info($"name (1) = {name}");
+                _logger.Info($"item.Item1 (1) = {item.Item1}");
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("C1177B68-C0AE-4934-9F0A-F9B26330636E", type, name);
+                TmpCheckProcessedMembersOfTypes("C1177B68-C0AE-4934-9F0A-F9B26330636E", type, item.Item1);
 #endif
 
-                var memberValue = DeserializeValue(item.Item3);
-
-#if DEBUG
-                _logger.Info($"memberValue (1) = {memberValue}");
-#endif
-
-                var typeId = item.Item2;
-
-#if DEBUG
-                _logger.Info($"typeId (1) = {typeId}");
-#endif
-
-                var levelType = _serializedTypesPool.GetTypeValue(typeId);
-
-#if DEBUG
-                _logger.Info($"levelType.FullName (1) = {levelType.FullName}");
-#endif
-
-                var field = levelType.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-#if DEBUG
-                _logger.Info($"field.Name (1) = {field.Name}");
-#endif
-
-                field.SetValue(obj, memberValue);
+                ProcessField(obj, item);
 
                 //throw new NotImplementedException("C2BD25AD-4D16-4407-B9C0-B5A1204CADC1");
             }
@@ -426,6 +433,90 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
             throw new NotImplementedException("C0C998E4-4D33-4597-9CED-D51B04036D01");
+        }
+
+        private void ProcessField(object obj, (string, int, SerializedValue) item)
+        {
+            var serializedValue = item.Item3;
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            if (serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
+            {
+                return;
+            }
+
+            var typeId = item.Item2;
+
+#if DEBUG
+            _logger.Info($"typeId = {typeId}");
+#endif
+
+            var levelType = _serializedTypesPool.GetTypeValue(typeId);
+
+#if DEBUG
+            _logger.Info($"levelType.FullName = {levelType.FullName}");
+#endif
+
+            var field = levelType.GetField(item.Item1, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+#if DEBUG
+            _logger.Info($"field.Name = {field.Name}");
+#endif
+
+            var objMember = new ObjMemberRef(obj, field);
+
+            var memberValue = DeserializeValue(serializedValue, objMember);
+
+#if DEBUG
+            _logger.Info($"memberValue = {memberValue}");
+#endif
+
+            field.SetValue(obj, memberValue);
+        }
+
+        private void ProcessProperty(object obj, (string, int, SerializedValue) item)
+        {
+            var serializedValue = item.Item3;
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            if(serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
+            {
+                return;
+            }
+
+            var typeId = item.Item2;
+
+#if DEBUG
+            _logger.Info($"typeId = {typeId}");
+#endif
+
+            var levelType = _serializedTypesPool.GetTypeValue(typeId);
+
+#if DEBUG
+            _logger.Info($"levelType.FullName = {levelType.FullName}");
+#endif
+
+            var property = levelType.GetProperty(item.Item1, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+#if DEBUG
+            _logger.Info($"field.Name = {property.Name}");
+#endif
+
+            var objMember = new ObjMemberRef(obj, property);
+
+            var memberValue = DeserializeValue(serializedValue, objMember);
+
+#if DEBUG
+            _logger.Info($"memberValue = {memberValue}");
+#endif
+
+            property.SetValue(obj, memberValue);
         }
 
         private object DeserializeManualResetEvent(object obj, Type type, ExternalManualResetEventClassCard card)
@@ -492,6 +583,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_isInitialized",
                 "_settings"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.WorldSettings"] = new List<string>()
+            { 
+                "LibsDirs",
+                "ImagesRootDir"
             };
         }
     }

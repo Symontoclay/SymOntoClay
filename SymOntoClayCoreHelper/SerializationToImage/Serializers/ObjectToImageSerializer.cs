@@ -785,7 +785,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
             return serializedValue;
         }
-
+        
         private void ProcessFieldInfo(FieldInfo field, int typeId, object obj, List<(string, int, SerializedValue)> cardFieldList)
         {
             var fieldValue = field.GetValue(obj);

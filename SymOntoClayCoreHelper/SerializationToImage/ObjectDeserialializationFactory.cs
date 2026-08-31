@@ -98,6 +98,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
+            if(type.FullName == "System.String")
+            {
+                return serializedValue.Literal;
+            }
+
             var instance = Activator.CreateInstance(type, nonPublic: true);
 
             _alreadyExistingObjects[serializedValue] = instance;

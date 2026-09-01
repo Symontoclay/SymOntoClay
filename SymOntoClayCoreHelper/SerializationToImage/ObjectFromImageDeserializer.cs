@@ -235,7 +235,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeBareObject(object obj, Type type, ClassCard card)
         {
-            throw new NotImplementedException("C11674D7-5BD0-4AA7-811F-D0B8495CD505");
+            return obj;
         }
 
         private object DeserializeArray(object obj, Type type, ArrayCard card)
@@ -713,7 +713,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"] = new List<string>() 
             { 
-                "_coreContext" 
+                "_coreContext",
+                "_worldComponentsListLockObj",
+                "_worldComponentsList"
             };
         }
     }

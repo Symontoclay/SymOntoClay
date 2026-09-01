@@ -271,7 +271,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     return DeserializeWithSerializationDataCreation(obj, type, card as ClassCardWithSerializationData);
 
                 case KindOfStructuralObject.UsualObject:
-                    return DeserializeUsualObject(obj, type, card as ClassCard);
+                    {
+                        var classCard = card as ClassCard;
+
+                        if(classCard != null)
+                        {
+                            return DeserializeUsualObject(obj, type, classCard);
+                        }
+
+                        throw new NotSupportedException($"E502B8A3-5A93-4641-A052-5CD322508B8B card = {card}");
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStructuralObject), kindOfStructuralObject, "2F0E3A83-964D-4E30-B083-FFAC86976C3D");
@@ -567,7 +576,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         { 
             "SymOntoClay.UnityAsset.Core.World.WorldCore",
             "SymOntoClay.UnityAsset.Core.Internal.WorldContext",
-            "SymOntoClay.UnityAsset.Core.WorldSettings"
+            "SymOntoClay.UnityAsset.Core.WorldSettings",
+            "SymOntoClay.Core.ThreadingSettings"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -590,8 +600,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "LibsDirs",
                 "ImagesRootDir",
                 "DictionariesDirs",
-                "BuiltInStandardLibraryDir"
+                "BuiltInStandardLibraryDir",
+                "TmpDir",
+                "Monitor",
+                "HostFile",
+                "InvokerInMainThread",
+                "SoundBus",
+                "NLPConverterProvider",
+                "StandardFactsBuilder",
+                "EnableAutoloadingConvertors",
+                "CancellationContext",
+                "WorldThreadingSettings"
             };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.ThreadingSettings"] = new List<string>() { };
         }
     }
 }

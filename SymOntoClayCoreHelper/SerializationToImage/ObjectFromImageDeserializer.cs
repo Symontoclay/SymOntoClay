@@ -279,6 +279,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                             return DeserializeUsualObject(obj, type, classCard);
                         }
 
+                        var externalClassCard = card as ExternalClassCard;
+
+                        if()
+                        {
+
+                        }
+
                         throw new NotSupportedException($"E502B8A3-5A93-4641-A052-5CD322508B8B card = {card}");
                     }
 

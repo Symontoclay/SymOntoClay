@@ -35,7 +35,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if(type == null)
             {
-                return 0;
+                return _nullTypeId;
             }
 
             var typeFullName = type.FullName;
@@ -70,6 +70,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
                 _logger.Info($"typeId = {typeId}");
 #endif
+
+                if(typeId == _nullTypeId)
+                {
+                    return null;
+                }
 
                 var typeFullName = _typeNamesDict[typeId];
 

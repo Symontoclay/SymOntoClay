@@ -588,7 +588,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.WorldSettings"] = new List<string>()
             { 
                 "LibsDirs",
-                "ImagesRootDir"
+                "ImagesRootDir",
+                "DictionariesDirs",
+                "BuiltInStandardLibraryDir"
             };
         }
     }

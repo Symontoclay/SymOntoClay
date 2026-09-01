@@ -92,10 +92,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return existingObj;
             }
 
+            if(serializedValue.TypeId == _serializedTypesPool.NullTypeId)
+            {
+                return null;
+            }
+
             var type = _serializedTypesPool.GetTypeValue(serializedValue.TypeId);
 
 #if DEBUG
-            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
             if(type.FullName == "System.String")

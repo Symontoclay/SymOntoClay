@@ -10,6 +10,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public class SerializedWorldContext: Disposable
     {
+        private SerializedWorldContext()
+        {
+        }
+
         public SerializedWorldContext(IWorldCoreContext coreContext)
         {
             _coreContext = coreContext;

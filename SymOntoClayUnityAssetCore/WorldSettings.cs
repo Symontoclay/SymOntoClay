@@ -24,14 +24,11 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core
 {

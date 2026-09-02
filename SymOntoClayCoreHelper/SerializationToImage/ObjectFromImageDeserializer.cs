@@ -54,7 +54,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"obj = {obj}");
 #endif
 
-            if (obj == null)
+            if (obj == null && obj?.GetType()?.FullName != "SymOntoClay.Monitor.Internal.MonitorNode")
             {
                 _processedSerializedValue[serializedValue] = null;
 
@@ -83,25 +83,23 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.IsArray)
             {
-                _processedSerializedValue[serializedValue] = obj;
-
-                return DeserializeArray(obj, type, dataCard as ArrayCard);
+                return DeserializeArray(obj, type, dataCard as ArrayCard, serializedValue);
             }
 
             if (type.FullName.StartsWith("System.Action"))
             {
-                return DeserializeAction(obj, type, objMember, dataCard as ActionCard);
+                return DeserializeAction(obj, type, objMember, dataCard as ActionCard, serializedValue);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                return DeserializeAction(obj, type, objMember, dataCard as ActionCard);
+                return DeserializeAction(obj, type, objMember, dataCard as ActionCard, serializedValue);
             }
 
             switch (type.FullName)
             {
                 case "System.Object":
-                    return DeserializeBareObject(obj, type, dataCard as ClassCard);
+                    return DeserializeBareObject(obj, type, dataCard as ClassCard, serializedValue);
 
                 case "System.Threading.CancellationTokenSource":
                     throw new NotImplementedException("C44E3BFE-ACF8-46EB-9059-0665A0BAB1E7");
@@ -115,7 +113,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     throw new NotImplementedException("C3F3E1DF-33BD-4C55-8B8D-62E4E79D21B0");
 
                 case "System.Threading.ManualResetEvent":
-                    return DeserializeManualResetEvent(obj, type, dataCard as ExternalManualResetEventClassCard);
+                    return DeserializeManualResetEvent(obj, type, dataCard as ExternalManualResetEventClassCard, serializedValue);
 
                 case "System.Byte":
                 case "System.SByte":
@@ -140,7 +138,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 case "System.Type":
                 case "System.RuntimeType":
-                    return DeserializeReflectionType(obj, type, dataCard as ReflectionTypeCard);
+                    return DeserializeReflectionType(obj, type, dataCard as ReflectionTypeCard, serializedValue);
             }
 
             var fullShortTypeName = $"{type.Namespace}.{type.Name}";
@@ -152,29 +150,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (fullShortTypeName)
             {
                 case "System.Collections.Generic.List`1":
-                    _processedSerializedValue[serializedValue] = obj;
-
-                    return DeserializeGenericList(obj, type, dataCard as ListCard);
+                    return DeserializeGenericList(obj, type, dataCard as ListCard, serializedValue);
 
                 case "System.Collections.Generic.Stack`1":
-                    _processedSerializedValue[serializedValue] = obj;
-
-                    return DeserializeGenericStack(obj, type, dataCard as StackCard);
+                    return DeserializeGenericStack(obj, type, dataCard as StackCard, serializedValue);
 
                 case "System.Collections.Generic.Queue`1":
-                    _processedSerializedValue[serializedValue] = obj;
-
-                    return DeserializeGenericQueue(obj, type, dataCard as QueueCard);
+                    return DeserializeGenericQueue(obj, type, dataCard as QueueCard, serializedValue);
 
                 case "System.Collections.Generic.HashSet`1":
-                    _processedSerializedValue[serializedValue] = obj;
-
-                    return DeserializeHashSet(obj, type, dataCard as HashSetCard);
+                    return DeserializeHashSet(obj, type, dataCard as HashSetCard, serializedValue);
 
                 case "System.Collections.Generic.Dictionary`2":
-                    _processedSerializedValue[serializedValue] = obj;
-
-                    return DeserializeGenericDictionary(obj, type, dataCard as DictionaryCard);
+                    return DeserializeGenericDictionary(obj, type, dataCard as DictionaryCard, serializedValue);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -183,9 +171,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                         throw new NotImplementedException("C8E00923-0AF2-448A-8B42-8B037C442532");
                     }
 
-                    _processedSerializedValue[serializedValue] = obj;
-
-                    return DeserializeComposite(obj, type, dataCard);
+                    return DeserializeComposite(obj, type, dataCard, serializedValue);
             }
         }
 
@@ -229,34 +215,42 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return _typesHelper.FromString(type, header.Literal);
         }
 
-        private object DeserializeReflectionType(object obj, Type type, ReflectionTypeCard card)
+        private object DeserializeReflectionType(object obj, Type type, ReflectionTypeCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C800E9B2-9E20-402B-A3B2-EB025A76E76E");
         }
 
-        private object DeserializeBareObject(object obj, Type type, ClassCard card)
+        private object DeserializeBareObject(object obj, Type type, ClassCard card, SerializedValue serializedValue)
         {
+            _processedSerializedValue[serializedValue] = obj;
+
             return obj;
         }
 
-        private object DeserializeArray(object obj, Type type, ArrayCard card)
+        private object DeserializeArray(object obj, Type type, ArrayCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C3A41E1D-BC85-453B-A6B0-8D84105B5E4A");
         }
 
-        private object DeserializeGenericList(object obj, Type type, ListCard card)
+        private object DeserializeGenericList(object obj, Type type, ListCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             var list = (IList)obj;
 
@@ -278,43 +272,51 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C9CA6832-F3F1-4724-9043-28156FB104C7");
         }
 
-        private object DeserializeGenericStack(object obj, Type type, StackCard card)
+        private object DeserializeGenericStack(object obj, Type type, StackCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C69DBB7C-2834-41D5-9568-D196D37DC196");
         }
 
-        private object DeserializeGenericQueue(object obj, Type type, QueueCard card)
+        private object DeserializeGenericQueue(object obj, Type type, QueueCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C138422C-F405-4A36-8AB7-C4A5A9455BFB");
         }
 
-        private object DeserializeHashSet(object obj, Type type, HashSetCard card)
+        private object DeserializeHashSet(object obj, Type type, HashSetCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C2CD8D58-AC3D-451E-8C6B-11D02F521864");
         }
 
-        private object DeserializeGenericDictionary(object obj, Type type, DictionaryCard card)
+        private object DeserializeGenericDictionary(object obj, Type type, DictionaryCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
+            _processedSerializedValue[serializedValue] = obj;
+
             throw new NotImplementedException("C7F18F76-A497-4A99-A950-8EEE7F2EBA16");
         }
 
-        private object DeserializeComposite(object obj, Type type, IDataCardWithHeader card)
+        private object DeserializeComposite(object obj, Type type, IDataCardWithHeader card, SerializedValue serializedValue)
         {
 #if DEBUG
             TmpCheckProcessedTypes("DAFDB7EA-1D12-4619-B3F5-1028016968BC", type);
@@ -330,13 +332,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 case KindOfStructuralObject.WorldRoot:
                 case KindOfStructuralObject.WorldComponent:
-                    return DeserializeKeyWorldComponent(obj, type, card as KeyWorldComponentClassCard);
+                    return DeserializeKeyWorldComponent(obj, type, card as KeyWorldComponentClassCard, serializedValue);
 
                 case KindOfStructuralObject.WorldSettings:
-                    return DeserializeWorldSettings(obj, type, card as ExternalClassCard);
+                    return DeserializeWorldSettings(obj, type, card as ExternalClassCard, serializedValue);
 
                 case KindOfStructuralObject.SerializeWithSerializationDataCreation:
-                    return DeserializeWithSerializationDataCreation(obj, type, card as ClassCardWithSerializationData);
+                    return DeserializeWithSerializationDataCreation(obj, type, card as ClassCardWithSerializationData, serializedValue);
 
                 case KindOfStructuralObject.UsualObject:
                     {
@@ -344,14 +346,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                         if(classCard != null)
                         {
-                            return DeserializeUsualObject(obj, type, classCard);
+                            return DeserializeUsualObject(obj, type, classCard, serializedValue);
                         }
 
                         var externalClassCard = card as ExternalClassCard;
 
                         if(externalClassCard != null)
                         {
-                            return DeserializeUsualObject(obj, type, externalClassCard);
+                            return DeserializeUsualObject(obj, type, externalClassCard, serializedValue);
                         }
 
                         throw new NotSupportedException($"E502B8A3-5A93-4641-A052-5CD322508B8B card = {card}");
@@ -362,13 +364,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
         }
 
-        private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCard card)
+        private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
-            foreach(var item in card.FieldsWithSerializedMembers)
+            _processedSerializedValue[serializedValue] = obj;
+
+            foreach (var item in card.FieldsWithSerializedMembers)
             {
 #if DEBUG
                 _logger.Info($"name (1) = {item.Item1}");
@@ -431,13 +435,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C8CA053E-8B82-40B4-90DC-B100748AE0A5");
         }
 
-        private object DeserializeWorldSettings(object obj, Type type, ExternalClassCard card)
+        private object DeserializeWorldSettings(object obj, Type type, ExternalClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
-            if(card.Fields != null)
+            _processedSerializedValue[serializedValue] = obj;
+
+            if (card.Fields != null)
             {
                 foreach (var item in card.Fields)
                 {
@@ -477,22 +483,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return obj;
         }
 
-        private object DeserializeWithSerializationDataCreation(object obj, Type type, ClassCardWithSerializationData card)
+        private object DeserializeWithSerializationDataCreation(object obj, Type type, ClassCardWithSerializationData card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
             throw new NotImplementedException("C7A28E4A-70A5-4334-8700-E3FFE44A4604");
+
+            _processedSerializedValue[serializedValue] = obj;
         }
 
-        private object DeserializeUsualObject(object obj, Type type, ClassCard card)
+        private object DeserializeUsualObject(object obj, Type type, ClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
-            foreach(var item in card.Fields)
+            _processedSerializedValue[serializedValue] = obj;
+
+            foreach (var item in card.Fields)
             {
 #if DEBUG
                 _logger.Info($"item.Item1 (1) = {item.Item1}");
@@ -527,11 +537,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             throw new NotImplementedException("C0C998E4-4D33-4597-9CED-D51B04036D01");
         }
 
-        private object DeserializeUsualObject(object obj, Type type, ExternalClassCard card)
+        private object DeserializeUsualObject(object obj, Type type, ExternalClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             foreach (var item in card.Fields)
             {
@@ -654,20 +666,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             property.SetValue(obj, memberValue);
         }
 
-        private object DeserializeManualResetEvent(object obj, Type type, ExternalManualResetEventClassCard card)
+        private object DeserializeManualResetEvent(object obj, Type type, ExternalManualResetEventClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C5C9CAEE-AAEB-437D-A2CE-552CE3F13FEC");
         }
 
-        private object DeserializeAction(object obj, Type type, ObjMemberRef objMember, ActionCard card)
+        private object DeserializeAction(object obj, Type type, ObjMemberRef objMember, ActionCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            _processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
         }

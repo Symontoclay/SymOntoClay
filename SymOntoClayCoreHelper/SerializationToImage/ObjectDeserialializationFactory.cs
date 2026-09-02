@@ -109,10 +109,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
 #if DEBUG
-            //if (type.FullName == "SymOntoClay.Monitor.Internal.MonitorNode")
-            //{
-            //    return null;//tmp
-            //}
+            if (type.FullName == "SymOntoClay.Monitor.Internal.MonitorNode")
+            {
+                return null;//tmp
+            }
 #endif
 
             var instance = Activator.CreateInstance(type, nonPublic: true);

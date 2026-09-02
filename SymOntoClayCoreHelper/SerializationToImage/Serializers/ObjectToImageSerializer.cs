@@ -458,7 +458,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
 
 #if DEBUG
-            //_logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
+            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
             switch (kindOfStructuralObject)
@@ -656,6 +656,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
         private SerializedValue SerializeWithSerializationDataCreation(object obj, Type type, string path)
         {
+#if DEBUG
+            _logger.Info($"type?.FullName = {type?.FullName}");
+#endif
+
             _visitedObjects.Add(obj);
 
 #if DEBUG
@@ -665,7 +669,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
 
 #if DEBUG
-            //_logger.Info($"serializedValue = {serializedValue}");
+            _logger.Info($"serializedValue = {serializedValue}");
 #endif
             
             var card = new ClassCardWithSerializationData()
@@ -678,19 +682,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             var serializationData = serializationDataFactory.GetSerializationData();
 
 #if DEBUG
-            //_logger.Info($"serializationData = {serializationData}");
+            _logger.Info($"serializationData = {serializationData}");
 #endif
 
             var serializedSerializationDataValue = SerializeValue(serializationData, string.Empty);
 
 #if DEBUG
-            //_logger.Info($"serializedSerializationDataValue = {serializedSerializationDataValue}");
+            _logger.Info($"serializedSerializationDataValue = {serializedSerializationDataValue}");
 #endif
 
             card.SerializationData = serializedSerializationDataValue;
 
 #if DEBUG
-            //_logger.Info($"card = {card}");
+            _logger.Info($"card = {card}");
 #endif
 
             _dataCardWriter.Write(card);
@@ -743,6 +747,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 #endif
 
                 ProcessFieldInfo(field, item.TypeId, obj, cardFieldList);
+
+#if DEBUG
+                //if(field.Name == "_logger")
+                //{
+                //    throw new NotImplementedException("1323E7F0-96FB-435A-9798-1FBF1E22CB17");
+                //}
+#endif
             }
 
             card.Fields = cardFieldList;

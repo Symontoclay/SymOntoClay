@@ -46,7 +46,7 @@ namespace TestSandbox.Handlers
 
             CreateMainNPC(factorySettings);
 
-            var serializationPath = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "Img_20260826_202205.pckg");
+            var serializationPath = Path.Combine(Directory.GetCurrentDirectory(), "SerializationToImage", "Img_20260902_100634.pckg");
 
             _globalLogger.Info($"serializationPath = {serializationPath}");
 

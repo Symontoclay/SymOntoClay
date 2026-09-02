@@ -8,6 +8,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public abstract class BaseSerializedWorldCoreComponent : ISerializedWorldCoreComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseSerializedWorldCoreComponent()
+        {
+        }
+
         private readonly IWorldCoreContext _coreContext;
         private readonly IMonitorLogger _logger;
 

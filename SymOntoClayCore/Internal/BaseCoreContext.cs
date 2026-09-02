@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal
 {
     public class BaseCoreContext: BaseComponent, IBaseCoreContext
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseCoreContext()
+        {
+        }
+
         public BaseCoreContext(IMonitorNode monitorNode)
             : base(monitorNode)
         {

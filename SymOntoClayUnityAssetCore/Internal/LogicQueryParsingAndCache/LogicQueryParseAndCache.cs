@@ -32,6 +32,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
 {
     public class LogicQueryParseAndCache: BaseSerializedWorldCoreComponent, ILogicQueryParseAndCache
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private LogicQueryParseAndCache()
+        {
+        }
+
         public LogicQueryParseAndCache(IWorldCoreContext coreContext)
             : base(coreContext)
         {

@@ -57,6 +57,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     //[SerializeOnlyExplicitlySerializableMembersAttribute]
     public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
         private WorldContext()
         {
         }

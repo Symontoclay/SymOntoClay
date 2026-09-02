@@ -27,6 +27,13 @@ namespace SymOntoClay.Core.Internal
 {
     public abstract class BaseComponent: BaseLoggedComponent, ISymOntoClayDisposable
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseComponent()
+        {
+        }
+
         protected BaseComponent(IMonitorLogger logger)
             : base(logger)
         {

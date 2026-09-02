@@ -385,11 +385,21 @@
             </summary>
             <param name="logger">Logger.</param>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.BaseComponent.IsDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.BaseComponent.Dispose">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseCoreContext.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.MonitorNode">
             <inheritdoc/>
@@ -417,6 +427,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.BaseCoreContext.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeExecution.ActionExecutionStatus.None">
             <summary>

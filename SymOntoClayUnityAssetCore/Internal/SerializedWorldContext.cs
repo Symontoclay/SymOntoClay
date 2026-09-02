@@ -10,6 +10,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public class SerializedWorldContext: Disposable
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
         private SerializedWorldContext()
         {
         }

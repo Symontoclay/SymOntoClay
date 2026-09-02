@@ -838,6 +838,11 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Dispose">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseSerializedWorldCoreComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseSerializedWorldCoreComponent.IsDisposed">
             <inheritdoc/>
         </member>
@@ -1135,8 +1140,18 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetDirectionToPosition(SymOntoClay.Monitor.Common.IMonitorLogger,System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext.OnDisposing">
             <inheritdoc/>
@@ -1356,6 +1371,11 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.Vision.VisionComponent.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#Motitor">
             <inheritdoc/>

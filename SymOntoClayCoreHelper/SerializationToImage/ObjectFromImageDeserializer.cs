@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -230,6 +231,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeReflectionType(object obj, Type type, ReflectionTypeCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C800E9B2-9E20-402B-A3B2-EB025A76E76E");
         }
 
@@ -240,31 +245,72 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeArray(object obj, Type type, ArrayCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C3A41E1D-BC85-453B-A6B0-8D84105B5E4A");
         }
 
         private object DeserializeGenericList(object obj, Type type, ListCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
+            var list = (IList)obj;
+
+            foreach(var item in card.Items)
+            {
+#if DEBUG
+                _logger.Info($"item = {item}");
+#endif
+
+                var itemValue = DeserializeValue(item);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                throw new NotImplementedException("CA3E61AC-27C7-4A74-B369-BF5A38D0CD63");
+            }
+
             throw new NotImplementedException("C9CA6832-F3F1-4724-9043-28156FB104C7");
         }
 
         private object DeserializeGenericStack(object obj, Type type, StackCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C69DBB7C-2834-41D5-9568-D196D37DC196");
         }
 
         private object DeserializeGenericQueue(object obj, Type type, QueueCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C138422C-F405-4A36-8AB7-C4A5A9455BFB");
         }
 
         private object DeserializeHashSet(object obj, Type type, HashSetCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C2CD8D58-AC3D-451E-8C6B-11D02F521864");
         }
 
         private object DeserializeGenericDictionary(object obj, Type type, DictionaryCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C7F18F76-A497-4A99-A950-8EEE7F2EBA16");
         }
 
@@ -433,6 +479,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeWithSerializationDataCreation(object obj, Type type, ClassCardWithSerializationData card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C7A28E4A-70A5-4334-8700-E3FFE44A4604");
         }
 
@@ -606,11 +656,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private object DeserializeManualResetEvent(object obj, Type type, ExternalManualResetEventClassCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C5C9CAEE-AAEB-437D-A2CE-552CE3F13FEC");
         }
 
         private object DeserializeAction(object obj, Type type, ObjMemberRef objMember, ActionCard card)
         {
+#if DEBUG
+            _logger.Info($"card = {card}");
+#endif
+
             throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
         }
 
@@ -655,7 +713,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.WorldSettings",
             "SymOntoClay.Core.ThreadingSettings",
             "SymOntoClay.Threading.CustomThreadPoolSettings",
-            "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"
+            "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext",
+            "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
+            "SymOntoClay.Core.Internal.BaseCoreContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -716,6 +776,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_coreContext",
                 "_worldComponentsListLockObj",
                 "_worldComponentsList"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>() 
+            { 
+                "_context" 
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.BaseCoreContext"] = new List<string>() 
+            { 
+                "_state"
             };
         }
     }

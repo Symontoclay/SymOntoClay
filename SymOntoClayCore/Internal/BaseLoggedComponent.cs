@@ -29,6 +29,13 @@ namespace SymOntoClay.Core.Internal
 {
     public abstract class BaseLoggedComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseLoggedComponent()
+        {
+        }
+
         protected BaseLoggedComponent(IMonitorLogger logger)
         {
             _logger = logger;

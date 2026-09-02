@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
+﻿using SymOntoClay.Common.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -338,7 +339,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     return DeserializeWorldSettings(obj, type, card as ExternalClassCard, serializedValue);
 
                 case KindOfStructuralObject.SerializeWithSerializationDataCreation:
-                    return DeserializeWithSerializationDataCreation(obj, type, card as ClassCardWithSerializationData, serializedValue);
+                    return DeserializeWithSerializationDataCreation(card as ClassCardWithSerializationData, serializedValue);
 
                 case KindOfStructuralObject.UsualObject:
                     {
@@ -483,15 +484,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return obj;
         }
 
-        private object DeserializeWithSerializationDataCreation(object obj, Type type, ClassCardWithSerializationData card, SerializedValue serializedValue)
+        private object DeserializeWithSerializationDataCreation(ClassCardWithSerializationData card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
+            var serializationData = DeserializeValue(card.SerializationData);
+
+#if DEBUG
+            _logger.Info($"serializationData = {serializationData}");
+#endif
+
             throw new NotImplementedException("C7A28E4A-70A5-4334-8700-E3FFE44A4604");
 
-            _processedSerializedValue[serializedValue] = obj;
+            //_processedSerializedValue[serializedValue] = obj;
         }
 
         private object DeserializeUsualObject(object obj, Type type, ClassCard card, SerializedValue serializedValue)
@@ -534,7 +541,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 //throw new NotImplementedException("C4E71323-8AF9-4149-A2AD-EBCF0B342766");
             }
 
-            throw new NotImplementedException("C0C998E4-4D33-4597-9CED-D51B04036D01");
+            //throw new NotImplementedException("C0C998E4-4D33-4597-9CED-D51B04036D01");
+
+            return obj;
         }
 
         private object DeserializeUsualObject(object obj, Type type, ExternalClassCard card, SerializedValue serializedValue)
@@ -590,10 +599,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            if (serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
-            {
-                return;
-            }
+            //if (serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
+            //{
+            //    return;
+            //}
 
             var typeId = item.Item2;
 
@@ -613,6 +622,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"field.Name = {field.Name}");
 #endif
 
+            if (field.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+            {
+                return;
+            }
+
             var objMember = new ObjMemberRef(obj, field);
 
             var memberValue = DeserializeValue(serializedValue, objMember);
@@ -630,12 +644,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
+            _logger.Info($"obj = {obj}");
 #endif
 
-            if(serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
-            {
-                return;
-            }
+            //if (serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
+            //{
+            //    return;
+            //}
 
             var typeId = item.Item2;
 
@@ -654,6 +669,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             _logger.Info($"field.Name = {property.Name}");
 #endif
+
+            if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
+            {
+                return;
+            }
 
             var objMember = new ObjMemberRef(obj, property);
 
@@ -731,7 +751,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Threading.CustomThreadPoolSettings",
             "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext",
             "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
-            "SymOntoClay.Core.Internal.BaseCoreContext"
+            "SymOntoClay.Core.Internal.BaseCoreContext",
+            "SymOntoClay.CoreHelper.SerializationToImage.SerializeWithDataCreationStub",
+            "SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -759,19 +781,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "BuiltInStandardLibraryDir",
                 "TmpDir",
                 "Monitor",
-                "HostFile",
-                "InvokerInMainThread",
-                "SoundBus",
-                "NLPConverterProvider",
-                "StandardFactsBuilder",
-                "EnableAutoloadingConvertors",
-                "CancellationContext",
-                "WorldThreadingSettings",
-                "HumanoidNpcDefaultThreadingSettings",
-                "PlayerDefaultThreadingSettings",
-                "GameObjectDefaultThreadingSettings",
-                "PlaceDefaultThreadingSettings",
-                "HtnExecutionDefaultSettings"
+                //"HostFile",
+                //"InvokerInMainThread",
+                //"SoundBus",
+                //"NLPConverterProvider",
+                //"StandardFactsBuilder",
+                //"EnableAutoloadingConvertors",
+                //"CancellationContext",
+                //"WorldThreadingSettings",
+                //"HumanoidNpcDefaultThreadingSettings",
+                //"PlayerDefaultThreadingSettings",
+                //"GameObjectDefaultThreadingSettings",
+                //"PlaceDefaultThreadingSettings",
+                //"HtnExecutionDefaultSettings"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.ThreadingSettings"] = new List<string>() 
@@ -805,6 +827,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_stateLockObj",
                 "_logger",
                 "MonitorNode"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData"] = new List<string>() 
+            {
+                "Parent",
+                "NodeId"
             };
         }
     }

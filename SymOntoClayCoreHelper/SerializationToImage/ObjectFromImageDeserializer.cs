@@ -785,7 +785,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.BaseCoreContext"] = new List<string>() 
             { 
-                "_state"
+                "_state",
+                "_stateLockObj",
+                "_logger",
+                "MonitorNode"
             };
         }
     }

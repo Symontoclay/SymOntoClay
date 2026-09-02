@@ -108,6 +108,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return serializedValue.Literal;
             }
 
+#if DEBUG
+            //if (type.FullName == "SymOntoClay.Monitor.Internal.MonitorNode")
+            //{
+            //    return null;//tmp
+            //}
+#endif
+
             var instance = Activator.CreateInstance(type, nonPublic: true);
 
             _alreadyExistingObjects[serializedValue] = instance;

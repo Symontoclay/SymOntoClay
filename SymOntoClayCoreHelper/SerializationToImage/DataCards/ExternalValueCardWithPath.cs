@@ -1,24 +1,22 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
 {
-    public class ExternalListCard : IDataCard, IDataCardWithHeader, IDataCardWithPath, IObjectToString
+    public class ExternalValueCardWithPath : IDataCard, IDataCardWithHeader, IDataCardWithPath, IObjectToString
     {
         /// <inheritdoc/>
-        public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalListCard;
+        public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalValueCardWithPath;
 
         /// <inheritdoc/>
-        public bool ShouldBeReplacedDuringDeserialization => false;
+        public bool ShouldBeReplacedDuringDeserialization => true;
 
         /// <inheritdoc/>
         public SerializedValue Header { get; set; }
 
         /// <inheritdoc/>
         public string Path { get; set; }
-        public List<SerializedValue> Items { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -47,7 +45,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
             sb.AppendLine($"{spaces}{nameof(ShouldBeReplacedDuringDeserialization)} = {ShouldBeReplacedDuringDeserialization}");
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
             sb.AppendLine($"{spaces}{nameof(Path)} = {Path}");
-            sb.PrintPODListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }

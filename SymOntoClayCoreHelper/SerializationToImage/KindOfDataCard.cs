@@ -8,6 +8,7 @@
         ExternalListCard,
         ExternalWorldRootClassCard,
         ExternalWorldComponentClassCard,
+        KeyWorldComponentClassCardWithPath,
         KeyWorldComponentClassCard,
         ClassCard,
         ClassCardWithSerializationData,
@@ -19,6 +20,7 @@
         DictionaryCard,
         ReflectionTypeCard,
         ActionCard,
-        ExternalValueCard
+        ExternalValueCard,
+        ExternalValueCardWithPath
     }
 }

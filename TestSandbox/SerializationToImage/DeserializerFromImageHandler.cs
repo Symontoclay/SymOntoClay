@@ -19,8 +19,8 @@ namespace TestSandbox.SerializationToImage
             _logger.Info("Begin");
 
             //Case8();
-            Case7_a();
-            //Case7();
+            //Case7_a();
+            Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -79,7 +79,7 @@ namespace TestSandbox.SerializationToImage
 
             using var dataCardReader = new DataCardReader(fullFileName);
 
-            var cards = dataCardReader.ReadAll().Cast<IDataCardWithPath>();
+            var cards = dataCardReader.ReadAll().Cast<IDataCardWithPath>().Where(p => p.ShouldBeReplacedDuringDeserialization);
 
 #if DEBUG
             _logger.Info($"cards.Count() = {cards.Count()}");

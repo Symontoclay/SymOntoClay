@@ -47,7 +47,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
             if(serializeValueMode == SerializeValueMode.ExternalValue)
             {
-                return SerializeExternalValue(obj);                
+                return SerializeExternalValue(obj, path);               
             }
 
             var type = obj.GetType();
@@ -163,7 +163,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             return _serializedObjectsPool.TryGetSerializedValue(obj, out serializedValue);
         }
 
-        protected virtual SerializedValue SerializeExternalValue(object obj)
+        protected virtual SerializedValue SerializeExternalValue(object obj, string path)
         {
             return _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
         }

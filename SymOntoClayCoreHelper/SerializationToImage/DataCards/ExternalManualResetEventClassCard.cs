@@ -10,6 +10,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
         public KindOfDataCard KindOfDataCard => KindOfDataCard.ExternalManualResetEventClassCard;
 
         /// <inheritdoc/>
+        public bool ShouldBeReplacedDuringDeserialization => false;
+
+        /// <inheritdoc/>
         public SerializedValue Header { get; set; }
 
         /// <inheritdoc/>
@@ -40,6 +43,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCards
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfDataCard)} = {KindOfDataCard}");
+            sb.AppendLine($"{spaces}{nameof(ShouldBeReplacedDuringDeserialization)} = {ShouldBeReplacedDuringDeserialization}");
             sb.AppendLine($"{spaces}{nameof(Header)} = {Header}");
             sb.AppendLine($"{spaces}{nameof(Path)} = {Path}");
             sb.AppendLine($"{spaces}{nameof(IsSet)} = {IsSet}");

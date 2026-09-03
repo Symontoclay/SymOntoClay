@@ -62,6 +62,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return null;
             }
 
+            if(serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
+            {
+                _processedSerializedValue[serializedValue] = obj;
+
+                return obj;
+            }
+
             var type = obj.GetType();
 
 #if DEBUG
@@ -781,19 +788,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "BuiltInStandardLibraryDir",
                 "TmpDir",
                 "Monitor",
-                //"HostFile",
-                //"InvokerInMainThread",
-                //"SoundBus",
-                //"NLPConverterProvider",
-                //"StandardFactsBuilder",
-                //"EnableAutoloadingConvertors",
-                //"CancellationContext",
-                //"WorldThreadingSettings",
-                //"HumanoidNpcDefaultThreadingSettings",
-                //"PlayerDefaultThreadingSettings",
-                //"GameObjectDefaultThreadingSettings",
-                //"PlaceDefaultThreadingSettings",
-                //"HtnExecutionDefaultSettings"
+                "HostFile",
+                "InvokerInMainThread",
+                "SoundBus",
+                "NLPConverterProvider",
+                "StandardFactsBuilder",
+                "EnableAutoloadingConvertors",
+                "CancellationContext",
+                "WorldThreadingSettings",
+                "HumanoidNpcDefaultThreadingSettings",
+                "PlayerDefaultThreadingSettings",
+                "GameObjectDefaultThreadingSettings",
+                "PlaceDefaultThreadingSettings",
+                "HtnExecutionDefaultSettings"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.ThreadingSettings"] = new List<string>() 

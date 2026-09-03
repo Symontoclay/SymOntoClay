@@ -37,7 +37,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"_rootObjectsAndSettingsDataCardsList.Count = {_rootObjectsAndSettingsDataCardsList.Count}");
 #endif
 
-            var serializedCardsList = _rootObjectsAndSettingsDataCardsList.Cast<IDataCardWithPath>();
+            var serializedCardsList = _rootObjectsAndSettingsDataCardsList.Cast<IDataCardWithPath>().Where(p => p.ShouldBeReplacedDuringDeserialization);
 
 #if DEBUG
             //_logger.Info($"serializedCardsList.Count() = {serializedCardsList.Count()}");
@@ -48,7 +48,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return;
             }
 
-            var deserializedCardsList = _deserializedRootObjectsAndSettingsdataCardReader.ReadAll().Cast<IDataCardWithPath>();
+            var deserializedCardsList = _deserializedRootObjectsAndSettingsdataCardReader.ReadAll().Cast<IDataCardWithPath>().Where(p => p.ShouldBeReplacedDuringDeserialization);
 
 #if DEBUG
             //_logger.Info($"deserializedCardsList.Count() = {deserializedCardsList.Count()}");

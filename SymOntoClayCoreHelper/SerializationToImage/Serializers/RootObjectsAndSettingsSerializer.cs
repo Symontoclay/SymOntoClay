@@ -4,6 +4,7 @@ using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -50,9 +51,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeExternalValue(object obj)
+        protected override SerializedValue SerializeExternalValue(object obj, string path)
         {
-            return _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
+            var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
+
+#if DEBUG
+            //_logger.Info($"serializedValue = {serializedValue}");
+#endif
+
+            var card = new ExternalValueCardWithPath
+            {
+                Header = serializedValue,
+                Path = path
+            };
+
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _dataCardWriter.Write(card);
+
+            return serializedValue;
         }
 
         /// <inheritdoc/>
@@ -235,7 +254,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
-            var card = new ExternalClassCard()
+            var card = new KeyWorldComponentClassCardWithPath()
             {
                 Header = serializedValue,
                 Path = path

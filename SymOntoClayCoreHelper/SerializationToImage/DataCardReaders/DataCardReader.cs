@@ -98,6 +98,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders
                 case KindOfDataCard.ExternalWorldComponentClassCard:
                     return serializer.Deserialize<ExternalWorldComponentClassCard>(bsonReader);
 
+                case KindOfDataCard.KeyWorldComponentClassCardWithPath:
+                    return serializer.Deserialize<KeyWorldComponentClassCardWithPath>(bsonReader);
+
                 case KindOfDataCard.KeyWorldComponentClassCard:
                     return serializer.Deserialize<KeyWorldComponentClassCard>(bsonReader);
 
@@ -133,6 +136,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders
 
                 case KindOfDataCard.ExternalValueCard:
                     return serializer.Deserialize<ExternalValueCard>(bsonReader);
+
+                case KindOfDataCard.ExternalValueCardWithPath:
+                    return serializer.Deserialize<ExternalValueCardWithPath>(bsonReader);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfDataCard), kindOfDataCard, "3EA4C344-7D39-47AD-B3D3-8F29FCE3C105");

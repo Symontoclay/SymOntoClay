@@ -78,7 +78,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         }
 
         /// <inheritdoc/>
-        protected override SerializedValue SerializeExternalValue(object obj)
+        protected override SerializedValue SerializeExternalValue(object obj, string path)
         {
             var serializedValue = _serializedObjectsPool.GetOrRegSerializedValue(obj, SerializedObjectsPoolMode.ExternalValue);
 

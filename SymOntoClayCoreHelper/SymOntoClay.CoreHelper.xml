@@ -103,6 +103,9 @@
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.KindOfDataCard">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.ShouldBeReplacedDuringDeserialization">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalClassCard.Header">
             <inheritdoc/>
         </member>
@@ -121,6 +124,9 @@
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalListCard.KindOfDataCard">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalListCard.ShouldBeReplacedDuringDeserialization">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalListCard.Header">
             <inheritdoc/>
         </member>
@@ -137,6 +143,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.ShouldBeReplacedDuringDeserialization">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalManualResetEventClassCard.Header">
@@ -167,6 +176,27 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCardWithPath.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCardWithPath.ShouldBeReplacedDuringDeserialization">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCardWithPath.Header">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCardWithPath.Path">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCardWithPath.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCardWithPath.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalValueCardWithPath.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ExternalWorldComponentClassCard.KindOfDataCard">
@@ -239,6 +269,27 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCard.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCardWithPath.KindOfDataCard">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCardWithPath.ShouldBeReplacedDuringDeserialization">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCardWithPath.Header">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCardWithPath.Path">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCardWithPath.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCardWithPath.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.DataCards.KeyWorldComponentClassCardWithPath.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.CoreHelper.SerializationToImage.DataCards.ListCard.KindOfDataCard">
@@ -406,7 +457,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeExternalValue(System.Object)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeExternalValue(System.Object,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeReflectionType(System.Object,System.Type)">
@@ -451,7 +502,7 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeExternalValue(System.Object)">
+        <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeExternalValue(System.Object,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeReflectionType(System.Object,System.Type)">

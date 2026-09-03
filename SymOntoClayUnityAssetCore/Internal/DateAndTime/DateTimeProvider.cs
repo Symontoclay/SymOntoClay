@@ -36,6 +36,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         IDateTimeProvider, IDisposable,
         IObjectWithPeriodicMethod
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private DateTimeProvider()
+        {
+        }
+
         public DateTimeProvider(IMonitorLogger logger, IActiveObjectCommonContext syncContext, ICustomThreadPool threadPool, ICancellationContext cancellationContext)
             : base(logger)
         {

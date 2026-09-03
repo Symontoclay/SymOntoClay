@@ -909,6 +909,11 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetNewEntity(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.TicksToSecondsMultiplicator">
             <inheritdoc/>
         </member>

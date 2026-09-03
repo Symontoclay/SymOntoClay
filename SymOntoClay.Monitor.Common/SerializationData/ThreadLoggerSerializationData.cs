@@ -1,12 +1,13 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.SerializationData
 {
-    public class ThreadLoggerSerializationData : IObjectToString
+    public class ThreadLoggerSerializationData : IObjectToString, IClassSerializationData
     {
         public IMonitorNode Parent { get; set; }
         public string ThreadId { get; set; }

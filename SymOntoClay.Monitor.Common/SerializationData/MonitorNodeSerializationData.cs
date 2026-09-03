@@ -1,11 +1,12 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using System.Text;
 
 namespace SymOntoClay.Monitor.Common.SerializationData
 {
-    public class MonitorNodeSerializationData : IObjectToString
+    public class MonitorNodeSerializationData : IClassSerializationData, IObjectToString
     {
         [MemberWithExternalValue]
         public IMonitor Parent { get; set; }

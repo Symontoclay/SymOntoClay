@@ -503,6 +503,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"serializationData = {serializationData}");
 #endif
 
+            var classSerializationData = serializationData as IClassSerializationData;
+
+#if DEBUG
+            _logger.Info($"classSerializationData = {classSerializationData}");
+#endif
+
+            if(classSerializationData != null)
+            {
+
+            }
+
             throw new NotImplementedException("C7A28E4A-70A5-4334-8700-E3FFE44A4604");
 
             //_processedSerializedValue[serializedValue] = obj;

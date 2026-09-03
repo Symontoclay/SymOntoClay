@@ -21,11 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using System.Runtime.CompilerServices;
 
 namespace SymOntoClay.Monitor.Common
 {
-    public interface IMonitor : IMonitorLogger, ISymOntoClayDisposable
+    public interface IMonitor : IMonitorLogger, ISymOntoClayDisposable, IParentInClassSerializationData
     {
         bool Enable { get; set; }
         bool EnableRemoteConnection { get; set; }

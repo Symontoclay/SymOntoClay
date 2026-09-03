@@ -59,5 +59,11 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
             return new EmptyThreadLogger(threadId);
         }
+
+        /// <inheritdoc/>
+        public object CreateObjectBySerializationData(object serializationData)
+        {
+            throw new NotImplementedException("243F9BB9-4026-4CEE-8BEA-2C0F988F1579");
+        }
     }
 }

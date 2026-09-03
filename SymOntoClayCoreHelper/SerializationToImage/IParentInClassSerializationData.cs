@@ -2,6 +2,6 @@
 {
     public interface IParentInClassSerializationData
     {
-        //object CreateObjectBySerializationData(object serializationData);
+        object CreateObjectBySerializationData(object serializationData);
     }
 }

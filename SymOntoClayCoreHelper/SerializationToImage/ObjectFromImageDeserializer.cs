@@ -511,12 +511,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if(classSerializationData != null)
             {
+                var obj = classSerializationData.Parent.CreateObjectBySerializationData(serializationData);
 
+#if DEBUG
+                _logger.Info($"obj = {obj}");
+#endif
+
+                _processedSerializedValue[serializedValue] = obj;
+
+                return obj;
             }
 
             throw new NotImplementedException("C7A28E4A-70A5-4334-8700-E3FFE44A4604");
-
-            //_processedSerializedValue[serializedValue] = obj;
         }
 
         private object DeserializeUsualObject(object obj, Type type, ClassCard card, SerializedValue serializedValue)

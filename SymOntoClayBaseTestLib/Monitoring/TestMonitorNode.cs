@@ -55,5 +55,11 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
             return new TestThreadLogger(_monitorSettings, threadId);
         }
+
+        /// <inheritdoc/>
+        public object CreateObjectBySerializationData(object serializationData)
+        {
+            throw new NotImplementedException("0E51BEFD-7B97-44A8-95DF-8D639B5032FA");
+        }
     }
 }

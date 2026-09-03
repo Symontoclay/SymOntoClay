@@ -672,6 +672,16 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        public object CreateObjectBySerializationData(object serializationData)
+        {
+#if DEBUG
+            _globalLogger.Info($"serializationData = {serializationData}");
+#endif
+
+            throw new NotImplementedException("CC5FC252-60AD-49A4-8B63-BC5ECFA34DCF");
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

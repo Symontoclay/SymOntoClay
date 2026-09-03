@@ -2,5 +2,6 @@
 {
     public interface IClassSerializationData
     {
+        IParentInClassSerializationData Parent { get; }
     }
 }

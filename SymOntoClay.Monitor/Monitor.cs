@@ -28,6 +28,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Common.SerializationData;
 using SymOntoClay.Monitor.Helpers;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.Internal.FileWriter;
@@ -42,7 +43,7 @@ namespace SymOntoClay.Monitor
     public class Monitor : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG
-        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly MonitorContext _monitorContext;
@@ -68,6 +69,7 @@ namespace SymOntoClay.Monitor
         private readonly BaseMonitorSettings _baseMonitorSettings;
 
         private readonly List<MonitorNode> _childMonitorNodes = new List<MonitorNode>();
+        private readonly Dictionary<string, MonitorNode> _childMonitorNodesDict = new Dictionary<string, MonitorNode>();
 
         private readonly bool _TopSysEnable = true;
 
@@ -687,6 +689,32 @@ namespace SymOntoClay.Monitor
         public bool EnableAsyncMessageCreation => _baseMonitorSettings.EnableAsyncMessageCreation;
 
         /// <inheritdoc/>
+        public object CreateObjectBySerializationData(object serializationData)
+        {
+#if DEBUG
+            _globalLogger.Info($"serializationData = {serializationData}");
+#endif
+
+            var monitorNodeSerializationData = serializationData as MonitorNodeSerializationData;
+
+#if DEBUG
+            _globalLogger.Info($"monitorNodeSerializationData = {monitorNodeSerializationData}");
+#endif
+
+            if(monitorNodeSerializationData == null)
+            {
+                throw new NotSupportedException($"FA538FF1-DD66-411B-AF45-0629F7F0BD8E: serializationData = {serializationData}");
+            }
+
+            if(_childMonitorNodesDict.TryGetValue(monitorNodeSerializationData.NodeId, out var existingNode))
+            {
+                return existingNode;
+            }
+
+            return CreateMonitorNode("11B62447-734B-4923-BCBE-6E0140A736EE", monitorNodeSerializationData.NodeId);
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -866,6 +894,7 @@ namespace SymOntoClay.Monitor
             var node = new MonitorNode(nodeId, nodeSettings, _monitorContext);
 
             _childMonitorNodes.Add(node);
+            _childMonitorNodesDict[nodeId] = node;
 
             return node;
         }
@@ -1624,6 +1653,7 @@ namespace SymOntoClay.Monitor
             }
 
             _childMonitorNodes.Clear();
+            _childMonitorNodesDict.Clear();
 
             _remoteMonitor?.Dispose();
             _cancellationTokenSourceContext.Dispose();

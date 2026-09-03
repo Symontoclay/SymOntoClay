@@ -70,5 +70,11 @@ namespace SymOntoClay.Monitor.NLog
         {
             throw new NotImplementedException("C263F755-D0EA-49BE-96F2-E246ED4EDD8C");
         }
+
+        /// <inheritdoc/>
+        public object CreateObjectBySerializationData(object serializationData)
+        {
+            throw new NotImplementedException("C58A0818-ED16-40EC-95F1-15FC8DFC7ACF");
+        }
     }
 }

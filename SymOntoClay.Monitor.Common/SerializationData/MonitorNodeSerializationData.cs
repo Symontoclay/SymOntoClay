@@ -10,6 +10,10 @@ namespace SymOntoClay.Monitor.Common.SerializationData
     {
         [MemberWithExternalValue]
         public IMonitor Parent { get; set; }
+
+        /// <inheritdoc/>
+        IParentInClassSerializationData IClassSerializationData.Parent => Parent;
+
         public string NodeId { get; set; }
 
         /// <inheritdoc/>

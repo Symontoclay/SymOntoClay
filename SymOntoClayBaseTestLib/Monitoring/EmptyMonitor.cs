@@ -55,5 +55,11 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
             return new EmptyMonitorNode(nodeId);
         }
+
+        /// <inheritdoc/>
+        public object CreateObjectBySerializationData(object serializationData)
+        {
+            throw new NotImplementedException("0B3ED116-1563-4D7B-89C3-960220F07ACC");
+        }
     }
 }

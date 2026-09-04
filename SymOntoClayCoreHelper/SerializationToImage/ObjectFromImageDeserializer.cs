@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Xml.Linq;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
@@ -121,7 +122,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     throw new NotImplementedException("C3F3E1DF-33BD-4C55-8B8D-62E4E79D21B0");
 
                 case "System.Threading.ManualResetEvent":
-                    return DeserializeManualResetEvent(obj, type, dataCard as ExternalManualResetEventClassCard, serializedValue);
+                case "SymOntoClay.CoreHelper.SerializationToImage.ManualResetEventStub":
+                    return DeserializeManualResetEvent(type, dataCard as ExternalManualResetEventClassCard, serializedValue);
 
                 case "System.Byte":
                 case "System.SByte":
@@ -710,15 +712,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             property.SetValue(obj, memberValue);
         }
 
-        private object DeserializeManualResetEvent(object obj, Type type, ExternalManualResetEventClassCard card, SerializedValue serializedValue)
+        private object DeserializeManualResetEvent(Type type, ExternalManualResetEventClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
+            var obj = new ManualResetEvent(card.IsSet);
+
             _processedSerializedValue[serializedValue] = obj;
 
-            throw new NotImplementedException("C5C9CAEE-AAEB-437D-A2CE-552CE3F13FEC");
+            //throw new NotImplementedException("C5C9CAEE-AAEB-437D-A2CE-552CE3F13FEC");
+
+            return obj;
         }
 
         private object DeserializeAction(object obj, Type type, ObjMemberRef objMember, ActionCard card, SerializedValue serializedValue)
@@ -780,7 +786,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData",
             "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider",
             "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject",
-            "SymOntoClay.ActiveObject.Threads.ActiveObjectContext"
+            "SymOntoClay.ActiveObject.Threads.ActiveObjectContext",
+            "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent",
+            "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -877,7 +885,25 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>() 
             { 
-                "_commonContext" 
+                "_commonContext",
+                "_cancellationContext"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent"] = new List<string>() 
+            { 
+                "_lockObj",
+                "_isLocked",
+                "_commonActiveContext",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext"] = new List<string>() 
+            { 
+                "_autoResetEvent",
+                "_isNeedWating"
             };
         }
     }

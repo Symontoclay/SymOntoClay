@@ -24,9 +24,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
@@ -34,6 +32,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         private readonly IWorldCoreContext _coreContext;
         private readonly IMonitorLogger _logger;
+
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseWorldCoreComponent()
+        {
+        }
 
         protected BaseWorldCoreComponent(IWorldCoreContext coreContext)
         {

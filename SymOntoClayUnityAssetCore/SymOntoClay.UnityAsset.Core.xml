@@ -849,6 +849,11 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseSerializedWorldCoreComponent.Dispose">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.IsDisposed">
             <inheritdoc/>
         </member>
@@ -1202,6 +1207,11 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.IsNeedWaiting">
             <inheritdoc/>

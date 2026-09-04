@@ -113,6 +113,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return serializedValue.Literal;
             }
 
+            if (type.FullName == "System.Threading.ManualResetEvent")
+            {
+                return ManualResetEventStub.Instance;
+            }
+
             if (type.IsDefined(typeof(SerializeWithDataCreationAttribute), true))
             {
                 return SerializeWithDataCreationStub.Instance;

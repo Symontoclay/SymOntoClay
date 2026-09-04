@@ -52,6 +52,11 @@
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.WaitEvent">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.IsNeedWaiting">
             <inheritdoc/>
         </member>
@@ -126,6 +131,11 @@
         </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.Dispose">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.ObjectWithPeriodicMethod">
             <inheritdoc/>

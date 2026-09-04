@@ -778,7 +778,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.BaseCoreContext",
             "SymOntoClay.CoreHelper.SerializationToImage.SerializeWithDataCreationStub",
             "SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData",
-            "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider"
+            "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider",
+            "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject",
+            "SymOntoClay.ActiveObject.Threads.ActiveObjectContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -866,6 +868,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_lockObj",
                 "_activeObject"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>() 
+            { 
+                "_context" 
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>() 
+            { 
+                "_commonContext" 
             };
         }
     }

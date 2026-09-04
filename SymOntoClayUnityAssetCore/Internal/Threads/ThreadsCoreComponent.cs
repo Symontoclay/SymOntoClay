@@ -27,6 +27,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
 {
     public class ThreadsCoreComponent: BaseWorldCoreComponent, IActiveObjectCommonContext
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        public ThreadsCoreComponent()
+        {
+        }
+
         public ThreadsCoreComponent(IWorldCoreContext coreContext)
             : base(coreContext)
         {

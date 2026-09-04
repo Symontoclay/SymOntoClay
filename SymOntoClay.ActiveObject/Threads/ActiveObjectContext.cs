@@ -30,6 +30,13 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public class ActiveObjectContext : IActiveObjectContext, IDisposable
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ActiveObjectContext()
+        {
+        }
+
         public ActiveObjectContext(IActiveObjectCommonContext commonContext, ICancellationContext cancellationContext)
         {
             _commonContext = commonContext;

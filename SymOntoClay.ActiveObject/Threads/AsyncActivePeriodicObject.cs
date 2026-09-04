@@ -24,7 +24,6 @@ using SymOntoClay.ActiveObject.EventsCollections;
 using SymOntoClay.ActiveObject.EventsInterfaces;
 using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.Common.Cancellation;
-using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -33,6 +32,13 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public class AsyncActivePeriodicObject : IActivePeriodicObject, IDisposable
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private AsyncActivePeriodicObject()
+        {
+        }
+
         public AsyncActivePeriodicObject(IActiveObjectContext context, ICustomThreadPool threadPool, IMonitorLogger logger)
         {
             _context = context;

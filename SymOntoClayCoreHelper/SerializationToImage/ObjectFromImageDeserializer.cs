@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Common.SerializationToImage.Attributes;
+﻿using SymOntoClay.Common.SerializationToImage;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections;
@@ -565,6 +566,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 ProcessProperty(obj, item);
 
                 //throw new NotImplementedException("C4E71323-8AF9-4149-A2AD-EBCF0B342766");
+            }
+
+            var postDeserializationHandler = obj as IPostDeserializationHandler;
+
+            if(postDeserializationHandler != null)
+            {
+#if DEBUG
+                _logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
+#endif
+
+                postDeserializationHandler.Handle();
             }
 
             //throw new NotImplementedException("C0C998E4-4D33-4597-9CED-D51B04036D01");

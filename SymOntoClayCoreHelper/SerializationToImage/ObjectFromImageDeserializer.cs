@@ -277,10 +277,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                throw new NotImplementedException("CA3E61AC-27C7-4A74-B369-BF5A38D0CD63");
+                list.Add(itemValue);
+
+                //throw new NotImplementedException("CA3E61AC-27C7-4A74-B369-BF5A38D0CD63");
             }
 
-            throw new NotImplementedException("C9CA6832-F3F1-4724-9043-28156FB104C7");
+            //throw new NotImplementedException("C9CA6832-F3F1-4724-9043-28156FB104C7");
+
+            return obj;
         }
 
         private object DeserializeGenericStack(object obj, Type type, StackCard card, SerializedValue serializedValue)
@@ -443,6 +447,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 throw new NotImplementedException("C51E0F23-E34D-4B7C-9CD3-F8307BC33574");
             }
 
+            var postDeserializationHandler = obj as IPostDeserializationHandler;
+
+            if (postDeserializationHandler != null)
+            {
+#if DEBUG
+                _logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
+#endif
+
+                postDeserializationHandler.Handle();
+            }
+
             throw new NotImplementedException("C8CA053E-8B82-40B4-90DC-B100748AE0A5");
         }
 
@@ -487,6 +502,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 ProcessProperty(obj, item);
 
                 //throw new NotImplementedException("CC190AD1-8A2D-458B-AF36-5D31C8E3F3EF");
+            }
+
+            var postDeserializationHandler = obj as IPostDeserializationHandler;
+
+            if (postDeserializationHandler != null)
+            {
+#if DEBUG
+                _logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
+#endif
+
+                postDeserializationHandler.Handle();
             }
 
             //throw new NotImplementedException("C31353B5-CE4C-477A-AC83-42B730137FF7");
@@ -622,6 +648,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 ProcessProperty(obj, item);
 
                 //throw new NotImplementedException("C6DCA63F-E240-44A7-8C18-3CE4F8A4F66E");
+            }
+
+            var postDeserializationHandler = obj as IPostDeserializationHandler;
+
+            if (postDeserializationHandler != null)
+            {
+#if DEBUG
+                _logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
+#endif
+
+                postDeserializationHandler.Handle();
             }
 
             //throw new NotImplementedException("C4CF5809-9536-475C-851D-A1AFD3845C84");
@@ -800,7 +837,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject",
             "SymOntoClay.ActiveObject.Threads.ActiveObjectContext",
             "SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent",
-            "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext"
+            "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext",
+            "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
+            "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -898,7 +937,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>() 
             { 
                 "_commonContext",
-                "_cancellationContext"
+                "_cancellationContext",
+                "_lockObj",
+                "_periodicChildren",
+                "_onceChildren",
+                "_isDisposed"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent"] = new List<string>() 
@@ -916,6 +959,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_autoResetEvent",
                 "_isNeedWating"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext"] = new List<string>() 
+            { 
+                "_cancellationContext1",
+                "_cancellationContext2",
+                "_isDisposed",
+                "_lockObj"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Common.Cancellation.CancellationTokenSourceContext"] = new List<string>() 
+            { 
+                "_isDisposed",
+                "_lockObj"
             };
         }
     }

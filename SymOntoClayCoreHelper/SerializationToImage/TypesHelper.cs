@@ -165,7 +165,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     throw new NotImplementedException("C5F62D15-CE59-443E-8FFA-51575996DE3F");
 
                 case "System.UInt64":
-                    throw new NotImplementedException("C7A2F01C-CB41-4860-A118-5F14CB63F091");
+                    return ulong.Parse(literal);
 
                 case "System.Single":
                     throw new NotImplementedException("C9DF0F3B-F993-43E6-9C29-BE7657E8C3F7");

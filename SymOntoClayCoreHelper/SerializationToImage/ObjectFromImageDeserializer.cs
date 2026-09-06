@@ -841,7 +841,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
             "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
             "SymOntoClay.Threading.CustomThreadPool",
-            "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"
+            "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer",
+            "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -928,7 +929,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider"] = new List<string>() 
             { 
                 "_lockObj",
-                "_activeObject"
+                "_activeObject",
+                "_ticks",
+                "_logger",
+                "_millisecondsTimeout",
+                "_ulongMillisecondsTimeout"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>() 
@@ -940,7 +945,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_lockObj",
                 "_isWaited",
                 "_isExited",
-                "_task"
+                "_task",
+                "_onCompletedHandlersCollection",
+                "_isDisposed",
+                "ObjectWithPeriodicMethod"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>() 
@@ -994,6 +1002,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"] = new List<string>() { };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection"] = new List<string>() 
+            { 
+                "_lockObj",
+                "_handlers"
+            };
         }
     }
 }

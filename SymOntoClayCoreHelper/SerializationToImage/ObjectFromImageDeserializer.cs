@@ -840,7 +840,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext",
             "SymOntoClay.Common.Cancellation.CancellationLinkedTokenSourceContext",
             "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
-            "SymOntoClay.Threading.CustomThreadPool"
+            "SymOntoClay.Threading.CustomThreadPool",
+            "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -933,7 +934,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject"] = new List<string>() 
             { 
                 "_context",
-                "_threadPool"
+                "_threadPool",
+                "_cancellationContext",
+                "_logger",
+                "_lockObj",
+                "_isWaited",
+                "_isExited",
+                "_task"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Threads.ActiveObjectContext"] = new List<string>() 
@@ -977,7 +984,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_lockObj"
             };
 
-            _tmpProcessedMembersOfTypes["SymOntoClay.Threading.CustomThreadPool"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Threading.CustomThreadPool"] = new List<string>()
+            { 
+                "_settings",
+                "_maxThreadsCount",
+                "_minThreadsCount",
+                "_cancellationContext",
+                "_needToRun"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer"] = new List<string>() { };
         }
     }
 }

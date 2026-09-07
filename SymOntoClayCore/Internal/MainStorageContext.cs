@@ -37,6 +37,13 @@ namespace SymOntoClay.Core.Internal
 {
     public class MainStorageContext: BaseCoreContext, IMainStorageContext
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private MainStorageContext()
+        {
+        }
+
         public MainStorageContext(IMonitorNode monitorNode)
             : base(monitorNode)
         {

@@ -36,6 +36,13 @@ namespace SymOntoClay.Core
 {
     public class ModulesStorage : BaseComponent, IModulesStorage, ISerializableEngine
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ModulesStorage()
+        {
+        }
+
         public ModulesStorage(ModulesStorageSettings settings)
             : base(settings.MonitorNode)
         {

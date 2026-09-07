@@ -396,6 +396,11 @@
         <member name="M:SymOntoClay.Core.Internal.BaseComponent.Dispose">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseContextComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.BaseCoreContext.#ctor">
             <summary>
             Constructor for deserialization.
@@ -9881,6 +9886,11 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.MainStorageContext.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
             <inheritdoc/>
         </member>
@@ -10886,6 +10896,11 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.Parse(System.String)">
             <inheritdoc/>
         </member>
@@ -10906,6 +10921,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode.Init">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Serialization.ProjectLoader.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -12576,6 +12596,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Visitors.ResolveVariablesLogicalVisitor.VisitLogicalQueryNode(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.ModulesStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorage.LoadFromSourceCode">
             <inheritdoc/>

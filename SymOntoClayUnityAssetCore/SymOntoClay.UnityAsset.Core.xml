@@ -1158,6 +1158,11 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext.#ctor">
             <summary>
             Constructor for deserialization.

@@ -27,6 +27,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
 {
     public class ModulesStorageComponent : BaseSerializedWorldCoreComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ModulesStorageComponent()
+        {
+        }
+
         public ModulesStorageComponent(IWorldCoreContext coreContext)
             : base(coreContext)
         {

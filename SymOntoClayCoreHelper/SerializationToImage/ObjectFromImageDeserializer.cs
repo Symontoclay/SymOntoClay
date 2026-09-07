@@ -328,7 +328,32 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _processedSerializedValue[serializedValue] = obj;
 
-            throw new NotImplementedException("C7F18F76-A497-4A99-A950-8EEE7F2EBA16");
+            var dict = (IDictionary)obj;
+
+            foreach (var item in card.Items)
+            {
+#if DEBUG
+                _logger.Info($"item = {item}");
+#endif
+
+                var itemKey = DeserializeValue(item.Key);
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+#endif
+
+                var itemValue = DeserializeValue(item.Value);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                dict.Add(itemKey, itemValue);
+            }
+
+            //throw new NotImplementedException("C7F18F76-A497-4A99-A950-8EEE7F2EBA16");
+
+            return obj;
         }
 
         private object DeserializeComposite(object obj, Type type, IDataCardWithHeader card, SerializedValue serializedValue)
@@ -842,7 +867,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Common.Cancellation.CancellationTokenSourceContext",
             "SymOntoClay.Threading.CustomThreadPool",
             "SymOntoClay.ActiveObject.Pointers.ThreadTaskPointer",
-            "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection"
+            "SymOntoClay.ActiveObject.EventsCollections.OnCompletedActiveObjectHandlersCollection",
+            "SymOntoClay.Core.Internal.Parsing.Parser",
+            "SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent",
+            "SymOntoClay.Core.ModulesStorage",
+            "SymOntoClay.Core.Internal.Serialization.ProjectLoader",
+            "SymOntoClay.Core.Internal.MainStorageContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -851,7 +881,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         {
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>() 
             {
-                "_context" 
+                "_context"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>() 
@@ -882,7 +912,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "PlayerDefaultThreadingSettings",
                 "GameObjectDefaultThreadingSettings",
                 "PlaceDefaultThreadingSettings",
-                "HtnExecutionDefaultSettings"
+                "HtnExecutionDefaultSettings",
+                "SymOntoClay.Core.Internal.Serialization.ProjectLoader"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.ThreadingSettings"] = new List<string>() 
@@ -907,7 +938,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>() 
             { 
-                "_context" 
+                "_context",
+                "_parser",
+                "_cache",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.BaseCoreContext"] = new List<string>() 
@@ -917,7 +954,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger",
                 "MonitorNode",
                 "Compiler",
-                "DateTimeProvider"
+                "DateTimeProvider",
+                "StandardFactsBuilder",
+                "AsyncEventsThreadPool",
+                "GarbageCollectionThreadPool",
+                "CancellationTokenSourceContext",
+                "LinkedCancellationTokenSourceContext"
             };
 
             _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData"] = new List<string>() 
@@ -1007,6 +1049,80 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             { 
                 "_lockObj",
                 "_handlers"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Parsing.Parser"] = new List<string>() 
+            { 
+                "_context",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent"] = new List<string>()
+            {
+                "_modulesStorage",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.ModulesStorage"] = new List<string>()
+            {
+                "_projectLoader",
+                "_mainStorageContext",
+                "_lockObj",
+                "_libDirs",
+                "_hasLibDirs",
+                "_storagesDict",
+                "_dependenciesDict",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Serialization.ProjectLoader"] = new List<string>()
+            {
+                "_context",
+                "_compiler",
+                "_isDeferredImport",
+                "_defaultSettingsOfCodeEntity",
+                "_globalStorage",
+                "_commonNamesStorage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.MainStorageContext"] = new List<string>()
+            {
+                "Id",
+                "SelfName",
+                "AppFile",
+                "ActiveObjectContext",
+                "_state",
+                "_stateLockObj",
+                "_logger",
+                "Storage",
+                "Parser",
+                "DataResolversFactory",
+                "ConvertersFactory",
+                "TypeConverter",
+                "CommonNamesStorage",
+                "InstancesStorage",
+                "LoaderFromSourceCode",
+                "ServicesFactory",
+                "LogicQueryParseAndCache",
+                "ModulesStorage",
+                "MonitorNode",
+                "Compiler",
+                "DateTimeProvider",
+                "StandardFactsBuilder",
+                "AsyncEventsThreadPool",
+                "GarbageCollectionThreadPool",
+                "CancellationTokenSourceContext",
+                "LinkedCancellationTokenSourceContext"
             };
         }
     }

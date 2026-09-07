@@ -36,6 +36,13 @@ namespace SymOntoClay.Core.Internal.Serialization
 {
     public class ProjectLoader : BaseComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ProjectLoader()
+        {
+        }
+
         public ProjectLoader(IMainStorageContext context)
             : this(context, false)
         {

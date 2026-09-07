@@ -26,6 +26,13 @@ namespace SymOntoClay.Core.Internal
 {
     public abstract class BaseContextComponent: BaseComponent, IBaseContextComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseContextComponent()
+        {
+        }
+
         protected BaseContextComponent(IMonitorLogger logger)
             : base(logger)
         {

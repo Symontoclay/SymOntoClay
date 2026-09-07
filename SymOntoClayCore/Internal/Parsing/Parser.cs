@@ -22,17 +22,22 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Parsing.Internal;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing
 {
     public class Parser : BaseContextComponent, IParser
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private Parser()
+        {
+        }
+
         public Parser(IBaseCoreContext context)
             : base(context.Logger)
         {

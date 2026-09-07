@@ -144,37 +144,37 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (type.FullName)
             {
                 case "System.Byte":
-                    throw new NotImplementedException("C9719420-E5A5-41B5-849D-4E4FA0F98BBD");
+                    return Byte.Parse(literal);
 
                 case "System.SByte":
-                    throw new NotImplementedException("C8950F25-F286-4A5A-A62E-A8B556485E28");
+                    return SByte.Parse(literal);
 
                 case "System.Int16":
-                    throw new NotImplementedException("C5202D05-2D1D-4F66-A1F9-B9F9044C4B2A");
+                    return Int16.Parse(literal);
 
                 case "System.Int32":
                     return int.Parse(literal);
 
                 case "System.Int64":
-                    throw new NotImplementedException("C3DE4402-94D8-4AFD-B67C-69E59304373B");
+                    return Int64.Parse(literal);
 
                 case "System.UInt16":
-                    throw new NotImplementedException("CCE6CE31-2758-46F1-A168-65F64A4EE64C");
+                    return UInt16.Parse(literal);
 
                 case "System.UInt32":
-                    throw new NotImplementedException("C5F62D15-CE59-443E-8FFA-51575996DE3F");
+                    return uint.Parse(literal);
 
                 case "System.UInt64":
                     return ulong.Parse(literal);
 
                 case "System.Single":
-                    throw new NotImplementedException("C9DF0F3B-F993-43E6-9C29-BE7657E8C3F7");
+                    return Single.Parse(literal);
 
                 case "System.Decimal":
-                    throw new NotImplementedException("C246AEBD-65C9-498C-8B51-9E765E901493");
+                    return Decimal.Parse(literal);
 
                 case "System.Double":
-                    throw new NotImplementedException("C240B14D-831C-42E2-B3EB-AB59C8AE69C3");
+                    return Double.Parse(literal);
 
                 case "System.Boolean":
                     return bool.Parse(literal);

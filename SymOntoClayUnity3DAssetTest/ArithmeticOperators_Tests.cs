@@ -65,7 +65,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "7D51F929-EED3-436F-9C8F-0A5B075C1BF8");
                     }
                 }));
 
@@ -113,7 +113,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "E0B3F063-2329-4FC0-994D-F260326C2954");
                     }
                 }));
 
@@ -157,7 +157,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "14E12F04-3955-4C1D-BAD1-5072910532E9");
                     }
                 }));
 
@@ -201,7 +201,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "73694DDC-C1C9-4260-BCC6-9E8148EBAA57");
                     }
                 }));
 
@@ -245,7 +245,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "1619907D-DF01-43ED-AD64-043E70CBFD96");
                     }
                 }));
 
@@ -289,7 +289,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "B9EE8AE9-0DA8-423F-B6AF-9D1971A24F16");
                     }
                 }));
 
@@ -333,7 +333,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "0B5D6297-50DB-43BA-AC11-00FE0C27BC21");
                     }
                 }));
 
@@ -377,7 +377,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "664925A1-C9FD-41A5-AC50-6B1CCE27B102");
                     }
                 }));
 
@@ -420,7 +420,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "09E2A956-AF16-4129-BDCC-B9563E6B453D");
                     }
                 }));
 
@@ -464,7 +464,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "072027E7-38D9-4BBF-8289-AA2E22B19628");
                     }
                 }));
 
@@ -508,7 +508,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "8DAF883D-4C76-410D-A69F-0D1BA37CF0DD");
                     }
                 }));
 
@@ -553,7 +553,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "F08026BA-0E41-4ADE-B892-A85C7E645046");
                     }
                 }));
 
@@ -598,7 +598,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "6ED4E998-0E19-4ACC-8270-32FADF968A22");
                     }
                 }));
 
@@ -643,7 +643,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "083FC43A-CC44-4B57-B4C9-B57B7E060615");
                     }
                 }));
 
@@ -687,7 +687,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "A751475F-900A-4E79-B70E-B7F6D943078F");
                     }
                 }));
 
@@ -732,7 +732,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "281DA7EA-3A52-4132-9C5E-3CF95A787C91");
                     }
                 }));
 
@@ -778,7 +778,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "17954482-439F-47D5-B170-853C06976119");
                     }
                 }));
 
@@ -824,7 +824,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "4ADB7CBA-805F-4939-BE03-75EBE81C0616");
                     }
                 }));
 
@@ -870,7 +870,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "2D7CCF26-D36C-4AD4-8D3A-0BE949DB2183");
                     }
                 }));
 
@@ -916,7 +916,7 @@ private:
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "58EED454-A00F-4C79-8511-E318DDA42AFE");
                     }
                 }));
 

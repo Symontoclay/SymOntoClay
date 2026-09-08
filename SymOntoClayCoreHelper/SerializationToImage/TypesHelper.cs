@@ -183,7 +183,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     return literal;
 
                 case "System.Char":
-                    throw new NotImplementedException("C7C7001E-32DB-4982-97A0-6D4FB470CEA3");
+                    return char.Parse(literal);
 
                 case "System.DateTime":
                     throw new NotImplementedException("C66C62EB-6EA9-41A2-B5A6-B93B14C8DBD0");
@@ -198,7 +198,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     throw new NotImplementedException("C2C051F2-0E9C-4845-9E26-863DB6507FF6");
 
                 case "System.Guid":
-                    throw new NotImplementedException("C2B19843-1E68-4A2B-BDE3-CFC60EB809F9");
+                    return Guid.Parse(literal);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type.FullName), type.FullName, "4A06B1F6-BBF3-4B58-A122-8AD1AD23CECB");

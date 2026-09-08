@@ -23,6 +23,7 @@ SOFTWARE.*/
 using DictionaryGenerator;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.CLI;
@@ -93,6 +94,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            //TstParseGuid();
             //TstThreadExecutorStackHandler();
             //TstSerializationToImageHandler();
             //TstDeserializerFromImageHandler();
@@ -195,6 +197,29 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstParseGuid()
+        {
+            _globalLogger.Info("Begin");
+
+            var guidStr = "96C27CD2-8DFE-44DD-89D1-EDEF19FA5D51";
+
+            _globalLogger.Info($"guidStr = {guidStr}");
+
+            var guid = Guid.Parse(guidStr);
+
+            _globalLogger.Info($"guid = {guid}");
+
+            var guidStr2 = "00000000-0000-0000-0000-000000000000";
+
+            _globalLogger.Info($"guidStr2 = {guidStr2}");
+
+            var guid2 = Guid.Parse(guidStr2);
+
+            _globalLogger.Info($"guid2 = {guid2}");
+
+            _globalLogger.Info("End");
         }
 
         private static void TstThreadExecutorStackHandler()

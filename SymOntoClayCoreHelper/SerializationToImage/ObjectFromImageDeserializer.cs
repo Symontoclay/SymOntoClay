@@ -883,7 +883,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.RuleInstance",
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData",
             "SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode",
-            "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart"
+            "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
+            "SymOntoClay.Core.Internal.CodeModel.LogicalValue"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1400,6 +1401,25 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "TypeOfAccess",
                 "Holder",
                 "RelationsDict",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.LogicalValue"] = new List<string>()
+            {
+                "_builtInSuperTypes",
+                "_isBoolean",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "SystemValue",
                 "InternalSystemId",
                 "WhereSection",
                 "Annotations"

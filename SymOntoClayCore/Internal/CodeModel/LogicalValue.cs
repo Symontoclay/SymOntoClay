@@ -46,6 +46,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             FalseValue.CheckDirty();
         }
 
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private LogicalValue()
+        {
+        }
+
         public LogicalValue(bool systemBool)
             : this(systemBool ? 1: 0)
         {

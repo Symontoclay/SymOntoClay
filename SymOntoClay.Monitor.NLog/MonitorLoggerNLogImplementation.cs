@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
@@ -34,8 +35,7 @@ using System.Runtime.CompilerServices;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    [SerializeWithDataCreation]
-    public class MonitorLoggerNLogImplementation: Disposable, IMonitorLogger, ISerializationDataFactory
+    public class MonitorLoggerNLogImplementation: Disposable, IMonitorLogger
     {
         /// <summary>
         /// Gets default instance of the class.
@@ -52,6 +52,7 @@ namespace SymOntoClay.Monitor.NLog
             _logger = logger;
         }
 
+        [SystemNoSerializedMember]
         private readonly Logger _logger;
 
         /// <inheritdoc/>
@@ -67,13 +68,6 @@ namespace SymOntoClay.Monitor.NLog
         public bool EnableAddingRemovingFactLoggingInStorages => false;
 
         IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException("DFAE432F-F3FF-4A44-8D6D-0D8B103AC205");
-
-        /// <inheritdoc/>
-        public virtual object GetSerializationData()
-        {
-            var serializationData = new MonitorNodeSerializationData();
-            return serializationData;
-        }
 
         /// <inheritdoc/>
         public string CreateThreadId()

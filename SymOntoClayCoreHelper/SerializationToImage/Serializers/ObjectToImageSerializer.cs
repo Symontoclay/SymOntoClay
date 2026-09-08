@@ -1674,7 +1674,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 "IndexedRulePartsWithOneRelationWithVarsDict",
                 "RelationsList"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"] = new List<string>() 
+            { 
+                "_isDisposed",
+                "_lockObj"
+            };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode"] = new List<string>() 
             { 
                 "_annotationsLockObj",

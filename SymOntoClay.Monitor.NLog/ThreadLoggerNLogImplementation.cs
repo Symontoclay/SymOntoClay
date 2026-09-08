@@ -28,7 +28,6 @@ using System;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    [SerializeWithDataCreation]
     public class ThreadLoggerNLogImplementation: MonitorLoggerNLogImplementation, IThreadLogger
     {
         public ThreadLoggerNLogImplementation(Logger logger)

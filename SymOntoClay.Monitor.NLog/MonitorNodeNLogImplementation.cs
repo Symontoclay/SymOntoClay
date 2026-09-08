@@ -29,8 +29,7 @@ using System.Runtime.CompilerServices;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    [SerializeWithDataCreation]
-    public class MonitorNodeNLogImplementation: MonitorLoggerNLogImplementation, IMonitorNode, ISerializationDataFactory
+    public class MonitorNodeNLogImplementation: MonitorLoggerNLogImplementation, IMonitorNode
     {
         public MonitorNodeNLogImplementation()
             : this(LogManager.GetCurrentClassLogger())
@@ -63,12 +62,6 @@ namespace SymOntoClay.Monitor.NLog
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId, string parentTheadId, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
             return _threadLogger;
-        }
-
-        /// <inheritdoc/>
-        public override object GetSerializationData()
-        {
-            throw new NotImplementedException("C263F755-D0EA-49BE-96F2-E246ED4EDD8C");
         }
 
         /// <inheritdoc/>

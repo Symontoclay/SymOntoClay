@@ -885,7 +885,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode",
             "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
             "SymOntoClay.Core.Internal.CodeModel.LogicalValue",
-            "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo"
+            "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo",
+            "SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1432,6 +1433,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "Position",
                 "Expression",
                 "AdditionalExpressions"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"] = new List<string>()
+            {
+                "_isDisposed",
+                "_lockObj"
             };
         }
     }

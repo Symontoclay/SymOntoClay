@@ -28,6 +28,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class ActionStorage : RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ActionStorage()
+        {
+        }
+
         public ActionStorage(RealStorageSettings settings)
             : base(KindOfStorage.Action, settings)
         {

@@ -30,6 +30,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class CategoriesStorage: BaseComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private CategoriesStorage()
+        {
+        }
+
         public CategoriesStorage(IMainStorageContext context, CategoriesStorageSettings settings)
             : base(context.Logger)
         {

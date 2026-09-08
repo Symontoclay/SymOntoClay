@@ -33,6 +33,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class StorageComponent: BaseContextComponent, IStorageComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private StorageComponent()
+        {
+        }
+
         public StorageComponent(IMainStorageContext context, IStandaloneStorage parentStorage, KindOfStorage kindGlobalOfStorage, StorageComponentSettings settings)
             : base(context.Logger)
         {

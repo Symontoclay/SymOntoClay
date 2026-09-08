@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class HostStorage: RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private HostStorage()
+        {
+        }
+
         public HostStorage(RealStorageSettings settings)
             : base(KindOfStorage.Host, settings)
         {

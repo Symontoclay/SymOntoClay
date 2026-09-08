@@ -50,6 +50,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
     {
         private const int DEFAULT_INITIAL_TIME = 20;
 
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private LogicalStorage()
+        {
+        }
+
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

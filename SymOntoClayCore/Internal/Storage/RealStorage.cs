@@ -56,6 +56,13 @@ namespace SymOntoClay.Core.Internal.Storage
         IOnParentStorageChangedStorageHandler,
         IRealStorageSerializedEventsHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected RealStorage()
+        {
+        }
+
         public RealStorage(KindOfStorage kind, RealStorageSettings settings)
             : base(settings.MainStorageContext.Logger)
         {
@@ -542,7 +549,7 @@ namespace SymOntoClay.Core.Internal.Storage
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
-            sb.AppendLine($"{spaces}Owner = {_realStorageContext.MainStorageContext.Id}");
+            sb.AppendLine($"{spaces}Owner = {_realStorageContext?.MainStorageContext?.Id}");
             sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
             return sb.ToString();
         }

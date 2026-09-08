@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class RootTaskInstanceStorage : RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private RootTaskInstanceStorage()
+        {
+        }
+
         public RootTaskInstanceStorage(RealStorageSettings settings)
             : base(KindOfStorage.RootTaskInstance, settings)
         {

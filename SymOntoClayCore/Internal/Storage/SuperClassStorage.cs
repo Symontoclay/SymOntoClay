@@ -28,6 +28,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class SuperClassStorage : RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private SuperClassStorage()
+        {
+        }
+
         public SuperClassStorage(RealStorageSettings settings, StrongIdentifierValue targetClassName, IInstance instance)
             : base(KindOfStorage.SuperClass, settings)
         {

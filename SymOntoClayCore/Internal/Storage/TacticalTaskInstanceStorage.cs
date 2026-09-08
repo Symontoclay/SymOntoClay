@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class TacticalTaskInstanceStorage : RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private TacticalTaskInstanceStorage()
+        {
+        }
+
         public TacticalTaskInstanceStorage(RealStorageSettings settings)
             : base(KindOfStorage.TacticalTaskInstance, settings)
         {

@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class LibStorage : RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private LibStorage()
+        {
+        }
+
         public LibStorage(RealStorageSettings settings)
             : base(KindOfStorage.World, settings)
         {

@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class CompoundTaskInstanceStorage : RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private CompoundTaskInstanceStorage()
+        {
+        }
+
         public CompoundTaskInstanceStorage(RealStorageSettings settings)
             : base(KindOfStorage.CompoundTaskInstance, settings)
         {

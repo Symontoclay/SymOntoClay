@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class LocalStorage: RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private LocalStorage()
+        {
+        }
+
         public LocalStorage(RealStorageSettings settings)
             : base(KindOfStorage.Local, settings)
         {

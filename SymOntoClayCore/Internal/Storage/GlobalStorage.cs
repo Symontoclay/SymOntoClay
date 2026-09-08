@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class GlobalStorage: RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private GlobalStorage()
+        {
+        }
+
         public GlobalStorage(RealStorageSettings settings)
             : base(KindOfStorage.Global, settings)
         {

@@ -33,6 +33,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class InheritancePublicFactsReplicator : BaseComponent, IInheritancePublicFactsReplicator
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private InheritancePublicFactsReplicator()
+        {
+        }
+
         public InheritancePublicFactsReplicator(IMainStorageContext context, RealStorage publicFactsStorage)
             : base(context.Logger)
         {

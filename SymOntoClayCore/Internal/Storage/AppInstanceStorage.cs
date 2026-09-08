@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class AppInstanceStorage : RealStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private AppInstanceStorage()
+        {
+        }
+
         public AppInstanceStorage(RealStorageSettings settings)
             : base(KindOfStorage.AppInstance, settings)
         {

@@ -51,6 +51,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class ConsolidatedPublicFactsStorage: BaseComponent, IStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ConsolidatedPublicFactsStorage()
+        {
+        }
+
         public ConsolidatedPublicFactsStorage(IMonitorLogger logger, KindOfStorage kind)
             : this(logger, kind, new ConsolidatedPublicFactsStorageSettings())
         {

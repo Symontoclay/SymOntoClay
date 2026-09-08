@@ -884,7 +884,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.LogicalStoraging.CommonPersistIndexedLogicalData",
             "SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode",
             "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
-            "SymOntoClay.Core.Internal.CodeModel.LogicalValue"
+            "SymOntoClay.Core.Internal.CodeModel.LogicalValue",
+            "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1423,6 +1424,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "InternalSystemId",
                 "WhereSection",
                 "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo"] = new List<string>()
+            {
+                "Kind",
+                "NameOfVar",
+                "Position",
+                "Expression",
+                "AdditionalExpressions"
             };
         }
     }

@@ -42,6 +42,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
     public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage,
         IOnAddingFactHandler, IOnChangedWithKeysLogicalStorageHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ConsolidatedPublicFactsLogicalStorage()
+        {
+        }
+
         public ConsolidatedPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IMonitorLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
             : base(logger)
         {

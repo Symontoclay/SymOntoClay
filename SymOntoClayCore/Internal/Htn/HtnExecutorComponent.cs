@@ -38,6 +38,13 @@ namespace SymOntoClay.Core.Internal.Htn
             WaitingForFinishPlanExecution
         }
 
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private HtnExecutorComponent()
+        {
+        }
+
         public HtnExecutorComponent(IEngineContext context, HtnExecutionSettings htnExecutionSettings)
             : base(context.Logger)
         {

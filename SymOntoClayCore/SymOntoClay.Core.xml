@@ -8422,6 +8422,11 @@
         <member name="M:SymOntoClay.Core.Internal.Htn.BuiltPlanItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
@@ -11669,6 +11674,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Kind">
             <inheritdoc/>

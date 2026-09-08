@@ -189,8 +189,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private IDataCardWithHeader GetDataCardByHeader(SerializedValue header, Type type)
         {
 #if DEBUG
-            _logger.Info($"header = {header}");
-            _logger.Info($"type?.FullName = {type?.FullName}");
+            //_logger.Info($"header = {header}");
+            //_logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
             if (header.KindOfSerializedValue == KindOfSerializedValue.Null)
@@ -258,7 +258,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeGenericList(object obj, Type type, ListCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -268,13 +268,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach(var item in card.Items)
             {
 #if DEBUG
-                _logger.Info($"item = {item}");
+                //_logger.Info($"item = {item}");
 #endif
 
                 var itemValue = DeserializeValue(item);
 
 #if DEBUG
-                _logger.Info($"itemValue = {itemValue}");
+                //_logger.Info($"itemValue = {itemValue}");
 #endif
 
                 list.Add(itemValue);
@@ -323,7 +323,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeGenericDictionary(object obj, Type type, DictionaryCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -333,19 +333,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in card.Items)
             {
 #if DEBUG
-                _logger.Info($"item = {item}");
+                //_logger.Info($"item = {item}");
 #endif
 
                 var itemKey = DeserializeValue(item.Key);
 
 #if DEBUG
-                _logger.Info($"itemKey = {itemKey}");
+                //_logger.Info($"itemKey = {itemKey}");
 #endif
 
                 var itemValue = DeserializeValue(item.Value);
 
 #if DEBUG
-                _logger.Info($"itemValue = {itemValue}");
+                //_logger.Info($"itemValue = {itemValue}");
 #endif
 
                 dict.Add(itemKey, itemValue);
@@ -489,7 +489,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeWorldSettings(object obj, Type type, ExternalClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -499,7 +499,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 foreach (var item in card.Fields)
                 {
 #if DEBUG
-                    _logger.Info($"item.Item1 (1) = {item.Item1}");
+                    //_logger.Info($"item.Item1 (1) = {item.Item1}");
 #endif
 
 #if DEBUG
@@ -517,7 +517,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var name = item.Item1;
 
 #if DEBUG
-                _logger.Info($"name (2) = {name}");
+                //_logger.Info($"name (2) = {name}");
 #endif
 
 #if DEBUG
@@ -548,19 +548,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeWithSerializationDataCreation(ClassCardWithSerializationData card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             var serializationData = DeserializeValue(card.SerializationData);
 
 #if DEBUG
-            _logger.Info($"serializationData = {serializationData}");
+            //_logger.Info($"serializationData = {serializationData}");
 #endif
 
             var classSerializationData = serializationData as IClassSerializationData;
 
 #if DEBUG
-            _logger.Info($"classSerializationData = {classSerializationData}");
+            //_logger.Info($"classSerializationData = {classSerializationData}");
 #endif
 
             if(classSerializationData != null)
@@ -568,7 +568,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var obj = classSerializationData.Parent.CreateObjectBySerializationData(serializationData);
 
 #if DEBUG
-                _logger.Info($"obj = {obj}");
+                //_logger.Info($"obj = {obj}");
 #endif
 
                 _processedSerializedValue[serializedValue] = obj;
@@ -576,13 +576,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 return obj;
             }
 
-            throw new NotImplementedException("C7A28E4A-70A5-4334-8700-E3FFE44A4604");
+            throw new NotImplementedException($"C7A28E4A-70A5-4334-8700-E3FFE44A4604 card = {card}");
         }
 
         private object DeserializeUsualObject(object obj, Type type, ClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -590,7 +590,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in card.Fields)
             {
 #if DEBUG
-                _logger.Info($"item.Item1 (1) = {item.Item1}");
+                //_logger.Info($"item.Item1 (1) = {item.Item1}");
 #endif
 
 #if DEBUG
@@ -607,7 +607,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var name = item.Item1;
 
 #if DEBUG
-                _logger.Info($"name (2) = {name}");
+                //_logger.Info($"name (2) = {name}");
 #endif
 
 #if DEBUG
@@ -624,7 +624,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             if(postDeserializationHandler != null)
             {
 #if DEBUG
-                _logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
+                //_logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
 #endif
 
                 postDeserializationHandler.Handle();
@@ -638,7 +638,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeUsualObject(object obj, Type type, ExternalClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -646,7 +646,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in card.Fields)
             {
 #if DEBUG
-                _logger.Info($"item.Item1 (1) = {item.Item1}");
+                //_logger.Info($"item.Item1 (1) = {item.Item1}");
 #endif
 
 #if DEBUG
@@ -663,7 +663,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var name = item.Item1;
 
 #if DEBUG
-                _logger.Info($"name (2) = {name}");
+                //_logger.Info($"name (2) = {name}");
 #endif
 
 #if DEBUG
@@ -680,7 +680,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             if (postDeserializationHandler != null)
             {
 #if DEBUG
-                _logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
+                //_logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
 #endif
 
                 postDeserializationHandler.Handle();
@@ -707,19 +707,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var typeId = item.Item2;
 
 #if DEBUG
-            _logger.Info($"typeId = {typeId}");
+            //_logger.Info($"typeId = {typeId}");
 #endif
 
             var levelType = _serializedTypesPool.GetTypeValue(typeId);
 
 #if DEBUG
-            _logger.Info($"levelType.FullName = {levelType.FullName}");
+            //_logger.Info($"levelType.FullName = {levelType.FullName}");
 #endif
 
             var field = levelType.GetField(item.Item1, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
 #if DEBUG
-            _logger.Info($"field.Name = {field.Name}");
+            //_logger.Info($"field.Name = {field.Name}");
 #endif
 
             if (field.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
@@ -732,7 +732,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var memberValue = DeserializeValue(serializedValue, objMember);
 
 #if DEBUG
-            _logger.Info($"memberValue = {memberValue}");
+            //_logger.Info($"memberValue = {memberValue}");
 #endif
 
             field.SetValue(obj, memberValue);
@@ -743,31 +743,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var serializedValue = item.Item3;
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
-            _logger.Info($"obj = {obj}");
+            //_logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"obj = {obj}");
 #endif
-
-            //if (serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
-            //{
-            //    return;
-            //}
 
             var typeId = item.Item2;
 
 #if DEBUG
-            _logger.Info($"typeId = {typeId}");
+            //_logger.Info($"typeId = {typeId}");
 #endif
 
             var levelType = _serializedTypesPool.GetTypeValue(typeId);
 
 #if DEBUG
-            _logger.Info($"levelType.FullName = {levelType.FullName}");
+            //_logger.Info($"levelType.FullName = {levelType.FullName}");
 #endif
 
             var property = levelType.GetProperty(item.Item1, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
 #if DEBUG
-            _logger.Info($"field.Name = {property.Name}");
+            //_logger.Info($"field.Name = {property.Name}");
 #endif
 
             if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
@@ -780,7 +775,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var memberValue = DeserializeValue(serializedValue, objMember);
 
 #if DEBUG
-            _logger.Info($"memberValue = {memberValue}");
+            //_logger.Info($"memberValue = {memberValue}");
 #endif
 
             property.SetValue(obj, memberValue);
@@ -789,7 +784,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeManualResetEvent(Type type, ExternalManualResetEventClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             var obj = new ManualResetEvent(card.IsSet);
@@ -886,7 +881,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart",
             "SymOntoClay.Core.Internal.CodeModel.LogicalValue",
             "SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo",
-            "SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation"
+            "SymOntoClay.Monitor.NLog.MonitorLoggerNLogImplementation",
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage",
+            "SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage",
+            "SymOntoClay.Core.Internal.Storage.RealStorage"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1438,6 +1436,89 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "_isDisposed",
                 "_lockObj"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage"] = new List<string>()
+            {
+                "_lockObj",
+                "_mainStorageContext",
+                "_parent",
+                "_logicalStorages",
+                "_rejectedFacts",
+                "_processedOnAddingFacts",
+                "_onAddingFactLockObj",
+                "_enableOnAddingFactEvent",
+                "_fuzzyLogicResolver",
+                "_localCodeExecutionContext",
+                "_kind",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_onChangedWithKeysHandlersLockObj",
+                "_onChangedWithKeysHandlers",
+                "_onAddingFactHandlerLockObj",
+                "_onAddingFactHandlers",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage"] = new List<string>()
+            {
+                "_lockObj",
+                "_storages",
+                "_logicalStorage",
+                "_inheritanceStorage",
+                "_triggersStorage",
+                "_varStorage",
+                "_statesStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_kind",
+                "_state",
+                "_stateLockObj",
+                "_logger",
+                "CodeItemsStoragesList"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.RealStorage"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext",
+                "_lockObj",
+                "_logicalStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_statesStorage",
+                "_triggersStorage",
+                "_inheritanceStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_varStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_onParentStorageChangedHandlersLockObj",
+                "_onParentStorageChangedHandlers",
+                "DefaultSettingsOfCodeEntity",
+                "CodeItemsStoragesList",
+                "_isDisposed",
+                "_logger",
+                "IsIsolated"
             };
         }
     }

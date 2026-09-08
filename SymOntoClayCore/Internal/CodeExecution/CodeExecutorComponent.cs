@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class CodeExecutorComponent: BaseContextComponent, ICodeExecutorComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private CodeExecutorComponent()
+        {
+        }
+
         public CodeExecutorComponent(IEngineContext context)
             : base(context.Logger)
         {

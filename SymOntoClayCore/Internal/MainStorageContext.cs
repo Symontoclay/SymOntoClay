@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal
         /// <summary>
         /// Constructor for deserialization.
         /// </summary>
-        private MainStorageContext()
+        protected MainStorageContext()
         {
         }
 

@@ -29,6 +29,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class NumberValueLinearResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private NumberValueLinearResolver()
+        {
+        }
+
         public NumberValueLinearResolver(IMainStorageContext context)
             : base(context)
         {

@@ -30,6 +30,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class BaseResolver: BaseContextComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseResolver()
+        {
+        }
+
         public BaseResolver(IMainStorageContext context)
             : base(context.Logger)
         {

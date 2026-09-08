@@ -29,6 +29,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class SynonymsResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private SynonymsResolver()
+        {
+        }
+
         public SynonymsResolver(IMainStorageContext context)
             : base(context)
         {

@@ -34,6 +34,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
 
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private InheritanceResolver()
+        {
+        }
+
         public InheritanceResolver(IMainStorageContext context)
             : base(context)
         {

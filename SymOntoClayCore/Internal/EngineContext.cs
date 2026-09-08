@@ -33,6 +33,13 @@ namespace SymOntoClay.Core.Internal
 {
     public class EngineContext : MainStorageContext, IEngineContext
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EngineContext()
+        {
+        }
+
         public EngineContext(IMonitorNode monitorNode)
             : base(monitorNode)
         {

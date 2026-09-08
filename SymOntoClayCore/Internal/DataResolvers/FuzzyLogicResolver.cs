@@ -33,6 +33,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class FuzzyLogicResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private FuzzyLogicResolver()
+        {
+        }
+
         public FuzzyLogicResolver(IMainStorageContext context)
             : base(context)
         {

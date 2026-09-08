@@ -37,6 +37,13 @@ namespace SymOntoClay.Core.Internal.Services
 {
     public class CodeFrameService : BaseContextComponent, ICodeFrameService
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private CodeFrameService()
+        {
+        }
+
         public CodeFrameService(IMainStorageContext context)
             : base(context.Logger)
         {

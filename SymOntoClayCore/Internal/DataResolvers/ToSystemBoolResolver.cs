@@ -28,6 +28,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class ToSystemBoolResolver : BaseContextComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ToSystemBoolResolver()
+        {
+        }
+
         public ToSystemBoolResolver(IMonitorLogger logger)
             : base(logger)
         {

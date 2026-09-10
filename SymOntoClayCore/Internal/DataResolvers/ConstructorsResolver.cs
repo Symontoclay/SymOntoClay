@@ -30,6 +30,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class ConstructorsResolver : BaseMethodsResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ConstructorsResolver()
+        {
+        }
+
         public ConstructorsResolver(IMainStorageContext context)
             : base(context)
         {

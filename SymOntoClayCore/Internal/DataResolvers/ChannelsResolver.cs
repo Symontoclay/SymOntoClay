@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class ChannelsResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ChannelsResolver()
+        {
+        }
+
         public ChannelsResolver(IMainStorageContext context)
             : base(context)
         {

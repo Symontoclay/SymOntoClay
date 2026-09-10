@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class TriggersResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private TriggersResolver()
+        {
+        }
+
         public TriggersResolver(IMainStorageContext context)
             : base(context)
         {

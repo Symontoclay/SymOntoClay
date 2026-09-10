@@ -28,6 +28,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class DateTimeResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private DateTimeResolver()
+        {
+        }
+
         public DateTimeResolver(IMainStorageContext context)
             : base(context)
         {

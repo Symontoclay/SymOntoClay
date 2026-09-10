@@ -892,7 +892,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.BaseResolver",
             "SymOntoClay.Core.Internal.DataResolvers.InheritanceResolver",
             "SymOntoClay.Core.Internal.DataResolvers.ResolverOptions",
-            "SymOntoClay.Core.Internal.DataResolvers.LogicalValueLinearResolver"
+            "SymOntoClay.Core.Internal.DataResolvers.LogicalValueLinearResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.FuzzyLogicResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.ToSystemBoolResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.NumberValueLinearResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.SynonymsResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.OperatorsResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.MethodsResolver",
+            "SymOntoClay.Core.Internal.Converters.TypeConverter",
+            "SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.VarsResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.PropertiesResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.LogicalSearchVarResultsItemInvertor",
+            "SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1638,6 +1650,135 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.FuzzyLogicResolver"] = new List<string>()
+            {
+                "_toSystemBoolResolver",
+                "_numberValueLinearResolver",
+                "_synonymsResolver",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.ToSystemBoolResolver"] = new List<string>()
+            {
+                "TruthThreshold",
+                "NullValueEquvivalent",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.NumberValueLinearResolver"] = new List<string>()
+            {
+                "_fuzzyLogicResolver",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.SynonymsResolver"] = new List<string>()
+            {
+                "DefaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.OperatorsResolver"] = new List<string>()
+            {
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.MethodsResolver"] = new List<string>()
+            {
+                "_defaultOptions",
+                "_emptyParametersRankMatrix",
+                "_synonymsResolver",
+                "_typeConverter",
+                "_fuzzyTypeName",
+                "_numberTypeName",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Converters.TypeConverter"] = new List<string>()
+            {
+                "_context",
+                "_inheritanceResolver",
+                "_logicalSearchResolver",
+                "_fuzzyLogicResolver",
+                "_anyTypeName",
+                "_booleanTypeName",
+                "_fuzzyTypeName",
+                "_numberTypeName",
+                "_emptyTypesList",
+                "_needConversionToBooleanTypeFitCheckingResult",
+                "_defaultOptions",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResolver"] = new List<string>()
+            {
+                "_fuzzyLogicResolver",
+                "_numberValueLinearResolver",
+                "_varsResolver",
+                "_synonymsResolver",
+                "_propertiesResolver",
+                "_logicalSearchVarResultsItemInvertor",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.VarsResolver"] = new List<string>()
+            {
+                "_anyTypeName",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.PropertiesResolver"] = new List<string>()
+            {
+                "_codeExecutorComponent",
+                "_standardCoreFactsBuilder",
+                "_logicalSearchResolver",
+                "_targetLogicalVarName",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger",
+                "DefaultOptions"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.LogicalSearchVarResultsItemInvertor"] = new List<string>()
+            {
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult"] = new List<string>()
+            {
+                "KindOfResult",
+                "SuggestedType"
             };
         }
     }

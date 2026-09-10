@@ -34,6 +34,13 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public class TypeConverter: BaseContextComponent, ITypeConverter
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private TypeConverter()
+        {
+        }
+
         public TypeConverter(IMainStorageContext context)
             : base(context.Logger)
         {

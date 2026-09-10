@@ -34,6 +34,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class MethodsResolver : BaseMethodsResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private MethodsResolver()
+        {
+        }
+
         #region public constructors
         public MethodsResolver(IMainStorageContext context)
             : base(context)

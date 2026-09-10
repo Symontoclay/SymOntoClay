@@ -29,6 +29,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class LogicalValueModalityResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private LogicalValueModalityResolver()
+        {
+        }
+
         public LogicalValueModalityResolver(IMainStorageContext context)
             : base(context)
         {

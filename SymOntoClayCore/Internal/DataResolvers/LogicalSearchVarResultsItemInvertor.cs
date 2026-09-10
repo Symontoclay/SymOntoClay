@@ -33,6 +33,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class LogicalSearchVarResultsItemInvertor : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private LogicalSearchVarResultsItemInvertor()
+        {
+        }
+
         public LogicalSearchVarResultsItemInvertor(IMainStorageContext context)
             : base(context)
         {

@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class MetadataResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private MetadataResolver()
+        {
+        }
+
         public MetadataResolver(IMainStorageContext context)
             : base(context)
         {

@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Converters
         public static TypeFitCheckingResult Fit = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.IsFit);
         public static TypeFitCheckingResult IsNotFit = new TypeFitCheckingResult(KindOfTypeFitCheckingResult.IsNotFit);
 
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private TypeFitCheckingResult()
+        {
+        }
+
         public TypeFitCheckingResult(KindOfTypeFitCheckingResult kindOfResult)
         {
             KindOfResult = kindOfResult;

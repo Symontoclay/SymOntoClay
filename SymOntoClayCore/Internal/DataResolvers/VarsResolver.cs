@@ -33,6 +33,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class VarsResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private VarsResolver()
+        {
+        }
+
         public VarsResolver(IMainStorageContext context)
             : base(context)
         {

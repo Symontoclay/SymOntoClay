@@ -35,12 +35,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 {
     public class PlatformTypesConvertersRegistry : BaseLoggedComponent, IPlatformTypesConvertersRegistry
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private PlatformTypesConvertersRegistry()
+        {
+        }
+
         public PlatformTypesConvertersRegistry(IMonitorLogger logger)
             : base(logger)
         {
         }
 
-        [DeserializeInPostHandler]
         [SystemNoSerializedMember]
         private readonly Type _nullValueType = typeof(NullValue);
 

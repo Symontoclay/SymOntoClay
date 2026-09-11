@@ -30,6 +30,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndpointsRegistry : BaseLoggedComponent, IEndpointsRegistry
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EndpointsRegistry()
+        {
+        }
+
         public EndpointsRegistry(IMonitorLogger logger)
             : base(logger)
         {

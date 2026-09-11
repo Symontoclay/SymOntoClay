@@ -931,7 +931,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage",
             "SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage",
             "SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage",
-            "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage"
+            "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage",
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry",
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2059,6 +2062,22 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_storage",
                 "_state",
                 "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry"] = new List<string>()
+            {
+                "_lockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver"] = new List<string>()
+            {
+                "_platformTypesConvertorsRegistry",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"] = new List<string>()
+            {
+                "_lockObj",
+                "_convertersDict",
                 "_logger"
             };
         }

@@ -34,6 +34,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointsResolver : BaseLoggedComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EndPointsResolver()
+        {
+        }
+
         public EndPointsResolver(IMonitorLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry)
             : base(logger)
         {

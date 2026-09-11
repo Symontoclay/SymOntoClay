@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.Common.SerializationToImage;
 using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
@@ -55,7 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     //[WorldRootAttribute]
     //[SerializeOnlyExplicitlySerializableMembersAttribute]
-    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
+    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable, IPostDeserializationHandler
     {
         /// <summary>
         /// Constructor for deserialization.
@@ -83,7 +84,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             _isInitialized = true;
         }
-        
+
+        /// <inheritdoc/>
+        void IPostDeserializationHandler.Handle()
+        {
+            if(!Directory.Exists(_tmpDir))
+            {
+                Directory.CreateDirectory(_tmpDir);
+            }
+        }
+
         private void ImplementGeneralSettings()
         {
             _tmpDir = _settings.TmpDir;

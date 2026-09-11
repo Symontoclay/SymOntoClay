@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.SerializationToImage;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -34,8 +35,15 @@ using System.Numerics;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
-    public class HumanoidNPCGameComponent: BaseManualControllingGameComponent
+    public class HumanoidNPCGameComponent: BaseManualControllingGameComponent, IPostDeserializationHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private HumanoidNPCGameComponent()
+        {
+        }
+
         public HumanoidNPCGameComponent(HumanoidNPCSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings, worldContext, KindOfWorldItem.HumanoidNPC)
         {
@@ -58,7 +66,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
                 internalContext.TmpDir = tmpDir;
 
-                Directory.CreateDirectory(worldContext.TmpDir);
+                Directory.CreateDirectory(internalContext.TmpDir);
 
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 internalContext.HostSupportComponent = _hostSupport;
@@ -71,6 +79,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 Error("9A9C31DD-54C7-4E82-A6D3-6A84C2ABE746", e);
 
                 throw e;
+            }
+        }
+
+        /// <inheritdoc/>
+        void IPostDeserializationHandler.Handle()
+        {
+            if(!Directory.Exists(_internalContext.TmpDir))
+            {
+                Directory.CreateDirectory(_internalContext.TmpDir);
             }
         }
 

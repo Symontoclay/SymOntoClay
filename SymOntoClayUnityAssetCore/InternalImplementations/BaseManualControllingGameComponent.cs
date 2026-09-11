@@ -36,6 +36,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
     public abstract class BaseManualControllingGameComponent: BaseGameComponent, IHostListener
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseManualControllingGameComponent()
+        {
+        }
+
         protected BaseManualControllingGameComponent(BaseManualControllingGameComponentSettings settings, IWorldCoreGameComponentContext worldContext, KindOfWorldItem kindOfWorldItem)
             : base(settings, worldContext, kindOfWorldItem)
         {

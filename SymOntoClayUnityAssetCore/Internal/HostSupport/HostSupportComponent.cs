@@ -30,6 +30,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
 {
     public class HostSupportComponent : BaseComponent, IHostSupport
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private HostSupportComponent()
+        {
+        }
+
         public HostSupportComponent(IMonitorLogger logger, IPlatformSupport platformSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {

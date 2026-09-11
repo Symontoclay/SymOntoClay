@@ -30,6 +30,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class LocalCodeExecutionContext: ILocalCodeExecutionContext
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
         public LocalCodeExecutionContext()
         {
         }

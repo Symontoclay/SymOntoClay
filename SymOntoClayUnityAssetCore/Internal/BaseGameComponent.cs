@@ -43,6 +43,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly int _instanceId;
 
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseGameComponent()
+        {
+        }
+
         protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext, KindOfWorldItem kindOfWorldItem)
         {
             _instanceId = settings.InstanceId;

@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 {
     public class StandardLibraryLoader : BaseContextComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private StandardLibraryLoader()
+        {
+        }
+
         public StandardLibraryLoader(IEngineContext context)
             : base(context.Logger)
         {

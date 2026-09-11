@@ -805,6 +805,11 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Parent">
             <inheritdoc/>
         </member>
@@ -11333,6 +11338,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.DataResolvers.KindOfValueConversion,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.StandardLibraryLoader.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionDef)">
             <inheritdoc/>

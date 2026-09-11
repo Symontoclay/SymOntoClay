@@ -907,7 +907,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult",
             "SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext",
             "SymOntoClay.Core.Internal.StandardLibrary.StandardLibraryLoader",
-            "SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent"
+            "SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent",
+            "SymOntoClay.UnityAsset.Core.HumanoidNPCSettings",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1811,6 +1814,63 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent"] = new List<string>()
+            {
+                "_settings",
+                "_internalContext",
+                "_internalSerializedContext",
+                "_allowPublicPosition",
+                "_hostSupport",
+                "_soundPublisher",
+                "_endpointsRegistries",
+                "_hostListener",
+                "_hostEndpointsRegistry",
+                "_endPointsResolver",
+                "_endPointActivator",
+                "_internalManualControlledObjectsList",
+                "_internalManualControlledObjectsDict",
+                "_endpointsRegistryForManualControlledObjectsDict",
+                "_manualControlLockObj",
+                "_worldContext",
+                "_logger",
+                "_monitorNode",
+                "_invokerInMainThread",
+                "_instanceId",
+                "_cancellationTokenSourceContext",
+                "_linkedCancellationTokenSourceContext",
+                "_standardFactsBuilder",
+                "_idForFacts",
+                "_id",
+                "_componentState",
+                "_stateLockObj",
+                "AsyncEventsThreadPool"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.HumanoidNPCSettings"] = new List<string>() 
+            {
+                "_id",
+                "_idForFacts",
+                "LogicFile",
+                "PlatformSupport",
+                "VisionProvider",
+                "Categories",
+                "EnableCategories",
+                "HtnExecutionSettings",
+                "HostListener",
+                "InstanceId",
+                "AllowPublicPosition",
+                "UseStaticPosition",
+                "ThreadingSettings"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext"] = new List<string>()
+            {
+                "IdForFacts",
+                "SelfInstanceId",
+                "TmpDir",
+                "CancellationContext",
+                "HostSupportComponent",
+                "AsyncEventsThreadPool",
+                "SoundPublisherComponent"
             };
         }
     }

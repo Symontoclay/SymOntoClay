@@ -1,18 +1,22 @@
-﻿using NLog;
-using SymOntoClay.Common.Disposing;
+﻿using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
-using System;
-using System.Runtime;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
     public class HumanoidNPCGameComponentSerializedContext : Disposable
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private HumanoidNPCGameComponentSerializedContext()
+        {
+        }
+
         public HumanoidNPCGameComponentSerializedContext(HumanoidNPCGameComponent gameComponent, HumanoidNPCSettings settings, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
         {
             if (settings.VisionProvider != null)

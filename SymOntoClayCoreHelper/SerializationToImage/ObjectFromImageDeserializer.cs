@@ -910,7 +910,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent",
             "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent",
             "SymOntoClay.UnityAsset.Core.HumanoidNPCSettings",
-            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext"
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext",
+            "SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1871,6 +1873,27 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "HostSupportComponent",
                 "AsyncEventsThreadPool",
                 "SoundPublisherComponent"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent"] = new List<string>()
+            {
+                "_soundBus",
+                "_hostSupport",
+                "_instanceId",
+                "_idForFacts",
+                "_standardFactsBuilder",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext"] = new List<string>()
+            {
+                "_isDisposed",
+                "_lockObj",
+                "VisionComponent",
+                "CoreEngine",
+                "ConditionalEntityHostSupportComponent",
+                "SoundReceiverComponent",
+                "BackpackStorage"
             };
         }
     }

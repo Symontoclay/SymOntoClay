@@ -30,6 +30,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public class SoundPublisherComponent : BaseComponent, ISoundPublisherProvider
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private SoundPublisherComponent()
+        {
+        }
+
         public SoundPublisherComponent(IMonitorLogger logger, int instanceId, string idForFacts, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {

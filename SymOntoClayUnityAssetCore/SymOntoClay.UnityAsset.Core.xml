@@ -434,6 +434,11 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext.OnDisposing">
             <inheritdoc/>
         </member>
@@ -1205,6 +1210,11 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent.PushSoundFact(System.Single,System.String)">
             <inheritdoc/>

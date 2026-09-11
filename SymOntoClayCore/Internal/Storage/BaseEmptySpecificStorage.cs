@@ -26,6 +26,13 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public abstract class BaseEmptySpecificStorage: BaseComponent, ISpecificStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseEmptySpecificStorage()
+        {
+        }
+
         protected BaseEmptySpecificStorage(IStorage storage, IMonitorLogger logger)
             : base(logger)
         {

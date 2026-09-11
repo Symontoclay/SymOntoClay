@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
     public class EmptyVarStorage : BaseEmptySpecificStorage, IVarStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyVarStorage()
+        {
+        }
+
         public EmptyVarStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

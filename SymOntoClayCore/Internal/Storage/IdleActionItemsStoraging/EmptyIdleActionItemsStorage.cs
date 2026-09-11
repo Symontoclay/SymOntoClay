@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
 {
     public class EmptyIdleActionItemsStorage : BaseEmptySpecificStorage, IIdleActionItemsStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyIdleActionItemsStorage()
+        {
+        }
+
         public EmptyIdleActionItemsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

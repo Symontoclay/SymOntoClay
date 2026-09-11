@@ -912,7 +912,26 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.HumanoidNPCSettings",
             "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentContext",
             "SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent",
-            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext"
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext",
+            "SymOntoClay.Core.Engine",
+            "SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent",
+            "SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent",
+            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage",
+            "SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage",
+            "SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage",
+            "SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage",
+            "SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage",
+            "SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage",
+            "SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage",
+            "SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage",
+            "SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage",
+            "SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage",
+            "SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage",
+            "SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage",
+            "SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage",
+            "SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage",
+            "SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage",
+            "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1894,6 +1913,153 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "ConditionalEntityHostSupportComponent",
                 "SoundReceiverComponent",
                 "BackpackStorage"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Engine"] = new List<string>()
+            {
+                "_context",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent"] = new List<string>()
+            {
+                "_worldContext",
+                "_visionComponent",
+                "_hostSupport",
+                "_instanceId",
+                "_id",
+                "_idForFacts",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent"] = new List<string>()
+            {
+                "_internalContext",
+                "_internalSerializedContext",
+                "_soundBus",
+                "_hostSupport",
+                "_coreEngine",
+                "_standardFactsBuilder",
+                "_instanceId",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage"] = new List<string>()
+            {
+                "_lockObj",
+                "_parent",
+                "_inheritanceStorages",
+                "_kind",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
     }

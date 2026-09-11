@@ -29,6 +29,13 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 {
     public class EmptyTasksStorage : BaseEmptySpecificStorage, ITasksStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyTasksStorage()
+        {
+        }
+
         public EmptyTasksStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

@@ -36,6 +36,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class EmptyLogicalStorage : BaseEmptySpecificStorage, ILogicalStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyLogicalStorage()
+        {
+        }
+
         public EmptyLogicalStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

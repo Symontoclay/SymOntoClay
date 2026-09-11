@@ -32,6 +32,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
 {
     public class ConditionalEntityHostSupportComponent : BaseComponent, IConditionalEntityHostSupport, IEntity
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ConditionalEntityHostSupportComponent()
+        {
+        }
+
         public ConditionalEntityHostSupportComponent(IMonitorLogger logger, HumanoidNPCSettings settings, VisionComponent visionComponent, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {

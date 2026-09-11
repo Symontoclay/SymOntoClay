@@ -29,6 +29,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public abstract class BaseSoundReceiverComponent : BaseComponent, ISoundReceiver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseSoundReceiverComponent()
+        {
+        }
+
         protected BaseSoundReceiverComponent(IMonitorLogger logger, int instanceId, IStandardFactsBuilder standardFactsBuilder)
             : base(logger)
         {

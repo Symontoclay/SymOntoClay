@@ -30,6 +30,13 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 {
     public class ConsolidatedPublicFactsInheritanceStorage : BaseComponent, IInheritanceStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private ConsolidatedPublicFactsInheritanceStorage()
+        {
+        }
+
         public ConsolidatedPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IMonitorLogger logger, KindOfStorage kind)
             : base(logger)
         {

@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
 {
     public class EmptyMetadataStorage : BaseEmptySpecificStorage, IMetadataStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyMetadataStorage()
+        {
+        }
+
         public EmptyMetadataStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
 {
     public class EmptyStatesStorage : BaseEmptySpecificStorage, IStatesStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyStatesStorage()
+        {
+        }
+
         public EmptyStatesStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

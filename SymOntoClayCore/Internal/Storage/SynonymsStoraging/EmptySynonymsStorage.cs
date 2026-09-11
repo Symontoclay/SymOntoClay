@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
 {
     public class EmptySynonymsStorage : BaseEmptySpecificStorage, ISynonymsStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptySynonymsStorage()
+        {
+        }
+
         public EmptySynonymsStorage(IStorage storage)
             : this(storage, null)
         {

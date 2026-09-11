@@ -29,6 +29,13 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 {
     public class EmptyInheritanceStorage : BaseEmptySpecificStorage, IInheritanceStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyInheritanceStorage()
+        {
+        }
+
         public EmptyInheritanceStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

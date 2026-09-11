@@ -33,6 +33,13 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
 {
     public class EmptyOperatorsStorage : BaseEmptySpecificStorage, IOperatorsStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyOperatorsStorage()
+        {
+        }
+
         public EmptyOperatorsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
 {
     public class EmptyMethodsStorage : BaseEmptySpecificStorage, IMethodsStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyMethodsStorage()
+        {
+        }
+
         public EmptyMethodsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

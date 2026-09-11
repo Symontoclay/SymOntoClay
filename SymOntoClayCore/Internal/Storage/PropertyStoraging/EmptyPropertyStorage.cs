@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 {
     public class EmptyPropertyStorage : BaseEmptySpecificStorage, IPropertyStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyPropertyStorage()
+        {
+        }
+
         public EmptyPropertyStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

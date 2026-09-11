@@ -30,6 +30,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public class SoundReceiverComponent : BaseSoundReceiverComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private SoundReceiverComponent()
+        {
+        }
+
         public SoundReceiverComponent(IMonitorLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, HumanoidNPCGameComponentSerializedContext internalSerializedContext, IWorldCoreGameComponentContext worldContext)
             : base(logger, instanceId, worldContext.StandardFactsBuilder)
         {

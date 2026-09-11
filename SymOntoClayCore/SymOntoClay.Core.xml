@@ -205,6 +205,11 @@
         <member name="M:SymOntoClay.Core.DebugHelpers.DebugHelperOptions.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Engine.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Engine.EngineContext">
             <summary>
             Gets engine context. Onkly for debugging and testing!
@@ -11353,6 +11358,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionDef)">
             <inheritdoc/>
         </member>
@@ -11365,6 +11375,11 @@
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.AppInstanceStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.BaseEmptySpecificStorage.#ctor">
             <summary>
             Constructor for deserialization.
             </summary>
@@ -11411,6 +11426,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Channel)">
             <inheritdoc/>
@@ -11575,6 +11595,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
             <inheritdoc/>
         </member>
@@ -11635,6 +11660,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.Factories.TacticalTaskInstanceStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
             <inheritdoc/>
         </member>
@@ -11672,6 +11702,11 @@
             Constructor for deserialization.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
             <inheritdoc/>
         </member>
@@ -11691,6 +11726,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.Kind">
             <inheritdoc/>
@@ -11712,6 +11752,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage.SetInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
@@ -11922,6 +11967,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
@@ -12141,6 +12191,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CodeItem)">
             <inheritdoc/>
         </member>
@@ -12162,6 +12217,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.NamedFunction)">
             <inheritdoc/>
         </member>
@@ -12182,6 +12242,11 @@
             Constructor for deserialization.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Operator)">
             <inheritdoc/>
         </member>
@@ -12196,6 +12261,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.Instances.PropertyInstance)">
             <inheritdoc/>
@@ -12382,6 +12452,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorageSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
             <inheritdoc/>
         </member>
@@ -12398,6 +12473,11 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RootTaskInstanceStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.#ctor">
             <summary>
             Constructor for deserialization.
             </summary>
@@ -12572,6 +12652,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.SuperClassStorage.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Synonym)">
             <inheritdoc/>
         </member>
@@ -12591,6 +12676,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.CommonTasksStorage`1.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.GetBaseCompoundTaskByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.KindOfTask)">
             <inheritdoc/>
@@ -12673,6 +12763,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
             <inheritdoc/>
         </member>
@@ -12741,6 +12836,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetSystemValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>

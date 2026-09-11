@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
 {
     public class EmptyChannelsStorage : BaseEmptySpecificStorage, IChannelsStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyChannelsStorage()
+        {
+        }
+
         public EmptyChannelsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

@@ -31,6 +31,13 @@ namespace SymOntoClay.Core
 {
     public class Engine : BaseComponent, ISerializableEngine
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private Engine()
+        {
+        }
+
         public Engine(EngineSettings settings)
             : base(settings.MonitorNode)
         {

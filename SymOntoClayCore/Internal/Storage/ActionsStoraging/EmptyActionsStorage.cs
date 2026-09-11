@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 {
     public class EmptyActionsStorage : BaseEmptySpecificStorage, IActionsStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyActionsStorage()
+        {
+        }
+
         public EmptyActionsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

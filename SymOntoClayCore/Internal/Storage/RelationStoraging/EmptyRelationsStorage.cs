@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
 {
     public class EmptyRelationsStorage : BaseEmptySpecificStorage, IRelationsStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyRelationsStorage()
+        {
+        }
+
         public EmptyRelationsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

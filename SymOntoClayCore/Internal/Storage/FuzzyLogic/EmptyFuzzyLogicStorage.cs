@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 {
     public class EmptyFuzzyLogicStorage : BaseEmptySpecificStorage, IFuzzyLogicStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyFuzzyLogicStorage()
+        {
+        }
+
         public EmptyFuzzyLogicStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

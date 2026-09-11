@@ -30,6 +30,13 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
     public class EmptyTriggersStorage: BaseEmptySpecificStorage, ITriggersStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EmptyTriggersStorage()
+        {
+        }
+
         public EmptyTriggersStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {

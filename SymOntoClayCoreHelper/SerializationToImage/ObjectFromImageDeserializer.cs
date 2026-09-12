@@ -149,7 +149,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 case "System.Type":
                 case "System.RuntimeType":
-                    return DeserializeReflectionType(obj, type, dataCard as ReflectionTypeCard, serializedValue);
+                case "SymOntoClay.CoreHelper.SerializationToImage.ReflectionTypeStub":
+                    return DeserializeReflectionType(dataCard as ReflectionTypeCard, serializedValue);
             }
 
             var fullShortTypeName = $"{type.Namespace}.{type.Name}";
@@ -226,15 +227,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return _typesHelper.FromString(type, header.Literal);
         }
 
-        private object DeserializeReflectionType(object obj, Type type, ReflectionTypeCard card, SerializedValue serializedValue)
+        private object DeserializeReflectionType(ReflectionTypeCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
+            var obj = _typesHelper.GetTypeByFullName(card.OriginalTypeName);
+
+#if DEBUG
+            _logger.Info($"obj?.FullName = {obj?.FullName}");
+#endif
+
             _processedSerializedValue[serializedValue] = obj;
 
-            throw new NotImplementedException("C800E9B2-9E20-402B-A3B2-EB025A76E76E");
+            return obj;
         }
 
         private object DeserializeBareObject(object obj, Type type, ClassCard card, SerializedValue serializedValue)

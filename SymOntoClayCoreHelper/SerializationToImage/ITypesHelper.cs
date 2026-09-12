@@ -7,5 +7,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         KindOfSerializedValue GetKindOfSerializedValue(Type type);
         string ToString(object obj);
         object FromString(Type type, string literal);
+        Type GetTypeByFullName(string fullName);
     }
 }

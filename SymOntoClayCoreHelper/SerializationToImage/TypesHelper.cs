@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 namespace SymOntoClay.CoreHelper.SerializationToImage
 {
@@ -203,6 +204,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type.FullName), type.FullName, "4A06B1F6-BBF3-4B58-A122-8AD1AD23CECB");
             }
+        }
+
+        /// <inheritdoc/>
+        public Type GetTypeByFullName(string fullName)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                    .Select(a => a.GetType(fullName, false, true))
+                    .FirstOrDefault(t => t != null);
         }
     }
 }

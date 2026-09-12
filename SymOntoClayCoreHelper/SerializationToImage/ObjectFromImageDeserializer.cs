@@ -941,7 +941,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage",
             "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry",
             "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver",
-            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry"
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter",
+            "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator",
+            "SymOntoClay.NLP.NLPConverterFactory",
+            "SymOntoClay.NLP.SerializationData.NLPConverterFactorySerializationData"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2086,6 +2095,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_lockObj",
                 "_convertersDict",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator"] = new List<string>()
+            {
+                "_platformTypesConvertorsRegistry",
+                "_invokingInMainThread",
+                "_threadPool",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.NLP.NLPConverterFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.NLP.SerializationData.NLPConverterFactorySerializationData"] = new List<string>()
+            {
+                "Provider"
             };
         }
     }

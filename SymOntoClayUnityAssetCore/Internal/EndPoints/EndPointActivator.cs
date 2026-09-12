@@ -40,6 +40,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointActivator : BaseLoggedComponent
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private EndPointActivator()
+        {
+        }
+
         public EndPointActivator(IMonitorLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread, ICustomThreadPool threadPool)
             : base(logger)
         {

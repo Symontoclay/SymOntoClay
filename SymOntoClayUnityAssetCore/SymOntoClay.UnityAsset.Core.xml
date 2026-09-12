@@ -1022,6 +1022,11 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.Name">
             <inheritdoc/>
         </member>

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public interface INLPConverterProvider
+    public interface INLPConverterProvider: IParentInClassSerializationData
     {
         INLPConverterFactory GetFactory(IMonitorLogger logger);
     }

@@ -1,15 +1,19 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.UnityAsset.Core;
 using System.Text;
 
 namespace SymOntoClay.NLP.SerializationData
 {
-    public class NLPConverterFactorySerializationData : IObjectToString
+    public class NLPConverterFactorySerializationData : IObjectToString, IClassSerializationData
     {
         [MemberWithExternalValue]
         public INLPConverterProvider Provider { get; set; }
+
+        /// <inheritdoc/>
+        IParentInClassSerializationData IClassSerializationData.Parent => Provider;
 
         /// <inheritdoc/>
         public override string ToString()

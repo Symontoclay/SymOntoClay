@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
@@ -53,6 +54,12 @@ namespace SymOntoClay.NLP
 
                 return _factory;
             }
+        }
+
+        /// <inheritdoc/>
+        object IParentInClassSerializationData.CreateObjectBySerializationData(object serializationData)
+        {
+            throw new NotImplementedException("C3B7032F-340D-42B6-8574-4263842DE045");
         }
     }
 }

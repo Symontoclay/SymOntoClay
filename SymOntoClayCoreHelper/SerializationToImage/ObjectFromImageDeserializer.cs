@@ -2112,7 +2112,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.NLP.NLPConverterFactory"] = new List<string>() { };
             _tmpProcessedMembersOfTypes["SymOntoClay.NLP.SerializationData.NLPConverterFactorySerializationData"] = new List<string>()
             {
-                "Provider"
+                "Provider",
+                "Logger"
             };
         }
     }

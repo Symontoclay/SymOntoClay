@@ -94,6 +94,7 @@ namespace SymOntoClay.NLP
         {
             var serializationData = new NLPConverterFactorySerializationData();
             serializationData.Provider = _provider;
+            serializationData.Logger = _logger;
 
             return serializationData;
         }

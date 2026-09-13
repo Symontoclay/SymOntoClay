@@ -2,6 +2,7 @@
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System.Text;
 
@@ -14,6 +15,8 @@ namespace SymOntoClay.NLP.SerializationData
 
         /// <inheritdoc/>
         IParentInClassSerializationData IClassSerializationData.Parent => Provider;
+
+        public IMonitorLogger Logger { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -39,7 +42,8 @@ namespace SymOntoClay.NLP.SerializationData
             var sb = new StringBuilder();
 
             sb.PrintExisting(n, nameof(Provider), Provider);
-            
+            sb.PrintExisting(n, nameof(Logger), Logger);
+
             return sb.ToString();
         }
     }

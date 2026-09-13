@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.NLP.SerializationData;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,14 @@ namespace SymOntoClay.NLP
         /// <inheritdoc/>
         object IParentInClassSerializationData.CreateObjectBySerializationData(object serializationData)
         {
-            throw new NotImplementedException("C3B7032F-340D-42B6-8574-4263842DE045");
+            var data = serializationData as NLPConverterFactorySerializationData;
+
+            if(data == null)
+            {
+                throw new NotSupportedException($"E5273AC4-C144-4F56-B229-0E491AB5D1D3 serializationData = {serializationData}");
+            }
+
+            return GetFactory(data.Logger);
         }
     }
 }

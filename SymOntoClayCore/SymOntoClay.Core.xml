@@ -5454,6 +5454,11 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.ToMonitorSerializableObject(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -8339,6 +8344,11 @@
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationLocalCodeExecutionContext.DbgPrintContextChain(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage.Kind">
             <inheritdoc/>
         </member>
@@ -8375,6 +8385,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.Kind">
             <inheritdoc/>

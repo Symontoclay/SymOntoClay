@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly IStorage _storage;
 
         /// <inheritdoc/>
-        public KindOfStorage Kind => _storage.Kind;
+        public KindOfStorage Kind => _storage?.Kind ?? KindOfStorage.Unknown;
 
         /// <inheritdoc/>
         public IStorage Storage => _storage;

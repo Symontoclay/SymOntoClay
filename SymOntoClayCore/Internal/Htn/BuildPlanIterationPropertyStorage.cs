@@ -34,6 +34,13 @@ namespace SymOntoClay.Core.Internal.Htn
 {
     public class BuildPlanIterationPropertyStorage: BaseComponent, IPropertyStorage
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private BuildPlanIterationPropertyStorage()
+        {
+        }
+
         public BuildPlanIterationPropertyStorage(IStorage storage, IMonitorLogger logger)
             : base(logger)
         {

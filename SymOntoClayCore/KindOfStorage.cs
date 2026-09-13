@@ -28,6 +28,7 @@ namespace SymOntoClay.Core
 {
     public enum KindOfStorage
     {
+        Unknown,
         World,
         Lib,
         Host,

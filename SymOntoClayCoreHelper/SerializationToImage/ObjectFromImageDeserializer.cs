@@ -960,7 +960,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.Factories.StrategicTaskInstanceStorageFactory",
             "SymOntoClay.Core.Internal.Storage.Factories.TacticalTaskInstanceStorageFactory",
             "SymOntoClay.Core.Internal.Storage.Factories.CompoundTaskInstanceStorageFactory",
-            "SymOntoClay.Core.StandaloneStorage"
+            "SymOntoClay.Core.StandaloneStorage",
+            "SymOntoClay.Core.Internal.Storage.GlobalStorage",
+            "SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage",
+            "SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage",
+            "SymOntoClay.Core.Internal.Storage.AppInstanceStorage",
+            "SymOntoClay.Core.Internal.CodeModel.NumberValue",
+            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2160,6 +2166,131 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_deferredRemovedPublicFacts",
                 "_deferredAddedCategories",
                 "_deferredRemovedCategories",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.GlobalStorage"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext",
+                "_lockObj",
+                "_logicalStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_statesStorage",
+                "_triggersStorage",
+                "_inheritanceStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_varStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_onParentStorageChangedHandlersLockObj",
+                "_onParentStorageChangedHandlers",
+                "DefaultSettingsOfCodeEntity",
+                "CodeItemsStoragesList",
+                "_isDisposed",
+                "_logger",
+                "IsIsolated"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage"] = new List<string>()
+            {
+                "_storage",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage"] = new List<string>()
+            {
+                "_parentStorage",
+                "_logicalStorage",
+                "_inheritanceStorage",
+                "_triggersStorage",
+                "_varStorage",
+                "_statesStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_state",
+                "_stateLockObj",
+                "_logger",
+                "CodeItemsStoragesList"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.AppInstanceStorage"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext",
+                "_lockObj",
+                "_logicalStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_statesStorage",
+                "_triggersStorage",
+                "_inheritanceStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_varStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_onParentStorageChangedHandlersLockObj",
+                "_onParentStorageChangedHandlers",
+                "DefaultSettingsOfCodeEntity",
+                "CodeItemsStoragesList",
+                "_isDisposed",
+                "_logger",
+                "IsIsolated"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NumberValue"] = new List<string>()
+            {
+                "_builtInSuperTypes",
+                "_isFuzzy",
+                "_isBoolean",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "SystemValue",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage"] = new List<string>()
+            {
+                "_storage",
                 "_state",
                 "_stateLockObj",
                 "_logger"

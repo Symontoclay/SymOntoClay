@@ -34,6 +34,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class NumberValue : Value
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private NumberValue()
+        {
+        }
+
         public NumberValue(double? systemValue)
         {
             SystemValue = systemValue;

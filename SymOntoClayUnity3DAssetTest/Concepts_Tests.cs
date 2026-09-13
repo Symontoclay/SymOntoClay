@@ -65,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "78265D25-A82E-4F66-8D63-D595BD02C12B");
                     }
                 }));
 

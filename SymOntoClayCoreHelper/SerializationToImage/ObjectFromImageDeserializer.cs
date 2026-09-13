@@ -950,7 +950,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter",
             "SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator",
             "SymOntoClay.NLP.NLPConverterFactory",
-            "SymOntoClay.NLP.SerializationData.NLPConverterFactorySerializationData"
+            "SymOntoClay.NLP.SerializationData.NLPConverterFactorySerializationData",
+            "SymOntoClay.Core.Internal.Storage.Factories.StorageFactories",
+            "SymOntoClay.Core.Internal.Storage.Factories.AppInstanceStorageFactory",
+            "SymOntoClay.Core.Internal.Storage.Factories.ObjectStorageFactory",
+            "SymOntoClay.Core.Internal.Storage.Factories.StateStorageFactory",
+            "SymOntoClay.Core.Internal.Storage.Factories.ActionStorageFactory",
+            "SymOntoClay.Core.Internal.Storage.Factories.RootTaskInstanceStorageFactory",
+            "SymOntoClay.Core.Internal.Storage.Factories.StrategicTaskInstanceStorageFactory",
+            "SymOntoClay.Core.Internal.Storage.Factories.TacticalTaskInstanceStorageFactory",
+            "SymOntoClay.Core.Internal.Storage.Factories.CompoundTaskInstanceStorageFactory",
+            "SymOntoClay.Core.StandaloneStorage"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2114,6 +2124,45 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "Provider",
                 "Logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.StorageFactories"] = new List<string>()
+            {
+                "_appInstanceStorageFactory",
+                "_objectStorageFactory",
+                "_stateStorageFactory",
+                "_actionStorageFactory",
+                "_rootTaskInstanceStorageFactory",
+                "_strategicTaskInstanceStorageFactory",
+                "_tacticalTaskInstanceStorageFactory",
+                "_compoundTaskInstanceStorageFactory",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.AppInstanceStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.ObjectStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.StateStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.ActionStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.RootTaskInstanceStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.StrategicTaskInstanceStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.TacticalTaskInstanceStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.Factories.CompoundTaskInstanceStorageFactory"] = new List<string>() { };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.StandaloneStorage"] = new List<string>()
+            {
+                "_context",
+                "_additionalSourceCodePaths",
+                "_storageComponent",
+                "_storage",
+                "_publicFactsStorage",
+                "_worldPublicFactsStorage",
+                "_deferredPublicFactsTexts",
+                "_deferredPublicFactsInstances",
+                "_deferredRemovedPublicFacts",
+                "_deferredAddedCategories",
+                "_deferredRemovedCategories",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
     }

@@ -35,10 +35,16 @@ namespace SymOntoClay.Core
 {
     public class StandaloneStorage: BaseComponent, IStandaloneStorage, ISerializableEngine
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private StandaloneStorage()
+        {
+        }
+
         public StandaloneStorage(StandaloneStorageSettings settings)
             : base(settings.MonitorNode)
         {
-
             _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;
 
             _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);

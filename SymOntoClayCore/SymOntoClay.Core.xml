@@ -11630,6 +11630,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.Factories.StateStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.AppInstanceStorageFactory">
             <inheritdoc/>
         </member>
@@ -12989,6 +12994,11 @@
         </member>
         <member name="M:SymOntoClay.Core.RelativeCoordinate.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.StandaloneStorage.Context">
             <inheritdoc/>

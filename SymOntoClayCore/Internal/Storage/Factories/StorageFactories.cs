@@ -24,6 +24,13 @@ namespace SymOntoClay.Core.Internal.Storage.Factories
 {
     public class StorageFactories: BaseContextComponent, IStorageFactories
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private StorageFactories()
+        {
+        }
+
         public StorageFactories(IEngineContext context)
             : base(context.Logger)
         {

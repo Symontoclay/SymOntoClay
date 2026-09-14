@@ -24,6 +24,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public enum KindOfProperty
     {
+        Unknown,
         Auto,
         GetSet,
         Readonly

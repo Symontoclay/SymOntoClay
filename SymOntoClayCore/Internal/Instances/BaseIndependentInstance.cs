@@ -35,6 +35,13 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseIndependentInstance : BaseInstance
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseIndependentInstance()
+        {
+        }
+
         protected BaseIndependentInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<VarInstance> varList)
             : base(codeItem, context, parentStorage, parentCodeExecutionContext, null, storageFactory, varList)
         {

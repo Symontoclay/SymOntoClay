@@ -966,7 +966,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage",
             "SymOntoClay.Core.Internal.Storage.AppInstanceStorage",
             "SymOntoClay.Core.Internal.CodeModel.NumberValue",
-            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage"
+            "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage",
+            "SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage",
+            "SymOntoClay.Core.Internal.Instances.PropertyInstance",
+            "SymOntoClay.Core.Internal.Instances.AppInstance"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2294,6 +2297,82 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage"] = new List<string>()
+            {
+                "_storage",
+                "_lockObj",
+                "_allPropertiesList",
+                "_propertiesDict",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.PropertyInstance"] = new List<string>()
+            {
+                "_instance",
+                "_context",
+                "_logicalStorage",
+                "_typeConverter",
+                "IsReal",
+                "Name",
+                "Holder",
+                "CodeItem",
+                "_isArray",
+                "_propertyGetMethodExecutable",
+                "_value",
+                "_factId",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.AppInstance"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_serializationAnchor",
+                "_statesResolver",
+                "_stateNameForAutomaticStart",
+                "_activeStatesDict",
+                "_mutuallyExclusiveStatesSet",
+                "_statesLockObj",
+                "_stateActivators",
+                "_state",
+                "_stateLockObj",
+                "_logger",
+                "_idleActionsResolver",
+                "_codeItem",
+                "Name",
+                "_activeObjectContext",
+                "_serializationAnchor",
+                "_threadPool",
+                "_context",
+                "_globalTriggersStorage",
+                "_parentStorage",
+                "_storage",
+                "_localCodeExecutionContext",
+                "_parentExecutionCoordinator",
+                "_triggersResolver",
+                "_constructorsResolver",
+                "_inheritanceResolver",
+                "_instanceState",
+                "_logicConditionalTriggersList",
+                "_addingFactNonConditionalTriggerInstancesList",
+                "_addingFactConditionalTriggerInstancesList",
+                "_executionCoordinator",
+                "_baseInstanceParentExecutionCoordinatorOnFinishedHandler",
+                "_childInstances",
+                "_parentInstance",
+                "_childInstancesLockObj",
+                "_superClassesStorages",
+                "_superClassesStoragesLockObj",
+                "_preConstructorsRunner",
+                "_constructors",
+                "_enterLifecycleTriggersRunner",
+                "_finalizationTriggersRunner",
+                "RootTasks",
+                "_activateIdleActionThreadExecutorList"
             };
         }
     }

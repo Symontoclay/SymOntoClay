@@ -9200,6 +9200,11 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.KindOfInstance">
             <inheritdoc/>
         </member>
@@ -9293,11 +9298,21 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseConditionalTriggerInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.ActivateIdleAction(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.OnDisposed">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.KindOfInstance">
             <inheritdoc/>
@@ -9853,6 +9868,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.PropertyInstance.TypeOfAccess">
             <inheritdoc/>

@@ -48,6 +48,13 @@ namespace SymOntoClay.Core.Internal.Instances
         IObjectToString, IObjectToShortString, IObjectToBriefString,
         IOnFinishedExecutionCoordinatorHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        protected BaseInstance()
+        {
+        }
+
         protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, 
             IExecutionCoordinator parentExecutionCoordinator, IStorageFactory storageFactory, List<VarInstance> varList)
             : base(context.Logger)

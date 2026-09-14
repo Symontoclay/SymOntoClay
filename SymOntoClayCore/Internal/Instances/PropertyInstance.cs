@@ -40,6 +40,13 @@ namespace SymOntoClay.Core.Internal.Instances
     public class PropertyInstance : BaseComponent, IFilteredCodeItem,
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private PropertyInstance()
+        {
+        }
+
         public PropertyInstance(Property codeItem, IInstance instance, bool isReal, IEngineContext context)
             : base(context.Logger)
         {
@@ -98,7 +105,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private ITypeConverter _typeConverter;
 
-        public KindOfProperty KindOfProperty => CodeItem.KindOfProperty;
+        public KindOfProperty KindOfProperty => CodeItem?.KindOfProperty ?? KindOfProperty.Unknown;
         public bool IsReal { get; set; }
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }

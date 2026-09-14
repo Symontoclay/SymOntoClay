@@ -39,6 +39,13 @@ namespace SymOntoClay.Core.Internal.Instances
         IOnStateInstanceFinishedStateInstanceHandler,
         IAppInstanceSerializedEventsHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private AppInstance()
+        {
+        }
+
         public AppInstance(AppInstanceCodeItem codeItem, IEngineContext context, IStorage parentStorage)
             : base(codeItem, context, parentStorage, null, context.StorageFactories.AppInstanceStorageFactory, null)
         {

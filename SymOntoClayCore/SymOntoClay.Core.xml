@@ -7737,6 +7737,11 @@
             </summary>
             <returns>Instance of States resolver.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.InheritanceResolver.#ctor">
             <summary>
             Constructor for deserialization.
@@ -8093,6 +8098,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ResolverOptions.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.StatesResolver.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.StatesResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>

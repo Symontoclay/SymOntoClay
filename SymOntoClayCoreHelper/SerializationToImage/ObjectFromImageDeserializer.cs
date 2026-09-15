@@ -969,7 +969,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage",
             "SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage",
             "SymOntoClay.Core.Internal.Instances.PropertyInstance",
-            "SymOntoClay.Core.Internal.Instances.AppInstance"
+            "SymOntoClay.Core.Internal.Instances.AppInstance",
+            "SymOntoClay.Core.Internal.DataResolvers.StatesResolver",
+            "SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver",
+            "SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2373,6 +2376,32 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_finalizationTriggersRunner",
                 "RootTasks",
                 "_activateIdleActionThreadExecutorList"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.StatesResolver"] = new List<string>()
+            {
+                "_synonymsResolver",
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver"] = new List<string>()
+            {
+                "_defaultOptions",
+                "_context",
+                "_inheritanceResolver",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList"] = new List<string>()
+            {
+                "_lockObj",
+                "_existingItems",
+                "_items",
+                "_isDisposed"
             };
         }
     }

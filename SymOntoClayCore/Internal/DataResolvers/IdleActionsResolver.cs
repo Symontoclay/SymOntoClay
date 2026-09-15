@@ -30,6 +30,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class IdleActionsResolver : BaseResolver
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private IdleActionsResolver()
+        {
+        }
+
         public IdleActionsResolver(IMainStorageContext context)
             : base(context)
         {

@@ -324,7 +324,24 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _processedSerializedValue[serializedValue] = obj;
 
-            throw new NotImplementedException("C2CD8D58-AC3D-451E-8C6B-11D02F521864");
+            foreach (var item in card.Items)
+            {
+#if DEBUG
+                _logger.Info($"item = {item}");
+#endif
+
+                var itemValue = DeserializeValue(item);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                throw new NotImplementedException("13722DF2-9450-4F77-A213-3A746F1B40A9");
+            }
+
+            //throw new NotImplementedException("C2CD8D58-AC3D-451E-8C6B-11D02F521864");
+
+            return obj;
         }
 
         private object DeserializeGenericDictionary(object obj, Type type, DictionaryCard card, SerializedValue serializedValue)
@@ -972,7 +989,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Instances.AppInstance",
             "SymOntoClay.Core.Internal.DataResolvers.StatesResolver",
             "SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver",
-            "SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList"
+            "SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList",
+            "SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem",
+            "SymOntoClay.Core.Internal.CodeModel.InheritanceItem"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2402,6 +2421,62 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_existingItems",
                 "_items",
                 "_isDisposed"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem"] = new List<string>()
+            {
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "SystemValue",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations",
+                "RootTasks",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.InheritanceItem"] = new List<string>()
+            {
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "Id",
+                "SubName",
+                "SuperName",
+                "Rank",
+                "IsSystemDefined",
+                "KeysOfPrimaryRecords",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
             };
         }
     }

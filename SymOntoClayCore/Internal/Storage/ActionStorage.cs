@@ -28,9 +28,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class ActionStorage : RealStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private ActionStorage()
         {
         }

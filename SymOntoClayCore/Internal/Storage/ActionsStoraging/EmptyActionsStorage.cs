@@ -32,9 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 {
     public class EmptyActionsStorage : BaseEmptySpecificStorage, IActionsStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private EmptyActionsStorage()
         {
         }

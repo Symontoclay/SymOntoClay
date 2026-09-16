@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
 {
     public class RelationsStorage : BaseSpecificStorage, IRelationsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private RelationsStorage()
+        {
+        }
+
         public RelationsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

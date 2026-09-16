@@ -31,9 +31,7 @@ namespace SymOntoClay.Core
 {
     public class Engine : BaseComponent, ISerializableEngine
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private Engine()
         {
         }

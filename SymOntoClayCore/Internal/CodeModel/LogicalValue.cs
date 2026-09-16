@@ -46,9 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             FalseValue.CheckDirty();
         }
 
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private LogicalValue()
         {
         }

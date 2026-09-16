@@ -37,9 +37,7 @@ namespace SymOntoClay.Core.Internal.Services
 {
     public class CodeFrameService : BaseContextComponent, ICodeFrameService
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private CodeFrameService()
         {
         }

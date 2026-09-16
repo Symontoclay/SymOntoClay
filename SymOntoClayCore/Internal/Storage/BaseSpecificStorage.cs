@@ -24,9 +24,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public abstract class BaseSpecificStorage : BaseComponent, ISpecificStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseSpecificStorage()
         {
         }

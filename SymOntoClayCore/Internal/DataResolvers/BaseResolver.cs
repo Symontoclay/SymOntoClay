@@ -30,9 +30,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class BaseResolver: BaseContextComponent
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseResolver()
         {
         }

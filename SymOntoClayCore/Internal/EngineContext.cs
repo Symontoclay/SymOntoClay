@@ -33,9 +33,7 @@ namespace SymOntoClay.Core.Internal
 {
     public class EngineContext : MainStorageContext, IEngineContext
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private EngineContext()
         {
         }

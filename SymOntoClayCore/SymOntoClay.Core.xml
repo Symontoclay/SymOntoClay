@@ -207,8 +207,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Engine.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Engine.EngineContext">
             <summary>
@@ -392,8 +392,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.BaseComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.BaseComponent.IsDisposed">
             <inheritdoc/>
@@ -403,13 +403,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.BaseContextComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.BaseCoreContext.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.MonitorNode">
             <inheritdoc/>
@@ -440,8 +440,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeExecution.ActionExecutionStatus.None">
             <summary>
@@ -12335,6 +12335,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.RemoveOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysPropertyStorageHandler)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedPropertyStorageHandler)">
             <inheritdoc/>
         </member>
@@ -12512,6 +12517,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.GetRelationsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
             <inheritdoc/>
@@ -12851,6 +12861,11 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
             <inheritdoc/>
         </member>
@@ -12924,6 +12939,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.DbgPrintVariables(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.#ctor">
+            <summary>
+            Constructor for deserialization.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedVarStorageHandler)">
             <inheritdoc/>

@@ -50,9 +50,7 @@ namespace SymOntoClay.Core.Internal.Htn
 {
     public class BuildPlanIterationStorage : BaseComponent, IStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private BuildPlanIterationStorage()
         {
         }

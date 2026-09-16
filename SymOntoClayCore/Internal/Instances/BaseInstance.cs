@@ -48,9 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances
         IObjectToString, IObjectToShortString, IObjectToBriefString,
         IOnFinishedExecutionCoordinatorHandler
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseInstance()
         {
         }

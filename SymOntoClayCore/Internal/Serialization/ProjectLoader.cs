@@ -36,9 +36,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 {
     public class ProjectLoader : BaseComponent
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private ProjectLoader()
         {
         }

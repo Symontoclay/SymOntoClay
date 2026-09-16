@@ -45,9 +45,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private PropertiesResolver _propertiesResolver;
         private LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
 
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private LogicalSearchResolver()
         {
         }

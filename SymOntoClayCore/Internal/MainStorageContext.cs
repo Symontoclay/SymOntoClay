@@ -37,9 +37,7 @@ namespace SymOntoClay.Core.Internal
 {
     public class MainStorageContext: BaseCoreContext, IMainStorageContext
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected MainStorageContext()
         {
         }

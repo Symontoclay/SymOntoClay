@@ -34,9 +34,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
 
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private InheritanceResolver()
         {
         }

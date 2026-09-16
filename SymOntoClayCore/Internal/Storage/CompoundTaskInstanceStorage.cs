@@ -24,9 +24,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class CompoundTaskInstanceStorage : RealStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private CompoundTaskInstanceStorage()
         {
         }

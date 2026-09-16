@@ -27,9 +27,7 @@ namespace SymOntoClay.Core.Internal
 {
     public abstract class BaseComponent: BaseLoggedComponent, ISymOntoClayDisposable
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseComponent()
         {
         }

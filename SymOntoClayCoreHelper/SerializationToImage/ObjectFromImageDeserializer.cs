@@ -991,7 +991,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver",
             "SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList",
             "SymOntoClay.Core.Internal.CodeModel.AppInstanceCodeItem",
-            "SymOntoClay.Core.Internal.CodeModel.InheritanceItem"
+            "SymOntoClay.Core.Internal.CodeModel.InheritanceItem",
+            "SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage",
+            "SymOntoClay.Core.Internal.CodeModel.Property",
+            "SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage",
+            "SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage",
+            "SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2477,6 +2482,119 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "InternalSystemId",
                 "WhereSection",
                 "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_lockObj",
+                "_parentTriggersStoragesList",
+                "_systemEventsInfoDict",
+                "_logicConditionalsDict",
+                "_addFactsDict",
+                "_namedTriggerInstancesList",
+                "_namedTriggerInstancesDict",
+                "_onNamedTriggerInstanceChangedHandlersLockObj",
+                "_onNamedTriggerInstanceChangedHandlers",
+                "_onNamedTriggerInstanceChangedWithKeysHandlersLockObj",
+                "_onNamedTriggerInstanceChangedWithKeysHandlers",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.Property"] = new List<string>()
+            {
+                "KindOfProperty",
+                "TypesList",
+                "DefaultValue",
+                "GetStatements",
+                "GetCompiledFunctionBody",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_lockObj",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_onChangedWithKeysHandlersLockObj",
+                "_onChangedWithKeysHandlers",
+                "_parentVarStoragesList",
+                "_variablesDict",
+                "_localVariablesDict",
+                "_allVariablesList",
+                "_systemVariables",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_lockObj",
+                "_onChangedHandlersLockObj",
+                "_onChangedHandlers",
+                "_onChangedWithKeysHandlersLockObj",
+                "_onChangedWithKeysHandlers",
+                "_parentPropertyStoragesList",
+                "_allPropertiesList",
+                "_propertiesDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage"] = new List<string>()
+            {
+                "_lockObj",
+                "_itemsDict",
+                "_kind",
+                "_realStorageContext",
+                "_mainStorageContext",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
     }

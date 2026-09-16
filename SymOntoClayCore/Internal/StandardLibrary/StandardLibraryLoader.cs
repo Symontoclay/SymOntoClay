@@ -32,9 +32,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 {
     public class StandardLibraryLoader : BaseContextComponent
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private StandardLibraryLoader()
         {
         }

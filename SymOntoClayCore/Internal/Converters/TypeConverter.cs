@@ -34,9 +34,7 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public class TypeConverter: BaseContextComponent, ITypeConverter
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private TypeConverter()
         {
         }

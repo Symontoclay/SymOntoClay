@@ -12,5 +12,10 @@
 		</summary>
 		<param name="context">Special context for providing references continuity.</param>
 		 <returns>Cloned instance.</returns>		
-	</method>	
+	</method>
+	<method name="DeserializationCtor">
+		<summary>
+			Constructor for deserialization.
+		</summary>
+	</method>
 </extradoc>

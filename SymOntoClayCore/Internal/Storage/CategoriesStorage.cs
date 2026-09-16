@@ -30,9 +30,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class CategoriesStorage: BaseComponent
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private CategoriesStorage()
         {
         }

@@ -34,9 +34,7 @@ namespace SymOntoClay.Core.Internal.Htn
 {
     public class BuildPlanIterationPropertyStorage: BaseComponent, IPropertyStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private BuildPlanIterationPropertyStorage()
         {
         }

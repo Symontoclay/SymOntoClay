@@ -39,6 +39,13 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysVarStorageHandler, IOnChangedVarHandler,
         IVarStorageSerializedEventsHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private VarStorage()
+        {
+        }
+
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

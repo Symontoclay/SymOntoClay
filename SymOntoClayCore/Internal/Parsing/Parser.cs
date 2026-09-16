@@ -31,9 +31,7 @@ namespace SymOntoClay.Core.Internal.Parsing
 {
     public class Parser : BaseContextComponent, IParser
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private Parser()
         {
         }

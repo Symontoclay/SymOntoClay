@@ -32,9 +32,7 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public class AsyncActivePeriodicObject : IActivePeriodicObject, IDisposable
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private AsyncActivePeriodicObject()
         {
         }

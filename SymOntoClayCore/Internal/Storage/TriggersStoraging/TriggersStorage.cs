@@ -40,6 +40,13 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         IOnChangedNamedTriggerInstanceHandler, IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler,
         ITriggersStorageSerializedEventsHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private TriggersStorage()
+        {
+        }
+
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

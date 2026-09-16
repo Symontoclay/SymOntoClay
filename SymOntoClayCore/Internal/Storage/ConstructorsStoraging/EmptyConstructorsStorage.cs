@@ -36,9 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         private static readonly List<WeightedInheritanceResultItem<Constructor>> EmptyConstructorsList = new List<WeightedInheritanceResultItem<Constructor>>();
         private static readonly List<WeightedInheritanceResultItem<PreConstructor>> EmptyPreConstructorsList = new List<WeightedInheritanceResultItem<PreConstructor>>();
 
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private EmptyConstructorsStorage()
         {
         }

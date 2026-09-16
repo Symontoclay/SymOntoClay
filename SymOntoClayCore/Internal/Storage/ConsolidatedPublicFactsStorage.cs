@@ -51,9 +51,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class ConsolidatedPublicFactsStorage: BaseComponent, IStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private ConsolidatedPublicFactsStorage()
         {
         }

@@ -40,9 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public class PropertyInstance : BaseComponent, IFilteredCodeItem,
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private PropertyInstance()
         {
         }

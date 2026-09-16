@@ -28,9 +28,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class DateTimeResolver : BaseResolver
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private DateTimeResolver()
         {
         }

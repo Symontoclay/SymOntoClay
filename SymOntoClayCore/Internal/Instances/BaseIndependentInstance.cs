@@ -35,9 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseIndependentInstance : BaseInstance
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseIndependentInstance()
         {
         }

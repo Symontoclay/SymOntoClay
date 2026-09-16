@@ -38,6 +38,13 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysPropertyStorageHandler, IOnChangedPropertyHandler,
         IPropertyStorageSerializedEventsHandler
     {
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        private PropertyStorage()
+        {
+        }
+
         public PropertyStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

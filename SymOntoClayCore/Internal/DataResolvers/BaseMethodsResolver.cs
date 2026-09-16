@@ -34,9 +34,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public abstract class BaseMethodsResolver : BaseResolver
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseMethodsResolver()
         {
         }

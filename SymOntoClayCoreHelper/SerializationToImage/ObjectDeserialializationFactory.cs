@@ -63,8 +63,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var serializedValue = item.Value;
 
 #if DEBUG
-                _logger.Info($"path = {path}");
-                _logger.Info($"serializedValue = {serializedValue}");
+                //_logger.Info($"path = {path}");
+                //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
                 if(serializedCardsDict.ContainsKey(path))
@@ -72,7 +72,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     if(_serializedObjectsPool.TryGetObject(serializedValue, out var obj))
                     {
 #if DEBUG
-                        _logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
+                        //_logger.Info($"obj?.GetType()?.FullName = {obj?.GetType()?.FullName}");
 #endif
 
                         _alreadyExistingObjects[serializedValue] = obj;
@@ -85,13 +85,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public object GetValue(SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             if(_alreadyExistingObjects.TryGetValue(serializedValue, out var existingObj))
             {
 #if DEBUG
-                _logger.Info($"return existingObj");
+                //_logger.Info($"return existingObj");
 #endif
 
                 return existingObj;
@@ -105,7 +105,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var type = _serializedTypesPool.GetTypeValue(serializedValue.TypeId);
 
 #if DEBUG
-            _logger.Info($"type?.FullName = {type?.FullName}");
+            //_logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
             if(type.FullName == "System.String")

@@ -31,9 +31,7 @@ namespace SymOntoClay.Core.Internal
 {
     public class BaseCoreContext: BaseComponent, IBaseCoreContext
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseCoreContext()
         {
         }

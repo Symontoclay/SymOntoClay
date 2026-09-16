@@ -38,9 +38,7 @@ namespace SymOntoClay.Core.Internal.Htn
             WaitingForFinishPlanExecution
         }
 
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private HtnExecutorComponent()
         {
         }

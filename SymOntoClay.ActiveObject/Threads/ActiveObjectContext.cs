@@ -30,9 +30,7 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public class ActiveObjectContext : IActiveObjectContext, IDisposable
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private ActiveObjectContext()
         {
         }

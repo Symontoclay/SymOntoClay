@@ -10,9 +10,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
     public class HumanoidNPCGameComponentSerializedContext : Disposable
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private HumanoidNPCGameComponentSerializedContext()
         {
         }
@@ -100,3 +98,4 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
     }
 }
+

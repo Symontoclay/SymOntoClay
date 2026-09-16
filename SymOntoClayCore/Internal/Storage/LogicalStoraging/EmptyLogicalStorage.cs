@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -36,9 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class EmptyLogicalStorage : BaseEmptySpecificStorage, ILogicalStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private EmptyLogicalStorage()
         {
         }
@@ -303,3 +301,4 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
     }
 }
+

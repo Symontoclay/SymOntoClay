@@ -566,8 +566,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -812,8 +812,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Parent">
             <inheritdoc/>
@@ -5154,8 +5154,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.KindOfValue">
             <inheritdoc/>
@@ -5456,8 +5456,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.KindOfValue">
             <inheritdoc/>
@@ -7408,8 +7408,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeConverter.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7455,8 +7455,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.ToString">
             <inheritdoc/>
@@ -7490,24 +7490,24 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.BaseMethodsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.BaseMethodsResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.BaseResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.BaseResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ChannelsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ChannelsResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7553,8 +7553,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ConstructorsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7645,16 +7645,16 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DateTimeResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DateTimeResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.FuzzyLogicResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.FuzzyLogicResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7739,13 +7739,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.IdleActionsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.InheritanceResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.InheritanceResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7797,8 +7797,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7865,21 +7865,21 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchVarResultsItemInvertor.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalValueLinearResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalValueLinearResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalValueModalityResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalValueModalityResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7913,8 +7913,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MetadataResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MetadataResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7948,21 +7948,21 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MethodsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.NumberValueLinearResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.NumberValueLinearResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.OperatorsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetInheritanceRank(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
@@ -8008,8 +8008,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PropertiesResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PropertiesResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -8101,8 +8101,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.StatesResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.StatesResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -8115,18 +8115,18 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.SynonymsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ToSystemBoolResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.TriggersResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.TriggersResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -8136,8 +8136,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.VarsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.VarsResolver.Init">
             <inheritdoc/>
@@ -8190,8 +8190,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.EngineContext.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.EngineContext.HostSupport">
             <inheritdoc/>
@@ -8356,8 +8356,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationPropertyStorage.Kind">
             <inheritdoc/>
@@ -8398,8 +8398,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Htn.BuildPlanIterationStorage.Kind">
             <inheritdoc/>
@@ -8579,8 +8579,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -9212,8 +9212,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.KindOfInstance">
             <inheritdoc/>
@@ -9310,8 +9310,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.ActivateIdleAction(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
@@ -9321,8 +9321,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.KindOfInstance">
             <inheritdoc/>
@@ -9881,8 +9881,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.PropertyInstance.TypeOfAccess">
             <inheritdoc/>
@@ -10073,8 +10073,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.MainStorageContext.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
             <inheritdoc/>
@@ -11083,8 +11083,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.Parse(System.String)">
             <inheritdoc/>
@@ -11109,13 +11109,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Serialization.ProjectLoader.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -11391,8 +11391,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.StandardLibraryLoader.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionDef)">
             <inheritdoc/>
@@ -11405,8 +11405,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionDef)">
             <inheritdoc/>
@@ -11416,18 +11416,18 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.AppInstanceStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.BaseEmptySpecificStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.BaseEmptySpecificStorage.Kind">
             <inheritdoc/>
@@ -11437,8 +11437,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.BaseSpecificStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.BaseSpecificStorage.Kind">
             <inheritdoc/>
@@ -11448,8 +11448,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorage.OnDisposed">
             <inheritdoc/>
@@ -11474,8 +11474,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Channel)">
             <inheritdoc/>
@@ -11485,13 +11485,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.CompoundTaskInstanceStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.Kind">
             <inheritdoc/>
@@ -11642,8 +11642,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
             <inheritdoc/>
@@ -11677,8 +11677,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.AppInstanceStorageFactory">
             <inheritdoc/>
@@ -11712,8 +11712,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
             <inheritdoc/>
@@ -11744,18 +11744,18 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.GlobalStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.HostStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
             <inheritdoc/>
@@ -11771,16 +11771,16 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.Kind">
             <inheritdoc/>
@@ -11805,8 +11805,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.EmptyInheritanceStorage.SetInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
@@ -11837,13 +11837,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LibStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LocalStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.KindOfResult">
             <inheritdoc/>
@@ -11907,8 +11907,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Kind">
             <inheritdoc/>
@@ -12020,8 +12020,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.EmptyLogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
@@ -12136,8 +12136,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
@@ -12243,8 +12243,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CodeItem)">
             <inheritdoc/>
@@ -12269,8 +12269,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.NamedFunction)">
             <inheritdoc/>
@@ -12289,13 +12289,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ObjectStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Operator)">
             <inheritdoc/>
@@ -12314,8 +12314,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.Instances.PropertyInstance)">
             <inheritdoc/>
@@ -12337,8 +12337,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedPropertyStorageHandler)">
             <inheritdoc/>
@@ -12363,8 +12363,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.Kind">
             <inheritdoc/>
@@ -12509,8 +12509,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
             <inheritdoc/>
@@ -12534,13 +12534,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RootTaskInstanceStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
@@ -12598,13 +12598,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StateStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -12686,13 +12686,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StrategicTaskInstanceStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.SuperClassStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.TargetClassName">
             <inheritdoc/>
@@ -12714,8 +12714,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Synonym)">
             <inheritdoc/>
@@ -12731,16 +12731,16 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TacticalTaskInstanceStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.CommonTasksStorage`1.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TasksStoraging.EmptyTasksStorage.GetBaseCompoundTaskByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.KindOfTask)">
             <inheritdoc/>
@@ -12825,8 +12825,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
             <inheritdoc/>
@@ -12863,8 +12863,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
             <inheritdoc/>
@@ -12904,8 +12904,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetSystemValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
@@ -12942,8 +12942,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedVarStorageHandler)">
             <inheritdoc/>
@@ -12983,8 +12983,8 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.WorldStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Visitors.ContainsNullValueLogicalVisitor.VisitRuleInstance(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
@@ -13024,8 +13024,8 @@
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorage.LoadFromSourceCode">
             <inheritdoc/>
@@ -13062,8 +13062,8 @@
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorage.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.StandaloneStorage.Context">
             <inheritdoc/>

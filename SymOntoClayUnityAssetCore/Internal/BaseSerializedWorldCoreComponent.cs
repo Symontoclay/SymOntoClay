@@ -8,9 +8,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public abstract class BaseSerializedWorldCoreComponent : ISerializedWorldCoreComponent
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseSerializedWorldCoreComponent()
         {
         }
@@ -144,3 +142,4 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
     }
 }
+

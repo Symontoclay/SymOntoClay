@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -34,9 +34,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointsResolver : BaseLoggedComponent
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private EndPointsResolver()
         {
         }
@@ -323,3 +321,4 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
     }
 }
+

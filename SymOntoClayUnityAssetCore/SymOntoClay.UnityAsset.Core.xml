@@ -298,8 +298,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseManualControllingGameComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseManualControllingGameComponent.CreateProcess(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ICommand,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
@@ -399,8 +399,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.SymOntoClay#Common#SerializationToImage#IPostDeserializationHandler#Handle">
             <inheritdoc/>
@@ -436,8 +436,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponentSerializedContext.OnDisposing">
             <inheritdoc/>
@@ -804,8 +804,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.AsyncEventsThreadPool">
             <inheritdoc/>
@@ -863,8 +863,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseSerializedWorldCoreComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseSerializedWorldCoreComponent.IsDisposed">
             <inheritdoc/>
@@ -874,8 +874,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.IsDisposed">
             <inheritdoc/>
@@ -885,8 +885,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.InstanceId">
             <inheritdoc/>
@@ -944,8 +944,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.TicksToSecondsMultiplicator">
             <inheritdoc/>
@@ -1024,8 +1024,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointActivator.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.Name">
             <inheritdoc/>
@@ -1089,16 +1089,16 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointsRegistry.GetEndpointsInfoListDirectly(System.String,System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndPointsResolver.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvocableInMainThread.Invoke">
             <inheritdoc/>
@@ -1186,8 +1186,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.ConvertFromRelativeToAbsolute(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.RelativeCoordinate)">
             <inheritdoc/>
@@ -1200,29 +1200,29 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.ModulesStorage.ModulesStorageComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext.OnDisposing">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.InstanceId">
             <inheritdoc/>
@@ -1238,8 +1238,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent.PushSoundFact(System.Single,System.String)">
             <inheritdoc/>
@@ -1255,8 +1255,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.Position">
             <inheritdoc/>
@@ -1278,8 +1278,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.IsNeedWaiting">
             <inheritdoc/>
@@ -1442,8 +1442,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.AddConvertor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.UnityAsset.Core.IPlatformTypesConverter)">
             <inheritdoc/>
@@ -1462,8 +1462,8 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.#ctor">
             <summary>
-            Constructor for deserialization.
-            </summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#Common#SerializationToImage#IPostDeserializationHandler#Handle">
             <inheritdoc/>

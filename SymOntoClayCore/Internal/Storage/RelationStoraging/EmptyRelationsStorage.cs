@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -32,9 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
 {
     public class EmptyRelationsStorage : BaseEmptySpecificStorage, IRelationsStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private EmptyRelationsStorage()
         {
         }
@@ -56,3 +54,4 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         }
     }
 }
+

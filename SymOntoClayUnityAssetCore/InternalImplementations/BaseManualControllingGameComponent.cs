@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -36,9 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
     public abstract class BaseManualControllingGameComponent: BaseGameComponent, IHostListener
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseManualControllingGameComponent()
         {
         }
@@ -182,3 +180,4 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
     }
 }
+

@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -29,9 +29,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public abstract class BaseSoundReceiverComponent : BaseComponent, ISoundReceiver
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         protected BaseSoundReceiverComponent()
         {
         }
@@ -76,3 +74,4 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         protected abstract float GetDirectionToPosition(Vector3 position);
     }
 }
+

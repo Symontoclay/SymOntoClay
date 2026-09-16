@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -36,9 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         IDateTimeProvider, IDisposable,
         IObjectWithPeriodicMethod
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private DateTimeProvider()
         {
         }
@@ -124,3 +122,4 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         }
     }
 }
+

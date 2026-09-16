@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -50,9 +50,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
     {
         private const int DEFAULT_INITIAL_TIME = 20;
 
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private LogicalStorage()
         {
         }
@@ -1207,3 +1205,4 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
     }
 }
+

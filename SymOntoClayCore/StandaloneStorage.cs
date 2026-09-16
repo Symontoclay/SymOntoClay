@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -35,9 +35,7 @@ namespace SymOntoClay.Core
 {
     public class StandaloneStorage: BaseComponent, IStandaloneStorage, ISerializableEngine
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private StandaloneStorage()
         {
         }
@@ -378,3 +376,4 @@ namespace SymOntoClay.Core
         public bool EnableCategories { get => _storageComponent.EnableCategories; set => _storageComponent.EnableCategories = value; }
     }
 }
+

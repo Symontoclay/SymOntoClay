@@ -10,9 +10,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public class SerializedWorldContext: Disposable
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private SerializedWorldContext()
         {
         }
@@ -86,3 +84,4 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
     }
 }
+

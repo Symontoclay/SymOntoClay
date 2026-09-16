@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -36,9 +36,7 @@ namespace SymOntoClay.Core
 {
     public class ModulesStorage : BaseComponent, IModulesStorage, ISerializableEngine
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private ModulesStorage()
         {
         }
@@ -256,3 +254,4 @@ namespace SymOntoClay.Core
         }
     }
 }
+

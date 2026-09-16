@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -38,9 +38,7 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysPropertyStorageHandler, IOnChangedPropertyHandler,
         IPropertyStorageSerializedEventsHandler
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private PropertyStorage()
         {
         }
@@ -356,3 +354,4 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         }
     }
 }
+

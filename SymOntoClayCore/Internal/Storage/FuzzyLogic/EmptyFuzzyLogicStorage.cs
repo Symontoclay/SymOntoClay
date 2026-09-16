@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -32,9 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 {
     public class EmptyFuzzyLogicStorage : BaseEmptySpecificStorage, IFuzzyLogicStorage
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private EmptyFuzzyLogicStorage()
         {
         }
@@ -67,3 +65,4 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         }
     }
 }
+

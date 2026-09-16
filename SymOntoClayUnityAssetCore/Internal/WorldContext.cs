@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2026 Sergiy Tolkachov
 
@@ -58,9 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     //[SerializeOnlyExplicitlySerializableMembersAttribute]
     public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable, IPostDeserializationHandler
     {
-        /// <summary>
-        /// Constructor for deserialization.
-        /// </summary>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private WorldContext()
         {
         }
@@ -762,3 +760,4 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
     }
 }
+

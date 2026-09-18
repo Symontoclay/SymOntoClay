@@ -68,7 +68,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             lock (_lock)
             {
 #if DEBUG
-                _logger.Info($"typeId = {typeId}");
+                //_logger.Info($"typeId = {typeId}");
 #endif
 
                 if(typeId == _nullTypeId)
@@ -79,7 +79,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var typeFullName = _typeNamesDict[typeId];
 
 #if DEBUG
-                _logger.Info($"typeFullName = {typeFullName}");
+                //_logger.Info($"typeFullName = {typeFullName}");
 #endif
 
                 var type = AppDomain.CurrentDomain.GetAssemblies()
@@ -87,8 +87,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     .FirstOrDefault(t => t != null);
 
 #if DEBUG
-                _logger.Info($"type?.Name = {type?.Name}");
-                _logger.Info($"type?.FullName = {type?.FullName}");
+                //_logger.Info($"type?.Name = {type?.Name}");
+                //_logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
                 return type;

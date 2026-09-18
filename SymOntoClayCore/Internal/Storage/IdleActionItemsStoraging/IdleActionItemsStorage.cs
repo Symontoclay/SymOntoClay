@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
 {
     public class IdleActionItemsStorage : BaseSpecificStorage, IIdleActionItemsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private IdleActionItemsStorage()
+        {
+        }
+
         public IdleActionItemsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 {
     public class InheritanceStorage: BaseSpecificStorage, IInheritanceStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private InheritanceStorage()
+        {
+        }
+
         public InheritanceStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

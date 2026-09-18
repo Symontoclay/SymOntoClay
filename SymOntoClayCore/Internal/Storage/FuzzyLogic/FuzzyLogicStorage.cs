@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 {
     public class FuzzyLogicStorage : BaseSpecificStorage, IFuzzyLogicStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private FuzzyLogicStorage()
+        {
+        }
+
         public FuzzyLogicStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

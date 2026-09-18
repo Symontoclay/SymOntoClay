@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
 {
     public class ConstructorsStorage : BaseSpecificStorage, IConstructorsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ConstructorsStorage()
+        {
+        }
+
         public ConstructorsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         { 

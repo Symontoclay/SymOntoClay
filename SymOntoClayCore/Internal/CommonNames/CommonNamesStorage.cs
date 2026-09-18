@@ -27,6 +27,11 @@ namespace SymOntoClay.Core.Internal.CommonNames
 {
     public class CommonNamesStorage : BaseContextComponent, ICommonNamesStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private CommonNamesStorage()
+        {
+        }
+
         public CommonNamesStorage(IMainStorageContext context)
             : base(context.Logger)
         {

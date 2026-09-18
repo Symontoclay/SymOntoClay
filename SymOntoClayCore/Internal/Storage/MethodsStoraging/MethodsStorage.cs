@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
 {
     public class MethodsStorage: BaseSpecificStorage, IMethodsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private MethodsStorage()
+        {
+        }
+
         public MethodsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

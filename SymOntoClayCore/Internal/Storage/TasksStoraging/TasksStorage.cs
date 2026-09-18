@@ -28,6 +28,11 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 {
     public class TasksStorage: BaseSpecificStorage, ITasksStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private TasksStorage()
+        {
+        }
+
         public TasksStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

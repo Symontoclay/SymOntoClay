@@ -28,6 +28,11 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
 {
     public class SynonymsStorage: BaseSpecificStorage, ISynonymsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private SynonymsStorage()
+        {
+        }
+
         public SynonymsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

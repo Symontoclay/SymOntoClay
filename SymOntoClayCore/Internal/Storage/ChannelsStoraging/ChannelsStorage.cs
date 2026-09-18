@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
 {
     public class ChannelsStorage: BaseSpecificStorage, IChannelsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ChannelsStorage()
+        {
+        }
+
         public ChannelsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

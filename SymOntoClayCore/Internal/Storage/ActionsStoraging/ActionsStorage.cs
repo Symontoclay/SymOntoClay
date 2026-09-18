@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 {
     public class ActionsStorage: BaseSpecificStorage, IActionsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ActionsStorage()
+        {
+        }
+
         public ActionsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

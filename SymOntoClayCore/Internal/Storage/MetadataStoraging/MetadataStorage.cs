@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
 {
     public class MetadataStorage: BaseSpecificStorage, IMetadataStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private MetadataStorage()
+        {
+        }
+
         public MetadataStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
     public class CommonTasksStorage<T>: BaseComponent
         where T: BaseHtnTask
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private CommonTasksStorage()
+        {
+        }
+
         public CommonTasksStorage(IMonitorLogger logger)
             : base(logger)
         {

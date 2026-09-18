@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
 {
     public class StatesStorage : BaseSpecificStorage, IStatesStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private StatesStorage()
+        {
+        }
+
         public StatesStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

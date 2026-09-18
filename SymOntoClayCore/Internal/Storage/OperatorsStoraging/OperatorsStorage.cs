@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
 {
     public class OperatorsStorage : BaseSpecificStorage, IOperatorsStorage
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private OperatorsStorage()
+        {
+        }
+
         public OperatorsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {

@@ -43,6 +43,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.StringTypeName));
         }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private StringValue()
+        {
+        }
+
         public StringValue(string systemValue)
         {
             SystemValue = systemValue;

@@ -4615,6 +4615,11 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceCodeItem.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.InstanceValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -6724,6 +6729,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicHtnTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.KindOfValue">
             <inheritdoc/>

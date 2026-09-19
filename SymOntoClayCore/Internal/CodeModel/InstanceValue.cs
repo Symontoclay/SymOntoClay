@@ -34,6 +34,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InstanceValue : Value
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private InstanceValue()
+        {
+        }
+
         public InstanceValue(IInstance instanceInfo)
         {
             InstanceInfo = instanceInfo;

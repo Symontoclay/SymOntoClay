@@ -257,21 +257,21 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeArray(ArrayCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             var arrayType = _serializedTypesPool.GetTypeValue(serializedValue.TypeId);
 
 #if DEBUG
-            _logger.Info($"arrayType?.FullName = {arrayType?.FullName}");
-            _logger.Info($"arrayType?.IsArray = {arrayType?.IsArray}");
+            //_logger.Info($"arrayType?.FullName = {arrayType?.FullName}");
+            //_logger.Info($"arrayType?.IsArray = {arrayType?.IsArray}");
 #endif
 
             var elementType = arrayType.GetElementType();
 
 #if DEBUG
-            _logger.Info($"elementType?.FullName = {elementType?.FullName}");
-            _logger.Info($"card?.Items?.Count = {card?.Items?.Count}");
+            //_logger.Info($"elementType?.FullName = {elementType?.FullName}");
+            //_logger.Info($"card?.Items?.Count = {card?.Items?.Count}");
 #endif
 
             var arrayInstance = Array.CreateInstance(elementType, card.Items.Count);
@@ -364,6 +364,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _processedSerializedValue[serializedValue] = obj;
 
+            var addMethod = type.GetMethod("Add");
+
             foreach (var item in card.Items)
             {
 #if DEBUG
@@ -376,7 +378,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                throw new NotImplementedException("13722DF2-9450-4F77-A213-3A746F1B40A9");
+                addMethod.Invoke(obj, new object[] { itemValue });
+
+                //throw new NotImplementedException("13722DF2-9450-4F77-A213-3A746F1B40A9");
             }
 
             //throw new NotImplementedException("C2CD8D58-AC3D-451E-8C6B-11D02F521864");

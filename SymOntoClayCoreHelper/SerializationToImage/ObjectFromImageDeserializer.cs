@@ -93,7 +93,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.IsArray)
             {
-                return DeserializeArray(type, dataCard as ArrayCard, serializedValue);
+                return DeserializeArray(dataCard as ArrayCard, serializedValue);
             }
 
             if (type.FullName.StartsWith("System.Action"))
@@ -153,7 +153,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     return DeserializeReflectionType(dataCard as ReflectionTypeCard, serializedValue);
 
                 case "SymOntoClay.CoreHelper.SerializationToImage.Stubs.ArrayStub":
-                    return DeserializeArray(type, dataCard as ArrayCard, serializedValue);
+                    return DeserializeArray(dataCard as ArrayCard, serializedValue);
             }
 
             var fullShortTypeName = $"{type.Namespace}.{type.Name}";
@@ -254,15 +254,52 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return obj;
         }
 
-        private object DeserializeArray(Type type, ArrayCard card, SerializedValue serializedValue)
+        private object DeserializeArray(ArrayCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
-            //_processedSerializedValue[serializedValue] = obj;
+            var arrayType = _serializedTypesPool.GetTypeValue(serializedValue.TypeId);
 
-            throw new NotImplementedException("C3A41E1D-BC85-453B-A6B0-8D84105B5E4A");
+#if DEBUG
+            _logger.Info($"arrayType?.FullName = {arrayType?.FullName}");
+            _logger.Info($"arrayType?.IsArray = {arrayType?.IsArray}");
+#endif
+
+            var elementType = arrayType.GetElementType();
+
+#if DEBUG
+            _logger.Info($"elementType?.FullName = {elementType?.FullName}");
+            _logger.Info($"card?.Items?.Count = {card?.Items?.Count}");
+#endif
+
+            var arrayInstance = Array.CreateInstance(elementType, card.Items.Count);
+
+            _processedSerializedValue[serializedValue] = arrayInstance;
+
+            var n = 0;
+
+            foreach(var item in card.Items)
+            {
+#if DEBUG
+                //_logger.Info($"n = {n}");
+                //_logger.Info($"item = {item}");
+#endif
+
+                var itemValue = DeserializeValue(item);
+
+#if DEBUG
+                //_logger.Info($"itemValue = {itemValue}");
+#endif
+
+                arrayInstance.SetValue(itemValue, n);
+                n++;
+            }
+
+            //throw new NotImplementedException("C3A41E1D-BC85-453B-A6B0-8D84105B5E4A");
+
+            return arrayInstance;
         }
 
         private object DeserializeGenericList(object obj, Type type, ListCard card, SerializedValue serializedValue)

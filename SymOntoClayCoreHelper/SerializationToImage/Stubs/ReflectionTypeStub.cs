@@ -1,4 +1,4 @@
-﻿namespace SymOntoClay.CoreHelper.SerializationToImage
+﻿namespace SymOntoClay.CoreHelper.SerializationToImage.Stubs
 {
     public class ReflectionTypeStub
     {

@@ -93,7 +93,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.IsArray)
             {
-                return DeserializeArray(obj, type, dataCard as ArrayCard, serializedValue);
+                return DeserializeArray(type, dataCard as ArrayCard, serializedValue);
             }
 
             if (type.FullName.StartsWith("System.Action"))
@@ -123,7 +123,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                     throw new NotImplementedException("C3F3E1DF-33BD-4C55-8B8D-62E4E79D21B0");
 
                 case "System.Threading.ManualResetEvent":
-                case "SymOntoClay.CoreHelper.SerializationToImage.ManualResetEventStub":
+                case "SymOntoClay.CoreHelper.SerializationToImage.Stubs.ManualResetEventStub":
                     return DeserializeManualResetEvent(type, dataCard as ExternalManualResetEventClassCard, serializedValue);
 
                 case "System.Byte":
@@ -149,8 +149,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 case "System.Type":
                 case "System.RuntimeType":
-                case "SymOntoClay.CoreHelper.SerializationToImage.ReflectionTypeStub":
+                case "SymOntoClay.CoreHelper.SerializationToImage.Stubs.ReflectionTypeStub":
                     return DeserializeReflectionType(dataCard as ReflectionTypeCard, serializedValue);
+
+                case "SymOntoClay.CoreHelper.SerializationToImage.Stubs.ArrayStub":
+                    return DeserializeArray(type, dataCard as ArrayCard, serializedValue);
             }
 
             var fullShortTypeName = $"{type.Namespace}.{type.Name}";
@@ -251,13 +254,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return obj;
         }
 
-        private object DeserializeArray(object obj, Type type, ArrayCard card, SerializedValue serializedValue)
+        private object DeserializeArray(Type type, ArrayCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
-            _processedSerializedValue[serializedValue] = obj;
+            //_processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C3A41E1D-BC85-453B-A6B0-8D84105B5E4A");
         }
@@ -875,7 +878,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext",
             "SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache",
             "SymOntoClay.Core.Internal.BaseCoreContext",
-            "SymOntoClay.CoreHelper.SerializationToImage.SerializeWithDataCreationStub",
+            "SymOntoClay.CoreHelper.SerializationToImage.Stubs.SerializeWithDataCreationStub",
             "SymOntoClay.Monitor.Common.SerializationData.MonitorNodeSerializationData",
             "SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider",
             "SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject",

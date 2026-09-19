@@ -1,6 +1,6 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 
-namespace SymOntoClay.CoreHelper.SerializationToImage
+namespace SymOntoClay.CoreHelper.SerializationToImage.Stubs
 {
     [SerializeWithDataCreation]
     public class SerializeWithDataCreationStub

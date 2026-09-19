@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders;
+using SymOntoClay.CoreHelper.SerializationToImage.Stubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,6 +109,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _logger.Info($"type?.FullName = {type?.FullName}");
             _logger.Info($"type?.IsArray = {type?.IsArray}");
 #endif
+
+            if(type.IsArray)
+            {
+                return ArrayStub.Instance;
+            }
 
             if (type.FullName == "System.String")
             {

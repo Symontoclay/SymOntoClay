@@ -106,8 +106,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var type = _serializedTypesPool.GetTypeValue(serializedValue.TypeId);
 
 #if DEBUG
-            _logger.Info($"type?.FullName = {type?.FullName}");
-            _logger.Info($"type?.IsArray = {type?.IsArray}");
+            //_logger.Info($"type?.FullName = {type?.FullName}");
+            //_logger.Info($"type?.IsArray = {type?.IsArray}");
 #endif
 
             if(type.IsArray)

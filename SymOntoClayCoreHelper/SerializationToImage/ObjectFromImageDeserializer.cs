@@ -43,7 +43,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public object DeserializeValue(SerializedValue serializedValue, ObjMemberRef objMember = null)
         {
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             if(_processedSerializedValue.TryGetValue(serializedValue, out var processedObj))
@@ -54,7 +54,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var obj = _objectDeserialializationFactory.GetValue(serializedValue);
 
 #if DEBUG
-            _logger.Info($"obj = {obj}");
+            //_logger.Info($"obj = {obj}");
 #endif
 
             if (obj == null && obj?.GetType()?.FullName != "SymOntoClay.Monitor.Internal.MonitorNode")
@@ -74,16 +74,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var type = obj.GetType();
 
 #if DEBUG
-            _logger.Info($"type.FullName = {type.FullName}");
-            _logger.Info($"type.Name = {type.Name}");
-            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
-            _logger.Info($"type.IsArray = {type.IsArray}");
+            //_logger.Info($"type.FullName = {type.FullName}");
+            //_logger.Info($"type.Name = {type.Name}");
+            //_logger.Info($"type.IsGenericType = {type.IsGenericType}");
+            //_logger.Info($"type.IsArray = {type.IsArray}");
 #endif
 
             var dataCard = GetDataCardByHeader(serializedValue, type);
 
 #if DEBUG
-            _logger.Info($"dataCard = {dataCard}");
+            //_logger.Info($"dataCard = {dataCard}");
 #endif
 
             if (type.IsEnum)
@@ -233,13 +233,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeReflectionType(ReflectionTypeCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             var obj = _typesHelper.GetTypeByFullName(card.OriginalTypeName);
 
 #if DEBUG
-            _logger.Info($"obj?.FullName = {obj?.FullName}");
+            //_logger.Info($"obj?.FullName = {obj?.FullName}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -359,7 +359,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeHashSet(object obj, Type type, HashSetCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -369,13 +369,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in card.Items)
             {
 #if DEBUG
-                _logger.Info($"item = {item}");
+                //_logger.Info($"item = {item}");
 #endif
 
                 var itemValue = DeserializeValue(item);
 
 #if DEBUG
-                _logger.Info($"itemValue = {itemValue}");
+                //_logger.Info($"itemValue = {itemValue}");
 #endif
 
                 addMethod.Invoke(obj, new object[] { itemValue });
@@ -433,7 +433,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
 
 #if DEBUG
-            _logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
+            //_logger.Info($"kindOfStructuralObject = {kindOfStructuralObject}");
 #endif
 
             switch (kindOfStructuralObject)
@@ -475,7 +475,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -483,7 +483,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in card.FieldsWithSerializedMembers)
             {
 #if DEBUG
-                _logger.Info($"name (1) = {item.Item1}");
+                //_logger.Info($"name (1) = {item.Item1}");
 #endif
 
 #if DEBUG
@@ -498,7 +498,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in card.FieldsWithChildren)
             {
 #if DEBUG
-                _logger.Info($"item.Item1 (2) = {item.Item1}");
+                //_logger.Info($"item.Item1 (2) = {item.Item1}");
 #endif
 
 #if DEBUG
@@ -764,7 +764,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var serializedValue = item.Item3;
 
 #if DEBUG
-            _logger.Info($"serializedValue = {serializedValue}");
+            //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
             //if (serializedValue.KindOfSerializedValue == KindOfSerializedValue.ExternalValue)
@@ -1058,7 +1058,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.CompoundTaskInstanceStorage",
             "SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity",
             "SymOntoClay.Core.StorageUsingOptions",
-            "SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator"
+            "SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator",
+            "SymOntoClay.Core.Internal.Storage.SuperClassStorage",
+            "SymOntoClay.Core.Internal.Storage.LocalStorage"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2912,6 +2914,75 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.SuperClassStorage"] = new List<string>()
+            {
+                "_targetClassName",
+                "_instanceName",
+                "_instance",
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext",
+                "_lockObj",
+                "_logicalStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_statesStorage",
+                "_triggersStorage",
+                "_inheritanceStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_varStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_onParentStorageChangedHandlersLockObj",
+                "_onParentStorageChangedHandlers",
+                "DefaultSettingsOfCodeEntity",
+                "CodeItemsStoragesList",
+                "_isDisposed",
+                "_logger",
+                "IsIsolated"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.LocalStorage"] = new List<string>()
+            {
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor",
+                "_kind",
+                "_realStorageContext",
+                "_lockObj",
+                "_logicalStorage",
+                "_relationsStorage",
+                "_methodsStorage",
+                "_constructorsStorage",
+                "_actionsStorage",
+                "_statesStorage",
+                "_triggersStorage",
+                "_inheritanceStorage",
+                "_synonymsStorage",
+                "_operatorsStorage",
+                "_channelsStorage",
+                "_metadataStorage",
+                "_varStorage",
+                "_fuzzyLogicStorage",
+                "_idleActionItemsStorage",
+                "_tasksStorage",
+                "_propertyStorage",
+                "_onParentStorageChangedHandlersLockObj",
+                "_onParentStorageChangedHandlers",
+                "DefaultSettingsOfCodeEntity",
+                "CodeItemsStoragesList",
+                "_isDisposed",
+                "_logger",
+                "IsIsolated"
             };
         }
     }

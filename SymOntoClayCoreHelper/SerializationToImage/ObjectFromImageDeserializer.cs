@@ -1055,7 +1055,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage",
             "SymOntoClay.Core.Internal.Storage.TasksStoraging.TasksStorage",
             "SymOntoClay.Core.Internal.Storage.TasksStoraging.CommonTasksStorage`1",
-            "SymOntoClay.Core.Internal.Storage.CompoundTaskInstanceStorage"
+            "SymOntoClay.Core.Internal.Storage.CompoundTaskInstanceStorage",
+            "SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity",
+            "SymOntoClay.Core.StorageUsingOptions",
+            "SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -2875,7 +2878,41 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger",
                 "IsIsolated"
             };
-
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity"] = new List<string>()
+            {
+                "WhereSection",
+                "Holder",
+                "TypeOfAccess"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.StorageUsingOptions"] = new List<string>()
+            {
+                "Storage",
+                "UseFacts",
+                "UseInheritanceFacts",
+                "UseProductions",
+                "MaxDeph",
+                "Priority"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator"] = new List<string>()
+            {
+                "_lockObj",
+                "_context",
+                "_publicFactsStorage",
+                "_publicInheritanceStorage",
+                "_inheritanceResolver",
+                "_resolverOptions",
+                "_standardCoreFactsBuilder",
+                "_foundInheritanceKeysList",
+                "_localCodeExecutionContext",
+                "_logicQueryParseAndCache",
+                "_selfName",
+                "_selfNameForFacts",
+                "_factsIdDict",
+                "_inheritanceItemsDict",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
         }
     }
 }

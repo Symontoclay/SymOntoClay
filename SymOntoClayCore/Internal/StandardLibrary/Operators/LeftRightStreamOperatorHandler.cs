@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class LeftRightStreamOperatorHandler: BaseOperatorHandler, IBinaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LeftRightStreamOperatorHandler()
+        {
+        }
+
         public LeftRightStreamOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

@@ -32,6 +32,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public abstract class BaseOperatorHandler: BaseLoggedComponent
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseOperatorHandler()
+        {
+        }
+
         protected BaseOperatorHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
         {       

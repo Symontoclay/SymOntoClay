@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 {
     public class FinalizationTriggersRunner
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private FinalizationTriggersRunner()
+        {
+        }
+
         public FinalizationTriggersRunner(IMonitorLogger logger, IEngineContext context, IInstance instance, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, IStorage storage)
         {
             _logger = logger;

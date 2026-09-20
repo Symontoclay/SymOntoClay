@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class BinaryOperatorSystemHandler: ISystemHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private BinaryOperatorSystemHandler()
+        {
+        }
+
         public BinaryOperatorSystemHandler(IBinaryOperatorHandler operatorHandler)
         {
             _leftOperandKey = "leftOperand";

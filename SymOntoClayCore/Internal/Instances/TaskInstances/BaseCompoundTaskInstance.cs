@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.Instances.TaskInstances
 {
     public abstract class BaseCompoundTaskInstance: BaseInstance
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseCompoundTaskInstance()
+        {
+        }
+
         protected BaseCompoundTaskInstance(BaseCompoundHtnTask baseCompoundHtnTask, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IExecutionCoordinator parentExecutionCoordinator, IStorageFactory storageFactory)
             : base(baseCompoundHtnTask, context, parentStorage, parentCodeExecutionContext, parentExecutionCoordinator, storageFactory, null)
         {

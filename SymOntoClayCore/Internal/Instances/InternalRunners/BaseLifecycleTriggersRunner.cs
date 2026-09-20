@@ -32,6 +32,11 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 {
     public abstract class BaseLifecycleTriggersRunner
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseLifecycleTriggersRunner()
+        {
+        }
+
         protected BaseLifecycleTriggersRunner(IMonitorLogger logger, IEngineContext context, IInstance instance, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator, IStorage storage, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, bool normalOrder, bool runOnce)
         {
             _logger = logger;

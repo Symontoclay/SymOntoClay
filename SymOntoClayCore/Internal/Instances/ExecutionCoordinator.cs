@@ -36,6 +36,11 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ExecutionCoordinator: IExecutionCoordinator
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ExecutionCoordinator()
+        {
+        }
+
         public ExecutionCoordinator(IInstance instance)
         {
             _instance = instance;

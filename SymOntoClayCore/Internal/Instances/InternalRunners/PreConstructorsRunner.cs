@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
 {
     public class PreConstructorsRunner: BaseOnceCodeRunner
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private PreConstructorsRunner()
+        {
+        }
+
         public PreConstructorsRunner(IMonitorLogger logger, IEngineContext context, IInstance instance, IInstanceWithChangingState instanceWithChangingState, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
             : base(logger)
         {

@@ -32,6 +32,11 @@ namespace SymOntoClay.Core.Internal.Instances
     public class BaseInstanceParentExecutionCoordinatorOnFinishedHandler : IOnFinishedExecutionCoordinatorHandler,
         IBaseInstanceParentExecutionCoordinatorOnFinishedHandlerSerializedEventsHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private BaseInstanceParentExecutionCoordinatorOnFinishedHandler()
+        {
+        }
+
         public BaseInstanceParentExecutionCoordinatorOnFinishedHandler(IMonitorLogger logger, IExecutionCoordinator executionCoordinator,
             IActiveObjectContext activeObjectContext, ICustomThreadPool threadPool, SerializationAnchor serializationAnchor)
         {

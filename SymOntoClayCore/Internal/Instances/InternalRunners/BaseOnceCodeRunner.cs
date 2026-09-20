@@ -17,6 +17,11 @@ namespace SymOntoClay.Core.Internal.Instances.InternalRunners
             Finished
         }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseOnceCodeRunner()
+        {
+        }
+
         protected BaseOnceCodeRunner(IMonitorLogger logger)
         {
             _logger = logger;

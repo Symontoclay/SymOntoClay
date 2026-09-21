@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class UnaryOperatorSystemHandler : ISystemHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private UnaryOperatorSystemHandler()
+        {
+        }
+
         public UnaryOperatorSystemHandler(IUnaryOperatorHandler operatorHandler)
         {
             _operandKey = "operand";

@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class PointOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private PointOperatorHandler()
+        {
+        }
+
         public PointOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

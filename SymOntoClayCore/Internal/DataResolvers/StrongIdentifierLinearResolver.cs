@@ -28,6 +28,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class StrongIdentifierLinearResolver : BaseResolver
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private StrongIdentifierLinearResolver()
+        {
+        }
+
         public StrongIdentifierLinearResolver(IMainStorageContext context)
             : base(context)
         {

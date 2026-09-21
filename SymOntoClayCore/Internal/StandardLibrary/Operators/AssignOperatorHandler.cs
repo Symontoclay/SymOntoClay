@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class AssignOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private AssignOperatorHandler()
+        {
+        }
+
         public AssignOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

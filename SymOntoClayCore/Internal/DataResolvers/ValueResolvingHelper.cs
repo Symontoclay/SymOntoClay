@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class ValueResolvingHelper : BaseContextComponent
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ValueResolvingHelper()
+        {
+        }
+
         public ValueResolvingHelper(IMainStorageContext context)
             : base(context.Logger)
         {

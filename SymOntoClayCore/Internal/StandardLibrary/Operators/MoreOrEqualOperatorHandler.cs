@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class MoreOrEqualOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private MoreOrEqualOperatorHandler()
+        {
+        }
+
         public MoreOrEqualOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

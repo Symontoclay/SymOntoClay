@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class NotOperatorHandler : BaseOperatorHandler, IUnaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private NotOperatorHandler()
+        {
+        }
+
         public NotOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

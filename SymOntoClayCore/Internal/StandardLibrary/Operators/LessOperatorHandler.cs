@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class LessOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LessOperatorHandler()
+        {
+        }
+
         public LessOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

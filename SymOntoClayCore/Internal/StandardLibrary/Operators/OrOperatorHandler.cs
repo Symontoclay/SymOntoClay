@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class OrOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private OrOperatorHandler()
+        {
+        }
+
         public OrOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

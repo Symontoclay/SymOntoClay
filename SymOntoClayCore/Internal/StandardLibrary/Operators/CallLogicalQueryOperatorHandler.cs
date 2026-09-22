@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class CallLogicalQueryOperatorHandler : BaseOperatorHandler, IUnaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private CallLogicalQueryOperatorHandler()
+        {
+        }
+
         public CallLogicalQueryOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
     public class UnaryMinusOperatorHandler : BaseOperatorHandler, IUnaryOperatorHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private UnaryMinusOperatorHandler()
+        {
+        }
+
         public UnaryMinusOperatorHandler(IEngineContext engineContext)
             : base(engineContext)
         {

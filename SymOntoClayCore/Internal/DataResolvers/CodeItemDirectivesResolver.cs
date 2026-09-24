@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class CodeItemDirectivesResolver : BaseResolver
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private CodeItemDirectivesResolver()
+        {
+        }
+
         public CodeItemDirectivesResolver(IMainStorageContext context)
             : base(context)
         {

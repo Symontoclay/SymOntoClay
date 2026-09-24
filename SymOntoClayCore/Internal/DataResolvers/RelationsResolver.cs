@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class RelationsResolver : BaseResolver
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private RelationsResolver()
+        {
+        }
+
         public RelationsResolver(IMainStorageContext context)
             : base(context)
         {

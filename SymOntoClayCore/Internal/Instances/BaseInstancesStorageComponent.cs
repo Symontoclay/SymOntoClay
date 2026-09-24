@@ -32,6 +32,11 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class BaseInstancesStorageComponent : BaseContextComponent, IInstancesStorageComponent
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseInstancesStorageComponent()
+        {
+        }
+
         public BaseInstancesStorageComponent(IMainStorageContext context)
             : base(context.Logger)
         {

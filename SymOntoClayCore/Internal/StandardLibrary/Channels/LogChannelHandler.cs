@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
 {
     public class LogChannelHandler : BaseLoggedComponent, IChannelHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LogChannelHandler()
+        {
+        }
+
         public LogChannelHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
         {

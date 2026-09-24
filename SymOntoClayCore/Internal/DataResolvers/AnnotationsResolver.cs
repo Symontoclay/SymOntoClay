@@ -27,6 +27,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class AnnotationsResolver : BaseResolver
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private AnnotationsResolver()
+        {
+        }
+
         public AnnotationsResolver(IMainStorageContext context)
             : base(context)
         {

@@ -37,6 +37,11 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public class ConverterFactToImperativeCode : BaseContextComponent
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ConverterFactToImperativeCode()
+        {
+        }
+
         public ConverterFactToImperativeCode(IMainStorageContext context)
             : base(context.Logger)
         {

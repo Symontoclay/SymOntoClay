@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
 {
     public class SayChannelHandler : BaseLoggedComponent, IChannelHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private SayChannelHandler()
+        {
+        }
+
         public SayChannelHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
         {

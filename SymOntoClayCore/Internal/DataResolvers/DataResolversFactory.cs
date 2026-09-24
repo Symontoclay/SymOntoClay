@@ -26,6 +26,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class DataResolversFactory : BaseContextComponent, IDataResolversFactory
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private DataResolversFactory()
+        {
+        }
+
         public DataResolversFactory(IMainStorageContext context)
             : base(context.Logger)
         {

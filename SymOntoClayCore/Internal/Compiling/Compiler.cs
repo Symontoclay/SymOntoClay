@@ -34,6 +34,11 @@ namespace SymOntoClay.Core.Internal.Compiling
 {
     public class Compiler: BaseContextComponent, ICompiler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private Compiler()
+        {
+        }
+
         public Compiler(IMainStorageContext context)
             : base(context.Logger)
         {

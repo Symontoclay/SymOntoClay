@@ -7245,6 +7245,11 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.FalseValueLiteral">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
             <inheritdoc/>
         </member>
@@ -7419,8 +7424,18 @@
         <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.ConverterFactToImperativeCode.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.ConverterFactToImperativeCode.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.ConvertersFactory.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.ConvertersFactory.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7510,6 +7525,11 @@
         <member name="M:SymOntoClay.Core.Internal.Converters.TypeFitCheckingResult.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.AnnotationsResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
@@ -7536,6 +7556,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ChannelsResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.CodeItemDirectivesResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -7577,6 +7602,11 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ConstructorsResolver.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.#ctor">
             <summary>
 			Constructor for deserialization.
 		</summary>
@@ -8068,6 +8098,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.RelationsResolver.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.RelationsResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -9486,6 +9521,11 @@
 			Constructor for deserialization.
 		</summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
@@ -9628,6 +9668,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
@@ -11246,6 +11291,11 @@
         <member name="M:SymOntoClay.Core.Internal.Services.ServicesFactory.GetCodeFrameService">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
@@ -11254,6 +11304,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.GetLongHashCode">
             <inheritdoc/>

@@ -45,6 +45,11 @@ namespace SymOntoClay.Core.Internal.Instances
     public class InstancesStorageComponent: BaseInstancesStorageComponent,
         IInstancesStorageComponentSerializedEventsHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private InstancesStorageComponent()
+        {
+        }
+
         public InstancesStorageComponent(IEngineContext context)
             : base(context)
         {

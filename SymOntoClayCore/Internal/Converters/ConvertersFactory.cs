@@ -24,6 +24,11 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public class ConvertersFactory: BaseContextComponent, IConvertersFactory
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ConvertersFactory()
+        {
+        }
+
         public ConvertersFactory(IMainStorageContext context)
             : base(context.Logger)
         {

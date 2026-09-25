@@ -26,6 +26,11 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class InstancesStorageComponentOnFinishProcessWithDevicesHandler : IOnFinishProcessInfoHandler
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private InstancesStorageComponentOnFinishProcessWithDevicesHandler()
+        {
+        }
+
         public InstancesStorageComponentOnFinishProcessWithDevicesHandler(InstancesStorageComponent instancesStorageComponent)
         {
             _instancesStorageComponent = instancesStorageComponent;

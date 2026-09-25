@@ -36,6 +36,11 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ProcessInfo()
+        {
+        }
+
         public ProcessInfo(ICancellationContext cancellationContext, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
             : base(cancellationContext, threadPool, activeObjectContext)
         {

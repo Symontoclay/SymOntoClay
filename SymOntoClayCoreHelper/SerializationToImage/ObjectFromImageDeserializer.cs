@@ -1136,7 +1136,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Converters.ConvertersFactory",
             "SymOntoClay.Core.Internal.Converters.ConverterFactToImperativeCode",
             "SymOntoClay.Core.Internal.Compiling.Compiler",
-            "SymOntoClay.Core.Internal.Instances.InstancesStorageComponent"
+            "SymOntoClay.Core.Internal.Instances.InstancesStorageComponent",
+            "SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithoutDevicesHandler",
+            "SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithDevicesHandler",
+            "SymOntoClay.Core.Internal.Instances.ProcessInfo",
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrame"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -4112,6 +4116,88 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithoutDevicesHandler"] = new List<string>()
+            {
+                "_instancesStorageComponent"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithDevicesHandler"] = new List<string>()
+            {
+                "_instancesStorageComponent"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.ProcessInfo"] = new List<string>()
+            {
+                "CodeFrame",
+                "_devices",
+                "_friends",
+                "_cancellationContext",
+                "_threadPool",
+                "_activeObjectContext",
+                "_serializationAnchor",
+                "Id",
+                "EndPointName",
+                "_onFinishHandlersLockObj",
+                "_onFinishHandlers",
+                "_onCompleteHandlersLockObj",
+                "_onCompleteHandlers",
+                "_onWeakCanceledHandlersLockObj",
+                "_onWeakCanceledHandlers",
+                "Priority",
+                "_statusLockObj",
+                "_parentAndChildrenLockObj",
+                "_status",
+                "_parentProcessInfo",
+                "_childrenProcessInfoList",
+                "_removedChildrenProcessInfoList",
+                "_onFinishHandlersList",
+                "_onCompleteHandlersList",
+                "_onWeakCanceledHandlersList",
+                "_isDisposed"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrame"] = new List<string>()
+            {
+                "CompiledFunctionBody",
+                "CurrentPosition",
+                "State",
+                "CurrentSEHGroup",
+                "ValuesStack",
+                "SEHStack",
+                "LocalContext",
+                "ProcessInfo",
+                "Metadata",
+                "Arguments",
+                "CallMethodId",
+                "Instance",
+                "ExecutionCoordinator",
+                "SpecialMark",
+                "TargetDuration",
+                "EndOfTargetDuration",
+                "TimeoutCancellationMode",
+                "CalledCtorsList",
+                "PutToValueStackAfterReturningBack",
+                "NeedsExecCallEvent",
+                "LastProcessStatus",
+                "CompleteAnnotationSystemEvent",
+                "CancelAnnotationSystemEvent",
+                "WeakCancelAnnotationSystemEvent",
+                "ErrorAnnotationSystemEvent",
+                "PseudoSyncTask",
+                "CodeFrameEvnPartsStack",
+                "CompoundTaskInstance",
+                "_callMode",
+                "ForParameterValueResolving",
+                "TakingValuesState",
+                "ResolvingParameterValues",
+                "CurrentPositionOfResolvingParameter",
+                "ResolvedPositionedParameterValues",
+                "ResolvedNamedParameterValues",
+                "CurrentResolvedParameterValue",
+                "CurrentCaller",
+                "CurrentKindOfOperator",
+                "KindOfParameters",
+                "ParametersCount",
+                "CurrentFunctionCallMethodId",
+                "BaseCompoundTaskInstance"
             };
         }
     }

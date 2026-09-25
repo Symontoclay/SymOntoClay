@@ -46,7 +46,12 @@ namespace SymOntoClay.Core
         IBaseProcessInfoSerializedEventsHandler
     {
         protected static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
-        
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseProcessInfo()
+        {
+        }
+
         protected BaseProcessInfo(ICancellationContext cancellationContext, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
         {
             _cancellationContext = cancellationContext;

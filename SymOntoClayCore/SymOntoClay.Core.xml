@@ -18,6 +18,11 @@
         <member name="M:SymOntoClay.Core.BaseCoreSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Id">
             <inheritdoc/>
         </member>
@@ -9728,6 +9733,16 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithDevicesHandler.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithoutDevicesHandler.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InternalRunners.BaseLifecycleTriggersRunner.#ctor">
             <summary>
 			Constructor for deserialization.
@@ -9898,6 +9913,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunConstructors(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.EndPointName">
             <inheritdoc/>

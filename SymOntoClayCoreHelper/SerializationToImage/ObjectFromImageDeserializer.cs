@@ -529,7 +529,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 case KindOfStructuralObject.WorldRoot:
                 case KindOfStructuralObject.WorldComponent:
-                    return DeserializeKeyWorldComponent(obj, type, card as KeyWorldComponentClassCard, serializedValue);
+                    {
+                        var keyWorldComponentClassCardWithPath = card as KeyWorldComponentClassCardWithPath;
+
+#if DEBUG
+                        //_logger.Info($"keyWorldComponentClassCardWithPath = {keyWorldComponentClassCardWithPath}");
+#endif
+
+                        if(keyWorldComponentClassCardWithPath == null)
+                        {
+                            return DeserializeKeyWorldComponent(obj, type, card as KeyWorldComponentClassCard, serializedValue);
+                        }
+
+                        return DeserializeKeyWorldComponent(obj, type, keyWorldComponentClassCardWithPath, serializedValue);
+                    }
 
                 case KindOfStructuralObject.WorldSettings:
                     return DeserializeWorldSettings(obj, type, card as ExternalClassCard, serializedValue);
@@ -564,7 +577,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -602,7 +615,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var item in card.OtherFields)
             {
 #if DEBUG
-                _logger.Info($"item.Item1 (3) = {item.Item1}");
+                //_logger.Info($"item.Item1 (3) = {item.Item1}");
 #endif
 
 #if DEBUG
@@ -619,7 +632,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 var name = item.Item1;
 
 #if DEBUG
-                _logger.Info($"name (4) = {name}");
+                //_logger.Info($"name (4) = {name}");
 #endif
 
 #if DEBUG
@@ -642,7 +655,68 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 postDeserializationHandler.Handle();
             }
 
-            throw new NotImplementedException("C8CA053E-8B82-40B4-90DC-B100748AE0A5");
+            //throw new NotImplementedException("C8CA053E-8B82-40B4-90DC-B100748AE0A5");
+
+            return obj;
+        }
+
+        private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCardWithPath card, SerializedValue serializedValue)
+        {
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _processedSerializedValue[serializedValue] = obj;
+
+            foreach (var item in card.Fields)
+            {
+#if DEBUG
+                //_logger.Info($"item.Item1 = {item.Item1}");
+#endif
+
+#if DEBUG
+                TmpCheckProcessedMembersOfTypes("F38035CD-7834-4940-A32A-64027ED1DB3C", type, item.Item1);
+#endif
+
+                ProcessField(obj, item);
+
+                //throw new NotImplementedException("C930DEDB-A6FB-4FE4-B7E1-D901B16ED59D");
+            }
+
+            if(card.Properties?.Any() ?? false)
+            {
+                foreach (var item in card.Properties)
+                {
+                    var name = item.Item1;
+
+#if DEBUG
+                    //_logger.Info($"name (4) = {name}");
+#endif
+
+#if DEBUG
+                    TmpCheckProcessedMembersOfTypes("7C1BF264-244F-4A3F-A1D0-57FE66CE188E", type, name);
+#endif
+
+                    ProcessProperty(obj, item);
+
+                    //throw new NotImplementedException("C1F9DC3D-51FB-42BA-99F7-38D32D3BA04F");
+                }
+            }
+
+            var postDeserializationHandler = obj as IPostDeserializationHandler;
+
+            if (postDeserializationHandler != null)
+            {
+#if DEBUG
+                _logger.Info($"postDeserializationHandler != null = {postDeserializationHandler != null}");
+#endif
+
+                postDeserializationHandler.Handle();
+            }
+
+            //throw new NotImplementedException("C5AF16A8-6941-4753-9C78-09664149B5BC");
+
+            return obj;
         }
 
         private object DeserializeWorldSettings(object obj, Type type, ExternalClassCard card, SerializedValue serializedValue)

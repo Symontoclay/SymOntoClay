@@ -87,7 +87,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             Finalization();
 
-            throw new NotImplementedException("C072330D-6772-4582-948D-CA412DCD07FE");
+            //throw new NotImplementedException("C072330D-6772-4582-948D-CA412DCD07FE");
         }
 
         private void CreateCommonObjects()

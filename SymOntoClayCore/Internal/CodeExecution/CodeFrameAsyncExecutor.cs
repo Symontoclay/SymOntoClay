@@ -20,19 +20,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class CodeFrameAsyncExecutor : BaseLoggedComponent
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private CodeFrameAsyncExecutor()
+        {
+        }
+
         public CodeFrameAsyncExecutor(IEngineContext context)
             : base(context.Logger)
         {

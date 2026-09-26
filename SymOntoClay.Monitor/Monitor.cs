@@ -24,6 +24,7 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
@@ -68,7 +69,10 @@ namespace SymOntoClay.Monitor
 
         private readonly BaseMonitorSettings _baseMonitorSettings;
 
+        [SystemNoSerializedMember]
         private readonly List<MonitorNode> _childMonitorNodes = new List<MonitorNode>();
+
+        [SystemNoSerializedMember]
         private readonly Dictionary<string, MonitorNode> _childMonitorNodesDict = new Dictionary<string, MonitorNode>();
 
         private readonly bool _TopSysEnable = true;
@@ -692,13 +696,13 @@ namespace SymOntoClay.Monitor
         public object CreateObjectBySerializationData(object serializationData)
         {
 #if DEBUG
-            _globalLogger.Info($"serializationData = {serializationData}");
+            //_globalLogger.Info($"serializationData = {serializationData}");
 #endif
 
             var monitorNodeSerializationData = serializationData as MonitorNodeSerializationData;
 
 #if DEBUG
-            _globalLogger.Info($"monitorNodeSerializationData = {monitorNodeSerializationData}");
+            //_globalLogger.Info($"monitorNodeSerializationData = {monitorNodeSerializationData}");
 #endif
 
             if(monitorNodeSerializationData == null)

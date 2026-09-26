@@ -24,6 +24,7 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
@@ -37,6 +38,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -70,6 +72,12 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         public string Id => _nodeId;
+
+        [SystemNoSerializedMember]
+        private readonly List<ThreadLogger> _childThreadLoggers = new List<ThreadLogger>();
+
+        [SystemNoSerializedMember]
+        private readonly Dictionary<string, ThreadLogger> _childThreadLoggersDict = new Dictionary<string, ThreadLogger>();
 
         public MonitorNode(string nodeId, BaseMonitorSettings nodeSettings, MonitorContext monitorContext)
         {
@@ -675,10 +683,26 @@ namespace SymOntoClay.Monitor.Internal
         public object CreateObjectBySerializationData(object serializationData)
         {
 #if DEBUG
-            _globalLogger.Info($"serializationData = {serializationData}");
+            //_globalLogger.Info($"serializationData = {serializationData}");
 #endif
 
-            throw new NotImplementedException("CC5FC252-60AD-49A4-8B63-BC5ECFA34DCF");
+            var threadLoggerSerializationData = serializationData as ThreadLoggerSerializationData;
+
+#if DEBUG
+            //_globalLogger.Info($"threadLoggerSerializationData = {threadLoggerSerializationData}");
+#endif
+
+            if (threadLoggerSerializationData == null)
+            {
+                throw new NotSupportedException($"379451B1-5DA1-475C-8AC8-18F84FD7AF07: serializationData = {serializationData}");
+            }
+
+            if (_childThreadLoggersDict.TryGetValue(threadLoggerSerializationData.ThreadId, out var existingNode))
+            {
+                return existingNode;
+            }
+
+            return CreateThreadLogger("DC7CBEF6-8353-462D-B711-38D9826EB1E4", threadLoggerSerializationData.ThreadId);
         }
 
         /// <inheritdoc/>
@@ -869,7 +893,12 @@ namespace SymOntoClay.Monitor.Internal
                 _messageProcessor.ProcessMessage(messageInfo, _fileWriter, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
             }
 
-            return new ThreadLogger(threadId, _monitorNodeContext);
+            var threadLogger = new ThreadLogger(threadId, _monitorNodeContext);
+
+            _childThreadLoggers.Add(threadLogger);
+            _childThreadLoggersDict[threadId] = threadLogger;
+
+            return threadLogger;
         }
 
         /// <inheritdoc/>
@@ -1605,6 +1634,11 @@ namespace SymOntoClay.Monitor.Internal
         protected override void OnDisposing()
         {
             _fileWriter.Dispose();
+
+            foreach (var child in _childThreadLoggers)
+            {
+                child.Dispose();
+            }
 
             _cancellationTokenSourceContext.Dispose();
             _threadPool.Dispose();

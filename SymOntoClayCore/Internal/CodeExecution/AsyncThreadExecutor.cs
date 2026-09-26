@@ -28,6 +28,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class AsyncThreadExecutor: BaseThreadExecutor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private AsyncThreadExecutor()
+        {
+        }
+
         public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool)
             : base(context, new AsyncActivePeriodicObject(context.ActiveObjectContext, threadPool, context.Logger), BaseThreadExecutor.CreateInitParams(context))
         {

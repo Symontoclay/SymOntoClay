@@ -67,6 +67,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
         }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseThreadExecutor()
+        {
+        }
+
         protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IMonitorLogger logger, string threadId)
             : base(logger)
         {

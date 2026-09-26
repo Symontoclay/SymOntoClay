@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     //[Obsolete("Use AsyncThreadExecutor", true)]
     public class SyncThreadExecutor: BaseThreadExecutor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private SyncThreadExecutor()
+        {
+        }
+
         public SyncThreadExecutor(IEngineContext context)
             : base(context, new SyncActivePeriodicObject(context.GetCancellationContext()), BaseThreadExecutor.CreateInitParams(context))
         {

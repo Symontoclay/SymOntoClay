@@ -454,6 +454,16 @@
             It is not used in real <see cref="T:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator"/>.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.AsyncThreadExecutor.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Start">
             <inheritdoc/>
         </member>
@@ -641,6 +651,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToString">
             <inheritdoc/>
@@ -1000,6 +1015,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorList.OnDisposing">
             <inheritdoc/>

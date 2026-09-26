@@ -338,7 +338,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeGenericStack(object obj, Type type, StackCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -371,7 +371,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeGenericQueue(object obj, Type type, QueueCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -1193,7 +1193,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Htn.HtnPlan",
             "SymOntoClay.Core.Internal.Htn.HtnPlanItem",
             "SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask",
-            "SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask"
+            "SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask",
+            "SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor",
+            "SymOntoClay.Core.Internal.CodeExecution.AsyncThreadExecutor",
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor",
+            "SymOntoClay.Monitor.Common.SerializationData.ThreadLoggerSerializationData"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -4380,6 +4384,119 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "InternalSystemId",
                 "WhereSection",
                 "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor"] = new List<string>()
+            {
+                "_context",
+                "_codeFrameService",
+                "_codeFrameAsyncExecutor",
+                "_threadId",
+                "_projectLoader",
+                "_globalStorage",
+                "_globalLogicalStorage",
+                "_hostListener",
+                "_instancesStorage",
+                "_operatorsResolver",
+                "_logicalValueLinearResolver",
+                "_numberValueLinearResolver",
+                "_strongIdentifierLinearResolver",
+                "_varsResolver",
+                "_propertiesResolver",
+                "_methodsResolver",
+                "_constructorsResolver",
+                "_logicalSearchResolver",
+                "_statesResolver",
+                "_annotationsResolver",
+                "_inheritanceResolver",
+                "_dateTimeResolver",
+                "_strongIdentifierExprValueResolver",
+                "_valueResolvingHelper",
+                "_typeConverter",
+                "_converterFactToImperativeCode",
+                "_dateTimeProvider",
+                "_codeFrames",
+                "_currentCodeFrame",
+                "_executionCoordinator",
+                "_currentInstance",
+                "_currentVarStorage",
+                "_currentPropertyStorage",
+                "_currentError",
+                "_isCanceled",
+                "_endOfTargetDuration",
+                "_waitedThreadExecutorsList",
+                "_waitedProcessInfoList",
+                "_defaultCtorName",
+                "_timeoutName",
+                "_priorityName",
+                "ExternalReturn",
+                "_activeObject",
+                "_onCompletedHandlersLockObj",
+                "_onCompletedHandlers",
+                "_processAddLifeCycleEventParametersCount",
+                "_defaultTimeoutCancellationMode",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.AsyncThreadExecutor"] = new List<string>()
+            {
+                "_context",
+                "_codeFrameService",
+                "_codeFrameAsyncExecutor",
+                "_threadId",
+                "_projectLoader",
+                "_globalStorage",
+                "_globalLogicalStorage",
+                "_hostListener",
+                "_instancesStorage",
+                "_operatorsResolver",
+                "_logicalValueLinearResolver",
+                "_numberValueLinearResolver",
+                "_strongIdentifierLinearResolver",
+                "_varsResolver",
+                "_propertiesResolver",
+                "_methodsResolver",
+                "_constructorsResolver",
+                "_logicalSearchResolver",
+                "_statesResolver",
+                "_annotationsResolver",
+                "_inheritanceResolver",
+                "_dateTimeResolver",
+                "_strongIdentifierExprValueResolver",
+                "_valueResolvingHelper",
+                "_typeConverter",
+                "_converterFactToImperativeCode",
+                "_dateTimeProvider",
+                "_codeFrames",
+                "_currentCodeFrame",
+                "_executionCoordinator",
+                "_currentInstance",
+                "_currentVarStorage",
+                "_currentPropertyStorage",
+                "_currentError",
+                "_isCanceled",
+                "_endOfTargetDuration",
+                "_waitedThreadExecutorsList",
+                "_waitedProcessInfoList",
+                "_defaultCtorName",
+                "_timeoutName",
+                "_priorityName",
+                "ExternalReturn",
+                "_activeObject",
+                "_onCompletedHandlersLockObj",
+                "_onCompletedHandlers",
+                "_processAddLifeCycleEventParametersCount",
+                "_defaultTimeoutCancellationMode",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor"] = new List<string>()
+            {
+                "_context",
+                "_codeFrameService",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Monitor.Common.SerializationData.ThreadLoggerSerializationData"] = new List<string>()
+            {
+                "Parent",
+                "ThreadId"
             };
         }
     }

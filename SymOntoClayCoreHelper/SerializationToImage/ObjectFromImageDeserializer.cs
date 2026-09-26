@@ -1197,7 +1197,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeExecution.SyncThreadExecutor",
             "SymOntoClay.Core.Internal.CodeExecution.AsyncThreadExecutor",
             "SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor",
-            "SymOntoClay.Monitor.Common.SerializationData.ThreadLoggerSerializationData"
+            "SymOntoClay.Monitor.Common.SerializationData.ThreadLoggerSerializationData",
+            "SymOntoClay.Core.Internal.CodeModel.World",
+            "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
+            "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -4497,6 +4500,56 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             {
                 "Parent",
                 "ThreadId"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.World"] = new List<string>()
+            {
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent"] = new List<string>()
+            {
+                "_context",
+                "_commonNamesStorage",
+                "_onIdleHandlersLockObj",
+                "_onIdleHandlers",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode"] = new List<string>()
+            {
+                "_context",
+                "_projectLoader",
+                "_state",
+                "_stateLockObj",
+                "_logger"
             };
         }
     }

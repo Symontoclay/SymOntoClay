@@ -65,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "D0D98106-AE62-4ADD-A3EB-1AA9C4D81556");
                     }
                 }));
 
@@ -110,7 +110,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "634A1953-229C-48AF-A1A5-283BCC69F1C3");
                     }
                 }));
 
@@ -155,7 +155,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "8296E747-3453-49D1-BEAC-5E5430FE32DF");
                     }
                 }));
 
@@ -199,7 +199,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "A2380ACF-603C-4556-863F-4E263FD53C72");
                     }
                 }));
 
@@ -243,7 +243,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "2E041F22-4FCC-4858-9DEA-BBD7F6E0D54F");
                     }
                 }));
 
@@ -287,7 +287,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "85305851-EBCC-4977-ACD5-C2FE68F44E9D");
                     }
                 }));
 
@@ -331,7 +331,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "A93A2D81-00A8-4885-B84B-BA469E913FFA");
                     }
                 }));
 
@@ -374,7 +374,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "28263102-B4F4-4C8E-9F8D-FE81E80C131D");
                     }
                 }));
 
@@ -423,7 +423,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "A84003D2-1190-4D30-A522-0E66120ADB6F");
                     }
                 }));
 
@@ -467,7 +467,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "01D04864-762B-496A-9A5D-BB74BCC5D10C");
                     }
                 }));
 
@@ -511,7 +511,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "3377D034-92C6-4569-BE2F-C6367AE94E4A");
                     }
                 }));
 

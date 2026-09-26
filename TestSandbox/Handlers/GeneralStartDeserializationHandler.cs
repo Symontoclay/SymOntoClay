@@ -2,6 +2,7 @@
 using SymOntoClay.CoreHelper.SerializationToImage;
 using System;
 using System.IO;
+using System.Threading;
 using TestSandbox.CoreHostListener;
 
 namespace TestSandbox.Handlers
@@ -64,6 +65,19 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"serializationSettings = {serializationSettings}");
 
             _world.LoadFromImage(serializationSettings);
+
+            _logger.Info("F65F9E99-F0F8-48FB-B92E-CDA49B418B8E", "Loaded");
+
+            _world.Start();
+
+            _logger.Info("D13088C1-BE74-4C27-AC71-0B87AB79D0B3", "Started");
+
+            Thread.Sleep(10000);
+            //Thread.Sleep(100000);
+
+            _logger.Info("36369211-6F3D-48CE-A778-666A02055A87", "|||||||||||||");
+
+            _world.Dispose();
 
             _logger.Info("5958BBB2-ED42-4698-95E3-AEEFBAA53F15", "End");
         }

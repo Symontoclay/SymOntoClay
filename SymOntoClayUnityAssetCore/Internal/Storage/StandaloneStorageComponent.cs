@@ -27,6 +27,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
 {
     public class StandaloneStorageComponent: BaseSerializedWorldCoreComponent
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private StandaloneStorageComponent()
+        {
+        }
+
         public StandaloneStorageComponent(IWorldCoreContext coreContext)
             : base(coreContext)
         {

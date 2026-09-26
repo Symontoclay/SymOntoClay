@@ -1200,23 +1200,58 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Monitor.Common.SerializationData.ThreadLoggerSerializationData",
             "SymOntoClay.Core.Internal.CodeModel.World",
             "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
-            "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode"
+            "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
+            "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
 
         private void InitTmpProcessedMembersOfTypes()
         {
-            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>() 
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
             {
-                "_context"
+                "_context",
+                "_serializedWorldComponents",
+                "_settings",
+                "_lockObj",
+                "_state",
+                "_platformTypesConverters"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>() 
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.WorldContext"] = new List<string>()
             {
                 "_isInitialized",
                 "_settings",
                 "_tmpDir",
-                "_serializedWorldContext"
+                "_serializedWorldContext",
+                "_cancellationTokenSourceContext",
+                "_linkedCancellationTokenSourceContext",
+                "_startedCancellationContext",
+                "_worldComponentsListLockObj",
+                "_worldComponentsList",
+                "_gameComponentsListLockObj",
+                "_gameComponentsList",
+                "_availableInstanceIdList",
+                "_gameComponentsDictByInstanceId",
+                "_instancesIdDict",
+                "_gameComponentsForLateInitializingList",
+                "_state",
+                "_stateLockObj",
+                "Monitor",
+                "MonitorNode",
+                "Logger",
+                "ThreadsComponent",
+                "PlatformTypesConvertorsRegistry",
+                "NLPConverterFactory",
+                "StandardFactsBuilder",
+                "InvokerInMainThread",
+                "WorldThreadingSettings",
+                "HumanoidNpcDefaultThreadingSettings",
+                "PlayerDefaultThreadingSettings",
+                "GameObjectDefaultThreadingSettings",
+                "PlaceDefaultThreadingSettings",
+                "HtnExecutionSettings",
+                "AsyncEventsThreadPool",
+                "SoundBus"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.WorldSettings"] = new List<string>()
             { 
@@ -1252,11 +1287,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "MinThreadsCount",
                 "MaxThreadsCount"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"] = new List<string>() 
-            { 
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"] = new List<string>()
+            {
                 "_coreContext",
+                "_worldComponentsList",
                 "_worldComponentsListLockObj",
-                "_worldComponentsList"
+                "_isDisposed",
+                "_lockObj",
+                "DateTimeProvider",
+                "LogicQueryParseAndCache",
+                "ModulesStorage",
+                "StandaloneStorage"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache"] = new List<string>() 
             { 
@@ -4550,6 +4591,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_state",
                 "_stateLockObj",
                 "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent"] = new List<string>()
+            {
+                "_standaloneStorage",
+                "_coreContext",
+                "_logger",
+                "_componentState",
+                "_stateLockObj"
             };
         }
     }

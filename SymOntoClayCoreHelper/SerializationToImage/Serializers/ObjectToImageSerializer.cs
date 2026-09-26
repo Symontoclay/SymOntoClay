@@ -4595,10 +4595,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             { 
                 "_builtInSuperTypes"
             };
-            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NullValue"] = new List<string>() 
-            { 
-                "_builtInSuperTypes" 
-            };
         }
 #endif
     }

@@ -35,7 +35,6 @@ using System.Linq;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
-    /// <inheritdoc/>
     [WorldComponent]
     [SerializeOnlyExplicitlySerializableMembers]
     public class HumanoidNPCImplementation: IHumanoidNPC, ISerializedWorldComponent

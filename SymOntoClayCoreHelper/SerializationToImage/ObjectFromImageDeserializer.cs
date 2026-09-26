@@ -58,7 +58,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"obj = {obj}");
 #endif
 
-            if (obj == null && obj?.GetType()?.FullName != "SymOntoClay.Monitor.Internal.MonitorNode")
+            if (obj == null)
             {
                 _processedSerializedValue[serializedValue] = null;
 
@@ -166,7 +166,20 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             switch (fullShortTypeName)
             {
                 case "System.Collections.Generic.List`1":
-                    return DeserializeGenericList(obj, type, dataCard as ListCard, serializedValue);
+                    {
+                        var externalListCard = dataCard as ExternalListCard;
+
+#if DEBUG
+                        //_logger.Info($"externalListCard = {externalListCard}");
+#endif
+
+                        if (externalListCard == null)
+                        {
+                            return DeserializeGenericList(obj, type, dataCard as ListCard, serializedValue);
+                        }
+
+                        return DeserializeGenericList(obj, type, externalListCard, serializedValue);
+                    }
 
                 case "System.Collections.Generic.Stack`1":
                     return DeserializeGenericStack(obj, type, dataCard as StackCard, serializedValue);
@@ -331,6 +344,38 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
             //throw new NotImplementedException("C9CA6832-F3F1-4724-9043-28156FB104C7");
+
+            return obj;
+        }
+
+        private object DeserializeGenericList(object obj, Type type, ExternalListCard card, SerializedValue serializedValue)
+        {
+#if DEBUG
+            //_logger.Info($"card = {card}");
+#endif
+
+            _processedSerializedValue[serializedValue] = obj;
+
+            var list = (IList)obj;
+
+            foreach (var item in card.Items)
+            {
+#if DEBUG
+                //_logger.Info($"item = {item}");
+#endif
+
+                var itemValue = DeserializeValue(item);
+
+#if DEBUG
+                //_logger.Info($"itemValue = {itemValue}");
+#endif
+
+                list.Add(itemValue);
+
+                //throw new NotImplementedException("C28B715B-8096-403F-A450-240442C4829F");
+            }
+
+            //throw new NotImplementedException("C31B7A3C-DF04-40F3-8DF9-17C25F63E747");
 
             return obj;
         }
@@ -519,7 +564,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeKeyWorldComponent(object obj, Type type, KeyWorldComponentClassCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            //_logger.Info($"card = {card}");
+            _logger.Info($"card = {card}");
 #endif
 
             _processedSerializedValue[serializedValue] = obj;
@@ -536,7 +581,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 ProcessField(obj, item);
 
-                throw new NotImplementedException("C600854B-7E09-4B99-A29F-87A20272AA1D");
+                //throw new NotImplementedException("C600854B-7E09-4B99-A29F-87A20272AA1D");
             }
 
             foreach (var item in card.FieldsWithChildren)
@@ -551,7 +596,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 ProcessField(obj, item);
 
-                throw new NotImplementedException("C179CFA3-14DC-4872-86F5-A35902FA72EF");
+                //throw new NotImplementedException("C179CFA3-14DC-4872-86F5-A35902FA72EF");
             }
 
             foreach (var item in card.OtherFields)
@@ -566,7 +611,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
                 ProcessField(obj, item);
 
-                throw new NotImplementedException("C13FCEC2-ED94-4A21-8B8D-1DF3148F39FC");
+                //throw new NotImplementedException("C13FCEC2-ED94-4A21-8B8D-1DF3148F39FC");
             }
 
             foreach (var item in card.Properties)
@@ -581,7 +626,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 TmpCheckProcessedMembersOfTypes("02018B0B-AD73-4513-BCFB-443049C3A115", type, name);
 #endif
 
-                throw new NotImplementedException("C51E0F23-E34D-4B7C-9CD3-F8307BC33574");
+                ProcessProperty(obj, item);
+
+                //throw new NotImplementedException("C51E0F23-E34D-4B7C-9CD3-F8307BC33574");
             }
 
             var postDeserializationHandler = obj as IPostDeserializationHandler;
@@ -1201,7 +1248,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.CodeModel.World",
             "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
             "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
-            "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent"
+            "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent",
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -4599,6 +4647,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_logger",
                 "_componentState",
                 "_stateLockObj"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"] = new List<string>()
+            {
+                "_settings"
             };
         }
     }

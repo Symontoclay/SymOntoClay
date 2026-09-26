@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Xml.Linq;
@@ -342,7 +343,29 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _processedSerializedValue[serializedValue] = obj;
 
-            throw new NotImplementedException("C69DBB7C-2834-41D5-9568-D196D37DC196");
+            var pushMethod = type.GetMethod("Push");
+
+            var list = card.Items.ToList();
+            list.Reverse();
+
+            foreach (var item in list) 
+            {
+#if DEBUG
+                //_logger.Info($"item = {item}");
+#endif
+
+                var itemValue = DeserializeValue(item);
+
+#if DEBUG
+                //_logger.Info($"itemValue = {itemValue}");
+#endif
+
+                pushMethod.Invoke(obj, new object[] { itemValue });
+            }
+
+            //throw new NotImplementedException("C69DBB7C-2834-41D5-9568-D196D37DC196");
+
+            return obj;
         }
 
         private object DeserializeGenericQueue(object obj, Type type, QueueCard card, SerializedValue serializedValue)
@@ -353,7 +376,28 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _processedSerializedValue[serializedValue] = obj;
 
-            throw new NotImplementedException("C138422C-F405-4A36-8AB7-C4A5A9455BFB");
+            var enqueueMethod = type.GetMethod("Enqueue");
+
+            foreach (var item in card.Items)
+            {
+#if DEBUG
+                //_logger.Info($"item = {item}");
+#endif
+
+                var itemValue = DeserializeValue(item);
+
+#if DEBUG
+                //_logger.Info($"itemValue = {itemValue}");
+#endif
+
+                enqueueMethod.Invoke(obj, new object[] { itemValue });
+
+                //throw new NotImplementedException("C5A9AF30-F2F4-4630-BE05-D1B984950654");
+            }
+
+            //throw new NotImplementedException("C138422C-F405-4A36-8AB7-C4A5A9455BFB");
+
+            return obj;
         }
 
         private object DeserializeHashSet(object obj, Type type, HashSetCard card, SerializedValue serializedValue)

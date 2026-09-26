@@ -5,6 +5,7 @@ using SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using SymOntoClay.CoreHelper.SerializerAdapters;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -18,9 +19,11 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
+            WorkingWithGenericQueue();
+            //WorkingWithGenericStack();
             //Case8();
             //Case7_a();
-            Case7();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -29,6 +32,94 @@ namespace TestSandbox.SerializationToImage
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void WorkingWithGenericQueue()
+        {
+            var initialQueue = new Queue<int>();
+
+            initialQueue.Enqueue(1);
+            initialQueue.Enqueue(2);
+            initialQueue.Enqueue(3);
+
+#if DEBUG
+            _logger.Info($"initialQueue = {JsonConvert.SerializeObject(initialQueue, Formatting.Indented)}");
+#endif
+
+            var list = new List<int>();
+
+            foreach (var item in initialQueue)
+            {
+                list.Add(item);
+            }
+
+#if DEBUG
+            _logger.Info($"list = {JsonConvert.SerializeObject(list, Formatting.Indented)}");
+#endif
+
+            object obj = new Queue<int>();
+
+            var type = obj.GetType();
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
+            var enqueueMethod = type.GetMethod("Enqueue");
+
+            foreach (var item in list)
+            {
+                enqueueMethod.Invoke(obj, new object[] { item });
+            }
+
+#if DEBUG
+            _logger.Info($"obj = {JsonConvert.SerializeObject(obj, Formatting.Indented)}");
+#endif
+        }
+
+        private void WorkingWithGenericStack()
+        {
+            var initialStack = new Stack<int>();
+
+            initialStack.Push(1);
+            initialStack.Push(2);
+            initialStack.Push(3);
+
+#if DEBUG
+            _logger.Info($"initialStack = {JsonConvert.SerializeObject(initialStack, Formatting.Indented)}");
+#endif
+
+            var list = new List<int>();
+
+            foreach (var item in initialStack) 
+            {
+                list.Add(item);
+            }
+
+#if DEBUG
+            _logger.Info($"list = {JsonConvert.SerializeObject(list, Formatting.Indented)}");
+#endif
+
+            list.Reverse();
+
+            object obj = new Stack<int>();
+
+            var type = obj.GetType();
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
+            var pushMethod = type.GetMethod("Push");
+
+            foreach (var item in list) 
+            {
+                pushMethod.Invoke(obj, new object[] { item });
+            }
+
+#if DEBUG
+            _logger.Info($"obj = {JsonConvert.SerializeObject(obj, Formatting.Indented)}");
+#endif
         }
 
         private void Case8()

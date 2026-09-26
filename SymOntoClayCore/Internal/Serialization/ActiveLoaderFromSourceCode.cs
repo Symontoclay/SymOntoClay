@@ -24,6 +24,11 @@ namespace SymOntoClay.Core.Internal.Serialization
 {
     public class ActiveLoaderFromSourceCode: BaseLoaderFromSourceCode
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ActiveLoaderFromSourceCode()
+        {
+        }
+
         public ActiveLoaderFromSourceCode(IEngineContext context)
             : base(context)
         {

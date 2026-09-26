@@ -26,6 +26,11 @@ namespace SymOntoClay.Core.Internal.Services
 {
     public class ServicesFactory : BaseContextComponent, IServicesFactory
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private ServicesFactory()
+        {
+        }
+
         public ServicesFactory(IMainStorageContext context)
             : base(context.Logger)
         {

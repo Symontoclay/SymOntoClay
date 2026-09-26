@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.Services
 {
     public class EntityConstraintsService : BaseContextComponent, IEntityConstraintsService
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private EntityConstraintsService()
+        {
+        }
+
         public EntityConstraintsService(IMainStorageContext context)
             : base(context.Logger)
         {

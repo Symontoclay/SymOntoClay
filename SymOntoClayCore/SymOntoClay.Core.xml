@@ -8784,6 +8784,11 @@
         <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanItem.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlanner.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.HtnPlannerGlobalContext.ToString">
             <inheritdoc/>
         </member>
@@ -11259,6 +11264,16 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode.Init">
             <inheritdoc/>
         </member>
@@ -11284,6 +11299,11 @@
         <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.Internal.CodeModel.IInstance,SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
@@ -11295,6 +11315,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.ConvertToEntityConstraint(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.ServicesFactory.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.ServicesFactory.LinkWithOtherBaseContextComponents">
             <inheritdoc/>

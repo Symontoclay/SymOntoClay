@@ -33,6 +33,11 @@ namespace SymOntoClay.Core.Internal.Htn
 {
     public class HtnPlanner: BaseComponent
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private HtnPlanner()
+        {
+        }
+
         public HtnPlanner(IEngineContext context)
             : base(context.Logger)
         {

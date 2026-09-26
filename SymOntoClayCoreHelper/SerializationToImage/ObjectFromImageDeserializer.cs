@@ -1184,7 +1184,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithoutDevicesHandler",
             "SymOntoClay.Core.Internal.Instances.InstancesStorageComponentOnFinishProcessWithDevicesHandler",
             "SymOntoClay.Core.Internal.Instances.ProcessInfo",
-            "SymOntoClay.Core.Internal.CodeExecution.CodeFrame"
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrame",
+            "SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart",
+            "SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode",
+            "SymOntoClay.Core.Internal.Services.ServicesFactory",
+            "SymOntoClay.Core.Internal.Services.EntityConstraintsService",
+            "SymOntoClay.Core.Internal.Htn.HtnPlanner",
+            "SymOntoClay.Core.Internal.Htn.HtnPlan",
+            "SymOntoClay.Core.Internal.Htn.HtnPlanItem",
+            "SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask",
+            "SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -4242,6 +4251,135 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "ParametersCount",
                 "CurrentFunctionCallMethodId",
                 "BaseCompoundTaskInstance"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart"] = new List<string>()
+            {
+                "LocalContext",
+                "Metadata",
+                "Instance",
+                "ExecutionCoordinator",
+                "CompoundTaskInstance"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode"] = new List<string>()
+            {
+                "_context",
+                "_projectLoader",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Services.ServicesFactory"] = new List<string>()
+            {
+                "_context",
+                "_entityConstraintsService",
+                "_codeFrameService",
+                "_baseContextComponents",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Services.EntityConstraintsService"] = new List<string>()
+            {
+                "_context",
+                "_globalExecutionContext",
+                "_synonymsResolver",
+                "_randomConstraintName",
+                "_randomConstraintsList",
+                "_nearestConstraintName",
+                "_nearestConstraintsList",
+                "_constraintsList",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.HtnPlanner"] = new List<string>()
+            {
+                "_context",
+                "_mainEntity",
+                "_tasksStorage",
+                "_compiler",
+                "_state",
+                "_stateLockObj",
+                "_logger"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.HtnPlan"] = new List<string>()
+            {
+                "Items"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Htn.HtnPlanItem"] = new List<string>()
+            {
+                "ExecutedTask",
+                "TaskCase"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.BeginCompoundHtnTask"] = new List<string>()
+            {
+                "CompoundTask",
+                "Precondition",
+                "PreconditionExpression",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.EndCompoundHtnTask"] = new List<string>()
+            {
+                "CompoundTask",
+                "Precondition",
+                "PreconditionExpression",
+                "_onNameChangedHandlersLockObj",
+                "_onNameChangedHandlers",
+                "_name",
+                "_holder",
+                "_typeOfAccess",
+                "_annotationsLockObj",
+                "_annotationFacts",
+                "_meaningRolesList",
+                "_settingsDict",
+                "_annotationValueLockObj",
+                "_disposingLockObj",
+                "_isDisposed",
+                "_isDirty",
+                "_longConditionalHashCode",
+                "_longHashCode",
+                "IsAnonymous",
+                "InheritanceItems",
+                "CodeFile",
+                "ParentCodeEntity",
+                "SubItems",
+                "Directives",
+                "ActivatingConditions",
+                "DeactivatingConditions",
+                "IdleActionItems",
+                "Priority",
+                "ImportsList",
+                "InternalSystemId",
+                "WhereSection",
+                "Annotations"
             };
         }
     }

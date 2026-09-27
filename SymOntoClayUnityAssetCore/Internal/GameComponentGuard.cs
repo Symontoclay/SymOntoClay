@@ -7,17 +7,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public static class GameComponentGuard
     {
+#if DEBUG
         private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+#endif
 
         public static bool Check(string pointId, string objectName, ref ComponentState componentState, EventWaitHandle waitEvent, params ComponentState[] leaveIf)
         {
 #if DEBUG
-            //_logger.Info($"pointId = {pointId}");
-            //_logger.Info($"componentState = {componentState}");
-            //_logger.Info($"leaveIf.Length = {leaveIf.Length}");
+            _logger.Info($"pointId = {pointId}");
+            _logger.Info($"componentState = {componentState}");
+            _logger.Info($"leaveIf.Length = {leaveIf.Length}");
 #endif
 
-            waitEvent?.WaitOne();
+            //waitEvent?.WaitOne();
 
             if (componentState == ComponentState.Disposed)
             {

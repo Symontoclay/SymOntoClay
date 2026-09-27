@@ -72,8 +72,8 @@ namespace TestSandbox.Handlers
 
             _logger.Info("D13088C1-BE74-4C27-AC71-0B87AB79D0B3", "Started");
 
-            Thread.Sleep(10000);
-            //Thread.Sleep(100000);
+            //Thread.Sleep(10000);
+            Thread.Sleep(100000);
 
             _logger.Info("36369211-6F3D-48CE-A778-666A02055A87", "|||||||||||||");
 

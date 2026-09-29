@@ -19,7 +19,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Info($"leaveIf.Length = {leaveIf.Length}");
 #endif
 
-            //waitEvent?.WaitOne();
+            waitEvent?.WaitOne();
 
             if (componentState == ComponentState.Disposed)
             {

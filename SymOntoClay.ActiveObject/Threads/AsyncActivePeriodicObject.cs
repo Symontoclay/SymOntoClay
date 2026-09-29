@@ -99,12 +99,24 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public IThreadTaskPointer Start()
         {
+#if DEBUG
+            _logger.Info("D20587FB-F4F1-4F26-8BBD-2347ED98A983", "Start");
+#endif
+
             lock (_lockObj)
             {
+#if DEBUG
+                _logger.Info("8F012609-12D0-48BE-BB8C-12A0C1DA41FE", $"_isDisposed = {_isDisposed}");
+#endif
+
                 if (_isDisposed)
                 {
                     return _task;
                 }
+
+#if DEBUG
+                _logger.Info("3572D1D1-C801-4E46-A4FA-6044E768864B", $"!_isExited = {!_isExited}");
+#endif
 
                 if (!_isExited)
                 {

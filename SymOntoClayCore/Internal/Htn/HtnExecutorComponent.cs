@@ -80,6 +80,11 @@ namespace SymOntoClay.Core.Internal.Htn
 
         public void BeginStarting()
         {
+#if DEBUG
+            Info("ED8D9D35-1AB5-4172-A698-0FA8FA1B7D60", "BeginStarting");
+            //_executionState = ExecutionState.Init;//tmp
+#endif
+
             _activeObject.Start();
         }
 

@@ -557,6 +557,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             lock (_gameComponentsListLockObj)
             {
+#if DEBUG
+                Info("568CAB3D-8B72-4A03-9AAF-9F96614A6CBF", $"_gameComponentsList.Count = {_gameComponentsList.Count}");
+#endif
+
                 foreach (var item in _gameComponentsList)
                 {
                     item.BeginStarting();

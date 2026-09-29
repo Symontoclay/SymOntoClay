@@ -126,6 +126,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public override void BeginStarting()
         {
+#if DEBUG
+            Info("D1B3F4DF-A6F4-4D58-A642-32EC4A0BAA6F", "BeginStarting");
+#endif
+
             try
             {
                 _internalSerializedContext?.BeginStarting();

@@ -1020,8 +1020,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             //_logger.Info($"card = {card}");
 #endif
 
-            //var obj = new ManualResetEvent(card.IsSet);
-            var obj = new ManualResetEvent(true);
+            var obj = new ManualResetEvent(card.IsSet);
+            //var obj = new ManualResetEvent(true);
 
             _processedSerializedValue[serializedValue] = obj;
 

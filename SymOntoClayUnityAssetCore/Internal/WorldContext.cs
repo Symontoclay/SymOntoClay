@@ -681,13 +681,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             _startedCancellationContext?.Cancel();
 
-            ThreadsComponent.Lock();
-
-            WaitForAllGameComponentsWaiting();
+            NPause();
 
             _serializedWorldContext.DateTimeProvider.Stop();
 
             _state = ComponentState.Stopped;
+        }
+
+        public void NPause()
+        {
+            ThreadsComponent.Lock();
+
+            WaitForAllGameComponentsWaiting();
         }
 
         public bool IsActive

@@ -249,7 +249,7 @@ namespace SymOntoClay.UnityAsset.Core.World
             //Info("78C1B59D-87DA-4963-8230-946D31033A69", $"settings = {settings}");
 #endif
 
-            _context.Stop();
+            _context.NPause();
 
             var structuralContext = new WorldStructuralContext();
 

@@ -63,7 +63,7 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public bool IsWaited => _isWaited;
 
-        private volatile bool _isExited = true;
+        private volatile bool _isExited = false;
 
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
@@ -115,10 +115,11 @@ namespace SymOntoClay.ActiveObject.Threads
                 }
 
 #if DEBUG
+                _logger.Info("5BE6C6F3-542A-4AE9-8A5C-4407C2B38A61", $"_isExited = {_isExited}");
                 _logger.Info("3572D1D1-C801-4E46-A4FA-6044E768864B", $"!_isExited = {!_isExited}");
 #endif
 
-                if (!_isExited)
+                if (_isExited)
                 {
                     return _task;
                 }

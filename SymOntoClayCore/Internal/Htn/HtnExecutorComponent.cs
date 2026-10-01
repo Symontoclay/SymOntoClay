@@ -22,13 +22,14 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
+using SymOntoClay.Common.SerializationToImage;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
 
 namespace SymOntoClay.Core.Internal.Htn
 {
     public class HtnExecutorComponent: BaseContextComponent, IHtnExecutorComponent,
-        IObjectWithPeriodicMethod
+        IObjectWithPeriodicMethod, IPostDeserializationHandler
     {
         private enum ExecutionState
         {
@@ -48,6 +49,12 @@ namespace SymOntoClay.Core.Internal.Htn
         {
             _context = context;
             _planExecutionIterationsMaxCount = htnExecutionSettings?.PlanExecutionIterationsMaxCount;
+        }
+
+        /// <inheritdoc/>
+        void IPostDeserializationHandler.Handle()
+        {
+            _executionState = ExecutionState.Init;
         }
 
         /// <inheritdoc/>
@@ -82,7 +89,6 @@ namespace SymOntoClay.Core.Internal.Htn
         {
 #if DEBUG
             Info("ED8D9D35-1AB5-4172-A698-0FA8FA1B7D60", "BeginStarting");
-            //_executionState = ExecutionState.Init;//tmp
 #endif
 
             _activeObject.Start();

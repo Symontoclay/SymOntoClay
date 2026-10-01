@@ -8682,6 +8682,9 @@
 			Constructor for deserialization.
 		</summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.SymOntoClay#Common#SerializationToImage#IPostDeserializationHandler#Handle">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Htn.HtnExecutorComponent.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>

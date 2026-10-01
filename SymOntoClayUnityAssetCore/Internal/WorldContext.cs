@@ -90,6 +90,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 Directory.CreateDirectory(_tmpDir);
             }
+
+            _state = ComponentState.Loaded;
         }
 
         private void ImplementGeneralSettings()
@@ -507,6 +509,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
 #if DEBUG
                 Info("CB60D9E5-32C3-474D-841C-605002B7B8D1", "Begin");
+                Info("4F8E2DE7-8BCB-4882-A961-BBB80B4BBCB9", $"_state = {_state}");
 #endif
 
                 if (!GameComponentGuard.Check("A7EBF771-7201-43AB-8034-725E5CF81C82", GetType().Name, ref _state, ThreadsComponent.WaitEvent, ComponentState.Started))
@@ -519,7 +522,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
 
 #if DEBUG
-                Info("4F8E2DE7-8BCB-4882-A961-BBB80B4BBCB9", $"_state = {_state}");
                 Info("0EA9E2AA-AFE5-4DEB-967D-AB81609DDBDB", $"!ComponentStateHelper.IsLoaded(_state) = {!ComponentStateHelper.IsLoaded(_state)}");
 #endif
 

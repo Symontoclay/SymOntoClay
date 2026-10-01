@@ -508,21 +508,21 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             lock (_stateLockObj)
             {
 #if DEBUG
-                Info("CB60D9E5-32C3-474D-841C-605002B7B8D1", "Begin");
-                Info("4F8E2DE7-8BCB-4882-A961-BBB80B4BBCB9", $"_state = {_state}");
+                //Info("CB60D9E5-32C3-474D-841C-605002B7B8D1", "Begin");
+                //Info("4F8E2DE7-8BCB-4882-A961-BBB80B4BBCB9", $"_state = {_state}");
 #endif
 
                 if (!GameComponentGuard.Check("A7EBF771-7201-43AB-8034-725E5CF81C82", GetType().Name, ref _state, ThreadsComponent.WaitEvent, ComponentState.Started))
                 {
 #if DEBUG
-                    Info("7B2E2523-9634-46AF-817A-26A23E382029", "return;");
+                    //Info("7B2E2523-9634-46AF-817A-26A23E382029", "return;");
 #endif
 
                     return;
                 }
 
 #if DEBUG
-                Info("0EA9E2AA-AFE5-4DEB-967D-AB81609DDBDB", $"!ComponentStateHelper.IsLoaded(_state) = {!ComponentStateHelper.IsLoaded(_state)}");
+                //Info("0EA9E2AA-AFE5-4DEB-967D-AB81609DDBDB", $"!ComponentStateHelper.IsLoaded(_state) = {!ComponentStateHelper.IsLoaded(_state)}");
 #endif
 
                 if (!ComponentStateHelper.IsLoaded(_state))
@@ -532,7 +532,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
 
 #if DEBUG
-                Info("2B38978E-E03B-46DB-8D39-CAEAF13A3B0C", "After NLoadFromSourceCode()");
+                //Info("2B38978E-E03B-46DB-8D39-CAEAF13A3B0C", "After NLoadFromSourceCode()");
 #endif
 
                 NStart();
@@ -542,25 +542,25 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private void NStart()
         {
 #if DEBUG
-            Info("A68349FF-6986-498C-AF82-431FDD4D4E7F", "Begin");
+            //Info("A68349FF-6986-498C-AF82-431FDD4D4E7F", "Begin");
 #endif
 
             ThreadsComponent.Lock();
 
 #if DEBUG
-            Info("97641D0B-D85C-4FF7-9F5A-D9A7C9209A2A", "After ThreadsComponent.Lock()");
+            //Info("97641D0B-D85C-4FF7-9F5A-D9A7C9209A2A", "After ThreadsComponent.Lock()");
 #endif
 
             _serializedWorldContext.DateTimeProvider.Start();
 
 #if DEBUG
-            Info("3DC94F41-FC30-4F3D-BA1C-59097921E649", "After _serializedWorldContext.DateTimeProvider.Start()");
+            //Info("3DC94F41-FC30-4F3D-BA1C-59097921E649", "After _serializedWorldContext.DateTimeProvider.Start()");
 #endif
 
             lock (_gameComponentsListLockObj)
             {
 #if DEBUG
-                Info("568CAB3D-8B72-4A03-9AAF-9F96614A6CBF", $"_gameComponentsList.Count = {_gameComponentsList.Count}");
+                //Info("568CAB3D-8B72-4A03-9AAF-9F96614A6CBF", $"_gameComponentsList.Count = {_gameComponentsList.Count}");
 #endif
 
                 foreach (var item in _gameComponentsList)
@@ -570,25 +570,25 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
 
 #if DEBUG
-            Info("26D6B738-A004-473A-8DC7-E761203FCE3B", "After item.BeginStarting()");
+            //Info("26D6B738-A004-473A-8DC7-E761203FCE3B", "After item.BeginStarting()");
 #endif
 
             WaitForAllGameComponentsWaiting();
 
 #if DEBUG
-            Info("B893C80F-83CD-4E12-8C5C-583EFD40B374", "After WaitForAllGameComponentsWaiting()");
+            //Info("B893C80F-83CD-4E12-8C5C-583EFD40B374", "After WaitForAllGameComponentsWaiting()");
 #endif
 
             ThreadsComponent.UnLock();
 
 #if DEBUG
-            Info("2496B6D1-DB86-4411-B54C-ABFB5556C859", "After ThreadsComponent.UnLock()");
+            //Info("2496B6D1-DB86-4411-B54C-ABFB5556C859", "After ThreadsComponent.UnLock()");
 #endif
 
             _state = ComponentState.Started;
 
 #if DEBUG
-            Info("CE02ACA6-91C9-4A7A-9DF0-040B2DF33F1E", $"_state = {_state}");
+            //Info("CE02ACA6-91C9-4A7A-9DF0-040B2DF33F1E", $"_state = {_state}");
 #endif
 
             lock (_gameComponentsListLockObj)
@@ -600,13 +600,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
 
 #if DEBUG
-            Info("B4D58F09-B33D-4A95-8861-C3329AC2661A", "After item.EndStarting()");
+            //Info("B4D58F09-B33D-4A95-8861-C3329AC2661A", "After item.EndStarting()");
 #endif
 
             StartGameComponentsForLateInitializing();
 
 #if DEBUG
-            Info("AB2083A6-C0F2-491B-B34E-2D702104DA7C", "End");
+            //Info("AB2083A6-C0F2-491B-B34E-2D702104DA7C", "End");
 #endif
         }
 

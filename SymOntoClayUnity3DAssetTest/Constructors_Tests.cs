@@ -58,7 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "2A68775B-B135-405E-B131-74ED092619D5");
                     }
                 }));
 
@@ -246,7 +246,7 @@ app PeaceKeeper is cls1, cls2
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "CBF71DB3-F5A6-4889-B085-08E212CDA5DB");
                     }
                 }));
 
@@ -459,7 +459,7 @@ app PeaceKeeper is cls1, cls2, cls3
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "10E99402-5A58-4618-8990-F0E27FA2A645");
                     }
                 }));
 
@@ -563,7 +563,7 @@ app PeaceKeeper
                             return false;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                            throw new ArgumentOutOfRangeException(nameof(n), n, "46709A68-532C-4854-8261-AA646A443CD9");
                     }
                 }));
 

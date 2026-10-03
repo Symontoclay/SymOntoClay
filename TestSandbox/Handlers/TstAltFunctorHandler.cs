@@ -5,6 +5,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
+using System.Threading;
 using TestSandbox.ThreadExecutorStackInv;
 
 namespace TestSandbox.Handlers
@@ -43,6 +44,8 @@ namespace TestSandbox.Handlers
                 loggerValue.Info("71AADDDC-83F9-4E90-8F5D-621873D2DC0B", "Run!!!!!");
             },
             threadPool, cancellationTokenSourceContext, serializationAnchor);
+
+            Thread.Sleep(1000);
         }
     }
 }

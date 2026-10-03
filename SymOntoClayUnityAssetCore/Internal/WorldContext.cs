@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
@@ -614,6 +616,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             _startedCancellationContext = new CancellationTokenSourceContext();
             var startedCancellationLinkedContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, _linkedCancellationTokenSourceContext);
+
+            //            LoggedFunctorWithoutResult.Run(logger, "5B3A8DB7-F7FF-469A-A3BB-D3DF197D2358",
+            //(IMonitorLogger loggerValue) => { },
+            //_activeObjectContext, _threadPool, _serializationAnchor);
 
             ThreadTask.Run(() => {//Must be refactored for serialization
                 try

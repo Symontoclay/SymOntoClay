@@ -191,9 +191,9 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGeneralStartSerializationHandler();
-            TstGeneralStartDeserializationHandler();
+            //TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
@@ -54,6 +56,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _parent = parent;
             _enableOnAddingFactEvent = settings.EnableOnAddingFactEvent;
 
+            _serializationAnchor = new SerializationAnchor();
+
+#if DEBUG
+            //Info("B8F17E4C-F4D5-4191-8469-802C85A6EBC6", $"settings.MainStorageContext == null = {settings.MainStorageContext == null}");
+#endif
+
             if(_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)
             {
                 _rejectedFacts = new HashSet<RuleInstance>();
@@ -61,6 +69,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 var mainStorageContext = settings.MainStorageContext;
                 _mainStorageContext = mainStorageContext;
+                _activeObjectContext = mainStorageContext.ActiveObjectContext;
+                _threadPool = mainStorageContext.AsyncEventsThreadPool;
 
                 _fuzzyLogicResolver = mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
 
@@ -74,6 +84,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private readonly object _lockObj = new object();
         private readonly IMainStorageContext _mainStorageContext;
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
         private readonly ConsolidatedPublicFactsStorage _parent;
         private readonly List<ILogicalStorage> _logicalStorages = new List<ILogicalStorage>();
         private HashSet<RuleInstance> _rejectedFacts;
@@ -156,45 +169,51 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
-            ThreadTask.Run(() => {//Must be refactored for serialization
-                var taskId = logger.StartThreadTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
+            LoggedFunctorWithoutResult<ILogicalStorage, ConsolidatedPublicFactsLogicalStorage>.Run(logger, "E259CBEF-B28F-4E1B-B0C4-7C354A085D23",
+                storage, this,
+                (IMonitorLogger loggerValue, ILogicalStorage storageValue, ConsolidatedPublicFactsLogicalStorage thisValue) => {
+                    var taskId = loggerValue.StartThreadTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
-                try
-                {
-                    var allFactsList = storage.GetAllOriginFacts(logger);
-
-                    foreach(var fact in allFactsList)
+                    try
                     {
-                        IsolatedProcessNewFact(logger, fact);
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.Error("5505F9AC-F874-4843-91D6-9CF97045326D", e);
-                }
+                        var allFactsList = storageValue.GetAllOriginFacts(logger);
 
-                logger.StopThreadTask("A1CE76A8-4CD5-49E2-90A8-D43FA04F8AD4", taskId);
-            }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationContext());
+                        foreach (var fact in allFactsList)
+                        {
+                            thisValue.IsolatedProcessNewFact(loggerValue, fact);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        loggerValue.Error("5505F9AC-F874-4843-91D6-9CF97045326D", e);
+                    }
+
+                    loggerValue.StopThreadTask("A1CE76A8-4CD5-49E2-90A8-D43FA04F8AD4", taskId);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         private IAddFactOrRuleResult EmitIsolatedOnAddingFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             if(_onAddingFactHandlers.Count > 0)
             {
-                ThreadTask.Run(() => {//Must be refactored for serialization
-                    var taskId = logger.StartThreadTask("612DB280-7EF8-4035-B6A5-229440E96F55");
+                LoggedFunctorWithoutResult<RuleInstance, ConsolidatedPublicFactsLogicalStorage>.Run(logger, "63D59094-E31B-4536-86BB-5C1BD68D8F81",
+                    ruleInstance, this,
+                    (IMonitorLogger loggerValue, RuleInstance ruleInstanceValue, ConsolidatedPublicFactsLogicalStorage thisValue) => {
+                        var taskId = loggerValue.StartThreadTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
-                    try
-                    {
-                        IsolatedProcessNewFact(logger, ruleInstance);
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Error("932FA4A1-3216-4B1F-8B5E-DB7EB08A42D4", e);
-                    }
+                        try
+                        {
+                            IsolatedProcessNewFact(loggerValue, ruleInstanceValue);
+                        }
+                        catch (Exception e)
+                        {
+                            loggerValue.Error("932FA4A1-3216-4B1F-8B5E-DB7EB08A42D4", e);
+                        }
 
-                    logger.StopThreadTask("76D7022F-2677-43F7-A1EC-519E00C60B25", taskId);
-                }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationContext());
+                        loggerValue.StopThreadTask("76D7022F-2677-43F7-A1EC-519E00C60B25", taskId);
+                    },
+                    _activeObjectContext, _threadPool, _serializationAnchor);
             }
 
             return new AddFactOrRuleResult() { KindOfResult = KindOfAddFactOrRuleResult.Accept };

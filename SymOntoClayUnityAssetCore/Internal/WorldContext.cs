@@ -20,27 +20,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Common.SerializationToImage;
-using SymOntoClay.Common.SerializationToImage.Attributes;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.SerializationToImage;
 using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
-using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
-using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
-using SymOntoClay.UnityAsset.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal.Threads;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
@@ -50,7 +43,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Runtime;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -58,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     //[WorldRootAttribute]
     //[SerializeOnlyExplicitlySerializableMembersAttribute]
-    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable, IPostDeserializationHandler
+    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable, IPostDeserializationHandler, IWorldContextSerializedEventsHandler
     {
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private WorldContext()
@@ -101,6 +93,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _tmpDir = _settings.TmpDir;
 
             Directory.CreateDirectory(_tmpDir);
+
+            _serializationAnchor = new SerializationAnchor();
 
             _cancellationTokenSourceContext = new CancellationTokenSourceContext();
             _linkedCancellationTokenSourceContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, _settings?.CancellationContext);
@@ -198,6 +192,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         //[SerializedMember]
         private SerializedWorldContext _serializedWorldContext;
 
+        private SerializationAnchor _serializationAnchor;
+
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
         IActiveObjectCommonContext IWorldCoreContext.SyncContext => ThreadsComponent;
@@ -270,6 +266,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private CancellationTokenSourceContext _startedCancellationContext;
 
         /// <inheritdoc/>
+        CancellationTokenSourceContext IWorldContextSerializedEventsHandler.StartedCancellationLinkedContext => _startedCancellationContext;
+
+        /// <inheritdoc/>
         public ICancellationContext GetCancellationContext()
         {
             return _linkedCancellationTokenSourceContext;
@@ -286,8 +285,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => _serializedWorldContext.DateTimeProvider;
         IDateTimeProvider IWorldCoreContext.DateTimeProvider => _serializedWorldContext.DateTimeProvider;
-
-        
+ 
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => _serializedWorldContext.LogicQueryParseAndCache;
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => _serializedWorldContext.LogicQueryParseAndCache;
 
@@ -317,6 +315,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private readonly object _gameComponentsListLockObj = new object();
 
+        /// <inheritdoc/>
+        object IWorldContextSerializedEventsHandler.GameComponentsListLockObj => _gameComponentsListLockObj;
+
         //[SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
 
@@ -331,6 +332,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         //[SerializedMemberAttributeWithChildrenAttribute]
         private readonly List<IGameComponent> _gameComponentsForLateInitializingList = new List<IGameComponent>();
+
+        /// <inheritdoc/>
+        List<IGameComponent> IWorldContextSerializedEventsHandler.GameComponentsForLateInitializingList => _gameComponentsForLateInitializingList;
 
         /// <inheritdoc/>
         void IWorldCoreGameComponentContext.AddGameComponent(IGameComponent component)
@@ -617,31 +621,28 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _startedCancellationContext = new CancellationTokenSourceContext();
             var startedCancellationLinkedContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, _linkedCancellationTokenSourceContext);
 
-            //LoggedFunctorWithoutResult.Run(Logger, "5B3A8DB7-F7FF-469A-A3BB-D3DF197D2358",
-            //(IMonitorLogger loggerValue) => { },
-            //AsyncEventsThreadPool, startedCancellationLinkedContext);
-
-            ThreadTask.Run(() => {//Must be refactored for serialization
+            LoggedAltFunctorWithoutResult<IWorldContextSerializedEventsHandler>.Run(Logger, "5B3A8DB7-F7FF-469A-A3BB-D3DF197D2358", this,
+            (IMonitorLogger loggerValue, IWorldContextSerializedEventsHandler thisValue) => {
                 try
                 {
                     while (true)
                     {
-                        lock (_gameComponentsListLockObj)
+                        lock (thisValue.GameComponentsListLockObj)
                         {
-                            if (_gameComponentsForLateInitializingList.Any())
+                            if (thisValue.GameComponentsForLateInitializingList.Any())
                             {
-                                foreach (var component in _gameComponentsForLateInitializingList)
+                                foreach (var component in thisValue.GameComponentsForLateInitializingList)
                                 {
                                     component.LoadFromSourceCode();
                                     component.BeginStarting();
                                     component.EndStarting();
                                 }
 
-                                _gameComponentsForLateInitializingList.Clear();
+                                thisValue.GameComponentsForLateInitializingList.Clear();
                             }
                         }
 
-                        if (startedCancellationLinkedContext.IsCancellationRequested)
+                        if (thisValue.StartedCancellationLinkedContext.IsCancellationRequested)
                         {
                             break;
                         }
@@ -651,9 +652,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
                 catch (Exception e)
                 {
-                    Error("CDF6BAD4-76E3-4B1F-9379-C64BF752F9AE", e);
+                    loggerValue.Error("CDF6BAD4-76E3-4B1F-9379-C64BF752F9AE", e);
                 }
-            }, AsyncEventsThreadPool, startedCancellationLinkedContext);
+            },
+            AsyncEventsThreadPool, startedCancellationLinkedContext, _serializationAnchor);
         }
 
         private void WaitForAllGameComponentsWaiting()

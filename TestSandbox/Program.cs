@@ -94,6 +94,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstAltFunctor();
             //TstParseGuid();
             //TstThreadExecutorStackHandler();
             //TstSerializationToImageHandler();
@@ -191,12 +192,22 @@ namespace TestSandbox
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGeneralStartSerializationHandler();
             //TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstAltFunctor()
+        {
+            _globalLogger.Info("Begin");
+
+            var handler = new TstAltFunctorHandler();
+            handler.Run();
+
+            _globalLogger.Info("End");
         }
 
         private static void TstParseGuid()

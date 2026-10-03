@@ -4,6 +4,12 @@
         <name>SymOntoClay.ActiveObject</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctor.Run">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`1.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctor.Run">
             <inheritdoc/>
         </member>

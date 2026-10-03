@@ -617,9 +617,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _startedCancellationContext = new CancellationTokenSourceContext();
             var startedCancellationLinkedContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, _linkedCancellationTokenSourceContext);
 
-            LoggedFunctorWithoutResult.Run(Logger, "5B3A8DB7-F7FF-469A-A3BB-D3DF197D2358",
-            (IMonitorLogger loggerValue) => { },
-            AsyncEventsThreadPool, startedCancellationLinkedContext);
+            //LoggedFunctorWithoutResult.Run(Logger, "5B3A8DB7-F7FF-469A-A3BB-D3DF197D2358",
+            //(IMonitorLogger loggerValue) => { },
+            //AsyncEventsThreadPool, startedCancellationLinkedContext);
 
             ThreadTask.Run(() => {//Must be refactored for serialization
                 try

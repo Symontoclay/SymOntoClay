@@ -4,7 +4,6 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
-using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {

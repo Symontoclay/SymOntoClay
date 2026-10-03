@@ -7,7 +7,22 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctor.Run">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`1.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`2.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`3.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`4.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`5.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctor.Run">

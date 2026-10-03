@@ -3758,7 +3758,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
 
                         //This will be replaces in other way.
-                        ThreadTask.Run(() => {
+                        ThreadTask.Run(() => {//Must be refactored for serialization
                             ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
                         }, _context.CodeExecutionThreadPool, _context.GetCancellationContext());
                     }

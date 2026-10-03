@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
-            ThreadTask.Run(() => {
+            ThreadTask.Run(() => {//Must be refactored for serialization
                 var taskId = logger.StartThreadTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
                 try
@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             if(_onAddingFactHandlers.Count > 0)
             {
-                ThreadTask.Run(() => {
+                ThreadTask.Run(() => {//Must be refactored for serialization
                     var taskId = logger.StartThreadTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
                     try

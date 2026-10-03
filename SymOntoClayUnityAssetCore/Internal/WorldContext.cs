@@ -615,7 +615,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _startedCancellationContext = new CancellationTokenSourceContext();
             var startedCancellationLinkedContext = new CancellationLinkedTokenSourceContext(_cancellationTokenSourceContext, _linkedCancellationTokenSourceContext);
 
-            ThreadTask.Run(() => {
+            ThreadTask.Run(() => {//Must be refactored for serialization
                 try
                 {
                     while (true)

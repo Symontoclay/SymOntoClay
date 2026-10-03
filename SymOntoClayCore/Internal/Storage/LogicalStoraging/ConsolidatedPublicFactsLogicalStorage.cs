@@ -42,7 +42,7 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage,
-        IOnAddingFactHandler, IOnChangedWithKeysLogicalStorageHandler
+        IOnAddingFactHandler, IOnChangedWithKeysLogicalStorageHandler, IConsolidatedPublicFactsLogicalStorageSerializedEventsHandler
     {
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
         private ConsolidatedPublicFactsLogicalStorage()
@@ -169,9 +169,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
-            LoggedFunctorWithoutResult<ILogicalStorage, ConsolidatedPublicFactsLogicalStorage>.Run(logger, "E259CBEF-B28F-4E1B-B0C4-7C354A085D23",
+            LoggedFunctorWithoutResult<ILogicalStorage, IConsolidatedPublicFactsLogicalStorageSerializedEventsHandler>.Run(logger, "E259CBEF-B28F-4E1B-B0C4-7C354A085D23",
                 storage, this,
-                (IMonitorLogger loggerValue, ILogicalStorage storageValue, ConsolidatedPublicFactsLogicalStorage thisValue) => {
+                (IMonitorLogger loggerValue, ILogicalStorage storageValue, IConsolidatedPublicFactsLogicalStorageSerializedEventsHandler thisValue) => {
                     var taskId = loggerValue.StartThreadTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
                     try
@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                         foreach (var fact in allFactsList)
                         {
-                            thisValue.IsolatedProcessNewFact(loggerValue, fact);
+                            thisValue.NIsolatedProcessNewFact(loggerValue, fact);
                         }
                     }
                     catch (Exception e)
@@ -197,14 +197,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             if(_onAddingFactHandlers.Count > 0)
             {
-                LoggedFunctorWithoutResult<RuleInstance, ConsolidatedPublicFactsLogicalStorage>.Run(logger, "63D59094-E31B-4536-86BB-5C1BD68D8F81",
+                LoggedFunctorWithoutResult<RuleInstance, IConsolidatedPublicFactsLogicalStorageSerializedEventsHandler>.Run(logger, "63D59094-E31B-4536-86BB-5C1BD68D8F81",
                     ruleInstance, this,
-                    (IMonitorLogger loggerValue, RuleInstance ruleInstanceValue, ConsolidatedPublicFactsLogicalStorage thisValue) => {
+                    (IMonitorLogger loggerValue, RuleInstance ruleInstanceValue, IConsolidatedPublicFactsLogicalStorageSerializedEventsHandler thisValue) => {
                         var taskId = loggerValue.StartThreadTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
                         try
                         {
-                            IsolatedProcessNewFact(loggerValue, ruleInstanceValue);
+                            thisValue.NIsolatedProcessNewFact(loggerValue, ruleInstanceValue);
                         }
                         catch (Exception e)
                         {
@@ -219,7 +219,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return new AddFactOrRuleResult() { KindOfResult = KindOfAddFactOrRuleResult.Accept };
         }
 
-        private void IsolatedProcessNewFact(IMonitorLogger logger, RuleInstance ruleInstance)
+        void IConsolidatedPublicFactsLogicalStorageSerializedEventsHandler.NIsolatedProcessNewFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             lock(_onAddingFactLockObj)
             {

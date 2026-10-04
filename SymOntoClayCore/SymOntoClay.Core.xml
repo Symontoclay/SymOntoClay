@@ -915,10 +915,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.Run(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.Run">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.RunSync">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.SymOntoClay#ActiveObject#Functors#IBaseFunctor#Run">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.SymOntoClay#ActiveObject#EventsInterfaces#IOnCompletedActiveObjectHandler#Invoke">

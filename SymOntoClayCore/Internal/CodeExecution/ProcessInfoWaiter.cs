@@ -14,10 +14,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class ProcessInfoWaiter: IBaseFunctor, IOnCompletedActiveObjectHandler, IObjectWithPeriodicMethod
     {
-        public static ProcessInfoWaiter Run(IMonitorLogger logger, IEngineContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor, string callMethodId, IProcessInfo waitingProcess, List<IExecutionCoordinator> executionCoordinators, ulong? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, params IProcessInfo[] processes)
+        public static ProcessInfoWaiter RunAsync(IMonitorLogger logger, IEngineContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor, string callMethodId, IProcessInfo waitingProcess, List<IExecutionCoordinator> executionCoordinators, ulong? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, params IProcessInfo[] processes)
         {
             var waiter = new ProcessInfoWaiter(logger, true, context, threadPool, serializationAnchor, callMethodId, waitingProcess, executionCoordinators, cancelAfter, timeoutCancellationMode, processes);
-            waiter.Run();
+            waiter.RunAsync();
             return waiter;
         }
 
@@ -62,7 +62,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private float _initialTicks;
 
         /// <inheritdoc/>
-        public void Run()
+        void IBaseFunctor.Run()
+        {
+            RunAsync();
+        }
+
+        public void RunAsync()
         {
             if (_processes.IsNullOrEmpty())
             {
@@ -74,7 +79,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _activeObject.Start();
         }
 
-        /// <inheritdoc/>
         public void RunSync()
         {
             if (_processes.IsNullOrEmpty())

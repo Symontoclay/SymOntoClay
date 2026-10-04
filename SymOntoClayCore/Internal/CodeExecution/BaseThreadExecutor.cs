@@ -3762,7 +3762,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                         }
 
-                        ProcessInfoWaiter.Run(Logger, _context, _context.CodeExecutionThreadPool, _serializationAnchor, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, processInfo);
+                        ProcessInfoWaiter.RunAsync(Logger, _context, _context.CodeExecutionThreadPool, _serializationAnchor, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, processInfo);
 
                         //This will be replaces in other way.
                         //ThreadTask.Run(() => {//Must be refactored for serialization

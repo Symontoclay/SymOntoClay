@@ -20,110 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Common.CollectionsHelpers;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ProcessInfoHelper
     {
-        public static void Wait(IMonitorLogger logger, params IProcessInfo[] processes)
-        {
-            Wait(logger, string.Empty, null, null, null, TimeoutCancellationMode.WeakCancel, null, processes);
-        }
-
-        public static void Wait(IMonitorLogger logger, string callMethodId, IProcessInfo waitingProcess, List<IExecutionCoordinator> executionCoordinators, ulong? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
-        {
-            if(processes.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            var initialTicks = 0f;
-
-            if(cancelAfter.HasValue)
-            {
-                initialTicks = dateTimeProvider.CurrentTicks;
-            }
-
-            while(true)
-            {
-                logger.WaitProcessInfo("77298A46-278C-4DC9-B124-BB71D068EBB1", waitingProcess?.Id, waitingProcess?.ToLabel(logger), processes.Select(p => p.ToLabel(logger)).ToList(), callMethodId);
-
-#if DEBUG
-                //logger.Info("F473B943-69C3-4B34-8D86-F7538F3A85B2", $"processes = {processes.Select(p => $"{p.Id}:{p.IsFinished(logger)};{p.ToHumanizedLabel()}").WritePODListToString()}");
-#endif
-
-                if (processes.All(p => p.IsFinished(logger)))
-                {
-                    return;
-                }
-                
-                if(executionCoordinators != null)
-                {
-                    if (executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing))
-                    {
-                        if (executionCoordinators.Any(p => p.ExecutionStatus == ActionExecutionStatus.Canceled))
-                        {
-                            var cancelledExecutionCoordinatorsChangers = executionCoordinators.Where(p => p.ExecutionStatus == ActionExecutionStatus.Canceled).Select(p => new Changer(KindOfChanger.ExecutionCoordinator, p.Id)).ToList();
-
-                            foreach (var proc in processes)
-                            {
-                                proc.Cancel(logger, "15E111BA-A585-46AB-A73E-9A554CD128C4", ReasonOfChangeStatus.ByExecutionCoordinator, cancelledExecutionCoordinatorsChangers);
-                            }
-                        }
-                        else
-                        {
-                            var executionCoordinatorsChangers = executionCoordinators.Select(p => new Changer(KindOfChanger.ExecutionCoordinator, p.Id)).ToList();
-
-                            foreach (var proc in processes)
-                            {
-                                proc.WeakCancel(logger, "589446A0-232E-4D86-A7F1-4E0A42BC13B8", ReasonOfChangeStatus.ByExecutionCoordinator, executionCoordinatorsChangers);
-                            }
-                        }
-
-                        return;
-                    }
-                }
-
-                if(cancelAfter.HasValue)
-                {
-                    var currentTick = dateTimeProvider.CurrentTicks;
-                    
-                    var delta = currentTick - initialTicks;
-
-                    if (delta >= cancelAfter.Value)
-                    {
-                        foreach (var proc in processes)
-                        {
-                            switch(timeoutCancellationMode)
-                            {
-                                case TimeoutCancellationMode.WeakCancel:
-                                    proc.WeakCancel(logger, "6F69A1A8-5C55-4B33-B711-BDD4C4F39F83", ReasonOfChangeStatus.ByTimeout);
-                                    break;
-
-                                case TimeoutCancellationMode.Cancel:
-                                    proc.Cancel(logger, "208DD252-4216-40B9-BAAE-5049EBE3ED61", ReasonOfChangeStatus.ByTimeout);
-                                    break;
-
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, "157B1E7C-FC3A-425C-B1AF-33A1F7D00CAC");
-                            }                            
-                        }
-
-                        return;
-                    }
-                }
-
-                Thread.Sleep(100);
-            }
-        }
-
         public static int Compare(IMonitorLogger logger, IProcessInfo x, IProcessInfo y)
         {
             if(x.ParentProcessInfo == null && y.ParentProcessInfo == null)

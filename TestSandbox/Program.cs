@@ -2223,9 +2223,11 @@ primitive task SomePrimitiveTask4
 
             _logger.Info("CF7047B1-3563-4026-ABB0-539205FD069B", "task.Start()");
 
-            ProcessInfoHelper.Wait(_logger, processInfo);
+            //ProcessInfoHelper.Wait(_logger, processInfo);
 
             _logger.Info("FF2656B1-8AA9-4CF6-B0E5-8877FC49EAE6", "End");
+
+            throw new NotImplementedException("C7D19AAE-54E4-439E-ACCC-39885953504B");
         }
 
         private enum KindOfParameters

@@ -915,6 +915,18 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.Run(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.Run">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.RunSync">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.SymOntoClay#ActiveObject#EventsInterfaces#IOnCompletedActiveObjectHandler#Invoke">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoWaiter.SymOntoClay#ActiveObject#Threads#IObjectWithPeriodicMethod#PeriodicHandler(SymOntoClay.Common.Cancellation.ICancellationContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.ToString">
             <inheritdoc/>
         </member>

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Pointers;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Cancellation;
@@ -80,6 +81,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _context = context;
             _codeFrameService = context.ServicesFactory.GetCodeFrameService();
             _codeFrameAsyncExecutor = new CodeFrameAsyncExecutor(context);
+
+            _serializationAnchor = new SerializationAnchor();
 
             _projectLoader = new ProjectLoader(context);
 
@@ -178,7 +181,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private readonly StrongIdentifierValue _defaultCtorName;
         private readonly StrongIdentifierValue _timeoutName;
-        private readonly StrongIdentifierValue _priorityName;        
+        private readonly StrongIdentifierValue _priorityName;
+
+        private SerializationAnchor _serializationAnchor;
 
         public Value ExternalReturn { get; private set; }
 
@@ -3677,8 +3682,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Info("20507B37-E3DE-460B-9E4E-40F079D3EFB1", $"Before ProcessInfoHelper.Wait");
 #endif
 
-                    ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
-
+                    ProcessInfoWaiter.RunSync(Logger, _context, _context.CodeExecutionThreadPool, _serializationAnchor, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, processInfo);
+                    
 #if DEBUG
                     //Info("EEB44353-D9EF-4AA9-8535-0A10F686BA2B", $"After ProcessInfoHelper.Wait");
 #endif
@@ -3757,10 +3762,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                         }
 
+                        ProcessInfoWaiter.Run(Logger, _context, _context.CodeExecutionThreadPool, _serializationAnchor, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, processInfo);
+
                         //This will be replaces in other way.
-                        ThreadTask.Run(() => {//Must be refactored for serialization
-                            ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
-                        }, _context.CodeExecutionThreadPool, _context.GetCancellationContext());
+                        //ThreadTask.Run(() => {//Must be refactored for serialization
+                        //    ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
+                        //}, _context.CodeExecutionThreadPool, _context.GetCancellationContext());
                     }
 
                     if (completeAnnotationSystemEvent != null)

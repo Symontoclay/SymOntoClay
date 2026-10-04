@@ -3763,11 +3763,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
 
                         ProcessInfoWaiter.RunAsync(Logger, _context, _context.CodeExecutionThreadPool, _serializationAnchor, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, processInfo);
-
-                        //This will be replaces in other way.
-                        //ThreadTask.Run(() => {//Must be refactored for serialization
-                        //    ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
-                        //}, _context.CodeExecutionThreadPool, _context.GetCancellationContext());
                     }
 
                     if (completeAnnotationSystemEvent != null)

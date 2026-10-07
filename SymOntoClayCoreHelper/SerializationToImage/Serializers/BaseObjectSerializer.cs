@@ -250,6 +250,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
         protected void TmpCheckProcessedTypes(string id, Type type)
         {
+            return;
+
             var fullShortTypeName = $"{type.Namespace}.{type.Name}";
 
 #if DEBUG
@@ -267,6 +269,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
         protected void TmpCheckProcessedMembersOfTypes(string id, Type type, string memberName)
         {
+            return;
+
             var fullShortTypeName = $"{type.Namespace}.{type.Name}";
 
             if (_tmpProcessedMembersOfTypes.TryGetValue(type.FullName, out var memberNamesList) || _tmpProcessedMembersOfTypes.TryGetValue(fullShortTypeName, out memberNamesList))

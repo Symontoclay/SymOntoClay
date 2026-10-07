@@ -1,6 +1,16 @@
-﻿using SymOntoClay.BaseTestLib;
+﻿using NUnit.Framework.Internal;
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.BaseTestLib;
+using SymOntoClay.Common.Cancellation;
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.SerializationToImage;
+using SymOntoClay.CoreHelper.SerializationToImage.DataCardWriters;
+using SymOntoClay.CoreHelper.SerializationToImage.Serializers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,8 +28,9 @@ namespace TestSandbox.SerializationToImage
         {
             _logger.Info("Begin");
 
+            Case6();
             //Case5();
-            Case4();
+            //Case4();
             //Case3_b();
             //Case3_a();
             //Case3();
@@ -27,6 +38,85 @@ namespace TestSandbox.SerializationToImage
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case6()
+        {
+            var logger = new MonitorLoggerNLogImplementation();
+            var serializationAnchor = new SerializationAnchor();
+            var cancellationTokenSourceContext = new CancellationTokenSourceContext();
+            var threadingSettings = new CustomThreadPoolSettings
+            {
+                MaxThreadsCount = 100,
+                MinThreadsCount = 1
+            };
+            var threadPool = new CustomThreadPool(threadingSettings, cancellationTokenSourceContext);
+
+            var loggedAltFunctorWithoutResult = new LoggedAltFunctorWithoutResult(logger, "60C84C46-066E-4574-B481-CDFB44D85FF4",
+                (IMonitorLogger loggerValue) => {
+                    loggerValue.Info("FDE3FD00-3B5B-4F07-A77C-EF88C108B8D0", "Run!!!!!");
+                },
+                threadPool, cancellationTokenSourceContext, serializationAnchor);
+
+            var serializationImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+
+            if (!Directory.Exists(serializationImagesPath))
+            {
+                Directory.CreateDirectory(serializationImagesPath);
+            }
+
+            var serializationPath = Path.Combine(serializationImagesPath, $"Img_{DateTime.Now:yyyyMMdd_HHmmss}.pckg");
+
+            _logger.Info($"serializationPath = {serializationPath}");
+
+            var baseTempPath = Path.Combine(Directory.GetCurrentDirectory(), "Temp");
+
+            if (!Directory.Exists(baseTempPath))
+            {
+                Directory.CreateDirectory(baseTempPath);
+            }
+
+            var serializationSettings = new SerializationToImageSettings();
+            serializationSettings.ImageFileName = serializationPath;
+            serializationSettings.BaseTempPath = baseTempPath;
+
+            _logger.Info($"serializationSettings = {serializationSettings}");
+
+            var structuralContext = new WorldStructuralContext();
+
+            var imageFileName = serializationSettings.ImageFileName;
+
+            var baseTempPath_1 = serializationSettings.BaseTempPath;
+
+            if (string.IsNullOrWhiteSpace(baseTempPath))
+            {
+                baseTempPath = Environment.GetEnvironmentVariable("TMP");
+            }
+
+#if DEBUG
+            //_logger.Info($"_baseTempPath = {_baseTempPath}");
+#endif
+
+            var tempPath = Path.Combine(baseTempPath_1, $"TempImage_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
+
+            if (!Directory.Exists(tempPath))
+            {
+                Directory.CreateDirectory(tempPath);
+            }
+
+            var filesToPack = new List<(string EntryName, string FilePath)>();
+
+            var serializedTypesPool = new SerializedTypesPool();
+            var typesHelper = new TypesHelper();
+            var serializedObjectsPool = new SerializedObjectsPool(serializedTypesPool, typesHelper);
+            var objectsDataCardWriter = new ObjectsDataCardFileWriter(tempPath, filesToPack);
+            var objectToImageSerializer = new ObjectToImageSerializer(serializedObjectsPool, serializedTypesPool, structuralContext, objectsDataCardWriter);
+
+            var serializedValue = objectToImageSerializer.SerializeValue(loggedAltFunctorWithoutResult);
+
+#if DEBUG
+            _logger.Info($"serializedValue = {serializedValue}");
+#endif
         }
 
         private void Case5()

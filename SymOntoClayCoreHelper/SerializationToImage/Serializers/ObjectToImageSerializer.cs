@@ -708,6 +708,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 
 #if DEBUG
             //_logger.Info($"path = {path}");
+            _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
             var serializedValue = _serializedObjectsPool.RegSerializedValue(obj, SerializedObjectsPoolMode.General);
@@ -724,7 +725,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             var fields = GetFields(type);
 
 #if DEBUG
-            //_logger.Info($"fields.Count() = {fields.Count()}");
+            _logger.Info($"fields.Count() = {fields.Count()}");
 #endif
 
             var cardFieldList = new List<(string, int, SerializedValue)>();
@@ -734,7 +735,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 var field = item.Field;
 
 #if DEBUG
-                //_logger.Info($"field.Name = {field.Name}");
+                _logger.Info($"field.Name = {field.Name}");
 #endif
 
                 if (field.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
@@ -763,7 +764,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             var properties = GetProperties(type);
 
 #if DEBUG
-            //_logger.Info($"properties.Count() = {properties.Count()}");
+            _logger.Info($"properties.Count() = {properties.Count()}");
 #endif
 
             foreach (var item in properties)
@@ -771,7 +772,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 var property = item.Prop;
 
 #if DEBUG
-                //_logger.Info($"property.Name = {property.Name}");
+                _logger.Info($"property.Name = {property.Name}");
 #endif
 
                 if (property.IsDefined(typeof(SystemNoSerializedMemberAttribute), false))
@@ -1204,7 +1205,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
             "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
             "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent",
-            "SymOntoClay.Core.Internal.CodeModel.NullValue"
+            "SymOntoClay.Core.Internal.CodeModel.NullValue",
+            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult"
         };
 
         /// <inheritdoc/>
@@ -4594,6 +4596,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeModel.NullValue"] = new List<string>() 
             { 
                 "_builtInSuperTypes"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult"] = new List<string>()
+            { 
+                "_functorId" 
             };
         }
 #endif

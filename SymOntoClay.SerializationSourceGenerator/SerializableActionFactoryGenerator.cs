@@ -1,6 +1,13 @@
-﻿namespace SymOntoClay.SerializationSourceGenerator
+﻿using Microsoft.CodeAnalysis;
+
+namespace SymOntoClay.SerializationSourceGenerator
 {
-    public class SerializableActionFactoryGenerator
+    [Generator]
+    public class SerializableActionFactoryGenerator : IIncrementalGenerator
     {
+        /// <inheritdoc/>
+        public void Initialize(IncrementalGeneratorInitializationContext context) 
+        { 
+        }
     }
 }

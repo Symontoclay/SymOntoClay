@@ -27,6 +27,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _serializedTypesPool = serializedTypesPool;
             _typesHelper = typesHelper;
 
+            LoadSerializableActionFactoryDict();
+
 #if DEBUG
             InitTmpProcessedMembersOfTypes();
 #endif
@@ -39,6 +41,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private readonly ISerializedTypesPool _serializedTypesPool;
         private readonly ITypesHelper _typesHelper;
         private readonly Dictionary<SerializedValue, object> _processedSerializedValue = new Dictionary<SerializedValue, object>();
+        private readonly Dictionary<string, ISerializableActionFactory> _serializableActionFactoryDict = new Dictionary<string, ISerializableActionFactory>();
+
+        private void LoadSerializableActionFactoryDict()
+        {
+            throw new NotImplementedException("C3E34134-1F27-48C3-986E-81A52FEB35DD");
+        }
 
         /// <inheritdoc/>
         public object DeserializeValue(SerializedValue serializedValue, ObjMemberRef objMember = null)
@@ -1038,6 +1046,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
+
+            if(!_serializableActionFactoryDict.TryGetValue(card.KeyValue, out var serializableActionFactory))
+            {
+                throw new NotSupportedException($"ACFBC823-49FD-4E7C-9823-545AC56C9BF8: card.KeyValue = {card.KeyValue}");
+            }
 
             //_processedSerializedValue[serializedValue] = obj;
 

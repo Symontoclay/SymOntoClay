@@ -14,6 +14,7 @@ using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using TestSandbox.Helpers;
@@ -116,7 +117,27 @@ namespace TestSandbox.SerializationToImage
 
 #if DEBUG
             _logger.Info($"serializedValue = {serializedValue}");
+            _logger.Info($"filesToPack.Count = {filesToPack.Count}");
 #endif
+
+            objectsDataCardWriter.Dispose();
+
+            foreach (var file in filesToPack)
+            {
+                _logger.Info($"file = {file}");
+            }
+
+            var objectImageFileName = filesToPack.First().FilePath;
+
+            _logger.Info($"objectImageFileName = {objectImageFileName}");
+
+            var _objectsDataCardDictionary = new DataCardDictionary(objectImageFileName);
+
+            var objectDeserialializationFactory = new ObjectDeserialializationFactory(_objectsDataCardDictionary, serializedTypesPool, serializedObjectsPool, null, null);
+
+            var objectDeserializer = new ObjectFromImageDeserializer(objectDeserialializationFactory, _objectsDataCardDictionary, null, structuralContext, serializedTypesPool, typesHelper);
+
+            var deserializedObj = objectDeserializer.DeserializeValue(serializedValue);
         }
 
         private void Case5()

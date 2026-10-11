@@ -99,12 +99,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             if (type.FullName.StartsWith("System.Action"))
             {
-                return DeserializeAction(obj, type, objMember, dataCard as ActionCard, serializedValue);
+                return DeserializeAction(type, objMember, dataCard as ActionCard, serializedValue);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                return DeserializeAction(obj, type, objMember, dataCard as ActionCard, serializedValue);
+                return DeserializeAction(type, objMember, dataCard as ActionCard, serializedValue);
             }
 
             switch (type.FullName)
@@ -126,6 +126,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 case "System.Threading.ManualResetEvent":
                 case "SymOntoClay.CoreHelper.SerializationToImage.Stubs.ManualResetEventStub":
                     return DeserializeManualResetEvent(type, dataCard as ExternalManualResetEventClassCard, serializedValue);
+
+                case "SymOntoClay.CoreHelper.SerializationToImage.Stubs.ActionStub":
+                    return DeserializeAction(type, objMember, dataCard as ActionCard, serializedValue);
 
                 case "System.Byte":
                 case "System.SByte":
@@ -1030,13 +1033,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             return obj;
         }
 
-        private object DeserializeAction(object obj, Type type, ObjMemberRef objMember, ActionCard card, SerializedValue serializedValue)
+        private object DeserializeAction(Type type, ObjMemberRef objMember, ActionCard card, SerializedValue serializedValue)
         {
 #if DEBUG
             _logger.Info($"card = {card}");
 #endif
 
-            _processedSerializedValue[serializedValue] = obj;
+            //_processedSerializedValue[serializedValue] = obj;
 
             throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
         }
@@ -1324,7 +1327,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent",
             "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
             "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent",
-            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"
+            "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation",
+            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -4726,6 +4730,16 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation"] = new List<string>()
             {
                 "_settings"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult"] = new List<string>()
+            {
+                "_functorId",
+                "_action",
+                "_arg",
+                "_logger",
+                "_threadPool",
+                "_cancellationContext",
+                "_serializationAnchor"
             };
         }
     }

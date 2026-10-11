@@ -8,6 +8,11 @@ namespace SymOntoClay.ActiveObject.Functors
 {
     public abstract class BaseAltFunctor: IBaseFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseAltFunctor()
+        {
+        }
+
         protected BaseAltFunctor(IMonitorLogger logger, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
         {
             _logger = logger;

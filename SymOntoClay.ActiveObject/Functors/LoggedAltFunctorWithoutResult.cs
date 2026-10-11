@@ -14,6 +14,11 @@ namespace SymOntoClay.ActiveObject.Functors
             return functor;
         }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LoggedAltFunctorWithoutResult()
+        {
+        }
+
         public LoggedAltFunctorWithoutResult(IMonitorLogger logger, string functorId, Action<IMonitorLogger> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, functorId, logger, action, threadPool, cancellationContext, serializationAnchor)
         {

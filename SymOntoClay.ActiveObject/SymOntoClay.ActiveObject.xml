@@ -4,11 +4,21 @@
         <name>SymOntoClay.ActiveObject</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctor.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctor.Run">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`1.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`1.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
@@ -48,6 +58,11 @@
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`5.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.SerializationAnchor.AddFunctor(SymOntoClay.ActiveObject.Functors.IBaseFunctor)">
             <inheritdoc/>

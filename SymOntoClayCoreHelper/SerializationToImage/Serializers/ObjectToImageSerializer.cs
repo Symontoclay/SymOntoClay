@@ -1206,7 +1206,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
             "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent",
             "SymOntoClay.Core.Internal.CodeModel.NullValue",
-            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult"
+            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult",
+            "SymOntoClay.Threading.CustomThreadPoolSettings"
         };
 
         /// <inheritdoc/>
@@ -4599,7 +4600,18 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult"] = new List<string>()
             { 
-                "_functorId" 
+                "_functorId",
+                "_action",
+                "_arg",
+                "_logger",
+                "_threadPool",
+                "_cancellationContext",
+                "_serializationAnchor"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.Threading.CustomThreadPoolSettings"] = new List<string>()
+            {
+                "MinThreadsCount",
+                "MaxThreadsCount"
             };
         }
 #endif

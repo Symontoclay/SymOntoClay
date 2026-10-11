@@ -31,6 +31,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseAltFunctorWithoutResult<T>: BaseAltFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseAltFunctorWithoutResult()
+        {
+        }
+
         public BaseAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T arg, Action<T> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, threadPool, cancellationContext, serializationAnchor)
         {

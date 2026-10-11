@@ -35,8 +35,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private void PrepareDictionaryForReplace()
         {
 #if DEBUG
-            //_logger.Info($"_rootObjectsAndSettingsDataCardsList.Count = {_rootObjectsAndSettingsDataCardsList.Count}");
+            //_logger.Info($"_rootObjectsAndSettingsDataCardsList?.Count = {_rootObjectsAndSettingsDataCardsList?.Count}");
 #endif
+
+            if(_rootObjectsAndSettingsDataCardsList == null)
+            {
+                return;
+            }
 
             var serializedCardsList = _rootObjectsAndSettingsDataCardsList.Cast<IDataCardWithPath>().Where(p => p.ShouldBeReplacedDuringDeserialization);
 
@@ -106,7 +111,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var type = _serializedTypesPool.GetTypeValue(serializedValue.TypeId);
 
 #if DEBUG
-            //_logger.Info($"type?.FullName = {type?.FullName}");
+            _logger.Info($"type?.FullName = {type?.FullName}");
             //_logger.Info($"type?.IsArray = {type?.IsArray}");
 #endif
 
@@ -128,6 +133,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             if (type.FullName == "System.Type" || type.FullName == "System.RuntimeType")
             {
                 return ReflectionTypeStub.Instance;
+            }
+
+            if (type.FullName.StartsWith("System.Action"))
+            {
+                return ActionStub.Instance;
             }
 
             if (type.IsDefined(typeof(SerializeWithDataCreationAttribute), true))

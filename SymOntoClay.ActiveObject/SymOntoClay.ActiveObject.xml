@@ -12,6 +12,11 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctor.Run">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
@@ -23,17 +28,42 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`1.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`2.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`2.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`3.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`3.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`4.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`4.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`5.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseAltFunctorWithoutResult`5.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctor.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctor.Run">
             <inheritdoc/>
@@ -41,25 +71,100 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctor`1.Run">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`1.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`1.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`2.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`2.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`3.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`3.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`4.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`4.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`5.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`5.OnRun(SymOntoClay.Common.Cancellation.ICancellationContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`1.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`2.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`3.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`4.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`1.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`2.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`3.#ctor">
+            <summary>
+			Constructor for deserialization.
+		</summary>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedFunctorWithoutResult`4.#ctor">
             <summary>
 			Constructor for deserialization.
 		</summary>

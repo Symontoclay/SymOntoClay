@@ -9,6 +9,11 @@ namespace SymOntoClay.ActiveObject.Functors
 {
     public class BaseAltFunctorWithoutResult : BaseAltFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseAltFunctorWithoutResult()
+        {
+        }
+
         public BaseAltFunctorWithoutResult(IMonitorLogger logger, string functorId, Action action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, threadPool, cancellationContext, serializationAnchor)
         {
@@ -60,6 +65,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseAltFunctorWithoutResult<T1, T2> : BaseAltFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseAltFunctorWithoutResult()
+        {
+        }
+
         public BaseAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<T1, T2> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, threadPool, cancellationContext, serializationAnchor)
         {
@@ -86,6 +96,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseAltFunctorWithoutResult<T1, T2, T3> : BaseAltFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseAltFunctorWithoutResult()
+        {
+        }
+
         public BaseAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, threadPool, cancellationContext, serializationAnchor)
         {
@@ -114,6 +129,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseAltFunctorWithoutResult<T1, T2, T3, T4> : BaseAltFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseAltFunctorWithoutResult()
+        {
+        }
+
         public BaseAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<T1, T2, T3, T4> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, threadPool, cancellationContext, serializationAnchor)
         {
@@ -144,6 +164,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseAltFunctorWithoutResult<T1, T2, T3, T4, T5> : BaseAltFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseAltFunctorWithoutResult()
+        {
+        }
+
         public BaseAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, Action<T1, T2, T3, T4, T5> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, threadPool, cancellationContext, serializationAnchor)
         {

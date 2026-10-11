@@ -10,6 +10,11 @@ namespace SymOntoClay.ActiveObject.Functors
 {
     public class BaseFunctorWithoutResult : BaseFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseFunctorWithoutResult()
+        {
+        }
+
         public BaseFunctorWithoutResult(IMonitorLogger logger, string functorId, Action action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, context, threadPool, serializationAnchor)
         {
@@ -32,6 +37,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseFunctorWithoutResult<T> : BaseFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseFunctorWithoutResult()
+        {
+        }
+
         public BaseFunctorWithoutResult(IMonitorLogger logger, string functorId, T arg, Action<T> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, context, threadPool, serializationAnchor)
         {
@@ -56,6 +66,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseFunctorWithoutResult<T1, T2> : BaseFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseFunctorWithoutResult()
+        {
+        }
+
         public BaseFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<T1, T2> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, context, threadPool, serializationAnchor)
         {
@@ -82,6 +97,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseFunctorWithoutResult<T1, T2, T3> : BaseFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseFunctorWithoutResult()
+        {
+        }
+
         public BaseFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, context, threadPool, serializationAnchor)
         {
@@ -110,6 +130,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseFunctorWithoutResult<T1, T2, T3, T4> : BaseFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseFunctorWithoutResult()
+        {
+        }
+
         public BaseFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<T1, T2, T3, T4> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, context, threadPool, serializationAnchor)
         {
@@ -140,6 +165,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class BaseFunctorWithoutResult<T1, T2, T3, T4, T5> : BaseFunctor
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseFunctorWithoutResult()
+        {
+        }
+
         public BaseFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, Action<T1, T2, T3, T4, T5> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, context, threadPool, serializationAnchor)
         {

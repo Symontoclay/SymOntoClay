@@ -34,6 +34,11 @@ namespace SymOntoClay.ActiveObject.Functors
             return functor;
         }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LoggedAltFunctorWithoutResult()
+        {
+        }
+
         public LoggedAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T arg, Action<IMonitorLogger, T> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, functorId, logger, arg, action, threadPool, cancellationContext, serializationAnchor)
         {
@@ -47,6 +52,11 @@ namespace SymOntoClay.ActiveObject.Functors
             var functor = new LoggedAltFunctorWithoutResult<T1, T2>(logger, functorId, arg1, arg2, action, threadPool, cancellationContext, serializationAnchor);
             functor.Run();
             return functor;
+        }
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LoggedAltFunctorWithoutResult()
+        {
         }
 
         public LoggedAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<IMonitorLogger, T1, T2> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
@@ -64,6 +74,11 @@ namespace SymOntoClay.ActiveObject.Functors
             return functor;
         }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LoggedAltFunctorWithoutResult()
+        {
+        }
+
         public LoggedAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<IMonitorLogger, T1, T2, T3> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)
             : base(logger, functorId, logger, arg1, arg2, arg3, action, threadPool, cancellationContext, serializationAnchor)
         {
@@ -77,6 +92,11 @@ namespace SymOntoClay.ActiveObject.Functors
             var functor = new LoggedAltFunctorWithoutResult<T1, T2, T3, T4>(logger, functorId, arg1, arg2, arg3, arg4, action, threadPool, cancellationContext, serializationAnchor);
             functor.Run();
             return functor;
+        }
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        private LoggedAltFunctorWithoutResult()
+        {
         }
 
         public LoggedAltFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<IMonitorLogger, T1, T2, T3, T4> action, ICustomThreadPool threadPool, ICancellationContext cancellationContext, ISerializationAnchor serializationAnchor)

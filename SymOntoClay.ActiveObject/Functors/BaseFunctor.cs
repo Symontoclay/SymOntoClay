@@ -10,6 +10,11 @@ namespace SymOntoClay.ActiveObject.Functors
     public abstract class BaseFunctor : IBaseFunctor, 
         IOnCompletedActiveObjectHandler, IObjectWithOnceRunMethod
     {
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="DeserializationCtor"]/*' />
+        protected BaseFunctor()
+        {
+        }
+
         protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
             _serializationAnchor = serializationAnchor;

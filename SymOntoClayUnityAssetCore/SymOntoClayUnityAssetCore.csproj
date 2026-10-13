@@ -24,4 +24,18 @@
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj"
+						  OutputItemType="Analyzer"
+						  ReferenceOutputAssembly="false" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<CoreCompileDependsOn>$(CoreCompileDependsOn);EnsureGeneratorBuilt</CoreCompileDependsOn>
+	</PropertyGroup>
+
+	<Target Name="EnsureGeneratorBuilt">
+		<MSBuild Projects="..\SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj" Properties="Configuration=$(Configuration)" />
+	</Target>
 </Project>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace SymOntoClay.SerializationSourceGenerator
 {
@@ -20,6 +22,12 @@ namespace SymOntoClay.SerializationSourceGenerator
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context) 
         {
+            Debugger.Launch();
+
+#if DEBUG
+            FileLogger.WriteLn($"96CD5257-A352-44EC-99D4-B86F61E429AB Initialize");
+#endif
+
             // 1. Syntax-level quick filter
             var methodCalls = context.SyntaxProvider
                 .CreateSyntaxProvider(
@@ -40,6 +48,10 @@ namespace SymOntoClay.SerializationSourceGenerator
 
         private static bool IsCandidateNode(SyntaxNode node)
         {
+#if DEBUG
+            FileLogger.WriteLn($"48E67743-54DC-450B-8552-E4BB32066FB8 IsCandidateNode: node = {node.ToFullString()}");
+#endif
+
             return false;//tmp
 
             //return node is InvocationExpressionSyntax invocation &&

@@ -22,12 +22,6 @@ namespace SymOntoClay.SerializationSourceGenerator
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context) 
         {
-            Debugger.Launch();
-
-#if DEBUG
-            FileLogger.WriteLn($"96CD5257-A352-44EC-99D4-B86F61E429AB Initialize");
-#endif
-
             // 1. Syntax-level quick filter
             var methodCalls = context.SyntaxProvider
                 .CreateSyntaxProvider(
@@ -48,16 +42,22 @@ namespace SymOntoClay.SerializationSourceGenerator
 
         private static bool IsCandidateNode(SyntaxNode node)
         {
-#if DEBUG
-            FileLogger.WriteLn($"48E67743-54DC-450B-8552-E4BB32066FB8 IsCandidateNode: node = {node.ToFullString()}");
-#endif
+            if (node is InvocationExpressionSyntax invocation &&
+                        invocation.ArgumentList.Arguments.Count >= 4 &&
+                        invocation.Expression is MemberAccessExpressionSyntax memberAccess &&
+                        memberAccess.Name.Identifier.Text == "Run")
+            {
+                return true;
+            }
 
-            return false;//tmp
+            if (node is ObjectCreationExpressionSyntax creation &&
+                creation.ArgumentList != null &&
+                creation.ArgumentList.Arguments.Count >= 4)
+            {
+                return true;
+            }
 
-            //return node is InvocationExpressionSyntax invocation &&
-            //       invocation.ArgumentList.Arguments.Count >= 4 &&
-            //       invocation.Expression is MemberAccessExpressionSyntax memberAccess &&
-            //       TargetMethods.Contains(memberAccess.Name.Identifier.Text);
+            return false;
         }
 
         private static bool IsTargetMethod(InvocationExpressionSyntax invocation, SemanticModel semanticModel)

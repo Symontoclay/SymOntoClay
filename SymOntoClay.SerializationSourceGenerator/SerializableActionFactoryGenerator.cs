@@ -9,6 +9,11 @@ namespace SymOntoClay.SerializationSourceGenerator
     [Generator]
     public class SerializableActionFactoryGenerator : IIncrementalGenerator
     {
+        private static readonly HashSet<string> TargetTypes = new()
+        {
+            "LoggedAltFunctorWithoutResult"
+        };
+
         private List<string> _targetConstructors = new List<string>()
         {
             "LoggedAltFunctorWithoutResult"
@@ -22,21 +27,19 @@ namespace SymOntoClay.SerializationSourceGenerator
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context) 
         {
-            // 1. Syntax-level quick filter
-            var methodCalls = context.SyntaxProvider
-                .CreateSyntaxProvider(
-                    predicate: static (node, _) => IsCandidateNode(node),
-                    transform: static (ctx, _) => (
-                        Invocation: (InvocationExpressionSyntax)ctx.Node,
-                        SemanticModel: ctx.SemanticModel
-                    )
-                )
-                .Where(static data => IsTargetMethod(data.Invocation, data.SemanticModel));
+            var targetNodes = context.SyntaxProvider
+                        .CreateSyntaxProvider(
+                            // 1. Syntactic filter: look for either method calls (Run) or object creation (new)
+                            predicate: static (node, _) => IsCandidateNode(node),
 
-            // 2. Code generation
-            context.RegisterSourceOutput(methodCalls, static (spc, source) =>
+                            // 2. Semantic analysis: check whether it is a constructor or a static method
+                            transform: static (ctx, _) => GetTargetInfo(ctx)
+                        )
+                        .Where(static data => data is not null);
+
+            context.RegisterSourceOutput(targetNodes, static (spc, source) =>
             {
-                ExecuteGeneration(spc, source.Invocation, source.SemanticModel);
+                FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
             });
         }
 
@@ -60,34 +63,40 @@ namespace SymOntoClay.SerializationSourceGenerator
             return false;
         }
 
-        private static bool IsTargetMethod(InvocationExpressionSyntax invocation, SemanticModel semanticModel)
+        private static TargetInfo GetTargetInfo(GeneratorSyntaxContext context)
         {
-            if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess)
-            { 
-                return false; 
+            var node = context.Node;
+            var semanticModel = context.SemanticModel;
+
+            if (node is InvocationExpressionSyntax invocation)
+            {
+                var symbolInfo = semanticModel.GetSymbolInfo(invocation);
+                if (symbolInfo.Symbol is not IMethodSymbol methodSymbol) { return null; }
+
+                // We are testing the static Run method of the target class.
+                if (!methodSymbol.IsStatic || methodSymbol.Name != "Run") { return null; }
+
+                var typeName = methodSymbol.ContainingType.Name;
+                if (!TargetTypes.Contains(typeName)) { return null; }
+
+                return new TargetInfo(invocation, semanticModel, typeName, isConstructor: false);
+            }
+            else if (node is ObjectCreationExpressionSyntax creation)
+            {
+                var symbolInfo = semanticModel.GetSymbolInfo(creation);
+                if (symbolInfo.Symbol is not IMethodSymbol constructorSymbol) { return null; }
+
+                // We verify that this is indeed a construction set
+                if (constructorSymbol.MethodKind != MethodKind.Constructor) { return null; }
+
+                var typeName = constructorSymbol.ContainingType.Name;
+                if (!TargetTypes.Contains(typeName)) return null;
+
+                // Note: For ObjectCreationExpressionSyntax, the arguments are located in creation.ArgumentList.
+                return new TargetInfo(creation, semanticModel, typeName, isConstructor: true);
             }
 
-            var methodName = memberAccess.Name.Identifier.Text;
-
-            return false;//tmp
-
-            //if (!TargetMethods.Contains(methodName)) 
-            //{ 
-            //    return false; 
-            //}
-
-            //// Obtaining information about the symbol via the semantic model.
-            //var symbolInfo = semanticModel.GetSymbolInfo(invocation);
-
-            //if (symbolInfo.Symbol is not IMethodSymbol methodSymbol) 
-            //{ 
-            //    return false;
-            //}
-
-            //var containingTypeName = methodSymbol.ContainingType.Name;
-
-            //// We check whether the class is in our list of target classes.
-            //return TargetTypes.Contains(containingTypeName);
+            return null;
         }
 
         private static void ExecuteGeneration(SourceProductionContext context, InvocationExpressionSyntax invocation, SemanticModel semanticModel)
@@ -117,5 +126,21 @@ namespace SymOntoClay.SerializationSourceGenerator
 
             //context.AddSource($"Functor_{safeGuidName}.g.cs", generatedCode);
         }
+    }
+
+    public class TargetInfo
+    {
+        public TargetInfo(SyntaxNode node, SemanticModel semanticModel, string typeName, bool isConstructor)
+        {
+            Node = node;
+            SemanticModel = semanticModel;
+            TypeName = typeName;
+            IsConstructor = isConstructor;
+        }
+
+        public SyntaxNode Node;
+        public SemanticModel SemanticModel;
+        public string TypeName;
+        public bool IsConstructor;
     }
 }

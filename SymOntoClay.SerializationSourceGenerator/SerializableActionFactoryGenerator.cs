@@ -39,7 +39,7 @@ namespace SymOntoClay.SerializationSourceGenerator
 
             context.RegisterSourceOutput(targetNodes, static (spc, source) =>
             {
-                FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
+                ExecuteGeneration(spc, source);
             });
         }
 
@@ -99,8 +99,36 @@ namespace SymOntoClay.SerializationSourceGenerator
             return null;
         }
 
-        private static void ExecuteGeneration(SourceProductionContext context, InvocationExpressionSyntax invocation, SemanticModel semanticModel)
+        private static void ExecuteGeneration(SourceProductionContext context, TargetInfo source)
         {
+#if DEBUG
+            FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
+#endif
+
+            // Safe retrieval of arguments based on node type
+            ArgumentListSyntax argList = source.Node switch
+            {
+                InvocationExpressionSyntax inv => inv.ArgumentList,
+                ObjectCreationExpressionSyntax obj => obj.ArgumentList,
+                _ => null
+            };
+
+            if (argList != null && argList.Arguments.Count >= 4)
+            {
+                // Second parameter (index 1)
+                var guidExpr = argList.Arguments[1].Expression;
+                var guid = source.SemanticModel.GetConstantValue(guidExpr).Value?.ToString() ?? "";
+
+                // Fourth parameter (index 3 — lambda)
+                var lambdaExpr = argList.Arguments[3].Expression;
+                var lambdaText = lambdaExpr.ToString();
+
+#if DEBUG
+                FileLogger.WriteLn($"guid = {guid}");
+                FileLogger.WriteLn($"lambdaText = {lambdaText}");
+#endif
+            }
+
             //var arguments = invocation.ArgumentList.Arguments;
 
             //// The second parameter (index 1) is a string literal (GUID)

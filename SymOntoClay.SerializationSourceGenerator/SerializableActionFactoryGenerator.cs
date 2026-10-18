@@ -2,6 +2,8 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 
 namespace SymOntoClay.SerializationSourceGenerator
@@ -127,6 +129,32 @@ namespace SymOntoClay.SerializationSourceGenerator
                 FileLogger.WriteLn($"guid = {guid}");
                 FileLogger.WriteLn($"lambdaText = {lambdaText}");
 #endif
+
+                var safeGuidName = guid.Replace("-", "");
+
+                var usings = GetUsingsForNode(source.Node, source.SemanticModel);
+
+                var identationStep = 4;
+                var baseIdentation = 0;
+
+                var sb = new StringBuilder();
+                sb.AppendLine($"// Auto-generated for GUID: {guid}");
+                foreach (var u in usings) 
+                {
+#if DEBUG
+                    FileLogger.WriteLn($"u = {u}");
+#endif
+                    sb.AppendLine($"using {u};");
+                }
+                sb.AppendLine("namespace SymOntoClay.GeneratedFunctors");
+                sb.AppendLine("{");
+                sb.AppendLine("}");
+
+#if DEBUG
+                FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
+#endif
+
+                context.AddSource($"Functor_{safeGuidName}.g.cs", sb.ToString());
             }
 
             //var arguments = invocation.ArgumentList.Arguments;
@@ -153,6 +181,35 @@ namespace SymOntoClay.SerializationSourceGenerator
             //}}";
 
             //context.AddSource($"Functor_{safeGuidName}.g.cs", generatedCode);
+        }
+
+        private static List<string> GetUsingsForNode(SyntaxNode node, SemanticModel semanticModel)
+        {
+            var usings = new List<string>();
+
+            // 1. Obtain a semantic model for a specific location in the code (taking local `using` directives into account)
+            //var enclosingSymbol = semanticModel.GetEnclosingSymbol(node.SpanStart);
+
+            // Alternatively, you can collect all `using` directives from the file's syntax tree:
+            var root = node.SyntaxTree.GetRoot();
+
+            // Find all using-directive nodes in the file
+            var usingDirectives = root.DescendantNodes().OfType<UsingDirectiveSyntax>();
+
+            foreach (var usingDirective in usingDirectives)
+            {
+                // Namespace name (e.g., System.Collections.Generic)
+                string usingName = usingDirective.Name?.ToString() ?? string.Empty;
+                if (!string.IsNullOrEmpty(usingName))
+                {
+                    usings.Add(usingName);
+                }
+            }
+
+            // You can also add namespaces that are included globally (`global using`) via `SemanticModel`.
+            // But for text generation, it is usually sufficient to collect the string directives from a file.
+
+            return usings;
         }
     }
 

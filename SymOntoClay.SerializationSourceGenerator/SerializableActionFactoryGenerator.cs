@@ -134,10 +134,15 @@ namespace SymOntoClay.SerializationSourceGenerator
 
                 var usings = GetUsingsForNode(source.Node, source.SemanticModel);
 
+                var serializableActionNamespace = "SymOntoClay.CoreHelper.SerializationToImage.Attributes";
+                var serializableActionFactoryNamespace = "SymOntoClay.CoreHelper.SerializationToImage";
+
                 var identationStep = 4;
                 var baseIdentation = 0;
                 var classDeclIdentation = baseIdentation + identationStep;
                 var classDeclSpaces = GeneratorsHelper.Spaces(classDeclIdentation);
+                var classContentDeclIdentation = classDeclIdentation + identationStep;
+                var classContentDeclSpaces = GeneratorsHelper.Spaces(classContentDeclIdentation);
 
                 var sb = new StringBuilder();
                 sb.AppendLine($"// Auto-generated for GUID: {guid}");
@@ -148,13 +153,29 @@ namespace SymOntoClay.SerializationSourceGenerator
 #endif
                     sb.AppendLine($"using {u};");
                 }
+
+                if(!usings.Contains(serializableActionNamespace))
+                {
+                    sb.AppendLine($"using {serializableActionNamespace};");
+                }
+
+                if (!usings.Contains(serializableActionFactoryNamespace))
+                {
+                    sb.AppendLine($"using {serializableActionFactoryNamespace};");
+                }
+
                 sb.AppendLine();
                 sb.AppendLine("namespace SymOntoClay.GeneratedFunctors");
                 sb.AppendLine("{");
                 sb.AppendLine($"{classDeclSpaces}[SerializableAction(Id = \"{guid}\")]");
-                sb.AppendLine($"{classDeclSpaces}");
-                sb.AppendLine($"{classDeclSpaces}");
-                sb.AppendLine($"{classDeclSpaces}");
+                sb.AppendLine($"{classDeclSpaces}public class Functor_{source.TypeName}_{safeGuidName}: ISerializableActionFactory");
+                sb.AppendLine($"{classDeclSpaces}{{");
+                sb.AppendLine($"{classContentDeclSpaces}public string Id => \"{guid}\";");
+                sb.AppendLine();
+                sb.AppendLine($"{classContentDeclSpaces}public object GetAction(int index)");
+                sb.AppendLine($"{classContentDeclSpaces}{{");
+                sb.AppendLine($"{classContentDeclSpaces}}}");
+                sb.AppendLine($"{classDeclSpaces}}}");
                 sb.AppendLine("}");
 
 #if DEBUG

@@ -136,6 +136,8 @@ namespace SymOntoClay.SerializationSourceGenerator
 
                 var identationStep = 4;
                 var baseIdentation = 0;
+                var classDeclIdentation = baseIdentation + identationStep;
+                var classDeclSpaces = GeneratorsHelper.Spaces(classDeclIdentation);
 
                 var sb = new StringBuilder();
                 sb.AppendLine($"// Auto-generated for GUID: {guid}");
@@ -146,8 +148,13 @@ namespace SymOntoClay.SerializationSourceGenerator
 #endif
                     sb.AppendLine($"using {u};");
                 }
+                sb.AppendLine();
                 sb.AppendLine("namespace SymOntoClay.GeneratedFunctors");
                 sb.AppendLine("{");
+                sb.AppendLine($"{classDeclSpaces}[SerializableAction(Id = \"{guid}\")]");
+                sb.AppendLine($"{classDeclSpaces}");
+                sb.AppendLine($"{classDeclSpaces}");
+                sb.AppendLine($"{classDeclSpaces}");
                 sb.AppendLine("}");
 
 #if DEBUG

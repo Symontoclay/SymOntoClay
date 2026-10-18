@@ -1,10 +1,9 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 
 namespace SymOntoClay.SerializationSourceGenerator
 {
@@ -121,12 +120,23 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var guidExpr = argList.Arguments[1].Expression;
                 var guid = source.SemanticModel.GetConstantValue(guidExpr).Value?.ToString() ?? "";
 
+                var lambdas = GetAllLambdas(3, argList.Arguments);
+
+#if DEBUG
+                FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
+#endif
+
                 // Fourth parameter (index 3 — lambda)
                 var lambdaExpr = argList.Arguments[3].Expression;
                 var lambdaText = lambdaExpr.ToString();
 
+                var isLambda = lambdaExpr is ParenthesizedLambdaExpressionSyntax
+                     || lambdaExpr is SimpleLambdaExpressionSyntax
+                     || lambdaExpr is AnonymousMethodExpressionSyntax;
+
 #if DEBUG
                 FileLogger.WriteLn($"guid = {guid}");
+                FileLogger.WriteLn($"isLambda = {isLambda}");
                 FileLogger.WriteLn($"lambdaText = {lambdaText}");
 #endif
 
@@ -209,6 +219,34 @@ namespace SymOntoClay.SerializationSourceGenerator
             //}}";
 
             //context.AddSource($"Functor_{safeGuidName}.g.cs", generatedCode);
+        }
+
+        private static List<ExpressionSyntax> GetAllLambdas(int startIndex, SeparatedSyntaxList<ArgumentSyntax> arguments)
+        {
+            var lambdas = new List<ExpressionSyntax>();
+
+            for(var i = startIndex; i < arguments.Count; i++)
+            {
+                var expr = arguments[i].Expression;
+
+                if(IsLambda(expr))
+                {
+                    lambdas.Add(expr);
+                }
+                else
+                {
+                    return lambdas;
+                }
+            }
+
+            throw new NotImplementedException("E551B64C-940C-4AA8-B66C-D074B23BF4F7");
+        }
+
+        private static bool IsLambda(ExpressionSyntax expr)
+        {
+            return expr is ParenthesizedLambdaExpressionSyntax
+                || expr is SimpleLambdaExpressionSyntax
+                || expr is AnonymousMethodExpressionSyntax;
         }
 
         private static List<string> GetUsingsForNode(SyntaxNode node, SemanticModel semanticModel)

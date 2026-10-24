@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace SymOntoClay.SerializationSourceGenerator
@@ -130,13 +131,8 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var lambdaExpr = argList.Arguments[3].Expression;
                 var lambdaText = lambdaExpr.ToString();
 
-                var isLambda = lambdaExpr is ParenthesizedLambdaExpressionSyntax
-                     || lambdaExpr is SimpleLambdaExpressionSyntax
-                     || lambdaExpr is AnonymousMethodExpressionSyntax;
-
 #if DEBUG
                 FileLogger.WriteLn($"guid = {guid}");
-                FileLogger.WriteLn($"isLambda = {isLambda}");
                 FileLogger.WriteLn($"lambdaText = {lambdaText}");
 #endif
 
@@ -153,6 +149,10 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var classDeclSpaces = GeneratorsHelper.Spaces(classDeclIdentation);
                 var classContentDeclIdentation = classDeclIdentation + identationStep;
                 var classContentDeclSpaces = GeneratorsHelper.Spaces(classContentDeclIdentation);
+                var classContentIdentation = classContentDeclIdentation + identationStep;
+                var classContentSpaces = GeneratorsHelper.Spaces(classContentIdentation);
+                var classContentIdentation_2 = classContentIdentation + identationStep;
+                var classContentSpaces_2 = GeneratorsHelper.Spaces(classContentIdentation_2);
 
                 var sb = new StringBuilder();
                 sb.AppendLine($"// Auto-generated for GUID: {guid}");
@@ -174,6 +174,17 @@ namespace SymOntoClay.SerializationSourceGenerator
                     sb.AppendLine($"using {serializableActionFactoryNamespace};");
                 }
 
+                var namespaceForNode = GetNamespaceForNode(source.Node, source.SemanticModel);
+
+#if DEBUG
+                FileLogger.WriteLn($"namespaceForNode = {namespaceForNode}");
+#endif
+
+                if(!string.IsNullOrWhiteSpace(namespaceForNode) && !usings.Contains(serializableActionFactoryNamespace))
+                {
+                    sb.AppendLine($"using {namespaceForNode};");
+                }
+
                 sb.AppendLine();
                 sb.AppendLine("namespace SymOntoClay.GeneratedFunctors");
                 sb.AppendLine("{");
@@ -182,8 +193,26 @@ namespace SymOntoClay.SerializationSourceGenerator
                 sb.AppendLine($"{classDeclSpaces}{{");
                 sb.AppendLine($"{classContentDeclSpaces}public string Id => \"{guid}\";");
                 sb.AppendLine();
+                
+                var n = 0;
+
+                foreach (var lambda in lambdas)
+                {
+                    sb.AppendLine($"{classContentDeclSpaces}private object _action_{n} = {lambda.ToString()};");
+                    sb.AppendLine();
+
+                    n++;
+                }
                 sb.AppendLine($"{classContentDeclSpaces}public object GetAction(int index)");
                 sb.AppendLine($"{classContentDeclSpaces}{{");
+                sb.AppendLine($"{classContentSpaces}switch(index)");
+                sb.AppendLine($"{classContentSpaces}{{");
+                for (var i = 0; i < n; i++)
+                {
+                    sb.AppendLine($"{classContentSpaces_2}case {i}: return _action_{i};");
+                }
+                sb.AppendLine($"{classContentSpaces_2}default: throw new System.NotSupportedException($\"{guid}: {{index}}\");");
+                sb.AppendLine($"{classContentSpaces}}}");
                 sb.AppendLine($"{classContentDeclSpaces}}}");
                 sb.AppendLine($"{classDeclSpaces}}}");
                 sb.AppendLine("}");
@@ -276,6 +305,29 @@ namespace SymOntoClay.SerializationSourceGenerator
             // But for text generation, it is usually sufficient to collect the string directives from a file.
 
             return usings;
+        }
+
+        private static string GetNamespaceForNode(SyntaxNode node, SemanticModel semanticModel)
+        {
+            // We retrieve the symbol that encloses the start of the lambda (a method, class, etc.)
+            var enclosingSymbol = semanticModel.GetEnclosingSymbol(node.SpanStart);
+
+            if (enclosingSymbol == null)
+            { 
+                return string.Empty; 
+            }
+
+            // We obtain the contained namespace
+            var namespaceSymbol = enclosingSymbol.ContainingNamespace;
+
+            // If it is the global namespace (no namespace), then ToDisplayString() will return an empty string or "<global namespace>".
+            if (namespaceSymbol == null || namespaceSymbol.IsGlobalNamespace)
+            {
+                return string.Empty;
+            }
+
+            // Returns the full name, for example: "MyCompany.Game.Systems"
+            return namespaceSymbol.ToDisplayString();
         }
     }
 

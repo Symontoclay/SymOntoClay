@@ -11,17 +11,12 @@ namespace SymOntoClay.SerializationSourceGenerator
     [Generator]
     public class SerializableActionFactoryGenerator : IIncrementalGenerator
     {
-        private static readonly HashSet<string> TargetTypes = new()
+        private static List<string> _targetConstructors = new List<string>()
         {
             "LoggedAltFunctorWithoutResult"
         };
 
-        private List<string> _targetConstructors = new List<string>()
-        {
-            "LoggedAltFunctorWithoutResult"
-        };
-
-        private List<(string FirstIdenfifier, string SecondIdenfifier)> _targetInvocations = new List<(string FirstIdenfifier, string SecondIdenfifier)>()
+        private static List<(string TypeName, string MethodName)> _targetInvocations = new List<(string TypeName, string MethodName)>()
         {
             ("LoggedAltFunctorWithoutResult", "Run")
         };
@@ -76,10 +71,18 @@ namespace SymOntoClay.SerializationSourceGenerator
                 if (symbolInfo.Symbol is not IMethodSymbol methodSymbol) { return null; }
 
                 // We are testing the static Run method of the target class.
-                if (!methodSymbol.IsStatic || methodSymbol.Name != "Run") { return null; }
+                if (!methodSymbol.IsStatic) 
+                { 
+                    return null; 
+                }
 
+                // ||  != "Run"
                 var typeName = methodSymbol.ContainingType.Name;
-                if (!TargetTypes.Contains(typeName)) { return null; }
+
+                if (_targetInvocations.Any(p => p.TypeName == typeName && p.MethodName == methodSymbol.Name)) 
+                { 
+                    return null; 
+                }
 
                 return new TargetInfo(invocation, semanticModel, typeName, isConstructor: false);
             }
@@ -92,7 +95,11 @@ namespace SymOntoClay.SerializationSourceGenerator
                 if (constructorSymbol.MethodKind != MethodKind.Constructor) { return null; }
 
                 var typeName = constructorSymbol.ContainingType.Name;
-                if (!TargetTypes.Contains(typeName)) return null;
+
+                if (!_targetConstructors.Contains(typeName)) 
+                { 
+                    return null; 
+                }
 
                 // Note: For ObjectCreationExpressionSyntax, the arguments are located in creation.ArgumentList.
                 return new TargetInfo(creation, semanticModel, typeName, isConstructor: true);
@@ -104,7 +111,7 @@ namespace SymOntoClay.SerializationSourceGenerator
         private static void ExecuteGeneration(SourceProductionContext context, TargetInfo source)
         {
 #if DEBUG
-            FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
+            //FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
 #endif
 
             // Safe retrieval of arguments based on node type
@@ -124,7 +131,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var lambdas = GetAllLambdas(3, argList.Arguments);
 
 #if DEBUG
-                FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
+                //FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
 #endif
 
                 // Fourth parameter (index 3 — lambda)
@@ -132,8 +139,8 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var lambdaText = lambdaExpr.ToString();
 
 #if DEBUG
-                FileLogger.WriteLn($"guid = {guid}");
-                FileLogger.WriteLn($"lambdaText = {lambdaText}");
+                //FileLogger.WriteLn($"guid = {guid}");
+                //FileLogger.WriteLn($"lambdaText = {lambdaText}");
 #endif
 
                 var safeGuidName = guid.Replace("-", "");
@@ -159,7 +166,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 foreach (var u in usings) 
                 {
 #if DEBUG
-                    FileLogger.WriteLn($"u = {u}");
+                    //FileLogger.WriteLn($"u = {u}");
 #endif
                     sb.AppendLine($"using {u};");
                 }
@@ -177,7 +184,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var namespaceForNode = GetNamespaceForNode(source.Node, source.SemanticModel);
 
 #if DEBUG
-                FileLogger.WriteLn($"namespaceForNode = {namespaceForNode}");
+                //FileLogger.WriteLn($"namespaceForNode = {namespaceForNode}");
 #endif
 
                 if(!string.IsNullOrWhiteSpace(namespaceForNode) && !usings.Contains(serializableActionFactoryNamespace))
@@ -218,36 +225,11 @@ namespace SymOntoClay.SerializationSourceGenerator
                 sb.AppendLine("}");
 
 #if DEBUG
-                FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
+                //FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
 #endif
 
                 context.AddSource($"Functor_{safeGuidName}.g.cs", sb.ToString());
             }
-
-            //var arguments = invocation.ArgumentList.Arguments;
-
-            //// The second parameter (index 1) is a string literal (GUID)
-            //var guidValue = semanticModel.GetConstantValue(arguments[1].Expression).Value?.ToString() ?? "UnknownGuid";
-
-            //// The fourth parameter (index 3) is a lambda expression.
-            //var lambdaText = arguments[3].Expression.ToString();
-
-            //var safeGuidName = guidValue.Replace("-", "");
-            //var generatedCode = $@"
-            //// Auto-generated for GUID: {guidValue}
-            //namespace GeneratedFunctors
-            //{{
-            //    public static class Handler_{safeGuidName}
-            //    {{
-            //        public static void Execute()
-            //        {{
-            //            // Logic of the extracted lambda:
-            //            // {lambdaText}
-            //        }}
-            //    }}
-            //}}";
-
-            //context.AddSource($"Functor_{safeGuidName}.g.cs", generatedCode);
         }
 
         private static List<ExpressionSyntax> GetAllLambdas(int startIndex, SeparatedSyntaxList<ArgumentSyntax> arguments)
@@ -294,7 +276,8 @@ namespace SymOntoClay.SerializationSourceGenerator
             foreach (var usingDirective in usingDirectives)
             {
                 // Namespace name (e.g., System.Collections.Generic)
-                string usingName = usingDirective.Name?.ToString() ?? string.Empty;
+                var usingName = usingDirective.Name?.ToString() ?? string.Empty;
+
                 if (!string.IsNullOrEmpty(usingName))
                 {
                     usings.Add(usingName);

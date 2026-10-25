@@ -11,12 +11,12 @@ namespace SymOntoClay.SerializationSourceGenerator
     [Generator]
     public class SerializableActionFactoryGenerator : IIncrementalGenerator
     {
-        private static List<string> _targetConstructors = new List<string>()
+        private static HashSet<string> _targetConstructors = new HashSet<string>()
         {
             "LoggedAltFunctorWithoutResult"
         };
 
-        private static List<(string TypeName, string MethodName)> _targetInvocations = new List<(string TypeName, string MethodName)>()
+        private static HashSet<(string TypeName, string MethodName)> _targetInvocations = new HashSet<(string TypeName, string MethodName)>()
         {
             ("LoggedAltFunctorWithoutResult", "Run")
         };

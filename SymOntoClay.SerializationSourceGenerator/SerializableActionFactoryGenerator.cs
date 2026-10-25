@@ -13,12 +13,14 @@ namespace SymOntoClay.SerializationSourceGenerator
     {
         private static HashSet<string> _targetConstructors = new HashSet<string>()
         {
-            "LoggedAltFunctorWithoutResult"
+            "LoggedAltFunctorWithoutResult",
+            "LoggedFunctorWithoutResult"
         };
 
         private static HashSet<(string TypeName, string MethodName)> _targetInvocations = new HashSet<(string TypeName, string MethodName)>()
         {
-            ("LoggedAltFunctorWithoutResult", "Run")
+            ("LoggedAltFunctorWithoutResult", "Run"),
+            ("LoggedFunctorWithoutResult", "Run")
         };
 
         /// <inheritdoc/>
@@ -42,6 +44,11 @@ namespace SymOntoClay.SerializationSourceGenerator
 
         private static bool IsCandidateNode(SyntaxNode node)
         {
+#if DEBUG
+            //FileLogger.WriteLn($"!!!!!! node = {node.ToString()}");
+            //FileLogger.WriteLn($"!!!!!! node is InvocationExpressionSyntax = {node is InvocationExpressionSyntax}");
+#endif
+
             if (node is InvocationExpressionSyntax invocation &&
                         invocation.ArgumentList.Arguments.Count >= 4 &&
                         invocation.Expression is MemberAccessExpressionSyntax memberAccess &&
@@ -67,8 +74,16 @@ namespace SymOntoClay.SerializationSourceGenerator
 
             if (node is InvocationExpressionSyntax invocation)
             {
+#if DEBUG
+                //FileLogger.WriteLn($"node = {node.ToString()}");
+#endif
+
                 var symbolInfo = semanticModel.GetSymbolInfo(invocation);
                 if (symbolInfo.Symbol is not IMethodSymbol methodSymbol) { return null; }
+
+#if DEBUG
+                //FileLogger.WriteLn($"methodSymbol.IsStatic = {methodSymbol.IsStatic}");
+#endif
 
                 // We are testing the static Run method of the target class.
                 if (!methodSymbol.IsStatic) 
@@ -76,13 +91,20 @@ namespace SymOntoClay.SerializationSourceGenerator
                     return null; 
                 }
 
-                // ||  != "Run"
                 var typeName = methodSymbol.ContainingType.Name;
 
-                if (_targetInvocations.Any(p => p.TypeName == typeName && p.MethodName == methodSymbol.Name)) 
+#if DEBUG
+                //FileLogger.WriteLn($"typeName = {typeName}; methodSymbol.Name = {methodSymbol.Name}");
+#endif
+
+                if (!_targetInvocations.Any(p => p.TypeName == typeName && p.MethodName == methodSymbol.Name)) 
                 { 
                     return null; 
                 }
+
+#if DEBUG
+                //FileLogger.WriteLn($"%%%%%%%");
+#endif
 
                 return new TargetInfo(invocation, semanticModel, typeName, isConstructor: false);
             }
@@ -111,7 +133,7 @@ namespace SymOntoClay.SerializationSourceGenerator
         private static void ExecuteGeneration(SourceProductionContext context, TargetInfo source)
         {
 #if DEBUG
-            //FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
+            FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
 #endif
 
             // Safe retrieval of arguments based on node type
@@ -122,8 +144,16 @@ namespace SymOntoClay.SerializationSourceGenerator
                 _ => null
             };
 
+#if DEBUG
+            FileLogger.WriteLn($"argList?.Arguments.Count = {argList?.Arguments.Count}");
+#endif
+
             if (argList != null && argList.Arguments.Count >= 4)
             {
+#if DEBUG
+                FileLogger.WriteLn($"source.Node = {source.Node.ToString()}");
+#endif
+
                 // Second parameter (index 1)
                 var guidExpr = argList.Arguments[1].Expression;
                 var guid = source.SemanticModel.GetConstantValue(guidExpr).Value?.ToString() ?? "";
@@ -131,7 +161,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var lambdas = GetAllLambdas(3, argList.Arguments);
 
 #if DEBUG
-                //FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
+                FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
 #endif
 
                 // Fourth parameter (index 3 — lambda)
@@ -225,7 +255,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 sb.AppendLine("}");
 
 #if DEBUG
-                //FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
+                FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
 #endif
 
                 context.AddSource($"Functor_{safeGuidName}.g.cs", sb.ToString());
@@ -244,13 +274,9 @@ namespace SymOntoClay.SerializationSourceGenerator
                 {
                     lambdas.Add(expr);
                 }
-                else
-                {
-                    return lambdas;
-                }
             }
 
-            throw new NotImplementedException("E551B64C-940C-4AA8-B66C-D074B23BF4F7");
+            return lambdas;
         }
 
         private static bool IsLambda(ExpressionSyntax expr)

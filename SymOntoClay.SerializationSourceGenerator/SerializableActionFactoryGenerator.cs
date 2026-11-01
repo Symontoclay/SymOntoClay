@@ -26,20 +26,47 @@ namespace SymOntoClay.SerializationSourceGenerator
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context) 
         {
-            var targetNodes = context.SyntaxProvider
-                        .CreateSyntaxProvider(
-                            // 1. Syntactic filter: look for either method calls (Run) or object creation (new)
-                            predicate: static (node, _) => IsCandidateNode(node),
-
-                            // 2. Semantic analysis: check whether it is a constructor or a static method
-                            transform: static (ctx, _) => GetTargetInfo(ctx)
-                        )
-                        .Where(static data => data is not null);
-
-            context.RegisterSourceOutput(targetNodes, static (spc, source) =>
+            try
             {
-                ExecuteGeneration(spc, source);
-            });
+                var targetNodes = context.SyntaxProvider
+                .CreateSyntaxProvider(
+                    // 1. Syntactic filter: look for either method calls (Run) or object creation (new)
+                    predicate: static (node, _) => IsCandidateNode(node),
+
+                    // 2. Semantic analysis: check whether it is a constructor or a static method
+                    transform: static (ctx, _) => GetTargetInfo(ctx)
+                )
+                .Where(static data => data is not null);
+
+                context.RegisterSourceOutput(targetNodes, static (spc, source) =>
+                {
+                    try
+                    {
+                        ExecuteGeneration(spc, source);
+                    }
+#if DEBUG
+                    catch (Exception e)
+#else
+                    catch
+#endif
+                    {
+#if DEBUG
+                        FileLogger.WriteLn(e.ToString());
+#endif
+                    }
+                });
+            }
+#if DEBUG
+            catch (Exception ex)
+#else
+            catch
+#endif
+            {
+#if DEBUG
+                FileLogger.WriteLn(ex.ToString());
+#endif
+            }
+
         }
 
         private static bool IsCandidateNode(SyntaxNode node)
@@ -259,6 +286,10 @@ namespace SymOntoClay.SerializationSourceGenerator
 #endif
 
                 context.AddSource($"Functor_{safeGuidName}.g.cs", sb.ToString());
+
+#if DEBUG
+                FileLogger.WriteLn($"NEXT!!!!!");
+#endif
             }
         }
 

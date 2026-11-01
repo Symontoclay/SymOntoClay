@@ -47,9 +47,4 @@
 	<Target Name="EnsureGeneratorBuilt">
 		<MSBuild Projects="..\SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj" Properties="Configuration=$(Configuration)" />
 	</Target>
-
-	<PropertyGroup>
-		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-		<CompilerGeneratedFilesOutputPath>GeneratedFiles</CompilerGeneratedFilesOutputPath>
-	</PropertyGroup>
 </Project>

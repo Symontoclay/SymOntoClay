@@ -370,7 +370,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<IVarStorageSerializedEventsHandler, IStorage>.Run(Logger, "B0E0BA4D-6F0D-4C69-BC14-0FEC022DE01C", this, storage,
+            LoggedFunctorWithoutResult<IVarStorageSerializedEventsHandler, IStorage>.Run(Logger, "4AEB86B6-7BD6-4242-B8B8-371CA3CB5C08", this, storage,
                 (IMonitorLogger loggerValue, IVarStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
@@ -392,7 +392,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<IVarStorageSerializedEventsHandler, IStorage>.Run(Logger, "2C400FE9-AFAE-4819-AC7B-35D9DFFB687A", this, storage,
+            LoggedFunctorWithoutResult<IVarStorageSerializedEventsHandler, IStorage>.Run(Logger, "43875187-D69E-4A35-94CD-771712341E38", this, storage,
                 (IMonitorLogger loggerValue, IVarStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },

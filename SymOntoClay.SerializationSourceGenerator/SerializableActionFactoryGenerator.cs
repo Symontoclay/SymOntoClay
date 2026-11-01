@@ -191,18 +191,25 @@ namespace SymOntoClay.SerializationSourceGenerator
                 FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
 #endif
 
-                // Fourth parameter (index 3 — lambda)
-                var lambdaExpr = argList.Arguments[3].Expression;
-                var lambdaText = lambdaExpr.ToString();
-
 #if DEBUG
                 //FileLogger.WriteLn($"guid = {guid}");
-                //FileLogger.WriteLn($"lambdaText = {lambdaText}");
 #endif
 
                 var safeGuidName = guid.Replace("-", "");
 
+                var safeUniqueGuidName = Guid.NewGuid().ToString("D").Replace("-", "");
+
                 var usings = GetUsingsForNode(source.Node, source.SemanticModel);
+
+                var collectedUsings = GetCollectedUsings(source.Node, source.SemanticModel, lambdas.First());
+
+#if DEBUG
+                FileLogger.WriteLn($"collectedUsings.Count = {collectedUsings.Count}");
+                foreach(var cu in collectedUsings)
+                {
+                    FileLogger.WriteLn($"cu = {cu}");
+                }
+#endif
 
                 var serializableActionNamespace = "SymOntoClay.CoreHelper.SerializationToImage.Attributes";
                 var serializableActionFactoryNamespace = "SymOntoClay.CoreHelper.SerializationToImage";
@@ -218,12 +225,15 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var classContentIdentation_2 = classContentIdentation + identationStep;
                 var classContentSpaces_2 = GeneratorsHelper.Spaces(classContentIdentation_2);
 
+                //var generatedClassName = $"Functor_{source.TypeName}_{safeGuidName}_{safeUniqueGuidName}";
+                var generatedClassName = $"Functor_{source.TypeName}_{safeGuidName}";
+
                 var sb = new StringBuilder();
                 sb.AppendLine($"// Auto-generated for GUID: {guid}");
                 foreach (var u in usings) 
                 {
 #if DEBUG
-                    //FileLogger.WriteLn($"u = {u}");
+                    FileLogger.WriteLn($"u = {u}");
 #endif
                     sb.AppendLine($"using {u};");
                 }
@@ -253,7 +263,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 sb.AppendLine("namespace SymOntoClay.GeneratedFunctors");
                 sb.AppendLine("{");
                 sb.AppendLine($"{classDeclSpaces}[SerializableAction(Id = \"{guid}\")]");
-                sb.AppendLine($"{classDeclSpaces}public class Functor_{source.TypeName}_{safeGuidName}: ISerializableActionFactory");
+                sb.AppendLine($"{classDeclSpaces}public class {generatedClassName}: ISerializableActionFactory");
                 sb.AppendLine($"{classDeclSpaces}{{");
                 sb.AppendLine($"{classContentDeclSpaces}public string Id => \"{guid}\";");
                 sb.AppendLine();
@@ -285,12 +295,68 @@ namespace SymOntoClay.SerializationSourceGenerator
                 FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
 #endif
 
-                context.AddSource($"Functor_{safeGuidName}.g.cs", sb.ToString());
+                context.AddSource($"{generatedClassName}.g.cs", sb.ToString());
 
 #if DEBUG
                 FileLogger.WriteLn($"NEXT!!!!!");
 #endif
             }
+        }
+
+        private static List<string> GetCollectedUsings(SyntaxNode node, SemanticModel semanticModel, ExpressionSyntax lambdaExpr)
+        {
+            var usingsSet = new HashSet<string>();
+
+            // 1. Collect the standard using directives from the source file
+            var root = node.SyntaxTree.GetRoot() as CompilationUnitSyntax;
+            if (root != null)
+            {
+                foreach (var usingDirective in root.Usings)
+                {
+                    usingsSet.Add(usingDirective.ToString());
+                }
+            }
+
+            // 2. AUTOMATICALLY analyze lambda parameters (e.g., IMonitorLogger, IStorage, etc.)
+            if (lambdaExpr != null)
+            {
+                // We get the symbol of the lambda itself or its parameters through the semantic model
+                var diagnosticSymbols = new List<ITypeSymbol>();
+
+                // If it’s a lambda with parentheses, we collect the types of its parameters.
+                if (lambdaExpr is ParenthesizedLambdaExpressionSyntax parenthesizedLambda)
+                {
+                    foreach (var parameter in parenthesizedLambda.ParameterList.Parameters)
+                    {
+                        var paramSymbol = semanticModel.GetDeclaredSymbol(parameter) as IParameterSymbol;
+                        if (paramSymbol?.Type != null)
+                        {
+                            diagnosticSymbols.Add(paramSymbol.Type);
+                        }
+                    }
+                }
+                else if (lambdaExpr is SimpleLambdaExpressionSyntax simpleLambda)
+                {
+                    var paramSymbol = semanticModel.GetDeclaredSymbol(simpleLambda.Parameter) as IParameterSymbol;
+                    if (paramSymbol?.Type != null)
+                    {
+                        diagnosticSymbols.Add(paramSymbol.Type);
+                    }
+                }
+
+                // For each type found, extract its namespace and add a `using` directive if it is not already present.
+                foreach (var typeSymbol in diagnosticSymbols)
+                {
+                    if (typeSymbol.ContainingNamespace != null && !typeSymbol.ContainingNamespace.IsGlobalNamespace)
+                    {
+                        string ns = typeSymbol.ContainingNamespace.ToDisplayString();
+                        // Do not add a system namespace or an identical namespace if it is already present.
+                        usingsSet.Add($"using {ns};");
+                    }
+                }
+            }
+
+            return usingsSet.ToList();
         }
 
         private static List<ExpressionSyntax> GetAllLambdas(int startIndex, SeparatedSyntaxList<ArgumentSyntax> arguments)

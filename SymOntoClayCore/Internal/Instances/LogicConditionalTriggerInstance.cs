@@ -169,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            LoggedFunctorWithoutResult<ILogicConditionalTriggerInstanceSerializedEventsHandler>.Run(Logger, "F5C7D84D-770E-40D0-AE92-48E497F75A82", this,
+            LoggedFunctorWithoutResult<ILogicConditionalTriggerInstanceSerializedEventsHandler>.Run(Logger, "33A6E47D-FD18-45E0-8BE3-C734B5D75799", this,
                 (IMonitorLogger loggerValue, ILogicConditionalTriggerInstanceSerializedEventsHandler instanceValue) => {
                     instanceValue.NObserver_OnChanged();
                 },

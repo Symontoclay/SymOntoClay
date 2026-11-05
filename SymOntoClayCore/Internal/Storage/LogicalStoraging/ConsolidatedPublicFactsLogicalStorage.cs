@@ -176,7 +176,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     try
                     {
-                        var allFactsList = storageValue.GetAllOriginFacts(logger);
+                        var allFactsList = storageValue.GetAllOriginFacts(loggerValue);
 
                         foreach (var fact in allFactsList)
                         {

@@ -199,20 +199,50 @@ namespace SymOntoClay.SerializationSourceGenerator
 
                 var safeUniqueGuidName = Guid.NewGuid().ToString("D").Replace("-", "");
 
+                var usingsList = new List<string>();
+
                 var usings = GetUsingsForNode(source.Node, source.SemanticModel);
 
-                var collectedUsings = GetCollectedUsings(source.Node, source.SemanticModel, lambdas.First());
+                foreach (var u in usings)
+                {
+#if DEBUG
+                    FileLogger.WriteLn($"u = {u}");
+#endif
+                    usingsList.Add($"using {u};");
+                }
+
+                foreach (var lambda in lambdas)
+                {
+                    var collectedUsings = GetCollectedUsings(source.Node, source.SemanticModel, lambda);
 
 #if DEBUG
-                FileLogger.WriteLn($"collectedUsings.Count = {collectedUsings.Count}");
-                foreach(var cu in collectedUsings)
-                {
-                    FileLogger.WriteLn($"cu = {cu}");
-                }
+                    FileLogger.WriteLn($"collectedUsings.Count = {collectedUsings.Count}");
+                    foreach (var cu in collectedUsings)
+                    {
+                        FileLogger.WriteLn($"cu = {cu}");
+                    }
 #endif
+
+                    usingsList.AddRange(collectedUsings);
+                }
 
                 var serializableActionNamespace = "SymOntoClay.CoreHelper.SerializationToImage.Attributes";
                 var serializableActionFactoryNamespace = "SymOntoClay.CoreHelper.SerializationToImage";
+
+                usingsList.Add($"using {serializableActionNamespace};");
+
+                usingsList.Add($"using {serializableActionFactoryNamespace};");
+
+                var namespaceForNode = GetNamespaceForNode(source.Node, source.SemanticModel);
+
+#if DEBUG
+                //FileLogger.WriteLn($"namespaceForNode = {namespaceForNode}");
+#endif
+
+                if (!string.IsNullOrWhiteSpace(namespaceForNode) && !usings.Contains(serializableActionFactoryNamespace))
+                {
+                    usingsList.Add($"using {namespaceForNode};");
+                }
 
                 var identationStep = 4;
                 var baseIdentation = 0;
@@ -230,33 +260,12 @@ namespace SymOntoClay.SerializationSourceGenerator
 
                 var sb = new StringBuilder();
                 sb.AppendLine($"// Auto-generated for GUID: {guid}");
-                foreach (var u in usings) 
+                foreach (var u in usingsList.Distinct()) 
                 {
 #if DEBUG
                     FileLogger.WriteLn($"u = {u}");
 #endif
-                    sb.AppendLine($"using {u};");
-                }
-
-                if(!usings.Contains(serializableActionNamespace))
-                {
-                    sb.AppendLine($"using {serializableActionNamespace};");
-                }
-
-                if (!usings.Contains(serializableActionFactoryNamespace))
-                {
-                    sb.AppendLine($"using {serializableActionFactoryNamespace};");
-                }
-
-                var namespaceForNode = GetNamespaceForNode(source.Node, source.SemanticModel);
-
-#if DEBUG
-                //FileLogger.WriteLn($"namespaceForNode = {namespaceForNode}");
-#endif
-
-                if(!string.IsNullOrWhiteSpace(namespaceForNode) && !usings.Contains(serializableActionFactoryNamespace))
-                {
-                    sb.AppendLine($"using {namespaceForNode};");
+                    sb.AppendLine($"{u}");
                 }
 
                 sb.AppendLine();

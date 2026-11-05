@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.SerializationAn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.SerializationSourceGenerator", "SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj", "{617F242C-987C-448E-A366-09B011D37679}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.GuidDuplicateAnalyzer", "SymOntoClay.GuidDuplicateAnalyzer\SymOntoClay.GuidDuplicateAnalyzer.csproj", "{F0A43B83-1459-483D-8A4D-83A05E8E2FA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +197,10 @@ Global
 		{617F242C-987C-448E-A366-09B011D37679}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{617F242C-987C-448E-A366-09B011D37679}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{617F242C-987C-448E-A366-09B011D37679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A43B83-1459-483D-8A4D-83A05E8E2FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A43B83-1459-483D-8A4D-83A05E8E2FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A43B83-1459-483D-8A4D-83A05E8E2FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A43B83-1459-483D-8A4D-83A05E8E2FA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,6 +219,7 @@ Global
 		{8EF40C46-C7A4-4617-9A7E-E0D30413F9A1} = {13EB4727-3CC9-46E0-B242-FFE590C488B1}
 		{B8A22554-8374-4EC1-B2FE-D37FEDBFA336} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{617F242C-987C-448E-A366-09B011D37679} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{F0A43B83-1459-483D-8A4D-83A05E8E2FA4} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A877AB4D-380D-4ADE-BBD2-F1DD29DADB05}

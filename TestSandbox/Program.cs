@@ -1545,7 +1545,7 @@ action Go
 
             BehaviorTestEngineRunner.RunMinimalInstanceTimeoutBasedWithImportStandardLibrary(text,
                 (n, message) => {
-                    _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = {message}");
+                    _logger.Info("FE351E66-0603-48FA-9174-93B5DE528FBE", $"n = {n}; message = {message}");
                 });
 
             _logger.Info("EFF4EB51-E83C-4FA6-96A9-811A72B430E4", "End");

@@ -240,7 +240,7 @@ namespace TestSandbox.Handlers
                 },
                 TargetThreads = new List<string>
                 {
-                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                    "8456E8A0-6FBC-4C55-9D8A-1E450F4140F7"
                 },
                 SourceDirectoryName = sourceDirectoryName,
                 OutputDirectory = logsOutputDirectory
@@ -289,7 +289,7 @@ namespace TestSandbox.Handlers
                 },
                 TargetThreads = new List<string>
                 {
-                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                    "968D2C5B-5363-4CA8-81DA-6F0D9A24AFFD"
                 },
                 SourceDirectoryName = sourceDirectoryName,
                 OutputDirectory = logsOutputDirectory
@@ -381,7 +381,7 @@ namespace TestSandbox.Handlers
                 },
                 TargetThreads = new List<string>
                 {
-                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                    "BEF4BE9F-FB8B-4643-A14C-32816A3C5674"
                 },
                 SourceDirectoryName = sourceDirectoryName,
                 OutputDirectory = logsOutputDirectory

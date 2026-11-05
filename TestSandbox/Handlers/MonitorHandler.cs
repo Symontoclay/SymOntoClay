@@ -104,7 +104,7 @@ namespace TestSandbox.Handlers
             //---------------
             var monitorNode = monitor.CreateMonitorNode("133776E5-AAAA-4896-AB6E-02C2902A5911", npcId);
 
-            var threadLogger = monitorNode.CreateThreadLogger("8507C879-EE50-4E83-B72B-FDE9662D92BC", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
+            var threadLogger = monitorNode.CreateThreadLogger("8507C879-EE50-4E83-B72B-FDE9662D92BC", "D3924178-0594-45C2-88B6-A20D76FD3B17");
 
             var taskId = threadLogger.StartThreadTask("F1DEBD17-F691-4CBD-AD6F-6D845960E252");
 
@@ -199,7 +199,7 @@ namespace TestSandbox.Handlers
 
             var monitorNode = monitor.CreateMonitorNode("9FF4FC16-06AF-4121-BD2F-F333F1BCCE95", "soldier 1");
 
-            var threadLogger = monitorNode.CreateThreadLogger("687E7D1B-4E52-470B-9D6F-D4CC9C08A5FD", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
+            var threadLogger = monitorNode.CreateThreadLogger("687E7D1B-4E52-470B-9D6F-D4CC9C08A5FD", "CB1BCE5A-38F1-46B8-9299-8E533A55A25E");
 
             threadLogger.Info("d14bd986-d932-4f62-b4e3-a6a38f7fb1c0", "Some message");
 

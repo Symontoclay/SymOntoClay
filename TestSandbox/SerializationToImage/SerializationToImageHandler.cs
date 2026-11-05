@@ -53,9 +53,9 @@ namespace TestSandbox.SerializationToImage
             };
             var threadPool = new CustomThreadPool(threadingSettings, cancellationTokenSourceContext);
 
-            var loggedAltFunctorWithoutResult = new LoggedAltFunctorWithoutResult(logger, "60C84C46-066E-4574-B481-CDFB44D85FF4",
+            var loggedAltFunctorWithoutResult = new LoggedAltFunctorWithoutResult(logger, "BC3DBB53-F178-411F-9451-5FCF88155A69",
                 (IMonitorLogger loggerValue) => {
-                    loggerValue.Info("FDE3FD00-3B5B-4F07-A77C-EF88C108B8D0", "Run!!!!!");
+                    loggerValue.Info("8647033C-0AAB-40C0-8296-A469049AB8F4", "Run!!!!!");
                 },
                 threadPool, cancellationTokenSourceContext, serializationAnchor);
 

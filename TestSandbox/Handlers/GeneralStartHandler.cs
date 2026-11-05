@@ -59,7 +59,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("FF819764-4617-46ED-9326-EADFE6B1A62D", "Begin");
+            _logger.Info("6340D0B8-EBC7-4B34-81D7-D85A9B912B81", "Begin");
 
             //var platformListener = new TstPlatformHostListener();
             //var platformListener = new HostMethods_Tests_HostListener();

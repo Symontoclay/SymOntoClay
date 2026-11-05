@@ -159,28 +159,28 @@ namespace TestSandbox.Handlers
         {
             var fact = _standardFactsBuilder.BuildPropertyVirtualRelationInstance(NameHelper.CreateName("someprop"), NameHelper.CreateName("#123"), new NumberValue(16));
 
-            _logger.Info("5D63A028-F53B-4575-ACFE-E5E5D1353DF3", $"fact = '{fact.ToHumanizedString()}'");
-            _logger.Info("87B6F264-F522-4248-8DED-FDEFB52D47CB", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+            _logger.Info("BD17B4CC-396E-4492-908E-429FB811F02C", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("A59E6103-B278-4DB8-8CC6-EF93412DBE66", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
         }
 
         private void Case29_1()
         {
             var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12.6);
 
-            _logger.Info("5D63A028-F53B-4575-ACFE-E5E5D1353DF3", $"fact = '{fact.ToHumanizedString()}'");
-            _logger.Info("87B6F264-F522-4248-8DED-FDEFB52D47CB", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+            _logger.Info("6345CC19-A7D0-4DFD-BD08-E3F19C2B551E", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("CD106F90-0167-4E01-9F50-867394D7262C", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
 
             var factStr = _standardFactsBuilder.BuildDistanceFactString("#123", 12.6);
 
-            _logger.Info("2675EC5A-AB19-4543-9B11-740F6A28FF62", $"factStr = '{factStr}'");
+            _logger.Info("7BF01D34-EEAC-4476-B7B6-871BD2366707", $"factStr = '{factStr}'");
         }
 
         private void Case29()
         {
             var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12);
 
-            _logger.Info("5D63A028-F53B-4575-ACFE-E5E5D1353DF3", $"fact = '{fact.ToHumanizedString()}'");
-            _logger.Info("87B6F264-F522-4248-8DED-FDEFB52D47CB", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+            _logger.Info("CFCECB15-4552-4038-97C4-0F5717656621", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("05058C02-5F77-4E87-954D-6540C8AB84BD", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
 
             var factStr = _standardFactsBuilder.BuildDistanceFactString("#123", 12);
 

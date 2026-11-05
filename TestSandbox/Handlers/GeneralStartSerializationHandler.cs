@@ -102,7 +102,7 @@ namespace TestSandbox.Handlers
 
             _world.Dispose();
 
-            _logger.Info("40669EA9-0F77-4447-B128-5E940A3DCE2D", "End");
+            _logger.Info("4A5C995B-3C3A-498B-A4AD-877587BD8825", "End");
             
             Thread.Sleep(500);
             

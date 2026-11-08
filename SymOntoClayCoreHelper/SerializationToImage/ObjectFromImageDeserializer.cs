@@ -51,13 +51,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             foreach (var assembly in assemblies)
             {
 #if DEBUG
-                _logger.Info($"assembly.FullName = {assembly.FullName}");
+                //_logger.Info($"assembly.FullName = {assembly.FullName}");
 #endif
 
                 var types = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISerializableActionFactory)));
 
 #if DEBUG
-                _logger.Info($"types.Count() = {types.Count()}");
+                //_logger.Info($"types.Count() = {types.Count()}");
 #endif
 
                 if (types.Count() == 0)
@@ -68,13 +68,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 foreach (var type in types)
                 {
 #if DEBUG
-                    _logger.Info($"type.FullName = {type.FullName}");
+                    //_logger.Info($"type.FullName = {type.FullName}");
 #endif
 
                     var atttibute = type.GetCustomAttribute<SerializableAction>();
 
 #if DEBUG
-                    _logger.Info($"atttibute.Id = {atttibute.Id}");
+                    //_logger.Info($"atttibute.Id = {atttibute.Id}");
 #endif
 
                     var factoryInstance = (ISerializableActionFactory)Activator.CreateInstance(type);
@@ -1082,7 +1082,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private object DeserializeAction(Type type, ObjMemberRef objMember, ActionCard card, SerializedValue serializedValue)
         {
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             if(!_serializableActionFactoryDict.TryGetValue(card.KeyValue, out var serializableActionFactory))

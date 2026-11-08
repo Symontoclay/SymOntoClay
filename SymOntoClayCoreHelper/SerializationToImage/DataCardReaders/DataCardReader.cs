@@ -11,7 +11,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders
     public class DataCardReader : Disposable, IDataCardReader
     {
 #if DEBUG
-        private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public DataCardReader(string basePath, string packEntryName)
@@ -22,7 +22,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.DataCardReaders
         public DataCardReader(string fullFileName)
         {
 #if DEBUG
-            _logger.Info($"fullFileName = {fullFileName}");
+            //_logger.Info($"fullFileName = {fullFileName}");
 #endif
 
             _fs = new FileStream(fullFileName, FileMode.Open, FileAccess.Read, FileShare.Read);

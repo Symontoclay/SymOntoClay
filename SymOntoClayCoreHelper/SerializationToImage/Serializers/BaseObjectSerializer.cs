@@ -34,7 +34,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             if (TryGetSerializedValue(obj, out var serializedValue))
             {
 #if DEBUG
-                _logger.Info($"serializedValue = {serializedValue}");
+                //_logger.Info($"serializedValue = {serializedValue}");
 #endif
 
                 return serializedValue;

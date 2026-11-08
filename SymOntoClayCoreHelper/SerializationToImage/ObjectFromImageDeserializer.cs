@@ -1094,9 +1094,9 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
             _processedSerializedValue[serializedValue] = obj;
 
+            //throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
 
-
-            throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
+            return obj;
         }
 
         private void TmpCheckProcessedTypes(string id, Type type)

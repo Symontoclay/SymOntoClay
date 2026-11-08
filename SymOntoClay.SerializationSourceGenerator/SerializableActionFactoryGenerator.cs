@@ -185,14 +185,14 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var guidExpr = argList.Arguments[1].Expression;
                 var guid = source.SemanticModel.GetConstantValue(guidExpr).Value?.ToString() ?? "";
 
-                var lambdas = GetAllLambdas(3, argList.Arguments);
+                var lambdas = GetAllLambdas(2, argList.Arguments);
 
 #if DEBUG
                 FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
 #endif
 
 #if DEBUG
-                //FileLogger.WriteLn($"guid = {guid}");
+                FileLogger.WriteLn($"guid = {guid}");
 #endif
 
                 var safeGuidName = guid.Replace("-", "");

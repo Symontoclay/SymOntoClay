@@ -138,6 +138,16 @@ namespace TestSandbox.SerializationToImage
             var objectDeserializer = new ObjectFromImageDeserializer(objectDeserialializationFactory, _objectsDataCardDictionary, null, structuralContext, serializedTypesPool, typesHelper);
 
             var deserializedObj = objectDeserializer.DeserializeValue(serializedValue);
+
+#if DEBUG
+            _logger.Info($"deserializedObj.GetType().FullName = {deserializedObj.GetType().FullName}");
+#endif
+
+            var deserializedLoggedAltFunctorWithoutResult = deserializedObj as LoggedAltFunctorWithoutResult;
+
+            deserializedLoggedAltFunctorWithoutResult.Run();
+
+            Thread.Sleep(1000);
         }
 
         private void Case5()

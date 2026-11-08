@@ -160,7 +160,7 @@ namespace SymOntoClay.SerializationSourceGenerator
         private static void ExecuteGeneration(SourceProductionContext context, TargetInfo source)
         {
 #if DEBUG
-            FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
+            //FileLogger.WriteLn($"Target element processed: {source.TypeName} (Constructor: {source.IsConstructor})");
 #endif
 
             // Safe retrieval of arguments based on node type
@@ -172,13 +172,13 @@ namespace SymOntoClay.SerializationSourceGenerator
             };
 
 #if DEBUG
-            FileLogger.WriteLn($"argList?.Arguments.Count = {argList?.Arguments.Count}");
+            //FileLogger.WriteLn($"argList?.Arguments.Count = {argList?.Arguments.Count}");
 #endif
 
             if (argList != null && argList.Arguments.Count >= 4)
             {
 #if DEBUG
-                FileLogger.WriteLn($"source.Node = {source.Node.ToString()}");
+                //FileLogger.WriteLn($"source.Node = {source.Node.ToString()}");
 #endif
 
                 // Second parameter (index 1)
@@ -188,11 +188,11 @@ namespace SymOntoClay.SerializationSourceGenerator
                 var lambdas = GetAllLambdas(2, argList.Arguments);
 
 #if DEBUG
-                FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
+                //FileLogger.WriteLn($"lambdas.Count = {lambdas.Count}");
 #endif
 
 #if DEBUG
-                FileLogger.WriteLn($"guid = {guid}");
+                //FileLogger.WriteLn($"guid = {guid}");
 #endif
 
                 var safeGuidName = guid.Replace("-", "");
@@ -206,7 +206,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 foreach (var u in usings)
                 {
 #if DEBUG
-                    FileLogger.WriteLn($"u = {u}");
+                    //FileLogger.WriteLn($"u = {u}");
 #endif
                     usingsList.Add($"using {u};");
                 }
@@ -216,11 +216,11 @@ namespace SymOntoClay.SerializationSourceGenerator
                     var collectedUsings = GetCollectedUsings(source.Node, source.SemanticModel, lambda);
 
 #if DEBUG
-                    FileLogger.WriteLn($"collectedUsings.Count = {collectedUsings.Count}");
-                    foreach (var cu in collectedUsings)
-                    {
-                        FileLogger.WriteLn($"cu = {cu}");
-                    }
+                    //FileLogger.WriteLn($"collectedUsings.Count = {collectedUsings.Count}");
+                    //foreach (var cu in collectedUsings)
+                    //{
+                    //    FileLogger.WriteLn($"cu = {cu}");
+                    //}
 #endif
 
                     usingsList.AddRange(collectedUsings);
@@ -263,7 +263,7 @@ namespace SymOntoClay.SerializationSourceGenerator
                 foreach (var u in usingsList.Distinct()) 
                 {
 #if DEBUG
-                    FileLogger.WriteLn($"u = {u}");
+                    //FileLogger.WriteLn($"u = {u}");
 #endif
                     sb.AppendLine($"{u}");
                 }
@@ -301,13 +301,13 @@ namespace SymOntoClay.SerializationSourceGenerator
                 sb.AppendLine("}");
 
 #if DEBUG
-                FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
+                //FileLogger.WriteLn($"sb.ToString() = {sb.ToString()}");
 #endif
 
                 context.AddSource($"{generatedClassName}.g.cs", sb.ToString());
 
 #if DEBUG
-                FileLogger.WriteLn($"NEXT!!!!!");
+                //FileLogger.WriteLn($"NEXT!!!!!");
 #endif
             }
         }

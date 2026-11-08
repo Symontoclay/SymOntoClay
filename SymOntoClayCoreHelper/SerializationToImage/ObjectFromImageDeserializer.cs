@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common.SerializationToImage;
 using SymOntoClay.Common.SerializationToImage.Attributes;
+using SymOntoClay.CoreHelper.SerializationToImage.Attributes;
 using SymOntoClay.CoreHelper.SerializationToImage.DataCards;
 using System;
 using System.Collections;
@@ -45,7 +46,44 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         private void LoadSerializableActionFactoryDict()
         {
-            throw new NotImplementedException("C3E34134-1F27-48C3-986E-81A52FEB35DD");
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+#if DEBUG
+                _logger.Info($"assembly.FullName = {assembly.FullName}");
+#endif
+
+                var types = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISerializableActionFactory)));
+
+#if DEBUG
+                _logger.Info($"types.Count() = {types.Count()}");
+#endif
+
+                if (types.Count() == 0)
+                {
+                    continue;
+                }
+
+                foreach (var type in types)
+                {
+#if DEBUG
+                    _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
+                    var atttibute = type.GetCustomAttribute<SerializableAction>();
+
+#if DEBUG
+                    _logger.Info($"atttibute.Id = {atttibute.Id}");
+#endif
+
+                    var factoryInstance = (ISerializableActionFactory)Activator.CreateInstance(type);
+
+                    _serializableActionFactoryDict[atttibute.Id] = factoryInstance;
+                }
+            }
+
+            //throw new NotImplementedException("C3E34134-1F27-48C3-986E-81A52FEB35DD");
         }
 
         /// <inheritdoc/>
@@ -1052,7 +1090,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 throw new NotSupportedException($"ACFBC823-49FD-4E7C-9823-545AC56C9BF8: card.KeyValue = {card.KeyValue}");
             }
 
-            //_processedSerializedValue[serializedValue] = obj;
+            var obj = serializableActionFactory.GetAction(card.Index);
+
+            _processedSerializedValue[serializedValue] = obj;
+
+
 
             throw new NotImplementedException("C7EB3A32-A00E-4AF2-8A09-0E861D749F79");
         }

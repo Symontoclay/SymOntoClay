@@ -13,7 +13,7 @@ namespace SymOntoClay.SerializationAnalyzer
         {
             var now = DateTime.Now;
 
-            _fileName = Path.Combine(@"c:\Users\Acer\", $"{now:dd.MM.yyyyy_HHmmss}.log");
+            _fileName = Path.Combine(@"c:\Users\Acer\", $"SerializationAnalyzer_{now:dd.MM.yyyyy_HHmmss}.log");
         }
 
         private static string _fileName;

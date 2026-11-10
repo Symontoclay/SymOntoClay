@@ -51,7 +51,7 @@ namespace SymOntoClay.GuidDuplicateAnalyzer
                         var optionsProvider = source.OptionsProvider;
 
 #if DEBUG
-                        FileLogger.WriteLn($"guids.IsDefaultOrEmpty = {guids.IsDefaultOrEmpty}");
+                        //FileLogger.WriteLn($"guids.IsDefaultOrEmpty = {guids.IsDefaultOrEmpty}");
 #endif
 
                         if (guids.IsDefaultOrEmpty)
@@ -63,19 +63,19 @@ namespace SymOntoClay.GuidDuplicateAnalyzer
                         var fileOptions = optionsProvider.GetOptions(firstTree);
 
 #if DEBUG
-                        foreach(var key in fileOptions.Keys)
-                        {
-                            FileLogger.WriteLn($"key = {key}");
-                        }
+                        //foreach(var key in fileOptions.Keys)
+                        //{
+                        //    FileLogger.WriteLn($"key = {key}");
+                        //}
 #endif
 
                         // We read our custom parameter (returns true/false if it is set)
-                        if (fileOptions.TryGetValue("symontoclay_guid_analyzer_ignore_duplicates", out var ignoreVal) &&
+                        if (fileOptions.TryGetValue("symontoclay.guid_analyzer.ignore_duplicates", out var ignoreVal) &&
                             bool.TryParse(ignoreVal, out bool shouldIgnore) && shouldIgnore)
                         {
 #if DEBUG
-                            FileLogger.WriteLn($"ignoreVal = {ignoreVal}");
-                            FileLogger.WriteLn($"shouldIgnore = {shouldIgnore}");
+                            //FileLogger.WriteLn($"ignoreVal = {ignoreVal}");
+                            //FileLogger.WriteLn($"shouldIgnore = {shouldIgnore}");
 #endif
 
                             // If the ignore flag is enabled in the config, we abort the analysis.
@@ -83,7 +83,7 @@ namespace SymOntoClay.GuidDuplicateAnalyzer
                         }
 
 #if DEBUG
-                        FileLogger.WriteLn($"ignoreVal = {ignoreVal}");
+                        //FileLogger.WriteLn($"ignoreVal = {ignoreVal}");
 #endif
 
                         // Group by GUID value to find those that appear more than once

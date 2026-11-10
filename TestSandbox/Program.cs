@@ -97,7 +97,7 @@ namespace TestSandbox
             //TstAltFunctor();
             //TstParseGuid();
             //TstThreadExecutorStackHandler();
-            TstSerializationToImageHandler();
+            //TstSerializationToImageHandler();
             //TstDeserializerFromImageHandler();
             //TstGameComponentGuardHander();
             //TstCancellationHandler();
@@ -193,7 +193,7 @@ namespace TestSandbox
             //TstAddingFactTriggerHandler();
             //TstHtnHandler();
             //TstGeneralStartHandler();//<=
-            //TstGeneralStartSerializationHandler();
+            TstGeneralStartSerializationHandler();
             //TstGeneralStartDeserializationHandler();
             //TstGetParsedFilesInfo();
 

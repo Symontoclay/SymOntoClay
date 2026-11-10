@@ -1207,7 +1207,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent",
             "SymOntoClay.Core.Internal.CodeModel.NullValue",
             "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult",
-            "SymOntoClay.Threading.CustomThreadPoolSettings"
+            "SymOntoClay.Threading.CustomThreadPoolSettings",
+            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`1[[SymOntoClay.UnityAsset.Core.Internal.IWorldContextSerializedEventsHandler, SymOntoClay.UnityAsset.Core, Version=0.5.6.0, Culture=neutral, PublicKeyToken=null]]"
         };
 
         /// <inheritdoc/>
@@ -1258,7 +1259,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 "PlaceDefaultThreadingSettings",
                 "HtnExecutionSettings",
                 "AsyncEventsThreadPool",
-                "SoundBus"
+                "SoundBus",
+                "_serializationAnchor"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.Internal.SerializedWorldContext"] = new List<string>()
             { 
@@ -1792,7 +1794,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 "_onAddingFactHandlers",
                 "_state",
                 "_stateLockObj",
-                "_logger"
+                "_logger",
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage"] = new List<string>()
             {
@@ -3773,7 +3778,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 "_onCompletedHandlers",
                 "_processAddLifeCycleEventParametersCount",
                 "_defaultTimeoutCancellationMode",
-                "_logger"
+                "_logger",
+                "_serializationAnchor"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Instances.InternalRunners.EnterLifecycleTriggersRunner"] = new List<string>() 
             {
@@ -4612,6 +4618,13 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             {
                 "MinThreadsCount",
                 "MaxThreadsCount"
+            };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`1[[SymOntoClay.UnityAsset.Core.Internal.IWorldContextSerializedEventsHandler, SymOntoClay.UnityAsset.Core, Version=0.5.6.0, Culture=neutral, PublicKeyToken=null]]"] = new List<string>()
+            {
+                "_functorId",
+                "_action",
+                "_arg1",
+                "_arg2"
             };
         }
 #endif

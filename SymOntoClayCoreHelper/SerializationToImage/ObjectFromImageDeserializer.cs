@@ -1383,7 +1383,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             "SymOntoClay.Core.Internal.Serialization.BaseLoaderFromSourceCode",
             "SymOntoClay.UnityAsset.Core.Internal.Storage.StandaloneStorageComponent",
             "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation",
-            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult"
+            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult",
+            "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`1[[SymOntoClay.UnityAsset.Core.Internal.IWorldContextSerializedEventsHandler, SymOntoClay.UnityAsset.Core, Version=0.5.6.0, Culture=neutral, PublicKeyToken=null]]"
         };
 
         private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
@@ -1433,7 +1434,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "PlaceDefaultThreadingSettings",
                 "HtnExecutionSettings",
                 "AsyncEventsThreadPool",
-                "SoundBus"
+                "SoundBus",
+                "_serializationAnchor"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.WorldSettings"] = new List<string>()
             { 
@@ -1997,7 +1999,10 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_onAddingFactHandlers",
                 "_state",
                 "_stateLockObj",
-                "_logger"
+                "_logger",
+                "_activeObjectContext",
+                "_threadPool",
+                "_serializationAnchor"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage"] = new List<string>()
             {
@@ -4711,7 +4716,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_onCompletedHandlers",
                 "_processAddLifeCycleEventParametersCount",
                 "_defaultTimeoutCancellationMode",
-                "_logger"
+                "_logger",
+                "_serializationAnchor"
             };
             _tmpProcessedMembersOfTypes["SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor"] = new List<string>()
             {

@@ -4624,7 +4624,11 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 "_functorId",
                 "_action",
                 "_arg1",
-                "_arg2"
+                "_arg2",
+                "_logger",
+                "_threadPool",
+                "_cancellationContext",
+                "_serializationAnchor"
             };
         }
 #endif

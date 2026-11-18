@@ -23,7 +23,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             _dataCardWriter = dataCardWriter;
 
 #if DEBUG
-            InitTmpProcessedMembersOfTypes();
+            //InitTmpProcessedMembersOfTypes();
 #endif
         }
 
@@ -452,7 +452,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         protected override SerializedValue SerializeComposite(object obj, Type type, string path)
         {
 #if DEBUG
-            TmpCheckProcessedTypes("1A078DE9-D217-43DD-AC25-642895615864", type);
+            //TmpCheckProcessedTypes("1A078DE9-D217-43DD-AC25-642895615864", type);
 #endif
 
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
@@ -518,7 +518,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("163EDDE8-6AFC-4E7F-8BEB-3EA8A0517FDD", type, field.Name);
+                //TmpCheckProcessedMembersOfTypes("163EDDE8-6AFC-4E7F-8BEB-3EA8A0517FDD", type, field.Name);
 #endif
 
                 var fieldValue = field.GetValue(obj);
@@ -557,7 +557,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("1084D544-1416-4C3D-8B41-4A1E4251E9BF", type, field.Name);
+                //TmpCheckProcessedMembersOfTypes("1084D544-1416-4C3D-8B41-4A1E4251E9BF", type, field.Name);
 #endif
 
                 var fieldValue = field.GetValue(obj);
@@ -603,7 +603,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                     }
 
 #if DEBUG
-                    TmpCheckProcessedMembersOfTypes("F7F593D8-D8B5-4A9F-866D-4ABC7AF8AA88", type, field.Name);
+                    //TmpCheckProcessedMembersOfTypes("F7F593D8-D8B5-4A9F-866D-4ABC7AF8AA88", type, field.Name);
 #endif
 
                     ProcessFieldInfo(field, item.TypeId, obj, cardOtherFieldList);
@@ -636,7 +636,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                     }
 
 #if DEBUG
-                    TmpCheckProcessedMembersOfTypes("5E1B7132-C79B-45F2-9D06-F4B749989D8D", type, property.Name);
+                    //TmpCheckProcessedMembersOfTypes("5E1B7132-C79B-45F2-9D06-F4B749989D8D", type, property.Name);
 #endif
 
                     ProcessPropertyInfo(property, item.TypeId, obj, cardPropertyList);
@@ -744,7 +744,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 }
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("EE52FE77-A62A-49E4-AF17-A18DEFB8F967", type, field.Name);
+                //TmpCheckProcessedMembersOfTypes("EE52FE77-A62A-49E4-AF17-A18DEFB8F967", type, field.Name);
 #endif
 
                 ProcessFieldInfo(field, item.TypeId, obj, cardFieldList);
@@ -781,7 +781,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 }
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("A1F98420-EC02-477B-A384-863381A86F5F", type, property.Name);
+                //TmpCheckProcessedMembersOfTypes("A1F98420-EC02-477B-A384-863381A86F5F", type, property.Name);
 #endif
 
                 ProcessPropertyInfo(property, item.TypeId, obj, cardPropertyList);
@@ -954,6 +954,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         }
 
 #if DEBUG
+        /*
         /// <inheritdoc/>
         protected override List<string> _tmpProcessedTypes { get; set; } = new List<string>()
         {
@@ -1209,11 +1210,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult",
             "SymOntoClay.Threading.CustomThreadPoolSettings",
             "SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`1[[SymOntoClay.UnityAsset.Core.Internal.IWorldContextSerializedEventsHandler, SymOntoClay.UnityAsset.Core, Version=0.5.6.0, Culture=neutral, PublicKeyToken=null]]"
-        };
+        };*/
 
-        /// <inheritdoc/>
-        protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
+        //// <inheritdoc/>
+        //protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
 
+        /*
         private void InitTmpProcessedMembersOfTypes()
         {
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
@@ -4631,6 +4633,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 "_serializationAnchor"
             };
         }
+        */
 #endif
     }
 }

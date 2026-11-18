@@ -502,12 +502,6 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer._tmpProcessedTypes">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.ObjectToImageSerializer._tmpProcessedMembersOfTypes">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.TryGetSerializedValue(System.Object,SymOntoClay.CoreHelper.SerializationToImage.SerializedValue@)">
             <inheritdoc/>
         </member>
@@ -547,12 +541,6 @@
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer._tmpProcessedTypes">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsAndSettingsSerializer._tmpProcessedMembersOfTypes">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeReflectionType(System.Object,System.Type)">
             <inheritdoc/>
         </member>
@@ -584,12 +572,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer.SerializeAction(System.Object,System.Type,SymOntoClay.CoreHelper.SerializationToImage.ObjMemberRef)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer._tmpProcessedTypes">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.SerializationToImage.Serializers.RootObjectsSerializer._tmpProcessedMembersOfTypes">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.CoreHelper.SerializationToImage.StructuralAdvice.ToString">

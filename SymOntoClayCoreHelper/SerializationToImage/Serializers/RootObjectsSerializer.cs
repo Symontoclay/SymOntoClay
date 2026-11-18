@@ -73,7 +73,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         protected override SerializedValue SerializeComposite(object obj, Type type, string path)
         {
 #if DEBUG
-            TmpCheckProcessedTypes("3862A9A0-0E28-4A26-AD77-9788DD2C9C3F", type);
+            //TmpCheckProcessedTypes("3862A9A0-0E28-4A26-AD77-9788DD2C9C3F", type);
 #endif
 
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
@@ -173,14 +173,14 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         }
 
 #if DEBUG
-        /// <inheritdoc/>
-        protected override List<string> _tmpProcessedTypes { get; set; } = new List<string>()
+        //// <inheritdoc/>
+        /*protected override List<string> _tmpProcessedTypes { get; set; } = new List<string>()
         {
             "SymOntoClay.UnityAsset.Core.World.WorldCore"
-        };
+        };*/
 
-        /// <inheritdoc/>
-        protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
+        //// <inheritdoc/>
+        //protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
 #endif
     }
 }

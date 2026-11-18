@@ -248,41 +248,43 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             return backingField != null;
         }
 
-        protected void TmpCheckProcessedTypes(string id, Type type)
-        {
-            var fullShortTypeName = $"{type.Namespace}.{type.Name}";
-
 #if DEBUG
-            //_logger.Info($"type.Name = {type.Name}");
-            //_logger.Info($"type.FullName = {type.FullName}");
-            //_logger.Info($"type.Namespace = {type.Namespace}");
-            //_logger.Info($"fullShortTypeName = {fullShortTypeName}");
+        //protected void TmpCheckProcessedTypes(string id, Type type)
+        //{
+        //    var fullShortTypeName = $"{type.Namespace}.{type.Name}";
+
+
+        //    //_logger.Info($"type.Name = {type.Name}");
+        //    //_logger.Info($"type.FullName = {type.FullName}");
+        //    //_logger.Info($"type.Namespace = {type.Namespace}");
+        //    //_logger.Info($"fullShortTypeName = {fullShortTypeName}");
+
+
+        //    if (!_tmpProcessedTypes.Contains(type.FullName) && !_tmpProcessedTypes.Contains(fullShortTypeName))
+        //    {
+        //        throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
+        //    }
+        //}
+
+        //protected void TmpCheckProcessedMembersOfTypes(string id, Type type, string memberName)
+        //{
+        //    var fullShortTypeName = $"{type.Namespace}.{type.Name}";
+
+        //    if (_tmpProcessedMembersOfTypes.TryGetValue(type.FullName, out var memberNamesList) || _tmpProcessedMembersOfTypes.TryGetValue(fullShortTypeName, out memberNamesList))
+        //    {
+        //        if (!memberNamesList.Contains(memberName))
+        //        {
+        //            throw new NotSupportedException($"{id}: please check member '{memberName}' of type '{type.FullName}'");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
+        //    }
+        //}
+
+        //protected abstract List<string> _tmpProcessedTypes { get; set; }
+        //protected abstract Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; }
 #endif
-
-            if (!_tmpProcessedTypes.Contains(type.FullName) && !_tmpProcessedTypes.Contains(fullShortTypeName))
-            {
-                throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
-            }
-        }
-
-        protected void TmpCheckProcessedMembersOfTypes(string id, Type type, string memberName)
-        {
-            var fullShortTypeName = $"{type.Namespace}.{type.Name}";
-
-            if (_tmpProcessedMembersOfTypes.TryGetValue(type.FullName, out var memberNamesList) || _tmpProcessedMembersOfTypes.TryGetValue(fullShortTypeName, out memberNamesList))
-            {
-                if (!memberNamesList.Contains(memberName))
-                {
-                    throw new NotSupportedException($"{id}: please check member '{memberName}' of type '{type.FullName}'");
-                }
-            }
-            else
-            {
-                throw new NotSupportedException($"{id}: please check type '{type.FullName}'");
-            }
-        }
-
-        protected abstract List<string> _tmpProcessedTypes { get; set; }
-        protected abstract Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; }
     }
 }

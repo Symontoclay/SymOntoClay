@@ -24,7 +24,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             _dataCardWriter = dataCardWriter;
 
 #if DEBUG
-            InitTmpProcessedMembersOfTypes();
+            //InitTmpProcessedMembersOfTypes();
 #endif
         }
 
@@ -178,7 +178,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         protected override SerializedValue SerializeGenericStack(object obj, Type type, string path)
         {
 #if DEBUG
-            TmpCheckProcessedTypes("1CBE32CC-957C-4E43-A548-EE3705613153", type);
+            //TmpCheckProcessedTypes("1CBE32CC-957C-4E43-A548-EE3705613153", type);
 #endif
 
             throw new NotImplementedException("C81F1DFE-FACE-4AFA-BD4A-ED501B903D3F");
@@ -188,7 +188,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         protected override SerializedValue SerializeGenericQueue(object obj, Type type, string path)
         {
 #if DEBUG
-            TmpCheckProcessedTypes("5052BA76-14D6-436B-89C7-3910FDB46920", type);
+            //TmpCheckProcessedTypes("5052BA76-14D6-436B-89C7-3910FDB46920", type);
 #endif
 
             throw new NotImplementedException("C925989B-E02A-469D-9703-C73A22E7491D");
@@ -204,7 +204,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         protected override SerializedValue SerializeGenericDictionary(object obj, Type type, string path)
         {
 #if DEBUG
-            TmpCheckProcessedTypes("4923A521-BE0E-4ACC-8AF9-CCD1D78BA117", type);
+            //TmpCheckProcessedTypes("4923A521-BE0E-4ACC-8AF9-CCD1D78BA117", type);
 #endif
 
             throw new NotImplementedException("C6176FA0-9C26-4183-B80B-3A3D7E0D873F");
@@ -214,7 +214,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         protected override SerializedValue SerializeComposite(object obj, Type type, string path)
         {
 #if DEBUG
-            TmpCheckProcessedTypes("BFC68775-0E7F-4EF9-8393-9AFD8ED57344", type);
+            //TmpCheckProcessedTypes("BFC68775-0E7F-4EF9-8393-9AFD8ED57344", type);
 #endif
 
             var kindOfStructuralObject = _structuralContext.GetKindOfStructuralObject(type);
@@ -306,7 +306,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 }
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("ADC70B21-5098-4EC0-A43B-C118D67A72A9", type, field.Name);
+                //TmpCheckProcessedMembersOfTypes("ADC70B21-5098-4EC0-A43B-C118D67A72A9", type, field.Name);
 #endif
 
                 ProcessFieldInfo(field, item.TypeId, obj, path, cardFieldList);
@@ -330,7 +330,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
 #endif
 
 #if DEBUG
-                    TmpCheckProcessedMembersOfTypes("675FF756-50FE-4073-9B08-7AAA916ACCD9", type, item.Prop.Name);
+                    //TmpCheckProcessedMembersOfTypes("675FF756-50FE-4073-9B08-7AAA916ACCD9", type, item.Prop.Name);
 #endif
                 }
 
@@ -397,7 +397,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 }
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("85FEC95E-9478-4037-BB84-7F1C6328872B", type, property.Name);
+                //TmpCheckProcessedMembersOfTypes("85FEC95E-9478-4037-BB84-7F1C6328872B", type, property.Name);
 #endif
 
                 ProcessPropertyInfo(property, item.TypeId, obj, path, cardPropertyList);
@@ -458,7 +458,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 }
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("E09901B9-7B79-4DD3-9BD3-1F89B1AFC600", type, field.Name);
+                //TmpCheckProcessedMembersOfTypes("E09901B9-7B79-4DD3-9BD3-1F89B1AFC600", type, field.Name);
 #endif
 
                 ProcessFieldInfo(field, item.TypeId, obj, path, cardFieldList);
@@ -488,7 +488,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 }
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("8CF41E0D-1BEB-4BAF-8D3A-6107D6B788D7", type, property.Name);
+                //TmpCheckProcessedMembersOfTypes("8CF41E0D-1BEB-4BAF-8D3A-6107D6B788D7", type, property.Name);
 #endif
 
                 ProcessPropertyInfo(property, item.TypeId, obj, path, cardPropertyList);
@@ -604,14 +604,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
         protected override SerializedValue SerializeAction(object obj, Type type, ObjMemberRef objMember)
         {
 #if DEBUG
-            TmpCheckProcessedTypes("D6559AD4-8808-4D7A-95C8-EAB973C4ADA6", type);
+            //TmpCheckProcessedTypes("D6559AD4-8808-4D7A-95C8-EAB973C4ADA6", type);
 #endif
 
             throw new NotImplementedException("C6866BBD-6E0A-46CD-BBCA-2D9B66381B2B");
         }
 
 #if DEBUG
-        /// <inheritdoc/>
+        //// <inheritdoc/>
+        /*
         protected override List<string> _tmpProcessedTypes { get; set; } = new List<string>()
         {
             "TestSandbox.SerializationToImage.TstWorldContext",
@@ -621,11 +622,12 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
             "SymOntoClay.Threading.CustomThreadPoolSettings",
             "SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation",
             "SymOntoClay.UnityAsset.Core.HumanoidNPCSettings"
-        };
+        };*/
 
-        /// <inheritdoc/>
-        protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
+        ///// <inheritdoc/>
+        //protected override Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
 
+        /*
         private void InitTmpProcessedMembersOfTypes()
         {
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.WorldSettings"] = new List<string>()
@@ -690,6 +692,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage.Serializers
                 "_settings"
             };
         }
+        */
 #endif
     }
 }

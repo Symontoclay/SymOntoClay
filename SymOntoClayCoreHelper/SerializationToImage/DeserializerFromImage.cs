@@ -70,7 +70,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         public void Deserialize(object obj)
         {
 #if DEBUG
-            _logger.Info($"obj = {obj}");
+            //_logger.Info($"obj = {obj}");
 #endif
 
             CreateCommonObjects();
@@ -82,7 +82,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var deserializedObj = _objectDeserializer.DeserializeValue(_rootSerializedValue);
 
 #if DEBUG
-            _logger.Info($"deserializedObj = {deserializedObj}");
+            //_logger.Info($"deserializedObj = {deserializedObj}");
 #endif
 
             Finalization();
@@ -106,15 +106,15 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var rootSerializedValue = _rootObjectsSerializer.SerializeValue(obj);
 
 #if DEBUG
-            _logger.Info($"rootSerializedValue = {rootSerializedValue}");
-            _logger.Info($"_rootObjectsDataCardsList.Count = {_rootObjectsDataCardsList.Count}");
+            //_logger.Info($"rootSerializedValue = {rootSerializedValue}");
+            //_logger.Info($"_rootObjectsDataCardsList.Count = {_rootObjectsDataCardsList.Count}");
 #endif
 
             var rootSerializedSettingsValue = _rootObjectsAndSettingsSerializer.SerializeValue(obj, "@");
 
 #if DEBUG
-            _logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
-            _logger.Info($"_rootObjectsAndSettingsDataCardsList.Count = {_rootObjectsAndSettingsDataCardsList.Count}");
+            //_logger.Info($"rootSerializedSettingsValue = {rootSerializedSettingsValue}");
+            //_logger.Info($"_rootObjectsAndSettingsDataCardsList.Count = {_rootObjectsAndSettingsDataCardsList.Count}");
 #endif
         }
 
@@ -130,8 +130,8 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
         private void UnPackPackage()
         {
 #if DEBUG
-            _logger.Info($"_imageFileName = {_imageFileName}");
-            _logger.Info($"_tempPath = {_tempPath}");
+            //_logger.Info($"_imageFileName = {_imageFileName}");
+            //_logger.Info($"_tempPath = {_tempPath}");
 #endif
 
             ZipFile.ExtractToDirectory(_imageFileName, _tempPath);
@@ -144,19 +144,19 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var fullFileName = Path.Combine(_tempPath, packEntryName);
 
 #if DEBUG
-            _logger.Info($"fullFileName = {fullFileName}");
+            //_logger.Info($"fullFileName = {fullFileName}");
 #endif
 
             var content = File.ReadAllText(fullFileName);
 
 #if DEBUG
-            _logger.Info($"content = {content}");
+            //_logger.Info($"content = {content}");
 #endif
 
             _manifest = JsonConvert.DeserializeObject<ImageManifest>(content);
 
 #if DEBUG
-            _logger.Info($"_manifest = {_manifest}");
+            //_logger.Info($"_manifest = {_manifest}");
 #endif
         }
 
@@ -167,7 +167,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var fullFileName = Path.Combine(_tempPath, packEntryName);
 
 #if DEBUG
-            _logger.Info($"fullFileName = {fullFileName}");
+            //_logger.Info($"fullFileName = {fullFileName}");
 #endif
 
             using var fs = new FileStream(fullFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
@@ -183,7 +183,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var cardsList = imageRootCardDataCardReader.ReadAll();
 
 #if DEBUG
-            _logger.Info($"cardsList.Count = {cardsList.Count}");
+            //_logger.Info($"cardsList.Count = {cardsList.Count}");
 #endif
 
             if (cardsList.Count != 1)
@@ -194,7 +194,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var imageRootCard = cardsList.Where(p => p.KindOfDataCard == KindOfDataCard.ImageRootCard).Cast<ImageRootCard>();
 
 #if DEBUG
-            _logger.Info($"imageRootCard.Count() = {imageRootCard.Count()}");
+            //_logger.Info($"imageRootCard.Count() = {imageRootCard.Count()}");
 #endif
 
             if(imageRootCard.Count() != 1)
@@ -205,7 +205,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             var card = imageRootCard.Single();
 
 #if DEBUG
-            _logger.Info($"card = {card}");
+            //_logger.Info($"card = {card}");
 #endif
 
             _rootSerializedValue = card.RootSerializedValue;
@@ -226,7 +226,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             }
 
 #if DEBUG
-            _logger.Info($"_rootSerializedValue = {_rootSerializedValue}");
+            //_logger.Info($"_rootSerializedValue = {_rootSerializedValue}");
 #endif
         }
 

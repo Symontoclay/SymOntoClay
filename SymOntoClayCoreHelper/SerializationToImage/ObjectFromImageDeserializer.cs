@@ -4802,6 +4802,17 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_cancellationContext",
                 "_serializationAnchor"
             };
+            _tmpProcessedMembersOfTypes["SymOntoClay.ActiveObject.Functors.LoggedAltFunctorWithoutResult`1[[SymOntoClay.UnityAsset.Core.Internal.IWorldContextSerializedEventsHandler, SymOntoClay.UnityAsset.Core, Version=0.5.6.0, Culture=neutral, PublicKeyToken=null]]"] = new List<string>()
+            {
+                "_functorId",
+                "_action",
+                "_arg1",
+                "_arg2",
+                "_logger",
+                "_threadPool",
+                "_cancellationContext",
+                "_serializationAnchor"
+            };
         }
     }
 }

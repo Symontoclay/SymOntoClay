@@ -31,7 +31,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
             LoadSerializableActionFactoryDict();
 
 #if DEBUG
-            InitTmpProcessedMembersOfTypes();
+            //InitTmpProcessedMembersOfTypes();
 #endif
         }
 
@@ -803,7 +803,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("C14E96E8-2F4B-4ECA-AE67-89ABBDD69475", type, name);
+                //TmpCheckProcessedMembersOfTypes("C14E96E8-2F4B-4ECA-AE67-89ABBDD69475", type, name);
 #endif
 
                 ProcessProperty(obj, item);
@@ -876,7 +876,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("C1177B68-C0AE-4934-9F0A-F9B26330636E", type, item.Item1);
+                //TmpCheckProcessedMembersOfTypes("C1177B68-C0AE-4934-9F0A-F9B26330636E", type, item.Item1);
 #endif
 
                 ProcessField(obj, item);
@@ -893,7 +893,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("C69AE107-BBAF-40EE-838D-02FE94DE613C", type, name);
+                //TmpCheckProcessedMembersOfTypes("C69AE107-BBAF-40EE-838D-02FE94DE613C", type, name);
 #endif
 
                 ProcessProperty(obj, item);
@@ -932,7 +932,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("C6464E24-F9CD-4CE3-A2CF-60799706AE43", type, item.Item1);
+                //TmpCheckProcessedMembersOfTypes("C6464E24-F9CD-4CE3-A2CF-60799706AE43", type, item.Item1);
 #endif
 
                 ProcessField(obj, item);
@@ -949,7 +949,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 #endif
 
 #if DEBUG
-                TmpCheckProcessedMembersOfTypes("C41D10B4-30AF-435D-AFE6-1A7781EFCB38", type, name);
+                //TmpCheckProcessedMembersOfTypes("C41D10B4-30AF-435D-AFE6-1A7781EFCB38", type, name);
 #endif
 
                 ProcessProperty(obj, item);
@@ -1389,6 +1389,7 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
 
         //private Dictionary<string, List<string>> _tmpProcessedMembersOfTypes { get; set; } = new Dictionary<string, List<string>>();
 
+        /*
         private void InitTmpProcessedMembersOfTypes()
         {
             _tmpProcessedMembersOfTypes["SymOntoClay.UnityAsset.Core.World.WorldCore"] = new List<string>()
@@ -4813,6 +4814,6 @@ namespace SymOntoClay.CoreHelper.SerializationToImage
                 "_cancellationContext",
                 "_serializationAnchor"
             };
-        }
+        }*/
     }
 }

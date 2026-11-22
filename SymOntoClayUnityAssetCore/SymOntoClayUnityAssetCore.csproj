@@ -9,14 +9,14 @@
     <FileVersion>0.5.6</FileVersion>
     <Copyright>Copyright (c) 2020 - 2026 Sergiy Tolkachov aka metatypeman</Copyright>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<LangVersion>latest</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClay.UnityAsset.Core.xml</DocumentationFile>
     <DefineConstants>TRACE;IMAGINE_WORKING</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.1.4" />
+    <PackageReference Include="NLog" Version="6.2.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
@@ -24,19 +24,14 @@
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
   </ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\SymOntoClay.GuidDuplicateAnalyzer\SymOntoClay.GuidDuplicateAnalyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-		<ProjectReference Include="..\SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj"
-						  OutputItemType="Analyzer"
-						  ReferenceOutputAssembly="false" />
-	</ItemGroup>
-
-	<PropertyGroup>
-		<CoreCompileDependsOn>$(CoreCompileDependsOn);EnsureGeneratorBuilt</CoreCompileDependsOn>
-	</PropertyGroup>
-
-	<Target Name="EnsureGeneratorBuilt">
-		<MSBuild Projects="..\SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj" Properties="Configuration=$(Configuration)" />
-	</Target>
+  <ItemGroup>
+    <ProjectReference Include="..\SymOntoClay.GuidDuplicateAnalyzer\SymOntoClay.GuidDuplicateAnalyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+  <PropertyGroup>
+    <CoreCompileDependsOn>$(CoreCompileDependsOn);EnsureGeneratorBuilt</CoreCompileDependsOn>
+  </PropertyGroup>
+  <Target Name="EnsureGeneratorBuilt">
+    <MSBuild Projects="..\SymOntoClay.SerializationSourceGenerator\SymOntoClay.SerializationSourceGenerator.csproj" Properties="Configuration=$(Configuration)" />
+  </Target>
 </Project>

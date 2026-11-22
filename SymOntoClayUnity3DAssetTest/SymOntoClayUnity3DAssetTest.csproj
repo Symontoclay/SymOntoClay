@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <RootNamespace>SymOntoClay.UnityAsset.Core.Tests</RootNamespace>
     <Version>0.5.6</Version>
@@ -9,7 +9,7 @@
     <Copyright>Copyright (c) 2020 - 2026 Sergiy Tolkachov aka metatypeman</Copyright>
     <AssemblyName>SymOntoClay.UnityAsset.Core.Tests</AssemblyName>
     <Nullable>disable</Nullable>
-	<LangVersion>latest</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>

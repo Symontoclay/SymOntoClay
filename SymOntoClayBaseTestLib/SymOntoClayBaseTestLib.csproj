@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AssemblyVersion>0.5.6</AssemblyVersion>
@@ -10,7 +10,7 @@
     <AssemblyName>SymOntoClay.BaseTestLib</AssemblyName>
     <RootNamespace>SymOntoClay.BaseTestLib</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<LangVersion>latest</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Libs\SymOntoClay.Libs.csproj" />

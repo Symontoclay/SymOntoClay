@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.Common;
@@ -39,21 +41,24 @@ namespace SymOntoClay.CLI
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            var writeOutputToTextFileAsParallel = bool.Parse(ConfigurationManager.AppSettings["ConsoleWrapper.WriteOutputToTextFileAsParallel"] ?? "false");
-            var useNLogLogger = bool.Parse(ConfigurationManager.AppSettings["ConsoleWrapper.UseNLogLogger"] ?? "false");
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            var consoleWrapperSettings = configuration.GetSection("ConsoleWrapperSettings").Get<ConsoleWrapperSettings>() ?? new ConsoleWrapperSettings();
 
 #if DEBUG
-            //_logger.Info($"writeOutputToTextFileAsParallel = {writeOutputToTextFileAsParallel}");
-            //_logger.Info($"useNLogLogger = {useNLogLogger}");
+            //_logger.Info($"consoleWrapperSettings = {JsonConvert.SerializeObject(consoleWrapperSettings, Formatting.Indented)}");
             //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 
-            if (useNLogLogger)
+            if (consoleWrapperSettings.UseNLogLogger)
             {
                 ConsoleWrapper.SetNLogLogger(_logger);
             }
 
-            if (writeOutputToTextFileAsParallel)
+            if (consoleWrapperSettings.WriteOutputToTextFileAsParallel)
             {
                 ConsoleWrapper.WriteOutputToTextFileAsParallel = true;
             }

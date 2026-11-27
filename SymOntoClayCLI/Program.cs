@@ -48,8 +48,15 @@ namespace SymOntoClay.CLI
 
             var consoleWrapperSettings = configuration.GetSection("ConsoleWrapperSettings").Get<ConsoleWrapperSettings>() ?? new ConsoleWrapperSettings();
 
+            var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>() ?? new AppSettings();
+
 #if DEBUG
-            //_logger.Info($"consoleWrapperSettings = {JsonConvert.SerializeObject(consoleWrapperSettings, Formatting.Indented)}");
+            //
+#endif
+
+#if DEBUG
+            //_logger.Info($"consoleWrapperSettings = {consoleWrapperSettings}");
+            //_logger.Info($"appSettings = {appSettings}");
             //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 

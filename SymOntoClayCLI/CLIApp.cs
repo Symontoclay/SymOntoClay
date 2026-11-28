@@ -127,9 +127,7 @@ namespace SymOntoClay.CLI
 
         private void PrintHeader()
         {
-            CLIHelper.ShowCopyrightSplash(20000);
-            
-            ConsoleWrapper.WriteCopyright();
+            CLIHelper.ShowCopyrightSplash(2000);
         }
 
         private void PrintHowToExitAndWait()

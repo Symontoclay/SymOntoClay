@@ -1,11 +1,11 @@
 {
   "profiles": {
-    "SymOntoClayCLI": {
+    "Run Default": {
       "commandName": "Project",
       "commandLineArgs": "run -nlp",
-      "workingDirectory": "C:\\Users\\sergiy.tolkachov\\source\\repos\\SymOntoClay\\TestSandbox\\Source"
+      "workingDirectory": "../TestSandbox/Source"
     },
-    "SymOntoClayCLI HELP": {
+    "HELP": {
       "commandName": "Project",
       "commandLineArgs": "help",
       "workingDirectory": ""

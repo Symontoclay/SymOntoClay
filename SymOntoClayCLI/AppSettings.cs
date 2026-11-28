@@ -7,6 +7,8 @@ namespace SymOntoClay.CLI
 {
     public class AppSettings : IObjectToString
     {
+        public string ImagesDir { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -25,7 +27,7 @@ namespace SymOntoClay.CLI
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof()} = {}");
+            sb.AppendLine($"{spaces}{nameof(ImagesDir)} = {ImagesDir}");
 
             return sb.ToString();
         }

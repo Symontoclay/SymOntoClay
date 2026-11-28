@@ -30,7 +30,7 @@ namespace SymOntoClay.CLI
 {
     public class CLIApp : IDisposable
     {
-        public void Run(string[] args)
+        public void Run(string[] args, AppSettings appSettings)
         {
             if(!args.Any())
             {
@@ -76,7 +76,7 @@ namespace SymOntoClay.CLI
 
                 case KindOfCLICommand.Run:
                     {
-                        using var handler = new CLIRunHandler();
+                        using var handler = new CLIRunHandler(appSettings);
                         handler.Run(command);
                         return;
                     }

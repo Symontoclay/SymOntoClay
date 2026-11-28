@@ -71,7 +71,7 @@ namespace SymOntoClay.CLI
             }
 
             using var app = new CLIApp();
-            app.Run(args);
+            app.Run(args, appSettings);
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

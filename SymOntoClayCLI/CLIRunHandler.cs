@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using Newtonsoft.Json;
 using SymOntoClay.CLI.Helpers;
+using SymOntoClay.Common;
 using SymOntoClay.Common.Cancellation;
 using SymOntoClay.Core;
 using SymOntoClay.DefaultCLIEnvironment;
@@ -44,9 +45,22 @@ namespace SymOntoClay.CLI
 {
     public class CLIRunHandler : IDisposable
     {
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
+        public CLIRunHandler(AppSettings appSettings)
+        {
+            _appSettings = appSettings;
+        }
+
+        private AppSettings _appSettings;
+
         private IWorld world;
 
         private CancellationTokenSourceContext _cancellationTokenSourceContext;
+
+        private string _imagesDir;
 
         public void Run(CLICommand command)
         {
@@ -54,6 +68,12 @@ namespace SymOntoClay.CLI
             {
                 ConsoleWrapper.WriteText($"Loading {command.InputFile}...");
             }
+
+#if DEBUG
+            _globalLogger.Info($"command.InputDir = {command.InputDir}");
+            _globalLogger.Info($"command.InputFile = {command.InputFile}");
+            _globalLogger.Info($"_appSettings.ImagesDir = {_appSettings.ImagesDir}");
+#endif
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -63,6 +83,10 @@ namespace SymOntoClay.CLI
             };
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
+
+#if DEBUG
+            _globalLogger.Info($"targetFiles.ImagesRootDir = {targetFiles.ImagesRootDir}");
+#endif
 
             _cancellationTokenSourceContext = new CancellationTokenSourceContext();
 
@@ -76,7 +100,21 @@ namespace SymOntoClay.CLI
 
             settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir, targetFiles.LibsDir };
 
-            settings.ImagesRootDir = targetFiles.ImagesRootDir;
+            if(_appSettings.ImagesDir == null)
+            {
+                _imagesDir = targetFiles.ImagesRootDir;
+            }
+            else
+            {
+                _imagesDir = EVPath.Normalize(_appSettings.ImagesDir);
+            }
+
+            settings.ImagesRootDir = _imagesDir;
+
+#if DEBUG
+            _globalLogger.Info($"_imagesDir = {_imagesDir}");
+            _globalLogger.Info($"settings.ImagesRootDir = {settings.ImagesRootDir}");
+#endif
 
             settings.TmpDir = targetFiles.TmpDir;
 
@@ -176,6 +214,10 @@ namespace SymOntoClay.CLI
             while(true)
             {
                 var inputStr = Console.ReadLine().Trim();
+
+#if DEBUG
+                _globalLogger.Info($"inputStr = {inputStr}");
+#endif
 
                 ConsoleWrapper.WriteText(inputStr);
 
@@ -329,9 +371,9 @@ namespace SymOntoClay.CLI
 
         public void Dispose()
         {
-            _cancellationTokenSourceContext.Cancel();
+            _cancellationTokenSourceContext?.Cancel();
             world?.Dispose();
-            _cancellationTokenSourceContext.Dispose();
+            _cancellationTokenSourceContext?.Dispose();
         }
 
         [DebuggerHidden]

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Spectre.Console;
 using SymOntoClay.CLI.Helpers;
 using System;
 using System.Linq;
@@ -132,7 +133,7 @@ namespace SymOntoClay.CLI
 
         private void PrintHowToExitAndWait()
         {
-            ConsoleWrapper.WriteText("Press any key for exit.");
+            AnsiConsole.MarkupLine("[grey]Press any key for exit.[/]");
             Console.ReadKey();
         }
 
@@ -143,34 +144,7 @@ namespace SymOntoClay.CLI
 
         private void PrintHelp()
         {
-            ConsoleWrapper.WriteText("Help - SymOntoClay CLI:");
-            ConsoleWrapper.WriteText("");
-            ConsoleWrapper.WriteText("Running CLI without arguments prints help.");
-            ConsoleWrapper.WriteText("");
-            ConsoleWrapper.WriteText("CLI arguments:");
-            ConsoleWrapper.WriteText("h - prints help.");
-            ConsoleWrapper.WriteText("help - prints help.");
-            ConsoleWrapper.WriteText("run <NPC file name> - runs NPC and waits when you write 'exit' for exit.");
-            ConsoleWrapper.WriteText("run - runs current NPC and waits when you write 'exit' for exit. The current NPC is detected by locators.");
-            ConsoleWrapper.WriteText("exit - ends running NPC.");
-            ConsoleWrapper.WriteText("new [-npc] <NPC name> - creates new NPC in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
-            ConsoleWrapper.WriteText("n - alias of 'new' command.");
-            ConsoleWrapper.WriteText("new -thing <NPC name> - creates new Thing in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
-            ConsoleWrapper.WriteText("new -world <NPC name> - creates new worldspace.");
-            ConsoleWrapper.WriteText("new -w <NPC name> - creates new worldspace.");
-            ConsoleWrapper.WriteText("new -lib <Lib name> - creates new library.");
-            ConsoleWrapper.WriteText("new -l <Lib name> - creates new library.");
-            ConsoleWrapper.WriteText("new -nav <Nav object name> - creates new navigation object.");
-            ConsoleWrapper.WriteText("new -player <Player name> - creates new player.");
-            ConsoleWrapper.WriteText("new -p <Player name> - creates new player.");
-            ConsoleWrapper.WriteText("install <Lib name> - installes library.");
-            ConsoleWrapper.WriteText("version - prints current version of SymOntoClay.");
-            ConsoleWrapper.WriteText("v - alias of 'version' command.");
-            ConsoleWrapper.WriteText("");
-            ConsoleWrapper.WriteText("Additional CLI arguments:");
-            ConsoleWrapper.WriteText("-nologo - supresses printing header.");
-            ConsoleWrapper.WriteText("-timeout <milleseconds> - terminates CLI after <milliseconds>. CLI will return 0.");
-            ConsoleWrapper.WriteText("-nlp - enables NLP (natural language processing).");
+            CLIHelper.PrintHelp();
         }
 
         public void Dispose()

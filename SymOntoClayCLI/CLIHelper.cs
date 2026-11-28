@@ -50,5 +50,10 @@ namespace SymOntoClay.CLI
 
             AnsiConsole.Clear();
         }
+
+        public static void PrintHelp(string readmePath = "README.md")
+        {
+            CliHelpPrinter.PrintHelp(readmePath);
+        }
     }
 }

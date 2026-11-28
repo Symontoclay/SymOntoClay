@@ -60,15 +60,15 @@ namespace SymOntoClay.CLI
             //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 
-            if (consoleWrapperSettings.UseNLogLogger)
-            {
-                ConsoleWrapper.SetNLogLogger(_logger);
-            }
+            //if (consoleWrapperSettings.UseNLogLogger)
+            //{
+            //    ConsoleWrapper.SetNLogLogger(_logger);
+            //}
 
-            if (consoleWrapperSettings.WriteOutputToTextFileAsParallel)
-            {
-                ConsoleWrapper.WriteOutputToTextFileAsParallel = true;
-            }
+            //if (consoleWrapperSettings.WriteOutputToTextFileAsParallel)
+            //{
+            //    ConsoleWrapper.WriteOutputToTextFileAsParallel = true;
+            //}
 
             using var app = new CLIApp();
             app.Run(args, appSettings);
